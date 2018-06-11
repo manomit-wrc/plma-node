@@ -17,8 +17,8 @@ module.exports = {
       avatar,
       address: 'Saltlake, Sector V, Kolkata',
       status: 1,
-      created_at: new Date(),
-      updated_at: new Date()
+      createdAt: new Date(),
+      updatedAt: new Date()
     }], {});
   },
 
