@@ -48,6 +48,9 @@ const hbs = exphbs.create({
             else
                 return opts.inverse(this);
         },
+        first_letter: function(a) {
+            return a.charAt(0);
+        },
         dateFormat: require('handlebars-dateformat')
     }
 });
