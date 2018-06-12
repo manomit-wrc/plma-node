@@ -37,7 +37,7 @@ router.get('/edit-profile', csrfProtection, auth, (req, res) => {
     var success_message = req.flash('success-message')[0];
     var error_message = req.flash('error-message')[0];
     res.render('edit-profile', { layout: 'dashboard', csrfToken: req.csrfToken(),success_message:success_message, error_message:error_message  });
-}).post('/edit-profile', auth, profile.single('avatar'), csrfProtection, (req, res) => {
+}).post('/edit-profile', auth, profile.single('avatar'), csrfProtection, auth, (req, res) => {
     const formatDate = req.body.dob ? req.body.dob.split("-") : '';
     User.update({
         first_name: req.body.first_name,
