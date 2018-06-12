@@ -546,13 +546,27 @@
                     }
                 },
                 submitHandler:function(form) {
-                    var form_data = new FormData($('#frmAddFirm')[0]);
+                    var title = $("#title").val(),
+                        address = $("#address").val(),
+                        email = $("#email").val(),
+                        password = $("#password").val(),
+                        first_name = $("#first_name").val(),
+                        last_name = $("#last_name").val(),
+                        mobile_no = $("#mobile_no").val(),
+                        gender = $("#gender").val();
                     $.ajax({
                         type: "POST",
                         url: "/firms/add",
-                        data: form_data,
-                        processData: false,
-                        contentType: false,
+                        data: {
+                            title: title,
+                            address: address,
+                            email: email,
+                            password: password,
+                            first_name: first_name,
+                            last_name: last_name,
+                            mobile_no: mobile_no,
+                            gender: gender
+                        },
                         beforeSend: function(xhr) {
                             xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
                             
