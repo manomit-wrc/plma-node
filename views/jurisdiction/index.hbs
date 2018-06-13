@@ -1,0 +1,371 @@
+{{#content "style" mode="prepend"}}
+<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+{{/content}}
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="row">
+            <div class="col-xs-4">
+                <h4 class="page-title">Jurisdiction</h4>
+            </div>
+            <div class="col-xs-8 text-right m-b-30">
+                <a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_user"><i class="fa fa-plus"></i> Add Jurisdiction</a>
+            </div>
+        </div>
+        <div class="row filter-row">
+            <form name="filter" method="GET">
+                <div class="col-sm-3 col-xs-6">
+                    <div class="form-group form-focus">
+                        <label class="control-label">Jurisdiction Code</label>
+                        <input type="text" name="jurisdiction_code" id="jurisdiction_code" class="form-control floating"
+                        value="{{jurisdiction_code}}" />
+                    </div>
+                </div>
+                <div class="col-sm-3 col-xs-6">
+                    <div class="form-group form-focus">
+                        <label class="control-label">Jurisdiction Name</label>
+                        <input type="text"  name="jurisdiction_name" id="jurisdiction_name" class="form-control floating"
+                        value="{{jurisdiction_name}}" />
+                    </div>
+                </div>
+                <div class="col-sm-3 col-xs-6">  
+                    <button type="submit" class="btn btn-success btn-block">Search</button>
+                </div>
+                <div class="col-sm-3 col-xs-6">
+                    <a href="/jurisdiction" class="btn btn-success btn-block"> Clear </a>
+                </div>  
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped custom-table datatable">
+                        <thead>
+                            <tr>
+                                <th style="width:30%;">Jurisdiction Code</th>
+                                <th>Jurisdiction Name</th>
+                                <th>Remarks</th>
+                                <th>Created Date &amp; Time</th>
+                                <th class="text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each jurisdiction}}
+                            <tr>
+                                <td>{{this.code}}</td>
+                                <td>{{this.name}}</td>
+                                <td>{{this.remarks}}</td>
+                                <td>{{dateFormat this.createdAt "DD-MM-YYYY, hh:mm a"}}</td>
+                                <td class="text-right">
+                                    <div class="dropdown">
+                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                        <ul class="dropdown-menu pull-right">
+                                            <li><a href="#" data-toggle="modal" data-target="#edit_users" data-jurisdiction-id="{{this.id}}" data-code="{{this.code}}" data-name="{{this.name}}" data-remarks="{{this.remarks}}" id="edit-jurisdiction"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#delete_users" data-jurisdiction-id="{{this.id}}" id="delete-jurisdiction"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="add_user" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Jurisdiction</h4>
+            </div>
+            <div class="modal-body">
+                <form class="m-b-30" name="addjurisdiction" id="addjurisdiction" method="POST">
+                    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Jurisdiction Code<span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" name="code" id="code">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Jurisdiction Name<span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" id="name" name="name">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Remarks<span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="remarks" name="remarks" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="m-t-20 text-center">
+                        <button class="btn btn-primary" type="button" id="btnAddjurisdiction">Create Jurisdiction</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="edit_user" class="modal custom-modal fade jurisdiction-modal" role="dialog">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Jurisdiction</h4>
+            </div>
+            <div class="modal-body">
+                <form class="m-b-30" name="edit_jurisdiction" id="edit_jurisdiction" method="post">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                            <div class="form-group">
+                                <label class="control-label">Jurisdiction Code<span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" name="edit_code" id="edit_code">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Jurisdiction Name<span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" id="edit_name" name="edit_name">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Remarks<span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="edit_remarks" name="edit_remarks" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-t-20 text-center">
+                        <button class="btn btn-primary" id="btnEditjurisdiction">Edit Jurisdiction</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="delete_user" class="modal custom-modal fade del-jurisdiction" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content modal-md">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Jurisdiction</h4>
+            </div>
+            <form>
+                <div class="modal-body card-box">
+                    <p>Are you sure want to delete this?</p>
+                    <div class="m-t-20"> <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                        <button type="submit" class="btn btn-danger delJurisdictionBtn">Delete</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{#content "script" mode="append"}}
+<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="/assets/js/select2.min.js"></script>
+<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(e) {
+
+    $("#btnAddjurisdiction").click(function() {
+        $("#addjurisdiction").submit();
+    });          
+
+    $("#addjurisdiction").validate({
+        rules: {
+            code: {
+                required: true
+            },
+            name: {
+                required: true
+            },
+            remarks: {
+                required: true
+            }
+        },
+        messages: {
+            code: {
+                required: "Jurisdiction Code can't be blank"
+            },
+            name: {
+                required: "Jurisdiction Name can't be blank"
+            },
+            remarks: {
+                required: "Remarks can't be blank"
+            }
+        },
+        submitHandler:function(form) {
+            var code = $("#code").val(),
+            name = $("#name").val(),
+            remarks = $("#remarks").val();
+            $.ajax({
+                type: "POST",
+                url: "/jurisdiction/add",
+                data: {
+                    code: code,
+                    name: name,
+                    remarks: remarks
+                },
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+                    $("#btnAddjurisdiction").prop('disabled', true);
+                    $("#btnAddjurisdiction").html("Loading...");
+                },
+                success:function(response) {
+                    if(response.add_jurisdiction == 1)
+                    {
+                        $(`<div class="alert alert-success"><strong>Success! </strong>Jurisdiction Added Successfully</div>`).insertBefore("#addjurisdiction");
+                        setTimeout(function() {
+                            window.location.href="/jurisdiction";
+                        }, 2000);
+                    }
+                    else if(response.add_jurisdiction == 2){
+                        $(`<div class="alert alert-danger"><strong>Error! </strong>Jurisdiction Code Already exist</div>`).insertBefore("#addjurisdiction");
+                        $(".alert").fadeTo(2000, 500).slideUp(500, function(){
+                            $(".alert").remove();
+                        });
+                        $("#btnAddjurisdiction").prop('disabled', false);
+                        $("#btnAddjurisdiction").html("Create Jurisdiction");
+                    }
+                }
+            });
+        }
+    });
+});
+
+/*=========================Starts Edit Jurisdiction==========================*/
+
+$(document).on('click', '#edit-jurisdiction', function(e){
+    var jurisdiction_id = $(this).data('jurisdiction-id');
+    var code = $(this).data('code');
+    var name = $(this).data('name');
+    var remarks = $(this).data('remarks');
+
+    $("#edit_code").val(code);
+    $("#edit_name").val(name);
+    $("#edit_remarks").val(remarks);
+
+    localStorage.setItem('jurisdiction_id',jurisdiction_id);
+
+    $('.jurisdiction-modal').modal("show");
+});
+
+$(document).ready(function(e) {
+
+    $("#btnEditjurisdiction").click(function() {
+        $("#edit_jurisdiction").submit();
+    });          
+
+    $("#edit_jurisdiction").validate({
+        rules: {
+            edit_code: {
+                required: true
+            },
+            edit_name: {
+                required: true
+            },
+            edit_remarks: {
+                required: true
+            }
+        },
+        messages: {
+            edit_code: {
+                required: "Jurisdiction Code can't be blank"
+            },
+            edit_name: {
+                required: "Jurisdiction Name can't be blank"
+            },
+            edit_remarks: {
+                required: "Remarks can't be blank"
+            }
+        },
+        submitHandler:function(form) {
+            $.ajax({
+                type: "POST",
+                url:"/admin/edit-jurisdiction/"+localStorage.getItem("jurisdiction_id"),
+                data:$("#edit_jurisdiction").serialize()+"&jurisdiction_id="+localStorage.getItem("jurisdiction_id"),
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+                    $("#btnEditjurisdiction").prop('disabled', true);
+                    $("#btnEditjurisdiction").html("Loading...");
+                },
+                success:function(response){
+                    if(response.edit_jurisdiction == 1)
+                    {
+                        $(`<div class="alert alert-success"><strong>Success! </strong>Jurisdiction Edited Successfully</div>`).insertBefore("#edit_jurisdiction");
+                        setTimeout(function() {
+                            window.location.href="/jurisdiction";
+                        }, 2000);
+                    }
+                    else if(response.edit_jurisdiction == 2){
+                        $(`<div class="alert alert-danger"><strong>Error! </strong>Jurisdiction Code Already exist</div>`).insertBefore("#edit_jurisdiction");
+                        $(".alert").fadeTo(2000, 500).slideUp(500, function(){
+                            $(".alert").remove();
+                        });
+                        $("#btnEditjurisdiction").prop('disabled', false);
+                        $("#btnEditjurisdiction").html("Edit Jurisdiction");
+                    }
+                },
+                error:function(xhr){
+
+                }
+            });
+        }
+    });
+});
+
+
+
+/*=========================Ends Edit Jurisdiction==========================*/
+/*=========================starts delete Jurisdiction==========================*/
+
+$(document).on('click','#delete-jurisdiction', function(e){
+    var jurisdiction_id = $(this).data('jurisdiction-id');
+
+    localStorage.setItem('jurisdiction_id',jurisdiction_id);
+
+    $('.del-jurisdiction').modal("show");
+});
+$(document).on('click', '.delJurisdictionBtn', function(e){
+    $.ajax({
+        type: "POST",
+        url:"/admin/delete-jurisdiction/"+localStorage.getItem("jurisdiction_id"),
+        data:"&jurisdiction_id="+localStorage.getItem("jurisdiction_id"),
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+        },
+        success:function(response){
+            if(response.del_jurisdiction == 1)
+            {
+                window.location.href="/jurisdiction";
+            }
+        },
+        error:function(xhr){
+
+        }
+    });
+    e.preventDefault();
+})
+
+/*=========================Ends delete Jurisdiction==========================*/
+</script>
+{{/content}}

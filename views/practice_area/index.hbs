@@ -1,0 +1,371 @@
+{{#content "style" mode="prepend"}}
+<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+{{/content}}
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="row">
+            <div class="col-xs-4">
+                <h4 class="page-title">Practice Areas</h4>
+            </div>
+            <div class="col-xs-8 text-right m-b-30">
+                <a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_user"><i class="fa fa-plus"></i> Add Practice Area</a>
+            </div>
+        </div>
+        <div class="row filter-row">
+            <form name="filter" method="GET">
+                <div class="col-sm-3 col-xs-6">
+                    <div class="form-group form-focus">
+                        <label class="control-label">Practice Area Code</label>
+                        <input type="text" name="practice_area_code" id="practice_area_code" class="form-control floating"
+                        value="{{practice_area_code}}" />
+                    </div>
+                </div>
+                <div class="col-sm-3 col-xs-6">
+                    <div class="form-group form-focus">
+                        <label class="control-label">Practice Area Name</label>
+                        <input type="text"  name="practice_area_name" id="practice_area_name" class="form-control floating"
+                        value="{{practice_area_name}}" />
+                    </div>
+                </div>
+                <div class="col-sm-3 col-xs-6">  
+                    <button type="submit" class="btn btn-success btn-block">Search</button>
+                </div>
+                <div class="col-sm-3 col-xs-6">
+                    <a href="/practice-area" class="btn btn-success btn-block"> Clear </a>
+                </div>  
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped custom-table datatable">
+                        <thead>
+                            <tr>
+                                <th style="width:30%;">Practice Area Code</th>
+                                <th>Practice Area Name</th>
+                                <th>Remarks</th>
+                                <th>Created Date &amp; Time</th>
+                                <th class="text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each practice_area}}
+                            <tr>
+                                <td>{{this.code}}</td>
+                                <td>{{this.name}}</td>
+                                <td>{{this.remarks}}</td>
+                                <td>{{dateFormat this.createdAt "DD-MM-YYYY, hh:mm a"}}</td>
+                                <td class="text-right">
+                                    <div class="dropdown">
+                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                        <ul class="dropdown-menu pull-right">
+                                            <li><a href="#" data-toggle="modal" data-target="#edit_users" data-practice-area-id="{{this.id}}" data-code="{{this.code}}" data-name="{{this.name}}" data-remarks="{{this.remarks}}" id="edit-practice-area"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#delete_users" data-practice-area-id="{{this.id}}" id="delete-practice-area"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="add_user" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Practice Area</h4>
+            </div>
+            <div class="modal-body">
+                <form class="m-b-30" name="addPracticeArea" id="addPracticeArea" method="POST">
+                    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Practice Area Code<span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" name="code" id="code">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Practice Area Name<span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" id="name" name="name">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Remarks<span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="remarks" name="remarks" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="m-t-20 text-center">
+                        <button class="btn btn-primary" type="button" id="btnAddPracticeArea">Create Practice Area</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="edit_user" class="modal custom-modal fade practice-area-modal" role="dialog">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Practice Area</h4>
+            </div>
+            <div class="modal-body">
+                <form class="m-b-30" name="edit_practice_frm" id="edit_practice_frm" method="post">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                            <div class="form-group">
+                                <label class="control-label">Practice Area Code<span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" name="edit_code" id="edit_code">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Practice Area Name<span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" id="edit_name" name="edit_name">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Remarks<span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="edit_remarks" name="edit_remarks" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-t-20 text-center">
+                        <button class="btn btn-primary" id="btnEditPracticeArea">Edit Practice Area</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="delete_user" class="modal custom-modal fade del-practice-area" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content modal-md">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Practice Area</h4>
+            </div>
+            <form>
+                <div class="modal-body card-box">
+                    <p>Are you sure want to delete this?</p>
+                    <div class="m-t-20"> <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                        <button type="submit" class="btn btn-danger delPracticeAreaBtn">Delete</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{#content "script" mode="append"}}
+<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="/assets/js/select2.min.js"></script>
+<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(e) {
+
+    $("#btnAddPracticeArea").click(function() {
+        $("#addPracticeArea").submit();
+    });          
+
+    $("#addPracticeArea").validate({
+        rules: {
+            code: {
+                required: true
+            },
+            name: {
+                required: true
+            },
+            remarks: {
+                required: true
+            }
+        },
+        messages: {
+            code: {
+                required: "Code can't be blank"
+            },
+            name: {
+                required: "Name can't be blank"
+            },
+            remarks: {
+                required: "Remarks can't be blank"
+            }
+        },
+        submitHandler:function(form) {
+            var code = $("#code").val(),
+            name = $("#name").val(),
+            remarks = $("#remarks").val();
+            $.ajax({
+                type: "POST",
+                url: "/practice-area/add",
+                data: {
+                    code: code,
+                    name: name,
+                    remarks: remarks
+                },
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+                    $("#btnAddPracticeArea").prop('disabled', true);
+                    $("#btnAddPracticeArea").html("Loading...");
+                },
+                success:function(response) {
+                    if(response.a == 1)
+                    {
+                        $(`<div class="alert alert-success"><strong>Success! </strong>Practice Area Added Successfully</div>`).insertBefore("#addPracticeArea");
+                        setTimeout(function() {
+                            window.location.href="/practice-area";
+                        }, 2000);
+                    }
+                    else if(response.a == 2){
+                        $(`<div class="alert alert-danger"><strong>Error! </strong>Code Already exist</div>`).insertBefore("#addPracticeArea");
+                        $(".alert").fadeTo(2000, 500).slideUp(500, function(){
+                            $(".alert").remove();
+                        });
+                        $("#btnAddPracticeArea").prop('disabled', false);
+                        $("#btnAddPracticeArea").html("Create Practice Area");
+                    }
+                }
+            });
+        }
+    });
+});
+
+/*=========================Starts Edit Practice area==========================*/
+
+$(document).on('click', '#edit-practice-area', function(e){
+    var practice_area_id = $(this).data('practice-area-id');
+    var code = $(this).data('code');
+    var name = $(this).data('name');
+    var remarks = $(this).data('remarks');
+
+    $("#edit_code").val(code);
+    $("#edit_name").val(name);
+    $("#edit_remarks").val(remarks);
+
+    localStorage.setItem('practice_area_id',practice_area_id);
+
+    $('.practice-area-modal').modal("show");
+});
+
+$(document).ready(function(e) {
+
+    $("#btnEditPracticeArea").click(function() {
+        $("#edit_practice_frm").submit();
+    });          
+
+    $("#edit_practice_frm").validate({
+        rules: {
+            edit_code: {
+                required: true
+            },
+            edit_name: {
+                required: true
+            },
+            edit_remarks: {
+                required: true
+            }
+        },
+        messages: {
+            edit_code: {
+                required: "Code can't be blank"
+            },
+            edit_name: {
+                required: "Name can't be blank"
+            },
+            edit_remarks: {
+                required: "Remarks can't be blank"
+            }
+        },
+        submitHandler:function(form) {
+            $.ajax({
+                type: "POST",
+                url:"/admin/edit-practice-area/"+localStorage.getItem("practice_area_id"),
+                data:$("#edit_practice_frm").serialize()+"&practice_area_id="+localStorage.getItem("practice_area_id"),
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+                    $("#btnEditPracticeArea").prop('disabled', true);
+                    $("#btnEditPracticeArea").html("Loading...");
+                },
+                success:function(response){
+                    if(response.b == 1)
+                    {
+                        $(`<div class="alert alert-success"><strong>Success! </strong>Practice Area Edited Successfully</div>`).insertBefore("#edit_practice_frm");
+                        setTimeout(function() {
+                            window.location.href="/practice-area";
+                        }, 2000);
+                    }
+                    else if(response.b == 2){
+                        $(`<div class="alert alert-danger"><strong>Error! </strong>Code Already exist</div>`).insertBefore("#edit_practice_frm");
+                        $(".alert").fadeTo(2000, 500).slideUp(500, function(){
+                            $(".alert").remove();
+                        });
+                        $("#btnEditPracticeArea").prop('disabled', false);
+                        $("#btnEditPracticeArea").html("Edit Practice Area");
+                    }
+                },
+                error:function(xhr){
+
+                }
+            });
+        }
+    });
+});
+
+
+
+/*=========================Ends Edit Practice area==========================*/
+/*=========================starts delete Practice area==========================*/
+
+$(document).on('click','#delete-practice-area', function(e){
+    var practice_area_id = $(this).data('practice-area-id');
+
+    localStorage.setItem('practice_area_id',practice_area_id);
+
+    $('.del-practice-area').modal("show");
+});
+$(document).on('click', '.delPracticeAreaBtn', function(e){
+    $.ajax({
+        type: "POST",
+        url:"/admin/delete-practice-area/"+localStorage.getItem("practice_area_id"),
+        data:"&practice_area_id="+localStorage.getItem("practice_area_id"),
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+        },
+        success:function(response){
+            if(response.c == 1)
+            {
+                window.location.href="/practice-area";
+            }
+        },
+        error:function(xhr){
+
+        }
+    });
+    e.preventDefault();
+})
+
+/*=========================Ends delete Practice area==========================*/
+</script>
+{{/content}}
