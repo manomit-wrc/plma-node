@@ -8,34 +8,26 @@
     <div class="content container-fluid">
         <div class="row">
             <div class="col-xs-4">
-                <h4 class="page-title">Practice Areas</h4>
+                <h4 class="page-title">Sections</h4>
             </div>
             <div class="col-xs-8 text-right m-b-30">
-                <a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_user"><i class="fa fa-plus"></i> Add Practice Area</a>
+                <a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_user"><i class="fa fa-plus"></i> Add Section</a>
             </div>
         </div>
         <div class="row filter-row">
-            <form name="filter" method="GET">
-                <div class="col-sm-3 col-xs-6">
+            <form method="GET" name="filter">
+                <div class="col-sm-6 col-xs-6">
                     <div class="form-group form-focus">
-                        <label class="control-label">Practice Area Code</label>
-                        <input type="text" name="practice_area_code" id="practice_area_code" class="form-control floating"
-                        value="{{practice_area_code}}" />
-                    </div>
-                </div>
-                <div class="col-sm-3 col-xs-6">
-                    <div class="form-group form-focus">
-                        <label class="control-label">Practice Area Name</label>
-                        <input type="text"  name="practice_area_name" id="practice_area_name" class="form-control floating"
-                        value="{{practice_area_name}}" />
+                        <label class="control-label">Section Name</label>
+                        <input type="text" class="form-control floating" name="section_name" id="section_name" value="{{section_name}}" />
                     </div>
                 </div>
                 <div class="col-sm-3 col-xs-6">  
                     <button type="submit" class="btn btn-success btn-block">Search</button>
                 </div>
-                <div class="col-sm-3 col-xs-6">
-                    <a href="/practice-area" class="btn btn-success btn-block"> Clear </a>
-                </div>  
+                <div class="col-sm-3 col-xs-6">  
+                    <a href="/section" class="btn btn-success btn-block"> Clear </a>  
+                </div>
             </form>
         </div>
         <div class="row">
@@ -44,26 +36,26 @@
                     <table class="table table-striped custom-table datatable">
                         <thead>
                             <tr>
-                                <th style="width:30%;">Practice Area Code</th>
-                                <th>Practice Area Name</th>
+                                <th style="width:30%;">Name</th>
+                                <th>Description</th>
                                 <th>Remarks</th>
                                 <th>Created Date &amp; Time</th>
                                 <th class="text-right">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{#each practice_area}}
+                            {{#each section}}
                             <tr>
-                                <td>{{this.code}}</td>
                                 <td>{{this.name}}</td>
+                                <td>{{this.description}}</td>
                                 <td>{{this.remarks}}</td>
                                 <td>{{dateFormat this.createdAt "DD-MM-YYYY, hh:mm a"}}</td>
                                 <td class="text-right">
                                     <div class="dropdown">
                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                         <ul class="dropdown-menu pull-right">
-                                            <li><a href="#" data-toggle="modal" data-target="#edit_users" data-practice-area-id="{{this.id}}" data-code="{{this.code}}" data-name="{{this.name}}" data-remarks="{{this.remarks}}" id="edit-practice-area"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                            <li><a href="#" data-toggle="modal" data-target="#delete_users" data-practice-area-id="{{this.id}}" id="delete-practice-area"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#edit_users" data-section-id="{{this.id}}" data-description="{{this.description}}" data-name="{{this.name}}" data-remarks="{{this.remarks}}" id="edit-section"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#delete_users" data-section-id="{{this.id}}" id="delete-section"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
                                         </ul>
                                     </div>
                                 </td>
@@ -82,22 +74,22 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <div class="modal-content modal-lg">
             <div class="modal-header">
-                <h4 class="modal-title">Add Practice Area</h4>
+                <h4 class="modal-title">Add Section</h4>
             </div>
             <div class="modal-body">
-                <form class="m-b-30" name="addPracticeArea" id="addPracticeArea" method="POST">
+                <form class="m-b-30" name="addSection" id="addSection" method="POST">
                     <input type="hidden" name="_csrf" value="{{csrfToken}}">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="control-label">Practice Area Code<span class="text-danger">*</span></label>
-                                <input class="form-control" type="text" name="code" id="code">
+                                <label class="control-label">Name<span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" id="name" name="name">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="control-label">Practice Area Name<span class="text-danger">*</span></label>
-                                <input class="form-control" type="text" id="name" name="name">
+                                <label class="control-label">Description<span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="description" name="description" rows="5"></textarea>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -109,34 +101,34 @@
                     </div>
                     
                     <div class="m-t-20 text-center">
-                        <button class="btn btn-primary" type="button" id="btnAddPracticeArea">Create Practice Area</button>
+                        <button class="btn btn-primary" type="button" id="btnAddSection">Create Section</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-<div id="edit_user" class="modal custom-modal fade practice-area-modal" role="dialog">
+<div id="edit_user" class="modal custom-modal fade section-modal" role="dialog">
     <div class="modal-dialog">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <div class="modal-content modal-lg">
             <div class="modal-header">
-                <h4 class="modal-title">Edit Practice Area</h4>
+                <h4 class="modal-title">Edit Section</h4>
             </div>
             <div class="modal-body">
-                <form class="m-b-30" name="edit_practice_frm" id="edit_practice_frm" method="post">
+                <form class="m-b-30" name="edit_section_frm" id="edit_section_frm" method="post">
                     <div class="row">
+                        <input type="hidden" name="_csrf" value="{{csrfToken}}">
                         <div class="col-md-12">
-                            <input type="hidden" name="_csrf" value="{{csrfToken}}">
                             <div class="form-group">
-                                <label class="control-label">Practice Area Code<span class="text-danger">*</span></label>
-                                <input class="form-control" type="text" name="edit_code" id="edit_code">
+                                <label class="control-label">Name<span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" id="edit_name" name="edit_name">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="control-label">Practice Area Name<span class="text-danger">*</span></label>
-                                <input class="form-control" type="text" id="edit_name" name="edit_name">
+                                <label class="control-label">Description<span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="edit_description" name="edit_description" rows="5"></textarea>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -147,24 +139,24 @@
                         </div>
                     </div>
                     <div class="m-t-20 text-center">
-                        <button class="btn btn-primary" id="btnEditPracticeArea">Edit Practice Area</button>
+                        <button class="btn btn-primary" id="btnEditSection">Edit Section</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-<div id="delete_user" class="modal custom-modal fade del-practice-area" role="dialog">
+<div id="delete_user" class="modal custom-modal fade del-section" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content modal-md">
             <div class="modal-header">
-                <h4 class="modal-title">Delete Practice Area</h4>
+                <h4 class="modal-title">Delete Section</h4>
             </div>
             <form>
                 <div class="modal-body card-box">
                     <p>Are you sure want to delete this?</p>
                     <div class="m-t-20"> <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
-                        <button type="submit" class="btn btn-danger delPracticeAreaBtn">Delete</button>
+                        <button type="submit" class="btn btn-danger delSectionBtn">Delete</button>
                     </div>
                 </div>
             </form>
@@ -183,16 +175,16 @@
 <script type="text/javascript">
 $(document).ready(function(e) {
 
-    $("#btnAddPracticeArea").click(function() {
-        $("#addPracticeArea").submit();
+    $("#btnAddSection").click(function() {
+        $("#addSection").submit();
     });          
 
-    $("#addPracticeArea").validate({
+    $("#addSection").validate({
         rules: {
-            code: {
+            name: {
                 required: true
             },
-            name: {
+            description: {
                 required: true
             },
             remarks: {
@@ -200,49 +192,49 @@ $(document).ready(function(e) {
             }
         },
         messages: {
-            code: {
-                required: "Code can't be blank"
-            },
             name: {
                 required: "Name can't be blank"
+            },
+            description: {
+                required: "Description can't be blank"
             },
             remarks: {
                 required: "Remarks can't be blank"
             }
         },
         submitHandler:function(form) {
-            var code = $("#code").val(),
+            var description = $("#description").val(),
             name = $("#name").val(),
             remarks = $("#remarks").val();
             $.ajax({
                 type: "POST",
-                url: "/practice-area/add",
+                url: "/section/add",
                 data: {
-                    code: code,
                     name: name,
+                    description: description,
                     remarks: remarks
                 },
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
 
-                    $("#btnAddPracticeArea").prop('disabled', true);
-                    $("#btnAddPracticeArea").html("Loading...");
+                    $("#btnAddSection").prop('disabled', true);
+                    $("#btnAddSection").html("Loading...");
                 },
                 success:function(response) {
-                    if(response.a == 1)
+                    if(response.add_section == 1)
                     {
-                        $(`<div class="alert alert-success"><strong>Success! </strong>Practice Area Added Successfully</div>`).insertBefore("#addPracticeArea");
+                        $(`<div class="alert alert-success"><strong>Success! </strong>Section Added Successfully</div>`).insertBefore("#addSection");
                         setTimeout(function() {
-                            window.location.href="/practice-area";
+                            window.location.href="/section";
                         }, 2000);
                     }
-                    else if(response.a == 2){
-                        $(`<div class="alert alert-danger"><strong>Error! </strong>Code Already exist</div>`).insertBefore("#addPracticeArea");
+                    else if(response.add_section == 2){
+                        $(`<div class="alert alert-danger"><strong>Error! </strong>Name Already exist</div>`).insertBefore("#addSection");
                         $(".alert").fadeTo(2000, 500).slideUp(500, function(){
                             $(".alert").remove();
                         });
-                        $("#btnAddPracticeArea").prop('disabled', false);
-                        $("#btnAddPracticeArea").html("Create Practice Area");
+                        $("#btnAddSection").prop('disabled', false);
+                        $("#btnAddSection").html("Create Section");
                     }
                 }
             });
@@ -250,35 +242,35 @@ $(document).ready(function(e) {
     });
 });
 
-/*=========================Starts Edit Practice area==========================*/
+/*=========================Starts Edit Sections==========================*/
 
-$(document).on('click', '#edit-practice-area', function(e){
-    var practice_area_id = $(this).data('practice-area-id');
-    var code = $(this).data('code');
+$(document).on('click', '#edit-section', function(e){
+    var section_id = $(this).data('section-id');
     var name = $(this).data('name');
+    var description = $(this).data('description');
     var remarks = $(this).data('remarks');
 
-    $("#edit_code").val(code);
     $("#edit_name").val(name);
+    $("#edit_description").val(description);
     $("#edit_remarks").val(remarks);
 
-    localStorage.setItem('practice_area_id',practice_area_id);
+    localStorage.setItem('section_id',section_id);
 
-    $('.practice-area-modal').modal("show");
+    $('.section-modal').modal("show");
 });
 
 $(document).ready(function(e) {
 
-    $("#btnEditPracticeArea").click(function() {
-        $("#edit_practice_frm").submit();
+    $("#btnEditSection").click(function() {
+        $("#edit_section_frm").submit();
     });          
 
-    $("#edit_practice_frm").validate({
+    $("#edit_section_frm").validate({
         rules: {
-            edit_code: {
+            edit_name: {
                 required: true
             },
-            edit_name: {
+            edit_description: {
                 required: true
             },
             edit_remarks: {
@@ -286,11 +278,11 @@ $(document).ready(function(e) {
             }
         },
         messages: {
-            edit_code: {
-                required: "Code can't be blank"
-            },
             edit_name: {
                 required: "Name can't be blank"
+            },
+            edit_description: {
+                required: "Description can't be blank"
             },
             edit_remarks: {
                 required: "Remarks can't be blank"
@@ -299,29 +291,21 @@ $(document).ready(function(e) {
         submitHandler:function(form) {
             $.ajax({
                 type: "POST",
-                url:"/admin/edit-practice-area/"+localStorage.getItem("practice_area_id"),
-                data:$("#edit_practice_frm").serialize()+"&practice_area_id="+localStorage.getItem("practice_area_id"),
+                url:"/admin/edit-section/"+localStorage.getItem("section_id"),
+                data:$("#edit_section_frm").serialize()+"&section_id="+localStorage.getItem("section_id"),
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
 
-                    $("#btnEditPracticeArea").prop('disabled', true);
-                    $("#btnEditPracticeArea").html("Loading...");
+                    $("#btnEditSection").prop('disabled', true);
+                    $("#btnEditSection").html("Loading...");
                 },
                 success:function(response){
-                    if(response.b == 1)
+                    if(response.edit_section == 1)
                     {
-                        $(`<div class="alert alert-success"><strong>Success! </strong>Practice Area Edited Successfully</div>`).insertBefore("#edit_practice_frm");
+                        $(`<div class="alert alert-success"><strong>Success! </strong>Section Edited Successfully</div>`).insertBefore("#edit_section_frm");
                         setTimeout(function() {
-                            window.location.href="/practice-area";
+                            window.location.href="/section";
                         }, 2000);
-                    }
-                    else if(response.b == 2){
-                        $(`<div class="alert alert-danger"><strong>Error! </strong>Code Already exist</div>`).insertBefore("#edit_practice_frm");
-                        $(".alert").fadeTo(2000, 500).slideUp(500, function(){
-                            $(".alert").remove();
-                        });
-                        $("#btnEditPracticeArea").prop('disabled', false);
-                        $("#btnEditPracticeArea").html("Edit Practice Area");
                     }
                 },
                 error:function(xhr){
@@ -334,29 +318,29 @@ $(document).ready(function(e) {
 
 
 
-/*=========================Ends Edit Practice area==========================*/
-/*=========================starts delete Practice area==========================*/
+/*=========================Ends Edit Sections==========================*/
+/*=========================starts delete Sections==========================*/
 
-$(document).on('click','#delete-practice-area', function(e){
-    var practice_area_id = $(this).data('practice-area-id');
+$(document).on('click','#delete-section', function(e){
+    var section_id = $(this).data('section-id');
 
-    localStorage.setItem('practice_area_id',practice_area_id);
+    localStorage.setItem('section_id',section_id);
 
-    $('.del-practice-area').modal("show");
+    $('.del-section').modal("show");
 });
-$(document).on('click', '.delPracticeAreaBtn', function(e){
+$(document).on('click', '.delSectionBtn', function(e){
     $.ajax({
         type: "POST",
-        url:"/admin/delete-practice-area/"+localStorage.getItem("practice_area_id"),
-        data:"&practice_area_id="+localStorage.getItem("practice_area_id"),
+        url:"/admin/delete-section/"+localStorage.getItem("section_id"),
+        data:"&section_id="+localStorage.getItem("section_id"),
         beforeSend: function(xhr) {
             xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
 
         },
         success:function(response){
-            if(response.c == 1)
+            if(response.del_section == 1)
             {
-                window.location.href="/practice-area";
+                window.location.href="/section";
             }
         },
         error:function(xhr){
@@ -366,6 +350,6 @@ $(document).on('click', '.delPracticeAreaBtn', function(e){
     e.preventDefault();
 })
 
-/*=========================Ends delete Practice area==========================*/
+/*=========================Ends delete Sections==========================*/
 </script>
 {{/content}}

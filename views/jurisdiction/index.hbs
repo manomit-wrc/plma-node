@@ -8,33 +8,33 @@
     <div class="content container-fluid">
         <div class="row">
             <div class="col-xs-4">
-                <h4 class="page-title">Practice Areas</h4>
+                <h4 class="page-title">Jurisdiction</h4>
             </div>
             <div class="col-xs-8 text-right m-b-30">
-                <a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_user"><i class="fa fa-plus"></i> Add Practice Area</a>
+                <a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_user"><i class="fa fa-plus"></i> Add Jurisdiction</a>
             </div>
         </div>
         <div class="row filter-row">
             <form name="filter" method="GET">
                 <div class="col-sm-3 col-xs-6">
                     <div class="form-group form-focus">
-                        <label class="control-label">Practice Area Code</label>
-                        <input type="text" name="practice_area_code" id="practice_area_code" class="form-control floating"
-                        value="{{practice_area_code}}" />
+                        <label class="control-label">Jurisdiction Code</label>
+                        <input type="text" name="jurisdiction_code" id="jurisdiction_code" class="form-control floating"
+                        value="{{jurisdiction_code}}" />
                     </div>
                 </div>
                 <div class="col-sm-3 col-xs-6">
                     <div class="form-group form-focus">
-                        <label class="control-label">Practice Area Name</label>
-                        <input type="text"  name="practice_area_name" id="practice_area_name" class="form-control floating"
-                        value="{{practice_area_name}}" />
+                        <label class="control-label">Jurisdiction Name</label>
+                        <input type="text"  name="jurisdiction_name" id="jurisdiction_name" class="form-control floating"
+                        value="{{jurisdiction_name}}" />
                     </div>
                 </div>
                 <div class="col-sm-3 col-xs-6">  
                     <button type="submit" class="btn btn-success btn-block">Search</button>
                 </div>
                 <div class="col-sm-3 col-xs-6">
-                    <a href="/practice-area" class="btn btn-success btn-block"> Clear </a>
+                    <a href="/jurisdiction" class="btn btn-success btn-block"> Clear </a>
                 </div>  
             </form>
         </div>
@@ -44,15 +44,15 @@
                     <table class="table table-striped custom-table datatable">
                         <thead>
                             <tr>
-                                <th style="width:30%;">Practice Area Code</th>
-                                <th>Practice Area Name</th>
+                                <th style="width:30%;">Jurisdiction Code</th>
+                                <th>Jurisdiction Name</th>
                                 <th>Remarks</th>
                                 <th>Created Date &amp; Time</th>
                                 <th class="text-right">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{#each practice_area}}
+                            {{#each jurisdiction}}
                             <tr>
                                 <td>{{this.code}}</td>
                                 <td>{{this.name}}</td>
@@ -62,8 +62,8 @@
                                     <div class="dropdown">
                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                         <ul class="dropdown-menu pull-right">
-                                            <li><a href="#" data-toggle="modal" data-target="#edit_users" data-practice-area-id="{{this.id}}" data-code="{{this.code}}" data-name="{{this.name}}" data-remarks="{{this.remarks}}" id="edit-practice-area"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                            <li><a href="#" data-toggle="modal" data-target="#delete_users" data-practice-area-id="{{this.id}}" id="delete-practice-area"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#edit_users" data-jurisdiction-id="{{this.id}}" data-code="{{this.code}}" data-name="{{this.name}}" data-remarks="{{this.remarks}}" id="edit-jurisdiction"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#delete_users" data-jurisdiction-id="{{this.id}}" id="delete-jurisdiction"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
                                         </ul>
                                     </div>
                                 </td>
@@ -82,21 +82,21 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <div class="modal-content modal-lg">
             <div class="modal-header">
-                <h4 class="modal-title">Add Practice Area</h4>
+                <h4 class="modal-title">Add Jurisdiction</h4>
             </div>
             <div class="modal-body">
-                <form class="m-b-30" name="addPracticeArea" id="addPracticeArea" method="POST">
+                <form class="m-b-30" name="addjurisdiction" id="addjurisdiction" method="POST">
                     <input type="hidden" name="_csrf" value="{{csrfToken}}">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="control-label">Practice Area Code<span class="text-danger">*</span></label>
+                                <label class="control-label">Jurisdiction Code<span class="text-danger">*</span></label>
                                 <input class="form-control" type="text" name="code" id="code">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="control-label">Practice Area Name<span class="text-danger">*</span></label>
+                                <label class="control-label">Jurisdiction Name<span class="text-danger">*</span></label>
                                 <input class="form-control" type="text" id="name" name="name">
                             </div>
                         </div>
@@ -109,33 +109,33 @@
                     </div>
                     
                     <div class="m-t-20 text-center">
-                        <button class="btn btn-primary" type="button" id="btnAddPracticeArea">Create Practice Area</button>
+                        <button class="btn btn-primary" type="button" id="btnAddjurisdiction">Create Jurisdiction</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-<div id="edit_user" class="modal custom-modal fade practice-area-modal" role="dialog">
+<div id="edit_user" class="modal custom-modal fade jurisdiction-modal" role="dialog">
     <div class="modal-dialog">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <div class="modal-content modal-lg">
             <div class="modal-header">
-                <h4 class="modal-title">Edit Practice Area</h4>
+                <h4 class="modal-title">Edit Jurisdiction</h4>
             </div>
             <div class="modal-body">
-                <form class="m-b-30" name="edit_practice_frm" id="edit_practice_frm" method="post">
+                <form class="m-b-30" name="edit_jurisdiction" id="edit_jurisdiction" method="post">
                     <div class="row">
                         <div class="col-md-12">
                             <input type="hidden" name="_csrf" value="{{csrfToken}}">
                             <div class="form-group">
-                                <label class="control-label">Practice Area Code<span class="text-danger">*</span></label>
+                                <label class="control-label">Jurisdiction Code<span class="text-danger">*</span></label>
                                 <input class="form-control" type="text" name="edit_code" id="edit_code">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="control-label">Practice Area Name<span class="text-danger">*</span></label>
+                                <label class="control-label">Jurisdiction Name<span class="text-danger">*</span></label>
                                 <input class="form-control" type="text" id="edit_name" name="edit_name">
                             </div>
                         </div>
@@ -147,24 +147,24 @@
                         </div>
                     </div>
                     <div class="m-t-20 text-center">
-                        <button class="btn btn-primary" id="btnEditPracticeArea">Edit Practice Area</button>
+                        <button class="btn btn-primary" id="btnEditjurisdiction">Edit Jurisdiction</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-<div id="delete_user" class="modal custom-modal fade del-practice-area" role="dialog">
+<div id="delete_user" class="modal custom-modal fade del-jurisdiction" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content modal-md">
             <div class="modal-header">
-                <h4 class="modal-title">Delete Practice Area</h4>
+                <h4 class="modal-title">Delete Jurisdiction</h4>
             </div>
             <form>
                 <div class="modal-body card-box">
                     <p>Are you sure want to delete this?</p>
                     <div class="m-t-20"> <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
-                        <button type="submit" class="btn btn-danger delPracticeAreaBtn">Delete</button>
+                        <button type="submit" class="btn btn-danger delJurisdictionBtn">Delete</button>
                     </div>
                 </div>
             </form>
@@ -183,11 +183,11 @@
 <script type="text/javascript">
 $(document).ready(function(e) {
 
-    $("#btnAddPracticeArea").click(function() {
-        $("#addPracticeArea").submit();
+    $("#btnAddjurisdiction").click(function() {
+        $("#addjurisdiction").submit();
     });          
 
-    $("#addPracticeArea").validate({
+    $("#addjurisdiction").validate({
         rules: {
             code: {
                 required: true
@@ -201,10 +201,10 @@ $(document).ready(function(e) {
         },
         messages: {
             code: {
-                required: "Code can't be blank"
+                required: "Jurisdiction Code can't be blank"
             },
             name: {
-                required: "Name can't be blank"
+                required: "Jurisdiction Name can't be blank"
             },
             remarks: {
                 required: "Remarks can't be blank"
@@ -216,7 +216,7 @@ $(document).ready(function(e) {
             remarks = $("#remarks").val();
             $.ajax({
                 type: "POST",
-                url: "/practice-area/add",
+                url: "/jurisdiction/add",
                 data: {
                     code: code,
                     name: name,
@@ -225,24 +225,24 @@ $(document).ready(function(e) {
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
 
-                    $("#btnAddPracticeArea").prop('disabled', true);
-                    $("#btnAddPracticeArea").html("Loading...");
+                    $("#btnAddjurisdiction").prop('disabled', true);
+                    $("#btnAddjurisdiction").html("Loading...");
                 },
                 success:function(response) {
-                    if(response.a == 1)
+                    if(response.add_jurisdiction == 1)
                     {
-                        $(`<div class="alert alert-success"><strong>Success! </strong>Practice Area Added Successfully</div>`).insertBefore("#addPracticeArea");
+                        $(`<div class="alert alert-success"><strong>Success! </strong>Jurisdiction Added Successfully</div>`).insertBefore("#addjurisdiction");
                         setTimeout(function() {
-                            window.location.href="/practice-area";
+                            window.location.href="/jurisdiction";
                         }, 2000);
                     }
-                    else if(response.a == 2){
-                        $(`<div class="alert alert-danger"><strong>Error! </strong>Code Already exist</div>`).insertBefore("#addPracticeArea");
+                    else if(response.add_jurisdiction == 2){
+                        $(`<div class="alert alert-danger"><strong>Error! </strong>Jurisdiction Code Already exist</div>`).insertBefore("#addjurisdiction");
                         $(".alert").fadeTo(2000, 500).slideUp(500, function(){
                             $(".alert").remove();
                         });
-                        $("#btnAddPracticeArea").prop('disabled', false);
-                        $("#btnAddPracticeArea").html("Create Practice Area");
+                        $("#btnAddjurisdiction").prop('disabled', false);
+                        $("#btnAddjurisdiction").html("Create Jurisdiction");
                     }
                 }
             });
@@ -250,10 +250,10 @@ $(document).ready(function(e) {
     });
 });
 
-/*=========================Starts Edit Practice area==========================*/
+/*=========================Starts Edit Jurisdiction==========================*/
 
-$(document).on('click', '#edit-practice-area', function(e){
-    var practice_area_id = $(this).data('practice-area-id');
+$(document).on('click', '#edit-jurisdiction', function(e){
+    var jurisdiction_id = $(this).data('jurisdiction-id');
     var code = $(this).data('code');
     var name = $(this).data('name');
     var remarks = $(this).data('remarks');
@@ -262,18 +262,18 @@ $(document).on('click', '#edit-practice-area', function(e){
     $("#edit_name").val(name);
     $("#edit_remarks").val(remarks);
 
-    localStorage.setItem('practice_area_id',practice_area_id);
+    localStorage.setItem('jurisdiction_id',jurisdiction_id);
 
-    $('.practice-area-modal').modal("show");
+    $('.jurisdiction-modal').modal("show");
 });
 
 $(document).ready(function(e) {
 
-    $("#btnEditPracticeArea").click(function() {
-        $("#edit_practice_frm").submit();
+    $("#btnEditjurisdiction").click(function() {
+        $("#edit_jurisdiction").submit();
     });          
 
-    $("#edit_practice_frm").validate({
+    $("#edit_jurisdiction").validate({
         rules: {
             edit_code: {
                 required: true
@@ -287,10 +287,10 @@ $(document).ready(function(e) {
         },
         messages: {
             edit_code: {
-                required: "Code can't be blank"
+                required: "Jurisdiction Code can't be blank"
             },
             edit_name: {
-                required: "Name can't be blank"
+                required: "Jurisdiction Name can't be blank"
             },
             edit_remarks: {
                 required: "Remarks can't be blank"
@@ -299,29 +299,29 @@ $(document).ready(function(e) {
         submitHandler:function(form) {
             $.ajax({
                 type: "POST",
-                url:"/admin/edit-practice-area/"+localStorage.getItem("practice_area_id"),
-                data:$("#edit_practice_frm").serialize()+"&practice_area_id="+localStorage.getItem("practice_area_id"),
+                url:"/admin/edit-jurisdiction/"+localStorage.getItem("jurisdiction_id"),
+                data:$("#edit_jurisdiction").serialize()+"&jurisdiction_id="+localStorage.getItem("jurisdiction_id"),
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
 
-                    $("#btnEditPracticeArea").prop('disabled', true);
-                    $("#btnEditPracticeArea").html("Loading...");
+                    $("#btnEditjurisdiction").prop('disabled', true);
+                    $("#btnEditjurisdiction").html("Loading...");
                 },
                 success:function(response){
-                    if(response.b == 1)
+                    if(response.edit_jurisdiction == 1)
                     {
-                        $(`<div class="alert alert-success"><strong>Success! </strong>Practice Area Edited Successfully</div>`).insertBefore("#edit_practice_frm");
+                        $(`<div class="alert alert-success"><strong>Success! </strong>Jurisdiction Edited Successfully</div>`).insertBefore("#edit_jurisdiction");
                         setTimeout(function() {
-                            window.location.href="/practice-area";
+                            window.location.href="/jurisdiction";
                         }, 2000);
                     }
-                    else if(response.b == 2){
-                        $(`<div class="alert alert-danger"><strong>Error! </strong>Code Already exist</div>`).insertBefore("#edit_practice_frm");
+                    else if(response.edit_jurisdiction == 2){
+                        $(`<div class="alert alert-danger"><strong>Error! </strong>Jurisdiction Code Already exist</div>`).insertBefore("#edit_jurisdiction");
                         $(".alert").fadeTo(2000, 500).slideUp(500, function(){
                             $(".alert").remove();
                         });
-                        $("#btnEditPracticeArea").prop('disabled', false);
-                        $("#btnEditPracticeArea").html("Edit Practice Area");
+                        $("#btnEditjurisdiction").prop('disabled', false);
+                        $("#btnEditjurisdiction").html("Edit Jurisdiction");
                     }
                 },
                 error:function(xhr){
@@ -334,29 +334,29 @@ $(document).ready(function(e) {
 
 
 
-/*=========================Ends Edit Practice area==========================*/
-/*=========================starts delete Practice area==========================*/
+/*=========================Ends Edit Jurisdiction==========================*/
+/*=========================starts delete Jurisdiction==========================*/
 
-$(document).on('click','#delete-practice-area', function(e){
-    var practice_area_id = $(this).data('practice-area-id');
+$(document).on('click','#delete-jurisdiction', function(e){
+    var jurisdiction_id = $(this).data('jurisdiction-id');
 
-    localStorage.setItem('practice_area_id',practice_area_id);
+    localStorage.setItem('jurisdiction_id',jurisdiction_id);
 
-    $('.del-practice-area').modal("show");
+    $('.del-jurisdiction').modal("show");
 });
-$(document).on('click', '.delPracticeAreaBtn', function(e){
+$(document).on('click', '.delJurisdictionBtn', function(e){
     $.ajax({
         type: "POST",
-        url:"/admin/delete-practice-area/"+localStorage.getItem("practice_area_id"),
-        data:"&practice_area_id="+localStorage.getItem("practice_area_id"),
+        url:"/admin/delete-jurisdiction/"+localStorage.getItem("jurisdiction_id"),
+        data:"&jurisdiction_id="+localStorage.getItem("jurisdiction_id"),
         beforeSend: function(xhr) {
             xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
 
         },
         success:function(response){
-            if(response.c == 1)
+            if(response.del_jurisdiction == 1)
             {
-                window.location.href="/practice-area";
+                window.location.href="/jurisdiction";
             }
         },
         error:function(xhr){
@@ -366,6 +366,6 @@ $(document).on('click', '.delPracticeAreaBtn', function(e){
     e.preventDefault();
 })
 
-/*=========================Ends delete Practice area==========================*/
+/*=========================Ends delete Jurisdiction==========================*/
 </script>
 {{/content}}
