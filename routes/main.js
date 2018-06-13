@@ -62,30 +62,29 @@ router.post('/practice-area/add', auth, csrfProtection, (req, res) =>{
 	});
 });
 router.post('/admin/edit-practice-area/:id', auth, csrfProtection, (req, res) =>{
-		PracticeArea.findAll({
-			where: {
-				code: req.body.edit_code,
-				id: {
-					[Op.ne]: req.params['id']
-				}
+	PracticeArea.findAll({
+		where: {
+			code: req.body.edit_code,
+			id: {
+				[Op.ne]: req.params['id']
 			}
-		}).then(practice_area => {
+		}
+	}).then(practice_area => {
+		if(practice_area.length === 0) {
+			PracticeArea.update({
+					code: req.body.edit_code,
+					name: req.body.edit_name,
+					remarks: req.body.edit_remarks
+				},{where: {id: req.params['id']}
+			}).then(result =>{
+				res.json({"b":1});
+			});
+		}
+		else {
 			
-			if(practice_area.length === 0) {
-				PracticeArea.update({
-						code: req.body.edit_code,
-						name: req.body.edit_name,
-						remarks: req.body.edit_remarks
-					},{where: {id: req.params['id']}
-				}).then(result =>{
-					res.json({"b":1});
-				});
-			}
-			else {
-				
-				res.json({"b":2});
-			}
-		});
+			res.json({"b":2});
+		}
+	});
 });
 
 router.post('/admin/delete-practice-area/:id', auth, csrfProtection, (req, res) =>{
@@ -141,13 +140,28 @@ router.post('/section/add', auth, csrfProtection, (req, res) =>{
 	});
 });
 router.post('/admin/edit-section/:id', auth, csrfProtection, (req, res) =>{
-	Section.update({
-		name: req.body.edit_name,
-		description: req.body.edit_description,
-		remarks: req.body.edit_remarks
-	},{where: {id: req.params['id']}
-	}).then(result =>{
-		res.json({"edit_section":1});
+	Section.findAll({
+		where: {
+			name: req.body.edit_name,
+			id: {
+				[Op.ne]: req.params['id']
+			}
+		}
+	}).then(section => {
+		if(section.length === 0) {
+			Section.update({
+			name: req.body.edit_name,
+			description: req.body.edit_description,
+			remarks: req.body.edit_remarks
+			},{where: {id: req.params['id']}
+			}).then(result =>{
+				res.json({"edit_section":1});
+			});
+		}
+		else {
+			
+			res.json({"edit_section":2});
+		}
 	});
 });
 
@@ -208,14 +222,29 @@ router.post('/jurisdiction/add', auth, csrfProtection, (req, res) =>{
 	});
 });
 router.post('/admin/edit-jurisdiction/:id', auth, csrfProtection, (req, res) =>{
-	Jurisdiction.update({
-		code: req.body.edit_code,
-		name: req.body.edit_name,
-		remarks: req.body.edit_remarks
-	},{where: {id: req.params['id']}
-	}).then(result =>{
-		res.json({"edit_jurisdiction":1});
-	});
+	Jurisdiction.findAll({
+		where: {
+			code: req.body.edit_code,
+			id: {
+				[Op.ne]: req.params['id']
+			}
+		}
+	}).then(jurisdiction => {
+		if(jurisdiction.length === 0) {
+			Jurisdiction.update({
+				code: req.body.edit_code,
+				name: req.body.edit_name,
+				remarks: req.body.edit_remarks
+			},{where: {id: req.params['id']}
+			}).then(result =>{
+				res.json({"edit_jurisdiction":1});
+			});
+		}
+		else {
+			
+			res.json({"edit_jurisdiction":2});
+		}
+	});	
 });
 
 router.post('/admin/delete-jurisdiction/:id', auth, csrfProtection, (req, res) =>{

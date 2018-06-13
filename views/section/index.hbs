@@ -307,6 +307,14 @@ $(document).ready(function(e) {
                             window.location.href="/section";
                         }, 2000);
                     }
+                    else if(response.edit_section == 2){
+                        $(`<div class="alert alert-danger"><strong>Error! </strong>Name Already exist</div>`).insertBefore("#edit_section_frm");
+                        $(".alert").fadeTo(2000, 500).slideUp(500, function(){
+                            $(".alert").remove();
+                        });
+                        $("#btnEditSection").prop('disabled', false);
+                        $("#btnEditSection").html("Edit Section");
+                    }
                 },
                 error:function(xhr){
 
