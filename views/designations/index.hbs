@@ -18,19 +18,23 @@
 						<div class="col-sm-3 col-xs-6">
 							<div class="form-group form-focus">
 								<label class="control-label">Code</label>
-								<input type="text" class="form-control floating" id="searchCode" name="searchCode" />
+								<input type="text" class="form-control floating" id="searchCode" name="searchCode" value="{{searchCode}}"/>
 							</div>
 						</div>
 						<div class="col-sm-3 col-xs-6">
               <div class="form-group form-focus">
                 <label class="control-label">Title</label>
-                <input type="text" class="form-control floating" id="searchTitle" name="searchTitle" />
+                <input type="text" class="form-control floating" id="searchTitle" name="searchTitle" value="{{searchTitle}}"/>
               </div>
 						</div>
 
 						<div class="col-sm-3 col-xs-6">
 							<!-- <a href="javascript:void(0)" class="btn btn-success btn-block" onclick="searchDataTable()"> Search </a> -->
 							 <button type="submit" class="btn btn-success btn-block"> Search </button>
+						</div>
+						<div class="col-sm-3 col-xs-6">
+							<!-- <a href="javascript:void(0)" class="btn btn-success btn-block" onclick="searchDataTable()"> Search </a> -->
+							 <a href="/designations" class="btn btn-success btn-block"> Clear </a>
 						</div>
                     </div>
                   </form>
