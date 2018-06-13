@@ -15,37 +15,32 @@
             </div>
         </div>
         <div class="row filter-row">
+            <form name="frmFirmSearch" id="frmFirmSearch" method="GET">
             <div class="col-sm-3 col-xs-6">
                 <div class="form-group form-focus">
-                <label class="control-label">Name</label>
-                <input type="text" class="form-control floating" />
+                <label class="control-label">Email</label>
+                <input type="text" class="form-control floating" name="search_email" id="search_email" value="{{search_email}}" />
                 </div>
             </div>
             <div class="col-sm-3 col-xs-6">
                 <div class="form-group form-focus select-focus">
-                <label class="control-label">Company</label>
-                <select class="select floating">
+                <label class="control-label">Firms</label>
+                <select class="select floating" name="search_firm" id="search_firm">
                     <option value="">Select Company</option>
-                    <option>Global Technologies</option>
-                    <option>Delta Infotech</option>
+                    {{#each firms}}
+                    <option value="{{this.id}}" {{#if_eq ../search_firm this.id }} selected="selected" {{/if_eq}}>{{this.title}}</option>
+                    {{/each}}
                 </select>
                 </div>
             </div>
-            <div class="col-sm-3 col-xs-6">
-                <div class="form-group form-focus select-focus">
-                <label class="control-label">Role</label>
-                <select class="select floating">
-                    <option value="">Select Roll</option>
-                    <option value="">Web Developer</option>
-                    <option value="1">Web Designer</option>
-                    <option value="1">Android Developer</option>
-                    <option value="1">Ios Developer</option>
-                </select>
-                </div>
+            
+            <div class="col-sm-3 col-xs-6">  
+                <button type="submit" class="btn btn-success btn-block"> Search </button>  
             </div>
             <div class="col-sm-3 col-xs-6">  
-                <a href="#" class="btn btn-success btn-block"> Search </a>  
+                <a href="javascript:void(0)" id="clearSearch" class="btn btn-success btn-block"> Clear </a>  
             </div>
+            </form>
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -86,7 +81,7 @@
                                     <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                     <ul class="dropdown-menu pull-right">
                                         <li><a href="javascript:void(0)" data-toggle="modal" class="edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                        <li><a href="javascript:void(0)" data-toggle="modal" data-target="#delete_user" class="delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                                        <li><a href="javascript:void(0)" data-toggle="modal" class="delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
                                     </ul>
                                 </div>
                                 </td>
@@ -263,13 +258,13 @@
     <div class="modal-dialog">
         <div class="modal-content modal-md">
             <div class="modal-header">
-                <h4 class="modal-title">Delete Employee</h4>
+                <h4 class="modal-title">Delete Firm</h4>
             </div>
-            <form>
+            <form id="frmFirmDelete">
                 <div class="modal-body card-box">
                 <p>Are you sure want to delete this?</p>
                 <div class="m-t-20"> <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="button" id="btnDelete" class="btn btn-danger">Delete</button>
                 </div>
                 </div>
             </form>
@@ -463,6 +458,43 @@
                     
                 }
             });
+
+            $("#btnDelete").click(function(){
+                $.ajax({
+                   type: "POST",
+                   url: "/firm/delete",
+                   data: {
+                       firm_id: localStorage.getItem('firm_id'),
+                       user_id: localStorage.getItem('user_id')
+                   },
+                   beforeSend:function(xhr) {
+                        xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");   
+                        $("#btnDelete").prop('disabled', true);
+                        $("#btnDelete").html("Deleting...");
+                   },
+                   success: function(response) {
+                       if(response.success == true) {
+                            $(`<div class="alert alert-success"><strong>Success! </strong>${response.message}</div>`).insertBefore("#frmFirmDelete");
+                            setTimeout(function() {
+                                window.location.href="/firms";
+                            }, 2000);
+                        }
+                        else {
+                            
+                            $(`<div class="alert alert-danger"><strong>Error! </strong>${response.message}</div>`).insertBefore("#frmFirmDelete");
+                            $(".alert").fadeTo(2000, 500).slideUp(500, function(){
+                                    $(".alert").remove();
+                            });
+                        }
+                        $("#btnDelete").prop('disabled', false);
+                        $("#btnDelete").html("Delete");
+                   } 
+                });
+            });
+
+            $("#clearSearch").click(function() {
+                window.location.href = "/firms";
+            });
         });
         $(document).on("click", ".edit", function() {
             $("#first_name_edit").val($(this).closest('tr').data('first-name'));
@@ -476,6 +508,12 @@
             localStorage.setItem('firm_id', $(this).closest('tr').data('firm-id'));
             localStorage.setItem('user_id', $(this).closest('tr').data('user-id'));
             $("#edit_user").modal('show');
+        });
+
+        $(document).on("click", ".delete", function() {
+            localStorage.setItem('firm_id', $(this).closest('tr').data('firm-id'));
+            localStorage.setItem('user_id', $(this).closest('tr').data('user-id'));
+            $("#delete_user").modal('show');
         });
     </script>
 {{/content}}

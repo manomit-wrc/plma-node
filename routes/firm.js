@@ -13,17 +13,32 @@ var csrfProtection = csrf({ cookie: true });
 const router = express.Router();
 
 router.get('/firms', csrfProtection, auth, async (req, res) => {
+    var whereStatement = {};
+    if(req.query.search_email) {
+        whereStatement.email = req.query.search_email;
+    }
+    if(req.query.search_firm) {
+        whereStatement.firm_id = req.query.search_firm;
+    }
+    whereStatement.role_id = 2;
     User.belongsTo(Firm, {foreignKey: 'firm_id'});
     const users = await User.findAll({
-        where: {
-            role_id: 2
-        },
+        where: whereStatement,
         include: [{
             model: Firm
         }]
     });
+
+    const firms = await Firm.findAll({});
      
-    res.render('firms/index', { layout: 'dashboard', csrfToken: req.csrfToken(), users });
+    res.render('firms/index', { 
+        layout: 'dashboard', 
+        csrfToken: req.csrfToken(), 
+        users, 
+        firms, 
+        search_email: req.query ? req.query.search_email : '', 
+        search_firm: req.query ? req.query.search_firm : ''
+    });
 });
 router.post('/firms/add', auth, csrfProtection, async (req, res) => {
     const user_data = await User.findOne({
@@ -120,5 +135,24 @@ router.post('/firms/edit', auth, csrfProtection, async (req, res) => {
         });
     }
 }); 
+
+router.post('/firm/delete', auth, csrfProtection, async (req, res) => {
+    const user_delete = User.destroy({
+        where: {
+            id: req.body.user_id
+        }
+    });
+
+    const firm_delete = Firm.destroy({
+        where: {
+            id: req.body.firm_id
+        }
+    });
+
+    res.json({
+        success: true,
+        message: 'Firm deleted successfully'
+    });
+});
 
 module.exports = router;
