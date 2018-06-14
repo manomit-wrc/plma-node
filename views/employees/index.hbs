@@ -1,11 +1,16 @@
 {{#content "style" mode="prepend"}}
-    <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
 {{/content}}
 <div class="page-wrapper">
     <div class="content container-fluid">
         <div class="row">
+            {{#if success_message}}
+            <div class="alert alert-success">
+                <strong>Success! </strong>{{success_message}}
+            </div>
+            {{/if}}
             <div class="col-xs-4">
                 <h4 class="page-title">Employee</h4>
             </div>
@@ -17,26 +22,26 @@
         <div class="row filter-row">
             <div class="col-sm-3 col-xs-6">
                 <div class="form-group form-focus">
-                <label class="control-label">Employee ID</label>
-                <input type="text" class="form-control floating" />
+                    <label class="control-label">Employee ID</label>
+                    <input type="text" class="form-control floating" />
                 </div>
             </div>
             <div class="col-sm-3 col-xs-6">
                 <div class="form-group form-focus">
-                <label class="control-label">Employee Name</label>
-                <input type="text" class="form-control floating" />
+                    <label class="control-label">Employee Name</label>
+                    <input type="text" class="form-control floating" />
                 </div>
             </div>
             <div class="col-sm-3 col-xs-6">
                 <div class="form-group form-focus select-focus">
-                <label class="control-label">Designation</label>
-                <select class="select floating">
-                    <option value="">Select Designation</option>
-                    <option value="">Web Developer</option>
-                    <option value="1">Web Designer</option>
-                    <option value="1">Android Developer</option>
-                    <option value="1">Ios Developer</option>
-                </select>
+                    <label class="control-label">Designation</label>
+                    <select class="select floating">
+                        <option value="">Select Designation</option>
+                        <option value="">Web Developer</option>
+                        <option value="1">Web Designer</option>
+                        <option value="1">Android Developer</option>
+                        <option value="1">Ios Developer</option>
+                    </select>
                 </div>
             </div>
             <div class="col-sm-3 col-xs-6">  
@@ -46,242 +51,242 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive">
-                <table class="table table-striped custom-table datatable">
-                    <thead>
-                        <tr>
-                            <th style="width:30%;">Name</th>
-                            <th>Employee ID</th>
-                            <th>Email</th>
-                            <th>Mobile</th>
-                            <th>Join Date</th>
-                            <th>Role</th>
-                            <th class="text-right">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                            <a href="profile.html" class="avatar">J</a>
-                            <h2><a href="profile.html">John Doe <span>Web Designer</span></a></h2>
-                            </td>
-                            <td>FT-0001</td>
-                            <td>johndoe@example.com</td>
-                            <td>9876543210</td>
-                            <td>1 Jan 2013</td>
-                            <td>
-                            <div class="dropdown">
-                                <a class="btn btn-white btn-sm rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Web Developer <i class="caret"></i></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Software Engineer</a></li>
-                                    <li><a href="#">Software Tester</a></li>
-                                    <li><a href="#">Frontend Developer</a></li>
-                                    <li><a href="#">UI/UX Developer</a></li>
-                                </ul>
-                            </div>
-                            </td>
-                            <td class="text-right">
-                            <div class="dropdown">
-                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                <ul class="dropdown-menu pull-right">
-                                    <li><a href="#" data-toggle="modal" data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                    <li><a href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                </ul>
-                            </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                            <a href="profile.html" class="avatar">R</a>
-                            <h2><a href="profile.html">Richard Miles <span>Web Developer</span></a></h2>
-                            </td>
-                            <td>FT-0002</td>
-                            <td>richardmiles@example.com</td>
-                            <td>9876543210</td>
-                            <td>18 Mar 2014</td>
-                            <td>
-                            <div class="dropdown">
-                                <a class="btn btn-white btn-sm rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Web Developer <i class="caret"></i></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Software Engineer</a></li>
-                                    <li><a href="#">Software Tester</a></li>
-                                    <li><a href="#">Frontend Developer</a></li>
-                                    <li><a href="#">UI/UX Developer</a></li>
-                                </ul>
-                            </div>
-                            </td>
-                            <td class="text-right">
-                            <div class="dropdown">
-                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                <ul class="dropdown-menu pull-right">
-                                    <li><a href="#" data-toggle="modal" data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                    <li><a href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                </ul>
-                            </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                            <a href="profile.html" class="avatar">J</a>
-                            <h2><a href="profile.html">John Smith <span>Android Developer</span></a></h2>
-                            </td>
-                            <td>FT-0003</td>
-                            <td>johnsmith@example.com</td>
-                            <td>9876543210</td>
-                            <td>1 Apr 2014</td>
-                            <td>
-                            <div class="dropdown">
-                                <a class="btn btn-white btn-sm rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Web Developer <i class="caret"></i></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Software Engineer</a></li>
-                                    <li><a href="#">Software Tester</a></li>
-                                    <li><a href="#">Frontend Developer</a></li>
-                                    <li><a href="#">UI/UX Developer</a></li>
-                                </ul>
-                            </div>
-                            </td>
-                            <td class="text-right">
-                            <div class="dropdown">
-                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                <ul class="dropdown-menu pull-right">
-                                    <li><a href="#" data-toggle="modal" data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                    <li><a href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                </ul>
-                            </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                            <a href="profile.html" class="avatar">M</a>
-                            <h2><a href="profile.html">Mike Litorus <span>IOS Developer</span></a></h2>
-                            </td>
-                            <td>FT-0004</td>
-                            <td>mikelitorus@example.com</td>
-                            <td>9876543210</td>
-                            <td>1 Apr 2014</td>
-                            <td>
-                            <div class="dropdown">
-                                <a class="btn btn-white btn-sm rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Web Developer <i class="caret"></i></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Software Engineer</a></li>
-                                    <li><a href="#">Software Tester</a></li>
-                                    <li><a href="#">Frontend Developer</a></li>
-                                    <li><a href="#">UI/UX Developer</a></li>
-                                </ul>
-                            </div>
-                            </td>
-                            <td class="text-right">
-                            <div class="dropdown">
-                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                <ul class="dropdown-menu pull-right">
-                                    <li><a href="#" data-toggle="modal" data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                    <li><a href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                </ul>
-                            </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                            <a href="profile.html" class="avatar">W</a>
-                            <h2><a href="profile.html">Wilmer Deluna <span>Team Leader</span></a></h2>
-                            </td>
-                            <td>FT-0005</td>
-                            <td>wilmerdeluna@example.com</td>
-                            <td>9876543210</td>
-                            <td>22 May 2014</td>
-                            <td>
-                            <div class="dropdown">
-                                <a class="btn btn-white btn-sm rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Web Developer <i class="caret"></i></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Software Engineer</a></li>
-                                    <li><a href="#">Software Tester</a></li>
-                                    <li><a href="#">Frontend Developer</a></li>
-                                    <li><a href="#">UI/UX Developer</a></li>
-                                </ul>
-                            </div>
-                            </td>
-                            <td class="text-right">
-                            <div class="dropdown">
-                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                <ul class="dropdown-menu pull-right">
-                                    <li><a href="#" data-toggle="modal" data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                    <li><a href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                </ul>
-                            </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                            <a href="profile.html" class="avatar">J</a>
-                            <h2><a href="profile.html">Jeffrey Warden <span>Web Developer</span></a></h2>
-                            </td>
-                            <td>FT-0006</td>
-                            <td>jeffreywarden@example.com</td>
-                            <td>9876543210</td>
-                            <td>16 Jun 2013</td>
-                            <td>
-                            <div class="dropdown">
-                                <a class="btn btn-white btn-sm rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Web Developer <i class="caret"></i></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Software Engineer</a></li>
-                                    <li><a href="#">Software Tester</a></li>
-                                    <li><a href="#">Frontend Developer</a></li>
-                                    <li><a href="#">UI/UX Developer</a></li>
-                                </ul>
-                            </div>
-                            </td>
-                            <td class="text-right">
-                            <div class="dropdown">
-                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                <ul class="dropdown-menu pull-right">
-                                    <li><a href="#" data-toggle="modal" data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                    <li><a href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                </ul>
-                            </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                            <a href="profile.html" class="avatar">B</a>
-                            <h2><a href="profile.html">Bernardo Galaviz <span>Web Developer</span></a></h2>
-                            </td>
-                            <td>FT-0007</td>
-                            <td>bernardogalaviz@example.com</td>
-                            <td>9876543210</td>
-                            <td>1 Jan 2013</td>
-                            <td>
-                            <div class="dropdown">
-                                <a class="btn btn-white btn-sm rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Web Developer <i class="caret"></i></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Software Engineer</a></li>
-                                    <li><a href="#">Software Tester</a></li>
-                                    <li><a href="#">Frontend Developer</a></li>
-                                    <li><a href="#">UI/UX Developer</a></li>
-                                </ul>
-                            </div>
-                            </td>
-                            <td class="text-right">
-                            <div class="dropdown">
-                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                <ul class="dropdown-menu pull-right">
-                                    <li><a href="#" data-toggle="modal" data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                    <li><a href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                </ul>
-                            </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                    <table class="table table-striped custom-table datatable">
+                        <thead>
+                            <tr>
+                                <th style="width:30%;">Name</th>
+                                <th>Employee ID</th>
+                                <th>Email</th>
+                                <th>Mobile</th>
+                                <th>Join Date</th>
+                                <th>Role</th>
+                                <th class="text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <a href="profile.html" class="avatar">J</a>
+                                    <h2><a href="profile.html">John Doe <span>Web Designer</span></a></h2>
+                                </td>
+                                <td>FT-0001</td>
+                                <td>johndoe@example.com</td>
+                                <td>9876543210</td>
+                                <td>1 Jan 2013</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <a class="btn btn-white btn-sm rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Web Developer <i class="caret"></i></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">Software Engineer</a></li>
+                                            <li><a href="#">Software Tester</a></li>
+                                            <li><a href="#">Frontend Developer</a></li>
+                                            <li><a href="#">UI/UX Developer</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <div class="dropdown">
+                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                        <ul class="dropdown-menu pull-right">
+                                            <li><a href="#" data-toggle="modal" data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="profile.html" class="avatar">R</a>
+                                    <h2><a href="profile.html">Richard Miles <span>Web Developer</span></a></h2>
+                                </td>
+                                <td>FT-0002</td>
+                                <td>richardmiles@example.com</td>
+                                <td>9876543210</td>
+                                <td>18 Mar 2014</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <a class="btn btn-white btn-sm rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Web Developer <i class="caret"></i></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">Software Engineer</a></li>
+                                            <li><a href="#">Software Tester</a></li>
+                                            <li><a href="#">Frontend Developer</a></li>
+                                            <li><a href="#">UI/UX Developer</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <div class="dropdown">
+                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                        <ul class="dropdown-menu pull-right">
+                                            <li><a href="#" data-toggle="modal" data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="profile.html" class="avatar">J</a>
+                                    <h2><a href="profile.html">John Smith <span>Android Developer</span></a></h2>
+                                </td>
+                                <td>FT-0003</td>
+                                <td>johnsmith@example.com</td>
+                                <td>9876543210</td>
+                                <td>1 Apr 2014</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <a class="btn btn-white btn-sm rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Web Developer <i class="caret"></i></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">Software Engineer</a></li>
+                                            <li><a href="#">Software Tester</a></li>
+                                            <li><a href="#">Frontend Developer</a></li>
+                                            <li><a href="#">UI/UX Developer</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <div class="dropdown">
+                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                        <ul class="dropdown-menu pull-right">
+                                            <li><a href="#" data-toggle="modal" data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="profile.html" class="avatar">M</a>
+                                    <h2><a href="profile.html">Mike Litorus <span>IOS Developer</span></a></h2>
+                                </td>
+                                <td>FT-0004</td>
+                                <td>mikelitorus@example.com</td>
+                                <td>9876543210</td>
+                                <td>1 Apr 2014</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <a class="btn btn-white btn-sm rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Web Developer <i class="caret"></i></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">Software Engineer</a></li>
+                                            <li><a href="#">Software Tester</a></li>
+                                            <li><a href="#">Frontend Developer</a></li>
+                                            <li><a href="#">UI/UX Developer</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <div class="dropdown">
+                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                        <ul class="dropdown-menu pull-right">
+                                            <li><a href="#" data-toggle="modal" data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="profile.html" class="avatar">W</a>
+                                    <h2><a href="profile.html">Wilmer Deluna <span>Team Leader</span></a></h2>
+                                </td>
+                                <td>FT-0005</td>
+                                <td>wilmerdeluna@example.com</td>
+                                <td>9876543210</td>
+                                <td>22 May 2014</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <a class="btn btn-white btn-sm rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Web Developer <i class="caret"></i></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">Software Engineer</a></li>
+                                            <li><a href="#">Software Tester</a></li>
+                                            <li><a href="#">Frontend Developer</a></li>
+                                            <li><a href="#">UI/UX Developer</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <div class="dropdown">
+                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                        <ul class="dropdown-menu pull-right">
+                                            <li><a href="#" data-toggle="modal" data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="profile.html" class="avatar">J</a>
+                                    <h2><a href="profile.html">Jeffrey Warden <span>Web Developer</span></a></h2>
+                                </td>
+                                <td>FT-0006</td>
+                                <td>jeffreywarden@example.com</td>
+                                <td>9876543210</td>
+                                <td>16 Jun 2013</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <a class="btn btn-white btn-sm rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Web Developer <i class="caret"></i></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">Software Engineer</a></li>
+                                            <li><a href="#">Software Tester</a></li>
+                                            <li><a href="#">Frontend Developer</a></li>
+                                            <li><a href="#">UI/UX Developer</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <div class="dropdown">
+                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                        <ul class="dropdown-menu pull-right">
+                                            <li><a href="#" data-toggle="modal" data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="profile.html" class="avatar">B</a>
+                                    <h2><a href="profile.html">Bernardo Galaviz <span>Web Developer</span></a></h2>
+                                </td>
+                                <td>FT-0007</td>
+                                <td>bernardogalaviz@example.com</td>
+                                <td>9876543210</td>
+                                <td>1 Jan 2013</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <a class="btn btn-white btn-sm rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Web Developer <i class="caret"></i></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">Software Engineer</a></li>
+                                            <li><a href="#">Software Tester</a></li>
+                                            <li><a href="#">Frontend Developer</a></li>
+                                            <li><a href="#">UI/UX Developer</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <div class="dropdown">
+                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                        <ul class="dropdown-menu pull-right">
+                                            <li><a href="#" data-toggle="modal" data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
-            
+
 </div>
 {{#content "script" mode="append"}}
-    <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
-    <script type="text/javascript" src="/assets/js/select2.min.js"></script>
-    <script type="text/javascript" src="/assets/js/moment.min.js"></script>
-    <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="/assets/js/select2.min.js"></script>
+<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 
 {{/content}}
