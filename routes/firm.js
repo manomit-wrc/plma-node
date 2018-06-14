@@ -17,7 +17,8 @@ router.get('/firms', csrfProtection, auth, async (req, res) => {
     if(req.query.search_email) {
         whereStatement.email = req.query.search_email;
     }
-    if(req.query.search_firm) {
+    if(req.query.search_firm)
+    {
         whereStatement.firm_id = req.query.search_firm;
     }
     whereStatement.role_id = 2;
