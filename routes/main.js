@@ -58,13 +58,13 @@ router.get('/designations/find',auth, (req,res) => {
     res.send(rows);
   });
 });
-router.get('/designations/update/:id',auth,csrfProtection, (req,res) => {
+router.get('/designations/update/:id',auth, csrfProtection, (req,res) => {
   designation.findById(req.params.id).then(row => {
     console.log(JSON.stringify(row,undefined,10));
     res.render('designations/update',{layout: 'dashboard', csrfToken: req.csrfToken(), designation: row});
   });
 
-	res.render('designations/index', { layout: 'dashboard', csrfToken: req.csrfToken() });
+	 
 });
 router.post('/designations/updateDesignation/:id',auth,csrfProtection, (req,res) => {
   var code = req.body.code;
