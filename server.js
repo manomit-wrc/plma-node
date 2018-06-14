@@ -53,6 +53,7 @@ const hbs = exphbs.create({
         first_letter: function(a) {
             return a.charAt(0);
         },
+        
         dateFormat: require('handlebars-dateformat')
     }
 });
