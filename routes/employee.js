@@ -11,6 +11,8 @@ const EmployeeToFirm = require('../models').employee_to_firm;
 
 var csrfProtection = csrf({ cookie: true });
 
+/*==================================BRATIN MEHETA 14-06-2018=====================================*/
+
 router.get('/employees', auth, async (req, res) => {
     var employeeFilter = {};
     if(req.query.employee_name)
@@ -25,7 +27,7 @@ router.get('/employees', auth, async (req, res) => {
     var success_edit_message = req.flash('success-edit-message')[0];
     const users = await User.findAll({
       where:employeeFilter,  
-  });
+    });
     res.render('employees/index', { 
         layout: 'dashboard', 
         success_message, 
@@ -38,7 +40,12 @@ router.get('/employees', auth, async (req, res) => {
     var error_message1 = req.flash('error-message1')[0];
     var error_message = req.flash('error-message')[0];
     const firms = await Firm.findAll({});
-    res.render('employees/add', { layout: 'dashboard', csrfToken: req.csrfToken(), firms,error_message, error_message1  });
+    res.render('employees/add', { 
+        layout: 'dashboard', 
+        csrfToken: req.csrfToken(), 
+        firms,error_message, 
+        error_message1  
+    });
 });
 
 router.post('/employees/add', auth, csrfProtection, async (req, res) => {
@@ -110,7 +117,13 @@ router.get('/employee/edit/:id', csrfProtection, auth, async (req, res) =>  {
     for(var i=0; i<result.length; i++){
         arr.push(result[i].firm_id);
     }
-    res.render('employees/edit', { layout: 'dashboard', csrfToken: req.csrfToken(), empl: users[0], firms, error_edit_message, arr});
+    res.render('employees/edit', { 
+        layout: 'dashboard', csrfToken: req.csrfToken(), 
+        empl: users[0], 
+        firms, 
+        error_edit_message, 
+        arr
+    });
 });
 
 router.post('/employees/edit/:id', auth, csrfProtection, async (req, res) => {
@@ -168,7 +181,6 @@ router.get('/employee/delete/:id',  auth, csrfProtection, async (req, res) =>{
             id: req.params['id']
         }
     });
-
     const firm_to_user_delete = EmployeeToFirm.destroy({
         where: {
             user_id: req.params['id']
@@ -176,5 +188,7 @@ router.get('/employee/delete/:id',  auth, csrfProtection, async (req, res) =>{
     });
     res.redirect('/employees');
 });
+
+/*==================================BRATIN MEHETA 14-06-2018=====================================*/
 
 module.exports = router;
