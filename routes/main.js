@@ -7,6 +7,8 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const PracticeArea = require('../models').practicearea;
 const Section = require('../models').section;
+const budget = require('../models').budget;
+
 const Jurisdiction = require('../models').jurisdiction;
 const user = require('../models').user;
 var csrfProtection = csrf({ cookie: true });
@@ -97,6 +99,7 @@ router.get('/designations/delete/:id',auth, (req,res) => {
     res.redirect('/designations');
   });
 });
+
 
 
 //==========================================Designation route ends=============================================
@@ -274,7 +277,83 @@ router.get('/attorneys/delete/:id',auth, (req,res) => {
   });
 });
 /*==========================================Attorney route ends==============================================*/
+/*======================COMMIT BY MALINI ROYCHOWDHURY 14-06-2018=============================*/
 
+router.get('/budgets', csrfProtection, auth, (req, res) => {
+	var whereCondition = {};
+	if(req.query.searchCode) {
+		whereCondition.code = req.query.searchCode;
+	}
+	if(req.query.searchName) {
+		whereCondition.name = req.query.searchName;
+	}
+     budget.findAll({
+			 where: whereCondition
+		 }).then(rows => {
+        res.render('budgets/index', { layout: 'dashboard', csrfToken: req.csrfToken(),rows:  rows, searchName: req.query.searchName, searchCode: req.query.searchCode   });
+    });
+
+});
+//insert
+router.post('/budgets/addbudget', auth, csrfProtection, (req, res) => {
+    console.log(req.body);
+    var code = req.body.code;
+    var name = req.body.name;
+    var remarks = req.body.remarks;
+    budget.findAndCountAll({
+      where:{
+        code: code
+      }
+    }).then(result => {
+      if(result.count > 0){
+        res.json({msg: 'ERRR'});
+      }else{
+        budget.create({code: code,name: name,remarks: remarks}).then(resp => {
+          res.end("Success");
+        });
+      }
+
+
+    });
+});
+ router.get('/budgets/edit/:id',auth,csrfProtection, (req,res) => {
+
+
+	 budget.findById(req.params.id).then(rows => {
+
+	 res.render('budgets/edit', { layout: 'dashboard', csrfToken: req.csrfToken(),rows:  rows   });
+});
+});
+router.post('/budgets/update/:id',auth,csrfProtection, (req,res) => {
+  var code = req.body.code;
+  var name = req.body.name;
+  var remarks = req.body.remarks;
+  console.log(req.params.id);
+  budget.findAndCountAll({
+    where:{
+      code: code
+    }
+  }).then(result => {
+    if(result.count > 0){
+      res.json({msg: 'ERRR'});
+    }else{
+      budget.update({code: code,name: name,remarks: remarks},{where:{id: req.params.id}}).then(resp => {
+        res.end("success");
+      });
+    }
+  });
+
+});
+router.get('/budgets/delete/:id',auth, (req,res) => {
+  console.log(req.params.id);
+  budget.destroy({
+    where:{
+      id: req.params.id
+    }
+  }).then(resp => {
+    res.redirect('/budgets');
+  });
+});
 /*==========================Start practice area//Bratin Meheta 12-06-2018=============================*/
 
 router.get('/practice-area', csrfProtection, auth, (req, res) =>{
