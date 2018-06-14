@@ -11,7 +11,7 @@ const Jurisdiction = require('../models').jurisdiction;
 var csrfProtection = csrf({ cookie: true });
 
 const router = express.Router();
-
+//===================================================Designation route starts==========================================================
 router.get('/designations', csrfProtection, auth, (req, res) => {
 
 		var whereCondition = {};
@@ -64,7 +64,7 @@ router.get('/designations/update/:id',auth, csrfProtection, (req,res) => {
     res.render('designations/update',{layout: 'dashboard', csrfToken: req.csrfToken(), designation: row});
   });
 
-	 
+
 });
 router.post('/designations/updateDesignation/:id',auth,csrfProtection, (req,res) => {
   var code = req.body.code;
@@ -76,9 +76,9 @@ router.post('/designations/updateDesignation/:id',auth,csrfProtection, (req,res)
       code: code
     }
   }).then(result => {
-    if(result.count > 0){
+    if(result.count > 1){
       res.json({msg: 'ERRR'});
-    }else{
+    }else if(result.count == 1 || result.count == 0){
       designation.update({code: code,title: title,remarks: remarks},{where:{id: req.params.id}}).then(resp => {
         res.end("success");
       });
@@ -96,6 +96,9 @@ router.get('/designations/delete/:id',auth, (req,res) => {
     res.redirect('/designations');
   });
 });
+
+
+//==========================================Designation route ends=============================================
 
 /*==========================Start practice area//Bratin Meheta 12-06-2018=============================*/
 
