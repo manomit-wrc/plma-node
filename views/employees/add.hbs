@@ -1,5 +1,5 @@
 {{#content "style" mode="prepend"}}
-    <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
     <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
 {{/content}}
 
@@ -7,12 +7,12 @@
    <div class="content container-fluid">
       <div class="row">
          <div class="col-sm-8">
-            <h4 class="page-title">Edit Profile</h4>
+            <h4 class="page-title">Add Employee</h4>
          </div>
       </div>
-      {{#if success_message}}
-        <div class="alert alert-success">
-            <strong>Success! </strong>{{success_message}}
+      {{#if error_message1}}
+        <div class="alert alert-danger">
+            <strong>Error! </strong>{{error_message1}}
         </div>
       {{/if}}
       {{#if error_message}}
@@ -20,7 +20,7 @@
             <strong>Error! </strong>{{error_message}}
         </div>
       {{/if}}
-      <form id="frmAddEmployee" method="POST" action="/employees/add" enctype="multipart/form-data">
+      <form id="frmAddEmployee" method="POST" action="/employees/add">
          <input type="hidden" name="_csrf" value="{{csrfToken}}">   
          <div class="card-box">
             <h3 class="card-title">Basic Informations</h3>
@@ -72,7 +72,7 @@
                         <div class="col-md-6">
                             <div class="form-group form-focus select-focus">
                                 <label class="control-label">Gender</label>
-                                <select class="select form-control floating" id="gender" name="gender">
+                                <select class="form-control floating" id="gender" name="gender">
                                     <option value="">Select Gender</option>
                                     <option value="M">Male</option>
                                     <option value="F">Female</option>
@@ -128,6 +128,16 @@
                      />
                   </div>
                </div>
+               <div class="col-md-12">
+                    <div class="form-group form-focus select-focus">
+                        
+                        <select class="form-control floating" id="firm_id" name="firm_id" multiple="multiple">
+                            {{#each firms}}
+                            <option value="{{this.id}}">{{this.title}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+               </div>
             </div>
          </div>
          
@@ -141,7 +151,56 @@
 {{#content "script" mode="append"}}
     <script type="text/javascript" src="/assets/js/moment.min.js"></script>
     <script type="text/javascript" src="/assets/js/select2.min.js"></script>
+    <script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
     <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#firm_id').multiselect({
+                nonSelectedText: 'Select Firms',
+                includeSelectAllOption: true,
+                buttonWidth: '100%'
+            });
+            $("#frmAddEmployee").validate({
+                ignore: [],
+                rules: {
+                    first_name: {
+                        required: true
+                    },
+                    last_name: {
+                        required: true
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    password: {
+                        required: true
+                    },
+                    firm_id: {
+                        required: true
+                    }
+                },
+                messages: {
+                    first_name: {
+                        required: "First name can't be blank"
+                    },
+                    last_name: {
+                        required: "Last name can't be blank"
+                    },
+                    email: {
+                        required: "Email can't be blank",
+                        email: "Must be valid email"
+                    },
+                    password: {
+                        required: "Password can't be blank"
+                    },
+                    firm_id: {
+                        required: "Select atleast one firm"
+                    }
+                }
+            });
+        });
+    </script>
 {{/content}}

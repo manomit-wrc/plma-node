@@ -1,444 +1,467 @@
-{{#content "style" mode="prepend"}}
-    <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
-{{/content}}
-<div class="page-wrapper">
-                <div class="content container-fluid">
-					<div class="row">
-						<div class="col-xs-4">
-							<h4 class="page-title">Designations</h4>
-						</div>
-						<div class="col-xs-8 text-right m-b-30">
-							<a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_user"><i class="fa fa-plus"></i> Add Designation</a>
-						</div>
-					</div>
-          <form method="GET">
-					<div class="row filter-row">
-						<div class="col-sm-3 col-xs-6">
-							<div class="form-group form-focus">
-								<label class="control-label">Code</label>
-								<input type="text" class="form-control floating" id="searchCode" name="searchCode" value="{{searchCode}}"/>
+	{{#content "style" mode="prepend"}}
+		<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+		<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+	{{/content}}
+	<div class="page-wrapper">
+					<div class="content container-fluid">
+						<div class="row">
+							<div class="col-xs-4">
+								<h4 class="page-title">Designations</h4>
+							</div>
+							<div class="col-xs-8 text-right m-b-30">
+								<a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_user"><i class="fa fa-plus"></i> Add Designation</a>
 							</div>
 						</div>
-						<div class="col-sm-3 col-xs-6">
-              <div class="form-group form-focus">
-                <label class="control-label">Title</label>
-                <input type="text" class="form-control floating" id="searchTitle" name="searchTitle" value="{{searchTitle}}"/>
-              </div>
+			<form method="GET">
+						<div class="row filter-row">
+							<div class="col-sm-3 col-xs-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Code</label>
+									<input type="text" class="form-control floating" id="searchCode" name="searchCode" value="{{searchCode}}"/>
+								</div>
+							</div>
+							<div class="col-sm-3 col-xs-6">
+				<div class="form-group form-focus">
+					<label class="control-label">Title</label>
+					<input type="text" class="form-control floating" id="searchTitle" name="searchTitle" value="{{searchTitle}}"/>
+				</div>
+							</div>
+
+							<div class="col-sm-3 col-xs-6">
+								<!-- <a href="javascript:void(0)" class="btn btn-success btn-block" onclick="searchDataTable()"> Search </a> -->
+								<button type="submit" class="btn btn-success btn-block"> Search </button>
+							</div>
+							<div class="col-sm-3 col-xs-6">
+								<!-- <a href="javascript:void(0)" class="btn btn-success btn-block" onclick="searchDataTable()"> Search </a> -->
+								<a href="/designations" class="btn btn-success btn-block"> Clear </a>
+							</div>
 						</div>
+					</form>
+						<div class="row" >
+							<div class="col-md-12">
+								<div class="table-responsive"  >
+									<table class="table table-striped custom-table datatable" id="searchData">
+										<thead>
+											<tr>
 
-						<div class="col-sm-3 col-xs-6">
-							<!-- <a href="javascript:void(0)" class="btn btn-success btn-block" onclick="searchDataTable()"> Search </a> -->
-							 <button type="submit" class="btn btn-success btn-block"> Search </button>
-						</div>
-						<div class="col-sm-3 col-xs-6">
-							<!-- <a href="javascript:void(0)" class="btn btn-success btn-block" onclick="searchDataTable()"> Search </a> -->
-							 <a href="/designations" class="btn btn-success btn-block"> Clear </a>
-						</div>
-                    </div>
-                  </form>
-					<div class="row" >
-						<div class="col-md-12">
-							<div class="table-responsive"  >
-								<table class="table table-striped custom-table datatable" id="searchData">
-									<thead>
-										<tr>
+												<th>Code</th>
+												<th>Title</th>
+												<th>Remarks</th>
 
-											<th>Code</th>
-											<th>Title</th>
-											<th>Remarks</th>
+												<th class="text-right">Action</th>
+											</tr>
+	</thead>
 
-											<th class="text-right">Action</th>
-										</tr>
-</thead>
-
-									<tbody  id="mainTable">
-                    {{#each rows}}
-										<tr data-code="{{this.code}}"
-                                data-title="{{this.title}}">
+										<tbody  id="mainTable">
+						{{#each rows}}
+											<tr data-code="{{this.code}}"
+									data-title="{{this.title}}">
 
 
-											<td>{{this.code}}</td>
-											<td>{{this.title}}</td>
-											<td>{{this.remarks}}</td>
+												<td>{{this.code}}</td>
+												<td>{{this.title}}</td>
+												<td>{{this.remarks}}</td>
 
-											<td class="text-right">
-												<div class="dropdown">
-													<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-													<ul class="dropdown-menu pull-right">
-														<li><a href="/designations/update/{{this.id}}" ><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+												<td class="text-right">
+													<div class="dropdown">
+														<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+														<ul class="dropdown-menu pull-right">
+															<li><a href="/designations/update/{{this.id}}" ><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
 
-														<li><a href="/designations/delete/{{this.id}}"  ><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-													</ul>
+															<li><a href="javascript:void(0)"  data-toggle="modal" data-target="#{{this.id}}"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+														</ul>
+													</div>
+												</td>
+											</tr>
+											{{!-- delete modal starts --}}
+										<div class="modal fade" id="{{this.id}}" role="dialog">
+												<div class="modal-dialog">
+												
+												<!-- Modal content-->
+												<div class="modal-content">
+													{{!-- <div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+													<h4 class="modal-title">Modal Header</h4>
+													</div> --}}
+													<div class="modal-body">
+													<p>Are you sure to delete ?</p>
+													</div>
+													<div class="modal-footer">
+														<a href="/designations/delete/{{this.id}}" class="btn btn-danger" ><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+													<a href="/designations" class="btn btn-default" >Cancel</a>
+													</div>
 												</div>
-											</td>
-										</tr>
-                    {{/each}}
+												
+												</div>
+											</div>
+													
+											{{!-- delete modal ends --}}
+						{{/each}}
 
-									</tbody>
-								</table>
+										</tbody>
+									</table>
 
 
 
+								</div>
 							</div>
 						</div>
 					</div>
-                </div>
-				<div class="notification-box">
-					<div class="msg-sidebar notifications msg-noti">
-						<div class="topnav-dropdown-header">
-							<span>Messages</span>
-						</div>
-						<div class="drop-scroll msg-list-scroll">
-							<ul class="list-box">
-								<li>
-									<a href="chat.html">
-										<div class="list-item">
-											<div class="list-left">
-												<span class="avatar">R</span>
+					<div class="notification-box">
+						<div class="msg-sidebar notifications msg-noti">
+							<div class="topnav-dropdown-header">
+								<span>Messages</span>
+							</div>
+							<div class="drop-scroll msg-list-scroll">
+								<ul class="list-box">
+									<li>
+										<a href="chat.html">
+											<div class="list-item">
+												<div class="list-left">
+													<span class="avatar">R</span>
+												</div>
+												<div class="list-body">
+													<span class="message-author">Richard Miles </span>
+													<span class="message-time">12:28 AM</span>
+													<div class="clearfix"></div>
+													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+												</div>
 											</div>
-											<div class="list-body">
-												<span class="message-author">Richard Miles </span>
-												<span class="message-time">12:28 AM</span>
-												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+										</a>
+									</li>
+									<li>
+										<a href="chat.html">
+											<div class="list-item new-message">
+												<div class="list-left">
+													<span class="avatar">J</span>
+												</div>
+												<div class="list-body">
+													<span class="message-author">John Doe</span>
+													<span class="message-time">1 Aug</span>
+													<div class="clearfix"></div>
+													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+												</div>
 											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="chat.html">
-										<div class="list-item new-message">
-											<div class="list-left">
-												<span class="avatar">J</span>
+										</a>
+									</li>
+									<li>
+										<a href="chat.html">
+											<div class="list-item">
+												<div class="list-left">
+													<span class="avatar">T</span>
+												</div>
+												<div class="list-body">
+													<span class="message-author"> Tarah Shropshire </span>
+													<span class="message-time">12:28 AM</span>
+													<div class="clearfix"></div>
+													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+												</div>
 											</div>
-											<div class="list-body">
-												<span class="message-author">John Doe</span>
-												<span class="message-time">1 Aug</span>
-												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+										</a>
+									</li>
+									<li>
+										<a href="chat.html">
+											<div class="list-item">
+												<div class="list-left">
+													<span class="avatar">M</span>
+												</div>
+												<div class="list-body">
+													<span class="message-author">Mike Litorus</span>
+													<span class="message-time">12:28 AM</span>
+													<div class="clearfix"></div>
+													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+												</div>
 											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="chat.html">
-										<div class="list-item">
-											<div class="list-left">
-												<span class="avatar">T</span>
+										</a>
+									</li>
+									<li>
+										<a href="chat.html">
+											<div class="list-item">
+												<div class="list-left">
+													<span class="avatar">C</span>
+												</div>
+												<div class="list-body">
+													<span class="message-author"> Catherine Manseau </span>
+													<span class="message-time">12:28 AM</span>
+													<div class="clearfix"></div>
+													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+												</div>
 											</div>
-											<div class="list-body">
-												<span class="message-author"> Tarah Shropshire </span>
-												<span class="message-time">12:28 AM</span>
-												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+										</a>
+									</li>
+									<li>
+										<a href="chat.html">
+											<div class="list-item">
+												<div class="list-left">
+													<span class="avatar">D</span>
+												</div>
+												<div class="list-body">
+													<span class="message-author"> Domenic Houston </span>
+													<span class="message-time">12:28 AM</span>
+													<div class="clearfix"></div>
+													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+												</div>
 											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="chat.html">
-										<div class="list-item">
-											<div class="list-left">
-												<span class="avatar">M</span>
+										</a>
+									</li>
+									<li>
+										<a href="chat.html">
+											<div class="list-item">
+												<div class="list-left">
+													<span class="avatar">B</span>
+												</div>
+												<div class="list-body">
+													<span class="message-author"> Buster Wigton </span>
+													<span class="message-time">12:28 AM</span>
+													<div class="clearfix"></div>
+													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+												</div>
 											</div>
-											<div class="list-body">
-												<span class="message-author">Mike Litorus</span>
-												<span class="message-time">12:28 AM</span>
-												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+										</a>
+									</li>
+									<li>
+										<a href="chat.html">
+											<div class="list-item">
+												<div class="list-left">
+													<span class="avatar">R</span>
+												</div>
+												<div class="list-body">
+													<span class="message-author"> Rolland Webber </span>
+													<span class="message-time">12:28 AM</span>
+													<div class="clearfix"></div>
+													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+												</div>
 											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="chat.html">
-										<div class="list-item">
-											<div class="list-left">
-												<span class="avatar">C</span>
+										</a>
+									</li>
+									<li>
+										<a href="chat.html">
+											<div class="list-item">
+												<div class="list-left">
+													<span class="avatar">C</span>
+												</div>
+												<div class="list-body">
+													<span class="message-author"> Claire Mapes </span>
+													<span class="message-time">12:28 AM</span>
+													<div class="clearfix"></div>
+													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+												</div>
 											</div>
-											<div class="list-body">
-												<span class="message-author"> Catherine Manseau </span>
-												<span class="message-time">12:28 AM</span>
-												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+										</a>
+									</li>
+									<li>
+										<a href="chat.html">
+											<div class="list-item">
+												<div class="list-left">
+													<span class="avatar">M</span>
+												</div>
+												<div class="list-body">
+													<span class="message-author">Melita Faucher</span>
+													<span class="message-time">12:28 AM</span>
+													<div class="clearfix"></div>
+													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+												</div>
 											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="chat.html">
-										<div class="list-item">
-											<div class="list-left">
-												<span class="avatar">D</span>
+										</a>
+									</li>
+									<li>
+										<a href="chat.html">
+											<div class="list-item">
+												<div class="list-left">
+													<span class="avatar">J</span>
+												</div>
+												<div class="list-body">
+													<span class="message-author">Jeffery Lalor</span>
+													<span class="message-time">12:28 AM</span>
+													<div class="clearfix"></div>
+													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+												</div>
 											</div>
-											<div class="list-body">
-												<span class="message-author"> Domenic Houston </span>
-												<span class="message-time">12:28 AM</span>
-												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+										</a>
+									</li>
+									<li>
+										<a href="chat.html">
+											<div class="list-item">
+												<div class="list-left">
+													<span class="avatar">L</span>
+												</div>
+												<div class="list-body">
+													<span class="message-author">Loren Gatlin</span>
+													<span class="message-time">12:28 AM</span>
+													<div class="clearfix"></div>
+													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+												</div>
 											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="chat.html">
-										<div class="list-item">
-											<div class="list-left">
-												<span class="avatar">B</span>
+										</a>
+									</li>
+									<li>
+										<a href="chat.html">
+											<div class="list-item">
+												<div class="list-left">
+													<span class="avatar">T</span>
+												</div>
+												<div class="list-body">
+													<span class="message-author">Tarah Shropshire</span>
+													<span class="message-time">12:28 AM</span>
+													<div class="clearfix"></div>
+													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+												</div>
 											</div>
-											<div class="list-body">
-												<span class="message-author"> Buster Wigton </span>
-												<span class="message-time">12:28 AM</span>
-												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="chat.html">
-										<div class="list-item">
-											<div class="list-left">
-												<span class="avatar">R</span>
-											</div>
-											<div class="list-body">
-												<span class="message-author"> Rolland Webber </span>
-												<span class="message-time">12:28 AM</span>
-												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="chat.html">
-										<div class="list-item">
-											<div class="list-left">
-												<span class="avatar">C</span>
-											</div>
-											<div class="list-body">
-												<span class="message-author"> Claire Mapes </span>
-												<span class="message-time">12:28 AM</span>
-												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="chat.html">
-										<div class="list-item">
-											<div class="list-left">
-												<span class="avatar">M</span>
-											</div>
-											<div class="list-body">
-												<span class="message-author">Melita Faucher</span>
-												<span class="message-time">12:28 AM</span>
-												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="chat.html">
-										<div class="list-item">
-											<div class="list-left">
-												<span class="avatar">J</span>
-											</div>
-											<div class="list-body">
-												<span class="message-author">Jeffery Lalor</span>
-												<span class="message-time">12:28 AM</span>
-												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="chat.html">
-										<div class="list-item">
-											<div class="list-left">
-												<span class="avatar">L</span>
-											</div>
-											<div class="list-body">
-												<span class="message-author">Loren Gatlin</span>
-												<span class="message-time">12:28 AM</span>
-												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="chat.html">
-										<div class="list-item">
-											<div class="list-left">
-												<span class="avatar">T</span>
-											</div>
-											<div class="list-body">
-												<span class="message-author">Tarah Shropshire</span>
-												<span class="message-time">12:28 AM</span>
-												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-											</div>
-										</div>
-									</a>
-								</li>
-							</ul>
-						</div>
-						<div class="topnav-dropdown-footer">
-							<a href="chat.html">See all messages</a>
-						</div>
-					</div>
-				</div>
-            </div>
-            <!-- Add designation modal start -->
-            <div id="add_user" class="modal custom-modal fade" role="dialog">
-				<div class="modal-dialog">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<div class="modal-content modal-lg">
-						<div class="modal-header">
-							<h4 class="modal-title">Add Designation</h4>
-						</div>
-						<div class="modal-body">
-							<form class="m-b-30" id="frmAddFirm">
-								<div class="row">
-									<div class="col-md-12">
-										<div class="form-group">
-											<label class="control-label">Code : <span class="text-danger">*</span></label>
-											<input class="form-control" type="text" id="code" name="code">
-                      <span id="uniqueCode" style="color: red; font-weight: bold;"> </span>
-										</div>
-									</div>
-									<div class="col-md-12">
-										<div class="form-group">
-											<label class="control-label">Designation :<span class="text-danger">*</span></label>
-											<input class="form-control" type="text" id="designation" name="designation">
-										</div>
-									</div>
-									<div class="col-md-12">
-										<div class="form-group">
-											<label class="control-label">Remarks : <span class="text-danger">*</span></label>
-											<!-- <input class="form-control" type="text"> -->
-                      <textarea class="form-control" rows="12" id="remarks" name="remarks"></textarea>
-										</div>
-									</div>
-
-								</div>
-
-								<div class="m-t-20 text-center">
-									<button class="btn btn-primary"  id="btnAdd">Add Designation</button>
-								</div>
-							</form>
+										</a>
+									</li>
+								</ul>
+							</div>
+							<div class="topnav-dropdown-footer">
+								<a href="chat.html">See all messages</a>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-      <!-- Add designation modal ends -->
+				<!-- Add designation modal start -->
+				<div id="add_user" class="modal custom-modal fade" role="dialog">
+					<div class="modal-dialog">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<div class="modal-content modal-lg">
+							<div class="modal-header">
+								<h4 class="modal-title">Add Designation</h4>
+							</div>
+							<div class="modal-body">
+								<form class="m-b-30" id="frmAddFirm">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group">
+												<label class="control-label">Code : <span class="text-danger">*</span></label>
+												<input class="form-control" type="text" id="code" name="code">
+						<span id="uniqueCode" style="color: red; font-weight: bold;"> </span>
+											</div>
+										</div>
+										<div class="col-md-12">
+											<div class="form-group">
+												<label class="control-label">Designation :<span class="text-danger">*</span></label>
+												<input class="form-control" type="text" id="designation" name="designation">
+											</div>
+										</div>
+										<div class="col-md-12">
+											<div class="form-group">
+												<label class="control-label">Remarks : <span class="text-danger">*</span></label>
+												<!-- <input class="form-control" type="text"> -->
+						<textarea class="form-control" rows="12" id="remarks" name="remarks"></textarea>
+											</div>
+										</div>
 
-            {{#content "script" mode="append"}}
-                <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
-                <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
-                <script type="text/javascript" src="/assets/js/select2.min.js"></script>
-                <script type="text/javascript" src="/assets/js/moment.min.js"></script>
-                <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
-                <script type="text/javascript">
-                // add designation ajax and form validation starts
-                $(document).ready(function(e) {
+									</div>
 
-                    $("#btnAdd").click(function() {
-                        $("#frmAddFirm").submit();
-                    });
+									<div class="m-t-20 text-center">
+										<button class="btn btn-primary"  id="btnAdd">Add Designation</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+		<!-- Add designation modal ends -->
 
-                    $("#frmAddFirm").validate({
-                        rules: {
-                            code: {
-                                required: true
-                            },
-                            designation: {
-                                required: true
-                            }
-                        },
-                        messages: {
-                            code: {
-                                required: "Code can't be blank"
-                            },
-                            designation: {
-                                required: "Designation title can't be blank"
-                            }
-                        },
-                        submitHandler:function(form) {
-                          var code = $('#code').val();
-                          var designation = $('#designation').val();
-                          var remarks = $('#remarks').val();
-                            $.ajax({
-                                type: "POST",
-                                url: "/designations/add",
-                                data: {
-                                  code: code,
-                                  designation: designation,
-                                  remarks: remarks
-                                },
-                                beforeSend: function(xhr) {
-                                    xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+				{{#content "script" mode="append"}}
+					<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+					<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+					<script type="text/javascript" src="/assets/js/select2.min.js"></script>
+					<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+					<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+					<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+					<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+					<script type="text/javascript">
+					// add designation ajax and form validation starts
+					$(document).ready(function(e) {
+
+						$("#btnAdd").click(function() {
+							$("#frmAddFirm").submit();
+						});
+
+						$("#frmAddFirm").validate({
+							rules: {
+								code: {
+									required: true
+								},
+								designation: {
+									required: true
+								}
+							},
+							messages: {
+								code: {
+									required: "Code can't be blank"
+								},
+								designation: {
+									required: "Designation title can't be blank"
+								}
+							},
+							submitHandler:function(form) {
+							var code = $('#code').val();
+							var designation = $('#designation').val();
+							var remarks = $('#remarks').val();
+								$.ajax({
+									type: "POST",
+									url: "/designations/add",
+									data: {
+									code: code,
+									designation: designation,
+									remarks: remarks
+									},
+									beforeSend: function(xhr) {
+										xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
 
 
-                                },
-                                success: function(response) {
-                                  if(response.msg === "ERRR"){
-                                    document.getElementById('uniqueCode').innerHTML = "Code already been assigned";
-                                  }else{
-                                    window.location.href = '/designations';
-                                  }
-                                },
-                                error: function(xhr){
+									},
+									success: function(response) {
+									if(response.msg === "ERRR"){
+										document.getElementById('uniqueCode').innerHTML = "Code already been assigned";
+									}else{
+										window.location.href = '/designations';
+									}
+									},
+									error: function(xhr){
 
-                                }
-                            });
+									}
+								});
 
-                        }
-                    });
+							}
+						});
 
-                      // add designation ajax operation and form validation ends
+						// add designation ajax operation and form validation ends
 
-                });
-                </script>
-                <script type="text/javascript">
-                  function searchDataTable(){
-                    var code = $('#searchCode').val();
-                    var title = $('#searchTitle').val();
-                    $.ajax({
-                      url: '/designations/search',
-                      method: 'POST',
-                      data: {code: code,title: title},
-                      success: function(resp){
-                        console.log(resp.searchData);
+					});
+					</script>
+					<script type="text/javascript">
+					function searchDataTable(){
+						var code = $('#searchCode').val();
+						var title = $('#searchTitle').val();
+						$.ajax({
+						url: '/designations/search',
+						method: 'POST',
+						data: {code: code,title: title},
+						success: function(resp){
+							console.log(resp.searchData);
 
-                        // document.getElementById('mainTable').removeAttribute('class');
-                        document.getElementById('mainTable').style.display = "none";
-                        // $( "#removeDatatable" ).remove();
-                         // document.getElementById('mainTable').removeChild(document.getElementById('mainTable').childNodes[1]);
-                         // $( "#searchData" ).removeClass( "datatable" );
-//                          $('.datatable').dataTable({
-//     "bPaginate": false
-// });
-                        // document.getElementById('searchTable').style.display = "block";
+							// document.getElementById('mainTable').removeAttribute('class');
+							document.getElementById('mainTable').style.display = "none";
+							// $( "#removeDatatable" ).remove();
+							// document.getElementById('mainTable').removeChild(document.getElementById('mainTable').childNodes[1]);
+							// $( "#searchData" ).removeClass( "datatable" );
+	//                          $('.datatable').dataTable({
+	//     "bPaginate": false
+	// });
+							// document.getElementById('searchTable').style.display = "block";
 
-                        $.each(resp.searchData, function(key, value) {
-                          console.log(value);
-     $("#searchData").append('<tbody   ><tr><td>'+value.code+'</td><td>'+value.title+'</td><td>'+value.remarks+'</td><td class="text-right"><div class="dropdown"><a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a><ul class="dropdown-menu pull-right"><li><a href="/designations/update/'+value.id+'" ><i class="fa fa-pencil m-r-5"></i> Edit</a></li><li><a href="/designations/delete/'+value.id+'"  ><i class="fa fa-trash-o m-r-5"></i>Delete</a></li></ul></div></td></tr></tbody   >');
-   });
-                      },
-                      error: function(xhr){
+							$.each(resp.searchData, function(key, value) {
+							console.log(value);
+		$("#searchData").append('<tbody   ><tr><td>'+value.code+'</td><td>'+value.title+'</td><td>'+value.remarks+'</td><td class="text-right"><div class="dropdown"><a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a><ul class="dropdown-menu pull-right"><li><a href="/designations/update/'+value.id+'" ><i class="fa fa-pencil m-r-5"></i> Edit</a></li><li><a href="/designations/delete/'+value.id+'"  ><i class="fa fa-trash-o m-r-5"></i>Delete</a></li></ul></div></td></tr></tbody   >');
+	});
+						},
+						error: function(xhr){
 
-                      }
-                    });
-                  }
-                </script>
+						}
+						});
+					}
+					</script>
 
-                {{/content}}
+					{{/content}}
