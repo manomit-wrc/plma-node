@@ -110,7 +110,6 @@ router.get('/employee/edit/:id', csrfProtection, auth, async (req, res) =>  {
     for(var i=0; i<result.length; i++){
         arr.push(result[i].firm_id);
     }
-    //console.log(arr);
     res.render('employees/edit', { layout: 'dashboard', csrfToken: req.csrfToken(), empl: users[0], firms, error_edit_message, arr});
 });
 
