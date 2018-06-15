@@ -1,0 +1,119 @@
+{{#content "style" mode="prepend"}}
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+{{/content}}
+
+<div class="page-wrapper">
+   <div class="content container-fluid">
+      <div class="row">
+         <div class="col-sm-8">
+            <h4 class="page-title">Edit Activity Goals</h4>
+         </div>
+      </div>
+      {{#if error_message1}}
+        <div class="alert alert-danger">
+            <strong>Error! </strong>{{error_message1}}
+        </div>
+      {{/if}}
+      {{#if error_message}}
+        <div class="alert alert-danger">
+            <strong>Error! </strong>{{error_message}}
+        </div>
+      {{/if}}
+      <form id="frmEditActivityGoal" method="POST" action="/activity-goal/edit/{{edit_goals.id}}">
+         <input type="hidden" name="_csrf" value="{{csrfToken}}">   
+         <div class="card-box">
+            <div class="row">
+               <div class="col-md-12">
+                     <div class="row">
+                        <div class="col-md-12">
+                           <div class="form-group form-focus">
+                              <label class="control-label">Activity Goal</label>
+                              <textarea name="activity_goal" id="activity_goal" class="form-control floating">{{edit_goals.activity_goal}}</textarea>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-focus">
+                                <label class="control-label">From Date</label>
+                                <div class="cal-icon">
+                                    <input class="form-control floating datetimepicker"
+                                        type="text" id="from_date" name="from_date" value="{{dateFormat edit_goals.from_date "DD-MM-YYYY"}}" 
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-focus">
+                                <label class="control-label">To Date</label>
+                                <div class="cal-icon">
+                                    <input class="form-control floating datetimepicker"
+                                        type="text" id="to_date" name="to_date" value="{{dateFormat edit_goals.to_date "DD-MM-YYYY"}}" 
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                           <div class="form-group form-focus">
+                              <label class="control-label">Remarks</label>
+                              <textarea name="remarks" id="remarks" class="form-control floating">{{edit_goals.remarks}}</textarea>
+                           </div>
+                        </div>
+                     </div>
+               </div>
+            </div>
+         </div>
+         <div class="text-center m-t-20">
+            <button class="btn btn-primary btn-lg" type="submit">Save &amp; update</button>
+         </div>
+      </form>
+   </div>
+   
+</div>
+{{#content "script" mode="append"}}
+    <script type="text/javascript" src="/assets/js/moment.min.js"></script>
+    <script type="text/javascript" src="/assets/js/select2.min.js"></script>
+    <script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
+    <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            /*$('#firm_id').multiselect({
+                nonSelectedText: 'Select Firms',
+                includeSelectAllOption: true,
+                buttonWidth: '100%'
+            });*/
+            $("#frmEditActivityGoal").validate({
+                ignore: [],
+                rules: {
+                    activity_goal: {
+                        required: true
+                    },
+                    from_date: {
+                        required: true
+                    },
+                    to_date: {
+                        required: true
+                    },
+                    remarks: {
+                        required: true
+                    }
+                },
+                messages: {
+                    activity_goal: {
+                        required: "Activity goal can't be blank"
+                    },
+                    from_date: {
+                        required: "From date can't be blank"
+                    },
+                    to_date: {
+                        required: "To date can't be blank"
+                    },
+                    remarks: {
+                        required: "Remarsks can't be blank"
+                    }
+                }
+            });
+        });
+    </script>
+{{/content}}
