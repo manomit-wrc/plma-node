@@ -1,6 +1,7 @@
 const express = require('express');
 const auth = require('../middlewares/auth');
 const csrf = require('csurf');
+const bCrypt = require('bcrypt-nodejs');
 const designation = require('../models').designation;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
@@ -9,13 +10,13 @@ const Section = require('../models').section;
 const budget = require('../models').budget;
 
 const Jurisdiction = require('../models').jurisdiction;
-
+const user = require('../models').user;
 var csrfProtection = csrf({ cookie: true });
 
 const router = express.Router();
 //===================================================Designation route starts==========================================================
 router.get('/designations', csrfProtection, auth, (req, res) => {
-
+	console.log(req.user);
 		var whereCondition = {};
 		if(req.query.searchCode) {
 			whereCondition.code = req.query.searchCode;
@@ -102,6 +103,180 @@ router.get('/designations/delete/:id',auth, (req,res) => {
 
 
 //==========================================Designation route ends=============================================
+/*==========================================Attorney route starts==============================================*/
+router.get('/attorneys',auth,csrfProtection, (req,res) => {
+	var whereCondition = {};
+	if(req.query.searchName) {
+		whereCondition.first_name = req.query.searchName;
+	}
+	if(req.query.searchEmail) {
+		whereCondition.email = req.query.searchEmail;
+	}
+	whereCondition.role_id = '3';
+	user.findAll({
+		where: whereCondition
+		// where:{
+		// 	role_id: '3',
+	 
+
+		// }
+	}).then(rows => {
+		
+		res.render('attorney/index', { layout: 'dashboard', csrfToken: req.csrfToken(), rows: rows, searchName: req.query.searchName, searchEmail: req.query.searchEmail});
+	});
+	
+});
+router.get('/attorney/addAttorney',auth,csrfProtection, (req,res) => {
+	res.render('attorney/addattorney',{ layout: 'dashboard', csrfToken: req.csrfToken()});
+});
+router.post('/attorneys/add',auth,csrfProtection, (req,res) => {
+	console.log(new Date());
+	var first_name = req.body.first_name;
+	var last_name = req.body.last_name;
+	var email = req.body.email;
+	var password = bCrypt.hashSync(req.body.password);
+	var dob = req.body.dob;
+	var gender = req.body.gender;
+	var address = req.body.address;
+	var city = req.body.city;
+	var state = req.body.state;
+	var country = req.body.country;
+	var mobile_no = req.body.mobile_no;
+	var firm_id = req.user.firm_id;
+	user.findAndCountAll({
+		where:{
+			email: email
+		}
+	}).then(result => {
+		if(result.count > 0){
+			res.json({msg: 'error'});
+		}else{
+			user.create({
+				first_name: first_name,
+				 last_name: last_name,
+					email: email, 
+					password: password, 
+					dob: dob,
+					gender: gender,
+					address: address,
+					city: city,
+					state: state,
+					country: country,
+					mobile_no: mobile_no,
+					firm_id: firm_id,
+					role_id: '3' 
+				}).then(rows => {
+					res.send("Success");
+				});
+		}
+		
+	});
+	
+});
+router.get('/attorneys/editAttorneys/:id',auth, csrfProtection, (req,res) => {
+	 user.findById(req.params.id).then(rows => {
+		 res.render('attorney/updateattorney',{ layout: 'dashboard', csrfToken: req.csrfToken(), rows: rows });
+	 });
+});
+router.post('/attorneys/updateAttorney/:id',auth,csrfProtection, (req,res) => {
+	console.log(req.params.id);
+	var first_name = req.body.first_name;
+	var last_name = req.body.last_name;
+	var email = req.body.email;
+	var password = bCrypt.hashSync(req.body.password);
+	var dob = req.body.dob;
+	var gender = req.body.gender;
+	var address = req.body.address;
+	var city = req.body.city;
+	var state = req.body.state;
+	var country = req.body.country;
+	var mobile_no = req.body.mobile_no;
+	var firm_id = req.user.firm_id;
+	console.log(req.params.id);
+	console.log(email);
+	user.findAndCountAll({
+		where:{
+			email: email
+		}
+	}).then(result => {
+		console.log(result.count);
+		if(result.count > 1){
+			res.json({msg: 'error'});
+		}else if(result.count == 0 || result.count == 1){
+			user.update({
+								first_name: first_name,
+								last_name: last_name,
+								email: email,
+								password: password,
+								dob: dob,
+								gender: gender,
+								address: address,
+								city: city,
+								state: state,
+								country: country,
+								mobile_no: mobile_no,
+								firm_id: firm_id
+							},{
+								where:{
+									id: req.params.id}
+								}).then(resp => {
+									console.log(req.params.id);
+								res.send("success");
+								console.log(req.params.id);
+					    });
+		}
+	
+		// 
+	});
+
+	// user.findAndCountAll({
+	// 	where:{
+	// 		email: email
+	// 	}
+	// }).then(result => {
+	// 	if(result.count > 1){
+	// 		console.log(req.params.id);
+	// 		res.json({msg: 'error'});
+	// 		console.log(req.params.id);
+	// 	}else if(result.count == 0 ){
+	// 		console.log(req.params.id);
+	// 		user.update({
+	// 			first_name: first_name,
+	// 			last_name: last_name,
+	// 			email: email,
+	// 			password: password,
+	// 			dob: dob,
+	// 			gender: gender,
+	// 			address: address,
+	// 			city: city,
+	// 			state: state,
+	// 			country: country,
+	// 			mobile_no: mobile_no,
+	// 			firm_id: firm_id
+	// 		},{
+	// 			where:{
+	// 				id: req.params.id}
+	// 			}).then(resp => {
+	// 				console.log(req.params.id);
+	// 			res.send("success");
+	// 			console.log(req.params.id);
+  //     });
+	// 	}
+	// });
+
+});
+
+router.get('/attorneys/delete/:id',auth, (req,res) => {
+  console.log(req.params.id);
+  user.destroy({
+    where:{
+      id: req.params.id
+    }
+  }).then(resp => {
+    res.redirect('/attorneys');
+  });
+});
+/*==========================================Attorney route ends==============================================*/
 /*======================COMMIT BY MALINI ROYCHOWDHURY 14-06-2018=============================*/
 
 router.get('/budgets', csrfProtection, auth, (req, res) => {

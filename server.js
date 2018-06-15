@@ -53,6 +53,9 @@ const hbs = exphbs.create({
         first_letter: function(a) {
             return a.charAt(0);
         },
+        
+        
+     
         inArray: function(array, value, block) {
           if (array.indexOf(value) !== -1) {
             return block.fn(this);

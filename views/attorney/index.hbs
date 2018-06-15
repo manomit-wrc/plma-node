@@ -1,0 +1,394 @@
+	{{#content "style" mode="prepend"}}
+		<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+		<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+	{{/content}}
+	<div class="page-wrapper">
+					<div class="content container-fluid">
+						<div class="row">
+							<div class="col-xs-4">
+								<h4 class="page-title">Attorneys</h4>
+							</div>
+							<div class="col-xs-8 text-right m-b-30">
+								<a href="/attorney/addAttorney" class="btn btn-primary rounded" ><i class="fa fa-plus"></i> Add Attorney</a>
+							</div>
+						</div>
+			<form method="GET">
+						<div class="row filter-row">
+							<div class="col-sm-3 col-xs-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Name</label>
+									<input type="text" class="form-control floating" id="searchName" name="searchName" value="{{searchName}}"/>
+								</div>
+							</div>
+							<div class="col-sm-3 col-xs-6">
+				<div class="form-group form-focus">
+					<label class="control-label">Email Id</label>
+					<input type="text" class="form-control floating" id="searchTitle" name="searchEmail" value="{{searchEmail}}"/>
+				</div>
+							</div>
+
+							<div class="col-sm-3 col-xs-6">
+								<!-- <a href="javascript:void(0)" class="btn btn-success btn-block" onclick="searchDataTable()"> Search </a> -->
+								<button type="submit" class="btn btn-success btn-block"> Search </button>
+							</div>
+							<div class="col-sm-3 col-xs-6">
+								<!-- <a href="javascript:void(0)" class="btn btn-success btn-block" onclick="searchDataTable()"> Search </a> -->
+								<a href="/attorneys" class="btn btn-success btn-block"> Clear </a>
+							</div>
+						</div>
+					</form>
+						<div class="row" >
+							<div class="col-md-12">
+								<div class="table-responsive"  >
+									<table class="table table-striped custom-table datatable" id="searchData">
+										<thead>
+											<tr>
+
+												<th>Name</th>
+												<th>Email Id</th>
+												<th>Mobile Number</th>
+                                                <th>Join date</th>
+
+												<th class="text-right">Action</th>
+											</tr>
+	</thead>
+
+										<tbody  id="mainTable">
+						{{#each rows}}
+											<tr>
+
+
+												<td>{{this.first_name}} {{this.last_name}}</td>
+												<td>{{this.email}}</td>
+												<td>{{this.mobile_no}}</td>
+                                                <td>{{this.createdAt}}</td>
+												<td class="text-right">
+													<div class="dropdown">
+														<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+														<ul class="dropdown-menu pull-right">
+															<li><a href="/attorneys/editAttorneys/{{this.id}}" ><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+
+															<li><a href="javascript:void(0)"  data-toggle="modal" data-target="#{{this.id}}"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+														</ul>
+													</div>
+												</td>
+											</tr>
+											{{!-- delete modal starts --}}
+										<div class="modal fade" id="{{this.id}}" role="dialog">
+												<div class="modal-dialog">
+												
+												<!-- Modal content-->
+												<div class="modal-content">
+													{{!-- <div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+													<h4 class="modal-title">Modal Header</h4>
+													</div> --}}
+													<div class="modal-body">
+													<p>Are you sure to delete ?</p>
+													</div>
+													<div class="modal-footer">
+														<a href="/attorneys/delete/{{this.id}}" class="btn btn-danger" ><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+													<a href="/attorneys" class="btn btn-default" >Cancel</a>
+													</div>
+												</div>
+												
+												</div>
+											</div>
+													
+											{{!-- delete modal ends --}}
+						{{/each}}
+
+										</tbody>
+									</table>
+
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="notification-box">
+						<div class="msg-sidebar notifications msg-noti">
+							<div class="topnav-dropdown-header">
+								<span>Messages</span>
+							</div>
+							<div class="drop-scroll msg-list-scroll">
+								<ul class="list-box">
+									<li>
+										<a href="chat.html">
+											<div class="list-item">
+												<div class="list-left">
+													<span class="avatar">R</span>
+												</div>
+												<div class="list-body">
+													<span class="message-author">Richard Miles </span>
+													<span class="message-time">12:28 AM</span>
+													<div class="clearfix"></div>
+													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+												</div>
+											</div>
+										</a>
+									</li>
+									<li>
+										<a href="chat.html">
+											<div class="list-item new-message">
+												<div class="list-left">
+													<span class="avatar">J</span>
+												</div>
+												<div class="list-body">
+													<span class="message-author">John Doe</span>
+													<span class="message-time">1 Aug</span>
+													<div class="clearfix"></div>
+													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+												</div>
+											</div>
+										</a>
+									</li>
+									<li>
+										<a href="chat.html">
+											<div class="list-item">
+												<div class="list-left">
+													<span class="avatar">T</span>
+												</div>
+												<div class="list-body">
+													<span class="message-author"> Tarah Shropshire </span>
+													<span class="message-time">12:28 AM</span>
+													<div class="clearfix"></div>
+													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+												</div>
+											</div>
+										</a>
+									</li>
+									<li>
+										<a href="chat.html">
+											<div class="list-item">
+												<div class="list-left">
+													<span class="avatar">M</span>
+												</div>
+												<div class="list-body">
+													<span class="message-author">Mike Litorus</span>
+													<span class="message-time">12:28 AM</span>
+													<div class="clearfix"></div>
+													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+												</div>
+											</div>
+										</a>
+									</li>
+									<li>
+										<a href="chat.html">
+											<div class="list-item">
+												<div class="list-left">
+													<span class="avatar">C</span>
+												</div>
+												<div class="list-body">
+													<span class="message-author"> Catherine Manseau </span>
+													<span class="message-time">12:28 AM</span>
+													<div class="clearfix"></div>
+													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+												</div>
+											</div>
+										</a>
+									</li>
+									<li>
+										<a href="chat.html">
+											<div class="list-item">
+												<div class="list-left">
+													<span class="avatar">D</span>
+												</div>
+												<div class="list-body">
+													<span class="message-author"> Domenic Houston </span>
+													<span class="message-time">12:28 AM</span>
+													<div class="clearfix"></div>
+													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+												</div>
+											</div>
+										</a>
+									</li>
+									<li>
+										<a href="chat.html">
+											<div class="list-item">
+												<div class="list-left">
+													<span class="avatar">B</span>
+												</div>
+												<div class="list-body">
+													<span class="message-author"> Buster Wigton </span>
+													<span class="message-time">12:28 AM</span>
+													<div class="clearfix"></div>
+													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+												</div>
+											</div>
+										</a>
+									</li>
+									<li>
+										<a href="chat.html">
+											<div class="list-item">
+												<div class="list-left">
+													<span class="avatar">R</span>
+												</div>
+												<div class="list-body">
+													<span class="message-author"> Rolland Webber </span>
+													<span class="message-time">12:28 AM</span>
+													<div class="clearfix"></div>
+													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+												</div>
+											</div>
+										</a>
+									</li>
+									<li>
+										<a href="chat.html">
+											<div class="list-item">
+												<div class="list-left">
+													<span class="avatar">C</span>
+												</div>
+												<div class="list-body">
+													<span class="message-author"> Claire Mapes </span>
+													<span class="message-time">12:28 AM</span>
+													<div class="clearfix"></div>
+													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+												</div>
+											</div>
+										</a>
+									</li>
+									<li>
+										<a href="chat.html">
+											<div class="list-item">
+												<div class="list-left">
+													<span class="avatar">M</span>
+												</div>
+												<div class="list-body">
+													<span class="message-author">Melita Faucher</span>
+													<span class="message-time">12:28 AM</span>
+													<div class="clearfix"></div>
+													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+												</div>
+											</div>
+										</a>
+									</li>
+									<li>
+										<a href="chat.html">
+											<div class="list-item">
+												<div class="list-left">
+													<span class="avatar">J</span>
+												</div>
+												<div class="list-body">
+													<span class="message-author">Jeffery Lalor</span>
+													<span class="message-time">12:28 AM</span>
+													<div class="clearfix"></div>
+													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+												</div>
+											</div>
+										</a>
+									</li>
+									<li>
+										<a href="chat.html">
+											<div class="list-item">
+												<div class="list-left">
+													<span class="avatar">L</span>
+												</div>
+												<div class="list-body">
+													<span class="message-author">Loren Gatlin</span>
+													<span class="message-time">12:28 AM</span>
+													<div class="clearfix"></div>
+													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+												</div>
+											</div>
+										</a>
+									</li>
+									<li>
+										<a href="chat.html">
+											<div class="list-item">
+												<div class="list-left">
+													<span class="avatar">T</span>
+												</div>
+												<div class="list-body">
+													<span class="message-author">Tarah Shropshire</span>
+													<span class="message-time">12:28 AM</span>
+													<div class="clearfix"></div>
+													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+												</div>
+											</div>
+										</a>
+									</li>
+								</ul>
+							</div>
+							<div class="topnav-dropdown-footer">
+								<a href="chat.html">See all messages</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+
+				{{#content "script" mode="append"}}
+					<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+					<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+					<script type="text/javascript" src="/assets/js/select2.min.js"></script>
+					<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+					<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+					<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+					<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+					<script type="text/javascript">
+					// add designation ajax and form validation starts
+					$(document).ready(function(e) {
+
+						$("#btnAdd").click(function() {
+							$("#frmAddFirm").submit();
+						});
+
+						$("#frmAddFirm").validate({
+							rules: {
+								code: {
+									required: true
+								},
+								designation: {
+									required: true
+								}
+							},
+							messages: {
+								code: {
+									required: "Code can't be blank"
+								},
+								designation: {
+									required: "Designation title can't be blank"
+								}
+							},
+							submitHandler:function(form) {
+							var code = $('#code').val();
+							var designation = $('#designation').val();
+							var remarks = $('#remarks').val();
+								$.ajax({
+									type: "POST",
+									url: "/designations/add",
+									data: {
+									code: code,
+									designation: designation,
+									remarks: remarks
+									},
+									beforeSend: function(xhr) {
+										xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+
+									},
+									success: function(response) {
+									if(response.msg === "ERRR"){
+										document.getElementById('uniqueCode').innerHTML = "Code already been assigned";
+									}else{
+										window.location.href = '/designations';
+									}
+									},
+									error: function(xhr){
+
+									}
+								});
+
+							}
+						});
+
+						// add designation ajax operation and form validation ends
+
+					});
+					</script>
+					
+
+					{{/content}}
