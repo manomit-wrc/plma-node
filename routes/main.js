@@ -7,6 +7,7 @@ const Op = Sequelize.Op;
 const PracticeArea = require('../models').practicearea;
 const Section = require('../models').section;
 const budget = require('../models').budget;
+const setting = require('../models').setting;
 
 const Jurisdiction = require('../models').jurisdiction;
 
@@ -98,11 +99,65 @@ router.get('/designations/delete/:id',auth, (req,res) => {
     res.redirect('/designations');
   });
 });
-
-
-
 //==========================================Designation route ends=============================================
-/*======================COMMIT BY MALINI ROYCHOWDHURY 14-06-2018=============================*/
+
+/*======================COMMIT BY MALINI ROYCHOWDHURY  (settings) 14-06-2018 -15-06-2018=============================*/
+
+router.get('/settings',auth,csrfProtection, (req,res) => {
+	setting.findAll().then(data => {
+		console.log(data);
+		res.render('superadminsetting/settings', { layout: 'dashboard', csrfToken: req.csrfToken(), data: data, test: 'test' });
+ });
+});
+
+router.post('/settings/insert',auth,csrfProtection, (req,res) => {
+
+    console.log(req.body);
+    var companyname = req.body.companyname;
+    var contactperson = req.body.contactperson;
+    var address = req.body.address;
+		var country = req.body.country;
+		var city = req.body.city;
+		var state = req.body.state;
+		var postalcode = req.body.postalcode;
+		var email = req.body.email;
+		var phnumber = req.body.phnumber;
+		var mbnumber = req.body.mbnumber;
+		var fax = req.body.fax;
+    var weburl = req.body.weburl;
+
+		var hidden_field =  req.body.hidden_field;
+
+   if(hidden_field != ""){
+		 setting.update({company_name: companyname,contact_person: contactperson,address: address,country: country,city: city,state: state,postal_code: postalcode,phone_number: phnumber,mobile_number: mbnumber,email: email,fax: fax,weburl: weburl},{where:{id: hidden_field}}).then(resp => {
+		 res.end("success");
+		});
+   }else{
+		 setting.create({company_name: companyname,contact_person: contactperson,address: address,country: country,city: city,state: state,postal_code: postalcode,phone_number: phnumber,mobile_number: mbnumber,email: email,fax: fax,weburl: weburl}).then(resp => {
+		 res.end("success");
+		});
+  }
+	});
+// 	setting.findAndCountAll().then(rows => {
+// if(rows.count > 0){
+// 	where:{
+// 		id: hidden_field
+// 	}
+//
+// 	setting.findAll({
+// 		where: whereCondition
+// 	  }).then(rows => {
+// 		 res.render('/settings/insert', { layout: 'dashboard', csrfToken: req.csrfToken(),rows:  rows});
+// 	 });
+//    }else{
+// 	setting.create({company_name: companyname,contact_person: contactperson,address: address,country: country,city: city,state: state,postal_code: postalcode,phone_number: phnumber,mobile_number: mbnumber,email: email,fax: fax,weburl: weburl}).then(resp => {
+// 				res.end("Success");
+// 			});
+//       }
+//       });
+//       });
+
+/*======================COMMIT BY MALINI ROYCHOWDHURY// (BUDGET HEAD) //14-06-2018=============================*/
 
 router.get('/budgets', csrfProtection, auth, (req, res) => {
 	var whereCondition = {};
@@ -142,7 +197,6 @@ router.post('/budgets/addbudget', auth, csrfProtection, (req, res) => {
     });
 });
  router.get('/budgets/edit/:id',auth,csrfProtection, (req,res) => {
-
 
 	 budget.findById(req.params.id).then(rows => {
 
