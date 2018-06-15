@@ -11,21 +11,41 @@ const EmployeeToFirm = require('../models').employee_to_firm;
 
 var csrfProtection = csrf({ cookie: true });
 
+/*==================================BRATIN MEHETA 14-06-2018=====================================*/
+
 router.get('/employees', auth, async (req, res) => {
+    var employeeFilter = {};
+    if(req.query.employee_name)
+    {
+        employeeFilter.first_name = req.query.employee_name;
+    }
+    if(req.query.employee_email)
+    {
+        employeeFilter.email = req.query.employee_email;
+    }
     var success_message = req.flash('success-message')[0];
-    Firm.belongsToMany(User, { through: EmployeeToFirm, as: 'users',foreignKey: 'user_id' });
-    User.belongsToMany(Firm, { through: EmployeeToFirm, as: 'firms', foreignKey: 'firm_id' });
+    var success_edit_message = req.flash('success-edit-message')[0];
     const users = await User.findAll({
-      where: {role_id: 4},  
-       include: [{ all: true, nested: true}]
-  });
-    res.send(users);
-    //res.render('employees/index', { layout: 'dashboard', success_message });
+      where:employeeFilter,  
+    });
+    res.render('employees/index', { 
+        layout: 'dashboard', 
+        success_message, 
+        employee:users, 
+        success_edit_message,
+        employee_names: req.query.employee_name ? req.query.employee_name : '', 
+        employee_emails: req.query.employee_email ? req.query.employee_email : '', 
+    });
 }).get('/employees/add', csrfProtection, auth, async (req, res) => {
     var error_message1 = req.flash('error-message1')[0];
     var error_message = req.flash('error-message')[0];
     const firms = await Firm.findAll({});
-    res.render('employees/add', { layout: 'dashboard', csrfToken: req.csrfToken(), firms,error_message, error_message1  });
+    res.render('employees/add', { 
+        layout: 'dashboard', 
+        csrfToken: req.csrfToken(), 
+        firms,error_message, 
+        error_message1  
+    });
 });
 
 router.post('/employees/add', auth, csrfProtection, async (req, res) => {
@@ -48,7 +68,7 @@ router.post('/employees/add', auth, csrfProtection, async (req, res) => {
             email: req.body.email,
             password: bCrypt.hashSync(req.body.password),
             avatar,
-            address: '',
+            address: req.body.address,
             city: req.body.city,
             state: req.body.state,
             country: req.body.country,
@@ -81,5 +101,94 @@ router.post('/employees/add', auth, csrfProtection, async (req, res) => {
         res.redirect('/employees/add');
     }
 });
+
+router.get('/employee/edit/:id', csrfProtection, auth, async (req, res) =>  {
+    var error_edit_message = req.flash('error-edit-message')[0];
+    User.hasMany(EmployeeToFirm, {foreignKey: 'user_id'});
+    const users = await User.findAll({
+        where: {id: req.params['id']},
+        include: [{
+            model: EmployeeToFirm
+        }]
+    });
+    const firms = await Firm.findAll({});
+    var result = JSON.parse(JSON.stringify(users[0].employee_to_firms));
+    var arr = [];
+    for(var i=0; i<result.length; i++){
+        arr.push(result[i].firm_id);
+    }
+    res.render('employees/edit', { 
+        layout: 'dashboard', csrfToken: req.csrfToken(), 
+        empl: users[0], 
+        firms, 
+        error_edit_message, 
+        arr
+    });
+});
+
+router.post('/employees/edit/:id', auth, csrfProtection, async (req, res) => {
+    var firms_id = req.body.firm_id;
+    const formatDate1 = req.body.dob ? req.body.dob.split("-") : '';
+    const user_data = await User.findOne({
+        where: {
+            email: req.body.email,
+            id: {
+                [Op.ne]: req.body.user_id
+            }
+        }
+    });
+    if(user_data === null) {
+        const data = await User.update({
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            email: req.body.email,
+            updatedAt: new Date(),
+            address: req.body.address,
+            city: req.body.city,
+            state: req.body.state,
+            country: req.body.country,
+            gender: req.body.gender,
+            dob: formatDate1 ? formatDate1[2]+"-"+formatDate1[1]+"-"+formatDate1[0] : null,
+            mobile_no: req.body.mobile_no
+        }, {
+            where: {
+                id: req.params['id']
+            }
+        });
+        const emp_to_frm_des = await EmployeeToFirm.destroy({
+            where: {
+                user_id: req.params['id']
+            }
+        });
+        for(var i=0; i<firms_id.length; i++){
+            const empToFirms = await EmployeeToFirm.create({
+                user_id: req.params['id'], 
+                firm_id: firms_id[i]
+            });
+        }
+        req.flash('success-edit-message', 'Employee Edited Successfully');
+        res.redirect('/employees');
+    }
+    else {
+        req.flash('error-edit-message', 'Email already taken.');
+        res.redirect('/employees/edit/'+ req.params['id']);
+    }
+});
+
+router.get('/employee/delete/:id',  auth, csrfProtection, async (req, res) =>{
+    const user_delete = User.destroy({
+        where: {
+            id: req.params['id']
+        }
+    });
+    const firm_to_user_delete = EmployeeToFirm.destroy({
+        where: {
+            user_id: req.params['id']
+        }
+    });
+    res.redirect('/employees');
+});
+
+/*==================================BRATIN MEHETA 14-06-2018=====================================*/
 
 module.exports = router;

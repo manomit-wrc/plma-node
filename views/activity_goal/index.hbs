@@ -16,28 +16,42 @@
                 <strong>Success! </strong>{{success_edit_message}}
             </div>
             {{/if}}
+            {{#if success_del_message}}
+            <div class="alert alert-danger">
+                <strong>Success! </strong>{{success_del_message}}
+            </div>
+            {{/if}}
             <div class="col-xs-4">
-                <h4 class="page-title">Employee</h4>
+                <h4 class="page-title">Activity Goal</h4>
             </div>
             <div class="col-xs-8 text-right m-b-30">
-                <a href="/employees/add" class="btn btn-primary pull-right rounded"><i class="fa fa-plus"></i> Add Employee</a>
+                <a href="/activity-goal/add" class="btn btn-primary pull-right rounded"><i class="fa fa-plus"></i> Add Activity Goal</a>
                 
             </div>
         </div>
         <div class="row filter-row">
             <form name="filter" method="GET">
-                <div class="col-sm-6 col-xs-6">
+                <div class="col-sm-3 col-xs-6">
                     <div class="form-group form-focus">
-                        <label class="control-label">Employee Email</label>
-                        <input type="text" name="employee_email" id="employee_email" class="form-control floating"
-                        value="{{employee_emails}}" />
+                        <label class="control-label">From Date</label>
+                        <div class="cal-icon">
+                            <input class="form-control floating datetimepicker" type="text" id="from_activity_goal_date" name="from_activity_goal_date" value="{{from_activity_goal_date}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-xs-6">
+                    <div class="form-group form-focus">
+                        <label class="control-label">To Date</label>
+                        <div class="cal-icon">
+                            <input class="form-control floating datetimepicker" type="text" id="to_activity_goal_date" name="to_activity_goal_date" value="{{to_activity_goal_date}}">
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-3 col-xs-6">  
                     <button type="submit" class="btn btn-success btn-block">Search</button>
                 </div>
                 <div class="col-sm-3 col-xs-6">
-                    <a href="/employees" class="btn btn-success btn-block"> Clear </a>
+                    <a href="/activity-goal" class="btn btn-success btn-block"> Clear </a>
                 </div>  
             </form>
         </div>
@@ -47,35 +61,32 @@
                     <table class="table table-striped custom-table datatable">
                         <thead>
                             <tr>
-                                <th style="width:30%;">Name</th>
-                                <th>Email</th>
-                                <th>Mobile</th>
-                                <th>Created Date</th>
+                                <th style="width:25%;">Activity Goals</th>
+                                <th>Firm Name</th>
+                                <th>Duration</th>
+                                <th style="width:25%;">Remarks</th>
+                                <th>Created Date &amp; time</th>
                                 <th class="text-right">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{#each employee}}
-                            {{#if_eq this.role_id "4"}}
+                            {{#each goals}}
                             <tr>
-                                <td>
-                                    <a href="javascript:void(0)" class="avatar">{{first_letter this.first_name}}</a>
-                                    <h2><a href="javascript:void(0)">{{this.first_name}}&nbsp;{{this.last_name}}</a></h2>
-                                </td>
-                                <td>{{this.email}}</td>
-                                <td>{{this.mobile_no}}</td>
-                                <td>{{dateFormat this.createdAt "DD-MM-YYYY"}}</td>
+                                <td>{{this.activity_goal}}</td>
+                                <td>{{this.firm.title}}</td>
+                                <td>{{dateFormat this.from_date "DD-MM-YYYY"}} To {{dateFormat this.to_date "DD-MM-YYYY"}}</td>
+                                <td>{{this.remarks}}</td>
+                                <td>{{dateFormat this.createdAt "DD-MM-YYYY, hh:mm a"}}</td>
                                 <td class="text-right">
                                     <div class="dropdown">
                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                         <ul class="dropdown-menu pull-right">
-                                            <li><a href="/employee/edit/{{this.id}}"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                            <li><a href="/employee/delete/{{this.id}}"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                                            <li><a href="/activity-goal/edit/{{this.id}}"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+                                            <li><a href="/activity-goal/delete/{{this.id}}"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
                                         </ul>
                                     </div>
                                 </td>
                             </tr>
-                            {{/if_eq}}
                             {{/each}}
                         </tbody>
                     </table>

@@ -13,7 +13,7 @@ const lodash = require('lodash');
 const port = process.env.PORT || 5000;
 
 var handlebars = require('handlebars'),
-      layouts = require('handlebars-layouts');
+layouts = require('handlebars-layouts');
 
 handlebars.registerHelper(layouts(handlebars));
 
@@ -24,6 +24,7 @@ const dashboard = require('./routes/dashboard');
 const firm = require('./routes/firm');
 const main = require('./routes/main');
 const employee = require('./routes/employee');
+const activity_goal = require('./routes/activity_goal');
 
 const allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -33,10 +34,10 @@ const allowCrossDomain = function(req, res, next) {
     // intercept OPTIONS method
     if ('OPTIONS' == req.method) {
       res.send(200);
-    }
-    else {
+  }
+  else {
       next();
-    }
+  }
 };
 app.use(allowCrossDomain);
 require('./config/passport')(passport);
@@ -53,8 +54,19 @@ const hbs = exphbs.create({
         first_letter: function(a) {
             return a.charAt(0);
         },
-        dateFormat: require('handlebars-dateformat')
-    }
+        
+        
+     
+        inArray: function(array, value, block) {
+          if (array.indexOf(value) !== -1) {
+            return block.fn(this);
+        }
+        else {
+          return block.inverse(this);
+        }
+    },
+    dateFormat: require('handlebars-dateformat')
+}
 });
 
 app.engine('.hbs', hbs.engine);
@@ -88,5 +100,6 @@ app.use(dashboard);
 app.use(firm);
 app.use(main);
 app.use(employee);
+app.use(activity_goal);
 /******** End  *******/
 app.listen(port, () => console.log(`Server listening to port ${port}`));

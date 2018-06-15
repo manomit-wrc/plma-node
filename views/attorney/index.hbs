@@ -7,45 +7,48 @@
 					<div class="content container-fluid">
 						<div class="row">
 							<div class="col-xs-4">
-								<h4 class="page-title">Designations</h4>
+								 
+								<h4 class="page-title">Attorneys  </h4>
+								 
 							</div>
+
 							<div class="col-xs-8 text-right m-b-30">
-								<a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_user"><i class="fa fa-plus"></i> Add Designation</a>
+								<a href="/attorney/addAttorney" class="btn btn-primary rounded" ><i class="fa fa-plus"></i> Add Attorney</a>
 							</div>
 						</div>
-						{{#if success_add_designation}}
+						{{#if success_create_attorney}}
 						<div class="row">
 							<div class="alert alert-success">
-								<strong>Success!!!</strong>{{success_add_designation}}
+								<strong>Success!!!!</strong>{{success_create_attorney}}
 							</div>
 						</div>
 						{{/if}}
-						{{#if success_edit_designation}}
-							<div class="row">
-								<div class="alert alert-success">
-									<strong>Success!!!</strong>{{success_edit_designation}}
-								</div>
+						{{#if success_delete_attorney}}
+						<div class="row">
+							<div class="alert alert-success">
+								<strong>Success!!!!</strong>{{success_delete_attorney}}
 							</div>
+						</div>
 						{{/if}}
-						{{#if success_delete_designation}}
-							<div class="row">
-								<div class="alert alert-success">
-									<strong>Success!!!</strong>{{success_delete_designation}}
-								</div>
-							</div>
+						{{#if success_edit_attorney}}
+						<div class="row" >
+                           <div class="alert alert-success">
+							   <strong>Success!!!</strong>{{success_edit_attorney}}
+                           </div>
+						</div>	
 						{{/if}}
 			<form method="GET">
 						<div class="row filter-row">
 							<div class="col-sm-3 col-xs-6">
 								<div class="form-group form-focus">
-									<label class="control-label">Code</label>
-									<input type="text" class="form-control floating" id="searchCode" name="searchCode" value="{{searchCode}}"/>
+									<label class="control-label">Name</label>
+									<input type="text" class="form-control floating" id="searchName" name="searchName" value="{{searchName}}"/>
 								</div>
 							</div>
 							<div class="col-sm-3 col-xs-6">
 				<div class="form-group form-focus">
-					<label class="control-label">Title</label>
-					<input type="text" class="form-control floating" id="searchTitle" name="searchTitle" value="{{searchTitle}}"/>
+					<label class="control-label">Email Id</label>
+					<input type="text" class="form-control floating" id="searchTitle" name="searchEmail" value="{{searchEmail}}"/>
 				</div>
 							</div>
 
@@ -55,7 +58,7 @@
 							</div>
 							<div class="col-sm-3 col-xs-6">
 								<!-- <a href="javascript:void(0)" class="btn btn-success btn-block" onclick="searchDataTable()"> Search </a> -->
-								<a href="/designations" class="btn btn-success btn-block"> Clear </a>
+								<a href="/attorneys" class="btn btn-success btn-block"> Clear </a>
 							</div>
 						</div>
 					</form>
@@ -66,9 +69,10 @@
 										<thead>
 											<tr>
 
-												<th>Code</th>
-												<th>Title</th>
-												<th>Remarks</th>
+												<th>Name</th>
+												<th>Email Id</th>
+												<th>Mobile Number</th>
+                                                <th>Join date</th>
 
 												<th class="text-right">Action</th>
 											</tr>
@@ -76,19 +80,18 @@
 
 										<tbody  id="mainTable">
 						{{#each rows}}
-											<tr data-code="{{this.code}}"
-									data-title="{{this.title}}">
+											<tr>
 
 
-												<td>{{this.code}}</td>
-												<td>{{this.title}}</td>
-												<td>{{this.remarks}}</td>
-
+												<td>{{this.first_name}} {{this.last_name}}</td>
+												<td>{{this.email}}</td>
+												<td>{{this.mobile_no}}</td>
+                                                <td>{{this.createdAt}}</td>
 												<td class="text-right">
 													<div class="dropdown">
 														<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
 														<ul class="dropdown-menu pull-right">
-															<li><a href="/designations/update/{{this.id}}" ><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+															<li><a href="/attorneys/editAttorneys/{{this.id}}" ><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
 
 															<li><a href="javascript:void(0)"  data-toggle="modal" data-target="#{{this.id}}"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
 														</ul>
@@ -109,8 +112,8 @@
 													<p>Are you sure to delete ?</p>
 													</div>
 													<div class="modal-footer">
-														<a href="/designations/delete/{{this.id}}" class="btn btn-danger" ><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-													<a href="/designations" class="btn btn-default" >Cancel</a>
+														<a href="/attorneys/delete/{{this.id}}" class="btn btn-danger" ><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+													<a href="/attorneys" class="btn btn-default" >Cancel</a>
 													</div>
 												</div>
 												
@@ -339,49 +342,7 @@
 						</div>
 					</div>
 				</div>
-				<!-- Add designation modal start -->
-				<div id="add_user" class="modal custom-modal fade" role="dialog">
-					<div class="modal-dialog">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<div class="modal-content modal-lg">
-							<div class="modal-header">
-								<h4 class="modal-title">Add Designation</h4>
-							</div>
-							<div class="modal-body">
-								<form class="m-b-30" id="frmAddFirm">
-									<div class="row">
-										<div class="col-md-12">
-											<div class="form-group">
-												<label class="control-label">Code : <span class="text-danger">*</span></label>
-												<input class="form-control" type="text" id="code" name="code">
-						<span id="uniqueCode" style="color: red; font-weight: bold;"> </span>
-											</div>
-										</div>
-										<div class="col-md-12">
-											<div class="form-group">
-												<label class="control-label">Designation :<span class="text-danger">*</span></label>
-												<input class="form-control" type="text" id="designation" name="designation">
-											</div>
-										</div>
-										<div class="col-md-12">
-											<div class="form-group">
-												<label class="control-label">Remarks : <span class="text-danger">*</span></label>
-												<!-- <input class="form-control" type="text"> -->
-						<textarea class="form-control" rows="12" id="remarks" name="remarks"></textarea>
-											</div>
-										</div>
-
-									</div>
-
-									<div class="m-t-20 text-center">
-										<button class="btn btn-primary"  id="btnAdd">Add Designation</button>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-		<!-- Add designation modal ends -->
+				
 
 				{{#content "script" mode="append"}}
 					<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
@@ -452,37 +413,6 @@
 
 					});
 					</script>
-					<script type="text/javascript">
-					function searchDataTable(){
-						var code = $('#searchCode').val();
-						var title = $('#searchTitle').val();
-						$.ajax({
-						url: '/designations/search',
-						method: 'POST',
-						data: {code: code,title: title},
-						success: function(resp){
-							console.log(resp.searchData);
-
-							// document.getElementById('mainTable').removeAttribute('class');
-							document.getElementById('mainTable').style.display = "none";
-							// $( "#removeDatatable" ).remove();
-							// document.getElementById('mainTable').removeChild(document.getElementById('mainTable').childNodes[1]);
-							// $( "#searchData" ).removeClass( "datatable" );
-	//                          $('.datatable').dataTable({
-	//     "bPaginate": false
-	// });
-							// document.getElementById('searchTable').style.display = "block";
-
-							$.each(resp.searchData, function(key, value) {
-							console.log(value);
-		$("#searchData").append('<tbody   ><tr><td>'+value.code+'</td><td>'+value.title+'</td><td>'+value.remarks+'</td><td class="text-right"><div class="dropdown"><a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a><ul class="dropdown-menu pull-right"><li><a href="/designations/update/'+value.id+'" ><i class="fa fa-pencil m-r-5"></i> Edit</a></li><li><a href="/designations/delete/'+value.id+'"  ><i class="fa fa-trash-o m-r-5"></i>Delete</a></li></ul></div></td></tr></tbody   >');
-	});
-						},
-						error: function(xhr){
-
-						}
-						});
-					}
-					</script>
+					
 
 					{{/content}}
