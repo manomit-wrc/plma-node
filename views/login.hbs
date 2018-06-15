@@ -3,12 +3,17 @@
     <div class="account-box">
         <div class="account-wrapper">
             <div class="account-logo">
-            <a href="index-2.html"><img src="/assets/img/logo2.png" alt="Focus Technologies"></a>
+                <a href="index-2.html"><img src="/assets/img/logo2.png" alt="Focus Technologies"></a>
             </div>
             {{#if message}}
-                <div class="alert alert-danger">
-                    <strong>Error! </strong>{{message}}
-                </div>
+            <div class="alert alert-danger">
+                <strong>Error! </strong>{{message}}
+            </div>
+            {{/if}}
+            {{#if success_password_message}}
+            <div class="alert alert-success">
+                <strong>Success! </strong>{{success_password_message}}
+            </div>
             {{/if}}
             <form action="/" method="POST" id="frmLogin">
                 <input type="hidden" name="_csrf" value="{{csrfToken}}">

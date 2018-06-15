@@ -1,6 +1,7 @@
 const express = require('express');
 const auth = require('../middlewares/auth');
 const csrf = require('csurf');
+const bCrypt = require('bcrypt-nodejs');
 const User = require('../models').user;
 
 var csrfProtection = csrf({ cookie: true });
@@ -63,5 +64,39 @@ router.get('/edit-profile', csrfProtection, auth, (req, res) => {
         res.redirect('/edit-profile');
     });
 });
+
+/*==================================Bratin Meheta 15-06-2018 ========================================*/
+
+router.get('/change-password', auth, csrfProtection, (req, res) => {
+    var change_pass = req.flash('change-pass')[0];
+    res.render('change_password', { layout: 'dashboard', csrfToken: req.csrfToken(), change_pass:change_pass,});
+});
+router.post('/change-password', auth, csrfProtection, (req, res) => {
+    User.findAll({
+        where: {
+            id:req.user.id
+        },
+        raw: true
+    }).then((result) =>{
+        var compare = bCrypt.compareSync( req.body.password, result[0].password);
+        if(compare)
+        {
+            User.update({
+                password: bCrypt.hashSync(req.body.new_password)
+                },{where: {id: req.user.id}
+            }).then((change) =>{
+                req.flash('success-password-message', 'Password updated successfully, Please login again.')
+                res.redirect('/logout');
+            });
+        }
+        else
+        {
+            req.flash('change-pass','Current password not matched, Please enter the correct password');
+            res.redirect('/change-password');
+        }
+    });
+});
+
+/*==================================Bratin Meheta 15-06-2018 ========================================*/
 
 module.exports = router;
