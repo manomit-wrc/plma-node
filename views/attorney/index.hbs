@@ -7,12 +7,36 @@
 					<div class="content container-fluid">
 						<div class="row">
 							<div class="col-xs-4">
-								<h4 class="page-title">Attorneys</h4>
+								 
+								<h4 class="page-title">Attorneys  </h4>
+								 
 							</div>
+
 							<div class="col-xs-8 text-right m-b-30">
 								<a href="/attorney/addAttorney" class="btn btn-primary rounded" ><i class="fa fa-plus"></i> Add Attorney</a>
 							</div>
 						</div>
+						{{#if success_create_attorney}}
+						<div class="row">
+							<div class="alert alert-success">
+								<strong>Success!!!!</strong>{{success_create_attorney}}
+							</div>
+						</div>
+						{{/if}}
+						{{#if success_delete_attorney}}
+						<div class="row">
+							<div class="alert alert-success">
+								<strong>Success!!!!</strong>{{success_delete_attorney}}
+							</div>
+						</div>
+						{{/if}}
+						{{#if success_edit_attorney}}
+						<div class="row" >
+                           <div class="alert alert-success">
+							   <strong>Success!!!</strong>{{success_edit_attorney}}
+                           </div>
+						</div>	
+						{{/if}}
 			<form method="GET">
 						<div class="row filter-row">
 							<div class="col-sm-3 col-xs-6">
