@@ -24,6 +24,7 @@ const dashboard = require('./routes/dashboard');
 const firm = require('./routes/firm');
 const main = require('./routes/main');
 const employee = require('./routes/employee');
+const activity_goal = require('./routes/activity_goal');
 
 const allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -99,5 +100,6 @@ app.use(dashboard);
 app.use(firm);
 app.use(main);
 app.use(employee);
+app.use(activity_goal);
 /******** End  *******/
 app.listen(port, () => console.log(`Server listening to port ${port}`));
