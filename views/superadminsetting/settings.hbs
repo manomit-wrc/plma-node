@@ -1,0 +1,486 @@
+
+            <div class="page-wrapper">
+
+
+            {{#content "style" mode="prepend"}}
+                <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+                <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+                <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+            {{/content}}
+
+
+      <div class="content container-fluid">
+					<div class="row">
+						<div class="col-md-8 col-md-offset-2">
+              {{#each data}}
+							<form name="addname" id="addname" >
+                <input type="hidden" id="hidden_field" value={{this.id}}>
+								<h3 class="page-title">Company Details</h3>
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label>Company Name <span class="text-danger">*</span></label>
+											<input class="form-control" type="text" name="companyname"  id="companyname" value="{{this.company_name}}">
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label>Contact Person</label>
+											<input class="form-control " type="text" name="contactperson" id="contactperson" value="{{this.contact_person}}">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="form-group">
+											<label>Address</label>
+											<input class="form-control " type="text" name="address" id="address" value={{this.address}}>
+										</div>
+									</div>
+									<div class="col-sm-6 col-md-6 col-lg-3">
+										<div class="form-group">
+											<label>Country</label>
+											 <select class="form-control select" name="country" id="country" value={{this.country}}>
+												<option>USA</option>
+												<option>United Kingdom</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-sm-6 col-md-6 col-lg-3">
+										<div class="form-group">
+											<label>City</label>
+											<input class="form-control" type="text" name="city" id="city" value={{this.city}}>
+										</div>
+									</div>
+									<div class="col-sm-6 col-md-6 col-lg-3">
+										<div class="form-group">
+											<label>State/Province</label>
+											<select class="form-control select" name="state" id="state" value={{this.state}}>
+												<option>California</option>
+												<option>Alaska</option>
+												<option>Alabama</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-sm-6 col-md-6 col-lg-3">
+										<div class="form-group">
+											<label>Postal Code</label>
+											<input class="form-control" type="text" name="postalcode" id="postalcode" value={{this.postal_code}}>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label>Email</label>
+											<input class="form-control" type="email" name="email" id="email" value={{this.email}}>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label>Phone Number</label>
+											<input class="form-control" type="text" name="phnumber" id="phnumber" value={{this.phone_number}}>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label>Mobile Number</label>
+											<input class="form-control" type="text" name="mbnumber" id="mbnumber" value={{this.mobile_number}}>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label>Fax</label>
+											<input class="form-control"  type="text" name="fax" id="fax" value= {{this.fax}}>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="form-group">
+											<label>Website Url</label>
+											<input class="form-control" type="text" name="weburl" id="weburl" value={{this.website_url}}>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12 text-center m-t-20">
+										<button type="button" class="btn btn-primary" id="insert">Save &amp; update</button>
+									</div>
+								</div>
+							</form>
+              {{/each}}
+						</div>
+					</div>
+        </div>
+
+
+				<div class="notification-box">
+					<div class="msg-sidebar notifications msg-noti">
+              						<div class="topnav-dropdown-header">
+              							<span>Messages</span>
+              						</div>
+                						<div class="drop-scroll msg-list-scroll">
+                							<ul class="list-box">
+                  								<li>
+                  									<a href="chat.html">
+                  										<div class="list-item">
+                  											<div class="list-left">
+                  												<span class="avatar">R</span>
+                  											</div>
+                  											<div class="list-body">
+                  												<span class="message-author">Richard Miles </span>
+                  												<span class="message-time">12:28 AM</span>
+                  												<div class="clearfix"></div>
+                  												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+                  											</div>
+                  										</div>
+                  									</a>
+                  								</li>
+                  								<li>
+                  									<a href="chat.html">
+                  										<div class="list-item new-message">
+                  											<div class="list-left">
+                  												<span class="avatar">J</span>
+                  											</div>
+                  											<div class="list-body">
+                  												<span class="message-author">John Doe</span>
+                  												<span class="message-time">1 Aug</span>
+                  												<div class="clearfix"></div>
+                  												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+                  											</div>
+                  										</div>
+                  									</a>
+                  								</li>
+                  								<li>
+                  									<a href="chat.html">
+                  										<div class="list-item">
+                  											<div class="list-left">
+                  												<span class="avatar">T</span>
+                  											</div>
+                  											<div class="list-body">
+                  												<span class="message-author"> Tarah Shropshire </span>
+                  												<span class="message-time">12:28 AM</span>
+                  												<div class="clearfix"></div>
+                  												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+                  											</div>
+                  										</div>
+                  									</a>
+                  								</li>
+                  								<li>
+                  									<a href="chat.html">
+                  										<div class="list-item">
+                  											<div class="list-left">
+                  												<span class="avatar">M</span>
+                  											</div>
+                  											<div class="list-body">
+                  												<span class="message-author">Mike Litorus</span>
+                  												<span class="message-time">12:28 AM</span>
+                  												<div class="clearfix"></div>
+                  												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+                  											</div>
+                  										</div>
+                  									</a>
+                  								</li>
+                  								<li>
+                  									<a href="chat.html">
+                  										<div class="list-item">
+                  											<div class="list-left">
+                  												<span class="avatar">C</span>
+                  											</div>
+                  											<div class="list-body">
+                  												<span class="message-author"> Catherine Manseau </span>
+                  												<span class="message-time">12:28 AM</span>
+                  												<div class="clearfix"></div>
+                  												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+                  											</div>
+                  										</div>
+                  									</a>
+                  								</li>
+                  								<li>
+                  									<a href="chat.html">
+                  										<div class="list-item">
+                  											<div class="list-left">
+                  												<span class="avatar">D</span>
+                  											</div>
+                  											<div class="list-body">
+                  												<span class="message-author"> Domenic Houston </span>
+                  												<span class="message-time">12:28 AM</span>
+                  												<div class="clearfix"></div>
+                  												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+                  											</div>
+                  										</div>
+                  									</a>
+                  								</li>
+                  								<li>
+                  									<a href="chat.html">
+                  										<div class="list-item">
+                  											<div class="list-left">
+                  												<span class="avatar">B</span>
+                  											</div>
+                  											<div class="list-body">
+                  												<span class="message-author"> Buster Wigton </span>
+                  												<span class="message-time">12:28 AM</span>
+                  												<div class="clearfix"></div>
+                  												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+                  											</div>
+                  										</div>
+                  									</a>
+                  								</li>
+                  								<li>
+                  									<a href="chat.html">
+                  										<div class="list-item">
+                  											<div class="list-left">
+                  												<span class="avatar">R</span>
+                  											</div>
+                  											<div class="list-body">
+                  												<span class="message-author"> Rolland Webber </span>
+                  												<span class="message-time">12:28 AM</span>
+                  												<div class="clearfix"></div>
+                  												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+                  											</div>
+                  										</div>
+                  									</a>
+                  								</li>
+                  								<li>
+                  									<a href="chat.html">
+                  										<div class="list-item">
+                  											<div class="list-left">
+                  												<span class="avatar">C</span>
+                  											</div>
+                  											<div class="list-body">
+                  												<span class="message-author"> Claire Mapes </span>
+                  												<span class="message-time">12:28 AM</span>
+                  												<div class="clearfix"></div>
+                  												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+                  											</div>
+                  										</div>
+                  									</a>
+                  								</li>
+                    								<li>
+                    									<a href="chat.html">
+                    										<div class="list-item">
+                    											<div class="list-left">
+                    												<span class="avatar">M</span>
+                    											</div>
+                    											<div class="list-body">
+                    												<span class="message-author">Melita Faucher</span>
+                    												<span class="message-time">12:28 AM</span>
+                    												<div class="clearfix"></div>
+                    												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+                    											</div>
+                    										</div>
+                    									</a>
+                    								</li>
+                    								<li>
+                    									<a href="chat.html">
+                    										<div class="list-item">
+                    											<div class="list-left">
+                    												<span class="avatar">J</span>
+                    											</div>
+                    											<div class="list-body">
+                    												<span class="message-author">Jeffery Lalor</span>
+                    												<span class="message-time">12:28 AM</span>
+                    												<div class="clearfix"></div>
+                    												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+                    											</div>
+                    										</div>
+                    									</a>
+                    								</li>
+                      								<li>
+                      									<a href="chat.html">
+                      										<div class="list-item">
+                      											<div class="list-left">
+                      												<span class="avatar">L</span>
+                      											</div>
+                      											<div class="list-body">
+                      												<span class="message-author">Loren Gatlin</span>
+                      												<span class="message-time">12:28 AM</span>
+                      												<div class="clearfix"></div>
+                      												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+                      											</div>
+                      										</div>
+                      									</a>
+                      								</li>
+
+                        							<li>
+                        								<a href="chat.html">
+                        									<div class="list-item">
+                        										<div class="list-left">
+                        											<span class="avatar">T</span>
+                        										</div>
+                        										<div class="list-body">
+                        											<span class="message-author">Tarah Shropshire</span>
+                        											<span class="message-time">12:28 AM</span>
+                        											<div class="clearfix"></div>
+                        											<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+                        										</div>
+                        									</div>
+                        								</a>
+                        							</li>
+
+                        							</ul>
+                        						</div>
+                      						<div class="topnav-dropdown-footer">
+                      							<a href="chat.html">See all messages</a>
+                      						</div>
+					</div>
+				</div>
+      </div>
+
+
+
+
+
+
+
+		<!-- <div class="sidebar-overlay" data-reff="#sidebar"></div>
+        <script type="text/javascript" src="assets/js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="assets/js/jquery.slimscroll.js"></script>
+		<script type="text/javascript" src="assets/js/select2.min.js"></script>
+		<script type="text/javascript" src="assets/js/app.js"></script> -->
+
+    {{#content "script" mode="append"}}
+        <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+        <script type="text/javascript" src="/assets/js/select2.min.js"></script>
+        <script type="text/javascript" src="/assets/js/moment.min.js"></script>
+        <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+        <script type="text/javascript">
+        // add designation ajax and form validation starts
+        $(document).ready(function(e) {
+
+            $("#insert").click(function() {
+                $("#addname").submit();
+            });
+
+            $("#addname").validate({
+                rules: {
+                    companyname: {
+                        required: true
+                    },
+                    contactperson: {
+                        required: true
+                    },
+                    address: {
+                        required: true
+                    },
+                    country: {
+                        required: true
+                    },
+                    email: {
+                        required: true
+                    },
+                    city: {
+                        required: true
+                    },
+                    phnumber: {
+                        required: true
+                    },
+                    mbnumber: {
+                        required: true
+                    },
+
+                    fax: {
+                        required: true
+                    },
+                    weburl: {
+                        required: true
+                    },
+                    postalcode: {
+                        required: true
+                        }
+                },
+                messages: {
+                    companyname: {
+                        required: "company_name can't be blank"
+                    },
+                    contactperson: {
+                        required: "contact_person can't be blank"
+                    },
+                    address: {
+                        required: "address can't be blank"
+                    },
+                    country: {
+                        required: "country can't be blank"
+                    },
+                    email: {
+                        required: "email can't be blank"
+                    },
+                    state: {
+                        required: "state can't be blank"
+                    },
+                    mbnumber: {
+                        required: "mobile_number can't be blank"
+                    },
+                    phnumber: {
+                        required: "phone_number can't be blank"
+                    },
+                    state: {
+                        required: "state title can't be blank"
+                    },
+                    fax: {
+                        required: " fax can't be blank"
+                    },
+                    postalcode: {
+                        required: "postal_code can't be blank"
+                    },
+                    weburl: {
+                        required: "website_url can't be blank"
+                    }
+                },
+                submitHandler:function(form) {
+                  var companyname = $('#companyname').val();
+                  var contactperson = $('#contactperson').val();
+                  var address = $('#address').val();
+                  var country = $('#country').val();
+                  var state = $('#state').val();
+                  var email = $('#email').val();
+                  var phnumber = $('#phnumber').val();
+                  var mbnumber = $('#mbnumber').val();
+                  var postalcode = $('#postalcode').val();
+                  var fax = $('#fax').val();
+                  var wburl = $('#weburl').val();
+                  var hidden_field = $('#hidden_field').val();
+
+
+
+
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/settings/insert",
+                        data: {
+                          hidden_field: hidden_field,
+                          companyname: companyname,
+                          contactperson: contactperson,
+                          address: address,
+                          country: country,
+                          email: email,
+                          state: state,
+                          phnumber: phnumber,
+                          mbnumber: mbnumber,
+                          postalcode: postalcode,
+                          fax: fax,
+                          weburl: wburl
+                        },
+                        beforeSend: function(xhr) {
+                            xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+                        },
+                        success: function(response) {
+
+                            window.location.href = '/settings';
+                        },
+                        error: function(xhr){
+                        }
+                    });
+              }
+            });
+          });
+        </script>
+        {{/content}}

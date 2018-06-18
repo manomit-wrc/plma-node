@@ -184,7 +184,7 @@
                                 var last_name = $('#last_name').val();
                                 var email = $('#email').val();
                                 var password = $('#password').val();
-                                var dob = $('#dob').val();
+                                var dob =  $('#dob').val() ;
                                 var gender = $('#gender').val();
                                 var address  = $('#address').val();
                                 var city = $('#city').val();
@@ -216,6 +216,7 @@
 									if(response.msg === "error"){
 										document.getElementById('uniqueEmail').innerHTML = "Email id already been exists";
 									}else{
+                                       // document.getElementById('uniqueEmail').innerHTML = "Okay";
 										window.location.href = '/attorneys';
 									}
 									},
