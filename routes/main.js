@@ -135,6 +135,7 @@ router.post('/settings/insert',auth,csrfProtection, (req,res) => {
    }else{
 		 setting.create({company_name: companyname,contact_person: contactperson,address: address,country: country,city: city,state: state,postal_code: postalcode,phone_number: phnumber,mobile_number: mbnumber,email: email,fax: fax,website_url: weburl}).then(resp => {
 		 res.end("success");
+
 		});
   }
 	});
