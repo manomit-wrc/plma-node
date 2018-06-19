@@ -1,0 +1,1192 @@
+{{#content "style" mode="prepend"}}
+<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+{{/content}}
+<div class="page-wrapper">
+	<div class="content container-fluid">
+		<div class="row">
+			<div class="col-xs-4">
+				<h4 class="page-title">Firm Profile</h4>
+			</div>
+		</div>
+		<div class="row filter-row">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="tab firm-box" role="tabpanel">
+						<!-- Nav tabs -->
+						<ul class="nav nav-tabs" role="tablist">
+							<li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-address-card-o"></i>Basic</a></li>
+							<li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-building"></i>Offices</a></li>
+							<li role="presentation"><a href="#Section3" aria-controls="messages" role="tab" data-toggle="tab"><i class="fa fa-address-book-o"></i>Contacts</a></li>
+							<li role="presentation"><a href="#Section4" aria-controls="messages" role="tab" data-toggle="tab"><i class="fa fa-list"></i>Sections</a></li>
+							<li role="presentation"><a href="#Section5" aria-controls="messages" role="tab" data-toggle="tab"><i class="fa fa-desktop"></i>Practice Area</a></li>
+							<li role="presentation"><a href="#Section6" aria-controls="messages" role="tab" data-toggle="tab"><i class="fa fa-balance-scale"></i>Jurisdiction</a></li>
+						</ul>
+						<!-- Tab panes -->
+						<div class="tab-content tabs">
+							<div role="tabpanel" class="tab-pane fade in active" id="Section1">
+								<div class="row filter-row">
+									<form class="m-b-30">
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">First Name <span class="text-danger">*</span></label>
+													<input class="form-control" type="text">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Last Name</label>
+													<input class="form-control" type="text">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Username <span class="text-danger">*</span></label>
+													<input class="form-control" type="text">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Email <span class="text-danger">*</span></label>
+													<input class="form-control" type="email">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Password</label>
+													<input class="form-control" type="password">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Confirm Password</label>
+													<input class="form-control" type="password">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Phone </label>
+													<input class="form-control" type="text">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Role</label>
+													<select class="select">
+														<option>Admin</option>
+														<option>Client</option>
+														<option>Employee</option>
+													</select>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Company</label>
+													<select class="select">
+														<option>Global Technologies</option>
+														<option>Delta Infotech</option>
+													</select>
+												</div>
+											</div>
+											<div class="col-md-6">  
+												<div class="form-group">
+													<label class="control-label">Employee ID <span class="text-danger">*</span></label>
+													<input type="text" class="form-control floating">
+												</div>
+											</div>
+										</div>
+										<div class="m-t-20 text-center">
+											<button class="btn btn-primary">Save &amp; Next</button>
+										</div>
+									</form>     
+								</div>
+							</div>
+							<div role="tabpanel" class="tab-pane fade" id="Section2">
+								<div class="row">
+									<div class="col-xs-4">
+										<h4 class="page-title">Office Details</h4>
+									</div>
+									<div class="col-xs-8 text-right m-b-30">
+										<a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_office"><i class="fa fa-plus"></i> Add Office</a>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="table-responsive">
+											<table class="table table-striped custom-table datatable">
+												<thead>
+													<tr>
+														<th>Firm Name</th>
+														<th>Office Name</th>
+														<th>Mobile Number</th>
+														<th>Address</th>
+														<th>City &amp; State</th>
+														<th>Created Date</th>
+														<th class="text-right">Action</th>
+													</tr>
+												</thead>
+												<tbody>
+													{{#each office}}
+													<tr>
+														<td>{{this.firm.title}}</td>
+														<td>{{this.name}}</td>
+														<td>{{this.mobile}}</td>
+														<td>{{this.address}}</td>
+														<td>{{this.city}}, {{this.state}} </td>
+														<td>{{dateFormat this.createdAt "DD-MM-YYYY"}}</td>
+														<td class="text-right">
+															<div class="dropdown">
+																<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+																<ul class="dropdown-menu pull-right">
+																	<li><a href="#" data-toggle="modal" data-target="#edit_offices" data-office-id="{{this.id}}" data-name="{{this.name}}" data-address="{{this.address}}" data-city="{{this.city}}" data-state="{{this.state}}" data-country="{{this.country}}" data-mobile="{{this.mobile}}" data-firm-id="{{this.firm_id}}" id="edit-office-detail"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+																	<li><a href="#" data-toggle="modal" data-target="#delete_offices" data-office-id="{{this.id}}" id="delete-office-details"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+																</ul>
+															</div>
+														</td>
+													</tr>
+													{{/each}}
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div role="tabpanel" class="tab-pane fade" id="Section3">
+								<div class="row">
+									<div class="col-xs-4">
+										<h4 class="page-title">Add Contact</h4>
+									</div>
+									<div class="col-xs-8 text-right m-b-30">
+										<a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_contact"><i class="fa fa-plus"></i> Add Contact</a>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="table-responsive">
+											<table class="table table-striped custom-table datatable">
+												<thead>
+													<tr>
+														<th>Office Name</th>
+														<th>Staff Name</th>
+														<th>Designation</th>
+														<th>Email</th>
+														<th>Mobile No.</th>
+														<th>Created Date</th>
+														<th class="text-right">Action</th>
+													</tr>
+												</thead>
+												<tbody>
+													{{#each contact}}
+													<tr>
+														<td>{{this.office.name}}</td>
+														<td>{{this.first_name}} {{this.last_name}}</td>
+														<td>{{this.designation.title}}</td>
+														<td>{{this.email}}</td>
+														<td>{{this.mobile}}</td>
+														<td>{{dateFormat this.createdAt "DD-MM-YYYY"}}</td>
+														<td class="text-right">
+															<div class="dropdown">
+																<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+																<ul class="dropdown-menu pull-right">
+																	<li><a href="#" data-toggle="modal" data-target="#edit_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}" data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}" data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}" data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}" id="edit-office-contact"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+																	<li><a href="#" data-toggle="modal" data-target="#delete_contacts" data-contact-id="{{this.id}}" id="delete-office-contact-details"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+																</ul>
+															</div>
+														</td>
+													</tr>
+													{{/each}}
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div role="tabpanel" class="tab-pane fade" id="Section4">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="table-responsive">
+											<table class="table table-striped custom-table datatable">
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Email</th>
+														<th>Company</th>
+														<th>Created Date</th>
+														<th>Role</th>
+														<th class="text-right">Action</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>
+															<a href="profile.html" class="avatar">D</a>
+															<h2><a href="profile.html">Daniel Porter <span>Admin</span></a></h2>
+														</td>
+														<td>danielporter@example.com</td>
+														<td>Focus Technologies</td>
+														<td>1 Jan 2013</td>
+														<td>
+															<span class="label label-danger-border">Admin</span>
+														</td>
+														<td class="text-right">
+															<div class="dropdown">
+																<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+																<ul class="dropdown-menu pull-right">
+																	<li><a href="#" data-toggle="modal" data-target="#edit_user"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+																	<li><a href="#" data-toggle="modal" data-target="#delete_user"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+																</ul>
+															</div>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div role="tabpanel" class="tab-pane fade" id="Section5">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="table-responsive">
+											<table class="table table-striped custom-table datatable">
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Email</th>
+														<th>Company</th>
+														<th>Created Date</th>
+														<th>Role</th>
+														<th class="text-right">Action</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>
+															<a href="profile.html" class="avatar">D</a>
+															<h2><a href="profile.html">Daniel Porter <span>Admin</span></a></h2>
+														</td>
+														<td>danielporter@example.com</td>
+														<td>Focus Technologies</td>
+														<td>1 Jan 2013</td>
+														<td>
+															<span class="label label-danger-border">Admin</span>
+														</td>
+														<td class="text-right">
+															<div class="dropdown">
+																<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+																<ul class="dropdown-menu pull-right">
+																	<li><a href="#" data-toggle="modal" data-target="#edit_user"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+																	<li><a href="#" data-toggle="modal" data-target="#delete_user"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+																</ul>
+															</div>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div role="tabpanel" class="tab-pane fade" id="Section6">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="table-responsive">
+											<table class="table table-striped custom-table datatable">
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Email</th>
+														<th>Company</th>
+														<th>Created Date</th>
+														<th>Role</th>
+														<th class="text-right">Action</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>
+															<a href="profile.html" class="avatar">D</a>
+															<h2><a href="profile.html">Daniel Porter <span>Admin</span></a></h2>
+														</td>
+														<td>danielporter@example.com</td>
+														<td>Focus Technologies</td>
+														<td>1 Jan 2013</td>
+														<td>
+															<span class="label label-danger-border">Admin</span>
+														</td>
+														<td class="text-right">
+															<div class="dropdown">
+																<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+																<ul class="dropdown-menu pull-right">
+																	<li><a href="#" data-toggle="modal" data-target="#edit_user"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+																	<li><a href="#" data-toggle="modal" data-target="#delete_user"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+																</ul>
+															</div>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- ====================Starts Add Office ============================== -->
+
+<div id="add_office" class="modal custom-modal fade" role="dialog">
+	<div class="modal-dialog">
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+		<div class="modal-content modal-lg">
+			<div class="modal-header">
+				<h4 class="modal-title">Add Office</h4>
+			</div>
+			<div class="modal-body">
+				<form class="m-b-30" name="addOffice" id="addOffice" method="POST">
+					<input type="hidden" name="_csrf" value="{{csrfToken}}">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label class="control-label">Office Name <span class="text-danger">*</span></label>
+								<input class="form-control" type="text" name="name" id="name">
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<label class="control-label">Office Address <span class="text-danger">*</span></label>
+								<textarea name="address" id="address" class="form-control"></textarea>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">City <span class="text-danger">*</span></label>
+								<input class="form-control" type="text" name="city" id="city">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">State<span class="text-danger">*</span></label>
+								<input class="form-control" type="text" name="state" id="state">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Country <span class="text-danger">*</span></label>
+								<input class="form-control" type="text" name="country" id="country">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Mobile No <span class="text-danger">*</span></label>
+								<input class="form-control" type="text" name="mobile_no" id="mobile_no">
+							</div>
+						</div>
+					</div>
+					<div class="m-t-20 text-center">
+						<button class="btn btn-primary" id="btnAddOffice">Create Office</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="edit_office" class="modal custom-modal fade edit-office-modal" role="dialog">
+	<div class="modal-dialog">
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+		<div class="modal-content modal-lg">
+			<div class="modal-header">
+				<h4 class="modal-title">Edit Office Details</h4>
+			</div>
+			<div class="modal-body">
+				<form class="m-b-30" name="editOffice" id="editOffice" method="POST">
+					<input type="hidden" name="_csrf" value="{{csrfToken}}">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label class="control-label">Office Name <span class="text-danger">*</span></label>
+								<input class="form-control" type="text" name="edit_office_name" id="edit_office_name">
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<label class="control-label">Office Address <span class="text-danger">*</span></label>
+								<textarea name="edit_office_address" id="edit_office_address" class="form-control"></textarea>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">City <span class="text-danger">*</span></label>
+								<input class="form-control" type="text" name="edit_office_city" id="edit_office_city">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">State<span class="text-danger">*</span></label>
+								<input class="form-control" type="text" name="edit_office_state" id="edit_office_state">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Country <span class="text-danger">*</span></label>
+								<input class="form-control" type="text" name="edit_office_country" id="edit_office_country">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Mobile No <span class="text-danger">*</span></label>
+								<input class="form-control" type="text" name="edit_office_mobile_no" id="edit_office_mobile_no">
+							</div>
+						</div>
+					</div>
+					<div class="m-t-20 text-center">
+						<button class="btn btn-primary btnEditOffice">Save &amp; Update</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="delete_office" class="modal custom-modal fade delete-office-modal" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content modal-md">
+			<div class="modal-header">
+				<h4 class="modal-title">Delete Office</h4>
+			</div>
+			<form>
+				<div class="modal-body card-box">
+					<p>Are you sure want to delete this?</p>
+
+					<div class="m-t-20"> <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+						<button type="submit" class="btn btn-danger btnDeleteOffice">Delete</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- ====================Ends Add Office ============================== -->
+<!-- ====================Starts Add contact ============================== -->
+
+<div id="add_contact" class="modal custom-modal fade" role="dialog">
+	<div class="modal-dialog">
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+		<div class="modal-content modal-lg">
+			<div class="modal-header">
+				<h4 class="modal-title">Add Office Contact</h4>
+			</div>
+			<div class="modal-body">
+				<form class="m-b-30" name="addOfficeContactFrm" id="addOfficeContactFrm" method="POST">
+					<input type="hidden" name="_csrf" value="{{csrfToken}}">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Office Name <span class="text-danger">*</span></label>
+								<select class="select" name="office_id" id="office_id">
+									<option value="">Select Office</option>
+									{{#each office}}
+									<option value="{{this.id}}">{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Designation <span class="text-danger">*</span></label>
+								<select class="select" name="designation_id" id="designation_id">
+									<option value="">Select Designation</option>
+									{{#each designation}}
+									<option value="{{this.id}}">{{this.code}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">First Name <span class="text-danger">*</span></label>
+								<input class="form-control" type="text" name="first_name" id="first_name">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Last Name <span class="text-danger">*</span></label>
+								<input class="form-control" type="text" name="last_name" id="last_name">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Email <span class="text-danger">*</span></label>
+								<input class="form-control" type="email" name="email" id="email">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Mobile No <span class="text-danger">*</span></label>
+								<input class="form-control" type="text" name="contact_mobile_no" id="contact_mobile_no">
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<label class="control-label"> Address <span class="text-danger">*</span></label>
+								<textarea name="contact_address" id="contact_address" class="form-control"></textarea>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">City <span class="text-danger">*</span></label>
+								<input class="form-control" type="text" name="contact_city" id="contact_city">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">State<span class="text-danger">*</span></label>
+								<input class="form-control" type="text" name="contact_state" id="contact_state">
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<label class="control-label">Country <span class="text-danger">*</span></label>
+								<input class="form-control" type="text" name="contact_country" id="contact_country">
+							</div>
+						</div>
+					</div>
+					<div class="m-t-20 text-center">
+						<button class="btn btn-primary" id="btnAddOfficeContact">Create Contact</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="edit_contact" class="modal custom-modal fade editContactModal" role="dialog">
+	<div class="modal-dialog">
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+		<div class="modal-content modal-lg">
+			<div class="modal-header">
+				<h4 class="modal-title">Edit Contact Details</h4>
+			</div>
+			<div class="modal-body">
+				<form class="m-b-30" name="EditOfficeContactFrm" id="EditOfficeContactFrm" method="POST">
+					<input type="hidden" name="_csrf" value="{{csrfToken}}">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Office Name <span class="text-danger">*</span></label>
+								<select class="select" name="edit_office_id" id="edit_office_id">
+									{{#each office}}
+									<option value="{{this.id}}">{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Designation <span class="text-danger">*</span></label>
+								<select class="select" name="edit_designation_id" id="edit_designation_id">
+									{{#each designation}}
+									<option value="{{this.id}}">{{this.code}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">First Name <span class="text-danger">*</span></label>
+								<input class="form-control" type="text" name="edit_contact_first_name" id="edit_contact_first_name">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Last Name <span class="text-danger">*</span></label>
+								<input class="form-control" type="text" name="edit_contact_last_name" id="edit_contact_last_name">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Email <span class="text-danger">*</span></label>
+								<input class="form-control" type="email" name="edit_contact_email" id="edit_contact_email">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Mobile No <span class="text-danger">*</span></label>
+								<input class="form-control" type="text" name="edit_contact_mobile_no" id="edit_contact_mobile_no">
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<label class="control-label"> Address <span class="text-danger">*</span></label>
+								<textarea name="edit_contact_address" id="edit_contact_address" class="form-control"></textarea>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">City <span class="text-danger">*</span></label>
+								<input class="form-control" type="text" name="edit_contact_city" id="edit_contact_city">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">State<span class="text-danger">*</span></label>
+								<input class="form-control" type="text" name="edit_contact_state" id="edit_contact_state">
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<label class="control-label">Country <span class="text-danger">*</span></label>
+								<input class="form-control" type="text" name="edit_contact_country" id="edit_contact_country">
+							</div>
+						</div>
+					</div>
+					<div class="m-t-20 text-center">
+						<button class="btn btn-primary" id="btnEditContactOffice">Edit Contact</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="delete_contact" class="modal custom-modal fade deleteContactModal" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content modal-md">
+			<div class="modal-header">
+				<h4 class="modal-title">Delete Contact</h4>
+			</div>
+			<form>
+				<div class="modal-body card-box">
+					<p>Are you sure want to delete this?</p>
+
+					<div class="m-t-20"> <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+						<button type="submit" class="btn btn-danger" id="btnDeleteContact">Delete</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- ====================Ends Add Office ============================== -->
+{{#content "script" mode="append"}}
+<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="/assets/js/select2.min.js"></script>
+<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+<script type="text/javascript">
+/*===============================Starts Add Ofiice Section========================================*/
+$(document).ready(function(e) {
+
+	$("#btnAddOffice").click(function() {
+		$("#addOffice").submit();
+	});          
+
+	$("#addOffice").validate({
+		rules: {
+			name: {
+				required: true
+			},
+			address: {
+				required: true
+			},
+			city: {
+				required: true
+			},
+			state: {
+				required: true
+			},
+			country: {
+				required: true
+			},
+			mobile_no: {
+				required: true,
+				number: true,
+				maxlength: 10
+			}
+		},
+		messages: {
+			name: {
+				required: "Name can't be blank"
+			},
+			address: {
+				required: "Address can't be blank"
+			},
+			city: {
+				required: "City can't be blank"
+			},
+			state: {
+				required: "State can't be blank"
+			},
+			country: {
+				required: "country can't be blank"
+			},
+			mobile_no: {
+				required: "Mobile Number can't be blank"
+			}
+		},
+		submitHandler:function(form) {
+			var name = $("#name").val(),
+			address = $("#address").val(),
+			city = $("#city").val();
+			state = $("#state").val();
+			country = $("#country").val();
+			mobile_no = $("#mobile_no").val();
+			$.ajax({
+				type: "POST",
+				url: "/add-office",
+				data: {
+					name: name,
+					address: address,
+					city: city,
+					state: state,
+					country: country,
+					mobile_no: mobile_no
+				},
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+					$("#btnAddOffice").prop('disabled', true);
+					$("#btnAddOffice").html("Loading...");
+				},
+				success:function(response) {
+					if(response.add_office == true)
+					{
+						$(`<div class="alert alert-success"><strong>Success! </strong>Office Added Successfully</div>`).insertBefore("#addOffice");
+						setTimeout(function() {
+							window.location.href="/firm-details";
+						}, 2000);
+					}
+				}
+			});
+		}
+	});
+});
+/*===============================Ends Add Ofiice Section========================================*/
+/*===============================Stasts Edit Ofiice Section========================================*/
+
+$(document).on('click', '#edit-office-detail', function(e){
+	var office_id = $(this).data('office-id');
+	var office_name = $(this).data('name');
+	var office_address = $(this).data('address');
+	var office_city = $(this).data('city');
+	var office_state = $(this).data('state');
+	var office_country = $(this).data('country');
+	var office_mobile = $(this).data('mobile');
+	var firm_id = $(this).data('firm-id');
+
+	localStorage.setItem('office_id', office_id);
+
+	$('#edit_office_name').val(office_name);
+	$('#edit_office_address').val(office_address);
+	$('#edit_office_city').val(office_city);
+	$('#edit_office_state').val(office_state);
+	$('#edit_office_country').val(office_country);
+	$('#edit_office_mobile_no').val(office_mobile);
+
+	$('.edit-office-modal').modal('show');
+});
+
+$(document).ready(function(e) {
+
+	$("#btnEditOffice").click(function() {
+		$("#editOffice").submit();
+	});          
+
+	$("#editOffice").validate({
+		rules: {
+			edit_office_name: {
+				required: true
+			},
+			edit_office_address: {
+				required: true
+			},
+			edit_office_city: {
+				required: true
+			},
+			edit_office_state: {
+				required: true
+			},
+			edit_office_country: {
+				required: true
+			},
+			edit_office_mobile_no: {
+				required: true,
+				number: true,
+				maxlength: 10
+			}
+		},
+		messages: {
+			edit_office_name: {
+				required: "Name can't be blank"
+			},
+			edit_office_address: {
+				required: "Address can't be blank"
+			},
+			edit_office_city: {
+				required: "City can't be blank"
+			},
+			edit_office_state: {
+				required: "State can't be blank"
+			},
+			edit_office_country: {
+				required: "country can't be blank"
+			},
+			edit_office_mobile_no: {
+				required: "Mobile Number can't be blank"
+			}
+		},
+		submitHandler:function(form) {
+			$.ajax({
+				type: "POST",
+				url: "/edit-office/"+localStorage.getItem("office_id"),
+				data:$("#editOffice").serialize()+"&office_id="+localStorage.getItem("office_id"),
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+					$("#btnEditOffice").prop('disabled', true);
+					$("#btnEditOffice").html("Loading...");
+				},
+				success:function(response) {
+					if(response.edit_office == true)
+					{
+						$(`<div class="alert alert-success"><strong>Success! </strong>Office Updated Successfully</div>`).insertBefore("#editOffice");
+						setTimeout(function() {
+							window.location.href="/firm-details";
+						}, 2000);
+					}
+				}
+			});
+		}
+	});
+});
+
+/*===============================Ends Edit Ofiice Section========================================*/
+/*===============================Starts Delete Ofiice Section========================================*/
+
+$(document).on('click', '#delete-office-details', function(e){
+	var office_id = $(this).data('office-id');
+
+	localStorage.setItem('office_id', office_id);
+
+	$('.delete-office-modal').modal('show');
+});
+
+$(document).on('click', '.btnDeleteOffice', function(e){
+	$.ajax({
+		type: "POST",
+		url:"/delete-office/"+localStorage.getItem("office_id"),
+		data:"&office_id="+localStorage.getItem("office_id"),
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+		},
+		success:function(response){
+			if(response.delete_office == true)
+			{
+				window.location.href="/firm-details";
+			}
+		},
+		error:function(xhr){
+
+		}
+	});
+	e.preventDefault();
+});
+
+/*===============================Ends Delete Ofiice Section========================================*/
+
+/*===============================Starts Office Contact Section=============================*/
+
+$(document).ready(function(e) {
+
+	$("#btnAddOfficeContact").click(function() {
+		$("#addOfficeContactFrm").submit();
+	});          
+
+	$("#addOfficeContactFrm").validate({
+		rules: {
+			office_id: {
+				required: true
+			},
+			designation_id: {
+				required: true
+			},
+			first_name: {
+				required: true
+			},
+			last_name: {
+				required: true
+			},
+			email: {
+				required: true,
+				email: true
+			},
+			contact_address: {
+				required: true
+			},
+			contact_city: {
+				required: true
+			},
+			contact_state: {
+				required: true
+			},
+			contact_country: {
+				required: true
+			},
+			contact_mobile_no: {
+				required: true,
+				number: true,
+				maxlength: 10
+			}
+		},
+		messages: {
+			office_id: {
+				required: "Please select a office name"
+			},
+			designation_id: {
+				required: "Please select designation"
+			},
+			first_name: {
+				required: "First name can't be blank"
+			},
+			last_name: {
+				required: "Last name can't be blank"
+			},
+			email: {
+				required: "Email can't be blank",
+				email: "Must be valid email"
+			},
+			contact_address: {
+				required: "Address can't be blank"
+			},
+			contact_city: {
+				required: "City can't be blank"
+			},
+			contact_state: {
+				required: "State can't be blank"
+			},
+			contact_country: {
+				required: "country can't be blank"
+			},
+			contact_mobile_no: {
+				required: "Mobile Number can't be blank"
+			}
+		},
+		submitHandler:function(form) {
+			var first_name = $("#first_name").val(),
+			last_name = $("#last_name").val(),
+			email = $("#email").val(),
+			office_id = $("#office_id").val(),
+			designation_id = $("#designation_id").val(),
+			address = $("#contact_address").val();
+			city = $("#contact_city").val();
+			state = $("#contact_state").val();
+			country = $("#contact_country").val();
+			mobile_no = $("#contact_mobile_no").val();
+			$.ajax({
+				type: "POST",
+				url: "/add-office-contact",
+				data: {
+					office_id: office_id,
+					designation_id: designation_id,
+					first_name: first_name,
+					last_name: last_name,
+					email: email,
+					address: address,
+					city: city,
+					state: state,
+					country: country,
+					mobile_no: mobile_no
+				},
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+					$("#btnAddOfficeContact").prop('disabled', true);
+					$("#btnAddOfficeContact").html("Loading...");
+				},
+				success:function(response) {
+					if(response.add_office_contact == true)
+					{
+						$(`<div class="alert alert-success"><strong>Success! </strong>Office Contact Added Successfully</div>`).insertBefore("#addOfficeContactFrm");
+						setTimeout(function() {
+							window.location.href="/firm-details";
+						}, 2000);
+					}
+				}
+			});
+		}
+	});
+});
+
+$(document).on('click', '#edit-office-contact', function(e){
+	var contact_id = $(this).data('contact-id');
+	var office_id = $(this).data('contact-office-id');
+	var designation_id = $(this).data('designation-id');
+	var first_name = $(this).data('first-name');
+	var last_name = $(this).data('last-name');
+	var email = $(this).data('email');
+	var contact_mobile = $(this).data('contact-mobile');
+	var contact_address = $(this).data('contact-address');
+	var contact_city = $(this).data('contact-city');
+	var contact_state = $(this).data('contact-state');
+	var contact_country = $(this).data('contact-country');
+
+
+	$("#edit_office_id").val(office_id);
+	$('#edit_office_id').trigger('change');
+	$("#edit_designation_id").val(designation_id);
+	$('#edit_designation_id').trigger('change');
+	$("#edit_contact_first_name").val(first_name);
+	$("#edit_contact_last_name").val(last_name);
+	$("#edit_contact_email").val(email);
+	$("#edit_contact_mobile_no").val(contact_mobile);
+	$("#edit_contact_address").val(contact_address);
+	$("#edit_contact_city").val(contact_city);
+	$("#edit_contact_state").val(contact_state);
+	$("#edit_contact_country").val(contact_country);
+
+	localStorage.setItem('contact_id', contact_id);
+
+	$('.editContactModal').modal('show');
+});
+
+$(document).ready(function(e) {
+
+	$("#btnEditContactOffice").click(function() {
+		$("#EditOfficeContactFrm").submit();
+	});          
+
+	$("#EditOfficeContactFrm").validate({
+		rules: {
+			edit_office_id: {
+				required: true
+			},
+			edit_designation_id: {
+				required: true
+			},
+			edit_contact_first_name: {
+				required: true
+			},
+			edit_contact_last_name: {
+				required: true
+			},
+			edit_contact_email: {
+				required: true,
+				email: true
+			},
+			edit_contact_address: {
+				required: true
+			},
+			edit_contact_city: {
+				required: true
+			},
+			edit_contact_state: {
+				required: true
+			},
+			edit_contact_country: {
+				required: true
+			},
+			edit_contact_mobile_no: {
+				required: true,
+				number: true,
+				maxlength: 10
+			}
+		},
+		messages: {
+			edit_office_id: {
+				required: "Please select a office name"
+			},
+			edit_designation_id: {
+				required: "Please select designation"
+			},
+			edit_contact_first_name: {
+				required: "First name can't be blank"
+			},
+			edit_contact_last_name: {
+				required: "Last name can't be blank"
+			},
+			edit_contact_email: {
+				required: "Email can't be blank",
+				email: "Must be valid email"
+			},
+			edit_contact_address: {
+				required: "Address can't be blank"
+			},
+			edit_contact_city: {
+				required: "City can't be blank"
+			},
+			edit_contact_state: {
+				required: "State can't be blank"
+			},
+			edit_contact_country: {
+				required: "country can't be blank"
+			},
+			edit_contact_mobile_no: {
+				required: "Mobile Number can't be blank"
+			}
+		},
+		submitHandler:function(form) {
+			$.ajax({
+				type: "POST",
+				url: "/edit-office-contact/"+localStorage.getItem("contact_id"),
+				data:$("#EditOfficeContactFrm").serialize()+"&contact_id="+localStorage.getItem("contact_id"),
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+					$("#btnEditContactOffice").prop('disabled', true);
+					$("#btnEditContactOffice").html("Loading...");
+				},
+				success:function(response) {
+					if(response.edit_office_contact == true)
+					{
+						$(`<div class="alert alert-success"><strong>Success! </strong>Office Contact Updated Successfully</div>`).insertBefore("#EditOfficeContactFrm");
+						setTimeout(function() {
+							window.location.href="/firm-details";
+						}, 2000);
+					}
+				}
+			});
+		}
+	});
+});
+
+$(document).on('click', '#delete-office-contact-details', function(e){
+	var contact_id = $(this).data('contact-id');
+
+	localStorage.setItem('contact_id', contact_id);
+
+	$('.deleteContactModal').modal('show');
+});
+
+$(document).on('click', '#btnDeleteContact', function(e){
+	$.ajax({
+		type: "POST",
+		url:"/delete-contact/"+localStorage.getItem("contact_id"),
+		data:"&contact_id="+localStorage.getItem("contact_id"),
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+		},
+		success:function(response){
+			if(response.delete_contact == true)
+			{
+				window.location.href="/firm-details";
+			}
+		},
+		error:function(xhr){
+
+		}
+	});
+	e.preventDefault();
+});
+
+/*===============================Ends Office Contact Section=============================*/
+</script>
+{{/content}}
