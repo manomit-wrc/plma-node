@@ -107,7 +107,7 @@
 								</div>
 								<div class="row">
 									<div class="col-sm-12 text-center m-t-20">
-										<button type="button" class="btn btn-primary" id="insert">Save &amp; update</button>
+										<button type="button" class="btn btn-primary" id="insert" value = "Validate" onclick = "Validate()" >Save &amp; update</button>
 									</div>
 								</div>
 							</form>
@@ -351,8 +351,54 @@
         <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
-        <script type="text/javascript">
-        // add designation ajax and form validation starts
+
+            <script type="text/javascript">
+            $.validator.addMethod('mobilenumber', function (value, element) {
+                    return this.optional(element) || /^(\+91-|\+91|0)?\d{10}$/.test(value);
+                }, "Please enter a valid mobile number");
+
+                $(document).ready(function () {
+                    $("#addname").validate({
+                        rules: {
+                            mbnumber: 'mobilenumber'
+                        }
+                    });
+                });
+         </script>
+
+         <script type="text/javascript">
+         function checkEmail() {
+
+             var email = document.getElementById('email');
+             var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+             if (!filter.test(email.value)) {
+             alert('Please provide a valid email address');
+             email.focus;
+             return false;
+          }
+         }</script>
+
+
+
+
+         <script type="text/javascript">
+      function Validate() {
+       var regexp = new RegExp("^http(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$");
+       var weburl = document.getElementById("weburl").value;
+       if (!regexp.test(weburl)) {
+           alert("Not valid weburl!");
+       }
+       // else {
+       //     alert("Valid weburl!");
+       // }
+   }
+</script>
+
+
+
+        <!-- <script type="text/javascript">
+        add designation ajax and form validation starts
         $(document).ready(function(e) {
 
             $("#insert").click(function() {
@@ -433,23 +479,25 @@
                     weburl: {
                         required: "website_url can't be blank"
                     }
-                },
-                submitHandler:function(form) {
-                  var companyname = $('#companyname').val();
-                  var contactperson = $('#contactperson').val();
-                  var address = $('#address').val();
-                  var country = $('#country').val();
-                  var state = $('#state').val();
-                  var email = $('#email').val();
-                  var phnumber = $('#phnumber').val();
-                  var mbnumber = $('#mbnumber').val();
-                  var postalcode = $('#postalcode').val();
-                  var fax = $('#fax').val();
-                  var wburl = $('#weburl').val();
-                  var hidden_field = $('#hidden_field').val();
+                }, -->
 
 
-
+                <script type="text/javascript">
+                // submitHandler:function(form) {
+                  $("#insert").on("click",function(){
+                    var companyname = $('#companyname').val();
+                    var contactperson = $('#contactperson').val();
+                    var address = $('#address').val();
+                    var country = $('#country').val();
+                    var state = $('#state').val();
+                    var city = $('#city').val();
+                    var email = $('#email').val();
+                    var phnumber = $('#phnumber').val();
+                    var mbnumber = $('#mbnumber').val();
+                    var postalcode = $('#postalcode').val();
+                    var fax = $('#fax').val();
+                    var wburl = $('#weburl').val();
+                    var hidden_field = $('#hidden_field').val();
 
 
                     $.ajax({
@@ -463,6 +511,7 @@
                           country: country,
                           email: email,
                           state: state,
+                          city: city,
                           phnumber: phnumber,
                           mbnumber: mbnumber,
                           postalcode: postalcode,
@@ -479,8 +528,16 @@
                         error: function(xhr){
                         }
                     });
-              }
-            });
-          });
-        </script>
+                  });
+
+
+
+
+
+
+
+          //   });
+          // });
+         </script>
+
         {{/content}}
