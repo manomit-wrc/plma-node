@@ -6,6 +6,7 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const PracticeArea = require('../models').practicearea;
 const Section = require('../models').section;
+const Group = require('../models').group;
 const budget = require('../models').budget;
 const setting = require('../models').setting;
 
@@ -475,5 +476,87 @@ router.post('/admin/delete-jurisdiction/:id', auth, csrfProtection, (req, res) =
 });
 
 /*========================================End Jurisdiction========================================*/
+
+/*==========================Start Group//Bratin Meheta 19-06-2018=============================*/
+
+router.get('/group', csrfProtection, auth, (req, res) =>{
+	var whereCondition = {};
+	if(req.query.group_code) {
+		whereCondition.code = req.query.group_code;
+	}
+	if(req.query.group_name) {
+		whereCondition.name = req.query.group_name;
+	}
+	Group.findAll({
+		where: whereCondition
+	}).then(show =>{
+		res.render('group/index',{
+			layout: 'dashboard',
+			csrfToken: req.csrfToken(),
+			group:show,
+			group_code: req.query.group_code ? req.query.group_code : '',
+			group_name: req.query.group_name ? req.query.group_name : ''
+		});
+	});
+});
+
+router.post('/group/add', auth, csrfProtection, (req, res) =>{
+	Group.findAndCountAll({
+		where:
+		{
+			code: req.body.code
+		}
+	}).then(result =>{
+		var count = result.count;
+		if(count == 0)
+		{
+			Group.create({
+				code: req.body.code,
+				name: req.body.name,
+				remarks:req.body.remarks
+			}).then(store =>{
+				res.json({"add_group":1});
+			});
+		}
+		else{
+			res.json({"add_group":2});
+		}
+	});
+});
+router.post('/admin/edit-group/:id', auth, csrfProtection, (req, res) =>{
+	Group.findAll({
+		where: {
+			code: req.body.edit_code,
+			id: {
+				[Op.ne]: req.params['id']
+			}
+		}
+	}).then(group => {
+		if(group.length === 0) {
+			Group.update({
+				code: req.body.edit_code,
+				name: req.body.edit_name,
+				remarks: req.body.edit_remarks
+			},{where: {id: req.params['id']}
+			}).then(result =>{
+				res.json({"edit_group":1});
+			});
+		}
+		else {
+
+			res.json({"edit_group":2});
+		}
+	});
+});
+
+router.post('/admin/delete-group/:id', auth, csrfProtection, (req, res) =>{
+	Group.destroy({
+		where: {id: req.params['id']}
+	}).then(result =>{
+		res.json({"del_group":1});
+	});
+});
+
+/*========================================End Group========================================*/
 
 module.exports = router;
