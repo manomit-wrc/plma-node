@@ -3,6 +3,10 @@ const auth = require('../middlewares/auth');
 const csrf = require('csurf');
 const bCrypt = require('bcrypt-nodejs');
 const User = require('../models').user;
+const Country = require('../models').country;
+const City = require('../models').city;
+const State = require('../models').state;
+const Zipcode = require('../models').zipcode;
 
 var csrfProtection = csrf({ cookie: true });
 
@@ -37,7 +41,9 @@ router.get('/profile', auth, (req, res) => {
 router.get('/edit-profile', csrfProtection, auth, (req, res) => {
     var success_message = req.flash('success-message')[0];
     var error_message = req.flash('error-message')[0];
-    res.render('edit-profile', { layout: 'dashboard', csrfToken: req.csrfToken(),success_message:success_message, error_message:error_message  });
+    Country.findAll().then(country => {
+        res.render('edit-profile', { layout: 'dashboard', csrfToken: req.csrfToken(),success_message:success_message, error_message:error_message, country: country });
+    });
 }).post('/edit-profile', auth, profile.single('avatar'), csrfProtection, auth, (req, res) => {
     const formatDate = req.body.dob ? req.body.dob.split("-") : '';
     User.update({

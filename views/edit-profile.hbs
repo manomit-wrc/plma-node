@@ -90,6 +90,17 @@
                </div>
                <div class="col-md-6">
                   <div class="form-group form-focus">
+                     <label class="control-label">Country</label>
+                     <select class="select form-control floating" id="gender" name="gender">
+                        <option value="">Select Country</option>
+                        {{#each country}}
+                        <option value="{{this.id}}" {{#if_eq user.country this.id}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <div class="form-group form-focus">
                      <label class="control-label">City</label>
                      <input type="text" class="form-control floating" 
                      id="city" name="city" value="{{user.city}}"
@@ -101,14 +112,6 @@
                      <label class="control-label">State</label>
                      <input type="text" class="form-control floating" 
                      id="state" name="state" value="{{user.state}}"
-                     />
-                  </div>
-               </div>
-               <div class="col-md-6">
-                  <div class="form-group form-focus">
-                     <label class="control-label">Country</label>
-                     <input type="text" class="form-control floating" 
-                     id="country" name="country" value="{{user.country}}"
                      />
                   </div>
                </div>
