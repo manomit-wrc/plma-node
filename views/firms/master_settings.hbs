@@ -168,8 +168,8 @@
 											<table class="table table-striped custom-table datatable">
 												<thead>
 													<tr>
-														<th>Office Name</th>
 														<th>Staff Name</th>
+														<th>Office Name</th>
 														<th>Designation</th>
 														<th>Email</th>
 														<th>Mobile No.</th>
@@ -180,8 +180,11 @@
 												<tbody>
 													{{#each contact}}
 													<tr>
+														<td>
+															<a href="javascript:void(0)" class="avatar">{{first_letter this.first_name}}</a>
+															<h2><a href="javascript:void(0)">{{this.first_name}}&nbsp;{{this.last_name}}</a></h2>
+														</td>
 														<td>{{this.office.name}}</td>
-														<td>{{this.first_name}} {{this.last_name}}</td>
 														<td>{{this.designation.title}}</td>
 														<td>{{this.email}}</td>
 														<td>{{this.mobile}}</td>

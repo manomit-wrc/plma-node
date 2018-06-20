@@ -6,8 +6,12 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const PracticeArea = require('../models').practicearea;
 const Section = require('../models').section;
+const Group = require('../models').group;
 const budget = require('../models').budget;
 const setting = require('../models').setting;
+
+const industry_type = require('../models').industry_type;
+
 
 const Jurisdiction = require('../models').jurisdiction;
 
@@ -100,6 +104,80 @@ router.get('/designations/delete/:id',auth, (req,res) => {
   });
 });
 //==========================================Designation route ends=============================================
+
+//=======================================(INDUSTRY TYPE)===================================================//
+router.get('/industry',auth,csrfProtection, (req,res) => {
+
+	var whereCondition = {};
+	if(req.query.searchCode) {
+		whereCondition.code = req.query.searchCode;
+	}
+	if(req.query.searchTitle) {
+		whereCondition.searchIndustryType = req.query.searchIndustryType;
+	}
+	industry_type.findAll({
+		where: whereCondition
+	}).then(name => {
+		// console.log(data);
+		res.render('industry_type/industry', { layout: 'dashboard', csrfToken: req.csrfToken(), name: name});
+ });
+});
+router.post('/industry/add', auth, csrfProtection, (req, res) => {
+    console.log(req.body);
+    var code = req.body.code;
+    var industryname = req.body.industryname;
+    var remarks = req.body.remarks;
+    industry_type.findAndCountAll({
+      where:{
+        code: code
+      }
+    }).then(result => {
+      if(result.count > 0){
+        res.json({msg: 'ERRR'});
+      }else{
+        industry_type.create({code: code,industry_name: industryname,remarks: remarks}).then(resp => {
+					res.json({msg: 'sucess'});
+        });
+      }
+    });
+});
+
+
+router.get('/industry/edit/:id',auth,csrfProtection, (req,res) => {
+industry_type.findById(req.params.id).then(editdata => {
+res.render('industry_type/update', { layout: 'dashboard', csrfToken: req.csrfToken(), editdata :editdata});
+});
+ });
+
+ router.post('/industry/updateindustry/:id',auth,csrfProtection, (req,res) => {
+   var code = req.body.code;
+   var industryname = req.body.industryname;
+   var remarks = req.body.remarks;
+   console.log(req.params.id);
+   industry_type.findAndCountAll({
+     where:{
+       code: code
+     }
+   }).then(result => {
+     if(result.count > 1){
+       res.json({msg: 'ERRR'});
+     }else if(result.count == 1 || result.count == 0){
+       industry_type.update({code: code,industry_name: industryname,remarks: remarks},{where:{id: req.params.id}}).then(resp => {
+         res.end("success");
+       });
+     }
+   });
+ });
+ router.get('/industry/delete/:id',auth, (req,res) => {
+   console.log(req.params.id);
+   industry_type.destroy({
+     where:{
+       id: req.params.id
+     }
+   }).then(resp => {
+     res.redirect('/industry');
+   });
+ });
 
 /*======================COMMIT BY MALINI ROYCHOWDHURY  (settings) 14-06-2018 -15-06-2018=============================*/
 
@@ -475,5 +553,87 @@ router.post('/admin/delete-jurisdiction/:id', auth, csrfProtection, (req, res) =
 });
 
 /*========================================End Jurisdiction========================================*/
+
+/*==========================Start Group//Bratin Meheta 19-06-2018=============================*/
+
+router.get('/group', csrfProtection, auth, (req, res) =>{
+	var whereCondition = {};
+	if(req.query.group_code) {
+		whereCondition.code = req.query.group_code;
+	}
+	if(req.query.group_name) {
+		whereCondition.name = req.query.group_name;
+	}
+	Group.findAll({
+		where: whereCondition
+	}).then(show =>{
+		res.render('group/index',{
+			layout: 'dashboard',
+			csrfToken: req.csrfToken(),
+			group:show,
+			group_code: req.query.group_code ? req.query.group_code : '',
+			group_name: req.query.group_name ? req.query.group_name : ''
+		});
+	});
+});
+
+router.post('/group/add', auth, csrfProtection, (req, res) =>{
+	Group.findAndCountAll({
+		where:
+		{
+			code: req.body.code
+		}
+	}).then(result =>{
+		var count = result.count;
+		if(count == 0)
+		{
+			Group.create({
+				code: req.body.code,
+				name: req.body.name,
+				remarks:req.body.remarks
+			}).then(store =>{
+				res.json({"add_group":1});
+			});
+		}
+		else{
+			res.json({"add_group":2});
+		}
+	});
+});
+router.post('/admin/edit-group/:id', auth, csrfProtection, (req, res) =>{
+	Group.findAll({
+		where: {
+			code: req.body.edit_code,
+			id: {
+				[Op.ne]: req.params['id']
+			}
+		}
+	}).then(group => {
+		if(group.length === 0) {
+			Group.update({
+				code: req.body.edit_code,
+				name: req.body.edit_name,
+				remarks: req.body.edit_remarks
+			},{where: {id: req.params['id']}
+			}).then(result =>{
+				res.json({"edit_group":1});
+			});
+		}
+		else {
+
+			res.json({"edit_group":2});
+		}
+	});
+});
+
+router.post('/admin/delete-group/:id', auth, csrfProtection, (req, res) =>{
+	Group.destroy({
+		where: {id: req.params['id']}
+	}).then(result =>{
+		res.json({"del_group":1});
+	});
+});
+
+/*========================================End Group========================================*/
 
 module.exports = router;
