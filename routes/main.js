@@ -9,6 +9,9 @@ const Section = require('../models').section;
 const budget = require('../models').budget;
 const setting = require('../models').setting;
 
+const industry_type = require('../models').industry_type;
+
+
 const Jurisdiction = require('../models').jurisdiction;
 
 var csrfProtection = csrf({ cookie: true });
@@ -100,6 +103,80 @@ router.get('/designations/delete/:id',auth, (req,res) => {
   });
 });
 //==========================================Designation route ends=============================================
+
+//=======================================(INDUSTRY TYPE)===================================================//
+router.get('/industry',auth,csrfProtection, (req,res) => {
+
+	var whereCondition = {};
+	if(req.query.searchCode) {
+		whereCondition.code = req.query.searchCode;
+	}
+	if(req.query.searchTitle) {
+		whereCondition.searchIndustryType = req.query.searchIndustryType;
+	}
+	industry_type.findAll({
+		where: whereCondition
+	}).then(name => {
+		// console.log(data);
+		res.render('industry_type/industry', { layout: 'dashboard', csrfToken: req.csrfToken(), name: name});
+ });
+});
+router.post('/industry/add', auth, csrfProtection, (req, res) => {
+    console.log(req.body);
+    var code = req.body.code;
+    var industryname = req.body.industryname;
+    var remarks = req.body.remarks;
+    industry_type.findAndCountAll({
+      where:{
+        code: code
+      }
+    }).then(result => {
+      if(result.count > 0){
+        res.json({msg: 'ERRR'});
+      }else{
+        industry_type.create({code: code,industry_name: industryname,remarks: remarks}).then(resp => {
+					res.json({msg: 'sucess'});
+        });
+      }
+    });
+});
+
+
+router.get('/industry/edit/:id',auth,csrfProtection, (req,res) => {
+industry_type.findById(req.params.id).then(editdata => {
+res.render('industry_type/update', { layout: 'dashboard', csrfToken: req.csrfToken(), editdata :editdata});
+});
+ });
+
+ router.post('/industry/updateindustry/:id',auth,csrfProtection, (req,res) => {
+   var code = req.body.code;
+   var industryname = req.body.industryname;
+   var remarks = req.body.remarks;
+   console.log(req.params.id);
+   industry_type.findAndCountAll({
+     where:{
+       code: code
+     }
+   }).then(result => {
+     if(result.count > 1){
+       res.json({msg: 'ERRR'});
+     }else if(result.count == 1 || result.count == 0){
+       industry_type.update({code: code,industry_name: industryname,remarks: remarks},{where:{id: req.params.id}}).then(resp => {
+         res.end("success");
+       });
+     }
+   });
+ });
+ router.get('/industry/delete/:id',auth, (req,res) => {
+   console.log(req.params.id);
+   industry_type.destroy({
+     where:{
+       id: req.params.id
+     }
+   }).then(resp => {
+     res.redirect('/industry');
+   });
+ });
 
 /*======================COMMIT BY MALINI ROYCHOWDHURY  (settings) 14-06-2018 -15-06-2018=============================*/
 
