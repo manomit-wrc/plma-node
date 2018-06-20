@@ -5,6 +5,7 @@ const bCrypt = require('bcrypt-nodejs');
 const gravatar = require('gravatar');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
+const dateFormat = require('dateformat');
 const User = require('../models').user;
 const Firm = require('../models').firm;
 const ActivityGoal = require('../models').activity_goal;
