@@ -8,11 +8,15 @@ const Op = Sequelize.Op;
 const PracticeArea = require('../models').practicearea;
 const Section = require('../models').section;
 const budget = require('../models').budget;
-
+const zipcode = require('../models').zipcode;
+const city = require('../models').city;
+const state = require('../models').state;
 const Jurisdiction = require('../models').jurisdiction;
 const user = require('../models').user;
 var csrfProtection = csrf({ cookie: true });
-
+var csv = require('fast-csv');
+var path      = require('path');
+var fs = require('fs');
 const router = express.Router();
 //===================================================Designation route starts==========================================================
 router.get('/designations', csrfProtection, auth, (req, res) => {
@@ -221,7 +225,7 @@ router.post('/attorneys/updateAttorney/:id',auth,csrfProtection, (req,res) => {
 		console.log(result.count);
 		if(result.count > 1){
 			res.json({msg: 'error'});
-		}else if(result.count == 0 || result.count == 1){
+		}else {
 			user.update({
 								first_name: first_name,
 								last_name: last_name,
@@ -298,7 +302,30 @@ router.get('/attorneys/delete/:id',auth, (req,res) => {
   });
 });
 /*==========================================Attorney route ends==============================================*/
-/*======================COMMIT BY MALINI ROYCHOWDHURY 14-06-2018=============================*/
+/*==========================================Import csv routes starts=========================================*/
+ 
+router.get('/import/csv',auth,csrfProtection, (req,res) => {
+	// var csv = fs.createReadStream("./"+"public/cities.csv");
+	csv
+	.fromPath("./public/states (1).csv")
+	.on("data", function(data){
+			console.log(data[2]);
+			state.create({id:data[0],code: data[1],name: data[2],country_id: data[3]}).then(result =>{
+				console.log("END");
+			});
+	})
+	.on("end", function(){
+			// console.log("done");
+			
+			res.redirect('/');
+	});
+ 
+
+  
+});
+/*==========================================Import csv routes ends=========================================*/
+
+/*================================COMMIT BY MALINI ROYCHOWDHURY 14-06-2018=================================*/
 
 router.get('/budgets', csrfProtection, auth, (req, res) => {
 	var whereCondition = {};
