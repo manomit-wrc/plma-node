@@ -102,7 +102,7 @@
                      <label class="control-label">Country</label>
                      <select class="select form-control floating" id="country" name="country">
                         {{#each country}}
-                        <option value="{{this.id}}">{{this.name}}</option>
+                        <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
                         {{/each}}
                     </select>
                   </div>
@@ -112,7 +112,7 @@
                      <label class="control-label">State</label>
                      <select class="select form-control floating" id="state" name="state">
                         {{#each state}}
-                        <option value="{{this.id}}">{{this.name}}</option>
+                        <option value="{{this.id}}" {{#if_eq this.id ../user.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
                         {{/each}}
                     </select>
                   </div>
@@ -121,8 +121,9 @@
                   <div class="form-group form-focus">
                      <label class="control-label">City</label>
                      <select class="select form-control floating" id="city" name="city">
-                        <option value="">Select City</option>
-                        
+                         {{#each city}}
+                            <option value="{{this.id}}" {{#if_eq this.id ../user.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                         {{/each}}
                     </select>
                   </div>
                </div>
@@ -131,7 +132,9 @@
                        <label class="control-label">Zipcode</label>
                         <select class="select form-control floating" id="zipcode" name="zipcode">
                         <option value="">Select Zipcode</option>
-                        
+                        {{#each zipcode}}
+                            <option value="{{this.id}}" {{#if_eq this.id ../user.zipcode}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
+                        {{/each}}
                     </select>
                   </div>
                </div>
@@ -199,17 +202,7 @@
                 }
             });
 
-            var user_country = "{{user.country}}";
-            var user_state = "{{user.state}}";
-            var user_city = "{{user.city}}";
-            var user_zipcode = "{{user.zipcode}}";
-
-            $("#country").val(user_country);
-            $('#country').trigger('change');
-            $("#state").val(user_state);
-            $('#state').trigger('change');
-            $("#city").val(user_city);
-            $('#city').trigger('change');
+            
 
             $("#state").change(function(e){
               var state_id = $(this).val();

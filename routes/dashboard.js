@@ -38,15 +38,35 @@ router.get('/profile', auth, (req, res) => {
     res.render('profile', { layout: 'dashboard' });
 });
 
-router.get('/edit-profile', csrfProtection, auth, (req, res) => {
+router.get('/edit-profile', csrfProtection, auth, async (req, res) => {
+    const country = await Country.findAll();
+    const state = await State.findAll();
+    var city = [];
+    var zipcode = [];
+    if(req.user.state != null) {
+        city = await City.findAll({
+            where: {
+                state_id: req.user.state.toString()
+            }
+        });
+    }
+
+    if(req.user.city != null) {
+        const cities = await City.findById(req.user.city);
+        
+        zipcode = await Zipcode.findAll({
+            where: {
+                city_name: cities.name
+            }
+        });
+        
+    }
     var success_message = req.flash('success-message')[0];
     var error_message = req.flash('error-message')[0];
-    Promise.all([
-    Country.findAll(),
-    State.findAll()
-    ]).then(country => {
-        res.render('edit-profile', { layout: 'dashboard', csrfToken: req.csrfToken(),success_message:success_message, error_message:error_message, country: country[0], state: country[1] });
-    });
+    
+    res.render('edit-profile', { layout: 'dashboard', csrfToken: req.csrfToken(),success_message, error_message, country, state, city, zipcode });
+
+    
 }).post('/edit-profile', auth, profile.single('avatar'), csrfProtection, auth, (req, res) => {
     const formatDate = req.body.dob ? req.body.dob.split("-") : '';
     User.update({
