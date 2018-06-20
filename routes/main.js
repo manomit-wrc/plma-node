@@ -244,12 +244,12 @@ router.post('/attorneys/updateAttorney/:id',auth,csrfProtection, (req,res) => {
 		}
 	
 		 
-	});
+	
 	}).then(name => {
 		// console.log(data);
 		res.render('industry_type/industry', { layout: 'dashboard', csrfToken: req.csrfToken(), name: name});
  });
-});
+ });
 router.post('/industry/add', auth, csrfProtection, (req, res) => {
     console.log(req.body);
     var code = req.body.code;

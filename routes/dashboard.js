@@ -41,14 +41,18 @@ router.get('/profile', auth, (req, res) => {
 router.get('/edit-profile', csrfProtection, auth, (req, res) => {
     var success_message = req.flash('success-message')[0];
     var error_message = req.flash('error-message')[0];
-    Country.findAll().then(country => {
-        res.render('edit-profile', { layout: 'dashboard', csrfToken: req.csrfToken(),success_message:success_message, error_message:error_message, country: country });
+    Promise.all([
+    Country.findAll(),
+    State.findAll()
+    ]).then(country => {
+        res.render('edit-profile', { layout: 'dashboard', csrfToken: req.csrfToken(),success_message:success_message, error_message:error_message, country: country[0], state: country[1] });
     });
 }).post('/edit-profile', auth, profile.single('avatar'), csrfProtection, auth, (req, res) => {
     const formatDate = req.body.dob ? req.body.dob.split("-") : '';
     User.update({
         first_name: req.body.first_name,
         last_name: req.body.last_name,
+        zipcode: req.body.zipcode,
         city: req.body.city,
         state: req.body.state,
         country: req.body.country,
@@ -104,5 +108,20 @@ router.post('/change-password', auth, csrfProtection, (req, res) => {
 });
 
 /*==================================Bratin Meheta 15-06-2018 ========================================*/
+
+router.post('/firm-profiles/get-city', auth, (req, res) =>{
+    City.findAll({
+        where: { state_id : req.body.state_id}
+    }).then(result => {
+        res.send({get_city:result});
+    });
+});
+router.post('/firm-profiles/get-zipcode', auth, (req, res) =>{
+    Zipcode.findAll({
+        where: { city_name : req.body.city_name}
+    }).then(result => {
+        res.send({zipcode:result});
+    });
+});
 
 module.exports = router;
