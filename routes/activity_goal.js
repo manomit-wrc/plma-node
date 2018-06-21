@@ -5,7 +5,7 @@ const bCrypt = require('bcrypt-nodejs');
 const gravatar = require('gravatar');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
-const dateFormat = require('dateformat');
+// const dateFormat = require('dateformat');
 const User = require('../models').user;
 const Firm = require('../models').firm;
 const ActivityGoal = require('../models').activity_goal;
@@ -40,10 +40,10 @@ router.get('/activity-goal', auth, csrfProtection, (req, res) => {
         }]
 	}).then(goals =>{
 	res.render('activity_goal/index', {
-			layout: 'dashboard', 
-			success_message:success_message, 
-			success_edit_message: success_edit_message, 
-			success_del_message: success_del_message, 
+			layout: 'dashboard',
+			success_message:success_message,
+			success_edit_message: success_edit_message,
+			success_del_message: success_del_message,
 			goals:goals,
 			from_activity_goal_date: req.query.from_activity_goal_date ? req.query.from_activity_goal_date : '',
 			to_activity_goal_date: req.query.to_activity_goal_date ? req.query.to_activity_goal_date : ''

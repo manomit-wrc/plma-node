@@ -9,16 +9,83 @@ const Section = require('../models').section;
 const Group = require('../models').group;
 const budget = require('../models').budget;
 const setting = require('../models').setting;
-
+// const target = require('../models').target;
 const industry_type = require('../models').industry_type;
 
 
 const Jurisdiction = require('../models').jurisdiction;
-
 var csrfProtection = csrf({ cookie: true });
-
 const router = express.Router();
+//=========================================targets==========================================================================//
+// router.get('/target', csrfProtection, auth, (req, res) => {
+// res.render('target/targets', { layout: 'dashboard', csrfToken: req.csrfToken()  });
+// });
+//
+// router.get('/addtarget', csrfProtection, auth, (req, res) => {
+// res.render('target/addtarget', { layout: 'dashboard', csrfToken: req.csrfToken()  });
+// });
+// router.post('/targetinsert/add', auth, csrfProtection, (req, res) => {
+//     console.log(req.body);
+//     var first_name = req.body.first_name;
+//     var last_name = req.body.last_name;
+//     var email = req.body.email;
+// 		var country = req.body.country;
+// 		var state = req.body.state;
+// 		var city = req.body.city;
+// 		var pin = req.body.pin;
+// 		var add1 = req.body.add1;
+// 		var add2 = req.body.add2;
+// 		var designation = req.body.designation;
+// 		var firm = req.user.firm_id;
+// 		var company_name = req.body.company_name;
+// 		var fax = req.body.fax;
+// 		var google = req.body.google;
+// 		var facebook = req.body.facebook;
+// 		var twitter = req.body.twitter;
+// 		var industry_type = req.body.industry_type;
+// 		var association = req.body.association;
+//
+//     target.findAndCountAll({
+//       where:{
+//         code: code
+//       }
+//     }).then(result => {
+//       if(result.count > 0){
+//         res.json({msg: 'ERRR'});
+//       }else{
+//         target.create({firstName: first_name,lastName: lastName,email: email,country: country,state: state,city: city,address_1: add1,address_2: add2,fax: fax,postal_code: pin,designation_id: designation,facebook: facebook,twitter: twitter,firm: firm,industry_type: industry_type}).then(resp => {
+//           res.end("Success");
+// 				});
+// 			}
+// 			});
+//
+// 			});
+//
+// 			router.get('/client/add',auth, csrfProtection, (req,res) => {
+//  country.findAll().then(country => {
+//
+//   state.findAll().then(state => {
+//
+//    res.render('client/addclient',{ layout: 'dashboard', csrfToken: req.csrfToken(), country: country, state: state });
+//   });
+//  });
+//
+//
+// });
+// router.post('/client/findCityByState',auth, csrfProtection, (req,res) => {
+//
+//  city.findAll({
+//   where:{
+//    state_id: req.body.state_id
+//   }
+//  }
+//  ).then(city => {
+//   // res.send(city);
+//   res.json({city: city});
+//  });
+// });
 //===================================================Designation route starts==========================================================
+
 router.get('/designations', csrfProtection, auth, (req, res) => {
 
 		var whereCondition = {};
@@ -53,10 +120,7 @@ router.post('/designations/add', auth, csrfProtection, (req, res) => {
           res.end("Success");
         });
       }
-
-
     });
-
 });
 router.get('/designations/find',auth, (req,res) => {
   var id = req.body.id;
