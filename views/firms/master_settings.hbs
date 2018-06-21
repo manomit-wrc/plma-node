@@ -98,7 +98,7 @@
 											</div>
 										</div>
 										<div class="m-t-20 text-center">
-											<button class="btn btn-primary">Save &amp; Next</button>
+											<button class="btn btn-primary  rounded common-rounded-btn">Save &amp; Next</button>
 										</div>
 									</form>     
 								</div>
@@ -109,7 +109,7 @@
 										<h4 class="page-title">Office Details</h4>
 									</div>
 									<div class="col-xs-8 text-right m-b-30">
-										<a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_office"><i class="fa fa-plus"></i> Add Office</a>
+										<a href="#" class="btn btn-primary rounded common-rounded-btn" data-toggle="modal" data-target="#add_office"><i class="fa fa-plus"></i> Add Office</a>
 									</div>
 								</div>
 								<div class="row">
@@ -122,7 +122,6 @@
 														<th>Office Name</th>
 														<th>Mobile Number</th>
 														<th>Address</th>
-														<th>City &amp; State</th>
 														<th>Created Date</th>
 														<th class="text-right">Action</th>
 													</tr>
@@ -134,13 +133,12 @@
 														<td>{{this.name}}</td>
 														<td>{{this.mobile}}</td>
 														<td>{{this.address}}</td>
-														<td>{{this.city}}, {{this.state}} </td>
 														<td>{{dateFormat this.createdAt "DD-MM-YYYY"}}</td>
 														<td class="text-right">
 															<div class="dropdown">
 																<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
 																<ul class="dropdown-menu pull-right">
-																	<li><a href="#" data-toggle="modal" data-target="#edit_offices" data-office-id="{{this.id}}" data-name="{{this.name}}" data-address="{{this.address}}" data-city="{{this.city}}" data-state="{{this.state}}" data-country="{{this.country}}" data-mobile="{{this.mobile}}" data-firm-id="{{this.firm_id}}" id="edit-office-detail"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+																	<li><a href="#" data-toggle="modal" data-target="#edit_offices" data-office-id="{{this.id}}" data-name="{{this.name}}" data-address="{{this.address}}" data-city="{{this.city}}" data-state="{{this.state}}" data-country="{{this.country}}" data-zipcode="{{this.zipcode}}" data-mobile="{{this.mobile}}" data-firm-id="{{this.firm_id}}" id="edit-office-detail"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
 																	<li><a href="#" data-toggle="modal" data-target="#delete_offices" data-office-id="{{this.id}}" id="delete-office-details"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
 																</ul>
 															</div>
@@ -159,7 +157,7 @@
 										<h4 class="page-title">Add Contact</h4>
 									</div>
 									<div class="col-xs-8 text-right m-b-30">
-										<a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_contact"><i class="fa fa-plus"></i> Add Contact</a>
+										<a href="#" class="btn btn-primary rounded common-rounded-btn" data-toggle="modal" data-target="#add_contact"><i class="fa fa-plus"></i> Add Contact</a>
 									</div>
 								</div>
 								<div class="row">
@@ -193,7 +191,7 @@
 															<div class="dropdown">
 																<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
 																<ul class="dropdown-menu pull-right">
-																	<li><a href="#" data-toggle="modal" data-target="#edit_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}" data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}" data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}" data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}" id="edit-office-contact"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+																	<li><a href="#" data-toggle="modal" data-target="#edit_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}" data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}" data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}" data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}" data-contact-zipcode="{{this.zipcode}}" id="edit-office-contact"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
 																	<li><a href="#" data-toggle="modal" data-target="#delete_contacts" data-contact-id="{{this.id}}" id="delete-office-contact-details"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
 																</ul>
 															</div>
@@ -355,10 +353,16 @@
 				<form class="m-b-30" name="addOffice" id="addOffice" method="POST">
 					<input type="hidden" name="_csrf" value="{{csrfToken}}">
 					<div class="row">
-						<div class="col-md-12">
+						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">Office Name <span class="text-danger">*</span></label>
 								<input class="form-control" type="text" name="name" id="name">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Mobile No <span class="text-danger">*</span></label>
+								<input class="form-control" type="text" name="mobile_no" id="mobile_no">
 							</div>
 						</div>
 						<div class="col-md-12">
@@ -368,27 +372,39 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group">
-								<label class="control-label">City <span class="text-danger">*</span></label>
-								<input class="form-control" type="text" name="city" id="city">
+							<div class="form-group form-focus">
+								<select class="select form-control floating" id="country" name="country">
+									<option value="">Select Country</option>
+									{{#each country}}
+									<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+									{{/each}}
+								</select>
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group">
-								<label class="control-label">State<span class="text-danger">*</span></label>
-								<input class="form-control" type="text" name="state" id="state">
+							<div class="form-group form-focus">
+								<select class="select form-control floating" id="state" name="state">
+									<option value="">select State</option>
+									{{#each state}}
+									<option value="{{this.id}}">{{this.name}}</option>
+									{{/each}}
+								</select>
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group">
-								<label class="control-label">Country <span class="text-danger">*</span></label>
-								<input class="form-control" type="text" name="country" id="country">
+							<div class="form-group form-focus">
+								<select class="select form-control floating" id="city" name="city">
+									<option value="">Select City</option>
+
+								</select>
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group">
-								<label class="control-label">Mobile No <span class="text-danger">*</span></label>
-								<input class="form-control" type="text" name="mobile_no" id="mobile_no">
+							<div class="form-group form-focus">
+								<select class="select form-control floating" id="zipcode" name="zipcode">
+									<option value="">Select Zipcode</option>
+
+								</select>
 							</div>
 						</div>
 					</div>
@@ -411,10 +427,16 @@
 				<form class="m-b-30" name="editOffice" id="editOffice" method="POST">
 					<input type="hidden" name="_csrf" value="{{csrfToken}}">
 					<div class="row">
-						<div class="col-md-12">
+						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">Office Name <span class="text-danger">*</span></label>
 								<input class="form-control" type="text" name="edit_office_name" id="edit_office_name">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Mobile No <span class="text-danger">*</span></label>
+								<input class="form-control" type="text" name="edit_office_mobile_no" id="edit_office_mobile_no">
 							</div>
 						</div>
 						<div class="col-md-12">
@@ -424,29 +446,46 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group">
-								<label class="control-label">City <span class="text-danger">*</span></label>
-								<input class="form-control" type="text" name="edit_office_city" id="edit_office_city">
+							<div class="form-group form-focus">
+								<select class="select form-control floating" id="edit_office_country" name="edit_office_country">
+									<option value="">Select Country</option>
+									{{#each country}}
+									<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+									{{/each}}
+								</select>
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group">
-								<label class="control-label">State<span class="text-danger">*</span></label>
-								<input class="form-control" type="text" name="edit_office_state" id="edit_office_state">
+							<div class="form-group form-focus">
+								<select class="select form-control floating" id="edit_office_state" name="edit_office_state">
+									<option value="">select State</option>
+									{{#each state}}
+									<option value="{{this.id}}">{{this.name}}</option>
+									{{/each}}
+								</select>
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group">
-								<label class="control-label">Country <span class="text-danger">*</span></label>
-								<input class="form-control" type="text" name="edit_office_country" id="edit_office_country">
+							<div class="form-group form-focus">
+								<select class="select form-control floating" id="edit_office_city" name="edit_office_city">
+									<option value="">Select City</option>
+									{{#each city}}
+									<option value="{{this.id}}">{{this.name}}</option>
+									{{/each}}
+								</select>
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group">
-								<label class="control-label">Mobile No <span class="text-danger">*</span></label>
-								<input class="form-control" type="text" name="edit_office_mobile_no" id="edit_office_mobile_no">
+							<div class="form-group form-focus">
+								<select class="select form-control floating" id="edit_office_zipcode" name="edit_office_zipcode">
+									<option value="">Select Zipcode</option>
+									{{#each zipcode}}
+									<option value="{{this.id}}">{{this.zip}}</option>
+									{{/each}}
+								</select>
 							</div>
 						</div>
+						
 					</div>
 					<div class="m-t-20 text-center">
 						<button class="btn btn-primary btnEditOffice">Save &amp; Update</button>
@@ -541,21 +580,39 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group">
-								<label class="control-label">City <span class="text-danger">*</span></label>
-								<input class="form-control" type="text" name="contact_city" id="contact_city">
+							<div class="form-group form-focus">
+								<select class="select form-control floating" id="contact_country" name="contact_country">
+									<option value="">Select Country</option>
+									{{#each country}}
+									<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+									{{/each}}
+								</select>
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group">
-								<label class="control-label">State<span class="text-danger">*</span></label>
-								<input class="form-control" type="text" name="contact_state" id="contact_state">
+							<div class="form-group form-focus">
+								<select class="select form-control floating" id="contact_state" name="contact_state">
+									<option value="">select State</option>
+									{{#each state}}
+									<option value="{{this.id}}">{{this.name}}</option>
+									{{/each}}
+								</select>
 							</div>
 						</div>
-						<div class="col-md-12">
-							<div class="form-group">
-								<label class="control-label">Country <span class="text-danger">*</span></label>
-								<input class="form-control" type="text" name="contact_country" id="contact_country">
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<select class="select form-control floating" id="contact_city" name="contact_city">
+									<option value="">Select City</option>
+
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<select class="select form-control floating" id="contact_zipcode" name="contact_zipcode">
+									<option value="">Select Zipcode</option>
+
+								</select>
 							</div>
 						</div>
 					</div>
@@ -629,21 +686,43 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group">
-								<label class="control-label">City <span class="text-danger">*</span></label>
-								<input class="form-control" type="text" name="edit_contact_city" id="edit_contact_city">
+							<div class="form-group form-focus">
+								<select class="select form-control floating" id="edit_contact_country" name="edit_contact_country">
+									<option value="">Select Country</option>
+									{{#each country}}
+									<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+									{{/each}}
+								</select>
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group">
-								<label class="control-label">State<span class="text-danger">*</span></label>
-								<input class="form-control" type="text" name="edit_contact_state" id="edit_contact_state">
+							<div class="form-group form-focus">
+								<select class="select form-control floating" id="edit_contact_state" name="edit_contact_state">
+									<option value="">select State</option>
+									{{#each state}}
+									<option value="{{this.id}}">{{this.name}}</option>
+									{{/each}}
+								</select>
 							</div>
 						</div>
-						<div class="col-md-12">
-							<div class="form-group">
-								<label class="control-label">Country <span class="text-danger">*</span></label>
-								<input class="form-control" type="text" name="edit_contact_country" id="edit_contact_country">
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<select class="select form-control floating" id="edit_contact_city" name="edit_contact_city">
+									<option value="">Select City</option>
+									{{#each city}}
+									<option value="{{this.id}}">{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<select class="select form-control floating" id="edit_contact_zipcode" name="edit_contact_zipcode">
+									<option value="">Select Zipcode</option>
+									{{#each zipcode}}
+									<option value="{{this.id}}">{{this.zip}}</option>
+									{{/each}}
+								</select>
 							</div>
 						</div>
 					</div>
@@ -708,6 +787,9 @@ $(document).ready(function(e) {
 			country: {
 				required: true
 			},
+			zipcode: {
+				required: true
+			},
 			mobile_no: {
 				required: true,
 				number: true,
@@ -730,6 +812,9 @@ $(document).ready(function(e) {
 			country: {
 				required: "country can't be blank"
 			},
+			zipcode: {
+				required: "Zipcode can't be blank"
+			},
 			mobile_no: {
 				required: "Mobile Number can't be blank"
 			}
@@ -740,6 +825,7 @@ $(document).ready(function(e) {
 			city = $("#city").val();
 			state = $("#state").val();
 			country = $("#country").val();
+			zipcode = $("#zipcode").val();
 			mobile_no = $("#mobile_no").val();
 			$.ajax({
 				type: "POST",
@@ -750,6 +836,7 @@ $(document).ready(function(e) {
 					city: city,
 					state: state,
 					country: country,
+					zipcode: zipcode,
 					mobile_no: mobile_no
 				},
 				beforeSend: function(xhr) {
@@ -781,6 +868,7 @@ $(document).on('click', '#edit-office-detail', function(e){
 	var office_city = $(this).data('city');
 	var office_state = $(this).data('state');
 	var office_country = $(this).data('country');
+	var office_zipcode = $(this).data('zipcode');
 	var office_mobile = $(this).data('mobile');
 	var firm_id = $(this).data('firm-id');
 
@@ -791,7 +879,13 @@ $(document).on('click', '#edit-office-detail', function(e){
 	$('#edit_office_city').val(office_city);
 	$('#edit_office_state').val(office_state);
 	$('#edit_office_country').val(office_country);
+	$('#edit_office_zipcode').val(office_zipcode);
 	$('#edit_office_mobile_no').val(office_mobile);
+
+	$('#edit_office_country').trigger('change');
+	$('#edit_office_state').trigger('change');
+	$('#edit_office_city').trigger('change');
+	$('#edit_office_zipcode').trigger('change');
 
 	$('.edit-office-modal').modal('show');
 });
@@ -819,6 +913,9 @@ $(document).ready(function(e) {
 			edit_office_country: {
 				required: true
 			},
+			edit_office_zipcode: {
+				required: true
+			},
 			edit_office_mobile_no: {
 				required: true,
 				number: true,
@@ -840,6 +937,9 @@ $(document).ready(function(e) {
 			},
 			edit_office_country: {
 				required: "country can't be blank"
+			},
+			edit_office_zipcode: {
+				required: "Zipcode can't be blank"
 			},
 			edit_office_mobile_no: {
 				required: "Mobile Number can't be blank"
@@ -943,6 +1043,9 @@ $(document).ready(function(e) {
 			contact_country: {
 				required: true
 			},
+			contact_zipcode: {
+				required: true
+			},
 			contact_mobile_no: {
 				required: true,
 				number: true,
@@ -978,6 +1081,9 @@ $(document).ready(function(e) {
 			contact_country: {
 				required: "country can't be blank"
 			},
+			contact_zipcode: {
+				required: "Zipcode can't be blank"
+			},
 			contact_mobile_no: {
 				required: "Mobile Number can't be blank"
 			}
@@ -992,6 +1098,7 @@ $(document).ready(function(e) {
 			city = $("#contact_city").val();
 			state = $("#contact_state").val();
 			country = $("#contact_country").val();
+			zipcode = $("#contact_zipcode").val();
 			mobile_no = $("#contact_mobile_no").val();
 			$.ajax({
 				type: "POST",
@@ -1006,6 +1113,7 @@ $(document).ready(function(e) {
 					city: city,
 					state: state,
 					country: country,
+					zipcode: zipcode,
 					mobile_no: mobile_no
 				},
 				beforeSend: function(xhr) {
@@ -1040,6 +1148,7 @@ $(document).on('click', '#edit-office-contact', function(e){
 	var contact_city = $(this).data('contact-city');
 	var contact_state = $(this).data('contact-state');
 	var contact_country = $(this).data('contact-country');
+	var contact_zipcode = $(this).data('contact-zipcode');
 
 
 	$("#edit_office_id").val(office_id);
@@ -1054,6 +1163,13 @@ $(document).on('click', '#edit-office-contact', function(e){
 	$("#edit_contact_city").val(contact_city);
 	$("#edit_contact_state").val(contact_state);
 	$("#edit_contact_country").val(contact_country);
+	$("#edit_contact_zipcode").val(contact_zipcode);
+
+
+	$("#edit_contact_country").trigger('change');
+	$("#edit_contact_state").trigger('change');
+	$("#edit_contact_city").trigger('change');
+	$("#edit_contact_zipcode").trigger('change');
 
 	localStorage.setItem('contact_id', contact_id);
 
@@ -1096,6 +1212,9 @@ $(document).ready(function(e) {
 			edit_contact_country: {
 				required: true
 			},
+			edit_contact_zipcode: {
+				required: true
+			},
 			edit_contact_mobile_no: {
 				required: true,
 				number: true,
@@ -1130,6 +1249,9 @@ $(document).ready(function(e) {
 			},
 			edit_contact_country: {
 				required: "country can't be blank"
+			},
+			edit_contact_zipcode: {
+				required: "Zipcode can't be blank"
 			},
 			edit_contact_mobile_no: {
 				required: "Mobile Number can't be blank"
@@ -1191,5 +1313,137 @@ $(document).on('click', '#btnDeleteContact', function(e){
 });
 
 /*===============================Ends Office Contact Section=============================*/
+
+$(document).ready(function(){
+/*========================Office state country fetch===========================*/
+/*	$("#edit_office_state").change(function(e){
+		var state_id = $(this).val();
+		$("#edit_office_city").find('option').not(':first').remove();
+		if(state_id){
+			$.ajax({
+				type: "POST",
+				url:"/editoffice-get/get-city",
+				data:{state_id:state_id},
+				success:function(response){
+					for(var i=0;i<response.get_city.length;i++) {
+						$("#edit_office_city").append('<option value="'+response.get_city[i].id+'">'+response.get_city[i].name+'</option>');
+					}
+				},
+				error:function(xhr){
+
+				}
+			});
+		}
+	});
+
+	$("#edit_office_city").change(function(e){
+		var city_name = $("#edit_office_city option:selected").text();
+		$("#edit_office_zipcode").find('option').not(':first').remove();
+		if(city_name){
+			$.ajax({
+				type: "POST",
+				url:"/edit-office-get/get-zipcode",
+				data:{city_name:city_name},
+				success:function(response){
+					for(var i=0;i<response.zipcode.length;i++) {
+						console.log(response.zipcode[i]);
+						$("#edit_office_zipcode").append('<option value="'+response.zipcode[i].id+'">'+response.zipcode[i].zip+'</option>');
+					}
+				},
+				error:function(xhr){
+
+				}
+			});
+		}
+	});*/
+/*========================Ends Office state country fetch===========================*/
+
+/*========================Starts edit contact state country fetch===========================*/
+/*	$("#edit_contact_state").change(function(e){
+		var state_id = $(this).val();
+		$("#edit_contact_city").find('option').not(':first').remove();
+		if(state_id){
+			$.ajax({
+				type: "POST",
+				url:"/edit-contact-get/get-city",
+				data:{state_id:state_id},
+				success:function(response){
+					for(var i=0;i<response.get_city.length;i++) {
+						$("#edit_contact_city").append('<option value="'+response.get_city[i].id+'">'+response.get_city[i].name+'</option>');
+					}
+				},
+				error:function(xhr){
+
+				}
+			});
+		}
+	});
+
+	$("#edit_contact_city").change(function(e){
+		var city_name = $("#edit_contact_city option:selected").text();
+		$("#edit_contact_zipcode").find('option').not(':first').remove();
+		if(city_name){
+			$.ajax({
+				type: "POST",
+				url:"/edit-contact-get/get-zipcode",
+				data:{city_name:city_name},
+				success:function(response){
+					for(var i=0;i<response.zipcode.length;i++) {
+						console.log(response.zipcode[i]);
+						$("#edit_contact_zipcode").append('<option value="'+response.zipcode[i].id+'">'+response.zipcode[i].zip+'</option>');
+					}
+				},
+				error:function(xhr){
+
+				}
+			});
+		}
+	});*/
+/*========================Edit Contact state country fetch===========================*/
+});
+
+
+$(document).ready(function(){
+	$("#contact_state").change(function(e){
+		var state_id = $(this).val();
+		$("#contact_city").find('option').not(':first').remove();
+		if(state_id){
+			$.ajax({
+				type: "POST",
+				url:"/contact/get-city",
+				data:{state_id:state_id},
+				success:function(response){
+					for(var i=0;i<response.get_city.length;i++) {
+						$("#contact_city").append('<option value="'+response.get_city[i].id+'">'+response.get_city[i].name+'</option>');
+					}
+				},
+				error:function(xhr){
+
+				}
+			});
+		}
+	});
+
+	$("#contact_city").change(function(e){
+		var city_name = $("#contact_city option:selected").text();
+		$("#contact_zipcode").find('option').not(':first').remove();
+		if(city_name){
+			$.ajax({
+				type: "POST",
+				url:"/contact/get-zipcode",
+				data:{city_name:city_name},
+				success:function(response){
+					for(var i=0;i<response.zipcode.length;i++) {
+						console.log(response.zipcode[i]);
+						$("#contact_zipcode").append('<option value="'+response.zipcode[i].id+'">'+response.zipcode[i].zip+'</option>');
+					}
+				},
+				error:function(xhr){
+
+				}
+			});
+		}
+	});
+});
 </script>
 {{/content}}

@@ -7,6 +7,10 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const User = require('../models').user;
 const Firm = require('../models').firm;
+const Country = require('../models').country;
+const State = require('../models').state;
+const City = require('../models').city;
+const Zipcode = require('../models').zipcode;
 const EmployeeToFirm = require('../models').employee_to_firm;
 
 var csrfProtection = csrf({ cookie: true });
@@ -40,11 +44,15 @@ router.get('/employees', auth, async (req, res) => {
     var error_message1 = req.flash('error-message1')[0];
     var error_message = req.flash('error-message')[0];
     const firms = await Firm.findAll({});
+    const country = await Country.findAll({});
+    const state = await State.findAll({});
     res.render('employees/add', { 
         layout: 'dashboard', 
         csrfToken: req.csrfToken(), 
         firms,error_message, 
-        error_message1  
+        error_message1 ,
+        country,
+        state 
     });
 });
 
@@ -72,6 +80,7 @@ router.post('/employees/add', auth, csrfProtection, async (req, res) => {
             city: req.body.city,
             state: req.body.state,
             country: req.body.country,
+            zipcode: req.body.zipcode,
             gender: req.body.gender,
             dob: formatDate ? formatDate[2]+"-"+formatDate[1]+"-"+formatDate[0] : null,
             mobile_no: req.body.mobile_no,
@@ -112,21 +121,50 @@ router.get('/employee/edit/:id', csrfProtection, auth, async (req, res) =>  {
         }]
     });
     const firms = await Firm.findAll({});
+    const country = await Country.findAll({});
+    const state = await State.findAll({});
     var result = JSON.parse(JSON.stringify(users[0].employee_to_firms));
     var arr = [];
     for(var i=0; i<result.length; i++){
         arr.push(result[i].firm_id);
     }
+    var state_id = users[0].state;
+    var city_id = users[0].city;
+    var city = [];
+    var zipcode = [];
+    if(state_id != null)
+    {
+         city = await City.findAll({
+            where: {state_id: state_id.toString()}
+        });
+    }
+    if(city_id != null)
+    {
+        const cities = await City.findById(city_id.toString());
+         zipcode = await Zipcode.findAll({
+            where: {
+                city_name: cities.name
+            }
+        });
+    } 
     res.render('employees/edit', { 
-        layout: 'dashboard', csrfToken: req.csrfToken(), 
+        layout: 'dashboard',
+        csrfToken: req.csrfToken(), 
         empl: users[0], 
         firms, 
         error_edit_message, 
-        arr
+        arr,
+        country,
+        state,
+        city, 
+        zipcode 
     });
 });
 
 router.post('/employees/edit/:id', auth, csrfProtection, async (req, res) => {
+    var city = req.body.city ? req.body.city : null;
+    var state = req.body.state ? req.body.state : null;
+    var zipcode = req.body.zipcode ? req.body.zipcode : null;
     var firms_id = req.body.firm_id;
     const formatDate1 = req.body.dob ? req.body.dob.split("-") : '';
     const user_data = await User.findOne({
@@ -144,12 +182,13 @@ router.post('/employees/edit/:id', auth, csrfProtection, async (req, res) => {
             email: req.body.email,
             updatedAt: new Date(),
             address: req.body.address,
-            city: req.body.city,
-            state: req.body.state,
+            city: city,
+            state: state,
             country: req.body.country,
+            zipcode: zipcode,
             gender: req.body.gender,
             dob: formatDate1 ? formatDate1[2]+"-"+formatDate1[1]+"-"+formatDate1[0] : null,
-            mobile_no: req.body.mobile_no
+            mobile_no: req.body.mobile_no,
         }, {
             where: {
                 id: req.params['id']
@@ -172,7 +211,7 @@ router.post('/employees/edit/:id', auth, csrfProtection, async (req, res) => {
     else {
         req.flash('error-edit-message', 'Email already taken.');
         res.redirect('/employees/edit/'+ req.params['id']);
-    }
+    }   
 });
 
 router.get('/employee/delete/:id',  auth, csrfProtection, async (req, res) =>{

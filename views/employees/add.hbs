@@ -1,5 +1,6 @@
 {{#content "style" mode="prepend"}}
     <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
     <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
 {{/content}}
 
@@ -89,6 +90,15 @@
             <div class="row">
                <div class="col-md-12">
                   <div class="form-group form-focus">
+                     <label class="control-label">Mobile No</label>
+                     <input type="text" class="form-control floating" 
+                     id="mobile_no" name="mobile_no"
+                     maxlength="10" minlength="10"
+                     />
+                  </div>
+               </div>
+               <div class="col-md-12">
+                  <div class="form-group form-focus">
                      <label class="control-label">Address</label>
                      <input type="text" class="form-control floating" 
                      id="address" name="address"
@@ -97,37 +107,41 @@
                </div>
                <div class="col-md-6">
                   <div class="form-group form-focus">
-                     <label class="control-label">City</label>
-                     <input type="text" class="form-control floating" 
-                     id="city" name="city"
-                     />
+                     <select class="select form-control floating" id="country" name="country">
+                        <option value="">Select Country</option>
+                        {{#each country}}
+                        <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                        {{/each}}
+                    </select>
                   </div>
                </div>
                <div class="col-md-6">
                   <div class="form-group form-focus">
-                     <label class="control-label">State</label>
-                     <input type="text" class="form-control floating" 
-                     id="state" name="state"
-                     />
+                     <select class="select form-control floating" id="state" name="state">
+                        <option value="">select State</option>
+                        {{#each state}}
+                        <option value="{{this.id}}">{{this.name}}</option>
+                        {{/each}}
+                    </select>
                   </div>
                </div>
                <div class="col-md-6">
                   <div class="form-group form-focus">
-                     <label class="control-label">Country</label>
-                     <input type="text" class="form-control floating" 
-                     id="country" name="country"
-                     />
+                     <select class="select form-control floating" id="city" name="city">
+                          <option value="">Select City</option>
+                         
+                    </select>
                   </div>
                </div>
                <div class="col-md-6">
                   <div class="form-group form-focus">
-                     <label class="control-label">Mobile No</label>
-                     <input type="text" class="form-control floating" 
-                     id="mobile_no" name="mobile_no"
-                     maxlength="10" minlength="10"
-                     />
+                        <select class="select form-control floating" id="zipcode" name="zipcode">
+                        <option value="">Select Zipcode</option>
+                        
+                    </select>
                   </div>
                </div>
+               
                <div class="col-md-12">
                     <div class="form-group form-focus select-focus">
                         
@@ -140,7 +154,6 @@
                </div>
             </div>
          </div>
-         
          <div class="text-center m-t-20">
             <button class="btn btn-primary btn-lg" type="submit">Save &amp; create</button>
          </div>
