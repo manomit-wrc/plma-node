@@ -213,6 +213,7 @@ router.post('/edit-office/:id', auth, csrfProtection, (req, res) => {
         city: req.body.edit_office_city,
         state: req.body.edit_office_state,
         country: req.body.edit_office_country,
+        zipcode: req.body.edit_office_zipcode,
         mobile: req.body.edit_office_mobile_no
     },{ where: {id: req.params['id']}
     }).then(edit => {

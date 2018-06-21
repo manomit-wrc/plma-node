@@ -873,6 +873,9 @@ $(document).ready(function(e) {
 			edit_office_country: {
 				required: true
 			},
+			edit_office_zipcode: {
+				required: true
+			},
 			edit_office_mobile_no: {
 				required: true,
 				number: true,
@@ -894,6 +897,9 @@ $(document).ready(function(e) {
 			},
 			edit_office_country: {
 				required: "country can't be blank"
+			},
+			edit_office_zipcode: {
+				required: "Zipcode can't be blank"
 			},
 			edit_office_mobile_no: {
 				required: "Mobile Number can't be blank"
@@ -1247,7 +1253,7 @@ $(document).on('click', '#btnDeleteContact', function(e){
 /*===============================Ends Office Contact Section=============================*/
 
 /*========================Office state country fetch===========================*/
-$(document).ready(function(){
+/*$(document).ready(function(){
 	$("#edit_office_state").change(function(e){
 		var state_id = $(this).val();
 		$("#edit_office_city").find('option').not(':first').remove();
@@ -1288,7 +1294,7 @@ $(document).ready(function(){
 			});
 		}
 	});
-});
+});*/
 
 /*========================Office state country fetch===========================*/
 </script>
