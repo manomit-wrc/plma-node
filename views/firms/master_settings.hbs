@@ -191,7 +191,7 @@
 															<div class="dropdown">
 																<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
 																<ul class="dropdown-menu pull-right">
-																	<li><a href="#" data-toggle="modal" data-target="#edit_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}" data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}" data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}" data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}" id="edit-office-contact"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+																	<li><a href="#" data-toggle="modal" data-target="#edit_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}" data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}" data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}" data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}" data-contact-zipcode="{{this.zipcode}}" id="edit-office-contact"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
 																	<li><a href="#" data-toggle="modal" data-target="#delete_contacts" data-contact-id="{{this.id}}" id="delete-office-contact-details"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
 																</ul>
 															</div>
@@ -686,21 +686,43 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group">
-								<label class="control-label">City <span class="text-danger">*</span></label>
-								<input class="form-control" type="text" name="edit_contact_city" id="edit_contact_city">
+							<div class="form-group form-focus">
+								<select class="select form-control floating" id="edit_contact_country" name="edit_contact_country">
+									<option value="">Select Country</option>
+									{{#each country}}
+									<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+									{{/each}}
+								</select>
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group">
-								<label class="control-label">State<span class="text-danger">*</span></label>
-								<input class="form-control" type="text" name="edit_contact_state" id="edit_contact_state">
+							<div class="form-group form-focus">
+								<select class="select form-control floating" id="edit_contact_state" name="edit_contact_state">
+									<option value="">select State</option>
+									{{#each state}}
+									<option value="{{this.id}}">{{this.name}}</option>
+									{{/each}}
+								</select>
 							</div>
 						</div>
-						<div class="col-md-12">
-							<div class="form-group">
-								<label class="control-label">Country <span class="text-danger">*</span></label>
-								<input class="form-control" type="text" name="edit_contact_country" id="edit_contact_country">
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<select class="select form-control floating" id="edit_contact_city" name="edit_contact_city">
+									<option value="">Select City</option>
+									{{#each city}}
+									<option value="{{this.id}}">{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<select class="select form-control floating" id="edit_contact_zipcode" name="edit_contact_zipcode">
+									<option value="">Select Zipcode</option>
+									{{#each zipcode}}
+									<option value="{{this.id}}">{{this.zip}}</option>
+									{{/each}}
+								</select>
 							</div>
 						</div>
 					</div>
@@ -1126,6 +1148,7 @@ $(document).on('click', '#edit-office-contact', function(e){
 	var contact_city = $(this).data('contact-city');
 	var contact_state = $(this).data('contact-state');
 	var contact_country = $(this).data('contact-country');
+	var contact_zipcode = $(this).data('contact-zipcode');
 
 
 	$("#edit_office_id").val(office_id);
@@ -1140,6 +1163,13 @@ $(document).on('click', '#edit-office-contact', function(e){
 	$("#edit_contact_city").val(contact_city);
 	$("#edit_contact_state").val(contact_state);
 	$("#edit_contact_country").val(contact_country);
+	$("#edit_contact_zipcode").val(contact_zipcode);
+
+
+	$("#edit_contact_country").trigger('change');
+	$("#edit_contact_state").trigger('change');
+	$("#edit_contact_city").trigger('change');
+	$("#edit_contact_zipcode").trigger('change');
 
 	localStorage.setItem('contact_id', contact_id);
 
@@ -1182,6 +1212,9 @@ $(document).ready(function(e) {
 			edit_contact_country: {
 				required: true
 			},
+			edit_contact_zipcode: {
+				required: true
+			},
 			edit_contact_mobile_no: {
 				required: true,
 				number: true,
@@ -1216,6 +1249,9 @@ $(document).ready(function(e) {
 			},
 			edit_contact_country: {
 				required: "country can't be blank"
+			},
+			edit_contact_zipcode: {
+				required: "Zipcode can't be blank"
 			},
 			edit_contact_mobile_no: {
 				required: "Mobile Number can't be blank"
@@ -1278,9 +1314,9 @@ $(document).on('click', '#btnDeleteContact', function(e){
 
 /*===============================Ends Office Contact Section=============================*/
 
+$(document).ready(function(){
 /*========================Office state country fetch===========================*/
-/*$(document).ready(function(){
-	$("#edit_office_state").change(function(e){
+/*	$("#edit_office_state").change(function(e){
 		var state_id = $(this).val();
 		$("#edit_office_city").find('option').not(':first').remove();
 		if(state_id){
@@ -1319,10 +1355,53 @@ $(document).on('click', '#btnDeleteContact', function(e){
 				}
 			});
 		}
-	});
-});*/
+	});*/
+/*========================Ends Office state country fetch===========================*/
 
-/*========================Office state country fetch===========================*/
+/*========================Starts edit contact state country fetch===========================*/
+/*	$("#edit_contact_state").change(function(e){
+		var state_id = $(this).val();
+		$("#edit_contact_city").find('option').not(':first').remove();
+		if(state_id){
+			$.ajax({
+				type: "POST",
+				url:"/edit-contact-get/get-city",
+				data:{state_id:state_id},
+				success:function(response){
+					for(var i=0;i<response.get_city.length;i++) {
+						$("#edit_contact_city").append('<option value="'+response.get_city[i].id+'">'+response.get_city[i].name+'</option>');
+					}
+				},
+				error:function(xhr){
+
+				}
+			});
+		}
+	});
+
+	$("#edit_contact_city").change(function(e){
+		var city_name = $("#edit_contact_city option:selected").text();
+		$("#edit_contact_zipcode").find('option').not(':first').remove();
+		if(city_name){
+			$.ajax({
+				type: "POST",
+				url:"/edit-contact-get/get-zipcode",
+				data:{city_name:city_name},
+				success:function(response){
+					for(var i=0;i<response.zipcode.length;i++) {
+						console.log(response.zipcode[i]);
+						$("#edit_contact_zipcode").append('<option value="'+response.zipcode[i].id+'">'+response.zipcode[i].zip+'</option>');
+					}
+				},
+				error:function(xhr){
+
+				}
+			});
+		}
+	});*/
+/*========================Edit Contact state country fetch===========================*/
+});
+
 
 $(document).ready(function(){
 	$("#contact_state").change(function(e){

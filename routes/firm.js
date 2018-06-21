@@ -262,6 +262,7 @@ router.post('/edit-office-contact/:id', auth, csrfProtection, (req, res) => {
         city: req.body.edit_contact_city,
         state: req.body.edit_contact_state,
         country: req.body.edit_contact_country,
+        zipcode: req.body.edit_contact_zipcode,
     },{where: {id: req.params['id']}
     }).then(edit => {
         res.json({"edit_office_contact": true});
@@ -279,6 +280,7 @@ router.post('/delete-contact/:id', auth, csrfProtection, (req, res) =>{
 /*====================Ends Office Contact Section 19-06-2018================================= */
 /*======================Ends Firm Master Settings:::::Bratin Meheta 18-06-2018 & 19-06-2018=====================*/
 
+/*======================edit office Get city state==========================*/
 router.post('/editoffice-get/get-city', auth, (req, res) =>{
     City.findAll({
         where: { state_id : req.body.state_id}
@@ -293,8 +295,9 @@ router.post('/edit-office-get/get-zipcode', auth, (req, res) =>{
         res.send({zipcode:result});
     });
 });
+/*======================edit office Get city state==========================*/
 
-
+/*======================ADD Contact Get city state==========================*/
 router.post('/contact/get-city', auth, (req, res) =>{
     City.findAll({
         where: { state_id : req.body.state_id}
@@ -309,5 +312,24 @@ router.post('/contact/get-zipcode', auth, (req, res) =>{
         res.send({zipcode:result});
     });
 });
+/*======================ADD Contact Get city state==========================*/
+
+/*======================Edit Contact Get city state==========================*/
+router.post('/edit-contact-get/get-city', auth, (req, res) =>{
+    City.findAll({
+        where: { state_id : req.body.state_id}
+    }).then(result => {
+        res.send({get_city:result});
+    });
+});
+router.post('/edit-contact-get/get-zipcode', auth, (req, res) =>{
+    Zipcode.findAll({
+        where: { city_name : req.body.city_name}
+    }).then(result => {
+        res.send({zipcode:result});
+    });
+});
+
+/*======================Edit Contact Get city state==========================*/
 
 module.exports = router;
