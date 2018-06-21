@@ -122,7 +122,6 @@
 														<th>Office Name</th>
 														<th>Mobile Number</th>
 														<th>Address</th>
-														<th>City &amp; State</th>
 														<th>Created Date</th>
 														<th class="text-right">Action</th>
 													</tr>
@@ -134,7 +133,6 @@
 														<td>{{this.name}}</td>
 														<td>{{this.mobile}}</td>
 														<td>{{this.address}}</td>
-														<td>{{this.city.name}}, {{this.state.name}} </td>
 														<td>{{dateFormat this.createdAt "DD-MM-YYYY"}}</td>
 														<td class="text-right">
 															<div class="dropdown">
@@ -459,7 +457,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-focus">
-								<select class="select form-control floating editOfficeState" id="edit_office_state" name="edit_office_state">
+								<select class="select form-control floating" id="edit_office_state" name="edit_office_state">
 									<option value="">select State</option>
 									{{#each state}}
 									<option value="{{this.id}}">{{this.name}}</option>
@@ -469,7 +467,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-focus">
-								<select class="select form-control floating editOfficeCity" id="edit_office_city" name="edit_office_city">
+								<select class="select form-control floating" id="edit_office_city" name="edit_office_city">
 									<option value="">Select City</option>
 									{{#each city}}
 									<option value="{{this.id}}">{{this.name}}</option>
@@ -479,7 +477,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-focus">
-								<select class="select form-control floating editOfficeZipcode" id="edit_office_zipcode" name="edit_office_zipcode">
+								<select class="select form-control floating" id="edit_office_zipcode" name="edit_office_zipcode">
 									<option value="">Select Zipcode</option>
 									{{#each zipcode}}
 									<option value="{{this.id}}">{{this.zip}}</option>
@@ -847,7 +845,7 @@ $(document).on('click', '#edit-office-detail', function(e){
 	$('#edit_office_country').trigger('change');
 	$('#edit_office_state').trigger('change');
 	$('#edit_office_city').trigger('change');
-	//$('#edit_office_zipcode').trigger('change');
+	$('#edit_office_zipcode').trigger('change');
 
 	$('.edit-office-modal').modal('show');
 });
@@ -1250,7 +1248,7 @@ $(document).on('click', '#btnDeleteContact', function(e){
 
 /*========================Office state country fetch===========================*/
 $(document).ready(function(){
-	$(".editOfficeState").change(function(e){
+	$("#edit_office_state").change(function(e){
 		var state_id = $(this).val();
 		$("#edit_office_city").find('option').not(':first').remove();
 		if(state_id){
@@ -1270,7 +1268,7 @@ $(document).ready(function(){
 		}
 	});
 
-	$(".editOfficeCity").change(function(e){
+	$("#edit_office_city").change(function(e){
 		var city_name = $("#edit_office_city option:selected").text();
 		$("#edit_office_zipcode").find('option').not(':first').remove();
 		if(city_name){
