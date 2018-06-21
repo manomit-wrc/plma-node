@@ -121,6 +121,7 @@
                   <div class="form-group form-focus">
                      <label class="control-label">City</label>
                      <select class="select form-control floating" id="city" name="city">
+                          <option value="">Select City</option>
                          {{#each city}}
                             <option value="{{this.id}}" {{#if_eq this.id ../user.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
                          {{/each}}
@@ -204,46 +205,7 @@
 
             
 
-            $("#state").change(function(e){
-              var state_id = $(this).val();
-              $("#city").find('option').not(':first').remove();
-              if(state_id){
-                $.ajax({
-                  type: "POST",
-                  url:"/firm-profiles/get-city",
-                  data:{state_id:state_id},
-                  success:function(response){
-                     for(var i=0;i<response.get_city.length;i++) {
-                        $("#city").append('<option value="'+response.get_city[i].id+'">'+response.get_city[i].name+'</option>');
-                      }
-                  },
-                  error:function(xhr){
-
-                  }
-                });
-              }
-            });
-
-            $("#city").change(function(e){
-              var city_name = $("#city option:selected").text();
-              $("#zipcode").find('option').not(':first').remove();
-              if(city_name){
-                $.ajax({
-                  type: "POST",
-                  url:"/firm-profiles/get-zipcode",
-                  data:{city_name:city_name},
-                  success:function(response){
-                    for(var i=0;i<response.zipcode.length;i++) {
-                    console.log(response.zipcode[i]);
-                     $("#zipcode").append('<option value="'+response.zipcode[i].id+'">'+response.zipcode[i].zip+'</option>');
-                   }
-                  },
-                  error:function(xhr){
-
-                  }
-                });
-              }
-            });
+            
           });
     </script>
 {{/content}}

@@ -27,15 +27,18 @@ var storage = multer.diskStorage({
 
 var profile = multer({ storage: storage });
 
-router.get('/dashboard', auth, (req, res) => {
-    res.render('dashboard', { layout: 'dashboard' });
+router.get('/dashboard', auth,  (req, res) => {
+    res.render('dashboard', { layout: 'dashboard'});
 }).get('/logout', auth, (req, res) => {
     req.logout();
     res.redirect('/');
 });
 
-router.get('/profile', auth, (req, res) => {
-    res.render('profile', { layout: 'dashboard' });
+router.get('/profile', auth, async (req, res) => {
+    const country = await Country.findById(req.user.country);
+    const state = await State.findById(req.user.state);
+    const city = await City.findById(req.user.city);
+    res.render('profile', { layout: 'dashboard', country, state, city });
 });
 
 router.get('/edit-profile', csrfProtection, auth, async (req, res) => {

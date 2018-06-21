@@ -10,6 +10,10 @@ const Firm = require('../models').firm;
 const Office = require('../models').office;
 const Designation = require('../models').designation;
 const Contact = require('../models').office_contact;
+const Country = require('../models').country;
+const State = require('../models').state;
+const City = require('../models').city;
+const Zipcode = require('../models').zipcode;
 
 var csrfProtection = csrf({ cookie: true });
 
@@ -164,24 +168,26 @@ router.post('/firm/delete', auth, csrfProtection, async (req, res) => {
 
 /*====================Starts Office Section 18-06-2018================================= */
 
-router.get('/firm-details', auth, csrfProtection, (req, res) => {
+router.get('/firm-details', auth, csrfProtection, async (req, res) => {
     Office.belongsTo(Firm, {foreignKey: 'firm_id'});
     Contact.belongsTo(Office, {foreignKey: 'office_id'});
     Contact.belongsTo(Designation, {foreignKey: 'designation_id'});
-    Promise.all([
-        Office.findAll(
-            {
-                include: [{
-                model: Firm
-            }]
-        }),
-        Designation.findAll(),
-        Contact.findAll({
-            include: [{model: Office}, {model: Designation}]
-        })
-    ]).then(show =>{
-        res.render('firms/master_settings', {layout: 'dashboard', csrfToken: req.csrfToken(), office: show[0], designation: show[1], contact: show[2]});
-    })
+    const office = await Office.findAll(
+        {
+            include: [{
+            model: Firm
+        }]
+    });
+    const designation = await Designation.findAll();
+    const contact = await Contact.findAll({
+        include: [{model: Office}, {model: Designation}]
+    });
+    const country = await Country.findAll();
+    const state = await State.findAll();
+    const city = await City.findAll();
+    const zipcode = await Zipcode.findAll();
+    
+    res.render('firms/master_settings', {layout: 'dashboard', csrfToken: req.csrfToken(), office, designation, contact, country, state, city, zipcode});
 });
 
 router.post('/add-office', auth, csrfProtection, (req, res) => {
@@ -192,6 +198,7 @@ router.post('/add-office', auth, csrfProtection, (req, res) => {
         city: req.body.city,
         state: req.body.state,
         country: req.body.country,
+        zipcode: req.body.zipcode,
         mobile: req.body.mobile_no
     }).then(store => {
         res.json({"add_office":true});
@@ -270,6 +277,19 @@ router.post('/delete-contact/:id', auth, csrfProtection, (req, res) =>{
 /*====================Ends Office Contact Section 19-06-2018================================= */
 /*======================Ends Firm Master Settings:::::Bratin Meheta 18-06-2018 & 19-06-2018=====================*/
 
-
+router.post('/editoffice-get/get-city', auth, (req, res) =>{
+    City.findAll({
+        where: { state_id : req.body.state_id}
+    }).then(result => {
+        res.send({get_city:result});
+    });
+});
+router.post('/edit-office-get/get-zipcode', auth, (req, res) =>{
+    Zipcode.findAll({
+        where: { city_name : req.body.city_name}
+    }).then(result => {
+        res.send({zipcode:result});
+    });
+});
 
 module.exports = router;

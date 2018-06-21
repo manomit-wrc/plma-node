@@ -1,5 +1,6 @@
 {{#content "style" mode="prepend"}}
     <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
     <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
 {{/content}}
 
@@ -73,6 +74,15 @@
          <div class="card-box">
             <h3 class="card-title">Contact Informations</h3>
             <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-focus">
+                     <label class="control-label">Mobile No</label>
+                     <input type="text" class="form-control floating" 
+                     id="mobile_no" name="mobile_no"
+                     maxlength="10" minlength="10" value="{{empl.mobile_no}}"
+                     />
+                  </div>
+               </div>
                <div class="col-md-12">
                   <div class="form-group form-focus">
                      <label class="control-label">Address</label>
@@ -83,37 +93,45 @@
                </div>
                <div class="col-md-6">
                   <div class="form-group form-focus">
-                     <label class="control-label">City</label>
-                     <input type="text" class="form-control floating" 
-                     id="city" name="city" value="{{empl.city}}"
-                     />
+                     <select class="select form-control floating" id="country" name="country">
+                        <option value="">Select Country</option>
+                        {{#each country}}
+                        <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                        {{/each}}
+                    </select>
                   </div>
                </div>
                <div class="col-md-6">
                   <div class="form-group form-focus">
-                     <label class="control-label">State</label>
-                     <input type="text" class="form-control floating" 
-                     id="state" name="state" value="{{empl.state}}"
-                     />
+                     <select class="select form-control floating" id="state" name="state">
+                        <option value="">select State</option>
+                        {{#each state}}
+                        <option value="{{this.id}}" {{#if_eq this.id ../empl.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                        {{/each}}
+                    </select>
                   </div>
                </div>
                <div class="col-md-6">
                   <div class="form-group form-focus">
-                     <label class="control-label">Country</label>
-                     <input type="text" class="form-control floating" 
-                     id="country" name="country" value="{{empl.country}}"
-                     />
+                     <select class="select form-control floating" id="city" name="city">
+                          <option value="">Select City</option>
+                          {{#each city}}
+                            <option value="{{this.id}}" {{#if_eq this.id ../empl.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                          {{/each}}
+                    </select>
                   </div>
                </div>
                <div class="col-md-6">
                   <div class="form-group form-focus">
-                     <label class="control-label">Mobile No</label>
-                     <input type="text" class="form-control floating" 
-                     id="mobile_no" name="mobile_no"
-                     maxlength="10" minlength="10" value="{{empl.mobile_no}}"
-                     />
+                        <select class="select form-control floating" id="zipcode" name="zipcode">
+                        <option value="">Select Zipcode</option>
+                        {{#each zipcode}}
+                            <option value="{{this.id}}" {{#if_eq this.id ../empl.zipcode}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
+                          {{/each}}
+                    </select>
                   </div>
                </div>
+               
                <div class="col-md-12">
                     <div class="form-group form-focus select-focus">
                         
