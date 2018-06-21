@@ -580,21 +580,39 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group">
-								<label class="control-label">City <span class="text-danger">*</span></label>
-								<input class="form-control" type="text" name="contact_city" id="contact_city">
+							<div class="form-group form-focus">
+								<select class="select form-control floating" id="contact_country" name="contact_country">
+									<option value="">Select Country</option>
+									{{#each country}}
+									<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+									{{/each}}
+								</select>
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group">
-								<label class="control-label">State<span class="text-danger">*</span></label>
-								<input class="form-control" type="text" name="contact_state" id="contact_state">
+							<div class="form-group form-focus">
+								<select class="select form-control floating" id="contact_state" name="contact_state">
+									<option value="">select State</option>
+									{{#each state}}
+									<option value="{{this.id}}">{{this.name}}</option>
+									{{/each}}
+								</select>
 							</div>
 						</div>
-						<div class="col-md-12">
-							<div class="form-group">
-								<label class="control-label">Country <span class="text-danger">*</span></label>
-								<input class="form-control" type="text" name="contact_country" id="contact_country">
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<select class="select form-control floating" id="contact_city" name="contact_city">
+									<option value="">Select City</option>
+
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<select class="select form-control floating" id="contact_zipcode" name="contact_zipcode">
+									<option value="">Select Zipcode</option>
+
+								</select>
 							</div>
 						</div>
 					</div>
@@ -1003,6 +1021,9 @@ $(document).ready(function(e) {
 			contact_country: {
 				required: true
 			},
+			contact_zipcode: {
+				required: true
+			},
 			contact_mobile_no: {
 				required: true,
 				number: true,
@@ -1038,6 +1059,9 @@ $(document).ready(function(e) {
 			contact_country: {
 				required: "country can't be blank"
 			},
+			contact_zipcode: {
+				required: "Zipcode can't be blank"
+			},
 			contact_mobile_no: {
 				required: "Mobile Number can't be blank"
 			}
@@ -1052,6 +1076,7 @@ $(document).ready(function(e) {
 			city = $("#contact_city").val();
 			state = $("#contact_state").val();
 			country = $("#contact_country").val();
+			zipcode = $("#contact_zipcode").val();
 			mobile_no = $("#contact_mobile_no").val();
 			$.ajax({
 				type: "POST",
@@ -1066,6 +1091,7 @@ $(document).ready(function(e) {
 					city: city,
 					state: state,
 					country: country,
+					zipcode: zipcode,
 					mobile_no: mobile_no
 				},
 				beforeSend: function(xhr) {
@@ -1297,5 +1323,48 @@ $(document).on('click', '#btnDeleteContact', function(e){
 });*/
 
 /*========================Office state country fetch===========================*/
+
+$(document).ready(function(){
+	$("#contact_state").change(function(e){
+		var state_id = $(this).val();
+		$("#contact_city").find('option').not(':first').remove();
+		if(state_id){
+			$.ajax({
+				type: "POST",
+				url:"/contact/get-city",
+				data:{state_id:state_id},
+				success:function(response){
+					for(var i=0;i<response.get_city.length;i++) {
+						$("#contact_city").append('<option value="'+response.get_city[i].id+'">'+response.get_city[i].name+'</option>');
+					}
+				},
+				error:function(xhr){
+
+				}
+			});
+		}
+	});
+
+	$("#contact_city").change(function(e){
+		var city_name = $("#contact_city option:selected").text();
+		$("#contact_zipcode").find('option').not(':first').remove();
+		if(city_name){
+			$.ajax({
+				type: "POST",
+				url:"/contact/get-zipcode",
+				data:{city_name:city_name},
+				success:function(response){
+					for(var i=0;i<response.zipcode.length;i++) {
+						console.log(response.zipcode[i]);
+						$("#contact_zipcode").append('<option value="'+response.zipcode[i].id+'">'+response.zipcode[i].zip+'</option>');
+					}
+				},
+				error:function(xhr){
+
+				}
+			});
+		}
+	});
+});
 </script>
 {{/content}}

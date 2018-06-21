@@ -244,6 +244,7 @@ router.post('/add-office-contact', auth, csrfProtection, (req, res) => {
         city: req.body.city,
         state: req.body.state,
         country: req.body.country,
+        zipcode: req.body.zipcode
     }).then(store => {
         res.json({"add_office_contact": true});
     });
@@ -286,6 +287,22 @@ router.post('/editoffice-get/get-city', auth, (req, res) =>{
     });
 });
 router.post('/edit-office-get/get-zipcode', auth, (req, res) =>{
+    Zipcode.findAll({
+        where: { city_name : req.body.city_name}
+    }).then(result => {
+        res.send({zipcode:result});
+    });
+});
+
+
+router.post('/contact/get-city', auth, (req, res) =>{
+    City.findAll({
+        where: { state_id : req.body.state_id}
+    }).then(result => {
+        res.send({get_city:result});
+    });
+});
+router.post('/contact/get-zipcode', auth, (req, res) =>{
     Zipcode.findAll({
         where: { city_name : req.body.city_name}
     }).then(result => {
