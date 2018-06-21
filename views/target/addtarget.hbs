@@ -1,392 +1,443 @@
-
-{{#content "style" mode="prepend"}}
-  <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-  <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
-{{/content}}
 <div class="page-wrapper">
-              <div class="content container-fluid">
-        <div class="row">
-          <div class="col-sm-8">
-            <h4 class="page-title">Edit Profile</h4>
-          </div>
-        </div>
-        <form id="targetform">
-          <div class="card-box">
-  							<h3 class="card-title">Basic Informations</h3>
-  							<div class="row">
-  								<div class="col-md-12">
-  									<div class="profile-img-wrap">
-  										<img class="inline-block" src="assets/img/user.jpg" alt="user">
-  										<div class="fileupload btn btn-default">
-  											<span class="btn-text">edit</span>
-  											<input class="upload" type="file">
-  										</div>
-  									</div>
-  									<div class="profile-basic">
-  										<div class="row">
-  											<div class="col-md-6">
-  												<div class="form-group form-focus">
-  													<label class="control-label">First Name</label>
-  													<input type="text" class="form-control floating" name="first_name"  id="first_name"/>
-  												</div>
-  											</div>
-  											<div class="col-md-6">
-  												<div class="form-group form-focus">
-  													<label class="control-label">Last Name</label>
-  													<input type="text" class="form-control floating" name="last_name" id="last_name"/>
-  												</div>
-  											</div>
-  											<div class="col-md-6">
-  												<div class="form-group form-focus">
-  													<label class="control-label">Email</label>
-                            <input type="text" class="form-control floating" name="email" id="email"/>
-  												</div>
-  											</div>
-                        <div class="col-md-6">
-  												<div class="form-group form-focus">
-  													<label class="control-label">Mobile</label>
-                            <input type="text" class="form-control floating" name="mobile" id="mobile"/>
-  												</div>
-  											</div>
-  										</div>
-  									</div>
-  								</div>
-  							</div>
-  						</div>
-          <div class="card-box">
-            <h3 class="card-title">Contact Informations</h3>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group form-focus">
-                  <label class="control-label">Address 1</label>
-                  <input type="text" class="form-control floating" name="add1" id="add1"/>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group form-focus">
-                  <label class="control-label">Address 2</label>
-                  <input type="text" class="form-control floating" name="add2" id="add2"/>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group form-focus">
-                  <label class="control-label">Country</label>
-                  <input type="text" class="form-control floating" name="country" id="country"/>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group form-focus">
-                  <label class="control-label">Pin Code</label>
-                  <input type="text" class="form-control floating" name="pin" id="pin"/>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group form-focus">
-                  <label class="control-label">City</label>
-                  <input type="text" class="form-control floating" name="city" id="city"/>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group form-focus">
-                  <label class="control-label">State</label>
-                  <input type="text" class="form-control floating" name="state" id="state"/>
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <div class="form-group form-focus">
-                  <label class="control-label">Fax</label>
-                  <input type="text" class="form-control floating" name="fax" id="fax"/>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group form-focus">
-                  <label class="control-label">Association</label>
-                  <input type="text" class="form-control floating" name="association" id="association"/>
-                </div>
+                <div class="content container-fluid">
+					<div class="row">
+						<div class="col-sm-8">
+							<h4 class="page-title">Edit Profile</h4>
+						</div>
+					</div>
+					<form id="targetform">
+						<div class="card-box">
+							<h3 class="card-title">Basic Informations</h3>
+							<div class="row">
+								<div class="col-md-12">
+									{{!-- <div class="profile-img-wrap">
+										<img class="inline-block" src="assets/img/user.jpg" alt="user">
+										<div class="fileupload btn btn-default">
+											<span class="btn-text">edit</span>
+											<input class="upload" type="file">
+										</div>
+									</div> --}}
+									<div class="profile-basic">
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group form-focus">
+													<label class="control-label">First Name</label>
+													<input type="text" class="form-control floating" id="first_name" name="first_name" />
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group form-focus">
+													<label class="control-label">Last Name</label>
+													<input type="text" class="form-control floating" id="last_name" name="last_name"/>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group form-focus">
+													<label class="control-label">Email Id :</label>
+													<input type="text" class="form-control floating" id="email" name="email"/>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group form-focus select-focus">
+													<label class="control-label">Mobile Number :</label>
+													<input type="text" class="form-control floating" id="mobile_no" name="mobile_no"/>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card-box">
+							<h3 class="card-title">Contact Informations</h3>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group form-focus">
+										<label class="control-label">Address 1 :</label>
+										<input type="text" class="form-control floating" id="address1" name="address1"/>
+									</div>
+								</div>
+                                <div class="col-md-12">
+									<div class="form-group form-focus">
+										<label class="control-label">Address 2 :</label>
+										<input type="text" class="form-control floating" id="address2" name="address2"/>
+									</div>
+								</div>
+                            <div class="col-md-12">
+              <div class="form-group form-focus">
+                <label class="control-label">Fax:</label>
+                <input type="text" class="form-control floating" id="fax" name="fax"/>
               </div>
             </div>
-          </div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="">Country :</label>
+										<select id="country" name="country" class="form-control">
+                                            {{#each country}}
+                                            <option value="{{this.id}}">{{this.name}}</option>
+											{{/each}}
+                                        </select>
+									</div>
+								</div>
 
 
-          <div class="card-box">
-            <h3 class="card-title">Others Information</h3>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group form-focus">
-                  <label class="control-label">Company Name</label>
-                  <input type="text" class="form-control floating" name="company_name" id="company_name" />
+<div class="col-md-6">
+<div class="form-group form-focus select-focus">
+<label class="control-label">State :</label>
+<select class="select form-control floating" id="state" name="state" class="form-control"  onchange="return cityByState();">
+{{#each state}}
+<option value="{{this.id}}">{{this.name}}</option>
+{{/each}}
+</select>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="form-group form-focus select-focus">
+<label class="control-label">City :</label>
+<select class="select form-control floating" id="city" name="city" class="form-control"  onchange="return StateByCity();">
+{{#each city}}
+<option value="{{this.id}}">{{this.name}}</option>
+{{/each}}
+</select>
+</div>
+</div>
+
+
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class=" ">Pin Code :</label>
+										<select id="pin_code" name="pin_code" class="form-control">
+                                            <option value=""></option>
+                                        </select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card-box">
+							<h3 class="card-title">Other Informations</h3>
+							<div class="row">
+                <div class="col-md-6">
+                  <div class="form-group form-focus">
+                    <label class="control-label">Designation :</label>
+                    <input type="text" class="form-control floating" id="designation" name="designation"/>
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group form-focus">
-                  <label class="control-label">Designations</label>
-                  <input type="text" class="form-control floating" name="designation" id="designation"/>
-                </div>
-              </div>
-            </div>
-            <div class="add-more">
-              <a href="#" class="btn btn-primary"><i class="fa fa-plus"></i> Add morethings</a>
-            </div>
-          </div>
-          <div class="card-box">
-            <h3 class="card-title">Add More Contect Informations</h3>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group form-focus">
-                  <label class="control-label">Twitter</label>
-                  <input type="text" class="form-control floating" name="twitter" id="twitter"/>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group form-focus">
-                  <label class="control-label">Facebook</label>
-                  <input type="text" class="form-control floating"  name="facebook" id="facebook"/>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group form-focus">
-                  <label class="control-label">Google++</label>
-                  <input type="text" class="form-control floating"  name="google" id="google"/>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group form-focus">
-                  <label class="control-label">Industry Type</label>
-                  <input type="text" class="form-control floating"  name="industry_type" id="industry_type"/>
-                </div>
-              </div>
-            </div>
-            <div class="add-more">
-              <a href="#" class="btn btn-primary"><i class="fa fa-plus"></i> Add More Experience</a>
-            </div>
-          </div>
-          <div class="text-center m-t-20">
-            <button class="btn btn-primary btn-lg" type="button" id="submit">Save &amp; update</button>
-          </div>
-        </form>
-      </div>
-      <div class="notification-box">
-        <div class="msg-sidebar notifications msg-noti">
-          <div class="topnav-dropdown-header">
-            <span>Messages</span>
-          </div>
-          <div class="drop-scroll msg-list-scroll">
-            <ul class="list-box">
-              <li>
-                <a href="chat.html">
-                  <div class="list-item">
-                    <div class="list-left">
-                      <span class="avatar">R</span>
-                    </div>
-                    <div class="list-body">
-                      <span class="message-author">Richard Miles </span>
-                      <span class="message-time">12:28 AM</span>
-                      <div class="clearfix"></div>
-                      <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="chat.html">
-                  <div class="list-item new-message">
-                    <div class="list-left">
-                      <span class="avatar">J</span>
-                    </div>
-                    <div class="list-body">
-                      <span class="message-author">John Doe</span>
-                      <span class="message-time">1 Aug</span>
-                      <div class="clearfix"></div>
-                      <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="chat.html">
-                  <div class="list-item">
-                    <div class="list-left">
-                      <span class="avatar">T</span>
-                    </div>
-                    <div class="list-body">
-                      <span class="message-author"> Tarah Shropshire </span>
-                      <span class="message-time">12:28 AM</span>
-                      <div class="clearfix"></div>
-                      <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="chat.html">
-                  <div class="list-item">
-                    <div class="list-left">
-                      <span class="avatar">M</span>
-                    </div>
-                    <div class="list-body">
-                      <span class="message-author">Mike Litorus</span>
-                      <span class="message-time">12:28 AM</span>
-                      <div class="clearfix"></div>
-                      <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="chat.html">
-                  <div class="list-item">
-                    <div class="list-left">
-                      <span class="avatar">C</span>
-                    </div>
-                    <div class="list-body">
-                      <span class="message-author"> Catherine Manseau </span>
-                      <span class="message-time">12:28 AM</span>
-                      <div class="clearfix"></div>
-                      <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="chat.html">
-                  <div class="list-item">
-                    <div class="list-left">
-                      <span class="avatar">D</span>
-                    </div>
-                    <div class="list-body">
-                      <span class="message-author"> Domenic Houston </span>
-                      <span class="message-time">12:28 AM</span>
-                      <div class="clearfix"></div>
-                      <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="chat.html">
-                  <div class="list-item">
-                    <div class="list-left">
-                      <span class="avatar">B</span>
-                    </div>
-                    <div class="list-body">
-                      <span class="message-author"> Buster Wigton </span>
-                      <span class="message-time">12:28 AM</span>
-                      <div class="clearfix"></div>
-                      <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="chat.html">
-                  <div class="list-item">
-                    <div class="list-left">
-                      <span class="avatar">R</span>
-                    </div>
-                    <div class="list-body">
-                      <span class="message-author"> Rolland Webber </span>
-                      <span class="message-time">12:28 AM</span>
-                      <div class="clearfix"></div>
-                      <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="chat.html">
-                  <div class="list-item">
-                    <div class="list-left">
-                      <span class="avatar">C</span>
-                    </div>
-                    <div class="list-body">
-                      <span class="message-author"> Claire Mapes </span>
-                      <span class="message-time">12:28 AM</span>
-                      <div class="clearfix"></div>
-                      <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="chat.html">
-                  <div class="list-item">
-                    <div class="list-left">
-                      <span class="avatar">M</span>
-                    </div>
-                    <div class="list-body">
-                      <span class="message-author">Melita Faucher</span>
-                      <span class="message-time">12:28 AM</span>
-                      <div class="clearfix"></div>
-                      <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="chat.html">
-                  <div class="list-item">
-                    <div class="list-left">
-                      <span class="avatar">J</span>
-                    </div>
-                    <div class="list-body">
-                      <span class="message-author">Jeffery Lalor</span>
-                      <span class="message-time">12:28 AM</span>
-                      <div class="clearfix"></div>
-                      <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="chat.html">
-                  <div class="list-item">
-                    <div class="list-left">
-                      <span class="avatar">L</span>
-                    </div>
-                    <div class="list-body">
-                      <span class="message-author">Loren Gatlin</span>
-                      <span class="message-time">12:28 AM</span>
-                      <div class="clearfix"></div>
-                      <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="chat.html">
-                  <div class="list-item">
-                    <div class="list-left">
-                      <span class="avatar">T</span>
-                    </div>
-                    <div class="list-body">
-                      <span class="message-author">Tarah Shropshire</span>
-                      <span class="message-time">12:28 AM</span>
-                      <div class="clearfix"></div>
-                      <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="topnav-dropdown-footer">
-            <a href="chat.html">See all messages</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  <!-- </div> -->
-      {{#content "script" mode="append"}}
-      <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
-                <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
-                <script type="text/javascript" src="/assets/js/select2.min.js"></script>
-                <script type="text/javascript" src="/assets/js/moment.min.js"></script>
-                <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
-  <script type="text/javascript">
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="">Type :</label>
+										<select id="country" name="country" class="form-control">
+
+                                            <option value="I">I</option>
+
+                                        </select>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Comapnay Name :</label>
+										<input type="text" class="form-control floating" id="company_name" name="company_name"/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Association</label>
+										<input type="text" class="form-control floating" id="association" name="association"/>
+									</div>
+								</div>
+                <div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Industry Type</label>
+										<input type="text" class="form-control floating" id="industry_type" name="industry_type"/>
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Facebook </label>
+										<input type="text" class="form-control floating" id="facebook" name="facebook"/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Google </label>
+										<input type="text" class="form-control floating" id="google" name="google"/>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+
+						<div class="text-center m-t-20">
+							<button class="btn btn-primary btn-lg" type="submit" id="submit">Add Client</button>
+						</div>
+					</form>
+				</div>
+				<div class="notification-box">
+					<div class="msg-sidebar notifications msg-noti">
+						<div class="topnav-dropdown-header">
+							<span>Messages</span>
+						</div>
+						<div class="drop-scroll msg-list-scroll">
+							<ul class="list-box">
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">R</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">Richard Miles </span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item new-message">
+											<div class="list-left">
+												<span class="avatar">J</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">John Doe</span>
+												<span class="message-time">1 Aug</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">T</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author"> Tarah Shropshire </span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">M</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">Mike Litorus</span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">C</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author"> Catherine Manseau </span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">D</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author"> Domenic Houston </span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">B</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author"> Buster Wigton </span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">R</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author"> Rolland Webber </span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">C</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author"> Claire Mapes </span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">M</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">Melita Faucher</span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">J</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">Jeffery Lalor</span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">L</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">Loren Gatlin</span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">T</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">Tarah Shropshire</span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+							</ul>
+						</div>
+						<div class="topnav-dropdown-footer">
+							<a href="chat.html">See all messages</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			 {{#content "script" mode="append"}}
+<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+ <!-- <script type="text/javascript" src="/assets/js/select2.min.js"></script>  -->
+<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+<script type="text/javascript">
+	function cityByState(){
+
+		var state = $('#state').val();
+		$.ajax({
+			url: "/target/findCityByState",
+			method: "POST",
+			data: {state_id: state},
+			beforeSend: function(xhr) {
+										xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+
+									},
+			success: function(resp){
+				console.log(resp);
+				var test = document.getElementsByClassName('test');
+							for(var i = 0; i < test.length; i++){
+								test[i].remove();
+
+							}
+							$.each(resp.city, function(key, value) {
+							console.log(value);
+
+		$("#city").append('<option class="test" value="'+value.id+'">'+value.name+'</option>');
+	});
+			},
+			error: function(xhr){
+
+			}
+		});
+	}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
   // add designation ajax and form validation starts
   $(document).ready(function(e) {
 
@@ -398,32 +449,96 @@
       rules: {
         first_name: {
           required: true
+        },
+        last_name: {
+          required: true
+        },
+        email: {
+          required: true
+        },
+        state: {
+          required: true
+        },
+        address1: {
+          required: true
+        },
+        address2: {
+          required: true
+        },
+        country: {
+          required: true
+        },
+        designation: {
+          required: true
+        },
+        industry_type: {
+          required: true
         }
       },
       messages: {
         first_name: {
           required: "first name can't be blank"
+        },
+        last_name: {
+          required: "first name can't be blank"
+        },
+        email: {
+          required: "first name can't be blank"
+        },
+        state: {
+          required: "first name can't be blank"
+        },
+        address1: {
+          required: "first name can't be blank"
+        },
+        address2: {
+          required: "first name can't be blank"
+        },
+        country: {
+          required: "first name can't be blank"
+        },
+        designation: {
+          required: "first name can't be blank"
+        },
+        industry_type: {
+          required: "first name can't be blank"
         }
       },
       submitHandler:function(form) {
       var country = $('#country').val();
-      var add2 = $('#add2').val();
-      var add1 = $('#add1').val();
+      var address2 = $('#address2').val();
+      var address1 = $('#address1').val();
       var industry_type = $('#industry_type').val();
       var state = $('#state').val();
       var city = $('#city').val();
-      var pin = $('#pin').val();
+      var pin_code = $('#pin_code').val();
       var first_name = $('#first_name').val();
       var last_name = $('#last_name').val();
       var email = $('#email').val();
-      var mobile = $('#mobile').val();
+      var mobile_no = $('#mobile_no').val();
+      var designation = $('#designation').val();
       var association = $('#association').val();
 
         $.ajax({
           type: "POST",
           url: "/targetinsert/add",
           data: {
-          state: state
+          first_name: first_name,
+          last_name: last_name
+          // association: association,
+          // designation: designation,
+          // mobile_no: mobile_no,
+          // email: email,
+          // pin_code: pin_code,
+          // industry_type: industry_type,
+          // industry_type: industry_type,
+          //
+          // industry_type: industry_type,
+          // industry_type: industry_type,
+          // industry_type: industry_type,
+          // industry_type: industry_type,
+          //
+
           },
           beforeSend: function(xhr) {
             xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
@@ -442,44 +557,46 @@
           }
         });
 
-
-
-
       }
-});
+    });
     });
 
 
-//city state
-    function cityByState(){
- alert($('#state').val());
- var state = $('#state').val();
- $.ajax({
-  url: "/client/findCityByState",
-  method: "POST",
-  data: {state_id: state},
-  beforeSend: function(xhr) {
-         xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+            </script>
 
 
-        },
-  success: function(resp){
-   console.log(resp);
-   var test = document.getElementsByClassName('test');
-      for(var i = 0; i < test.length; i++){
-       test[i].remove();
+            <!-- <script>
+            	function StateByCity(){
 
-      }
-      $.each(resp.city, function(key, value) {
-      console.log(value);
+            		var city = $('#city').val();
+            		$.ajax({
+            			url: "/target/findStateByCity",
+            			method: "POST",
+            			data: {city_id: city},
+            			beforeSend: function(xhr) {
+            										xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
 
- $("#city").append('<option class="test" value="'+value.id+'">'+value.name+'</option>');
-});
-  },
-  error: function(xhr){
 
-  }
- });
-}
-</script>
+            									},
+            			success: function(resp){
+            				// console.log(resp);
+            				var test = document.getElementsByClassName('test');
+                    // console.log(test);
+            							// for(var i = 0; i < test.length; i++){
+            							// 	test[i].remove();
+                          //
+            							// }
+                          console.log(resp.city);
+
+            							$.each(resp.city, function(key, value) {
+
+            		$("#city").append('<option class="test" value="'+value.id+'">'+value.name+'</option>');
+            	});
+            			},
+            			error: function(xhr){
+
+            			}
+            		});
+            	}
+            </script> -->
 {{/content}}
