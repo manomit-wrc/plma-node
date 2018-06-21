@@ -88,37 +88,54 @@
                      />
                   </div>
                </div>
-               <div class="col-md-6">
-                  <div class="form-group form-focus">
-                     <label class="control-label">City</label>
-                     <input type="text" class="form-control floating" 
-                     id="city" name="city" value="{{user.city}}"
-                     />
-                  </div>
-               </div>
-               <div class="col-md-6">
-                  <div class="form-group form-focus">
-                     <label class="control-label">State</label>
-                     <input type="text" class="form-control floating" 
-                     id="state" name="state" value="{{user.state}}"
-                     />
-                  </div>
-               </div>
-               <div class="col-md-6">
-                  <div class="form-group form-focus">
-                     <label class="control-label">Country</label>
-                     <input type="text" class="form-control floating" 
-                     id="country" name="country" value="{{user.country}}"
-                     />
-                  </div>
-               </div>
-               <div class="col-md-6">
+               <div class="col-md-12">
                   <div class="form-group form-focus">
                      <label class="control-label">Mobile No</label>
                      <input type="text" class="form-control floating" 
                      id="mobile_no" name="mobile_no" value="{{user.mobile_no}}"
                      maxlength="10" minlength="10"
                      />
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <div class="form-group form-focus">
+                     <label class="control-label">Country</label>
+                     <select class="select form-control floating" id="country" name="country">
+                        {{#each country}}
+                        <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <div class="form-group form-focus">
+                     <label class="control-label">State</label>
+                     <select class="select form-control floating" id="state" name="state">
+                        {{#each state}}
+                        <option value="{{this.id}}" {{#if_eq this.id ../user.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <div class="form-group form-focus">
+                     <label class="control-label">City</label>
+                     <select class="select form-control floating" id="city" name="city">
+                         {{#each city}}
+                            <option value="{{this.id}}" {{#if_eq this.id ../user.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                         {{/each}}
+                    </select>
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <div class="form-group form-focus">
+                       <label class="control-label">Zipcode</label>
+                        <select class="select form-control floating" id="zipcode" name="zipcode">
+                        <option value="">Select Zipcode</option>
+                        {{#each zipcode}}
+                            <option value="{{this.id}}" {{#if_eq this.id ../user.zipcode}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
+                        {{/each}}
+                    </select>
                   </div>
                </div>
             </div>
@@ -184,6 +201,49 @@
                     reader.readAsDataURL(input.files[0]);
                 }
             });
-        });
+
+            
+
+            $("#state").change(function(e){
+              var state_id = $(this).val();
+              $("#city").find('option').not(':first').remove();
+              if(state_id){
+                $.ajax({
+                  type: "POST",
+                  url:"/firm-profiles/get-city",
+                  data:{state_id:state_id},
+                  success:function(response){
+                     for(var i=0;i<response.get_city.length;i++) {
+                        $("#city").append('<option value="'+response.get_city[i].id+'">'+response.get_city[i].name+'</option>');
+                      }
+                  },
+                  error:function(xhr){
+
+                  }
+                });
+              }
+            });
+
+            $("#city").change(function(e){
+              var city_name = $("#city option:selected").text();
+              $("#zipcode").find('option').not(':first').remove();
+              if(city_name){
+                $.ajax({
+                  type: "POST",
+                  url:"/firm-profiles/get-zipcode",
+                  data:{city_name:city_name},
+                  success:function(response){
+                    for(var i=0;i<response.zipcode.length;i++) {
+                    console.log(response.zipcode[i]);
+                     $("#zipcode").append('<option value="'+response.zipcode[i].id+'">'+response.zipcode[i].zip+'</option>');
+                   }
+                  },
+                  error:function(xhr){
+
+                  }
+                });
+              }
+            });
+          });
     </script>
 {{/content}}
