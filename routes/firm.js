@@ -198,8 +198,27 @@ router.get('/firm-details', auth, csrfProtection, async (req, res) => {
     const firm = await Firm.findAll({
         where: {id: req.user.firm_id}
     });
+    var state_id = firm[0].state;
+    var city_id = firm[0].city;
+    var firm_city = [];
+    var firm_zipcode = [];
+    if(state_id != null)
+    {
+         firm_city = await City.findAll({
+            where: {state_id: state_id.toString()}
+        });
+    }
+    if(city_id != null)
+    {
+        const cities = await City.findById(city_id.toString());
+         firm_zipcode = await Zipcode.findAll({
+            where: {
+                city_name: cities.name
+            }
+        });
+    }
     
-    res.render('firms/master_settings', {layout: 'dashboard', csrfToken: req.csrfToken(), office, designation, contact, country, state, city, zipcode, firm: firm[0]});
+    res.render('firms/master_settings', {layout: 'dashboard', csrfToken: req.csrfToken(), office, designation, contact, country, state, city, zipcode, firm: firm[0], firm_city, firm_zipcode});
 });
 
 router.post('/add-office', auth, csrfProtection, (req, res) => {

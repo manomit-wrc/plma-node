@@ -81,7 +81,7 @@
 													<label class="control-label">City <span class="text-danger">*</span></label>
 													<select class="form-control" id="firm_city" name="firm_city">
 														<option value="">Select City</option>
-														{{#each city}}
+														{{#each firm_city}}
 															<option value="{{this.id}}" {{#if_eq this.id ../firm.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
 														{{/each}}
 													</select>
@@ -92,7 +92,7 @@
 													<label class="control-label">Zipcode <span class="text-danger">*</span></label>
 													<select class="form-control" id="firm_zipcode" name="firm_zipcode">
 														<option value="">Select Zipcode</option>
-														{{#each zipcode}}
+														{{#each firm_zipcode}}
 															<option value="{{this.id}}" {{#if_eq this.id ../firm.zipcode}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
 														{{/each}}
 													</select>
