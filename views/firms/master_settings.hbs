@@ -27,78 +27,104 @@
 						<div class="tab-content tabs">
 							<div role="tabpanel" class="tab-pane fade in active" id="Section1">
 								<div class="row filter-row">
-									<form class="m-b-30">
+									<form class="m-b-30" method="POST" name="frmUpdateFirm" id="frmUpdateFirm">
+										<input type="hidden" name="_csrf" value="{{csrfToken}}">
 										<div class="row">
 											<div class="col-md-6">
 												<div class="form-group">
-													<label class="control-label">First Name <span class="text-danger">*</span></label>
-													<input class="form-control" type="text">
+													<label class="control-label">Address Line 1 <span class="text-danger">*</span></label>
+													<input class="form-control" type="text" name="address1" id="address1" placeholder="Address Line 1" value="{{firm.address}}">
 												</div>
 											</div>
 											<div class="col-md-6">
 												<div class="form-group">
-													<label class="control-label">Last Name</label>
-													<input class="form-control" type="text">
+													<label class="control-label">Address Line 2</label>
+													<input class="form-control" type="text" name="address2" id="address2" placeholder="Address Line 2" value="{{firm.address1}}">
 												</div>
 											</div>
 											<div class="col-md-6">
 												<div class="form-group">
-													<label class="control-label">Username <span class="text-danger">*</span></label>
-													<input class="form-control" type="text">
+													<label class="control-label">Address Line 3</label>
+													<input class="form-control" type="text" name="address3" id="address3" placeholder="Address Line 3" value="{{firm.address2}}">
 												</div>
 											</div>
 											<div class="col-md-6">
 												<div class="form-group">
-													<label class="control-label">Email <span class="text-danger">*</span></label>
-													<input class="form-control" type="email">
+													<label class="control-label">Phone No <span class="text-danger">*</span></label>
+													<input class="form-control number_validator" type="text" name="phone_no" id="phone_no" placeholder="Phone No" value="{{firm.phone_no}}">
 												</div>
 											</div>
 											<div class="col-md-6">
 												<div class="form-group">
-													<label class="control-label">Password</label>
-													<input class="form-control" type="password">
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group">
-													<label class="control-label">Confirm Password</label>
-													<input class="form-control" type="password">
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group">
-													<label class="control-label">Phone </label>
-													<input class="form-control" type="text">
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group">
-													<label class="control-label">Role</label>
-													<select class="select">
-														<option>Admin</option>
-														<option>Client</option>
-														<option>Employee</option>
+													<label class="control-label">Country <span class="text-danger">*</span></label>
+													<select class="form-control" id="firm_country" name="firm_country">
+														<option value="">Select Country</option>
+														{{#each country}}
+														<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+														{{/each}}
 													</select>
 												</div>
 											</div>
 											<div class="col-md-6">
 												<div class="form-group">
-													<label class="control-label">Company</label>
-													<select class="select">
-														<option>Global Technologies</option>
-														<option>Delta Infotech</option>
+													<label class="control-label">State <span class="text-danger">*</span></label>
+													<select class="form-control" id="firm_state" name="firm_state">
+														<option value="">select State</option>
+														{{#each state}}
+															<option value="{{this.id}}" {{#if_eq this.id ../firm.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+														{{/each}}
 													</select>
 												</div>
 											</div>
-											<div class="col-md-6">  
+											<div class="col-md-6">
 												<div class="form-group">
-													<label class="control-label">Employee ID <span class="text-danger">*</span></label>
-													<input type="text" class="form-control floating">
+													<label class="control-label">City <span class="text-danger">*</span></label>
+													<select class="form-control" id="firm_city" name="firm_city">
+														<option value="">Select City</option>
+														{{#each city}}
+															<option value="{{this.id}}" {{#if_eq this.id ../firm.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+														{{/each}}
+													</select>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Zipcode <span class="text-danger">*</span></label>
+													<select class="form-control" id="firm_zipcode" name="firm_zipcode">
+														<option value="">Select Zipcode</option>
+														{{#each zipcode}}
+															<option value="{{this.id}}" {{#if_eq this.id ../firm.zipcode}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
+														{{/each}}
+													</select>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Fax</label>
+													<input class="form-control number_validator" type="text" name="fax" id="fax" placeholder="Fax" value="{{firm.fax}}">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Mobile</label>
+													<input class="form-control number_validator" type="text" name="firm_mobile" id="firm_mobile" placeholder="Mobile" value="{{firm.mobile}}">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Website URL</label>
+													<input class="form-control url_selector" type="text" name="web_url" id="web_url" placeholder="Website URL" value="{{firm.website_url}}">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Social URL</label>
+													<input class="form-control url_selector" type="text" name="social_url" id="social_url" placeholder="Social URL" value="{{firm.social_url}}">
 												</div>
 											</div>
 										</div>
 										<div class="m-t-20 text-center">
-											<button class="btn btn-primary  rounded common-rounded-btn">Save &amp; Next</button>
+											<button class="btn btn-primary rounded common-rounded-btn" id="btnUpdateFirm">Save &amp; Next</button>
 										</div>
 									</form>     
 								</div>
@@ -447,7 +473,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-focus">
-								<select class="select form-control floating" id="edit_office_country" name="edit_office_country">
+								<select class=" form-control floating" id="edit_office_country" name="edit_office_country">
 									<option value="">Select Country</option>
 									{{#each country}}
 									<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
@@ -457,7 +483,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-focus">
-								<select class="select form-control floating" id="edit_office_state" name="edit_office_state">
+								<select class=" form-control floating" id="edit_office_state" name="edit_office_state">
 									<option value="">select State</option>
 									{{#each state}}
 									<option value="{{this.id}}">{{this.name}}</option>
@@ -467,7 +493,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-focus">
-								<select class="select form-control floating" id="edit_office_city" name="edit_office_city">
+								<select class=" form-control floating" id="edit_office_city" name="edit_office_city">
 									<option value="">Select City</option>
 									{{#each city}}
 									<option value="{{this.id}}">{{this.name}}</option>
@@ -477,7 +503,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-focus">
-								<select class="select form-control floating" id="edit_office_zipcode" name="edit_office_zipcode">
+								<select class=" form-control floating" id="edit_office_zipcode" name="edit_office_zipcode">
 									<option value="">Select Zipcode</option>
 									{{#each zipcode}}
 									<option value="{{this.id}}">{{this.zip}}</option>
@@ -687,7 +713,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-focus">
-								<select class="select form-control floating" id="edit_contact_country" name="edit_contact_country">
+								<select class=" form-control floating" id="edit_contact_country" name="edit_contact_country">
 									<option value="">Select Country</option>
 									{{#each country}}
 									<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
@@ -697,7 +723,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-focus">
-								<select class="select form-control floating" id="edit_contact_state" name="edit_contact_state">
+								<select class=" form-control floating" id="edit_contact_state" name="edit_contact_state">
 									<option value="">select State</option>
 									{{#each state}}
 									<option value="{{this.id}}">{{this.name}}</option>
@@ -707,7 +733,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-focus">
-								<select class="select form-control floating" id="edit_contact_city" name="edit_contact_city">
+								<select class=" form-control floating" id="edit_contact_city" name="edit_contact_city">
 									<option value="">Select City</option>
 									{{#each city}}
 									<option value="{{this.id}}">{{this.name}}</option>
@@ -717,7 +743,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-focus">
-								<select class="select form-control floating" id="edit_contact_zipcode" name="edit_contact_zipcode">
+								<select class=" form-control floating" id="edit_contact_zipcode" name="edit_contact_zipcode">
 									<option value="">Select Zipcode</option>
 									{{#each zipcode}}
 									<option value="{{this.id}}">{{this.zip}}</option>
@@ -881,11 +907,6 @@ $(document).on('click', '#edit-office-detail', function(e){
 	$('#edit_office_country').val(office_country);
 	$('#edit_office_zipcode').val(office_zipcode);
 	$('#edit_office_mobile_no').val(office_mobile);
-
-	$('#edit_office_country').trigger('change');
-	$('#edit_office_state').trigger('change');
-	$('#edit_office_city').trigger('change');
-	$('#edit_office_zipcode').trigger('change');
 
 	$('.edit-office-modal').modal('show');
 });
@@ -1165,12 +1186,6 @@ $(document).on('click', '#edit-office-contact', function(e){
 	$("#edit_contact_country").val(contact_country);
 	$("#edit_contact_zipcode").val(contact_zipcode);
 
-
-	$("#edit_contact_country").trigger('change');
-	$("#edit_contact_state").trigger('change');
-	$("#edit_contact_city").trigger('change');
-	$("#edit_contact_zipcode").trigger('change');
-
 	localStorage.setItem('contact_id', contact_id);
 
 	$('.editContactModal').modal('show');
@@ -1315,8 +1330,8 @@ $(document).on('click', '#btnDeleteContact', function(e){
 /*===============================Ends Office Contact Section=============================*/
 
 $(document).ready(function(){
-/*========================Office state country fetch===========================*/
-/*	$("#edit_office_state").change(function(e){
+	/*========================Office state country fetch===========================*/
+	$("#edit_office_state").change(function(e){
 		var state_id = $(this).val();
 		$("#edit_office_city").find('option').not(':first').remove();
 		if(state_id){
@@ -1355,11 +1370,11 @@ $(document).ready(function(){
 				}
 			});
 		}
-	});*/
-/*========================Ends Office state country fetch===========================*/
+	});
+	/*========================Ends Office state country fetch===========================*/
 
-/*========================Starts edit contact state country fetch===========================*/
-/*	$("#edit_contact_state").change(function(e){
+	/*========================Starts edit contact state country fetch===========================*/
+	$("#edit_contact_state").change(function(e){
 		var state_id = $(this).val();
 		$("#edit_contact_city").find('option').not(':first').remove();
 		if(state_id){
@@ -1398,8 +1413,8 @@ $(document).ready(function(){
 				}
 			});
 		}
-	});*/
-/*========================Edit Contact state country fetch===========================*/
+	});
+	/*========================Edit Contact state country fetch===========================*/
 });
 
 
@@ -1444,6 +1459,152 @@ $(document).ready(function(){
 			});
 		}
 	});
+
+
+	/*===========================firm basic section =======================*/
+
+	$("#firm_state").change(function(e){
+		var state_id = $(this).val();
+		$("#firm_city").find('option').not(':first').remove();
+		if(state_id){
+			$.ajax({
+				type: "POST",
+				url:"/firm-basic/get-city",
+				data:{state_id:state_id},
+				success:function(response){
+					for(var i=0;i<response.get_city.length;i++) {
+						$("#firm_city").append('<option value="'+response.get_city[i].id+'">'+response.get_city[i].name+'</option>');
+					}
+				},
+				error:function(xhr){
+
+				}
+			});
+		}
+	});
+
+	$("#firm_city").change(function(e){
+		var city_name = $("#firm_city option:selected").text();
+		$("#firm_zipcode").find('option').not(':first').remove();
+		if(city_name){
+			$.ajax({
+				type: "POST",
+				url:"/firm-basic/get-zipcode",
+				data:{city_name:city_name},
+				success:function(response){
+					for(var i=0;i<response.zipcode.length;i++) {
+						console.log(response.zipcode[i]);
+						$("#firm_zipcode").append('<option value="'+response.zipcode[i].id+'">'+response.zipcode[i].zip+'</option>');
+					}
+				},
+				error:function(xhr){
+
+				}
+			});
+		}
+	});
+	/*===========================firm basic section =======================*/
 });
+
+/*==================================Update Firm Section (BASIC) =============================*/
+
+$(document).ready(function(e) {
+
+	$("#btnUpdateFirm").click(function() {
+		$("#frmUpdateFirm").submit();
+	});          
+
+	$("#frmUpdateFirm").validate({
+		rules: {
+			address1: {
+				required: true
+			},
+			phone_no: {
+				required: true
+			},
+			firm_city: {
+				required: true
+			},
+			firm_state: {
+				required: true
+			},
+			firm_country: {
+				required: true
+			},
+			firm_zipcode: {
+				required: true
+			}
+		},
+		messages: {
+			address1: {
+				required: "Address can't be blank"
+			},
+			phone_no: {
+				required: "Phone number can't be blank"
+			},
+			firm_city: {
+				required: "City can't be blank"
+			},
+			firm_state: {
+				required: "State can't be blank"
+			},
+			firm_country: {
+				required: "country can't be blank"
+			},
+			firm_zipcode: {
+				required: "Zipcode can't be blank"
+			}
+		},
+		submitHandler:function(form) {
+			var address1 = $("#address1").val(),
+			address2 = $("#address2").val(),
+			address3 = $("#address3").val(),
+			phone_no = $("#phone_no").val(),
+			city = $("#firm_city").val();
+			state = $("#firm_state").val();
+			country = $("#firm_country").val();
+			zipcode = $("#firm_zipcode").val();
+			fax = $("#fax").val();
+			mobile_no = $("#firm_mobile").val();
+			web_url = $("#web_url").val();
+			social_url = $("#social_url").val();
+			$.ajax({
+				type: "POST",
+				url: "/update-own-firm",
+				data: {
+					address1: address1,
+					address2: address2,
+					address3: address3,
+					phone_no: phone_no,
+					city: city,
+					state: state,
+					country: country,
+					zipcode: zipcode,
+					fax: fax,
+					web_url: web_url,
+					social_url: social_url,
+					mobile: mobile_no
+				},
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+					$("#btnUpdateFirm").prop('disabled', true);
+					$("#btnUpdateFirm").html("Loading...");
+				},
+				success:function(response) {
+					if(response.update_firm == true)
+					{
+						$(`<div class="alert alert-success"><strong>Success! </strong>Firm Updated Successfully</div>`).insertBefore("#frmUpdateFirm");
+						setTimeout(function() {
+							window.location.href="/firm-details";
+						}, 2000);
+					}
+				}
+			});
+		}
+	});
+});
+
+/*==================================Update Firm Section (BASIC) =============================*/
 </script>
 {{/content}}

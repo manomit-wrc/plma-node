@@ -18,6 +18,15 @@ const Zipcode = require('../models').zipcode;
 var csrfProtection = csrf({ cookie: true });
 
 const router = express.Router();
+function removePhoneMask (phone_no){
+// the format :(777) 777-7222
+        var phone_no = phone_no.replace("-","");
+        phone_no = phone_no.replace(")","");
+        phone_no = phone_no.replace("(","");
+        phone_no = phone_no.replace(" ","");
+        return phone_no;
+
+}
 
 router.get('/firms', csrfProtection, auth, async (req, res) => {
     var whereStatement = {};
@@ -186,8 +195,11 @@ router.get('/firm-details', auth, csrfProtection, async (req, res) => {
     const state = await State.findAll();
     const city = await City.findAll();
     const zipcode = await Zipcode.findAll();
+    const firm = await Firm.findAll({
+        where: {id: req.user.firm_id}
+    });
     
-    res.render('firms/master_settings', {layout: 'dashboard', csrfToken: req.csrfToken(), office, designation, contact, country, state, city, zipcode});
+    res.render('firms/master_settings', {layout: 'dashboard', csrfToken: req.csrfToken(), office, designation, contact, country, state, city, zipcode, firm: firm[0]});
 });
 
 router.post('/add-office', auth, csrfProtection, (req, res) => {
@@ -201,7 +213,7 @@ router.post('/add-office', auth, csrfProtection, (req, res) => {
         zipcode: req.body.zipcode,
         mobile: req.body.mobile_no
     }).then(store => {
-        res.json({"add_office":true});
+        removePhoneMask
     });
 });
 
@@ -331,5 +343,47 @@ router.post('/edit-contact-get/get-zipcode', auth, (req, res) =>{
 });
 
 /*======================Edit Contact Get city state==========================*/
+
+/*======================Edit Contact Get city state==========================*/
+router.post('/firm-basic/get-city', auth, (req, res) =>{
+    City.findAll({
+        where: { state_id : req.body.state_id}
+    }).then(result => {
+        res.send({get_city:result});
+    });
+});
+router.post('/firm-basic/get-zipcode', auth, (req, res) =>{
+    Zipcode.findAll({
+        where: { city_name : req.body.city_name}
+    }).then(result => {
+        res.send({zipcode:result});
+    });
+});
+
+/*======================Edit Contact Get city state==========================*/
+
+/*==========================Firm Profile Update section=======================*/
+
+router.post('/update-own-firm', auth, csrfProtection, (req, res) =>{
+    Firm.update({
+        address: req.body.address1,
+        address1: req.body.address2,
+        address2: req.body.address3,
+        phone_no:removePhoneMask(req.body.phone_no),
+        city: req.body.city,
+        state: req.body.state,
+        country: req.body.country,
+        zipcode: req.body.zipcode,
+        mobile: removePhoneMask(req.body.mobile),
+        fax: removePhoneMask(req.body.fax),
+        website_url: req.body.web_url,
+        social_url: req.body.social_url
+    },{where: {id: req.user.firm_id}
+    }).then(result => {
+        res.json({"update_firm": true});
+    });
+});
+
+/*==========================Firm Profile Update section=======================*/
 
 module.exports = router;
