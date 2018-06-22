@@ -8,9 +8,10 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     mobile: DataTypes.STRING,
     address: DataTypes.TEXT,
-    city: DataTypes.STRING,
-    state: DataTypes.STRING,
-    country: DataTypes.STRING,
+    city: DataTypes.INTEGER,
+    state: DataTypes.INTEGER,
+    country: DataTypes.INTEGER,
+    zipcode: DataTypes.INTEGER,
     status: DataTypes.INTEGER
   }, {});
   office_contact.associate = function(models) {

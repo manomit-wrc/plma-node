@@ -88,37 +88,55 @@
                      />
                   </div>
                </div>
-               <div class="col-md-6">
-                  <div class="form-group form-focus">
-                     <label class="control-label">City</label>
-                     <input type="text" class="form-control floating" 
-                     id="city" name="city" value="{{user.city}}"
-                     />
-                  </div>
-               </div>
-               <div class="col-md-6">
-                  <div class="form-group form-focus">
-                     <label class="control-label">State</label>
-                     <input type="text" class="form-control floating" 
-                     id="state" name="state" value="{{user.state}}"
-                     />
-                  </div>
-               </div>
-               <div class="col-md-6">
-                  <div class="form-group form-focus">
-                     <label class="control-label">Country</label>
-                     <input type="text" class="form-control floating" 
-                     id="country" name="country" value="{{user.country}}"
-                     />
-                  </div>
-               </div>
-               <div class="col-md-6">
+               <div class="col-md-12">
                   <div class="form-group form-focus">
                      <label class="control-label">Mobile No</label>
                      <input type="text" class="form-control floating" 
                      id="mobile_no" name="mobile_no" value="{{user.mobile_no}}"
                      maxlength="10" minlength="10"
                      />
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <div class="form-group form-focus">
+                     <label class="control-label">Country</label>
+                     <select class="select form-control floating" id="country" name="country">
+                        {{#each country}}
+                        <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <div class="form-group form-focus">
+                     <label class="control-label">State</label>
+                     <select class="select form-control floating" id="state" name="state">
+                        {{#each state}}
+                        <option value="{{this.id}}" {{#if_eq this.id ../user.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <div class="form-group form-focus">
+                     <label class="control-label">City</label>
+                     <select class="select form-control floating" id="city" name="city">
+                          <option value="">Select City</option>
+                         {{#each city}}
+                            <option value="{{this.id}}" {{#if_eq this.id ../user.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                         {{/each}}
+                    </select>
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <div class="form-group form-focus">
+                       <label class="control-label">Zipcode</label>
+                        <select class="select form-control floating" id="zipcode" name="zipcode">
+                        <option value="">Select Zipcode</option>
+                        {{#each zipcode}}
+                            <option value="{{this.id}}" {{#if_eq this.id ../user.zipcode}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
+                        {{/each}}
+                    </select>
                   </div>
                </div>
             </div>
@@ -184,6 +202,10 @@
                     reader.readAsDataURL(input.files[0]);
                 }
             });
-        });
+
+            
+
+            
+          });
     </script>
 {{/content}}

@@ -1449,6 +1449,66 @@ table.table-inbox tbody tr.checked {background-color: #ffffcc;}
 
 /*Ends on CSS Profile Tab 18-06-2018*/
 
+
+/*------------------------------------------------------------------
+[39-a. Custom Styles]
+*/
+
+.common-rounded-btn {
+     border-radius: 500px !important;
+    -webkit-border-radius: 500px !important;
+    -moz-border-radius: 500px !important;
+    -ms-border-radius: 500px !important;
+    -o-border-radius: 500px !important;
+    min-height: auto !important;
+    padding: 6px 12px !important;
+    text-transform: capitalize !important;
+}
+
+.firm-box.tab .nav-tabs {
+    margin-bottom: 30px;
+}
+
+.firm-box.tab .nav-tabs li a {
+    padding: 0;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    margin-right: 50px;
+    height: 100px;
+    width: 100px;
+    display: block;
+    line-height: 1;
+    padding-top: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+    white-space: normal;
+    word-wrap: break-word;
+    font-size: 13px;
+    text-transform: capitalize;
+    text-align: center;
+}
+
+.firm-box.tab .nav-tabs li a i {
+    margin-bottom: 10px;
+    float: none;
+    margin-right: 0;
+}
+
+.firm-box.tab .nav-tabs li::after {
+    right: 0px;
+    width: 50px;
+    top: 50px;
+    border: 1px solid #4ab657;
+}
+
+/*------------------------------------------------------------------
+[39-a.... Custom Styles]
+*/
+
+
 /*------------------------------------------------------------------
 [40. Responsive]
 */

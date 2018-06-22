@@ -10,10 +10,23 @@ const Firm = require('../models').firm;
 const Office = require('../models').office;
 const Designation = require('../models').designation;
 const Contact = require('../models').office_contact;
+const Country = require('../models').country;
+const State = require('../models').state;
+const City = require('../models').city;
+const Zipcode = require('../models').zipcode;
 
 var csrfProtection = csrf({ cookie: true });
 
 const router = express.Router();
+function removePhoneMask (phone_no){
+// the format :(777) 777-7222
+        var phone_no = phone_no.replace("-","");
+        phone_no = phone_no.replace(")","");
+        phone_no = phone_no.replace("(","");
+        phone_no = phone_no.replace(" ","");
+        return phone_no;
+
+}
 
 router.get('/firms', csrfProtection, auth, async (req, res) => {
     var whereStatement = {};
@@ -164,24 +177,48 @@ router.post('/firm/delete', auth, csrfProtection, async (req, res) => {
 
 /*====================Starts Office Section 18-06-2018================================= */
 
-router.get('/firm-details', auth, csrfProtection, (req, res) => {
+router.get('/firm-details', auth, csrfProtection, async (req, res) => {
     Office.belongsTo(Firm, {foreignKey: 'firm_id'});
     Contact.belongsTo(Office, {foreignKey: 'office_id'});
     Contact.belongsTo(Designation, {foreignKey: 'designation_id'});
-    Promise.all([
-        Office.findAll(
-            {
-                include: [{
-                model: Firm
-            }]
-        }),
-        Designation.findAll(),
-        Contact.findAll({
-            include: [{model: Office}, {model: Designation}]
-        })
-    ]).then(show =>{
-        res.render('firms/master_settings', {layout: 'dashboard', csrfToken: req.csrfToken(), office: show[0], designation: show[1], contact: show[2]});
-    })
+    const office = await Office.findAll(
+        {
+            include: [{
+            model: Firm
+        }]
+    });
+    const designation = await Designation.findAll();
+    const contact = await Contact.findAll({
+        include: [{model: Office}, {model: Designation}]
+    });
+    const country = await Country.findAll();
+    const state = await State.findAll();
+    const city = await City.findAll();
+    const zipcode = await Zipcode.findAll();
+    const firm = await Firm.findAll({
+        where: {id: req.user.firm_id}
+    });
+    var state_id = firm[0].state;
+    var city_id = firm[0].city;
+    var firm_city = [];
+    var firm_zipcode = [];
+    if(state_id != null)
+    {
+         firm_city = await City.findAll({
+            where: {state_id: state_id.toString()}
+        });
+    }
+    if(city_id != null)
+    {
+        const cities = await City.findById(city_id.toString());
+         firm_zipcode = await Zipcode.findAll({
+            where: {
+                city_name: cities.name
+            }
+        });
+    }
+    
+    res.render('firms/master_settings', {layout: 'dashboard', csrfToken: req.csrfToken(), office, designation, contact, country, state, city, zipcode, firm: firm[0], firm_city, firm_zipcode});
 });
 
 router.post('/add-office', auth, csrfProtection, (req, res) => {
@@ -192,9 +229,10 @@ router.post('/add-office', auth, csrfProtection, (req, res) => {
         city: req.body.city,
         state: req.body.state,
         country: req.body.country,
+        zipcode: req.body.zipcode,
         mobile: req.body.mobile_no
     }).then(store => {
-        res.json({"add_office":true});
+        removePhoneMask
     });
 });
 
@@ -206,6 +244,7 @@ router.post('/edit-office/:id', auth, csrfProtection, (req, res) => {
         city: req.body.edit_office_city,
         state: req.body.edit_office_state,
         country: req.body.edit_office_country,
+        zipcode: req.body.edit_office_zipcode,
         mobile: req.body.edit_office_mobile_no
     },{ where: {id: req.params['id']}
     }).then(edit => {
@@ -236,6 +275,7 @@ router.post('/add-office-contact', auth, csrfProtection, (req, res) => {
         city: req.body.city,
         state: req.body.state,
         country: req.body.country,
+        zipcode: req.body.zipcode
     }).then(store => {
         res.json({"add_office_contact": true});
     });
@@ -253,6 +293,7 @@ router.post('/edit-office-contact/:id', auth, csrfProtection, (req, res) => {
         city: req.body.edit_contact_city,
         state: req.body.edit_contact_state,
         country: req.body.edit_contact_country,
+        zipcode: req.body.edit_contact_zipcode,
     },{where: {id: req.params['id']}
     }).then(edit => {
         res.json({"edit_office_contact": true});
@@ -269,5 +310,99 @@ router.post('/delete-contact/:id', auth, csrfProtection, (req, res) =>{
 
 /*====================Ends Office Contact Section 19-06-2018================================= */
 /*======================Ends Firm Master Settings:::::Bratin Meheta 18-06-2018 & 19-06-2018=====================*/
+
+/*======================edit office Get city state==========================*/
+router.post('/editoffice-get/get-city', auth, (req, res) =>{
+    City.findAll({
+        where: { state_id : req.body.state_id}
+    }).then(result => {
+        res.send({get_city:result});
+    });
+});
+router.post('/edit-office-get/get-zipcode', auth, (req, res) =>{
+    Zipcode.findAll({
+        where: { city_name : req.body.city_name}
+    }).then(result => {
+        res.send({zipcode:result});
+    });
+});
+/*======================edit office Get city state==========================*/
+
+/*======================ADD Contact Get city state==========================*/
+router.post('/contact/get-city', auth, (req, res) =>{
+    City.findAll({
+        where: { state_id : req.body.state_id}
+    }).then(result => {
+        res.send({get_city:result});
+    });
+});
+router.post('/contact/get-zipcode', auth, (req, res) =>{
+    Zipcode.findAll({
+        where: { city_name : req.body.city_name}
+    }).then(result => {
+        res.send({zipcode:result});
+    });
+});
+/*======================ADD Contact Get city state==========================*/
+
+/*======================Edit Contact Get city state==========================*/
+router.post('/edit-contact-get/get-city', auth, (req, res) =>{
+    City.findAll({
+        where: { state_id : req.body.state_id}
+    }).then(result => {
+        res.send({get_city:result});
+    });
+});
+router.post('/edit-contact-get/get-zipcode', auth, (req, res) =>{
+    Zipcode.findAll({
+        where: { city_name : req.body.city_name}
+    }).then(result => {
+        res.send({zipcode:result});
+    });
+});
+
+/*======================Edit Contact Get city state==========================*/
+
+/*======================Edit Contact Get city state==========================*/
+router.post('/firm-basic/get-city', auth, (req, res) =>{
+    City.findAll({
+        where: { state_id : req.body.state_id}
+    }).then(result => {
+        res.send({get_city:result});
+    });
+});
+router.post('/firm-basic/get-zipcode', auth, (req, res) =>{
+    Zipcode.findAll({
+        where: { city_name : req.body.city_name}
+    }).then(result => {
+        res.send({zipcode:result});
+    });
+});
+
+/*======================Edit Contact Get city state==========================*/
+
+/*==========================Firm Profile Update section=======================*/
+
+router.post('/update-own-firm', auth, csrfProtection, (req, res) =>{
+    Firm.update({
+        address: req.body.address1,
+        address1: req.body.address2,
+        address2: req.body.address3,
+        phone_no:removePhoneMask(req.body.phone_no),
+        city: req.body.city,
+        state: req.body.state,
+        country: req.body.country,
+        zipcode: req.body.zipcode,
+        mobile: removePhoneMask(req.body.mobile),
+        fax: removePhoneMask(req.body.fax),
+        website_url: req.body.web_url,
+        social_url: req.body.social_url
+    },{where: {id: req.user.firm_id}
+    }).then(result => {
+        res.json({"update_firm": true});
+    });
+});
+
+/*==========================Firm Profile Update section=======================*/
 
 module.exports = router;
