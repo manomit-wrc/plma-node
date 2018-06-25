@@ -6,5 +6,6 @@ module.exports = (req, res, next) => {
         res.locals.client_url = ulrArr[1];
         return next();
     }
-    res.redirect('/');
+    req.flash('success-auth-message', 'You are not allowed to access this url!');
+    res.redirect('/dashboard');
 };
