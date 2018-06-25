@@ -5,6 +5,7 @@
             <li {{#if_eq client_url "dashboard" }} class="active" {{/if_eq}}>
                <a href="/dashboard">Dashboard</a>
             </li>
+         {{#if_eq user.role_id "1"}}
             <li {{#if_eq client_url "firms" }} class="active" {{/if_eq}}>
                 <a href="/firms">Firms</a>
             </li>
@@ -29,11 +30,13 @@
             <li {{#if_eq client_url "designations" }} class="active" {{/if_eq}}>
                <a href="/designations">Designations</a>
             </li>
-             <li {{#if_eq client_url "attorneys" }} class="active" {{/if_eq}}>
-               <a href="/attorneys">Attorneys</a>
             <li {{#if_eq client_url "budgets" }} class="active" {{/if_eq}}>
                <a href="/budgets">Budgets</a>
             </li>
+            {{/if_eq}}
+            {{#if_eq user.role_id "2"}}
+             <li {{#if_eq client_url "attorneys" }} class="active" {{/if_eq}}>
+               <a href="/attorneys">Attorneys</a>
             <li {{#if_eq client_url "activity-goal" }} class="active" {{/if_eq}}>
                <a href="/activity-goal">Activity Goals</a>
             </li>
@@ -43,6 +46,15 @@
              <li {{#if_eq client_url "client" }} class="active" {{/if_eq}}>
                <a href="/client">Clients</a>
             </li>
+            {{/if_eq}}
+            {{#if_eq user.role_id "3"}}
+            <li {{#if_eq client_url "activity-goal" }} class="active" {{/if_eq}}>
+               <a href="/activity-goal">Activity Goals</a>
+            </li>
+            <li {{#if_eq client_url "client" }} class="active" {{/if_eq}}>
+               <a href="/client">Clients</a>
+            </li>
+            {{/if_eq}}
          </ul>
       </div>
    </div>
