@@ -94,7 +94,9 @@
          <ul class="dropdown-menu">
             <li><a href="/profile">My Profile</a></li>
             <li><a href="/edit-profile">Edit Profile</a></li>
+            {{#if_eq user.role_id "1"}}
             <li><a href="/settings">Settings</a></li>
+            {{/if_eq}}
             <li><a href="/change-password">Change Password</a></li>
             <li><a href="/logout">Logout</a></li>
          </ul>
