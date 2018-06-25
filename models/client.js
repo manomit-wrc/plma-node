@@ -20,7 +20,8 @@ module.exports = (sequelize, DataTypes) => {
     facebook: DataTypes.STRING,
     google: DataTypes.STRING,
     association_type: DataTypes.STRING,
-    industry_type: DataTypes.STRING
+    industry_type: DataTypes.STRING,
+    fax: DataTypes.STRING
   }, {});
   client.associate = function(models) {
     // associations can be defined here
