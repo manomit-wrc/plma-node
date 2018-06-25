@@ -13,7 +13,9 @@ module.exports = (sequelize, DataTypes) => {
     fax: DataTypes.STRING,
     mobile: DataTypes.STRING,
     website_url: DataTypes.STRING,
-    social_url: DataTypes.STRING
+    social_url: DataTypes.STRING,
+    firm_code: DataTypes.STRING,
+    firm_registration: DataTypes.STRING
   }, {});
   firm.associate = function(models) {
     // associations can be defined here

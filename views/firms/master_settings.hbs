@@ -1,5 +1,6 @@
 {{#content "style" mode="prepend"}}
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
 {{/content}}
@@ -17,6 +18,7 @@
 						<!-- Nav tabs -->
 						<ul class="nav nav-tabs" role="tablist">
 							<li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-address-card-o"></i>Basic</a></li>
+							<li role="presentation"><a href="#SectionFirm" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list"></i>Firm Details</a></li>
 							<li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-building"></i>Offices</a></li>
 							<li role="presentation"><a href="#Section3" aria-controls="messages" role="tab" data-toggle="tab"><i class="fa fa-address-book-o"></i>Contacts</a></li>
 							<li role="presentation"><a href="#Section4" aria-controls="messages" role="tab" data-toggle="tab"><i class="fa fa-list"></i>Sections</a></li>
@@ -71,7 +73,7 @@
 													<select class="form-control" id="firm_state" name="firm_state">
 														<option value="">select State</option>
 														{{#each state}}
-															<option value="{{this.id}}" {{#if_eq this.id ../firm.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+														<option value="{{this.id}}" {{#if_eq this.id ../firm.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
 														{{/each}}
 													</select>
 												</div>
@@ -82,7 +84,7 @@
 													<select class="form-control" id="firm_city" name="firm_city">
 														<option value="">Select City</option>
 														{{#each firm_city}}
-															<option value="{{this.id}}" {{#if_eq this.id ../firm.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+														<option value="{{this.id}}" {{#if_eq this.id ../firm.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
 														{{/each}}
 													</select>
 												</div>
@@ -93,7 +95,7 @@
 													<select class="form-control" id="firm_zipcode" name="firm_zipcode">
 														<option value="">Select Zipcode</option>
 														{{#each firm_zipcode}}
-															<option value="{{this.id}}" {{#if_eq this.id ../firm.zipcode}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
+														<option value="{{this.id}}" {{#if_eq this.id ../firm.zipcode}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
 														{{/each}}
 													</select>
 												</div>
@@ -125,6 +127,66 @@
 										</div>
 										<div class="m-t-20 text-center">
 											<button class="btn btn-primary rounded common-rounded-btn" id="btnUpdateFirm">Save &amp; Next</button>
+										</div>
+									</form>     
+								</div>
+							</div>
+							<div role="tabpanel" class="tab-pane fade" id="SectionFirm">
+								<div class="row filter-row">
+									<form class="m-b-30" method="POST" name="frmUpdateFirmDetails" id="frmUpdateFirmDetails">
+										<input type="hidden" name="_csrf" value="{{csrfToken}}">
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="control-label">Firm Name <span class="text-danger">*</span></label>
+													<input class="form-control" type="text" name="firm_name" id="firm_name" placeholder="Firm Name" value="{{firm.title}}">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Firm Code <span class="text-danger">*</span></label>
+													<input class="form-control" type="text" name="firm_code" id="firm_code" placeholder="Firm Code" value="{{firm.firm_code}}">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Firm Registration <span class="text-danger">*</span></label>
+													<input class="form-control" type="text" name="firm_reg" id="firm_reg" placeholder="Firm Registration" value="{{firm.firm_registration}}">
+												</div>
+											</div>
+											<div class="col-md-12">
+												<label class="control-label">Section <span class="text-danger">*</span></label>
+												<div class="form-group form-focus select-focus">
+													<select class="form-control floating" id="section" name="section" multiple="multiple">
+														{{#each section}}
+														<option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected"{{/inArray}}>{{this.name}}</option>
+														{{/each}}
+													</select>
+												</div>
+											</div>
+											<div class="col-md-12">
+												<label class="control-label">Practice Area <span class="text-danger">*</span></label>
+												<div class="form-group form-focus select-focus">
+													<select class="form-control floating" id="practice_area" name="practice_area" multiple="multiple">
+														{{#each practice_area}}
+														<option value="{{this.id}}" {{#inArray ../PracticeAreaArr this.id}} selected="selected"{{/inArray}}>{{this.name}}</option>
+														{{/each}}
+													</select>
+												</div>
+											</div>
+											<div class="col-md-12">
+												<label class="control-label">Jurisdiction <span class="text-danger">*</span></label>
+												<div class="form-group form-focus select-focus">
+													<select class="form-control floating" id="firm_jurisdiction" name="firm_jurisdiction" multiple="multiple">
+														{{#each jurisdiction}}
+														<option value="{{this.id}}" {{#inArray ../jurisdictionArr this.id}} selected="selected"{{/inArray}}>{{this.name}}</option>
+														{{/each}}
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="m-t-20 text-center">
+											<button class="btn btn-primary rounded common-rounded-btn" id="btnUpdateFirmDetails">Save &amp; Next</button>
 										</div>
 									</form>     
 								</div>
@@ -784,6 +846,7 @@
 <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript" src="/assets/js/select2.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
@@ -791,6 +854,23 @@
 <script type="text/javascript">
 /*===============================Starts Add Ofiice Section========================================*/
 $(document).ready(function(e) {
+	$('#section').multiselect({
+		nonSelectedText: 'Select Section',
+		includeSelectAllOption: true,
+		buttonWidth: '100%'
+	});
+
+	$('#practice_area').multiselect({
+		nonSelectedText: 'Select Practice Area',
+		includeSelectAllOption: true,
+		buttonWidth: '100%'
+	});
+
+	$('#firm_jurisdiction').multiselect({
+		nonSelectedText: 'Select Jurisdiction',
+		includeSelectAllOption: true,
+		buttonWidth: '100%'
+	});
 
 	$("#btnAddOffice").click(function() {
 		$("#addOffice").submit();
@@ -1606,5 +1686,95 @@ $(document).ready(function(e) {
 });
 
 /*==================================Update Firm Section (BASIC) =============================*/
+/*==================================Update Firm Details (BASIC) =============================*/
+
+$(document).ready(function(e) {
+
+	$("#btnUpdateFirmDetails").click(function() {
+		$("#frmUpdateFirmDetails").submit();
+	});          
+
+	$("#frmUpdateFirmDetails").validate({
+		ignore: [],
+		rules: {
+			firm_name: {
+				required: true
+			},
+			firm_code: {
+				required: true
+			},
+			firm_reg: {
+				required: true
+			},
+			section: {
+				required: true
+			},
+			practice_area: {
+				required: true
+			},
+			firm_jurisdiction: {
+				required: true
+			}
+		},
+		messages: {
+			firm_name: {
+				required: "Firm name can't be blank"
+			},
+			firm_code: {
+				required: "Firm code can't be blank"
+			},
+			firm_reg: {
+				required: "Firm registration can't be blank"
+			},
+			section: {
+				required: "Select atleast one section"
+			},
+			practice_area: {
+				required: "Select atleast one practice area"
+			},
+			firm_jurisdiction: {
+				required: "Select atleast one jurisdiction"
+			}
+		},
+		submitHandler:function(form) {
+			var section = $("#section").val(),
+			practice_area = $("#practice_area").val(),
+			jurisdiction = $("#firm_jurisdiction").val(),
+			firm_name = $("#firm_name").val(),
+			firm_code = $("#firm_code").val(),
+			firm_reg = $("#firm_reg").val();
+
+			$.ajax({
+				type: "POST",
+				url: "/update-own-firmDetails",
+				data: {
+					firm_name: firm_name,
+					firm_code: firm_code,
+					firm_reg: firm_reg,
+					section: section,
+					practice_area: practice_area,
+					jurisdiction: jurisdiction
+				},
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+					$("#btnUpdateFirmDetails").prop('disabled', true);
+					$("#btnUpdateFirmDetails").html("Loading...");
+				},
+				success:function(response) {
+					if(response.update_firm_details == true)
+					{
+						$(`<div class="alert alert-success"><strong>Success! </strong>Firm Details Updated Successfully</div>`).insertBefore("#frmUpdateFirmDetails");
+						setTimeout(function() {
+							window.location.href="/firm-details";
+						}, 2000);
+					}
+				}
+			});
+		}
+	});
+});
+
+/*==================================Update Firm Details (BASIC) =============================*/
 </script>
 {{/content}}
