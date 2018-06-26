@@ -134,6 +134,7 @@ router.get('/attorneys',auth, firmAuth,csrfProtection, (req,res) => {
 	var success_delete_attorney = req.flash('success_delete_attorney')[0];
 	var success_edit_attorney = req.flash('success_edit_attorney')[0];
 	whereCondition.role_id = '3';
+	
 	user.findAll({
 		where: whereCondition
 	 
@@ -145,7 +146,12 @@ router.get('/attorneys',auth, firmAuth,csrfProtection, (req,res) => {
 
 });
 router.get('/attorney/addAttorney',auth, firmAuth,csrfProtection, (req,res) => {
-	res.render('attorney/addattorney',{ layout: 'dashboard', csrfToken: req.csrfToken()});
+	country.findAll().then(country => {
+		state.findAll().then(state => {
+			res.render('attorney/addattorney',{ layout: 'dashboard', csrfToken: req.csrfToken(), country: country,state: state});
+		});
+	});
+	
 });
 router.post('/attorneys/add',auth, firmAuth,csrfProtection, (req,res) => {
 	// console.log(new Date());
@@ -200,9 +206,13 @@ router.post('/attorneys/add',auth, firmAuth,csrfProtection, (req,res) => {
 
 });
 router.get('/attorneys/editAttorneys/:id',auth, firmAuth, csrfProtection, (req,res) => {
+	country.findAll().then(country => {
+		state.findAll().then(state => {
 	 user.findById(req.params.id).then(rows => {
-		 res.render('attorney/updateattorney',{ layout: 'dashboard', csrfToken: req.csrfToken(), rows: rows });
+		 res.render('attorney/updateattorney',{ layout: 'dashboard', csrfToken: req.csrfToken(), rows: rows, country: country, state: state });
 	 });
+	});
+});
 });
 router.post('/attorneys/updateAttorney/:id',auth, firmAuth,csrfProtection, (req,res) => {
 	console.log(req.params.id);
