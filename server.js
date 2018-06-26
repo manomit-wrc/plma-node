@@ -64,8 +64,8 @@ const hbs = exphbs.create({
         else {
           return block.inverse(this);
         }
-    }
-    // dateFormat: require('handlebars-dateformat')
+    },
+     dateFormat: require('handlebars-dateformat')
 }
 });
 
