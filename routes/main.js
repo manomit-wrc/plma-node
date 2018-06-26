@@ -30,7 +30,7 @@ var path      = require('path');
 var fs = require('fs');
 const router = express.Router();
 //============================================={{{{target}}}}
-router.get('/target', csrfProtection, auth, firmAttrAuth, (req, res) => {
+router.get('/target', csrfProtection, auth, (req, res) => {
 
 
 	var whereCondition = {};
@@ -48,7 +48,7 @@ res.render('target/targets', { layout: 'dashboard', csrfToken: req.csrfToken(), 
 });
 
 
-router.get('/addtarget',auth, firmAttrAuth, csrfProtection, (req,res) => {
+router.get('/addtarget',auth, csrfProtection, (req,res) => {
 
 	country.findAll().then(country => {
 		state.findAll().then(state => {
@@ -61,7 +61,7 @@ router.get('/addtarget',auth, firmAttrAuth, csrfProtection, (req,res) => {
 
 });
 
-router.post('/targetinsert/add', auth, firmAttrAuth, csrfProtection, (req, res) => {
+router.post('/targetinsert/add', auth, csrfProtection, (req, res) => {
     console.log(req.body);
     var first_name = req.body.first_name;
     var last_name = req.body.last_name;
@@ -100,7 +100,7 @@ router.post('/targetinsert/add', auth, firmAttrAuth, csrfProtection, (req, res) 
 		 });
 			});
 
-router.get('/target/edit/:id',auth, firmAttrAuth, csrfProtection, (req,res) => {
+router.get('/target/edit/:id',auth, csrfProtection, (req,res) => {
 	 target.findById(req.params.id).then(edata => {
 
 		 country.findAll().then(country => {
@@ -114,7 +114,7 @@ router.get('/target/edit/:id',auth, firmAttrAuth, csrfProtection, (req,res) => {
 });
 
 
-router.post('/target/updateTarget/:id',auth, firmAttrAuth,csrfProtection, (req,res) => {
+router.post('/target/updateTarget/:id',auth,csrfProtection, (req,res) => {
 	var first_name = req.body.first_name;
 	var last_name = req.body.last_name;
 	var email = req.body.email;
@@ -153,7 +153,7 @@ router.post('/target/updateTarget/:id',auth, firmAttrAuth,csrfProtection, (req,r
 
 
 
-		router.get('/target/delete/:id',auth, firmAttrAuth, (req,res) => {
+		router.get('/target/delete/:id',auth, (req,res) => {
 		  console.log(req.params.id);
 		  target.destroy({
 		    where:{
@@ -165,7 +165,7 @@ router.post('/target/updateTarget/:id',auth, firmAttrAuth,csrfProtection, (req,r
 		});
 //============================================={{{{{industry type}}}}}=========================================
 
-router.get('/industry',auth, siteAuth, csrfProtection, (req,res) => {
+router.get('/industry',auth,csrfProtection, (req,res) => {
 
 	var whereCondition = {};
 	if(req.query.searchCode) {
@@ -186,7 +186,7 @@ router.get('/industry',auth, siteAuth, csrfProtection, (req,res) => {
 		res.render('industry_type/industry', { layout: 'dashboard', csrfToken: req.csrfToken(), name: name});
  });
  });
-router.post('/industry/add', auth, siteAuth, csrfProtection, (req, res) => {
+router.post('/industry/add', auth, csrfProtection, (req, res) => {
     console.log(req.body);
     var code = req.body.code;
     var industryname = req.body.industryname;
@@ -207,13 +207,13 @@ router.post('/industry/add', auth, siteAuth, csrfProtection, (req, res) => {
 });
 
 
-router.get('/industry/edit/:id',auth, siteAuth,csrfProtection, (req,res) => {
+router.get('/industry/edit/:id',auth,csrfProtection, (req,res) => {
 industry_type.findById(req.params.id).then(editdata => {
 res.render('industry_type/update', { layout: 'dashboard', csrfToken: req.csrfToken(), editdata :editdata});
 });
  });
 
- router.post('/industry/updateindustry/:id',auth, siteAuth,csrfProtection, (req,res) => {
+ router.post('/industry/updateindustry/:id',auth,csrfProtection, (req,res) => {
    var code = req.body.code;
    var industryname = req.body.industryname;
    var remarks = req.body.remarks;
@@ -232,7 +232,7 @@ res.render('industry_type/update', { layout: 'dashboard', csrfToken: req.csrfTok
      }
    });
  });
- router.get('/industry/delete/:id',auth, siteAuth, (req,res) => {
+ router.get('/industry/delete/:id',auth, (req,res) => {
    console.log(req.params.id);
    industry_type.destroy({
      where:{
@@ -243,13 +243,23 @@ res.render('industry_type/update', { layout: 'dashboard', csrfToken: req.csrfTok
    });
  });
 //============================================={{{{{{settings}}}}}}==========================================
-router.get('/settings',auth, siteAuth,csrfProtection, (req,res) => {
-	setting.findAll().then(data => {
-		console.log(data);
-		res.render('superadminsetting/settings', { layout: 'dashboard', csrfToken: req.csrfToken(), data: data, test: 'test' });
+router.get('/settings',auth,csrfProtection, (req,res) => {
+
+	country.findAll().then(country => {
+		state.findAll().then(state => {
+
+
+			setting.findById(1).then(data => {
+	// setting.findAll().then(data => {
+	// 	console.log(country);
+	console.log(data);
+		res.render('superadminsetting/settings', { layout: 'dashboard', csrfToken: req.csrfToken(), data: data, test: 'test', country: country, state: state });
+});
+});
+
  });
 });
-router.post('/settings/insert',auth, siteAuth,csrfProtection, (req,res) => {
+router.post('/settings/insert',auth,csrfProtection, (req,res) => {
 
     console.log(req.body);
     var companyname = req.body.companyname;
@@ -278,7 +288,39 @@ router.post('/settings/insert',auth, siteAuth,csrfProtection, (req,res) => {
 		});
   }
 	});
-//============================================={{{{{}}}}}=========================================
+
+
+//============================
+
+
+	router.post('/client/findCityByState',auth, firmAttrAuth, csrfProtection, (req,res) => {
+
+		city.findAll({
+			where:{
+				state: req.body.state
+			}
+		}
+		).then(city => {
+			// res.send(city);
+			res.json({city: city});
+		});
+	});
+	router.post('/client/findPinByCity',auth, firmAttrAuth, csrfProtection, (req,res) => {
+		city.findById(req.body.city_id).then(row => {
+			console.log(row.name);
+			zipcode.findAll({
+				where:{
+					city_name: row.name
+				}
+			}
+			).then(pin => {
+				console.log(JSON.stringify(pin, undefined, 2));
+				// res.send(city);
+				res.json({pin: pin});
+			});
+		});
+		});
+
 //===================================================Designation route starts==========================================================
 router.get('/designations', csrfProtection, auth, siteAuth, (req, res) => {
 	console.log(req.user);
@@ -388,7 +430,6 @@ router.get('/attorneys',auth, firmAuth,csrfProtection, (req,res) => {
 	var success_delete_attorney = req.flash('success_delete_attorney')[0];
 	var success_edit_attorney = req.flash('success_edit_attorney')[0];
 	whereCondition.role_id = '3';
-	
 	user.findAll({
 		where: whereCondition
 
@@ -400,12 +441,7 @@ router.get('/attorneys',auth, firmAuth,csrfProtection, (req,res) => {
 
 });
 router.get('/attorney/addAttorney',auth, firmAuth,csrfProtection, (req,res) => {
-	country.findAll().then(country => {
-		state.findAll().then(state => {
-			res.render('attorney/addattorney',{ layout: 'dashboard', csrfToken: req.csrfToken(), country: country,state: state});
-		});
-	});
-	
+	res.render('attorney/addattorney',{ layout: 'dashboard', csrfToken: req.csrfToken()});
 });
 router.post('/attorneys/add',auth, firmAuth,csrfProtection, (req,res) => {
 	// console.log(new Date());
@@ -460,13 +496,9 @@ router.post('/attorneys/add',auth, firmAuth,csrfProtection, (req,res) => {
 
 });
 router.get('/attorneys/editAttorneys/:id',auth, firmAuth, csrfProtection, (req,res) => {
-	country.findAll().then(country => {
-		state.findAll().then(state => {
 	 user.findById(req.params.id).then(rows => {
-		 res.render('attorney/updateattorney',{ layout: 'dashboard', csrfToken: req.csrfToken(), rows: rows, country: country, state: state });
+		 res.render('attorney/updateattorney',{ layout: 'dashboard', csrfToken: req.csrfToken(), rows: rows });
 	 });
-	});
-});
 });
 router.post('/attorneys/updateAttorney/:id',auth, firmAuth,csrfProtection, (req,res) => {
 	console.log(req.params.id);
