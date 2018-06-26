@@ -315,7 +315,7 @@ router.get('/client',auth, csrfProtection, (req,res) => {
 			 client.findAll({
 				 where: whereCondition
 			 }).then(clients => {
-				res.render('client/index',{ layout: 'dashboard',  csrfToken: req.csrfToken() ,clients: clients });
+				res.render('client/index',{ layout: 'dashboard',  csrfToken: req.csrfToken() ,clients: clients, searchName: req.query.searchName, searchMail: req.query.searchEmail });
 			 });
 		
 		 

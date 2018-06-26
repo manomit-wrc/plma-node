@@ -7,7 +7,7 @@
                 <div class="content container-fluid">
 					<div class="row">
 						<div class="col-sm-8">
-							<h4 class="page-title">Edit Profile</h4>
+							<h4 class="page-title">Edit Client</h4>
 						</div>
 					</div>
 					<form id="clientform" method="POST">
@@ -123,7 +123,7 @@
 										<label class="">Designation :</label>
 										<select id="designation" name="designation" class="form-control">
                                             {{#each designations}}
-                                            <option value="{{this.id}}" {{#if_eq this.id client.designation_id}} selected="selected" {{/if_eq}}>{{this.code}}></option>
+                                            <option value="{{this.id}}" {{#if_eq this.id client.designation_id}} selected="selected" {{/if_eq}}>{{this.code}}</option>
 											{{/each}}
                                         </select>
 									</div>
