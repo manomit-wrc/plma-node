@@ -290,13 +290,14 @@ router.post('/settings/insert',auth,csrfProtection, (req,res) => {
 	});
 
 
+//============================
 
 
 	router.post('/client/findCityByState',auth, firmAttrAuth, csrfProtection, (req,res) => {
 
 		city.findAll({
 			where:{
-				state_id: req.body.state_id
+				state: req.body.state
 			}
 		}
 		).then(city => {
@@ -317,10 +318,7 @@ router.post('/settings/insert',auth,csrfProtection, (req,res) => {
 				// res.send(city);
 				res.json({pin: pin});
 			});
-
 		});
-
-
 		});
 
 //===================================================Designation route starts==========================================================

@@ -89,28 +89,43 @@
                </div>
                <div class="col-md-6">
                   <div class="form-group form-focus">
-                     <label class="control-label">City</label>
-                     <input type="text" class="form-control floating" 
-                     id="city" name="city" value="{{rows.city}}"
-                     />
+                     <label class="control-label">Country</label>
+                     <select id="country" name="country" class="form-control">
+                                            {{#each country}}
+                                            <option value="{{this.id}}">{{this.name}}</option>
+											{{/each}}
+                                        </select>
+                     {{!-- <input type="text" class="form-control floating" 
+                     id="country" name="country" value="{{rows.country}}"
+                     /> --}}
                   </div>
                </div>
-               <div class="col-md-6">
+                <div class="col-md-6">
                   <div class="form-group form-focus">
                      <label class="control-label">State</label>
-                     <input type="text" class="form-control floating" 
+                     <select id="state" name="state" class="form-control"  onchange="return cityByState();">
+                                            {{#each state}}
+                                            <option value="{{this.id}}">{{this.name}}</option>
+											{{/each}}
+                     </select>
+                     {{!-- <input type="text" class="form-control floating" 
                      id="state" name="state" value="{{rows.state}}"
-                     />
+                     /> --}}
                   </div>
                </div>
                <div class="col-md-6">
                   <div class="form-group form-focus">
-                     <label class="control-label">Country</label>
-                     <input type="text" class="form-control floating" 
-                     id="country" name="country" value="{{rows.country}}"
-                     />
+                     <label class="control-label">City</label>
+                     <select id="city" name="city" class="form-control">
+                                            
+                                        </select>
+                     {{!-- <input type="text" class="form-control floating" 
+                     id="city" name="city" value="{{rows.city}}"
+                     /> --}}
                   </div>
                </div>
+              
+               
                <div class="col-md-6">
                   <div class="form-group form-focus">
                      <label class="control-label">Mobile No</label>
@@ -138,6 +153,67 @@
     <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+     <script>
+	function cityByState(){
+	 
+		var state = $('#state').val();
+		$.ajax({
+			url: "/client/findCityByState",
+			method: "POST",
+			data: {state_id: state},
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+				},
+			success: function(resp){
+				console.log(resp);
+				var test = document.getElementsByClassName('test');
+							for(var i = 0; i < test.length; i++){
+								test[i].remove();
+								 
+							}
+							$.each(resp.city, function(key, value) {
+							console.log(value);
+							
+		$("#city").append('<option class="test" value="'+value.id+'">'+value.name+'</option>');
+	});
+			},
+			error: function(xhr){
+
+			}
+		});
+	}
+	function pinByCity(){
+		var city = document.getElementById('city').value;
+		 
+		$.ajax({
+			url: "/client/findPinByCity",
+			method: "POST",
+			data: {
+				city_id: city
+			},
+			beforeSend: function(xhr) {
+										xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+
+									},
+			success: function(resp){
+				var test1 = document.getElementsByClassName('pin');
+							for(var i = 0; i < test1.length; i++){
+								test1[i].remove();
+								 
+							}
+							$.each(resp.pin, function(key, value) {
+							console.log(value);
+							
+		$("#pin_code").append('<option class="pin" value="'+value.id+'">'+value.zip+'</option>');
+	});
+			},
+			error: function(xhr){
+
+			}
+		});
+	}
+</script>
     <script type="text/javascript">
         $(document).ready(function() {
              

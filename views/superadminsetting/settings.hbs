@@ -45,7 +45,7 @@
                         <select class="select form-control floating" id="country" name="country">
                            <option value="">Select Country</option>
                            {{#each country}}
-                           <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{data.name}}</option>
+                           <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
                            {{/each}}
                        </select>
                      </div>
