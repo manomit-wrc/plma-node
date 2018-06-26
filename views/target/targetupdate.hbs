@@ -1,0 +1,491 @@
+{{#content "style" mode="prepend"}}
+    <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+{{/content}}
+<div class="page-wrapper">
+                <div class="content container-fluid">
+					<div class="row">
+						<div class="col-sm-8">
+							<h4 class="page-title">Update Target</h4>
+						</div>
+					</div>
+					<form id="updateTargetForm" >
+           <input type ="hidden" value="{{target.id}}" id="updatedata">
+
+						<div class="card-box">
+							<!-- <h3 class="card-title">Contact Informations</h3> -->
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">First Name: <span class="text-danger">*</span></label>
+                    <input class="form-control" type="text" id="first_name" name="first_name" value="{{target.firstName}}">
+                    <span id="uniqueCode" style="color: red;font-weight: bold;"></span>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">Last Name :<span class="text-danger">*</span></label>
+                    <input class="form-control" type="text" id="last_name" name="last_name" value="{{target.lastName}}">
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">Email : <span class="text-danger">*</span></label>
+                    <!-- <input class="form-control" type="text"> -->
+                    <input class="form-control" rows="12" id="email" name="email" value="{{target.email}}" >
+                    <span id="sameemail" style="color: red"><span>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">Mobile No :<span class="text-danger">*</span></label>
+                    <input class="form-control" type="text" id="mobile_no" name="mobile_no" value="{{target.mobile_no}}">
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">Address 1 :<span class="text-danger">*</span></label>
+                    <input class="form-control" type="text" id="address1" name="address1" value="{{target.address_1}}">
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">Address 2 :<span class="text-danger">*</span></label>
+                    <input class="form-control" type="text" id="address2" name="address2" value="{{target.address_2}}">
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">Fax:<span class="text-danger">*</span></label>
+                    <input class="form-control" type="text" id="fax" name="fax" value="{{target.fax}}">
+                  </div>
+                </div>
+                <!-- <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">Country :<span class="text-danger">*</span></label>
+                    <input class="form-control" type="text" id="country" name="country" value="{{target.country}}">
+                  </div>
+                </div> -->
+                <div class="col-md-12">
+                   <div class="form-group">
+                     <label class="control-label">Country<span class="text-danger">*</span></label>
+                      <select class="select form-control floating" id="country" name="country">
+                         <option value="">Select Country</option>
+                         {{#each country}}
+                         <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                         {{/each}}
+                     </select>
+                   </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">State<span class="text-danger">*</span></label>
+                    <select class="select form-control floating" id="state" name="state">
+                       <option value="">select State</option>
+                       {{#each state}}
+                       <option value="{{this.id}}">{{this.name}}</option>
+                       {{/each}}
+                   </select>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">City<span class="text-danger">*</span></label>
+                    <select class="select form-control floating" id="city" name="city">
+                         <option value="">Select City</option>
+                         {{#each state}}
+                         <option value="{{this.id}}">{{this.name}}</option>
+                         {{/each}}
+                   </select>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">Pincode :<span class="text-danger">*</span></label>
+                    <input class="form-control" type="text" id="zipcode" name="zipcode" value="{{target.postal_code}}">
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">Designation :<span class="text-danger">*</span></label>
+                    <input class="form-control" type="text" id="designation" name="designation" value="{{target.designation_id}}">
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">Type :<span class="text-danger">*</span></label>
+                    <input class="form-control" type="text" id="type" name="type" value="{{target.type}}">
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">company name :<span class="text-danger">*</span></label>
+                    <input class="form-control" type="text" id="company_name" name="company_name" value="{{target.company_name}}">
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">association :<span class="text-danger">*</span></label>
+                    <input class="form-control" type="text" id="association" name="association" value="{{target.association}}">
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">industry_type :<span class="text-danger">*</span></label>
+                    <input class="form-control" type="text" id="industry_type" name="industry_type" value="{{target.industry_type}}">
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">Twitter :<span class="text-danger">*</span></label>
+                    <input class="form-control" type="text" id="twitter" name="twitter" value="{{target.twitter}}">
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">facebook :<span class="text-danger">*</span></label>
+                    <input class="form-control" type="text" id="facebook" name="facebook" value="{{target.facebook}}">
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">google :<span class="text-danger">*</span></label>
+                    <input class="form-control" type="text" id="google" name="google" value="{{target.google}}">
+                  </div>
+                </div>
+              </div>
+						</div>
+
+
+						<div class="text-center m-t-20">
+							<button class="btn btn-primary btn-lg" type="button" id="btnAdd"> update target</button>
+						</div>
+					</form>
+				</div>
+				<div class="notification-box">
+					<div class="msg-sidebar notifications msg-noti">
+						<div class="topnav-dropdown-header">
+							<span>Messages</span>
+						</div>
+						<div class="drop-scroll msg-list-scroll">
+							<ul class="list-box">
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">R</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">Richard Miles </span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item new-message">
+											<div class="list-left">
+												<span class="avatar">J</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">John Doe</span>
+												<span class="message-time">1 Aug</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">T</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author"> Tarah Shropshire </span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">M</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">Mike Litorus</span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">C</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author"> Catherine Manseau </span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">D</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author"> Domenic Houston </span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">B</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author"> Buster Wigton </span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">R</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author"> Rolland Webber </span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">C</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author"> Claire Mapes </span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">M</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">Melita Faucher</span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">J</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">Jeffery Lalor</span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">L</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">Loren Gatlin</span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">T</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">Tarah Shropshire</span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+							</ul>
+						</div>
+						<div class="topnav-dropdown-footer">
+							<a href="chat.html">See all messages</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+        {{#content "script" mode="append"}}
+            <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+            <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+            <script type="text/javascript" src="/assets/js/select2.min.js"></script>
+            <script type="text/javascript" src="/assets/js/moment.min.js"></script>
+            <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+            <script type="text/javascript">
+            $(document).ready(function(e) {
+
+                $("#btnAdd").click(function() {
+                    $("#updateTargetForm").submit();
+                });
+
+                $("#updateTargetForm").validate({
+                    rules: {
+                        first_name: {
+                            required: true
+                        },
+                        last_name: {
+                            required: true
+                        },
+                        email: {
+                            required: true
+
+                        }
+                    },
+                    first_name: {
+                        first_name: {
+                            required: "first name can't be blank"
+                        },
+                        last_name: {
+                            required: "last name can't be blank"
+                        },
+                        email: {
+                            required: "email title can't be blank"
+                        }
+                    },
+                      submitHandler:function(form) {
+                        var firstname = $('#first_name').val();
+                        var lastname = $('#last_name').val();
+                        var mail = $('#email').val();
+                        var mobile = $('#mobile_no').val();
+                        var address1 = $('#address1').val();
+                        var address2 = $('#address2').val();
+                        var con = $('#country').val();
+                        var state = $('#state').val();
+                        var city = $('#city').val();
+                        var zipcode = $('#zipcode').val();
+                        var fax = $('#fax').val();
+                        var facebook = $('#facebook').val();
+                        var google = $('#google').val();
+                        var twitter = $('#twitter').val();
+                        var designation = $('#designation').val();
+                        var company_name = $('#company_name').val();
+                        var association = $('#association').val();
+                        var industry_type = $('#industry_type').val();
+                        var type = $('#type').val();
+
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/target/updateTarget/{{target.id}}",
+                            data: {
+                              first_name: firstname,
+                              last_name: lastname,
+                              email: mail,
+                              mobile_no: mobile,
+                              country: con,
+                              state: state,
+                              city: city,
+                              zipcode: zipcode,
+                              address1: address1,
+                              address2: address2,
+                              fax: fax,
+                              facebook: facebook,
+                              designation: designation,
+                              association: association,
+                              twitter: twitter,
+                              google: google,
+                              company_name: company_name,
+                              type: type,
+                              industry_type: industry_type
+
+                            },
+                            beforeSend: function(xhr) {
+                                xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+
+                            },
+                            success: function(response) {
+
+                              if(response.msg == "ERRR"){
+                                document.getElementById('sameemail').innerHTML = "Code already been assigned";
+                              }else{
+                                window.location.href = '/target';
+                              }
+                               // window.location.href = '/designations';
+                            },
+                            error: function(xhr){
+
+                            }
+                        });
+
+                    }
+                });
+
+                  // add designation ajax operation and form validation ends
+
+            });
+            </script>
+
+            {{/content}}

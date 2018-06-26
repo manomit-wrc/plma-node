@@ -17,6 +17,10 @@ const city = require('../models').city;
 const state = require('../models').state;
 const country = require('../models').country;
 const industry_type = require('../models').industry_type;
+
+const setting = require('../models').setting;
+const target = require('../models').target;
+
 const Jurisdiction = require('../models').jurisdiction;
 const client = require('../models').client;
 const user = require('../models').user;
@@ -25,6 +29,256 @@ var csv = require('fast-csv');
 var path      = require('path');
 var fs = require('fs');
 const router = express.Router();
+//============================================={{{{target}}}}
+router.get('/target', csrfProtection, auth, firmAttrAuth, (req, res) => {
+
+
+	var whereCondition = {};
+	if(req.query.searchCode) {
+		whereCondition.email = req.query.searchCode;
+	}
+	if(req.query.searchTitle) {
+		whereCondition.mobile = req.query.searchTitle;
+	}
+
+	target.findAll({
+		where: whereCondition
+	}).then(fdata => {
+res.render('target/targets', { layout: 'dashboard', csrfToken: req.csrfToken(), fdata: fdata , searchTitle: req.query.searchTitle, searchCode: req.query.searchCode   });
+});
+
+
+router.get('/addtarget',auth, firmAttrAuth, csrfProtection, (req,res) => {
+
+	country.findAll().then(country => {
+		state.findAll().then(state => {
+
+			res.render('target/addtarget',{ layout: 'dashboard', csrfToken: req.csrfToken(), country: country, state: state });
+		});
+	});
+});
+
+
+});
+
+router.post('/targetinsert/add', auth, firmAttrAuth, csrfProtection, (req, res) => {
+    console.log(req.body);
+    var first_name = req.body.first_name;
+    var last_name = req.body.last_name;
+    var email = req.body.email;
+		var mobile_no = req.body.mobile_no;
+		var country = req.body.country;
+		var state = req.body.state;
+		var city = req.body.city;
+		var zipcode = req.body.zipcode;
+		var address1 = req.body.address1;
+		var address2 = req.body.address2;
+		var designation = req.body.designation;
+		var firm = req.user.firm_id;
+		var company_name = req.body.company_name;
+		var fax = req.body.fax;
+		var google = req.body.google;
+		var facebook = req.body.facebook;
+		var twitter = req.body.twitter;
+		var industry_type = req.body.industry_type;
+		var association = req.body.association;
+		var type = req.body.type;
+
+
+    target.findAndCountAll({
+      where:{
+         email: email
+      }
+    }).then(result => {
+      if(result.count > 0){
+        res.json({msg: 'ERRR'});
+      }else{
+        target.create({firstName: first_name,lastName: last_name,email: email,mobile_no: mobile_no,country: country,state: state,city: city,postal_code: zipcode,address_1: address1,address_2: address2,fax: fax,designation_id: designation,company_name: company_name,industry_type: industry_type,type: type,association: association,facebook: facebook,twitter: twitter,google: google,firm_id: req.user.firm_id}).then(resp => {
+          res.end("Success");
+				});
+			}
+		 });
+			});
+
+router.get('/target/edit/:id',auth, firmAttrAuth, csrfProtection, (req,res) => {
+	 target.findById(req.params.id).then(edata => {
+
+		 country.findAll().then(country => {
+	 		state.findAll().then(state => {
+
+		 //console.log(JSON.stringify(edata, undefined, 2));
+		 res.render('target/targetupdate',{ layout: 'dashboard', csrfToken: req.csrfToken(), target: edata ,country: country,state: state});
+	 });
+ });
+	 });
+});
+
+
+router.post('/target/updateTarget/:id',auth, firmAttrAuth,csrfProtection, (req,res) => {
+	var first_name = req.body.first_name;
+	var last_name = req.body.last_name;
+	var email = req.body.email;
+	var mobile_no = req.body.mobile_no;
+	var country = req.body.country;
+	var state = req.body.state;
+	var city = req.body.city;
+	var zipcode = req.body.zipcode;
+	var address1 = req.body.address1;
+	var address2 = req.body.address2;
+	var designation = req.body.designation;
+	var firm = req.user.firm_id;
+	var company_name = req.body.company_name;
+	var fax = req.body.fax;
+	var google = req.body.google;
+	var facebook = req.body.facebook;
+	var twitter = req.body.twitter;
+	var industry_type = req.body.industry_type;
+	var association = req.body.association;
+	var type = req.body.type;
+	console.log(req.params.id);
+	target.findAndCountAll({
+		where:{
+			email: email
+		}
+	}).then(result => {
+		if(result.count > 0){
+			res.json({msg: 'ERRR'});
+		}else{
+			target.update({firstName: first_name,lastName: last_name,email: email,mobile_no: mobile_no,country: country,state: state,city: city,postal_code: zipcode,address_1: address1,address_2: address2,fax: fax,designation_id: designation,company_name: company_name,industry_type: industry_type,type: type,association: association,facebook: facebook,twitter: twitter,google: google,firm_id: req.user.firm_id},{where:{id: req.params.id}}).then(resp => {
+				res.end("success");
+			});
+		}
+	});
+});
+
+
+
+		router.get('/target/delete/:id',auth, firmAttrAuth, (req,res) => {
+		  console.log(req.params.id);
+		  target.destroy({
+		    where:{
+		      id: req.params.id
+		    }
+		  }).then(resp => {
+		    res.redirect('/target');
+		  });
+		});
+//============================================={{{{{industry type}}}}}=========================================
+
+router.get('/industry',auth, siteAuth, csrfProtection, (req,res) => {
+
+	var whereCondition = {};
+	if(req.query.searchCode) {
+		whereCondition.code = req.query.searchCode;
+	}
+	if(req.query.searchTitle) {
+		whereCondition.searchIndustryType = req.query.searchIndustryType;
+	}
+	industry_type.findAll({
+		where: whereCondition
+		// where:{
+		// 	role_id: '3',
+
+
+		// }
+}).then(name => {
+		// console.log(data);
+		res.render('industry_type/industry', { layout: 'dashboard', csrfToken: req.csrfToken(), name: name});
+ });
+ });
+router.post('/industry/add', auth, siteAuth, csrfProtection, (req, res) => {
+    console.log(req.body);
+    var code = req.body.code;
+    var industryname = req.body.industryname;
+    var remarks = req.body.remarks;
+    industry_type.findAndCountAll({
+      where:{
+        code: code
+      }
+    }).then(result => {
+      if(result.count > 0){
+        res.json({msg: 'ERRR'});
+      }else{
+        industry_type.create({code: code,industry_name: industryname,remarks: remarks}).then(resp => {
+					res.json({msg: 'sucess'});
+        });
+      }
+    });
+});
+
+
+router.get('/industry/edit/:id',auth, siteAuth,csrfProtection, (req,res) => {
+industry_type.findById(req.params.id).then(editdata => {
+res.render('industry_type/update', { layout: 'dashboard', csrfToken: req.csrfToken(), editdata :editdata});
+});
+ });
+
+ router.post('/industry/updateindustry/:id',auth, siteAuth,csrfProtection, (req,res) => {
+   var code = req.body.code;
+   var industryname = req.body.industryname;
+   var remarks = req.body.remarks;
+   console.log(req.params.id);
+   industry_type.findAndCountAll({
+     where:{
+       code: code
+     }
+   }).then(result => {
+     if(result.count > 1){
+       res.json({msg: 'ERRR'});
+     }else if(result.count == 1 || result.count == 0){
+       industry_type.update({code: code,industry_name: industryname,remarks: remarks},{where:{id: req.params.id}}).then(resp => {
+         res.end("success");
+       });
+     }
+   });
+ });
+ router.get('/industry/delete/:id',auth, siteAuth, (req,res) => {
+   console.log(req.params.id);
+   industry_type.destroy({
+     where:{
+       id: req.params.id
+     }
+   }).then(resp => {
+     res.redirect('/industry');
+   });
+ });
+//============================================={{{{{{settings}}}}}}==========================================
+router.get('/settings',auth, siteAuth,csrfProtection, (req,res) => {
+	setting.findAll().then(data => {
+		console.log(data);
+		res.render('superadminsetting/settings', { layout: 'dashboard', csrfToken: req.csrfToken(), data: data, test: 'test' });
+ });
+});
+router.post('/settings/insert',auth, siteAuth,csrfProtection, (req,res) => {
+
+    console.log(req.body);
+    var companyname = req.body.companyname;
+    var contactperson = req.body.contactperson;
+    var address = req.body.address;
+		var country = req.body.country;
+		var city = req.body.city;
+		var state = req.body.state;
+		var postalcode = req.body.postalcode;
+		var email = req.body.email;
+		var phnumber = req.body.phnumber;
+		var mbnumber = req.body.mbnumber;
+		var fax = req.body.fax;
+    var weburl = req.body.weburl;
+
+		var hidden_field =  req.body.hidden_field;
+
+   if(hidden_field != ""){
+		 setting.update({company_name: companyname,contact_person: contactperson,address: address,country: country,city: city,state: state,postal_code: postalcode,phone_number: phnumber,mobile_number: mbnumber,email: email,fax: fax,website_url: weburl},{where:{id: hidden_field}}).then(resp => {
+		 res.end("success");
+		});
+   }else{
+		 setting.create({company_name: companyname,contact_person: contactperson,address: address,country: country,city: city,state: state,postal_code: postalcode,phone_number: phnumber,mobile_number: mbnumber,email: email,fax: fax,website_url: weburl}).then(resp => {
+		 res.end("success");
+
+		});
+  }
+	});
+//============================================={{{{{}}}}}=========================================
 //===================================================Designation route starts==========================================================
 router.get('/designations', csrfProtection, auth, siteAuth, (req, res) => {
 	console.log(req.user);
@@ -137,7 +391,7 @@ router.get('/attorneys',auth, firmAuth,csrfProtection, (req,res) => {
 	
 	user.findAll({
 		where: whereCondition
-	 
+
 	}).then(rows => {
 
 
@@ -325,15 +579,15 @@ router.get('/client',auth, firmAttrAuth, csrfProtection, (req,res) => {
 	if(req.query.searchEmail) {
 		whereCondition.email = req.query.searchEmail;
 	}
-	 
+
 			 client.findAll({
 				 where: whereCondition
 			 }).then(clients => {
 				res.render('client/index',{ layout: 'dashboard',  csrfToken: req.csrfToken() ,clients: clients, searchName: req.query.searchName, searchMail: req.query.searchEmail });
 			 });
-		
-		 
-	
+
+
+
 });
 router.get('/client/add',auth, firmAttrAuth, csrfProtection, (req,res) => {
 	designation.findAll().then(designation => {
@@ -361,7 +615,7 @@ var clientId = req.params.id;
 		client.findById(clientId).then(client => {
 			res.render('client/editClient',{ layout: 'dashboard', csrfToken: req.csrfToken(), country: country, state: state, designations: designation, industry: industry,client: client  });
 		});
-		
+
 		});
 	});
 });
@@ -538,7 +792,7 @@ router.post('/client/findPinByCity',auth, firmAttrAuth, csrfProtection, (req,res
 		});
 
 	});
-	
+
 
 	});
 
