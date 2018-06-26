@@ -244,6 +244,7 @@ res.render('industry_type/update', { layout: 'dashboard', csrfToken: req.csrfTok
  });
 //============================================={{{{{{settings}}}}}}==========================================
 router.get('/settings',auth,csrfProtection, async (req,res) => {
+	let zipcodes;
 	const country = await Country.findAll({});
 	const state = await State.findAll({});
 	const settings = await 	setting.findById(1);
@@ -252,12 +253,20 @@ router.get('/settings',auth,csrfProtection, async (req,res) => {
 			state_id: settings.state
 		}
 	});
-	const zipcodes = await Zipcode.findAll({
-		where: {
-			city
-		}
-	});
-	res.render('superadminsetting/settings', { layout: 'dashboard', csrfToken: req.csrfToken(), data: settings, country: country, state: state });
+	if(settings.city) {
+		const current_city = await City.findById(parseInt(settings.city));
+		
+		zipcodes = await Zipcode.findAll({
+			where: {
+				city_name: current_city.name
+			}
+		});
+		
+	}
+	
+	//
+	
+	res.render('superadminsetting/settings', { layout: 'dashboard', csrfToken: req.csrfToken(), data: settings, country: country, state: state, cities, zipcodes });
 });
 router.post('/settings/insert',auth,csrfProtection, (req,res) => {
 
