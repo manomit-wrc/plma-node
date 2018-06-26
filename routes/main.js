@@ -23,33 +23,51 @@ var fs = require('fs');
 const router = express.Router();
 //=========================================targets==========================================================================//
 router.get('/target', csrfProtection, auth, (req, res) => {
-res.render('target/targets', { layout: 'dashboard', csrfToken: req.csrfToken()  });
+
+
+	var whereCondition = {};
+	if(req.query.searchCode) {
+		whereCondition.email = req.query.searchCode;
+	}
+	if(req.query.searchTitle) {
+		whereCondition.mobile = req.query.searchTitle;
+	}
+
+	target.findAll({
+		where: whereCondition
+	}).then(fdata => {
+res.render('target/targets', { layout: 'dashboard', csrfToken: req.csrfToken(), fdata: fdata , searchTitle: req.query.searchTitle, searchCode: req.query.searchCode   });
 });
 
 
 router.get('/addtarget',auth, csrfProtection, (req,res) => {
-	country.findAll().then(country => {
 
+	country.findAll().then(country => {
 		state.findAll().then(state => {
 
 			res.render('target/addtarget',{ layout: 'dashboard', csrfToken: req.csrfToken(), country: country, state: state });
 		});
 	});
 });
-//insert
+
+
+});
+//insert data to data base
+
 router.post('/targetinsert/add', auth, csrfProtection, (req, res) => {
     console.log(req.body);
     var first_name = req.body.first_name;
     var last_name = req.body.last_name;
     var email = req.body.email;
+		var mobile_no = req.body.mobile_no;
 		var country = req.body.country;
 		var state = req.body.state;
 		var city = req.body.city;
-		var pin_code = req.body.pin_code;
+		var zipcode = req.body.zipcode;
 		var address1 = req.body.address1;
 		var address2 = req.body.address2;
 		var designation = req.body.designation;
-		// var firm = req.user.firm_id;
+		var firm = req.user.firm_id;
 		var company_name = req.body.company_name;
 		var fax = req.body.fax;
 		var google = req.body.google;
@@ -57,52 +75,90 @@ router.post('/targetinsert/add', auth, csrfProtection, (req, res) => {
 		var twitter = req.body.twitter;
 		var industry_type = req.body.industry_type;
 		var association = req.body.association;
+		var type = req.body.type;
 
-    // target.findAndCountAll({
-    //   where:{
-    //     code: code
-    //   }
-    // }).then(result => {
-    //   if(result.count > 0){
-    //     res.json({msg: 'ERRR'});
-    //   }else{
-        target.create({firstName: first_name,lastName: last_name}).then(resp => {
+
+    target.findAndCountAll({
+      where:{
+         email: email
+      }
+    }).then(result => {
+      if(result.count > 0){
+        res.json({msg: 'ERRR'});
+      }else{
+        target.create({firstName: first_name,lastName: last_name,email: email,mobile_no: mobile_no,country: country,state: state,city: city,postal_code: zipcode,address_1: address1,address_2: address2,fax: fax,designation_id: designation,company_name: company_name,industry_type: industry_type,type: type,association: association,facebook: facebook,twitter: twitter,google: google,firm_id: req.user.firm_id}).then(resp => {
           res.end("Success");
-			// 	});
-			// }
+				});
+			}
+		 });
 			});
+// end insert
+// start======================================================= edit===========================
 
-			});
-//====insert
+router.get('/target/edit/:id',auth, csrfProtection, (req,res) => {
+	 target.findById(req.params.id).then(edata => {
 
+		 country.findAll().then(country => {
+	 		state.findAll().then(state => {
 
-router.post('/target/findCityByState',auth, csrfProtection, (req,res) => {
+		 //console.log(JSON.stringify(edata, undefined, 2));
+		 res.render('target/targetupdate',{ layout: 'dashboard', csrfToken: req.csrfToken(), target: edata ,country: country,state: state});
+	 });
+ });
+	 });
+});
 
-	city.findAll({
+//update
+
+router.post('/target/updateTarget/:id',auth,csrfProtection, (req,res) => {
+	var first_name = req.body.first_name;
+	var last_name = req.body.last_name;
+	var email = req.body.email;
+	var mobile_no = req.body.mobile_no;
+	var country = req.body.country;
+	var state = req.body.state;
+	var city = req.body.city;
+	var zipcode = req.body.zipcode;
+	var address1 = req.body.address1;
+	var address2 = req.body.address2;
+	var designation = req.body.designation;
+	var firm = req.user.firm_id;
+	var company_name = req.body.company_name;
+	var fax = req.body.fax;
+	var google = req.body.google;
+	var facebook = req.body.facebook;
+	var twitter = req.body.twitter;
+	var industry_type = req.body.industry_type;
+	var association = req.body.association;
+	var type = req.body.type;
+	console.log(req.params.id);
+	target.findAndCountAll({
 		where:{
-			state_id: req.body.state_id
+			email: email
 		}
-	}
-	).then(city => {
-		// res.send(city);
-		res.json({city: city});
+	}).then(result => {
+		if(result.count > 0){
+			res.json({msg: 'ERRR'});
+		}else{
+			target.update({firstName: first_name,lastName: last_name,email: email,mobile_no: mobile_no,country: country,state: state,city: city,postal_code: zipcode,address_1: address1,address_2: address2,fax: fax,designation_id: designation,company_name: company_name,industry_type: industry_type,type: type,association: association,facebook: facebook,twitter: twitter,google: google,firm_id: req.user.firm_id},{where:{id: req.params.id}}).then(resp => {
+				res.end("success");
+			});
+		}
 	});
 });
 
-router.post('/target/findStateByCity',auth, csrfProtection, (req,res) => {
-
-	city.findAll({
-		where:{
-			city_id: req.body.city_id
-		}
-	}
-	).then(city => {
-		// console.log(JSON.stringify(city));
-		res.json({city: city});
-	});
-});
 
 
+		router.get('/target/delete/:id',auth, (req,res) => {
+		  console.log(req.params.id);
+		  target.destroy({
+		    where:{
+		      id: req.params.id
+		    }
+		  }).then(resp => {
+		    res.redirect('/target');
+		  });
+		});
 //===================================================Designation route starts==========================================================
 
 router.get('/designations', csrfProtection, auth, (req, res) => {
@@ -385,14 +441,8 @@ res.render('industry_type/update', { layout: 'dashboard', csrfToken: req.csrfTok
    });
  });
 
-/*======================COMMIT BY MALINI ROYCHOWDHURY  (settings) 14-06-2018 -15-06-2018=============================*/
 
-router.get('/settings',auth,csrfProtection, (req,res) => {
-	setting.findAll().then(data => {
-		console.log(data);
-		res.render('superadminsetting/settings', { layout: 'dashboard', csrfToken: req.csrfToken(), data: data, test: 'test' });
- });
-});
+
 /*==========================================Attorney route ends==============================================*/
 /*==========================================Import csv routes starts=========================================*/
 
@@ -419,6 +469,14 @@ router.get('/import/csv',auth,csrfProtection, (req,res) => {
 
 /*================================COMMIT BY MALINI ROYCHOWDHURY 14-06-2018=================================*/
 
+/*======================COMMIT BY MALINI ROYCHOWDHURY  (settings) 14-06-2018 -15-06-2018=============================*/
+
+router.get('/settings',auth,csrfProtection, (req,res) => {
+	setting.findAll().then(data => {
+		console.log(data);
+		res.render('superadminsetting/settings', { layout: 'dashboard', csrfToken: req.csrfToken(), data: data, test: 'test' });
+ });
+});
 router.post('/settings/insert',auth,csrfProtection, (req,res) => {
 
     console.log(req.body);

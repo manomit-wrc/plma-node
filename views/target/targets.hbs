@@ -38,7 +38,7 @@
           <div class="row filter-row">
             <div class="col-sm-3 col-xs-6">
               <div class="form-group form-focus">
-                <label class="control-label">Code</label>
+                <label class="control-label">Email</label>
                 <input type="text" class="form-control floating" id="searchCode" name="searchCode" value="{{searchCode}}"/>
               </div>
             </div>
@@ -55,7 +55,7 @@
             </div>
             <div class="col-sm-3 col-xs-6">
               <!-- <a href="javascript:void(0)" class="btn btn-success btn-block" onclick="searchDataTable()"> Search </a> -->
-              <a href="/industry" class="btn btn-success btn-block"> Clear </a>
+              <a href="/target" class="btn btn-success btn-block"> Clear </a>
             </div>
           </div>
         </form>
@@ -66,29 +66,59 @@
                   <thead>
                     <tr>
 
-                      <th>Code</th>
-                      <th>IndustryName</th>
-                      <th>Remarks</th>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>Email</th>
+                      <th>Mobile No</th>
+                      <th>Address 1</th>
+                      <th>Address 2</th>
+                      <th>Country</th>
+                      <th>State</th>
+                      <th>City</th>
+                      <th>Fax</th>
+                      <th>Pin Code</th>
+                      <th>Industry Type</th>
+                      <th>Designation</th>
+                      <th>CompanyName</th>
+                      <th>Industry Type</th>
+                      <th>Facebook</th>
+                      <th>Twitter</th>
+                      <th>Google</th>
 
                       <th class="text-right">Action</th>
                     </tr>
-</thead>
+              </thead>
 
                   <tbody  id="mainTable">
-          {{#each name}}
-                    <tr data-code="{{this.code}}"
-                data-title="{{this.industry_name}}">
+          {{#each fdata}}
+                    <tr>
 
 
-                      <td>{{this.code}}</td>
-                      <td>{{this.industry_name}}</td>
-                      <td>{{this.remarks}}</td>
+                      <td>{{this.firstName}}</td>
+                      <td>{{this.lastName}}</td>
+                      <td>{{this.email}}</td>
+                      <td>{{this.mobile_no}}</td>
+                      <td>{{this.address_1}}</td>
+                      <td>{{this.address_2}}</td>
+                      <td>{{this.Country}}</td>
+                      <td>{{this.state}}</td>
+                      <td>{{this.city}}</td>
+                      <td>{{this.zipcode}}</td>
+                      <td>{{this.fax}}</td>
+                      <td>{{this.industry_type}}</td>
+                      <td>{{this.designation_id}}</td>
+                      <td>{{this.company_name}}</td>
+                      <td>{{this.facebook}}</td>
+                      <td>{{this.twitter}}</td>
+                      <td>{{this.google}}</td>
+
+
 
                       <td class="text-right">
                         <div class="dropdown">
                           <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                           <ul class="dropdown-menu pull-right">
-                            <li><a href="/industry/edit/{{this.id}}" ><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+                            <li><a href="/target/edit/{{this.id}}" ><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
 
                             <li><a href="javascript:void(0)"  data-toggle="modal" data-target="#{{this.id}}"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
                           </ul>
@@ -109,7 +139,7 @@
                         <p>Are you sure to delete ?</p>
                         </div>
                         <div class="modal-footer">
-                          <a href="/industry/delete/{{this.id}}" class="btn btn-danger" ><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                          <a href="/target/delete/{{this.id}}" class="btn btn-danger" ><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                         <a href="/industry" class="btn btn-default" >Cancel</a>
                         </div>
                       </div>
@@ -459,7 +489,7 @@
           $.ajax({
           url: '/industry/search',
           method: 'POST',
-          data: {code: code,searchIndustryType: searchIndustryType},
+          data: {email: email,searchIndustryType: searchIndustryType},
           success: function(resp){
             console.log(resp.searchData);
 
