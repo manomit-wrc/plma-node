@@ -1,5 +1,10 @@
 <div class="page-wrapper">
    <div class="content container-fluid">
+      {{#if auth_msg}}
+        <div class="alert alert-danger">
+            <strong>Error! </strong>{{auth_msg}}
+        </div>
+      {{/if}}
       <div class="row">
          <div class="col-md-6 col-sm-6 col-lg-3">
             <div class="dash-widget clearfix card-box">

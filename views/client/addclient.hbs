@@ -1,0 +1,631 @@
+{{#content "style" mode="prepend"}}
+<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+{{/content}}
+<div class="page-wrapper">
+                <div class="content container-fluid">
+					<div class="row">
+						<div class="col-sm-8">
+							<h4 class="page-title">Add Client</h4>
+						</div>
+					</div>
+					<form id="clientform" method="POST">
+						<div class="card-box">
+							<h3 class="card-title">Basic Informations</h3>
+							<div class="row">
+								<div class="col-md-12">
+									{{!-- <div class="profile-img-wrap">
+										<img class="inline-block" src="assets/img/user.jpg" alt="user">
+										<div class="fileupload btn btn-default">
+											<span class="btn-text">edit</span>
+											<input class="upload" type="file">
+										</div>
+									</div> --}}
+									<div class="profile-basic">
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group form-focus">
+													<label class="control-label">First Name</label>
+													<input type="text" class="form-control floating" id="first_name" name="first_name" />
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group form-focus">
+													<label class="control-label">Last Name</label>
+													<input type="text" class="form-control floating" id="last_name" name="last_name"/>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group form-focus">
+													<label class="control-label">Email Id :</label>
+													<input type="text" class="form-control floating" id="email" name="email"/>
+													<span id="uniqueEmail" style="color: red"><span>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group form-focus select-focus">
+													<label class="control-label">Mobile Number :</label>
+													<input type="text" class="form-control floating" id="mobile_no" name="mobile_no"/>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group form-focus select-focus">
+													<label class="control-label">Fax :</label>
+													<input type="text" class="form-control floating" id="fax" name="fax"/>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card-box">
+							<h3 class="card-title">Contact Informations</h3>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group form-focus">
+										<label class="control-label">Address 1 :</label>
+										<input type="text" class="form-control floating" id="address1" name="address1"/>
+									</div>
+								</div>
+                                <div class="col-md-12">
+									<div class="form-group form-focus">
+										<label class="control-label">Address 2 :</label>
+										<input type="text" class="form-control floating" id="address2" name="address2"/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="">Country :</label>
+										<select id="country" name="country" class="form-control">
+                                            {{#each country}}
+                                            <option value="{{this.id}}">{{this.name}}</option>
+											{{/each}}
+                                        </select>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class=" ">State :</label>
+										<select id="state" name="state" class="form-control"  onchange="return cityByState();">
+                                            {{#each state}}
+                                            <option value="{{this.id}}">{{this.name}}</option>
+											{{/each}}
+                                        </select>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class=" ">City :</label>
+										 <select id="city" name="city" class="form-control" onchange="return pinByCity()">
+                                              
+                                            
+                                        </select>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class=" ">Pin Code :</label>
+										<select id="pin_code" name="pin_code" class="form-control">
+                                             
+                                        </select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card-box">
+							<h3 class="card-title">Other Informations</h3>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="">Designation :</label>
+										<select id="designation" name="designation" class="form-control">
+                                            {{#each designations}}
+                                            <option value="{{this.id}}">{{this.code}}</option>
+											{{/each}}
+                                        </select>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="">Type :</label>
+										<select id="type" name="country" class="form-control">
+                                             
+                                            <option value="I">I</option>
+										 
+                                        </select>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Comapnay Name :</label>
+										<input type="text" class="form-control floating" id="company_name" name="company_name"/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Twitter</label>
+										<input type="text" class="form-control floating" id="twitter"/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Linkdn</label>
+										<input type="text" class="form-control floating" id="linkdn"/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Facebook </label>
+										<input type="text" class="form-control floating" id="facebook"/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Google </label>
+										<input type="text" class="form-control floating" id="google"/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="">Association Status :</label>
+										<select id="association" name="association" class="form-control">
+                                             
+                                            <option value="NEW TARGET">NEW TARGET</option>
+											<option value="CONVERTED">CONVERTED</option>
+											<option value="TS-INTERIM">TS-INTERIM</option>
+											 
+										 
+                                        </select>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="">Industry Type :</label>
+										<select id="industry_type" name="industry_type" class="form-control">
+                                             {{#each industry}}
+                                            <option value="{{this.id}}">{{this.code}}</option>
+										 {{/each}}
+                                        </select>
+									</div>
+								</div>
+							</div>
+							 
+						</div>
+						 
+						<div class="text-center m-t-20">
+							<button class="btn btn-primary btn-lg" type="button" id="addclient">Add Client</button>
+						</div>
+					</form>
+				</div>
+				<div class="notification-box">
+					<div class="msg-sidebar notifications msg-noti">
+						<div class="topnav-dropdown-header">
+							<span>Messages</span>
+						</div>
+						<div class="drop-scroll msg-list-scroll">
+							<ul class="list-box">
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">R</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">Richard Miles </span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item new-message">
+											<div class="list-left">
+												<span class="avatar">J</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">John Doe</span>
+												<span class="message-time">1 Aug</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">T</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author"> Tarah Shropshire </span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">M</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">Mike Litorus</span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">C</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author"> Catherine Manseau </span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">D</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author"> Domenic Houston </span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">B</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author"> Buster Wigton </span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">R</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author"> Rolland Webber </span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">C</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author"> Claire Mapes </span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">M</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">Melita Faucher</span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">J</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">Jeffery Lalor</span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">L</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">Loren Gatlin</span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">T</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">Tarah Shropshire</span>
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+							</ul>
+						</div>
+						<div class="topnav-dropdown-footer">
+							<a href="chat.html">See all messages</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			 {{#content "script" mode="append"}}
+<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="/assets/js/select2.min.js"></script>
+<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+<script>
+	function cityByState(){
+	 
+		var state = $('#state').val();
+		$.ajax({
+			url: "/client/findCityByState",
+			method: "POST",
+			data: {state_id: state},
+			beforeSend: function(xhr) {
+										xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+
+									},
+			success: function(resp){
+				console.log(resp);
+				var test = document.getElementsByClassName('test');
+							for(var i = 0; i < test.length; i++){
+								test[i].remove();
+								 
+							}
+							$.each(resp.city, function(key, value) {
+							console.log(value);
+							
+		$("#city").append('<option class="test" value="'+value.id+'">'+value.name+'</option>');
+	});
+			},
+			error: function(xhr){
+
+			}
+		});
+	}
+	function pinByCity(){
+		var city = document.getElementById('city').value;
+		 
+		$.ajax({
+			url: "/client/findPinByCity",
+			method: "POST",
+			data: {
+				city_id: city
+			},
+			beforeSend: function(xhr) {
+										xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+
+									},
+			success: function(resp){
+				var test1 = document.getElementsByClassName('pin');
+							for(var i = 0; i < test1.length; i++){
+								test1[i].remove();
+								 
+							}
+							$.each(resp.pin, function(key, value) {
+							console.log(value);
+							
+		$("#pin_code").append('<option class="pin" value="'+value.id+'">'+value.zip+'</option>');
+	});
+			},
+			error: function(xhr){
+
+			}
+		});
+	}
+</script>
+<script type="text/javascript">
+            $(document).ready(function(e) {
+
+                $("#addclient").click(function() {
+                    $("#clientform").submit();
+                });
+
+                $("#clientform").validate({
+                    rules: {
+                        first_name: {
+                            required: true
+                        },
+                        last_name: {
+                            required: true
+                        },
+						email: {
+							required: true,
+							email: true
+						},
+						mobile_no: {
+							required: true,
+							digits: true
+						},
+						fax: {
+							required: true
+						},
+						address1: {
+							required: true
+						},
+						country: {
+							required: true
+						},
+						state: {
+							required: true
+						},
+						city: {
+							required: true
+						},
+						pin_code: {
+							required: true
+						}
+                    },
+                    messages: {
+                        first_name: {
+                            required: "First Name can't be blank"
+                        },
+                        last_name: {
+                            required: "Last name  title can't be blank"
+                        },
+						email: {
+							required: "Email id can't be blank",
+							email: "Enter valid email id"
+						},
+						mobile_no: {
+							required: "Mobile number can't blank",
+							digits: "Mobile number must be digits"
+						},
+						 fax: {
+                            required: "Fax  can't be blank"
+                        },
+						address1: {
+							required: "Must provide address"
+						},
+						country: {
+							required: "Choose your country"
+						},
+						state: {
+							required: "Choose your state"
+						},
+						city: {
+							required: "Choose your city"
+						},
+						pin_code: {
+							required: "Choose your zipcode"
+						}
+                    },
+                    submitHandler:function(form) {
+                       var first_name = $('#first_name').val();
+					   var last_name = $('#last_name').val();
+					   var email = $('#email').val();
+					   var  mobile_no = $('#mobile_no').val();
+					   var address1 = $('#address1').val();
+					   var address2 = $('#address2').val();
+					   var country = $('#country').val();
+					   var state = $('#state').val();
+					   var city = $('#city').val();
+					   var pin_code = $('#pin_code').val();
+					   var designation = $('#designation').val();
+					   var type = $('#type').val();
+					   var company_name = $('#company_name').val();
+					   var twitter = $('#twitter').val();
+					   var linkdn = $('#linkdn').val();
+					   var facebook = $('#facebook').val();
+					   var google = $('#google').val();
+					   var association = $('#association').val();
+					   var industry_type = $('#industry_type').val();
+					   var fax = $('#fax').val();
+                         $.ajax({
+                            type: "POST",
+                            url: "/client/addClient",
+                            data: {
+                              first_name: first_name,
+							  last_name: last_name,
+							  email: email,
+							  mobile_no: mobile_no,
+							  address1: address1,
+							  address2: address2,
+							  country: country,
+							  state: state,
+							  city: city,
+							  pin_code: pin_code,
+							  designation: designation,
+							  type: type,
+							  company_name: company_name,
+							  twitter: twitter,
+							  linkdn: linkdn,
+							  facebook: facebook,
+							  google: google,
+							  association: association,
+							  industry_type: industry_type,
+							  fax: fax
+                            },
+                            beforeSend: function(xhr) {
+                                xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+
+                            },
+                            success: function(response) {
+
+                              if(response.msg === "error"){
+                                document.getElementById('uniqueEmail').innerHTML = "Email id already exists";
+                              }else{
+                                window.location.href = '/client';
+                              }
+                               // window.location.href = '/designations';
+                            },
+                            error: function(xhr){
+
+                            }
+                        }); 
+
+                    }
+                });
+
+                  // add designation ajax operation and form validation ends
+
+            });
+            </script>
+{{/content}}
