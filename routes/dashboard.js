@@ -28,7 +28,8 @@ var storage = multer.diskStorage({
 var profile = multer({ storage: storage });
 
 router.get('/dashboard', auth,  (req, res) => {
-    res.render('dashboard', { layout: 'dashboard'});
+    var auth_msg = req.flash('success-auth-message')[0];
+    res.render('dashboard', { layout: 'dashboard', auth_msg: auth_msg});
 }).get('/logout', auth, (req, res) => {
     req.logout();
     res.redirect('/');

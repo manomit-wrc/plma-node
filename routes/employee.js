@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const auth = require('../middlewares/auth');
+const siteAuth = require('../middlewares/site_auth');
 const csrf = require('csurf');
 const bCrypt = require('bcrypt-nodejs');
 const gravatar = require('gravatar');
@@ -17,7 +18,7 @@ var csrfProtection = csrf({ cookie: true });
 
 /*==================================BRATIN MEHETA 14-06-2018=====================================*/
 
-router.get('/employees', auth, async (req, res) => {
+router.get('/employees', auth, siteAuth, async (req, res) => {
     var employeeFilter = {};
     if(req.query.employee_name)
     {
@@ -40,7 +41,7 @@ router.get('/employees', auth, async (req, res) => {
         employee_names: req.query.employee_name ? req.query.employee_name : '', 
         employee_emails: req.query.employee_email ? req.query.employee_email : '', 
     });
-}).get('/employees/add', csrfProtection, auth, async (req, res) => {
+}).get('/employees/add', csrfProtection, siteAuth, auth, async (req, res) => {
     var error_message1 = req.flash('error-message1')[0];
     var error_message = req.flash('error-message')[0];
     const firms = await Firm.findAll({});
@@ -56,7 +57,7 @@ router.get('/employees', auth, async (req, res) => {
     });
 });
 
-router.post('/employees/add', auth, csrfProtection, async (req, res) => {
+router.post('/employees/add', auth, siteAuth, csrfProtection, async (req, res) => {
     var firm_id = req.body.firm_id;
     const formatDate = req.body.dob ? req.body.dob.split("-") : '';
     const avatar = gravatar.url(req.body.email, {
@@ -111,7 +112,7 @@ router.post('/employees/add', auth, csrfProtection, async (req, res) => {
     }
 });
 
-router.get('/employee/edit/:id', csrfProtection, auth, async (req, res) =>  {
+router.get('/employee/edit/:id', csrfProtection, siteAuth, auth, async (req, res) =>  {
     var error_edit_message = req.flash('error-edit-message')[0];
     User.hasMany(EmployeeToFirm, {foreignKey: 'user_id'});
     const users = await User.findAll({
@@ -161,7 +162,7 @@ router.get('/employee/edit/:id', csrfProtection, auth, async (req, res) =>  {
     });
 });
 
-router.post('/employees/edit/:id', auth, csrfProtection, async (req, res) => {
+router.post('/employees/edit/:id', auth, siteAuth, csrfProtection, async (req, res) => {
     var city = req.body.city ? req.body.city : null;
     var state = req.body.state ? req.body.state : null;
     var zipcode = req.body.zipcode ? req.body.zipcode : null;
@@ -214,7 +215,7 @@ router.post('/employees/edit/:id', auth, csrfProtection, async (req, res) => {
     }   
 });
 
-router.get('/employee/delete/:id',  auth, csrfProtection, async (req, res) =>{
+router.get('/employee/delete/:id',  auth, siteAuth, csrfProtection, async (req, res) =>{
     const user_delete = User.destroy({
         where: {
             id: req.params['id']

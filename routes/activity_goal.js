@@ -1,5 +1,6 @@
 const express = require('express');
 const auth = require('../middlewares/auth');
+const firmAttrAuth = require('../middlewares/firm_attr_auth');
 const csrf = require('csurf');
 const bCrypt = require('bcrypt-nodejs');
 const gravatar = require('gravatar');
@@ -16,7 +17,7 @@ const router = express.Router();
 
 /*==================================Bratin Meheta 15-06-2018===================================*/
 
-router.get('/activity-goal', auth, csrfProtection, (req, res) => {
+router.get('/activity-goal', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	var success_message = req.flash('success-activityGoal-message')[0];
 	var success_edit_message = req.flash('success-edit-goal-message')[0];
 	var success_del_message = req.flash('success-delete-goal-message')[0];
@@ -31,7 +32,10 @@ router.get('/activity-goal', auth, csrfProtection, (req, res) => {
 	{
 		whereGoals.to_date = formatToDate2[2]+"-"+formatToDate2[1]+"-"+formatToDate2[0];
 	}
-	whereGoals.user_id = req.user.id
+	if(req.user.role_id != 2)
+	{
+		whereGoals.user_id = req.user.id
+	}
 	ActivityGoal.belongsTo(Firm, {foreignKey: 'firm_id'});
 	ActivityGoal.findAll({
 		where: whereGoals,
@@ -51,11 +55,11 @@ router.get('/activity-goal', auth, csrfProtection, (req, res) => {
 	});
 });
 
-router.get('/activity-goal/add', auth, csrfProtection, (req, res) => {
+router.get('/activity-goal/add', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	res.render('activity_goal/add', { layout: 'dashboard', csrfToken: req.csrfToken()});
 });
 
-router.post('/activity-goal/add', auth, csrfProtection, (req, res) => {
+router.post('/activity-goal/add', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	const formatFromDate = req.body.from_date ? req.body.from_date.split("-") : '';
 	const formatToDate = req.body.to_date ? req.body.to_date.split("-") : '';
 	ActivityGoal.create({
@@ -71,13 +75,13 @@ router.post('/activity-goal/add', auth, csrfProtection, (req, res) => {
 	});
 });
 
-router.get('/activity-goal/edit/:id', auth, csrfProtection, (req, res) => {
+router.get('/activity-goal/edit/:id', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	ActivityGoal.findById(req.params['id']).then(result => {
 		res.render('activity_goal/edit', { layout: 'dashboard', csrfToken: req.csrfToken(), edit_goals: result})
 	});
 });
 
-router.post('/activity-goal/edit/:id', auth, csrfProtection, (req, res) => {
+router.post('/activity-goal/edit/:id', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	const formatFromDate1 = req.body.from_date ? req.body.from_date.split("-") : '';
 	const formatToDate1 = req.body.to_date ? req.body.to_date.split("-") : '';
 	ActivityGoal.update({
@@ -92,7 +96,7 @@ router.post('/activity-goal/edit/:id', auth, csrfProtection, (req, res) => {
 	});
 });
 
-router.get('/activity-goal/delete/:id', auth, csrfProtection, (req, res) =>{
+router.get('/activity-goal/delete/:id', auth, firmAttrAuth, csrfProtection, (req, res) =>{
 	ActivityGoal.destroy({
 		where: {
 			id: req.params['id']

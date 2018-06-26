@@ -37,7 +37,6 @@
     <script type="text/javascript">
 
     $('.url_selector').keyup(function(){
-      //alert('kkkk');
       if (($(this).val().substr(0,7) !== 'http://') || ($(this).val() === '')) {
         $(this).val('http://');
       }
@@ -45,9 +44,10 @@
 
 
     $(document).ready(function() {
-    $(".number_validator").inputmask("mask", {
-      "mask": "(999) 999-9999"
-    });
+      $(".number_validator").inputmask("mask", {
+        "mask": "(999) 999-9999"
+      });
+      
       $(".alert").fadeTo(2000, 500).slideUp(500, function(){
         $(".alert").slideUp(500);
       });

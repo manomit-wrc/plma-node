@@ -1,5 +1,7 @@
 const express = require('express');
 const auth = require('../middlewares/auth');
+const firmAuth = require('../middlewares/firm_auth');
+const siteAuth = require('../middlewares/site_auth');
 const csrf = require('csurf');
 const bCrypt = require('bcrypt-nodejs');
 const gravatar = require('gravatar');
@@ -14,12 +16,17 @@ const Country = require('../models').country;
 const State = require('../models').state;
 const City = require('../models').city;
 const Zipcode = require('../models').zipcode;
+const Section = require('../models').section;
+const PracticeArea = require('../models').practicearea;
+const Jurisdiction = require('../models').jurisdiction;
+const SectionToFirm = require('../models').section_to_firms;
+const JurisdictionToFirm = require('../models').jurisdiction_to_firms;
+const PracticeAreaToFirm = require('../models').practice_area_to_firms;
 
 var csrfProtection = csrf({ cookie: true });
 
 const router = express.Router();
 function removePhoneMask (phone_no){
-// the format :(777) 777-7222
         var phone_no = phone_no.replace("-","");
         phone_no = phone_no.replace(")","");
         phone_no = phone_no.replace("(","");
@@ -28,7 +35,7 @@ function removePhoneMask (phone_no){
 
 }
 
-router.get('/firms', csrfProtection, auth, async (req, res) => {
+router.get('/firms', csrfProtection, auth, siteAuth, async (req, res) => {
     var whereStatement = {};
     if(req.query.search_email) {
         whereStatement.email = req.query.search_email;
@@ -57,7 +64,7 @@ router.get('/firms', csrfProtection, auth, async (req, res) => {
         search_firm: req.query ? req.query.search_firm : ''
     });
 });
-router.post('/firms/add', auth, csrfProtection, async (req, res) => {
+router.post('/firms/add', auth, siteAuth, csrfProtection, async (req, res) => {
     const user_data = await User.findOne({
         where: {
             email: req.body.email
@@ -107,7 +114,7 @@ router.post('/firms/add', auth, csrfProtection, async (req, res) => {
     
 });
 
-router.post('/firms/edit', auth, csrfProtection, async (req, res) => {
+router.post('/firms/edit', auth, siteAuth, csrfProtection, async (req, res) => {
     const user_data = await User.findOne({
         where: {
             email: req.body.email,
@@ -153,7 +160,7 @@ router.post('/firms/edit', auth, csrfProtection, async (req, res) => {
     }
 }); 
 
-router.post('/firm/delete', auth, csrfProtection, async (req, res) => {
+router.post('/firm/delete', auth, siteAuth, csrfProtection, async (req, res) => {
     const user_delete = User.destroy({
         where: {
             id: req.body.user_id
@@ -177,10 +184,13 @@ router.post('/firm/delete', auth, csrfProtection, async (req, res) => {
 
 /*====================Starts Office Section 18-06-2018================================= */
 
-router.get('/firm-details', auth, csrfProtection, async (req, res) => {
+router.get('/firm-details', auth, firmAuth, csrfProtection, async (req, res) => {
     Office.belongsTo(Firm, {foreignKey: 'firm_id'});
     Contact.belongsTo(Office, {foreignKey: 'office_id'});
     Contact.belongsTo(Designation, {foreignKey: 'designation_id'});
+    Firm.hasMany(SectionToFirm, {foreignKey: 'firm_id'});
+    Firm.hasMany(JurisdictionToFirm, {foreignKey: 'firm_id'});
+    Firm.hasMany(PracticeAreaToFirm, {foreignKey: 'firm_id'});
     const office = await Office.findAll(
         {
             include: [{
@@ -196,7 +206,8 @@ router.get('/firm-details', auth, csrfProtection, async (req, res) => {
     const city = await City.findAll();
     const zipcode = await Zipcode.findAll();
     const firm = await Firm.findAll({
-        where: {id: req.user.firm_id}
+        where: {id: req.user.firm_id},
+        include: [{model: SectionToFirm}, {model: JurisdictionToFirm}, {model: PracticeAreaToFirm}]
     });
     var state_id = firm[0].state;
     var city_id = firm[0].city;
@@ -217,11 +228,32 @@ router.get('/firm-details', auth, csrfProtection, async (req, res) => {
             }
         });
     }
+    var section = await Section.findAll();
+    var practice_area = await PracticeArea.findAll();
+    var jurisdiction = await Jurisdiction.findAll();
+
+    var result = JSON.parse(JSON.stringify(firm[0].section_to_firms));
+    var arr = [];
+    for(var i=0; i<result.length; i++){
+        arr.push(result[i].section_id);
+    }
+
+    var firmJurisdiction = JSON.parse(JSON.stringify(firm[0].jurisdiction_to_firms));
+    var jurisdictionArr = [];
+    for(var j=0; j<firmJurisdiction.length; j++){
+        jurisdictionArr.push(firmJurisdiction[j].jurisdiction_id);
+    }
+
+    var firmPracticeArea = JSON.parse(JSON.stringify(firm[0].practice_area_to_firms));
+    var PracticeAreaArr = [];
+    for(var k=0; k<firmPracticeArea.length; k++){
+        PracticeAreaArr.push(firmPracticeArea[k].practice_area_id);
+    }
     
-    res.render('firms/master_settings', {layout: 'dashboard', csrfToken: req.csrfToken(), office, designation, contact, country, state, city, zipcode, firm: firm[0], firm_city, firm_zipcode});
+    res.render('firms/master_settings', {layout: 'dashboard', csrfToken: req.csrfToken(), office, designation, contact, country, state, city, zipcode, firm: firm[0], firm_city, firm_zipcode, section, practice_area, jurisdiction, arr, jurisdictionArr, PracticeAreaArr});
 });
 
-router.post('/add-office', auth, csrfProtection, (req, res) => {
+router.post('/add-office', auth, firmAuth, csrfProtection, (req, res) => {
     Office.create({
         firm_id: 5,
         name: req.body.name,
@@ -236,7 +268,7 @@ router.post('/add-office', auth, csrfProtection, (req, res) => {
     });
 });
 
-router.post('/edit-office/:id', auth, csrfProtection, (req, res) => {
+router.post('/edit-office/:id', auth, firmAuth, csrfProtection, (req, res) => {
     Office.update({
         firm_id: 5,
         name: req.body.edit_office_name,
@@ -252,7 +284,7 @@ router.post('/edit-office/:id', auth, csrfProtection, (req, res) => {
     });
 });
 
-router.post('/delete-office/:id', auth, csrfProtection, (req, res) =>{
+router.post('/delete-office/:id', auth, firmAuth, csrfProtection, (req, res) =>{
     Office.destroy({
         where: {id: req.params['id']}
     }).then(result =>{
@@ -263,7 +295,7 @@ router.post('/delete-office/:id', auth, csrfProtection, (req, res) =>{
 
 /*====================Starts Office Contact Section 19-06-2018================================= */
 
-router.post('/add-office-contact', auth, csrfProtection, (req, res) => {
+router.post('/add-office-contact', auth, firmAuth, csrfProtection, (req, res) => {
     Contact.create({
         office_id: req.body.office_id,
         designation_id: req.body.designation_id,
@@ -281,7 +313,7 @@ router.post('/add-office-contact', auth, csrfProtection, (req, res) => {
     });
 });
 
-router.post('/edit-office-contact/:id', auth, csrfProtection, (req, res) => {
+router.post('/edit-office-contact/:id', auth, firmAuth, csrfProtection, (req, res) => {
     Contact.update({
         office_id: req.body.edit_office_id,
         designation_id: req.body.edit_designation_id,
@@ -300,7 +332,7 @@ router.post('/edit-office-contact/:id', auth, csrfProtection, (req, res) => {
     });
 });
 
-router.post('/delete-contact/:id', auth, csrfProtection, (req, res) =>{
+router.post('/delete-contact/:id', auth, firmAuth, csrfProtection, (req, res) =>{
     Contact.destroy({
         where: {id: req.params['id']}
     }).then(result =>{
@@ -383,7 +415,7 @@ router.post('/firm-basic/get-zipcode', auth, (req, res) =>{
 
 /*==========================Firm Profile Update section=======================*/
 
-router.post('/update-own-firm', auth, csrfProtection, (req, res) =>{
+router.post('/update-own-firm', auth,  firmAuth, csrfProtection, (req, res) =>{
     Firm.update({
         address: req.body.address1,
         address1: req.body.address2,
@@ -404,5 +436,56 @@ router.post('/update-own-firm', auth, csrfProtection, (req, res) =>{
 });
 
 /*==========================Firm Profile Update section=======================*/
+
+/*==========================Firm Profile Details Update section=======================*/
+
+router.post('/update-own-firmDetails', auth, firmAuth, csrfProtection, async(req, res) =>{
+    var section = req.body.section;
+    var practice_area = req.body.practice_area;
+    var jurisdiction = req.body.jurisdiction;
+
+    const frim_details = await Firm.update({
+        title: req.body.firm_name,
+        firm_code: req.body.firm_code,
+        firm_registration: req.body.firm_reg
+    },{ where: { id: req.user.firm_id}
+    });
+
+    const section_to_firm_des = await SectionToFirm.destroy({
+        where: { firm_id : req.user.firm_id}
+    }); 
+
+    const practice_area_to_firm_des = await PracticeAreaToFirm.destroy({
+        where: { firm_id : req.user.firm_id}
+    });
+
+    const jurisdiction_to_firm_des = await JurisdictionToFirm.destroy({
+        where: { firm_id : req.user.firm_id}
+    });
+
+    for(var i=0; i<section.length; i++){
+        const section_to_firm = await SectionToFirm.create({
+            firm_id: req.user.firm_id,
+            section_id: section[i] 
+        });
+    }
+
+    for(var j=0; j<practice_area.length; j++){
+        const practice_area_to_firm = await PracticeAreaToFirm.create({
+            firm_id: req.user.firm_id,
+            practice_area_id: practice_area[j] 
+        });
+    }
+
+    for(var k=0; k<jurisdiction.length; k++){
+        const jurisdiction_to_firm = await JurisdictionToFirm.create({
+            firm_id: req.user.firm_id,
+            jurisdiction_id: jurisdiction[k] 
+        });
+    }
+    res.json({"update_firm_details": true});
+});
+
+/*==========================Firm Profile Details Update section=======================*/
 
 module.exports = router;

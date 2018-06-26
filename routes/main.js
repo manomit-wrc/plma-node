@@ -1,5 +1,8 @@
 const express = require('express');
 const auth = require('../middlewares/auth');
+const siteAuth = require('../middlewares/site_auth');
+const firmAuth = require('../middlewares/firm_auth');
+const firmAttrAuth = require('../middlewares/firm_attr_auth');
 const csrf = require('csurf');
 const bCrypt = require('bcrypt-nodejs');
 const designation = require('../models').designation;
@@ -7,6 +10,7 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const PracticeArea = require('../models').practicearea;
 const Section = require('../models').section;
+const Group = require('../models').group;
 const budget = require('../models').budget;
 const zipcode = require('../models').zipcode;
 const city = require('../models').city;
@@ -22,7 +26,7 @@ var path      = require('path');
 var fs = require('fs');
 const router = express.Router();
 //===================================================Designation route starts==========================================================
-router.get('/designations', csrfProtection, auth, (req, res) => {
+router.get('/designations', csrfProtection, auth, siteAuth, (req, res) => {
 	console.log(req.user);
 		var whereCondition = {};
 		if(req.query.searchCode) {
@@ -42,7 +46,7 @@ router.get('/designations', csrfProtection, auth, (req, res) => {
     });
 
 });
-router.post('/designations/add', auth, csrfProtection, (req, res) => {
+router.post('/designations/add', auth, siteAuth, csrfProtection, (req, res) => {
     console.log(req.body);
     var code = req.body.code;
     var title = req.body.designation;
@@ -66,14 +70,14 @@ router.post('/designations/add', auth, csrfProtection, (req, res) => {
     });
 
 });
-router.get('/designations/find',auth, (req,res) => {
+router.get('/designations/find',auth, siteAuth, (req,res) => {
   var id = req.body.id;
   designation.findById(27).then(rows => {
     console.log(rows);
     res.send(rows);
   });
 });
-router.get('/designations/update/:id',auth, csrfProtection, (req,res) => {
+router.get('/designations/update/:id',auth, siteAuth, csrfProtection, (req,res) => {
   designation.findById(req.params.id).then(row => {
     console.log(JSON.stringify(row,undefined,10));
     res.render('designations/update',{layout: 'dashboard', csrfToken: req.csrfToken(), designation: row});
@@ -81,7 +85,7 @@ router.get('/designations/update/:id',auth, csrfProtection, (req,res) => {
 
 
 });
-router.post('/designations/updateDesignation/:id',auth,csrfProtection, (req,res) => {
+router.post('/designations/updateDesignation/:id',auth, siteAuth,csrfProtection, (req,res) => {
   var code = req.body.code;
   var title = req.body.designation;
   var remarks = req.body.remarks;
@@ -102,7 +106,7 @@ router.post('/designations/updateDesignation/:id',auth,csrfProtection, (req,res)
   });
 
 });
-router.get('/designations/delete/:id',auth, (req,res) => {
+router.get('/designations/delete/:id',auth, siteAuth, (req,res) => {
   console.log(req.params.id);
   designation.destroy({
     where:{
@@ -118,7 +122,7 @@ router.get('/designations/delete/:id',auth, (req,res) => {
 
 //==========================================Designation route ends=============================================
 /*==========================================Attorney route starts==============================================*/
-router.get('/attorneys',auth,csrfProtection, (req,res) => {
+router.get('/attorneys',auth, firmAuth,csrfProtection, (req,res) => {
 	var whereCondition = {};
 	if(req.query.searchName) {
 		whereCondition.first_name = req.query.searchName;
@@ -140,10 +144,10 @@ router.get('/attorneys',auth,csrfProtection, (req,res) => {
 	});
 
 });
-router.get('/attorney/addAttorney',auth,csrfProtection, (req,res) => {
+router.get('/attorney/addAttorney',auth, firmAuth,csrfProtection, (req,res) => {
 	res.render('attorney/addattorney',{ layout: 'dashboard', csrfToken: req.csrfToken()});
 });
-router.post('/attorneys/add',auth,csrfProtection, (req,res) => {
+router.post('/attorneys/add',auth, firmAuth,csrfProtection, (req,res) => {
 	// console.log(new Date());
 	var first_name = req.body.first_name;
 	var last_name = req.body.last_name;
@@ -195,12 +199,12 @@ router.post('/attorneys/add',auth,csrfProtection, (req,res) => {
 	});
 
 });
-router.get('/attorneys/editAttorneys/:id',auth, csrfProtection, (req,res) => {
+router.get('/attorneys/editAttorneys/:id',auth, firmAuth, csrfProtection, (req,res) => {
 	 user.findById(req.params.id).then(rows => {
 		 res.render('attorney/updateattorney',{ layout: 'dashboard', csrfToken: req.csrfToken(), rows: rows });
 	 });
 });
-router.post('/attorneys/updateAttorney/:id',auth,csrfProtection, (req,res) => {
+router.post('/attorneys/updateAttorney/:id',auth, firmAuth,csrfProtection, (req,res) => {
 	console.log(req.params.id);
 	var first_name = req.body.first_name;
 	var last_name = req.body.last_name;
@@ -289,7 +293,7 @@ router.post('/attorneys/updateAttorney/:id',auth,csrfProtection, (req,res) => {
 
 });
 
-router.get('/attorneys/delete/:id',auth, (req,res) => {
+router.get('/attorneys/delete/:id',auth, firmAuth, (req,res) => {
   console.log(req.params.id);
   user.destroy({
     where:{
@@ -303,7 +307,7 @@ router.get('/attorneys/delete/:id',auth, (req,res) => {
 /*==========================================Attorney route ends==============================================*/
 
 /*==========================================Client route starts==============================================*/
-router.get('/client',auth, csrfProtection, (req,res) => {
+router.get('/client',auth, firmAttrAuth, csrfProtection, (req,res) => {
 	var whereCondition = {};
 	if(req.query.searchName) {
 		whereCondition.first_name = req.query.searchName;
@@ -321,7 +325,7 @@ router.get('/client',auth, csrfProtection, (req,res) => {
 		 
 	
 });
-router.get('/client/add',auth, csrfProtection, (req,res) => {
+router.get('/client/add',auth, firmAttrAuth, csrfProtection, (req,res) => {
 	designation.findAll().then(designation => {
 		industry_type.findAll().then(industry => {
 	country.findAll().then(country => {
@@ -335,7 +339,7 @@ router.get('/client/add',auth, csrfProtection, (req,res) => {
 });
 
 });
-router.get('/client/edit/:id',auth, csrfProtection, (req,res) => {
+router.get('/client/edit/:id',auth, firmAttrAuth, csrfProtection, (req,res) => {
 var clientId = req.params.id;
 
 	designation.findAll().then(designation => {
@@ -354,7 +358,7 @@ var clientId = req.params.id;
 });
 
 });
-router.post('/client/addClient',auth,csrfProtection, (req,res) => {
+router.post('/client/addClient',auth, firmAttrAuth,csrfProtection, (req,res) => {
 	var first_name = req.body.first_name;
 	var last_name = req.body.last_name;
 	var email = req.body.email;
@@ -417,7 +421,7 @@ router.post('/client/addClient',auth,csrfProtection, (req,res) => {
 
 
 });
-router.post('/client/editClient',auth,csrfProtection, (req,res) => {
+router.post('/client/editClient',auth, firmAttrAuth,csrfProtection, (req,res) => {
 	var id = req.body.id;
 	var first_name = req.body.first_name;
 	var last_name = req.body.last_name;
@@ -486,7 +490,7 @@ router.post('/client/editClient',auth,csrfProtection, (req,res) => {
 
 });
 
-router.get('/client/delete/:id',auth, (req,res) => {
+router.get('/client/delete/:id',auth, firmAttrAuth, (req,res) => {
   console.log(req.params.id);
   client.destroy({
     where:{
@@ -497,7 +501,7 @@ router.get('/client/delete/:id',auth, (req,res) => {
     res.redirect('/client');
   });
 });
-router.post('/client/findCityByState',auth, csrfProtection, (req,res) => {
+router.post('/client/findCityByState',auth, firmAttrAuth, csrfProtection, (req,res) => {
 
 	city.findAll({
 		where:{
@@ -509,7 +513,7 @@ router.post('/client/findCityByState',auth, csrfProtection, (req,res) => {
 		res.json({city: city});
 	});
 });
-router.post('/client/findPinByCity',auth, csrfProtection, (req,res) => {
+router.post('/client/findPinByCity',auth, firmAttrAuth, csrfProtection, (req,res) => {
 	city.findById(req.body.city_id).then(row => {
 		console.log(row.name);
 		zipcode.findAll({
@@ -556,7 +560,7 @@ router.get('/import/csv',auth,csrfProtection, (req,res) => {
 
 /*================================COMMIT BY MALINI ROYCHOWDHURY 14-06-2018=================================*/
 
-router.get('/budgets', csrfProtection, auth, (req, res) => {
+router.get('/budgets', csrfProtection, siteAuth, auth, (req, res) => {
 	var whereCondition = {};
 	if(req.query.searchCode) {
 		whereCondition.code = req.query.searchCode;
@@ -572,7 +576,7 @@ router.get('/budgets', csrfProtection, auth, (req, res) => {
 
 });
 //insert
-router.post('/budgets/addbudget', auth, csrfProtection, (req, res) => {
+router.post('/budgets/addbudget', auth, siteAuth, csrfProtection, (req, res) => {
     console.log(req.body);
     var code = req.body.code;
     var name = req.body.name;
@@ -593,7 +597,7 @@ router.post('/budgets/addbudget', auth, csrfProtection, (req, res) => {
 
     });
 });
- router.get('/budgets/edit/:id',auth,csrfProtection, (req,res) => {
+ router.get('/budgets/edit/:id',auth, siteAuth,csrfProtection, (req,res) => {
 
 
 	 budget.findById(req.params.id).then(rows => {
@@ -601,7 +605,7 @@ router.post('/budgets/addbudget', auth, csrfProtection, (req, res) => {
 	 res.render('budgets/edit', { layout: 'dashboard', csrfToken: req.csrfToken(),rows:  rows   });
 });
 });
-router.post('/budgets/update/:id',auth,csrfProtection, (req,res) => {
+router.post('/budgets/update/:id',auth, siteAuth,csrfProtection, (req,res) => {
   var code = req.body.code;
   var name = req.body.name;
   var remarks = req.body.remarks;
@@ -621,7 +625,7 @@ router.post('/budgets/update/:id',auth,csrfProtection, (req,res) => {
   });
 
 });
-router.get('/budgets/delete/:id',auth, (req,res) => {
+router.get('/budgets/delete/:id',auth, siteAuth, (req,res) => {
   console.log(req.params.id);
   budget.destroy({
     where:{
@@ -633,7 +637,7 @@ router.get('/budgets/delete/:id',auth, (req,res) => {
 });
 /*==========================Start practice area//Bratin Meheta 12-06-2018=============================*/
 
-router.get('/practice-area', csrfProtection, auth, (req, res) =>{
+router.get('/practice-area', csrfProtection, auth, siteAuth, (req, res) =>{
 	var practiceAreaFilter = {};
 	if(req.query.practice_area_code){
 		practiceAreaFilter.code = req.query.practice_area_code;
@@ -654,7 +658,7 @@ router.get('/practice-area', csrfProtection, auth, (req, res) =>{
 	});
 });
 
-router.post('/practice-area/add', auth, csrfProtection, (req, res) =>{
+router.post('/practice-area/add', auth, siteAuth, csrfProtection, (req, res) =>{
 	PracticeArea.findAndCountAll({
 		where:
 		{
@@ -677,7 +681,7 @@ router.post('/practice-area/add', auth, csrfProtection, (req, res) =>{
 		}
 	});
 });
-router.post('/admin/edit-practice-area/:id', auth, csrfProtection, (req, res) =>{
+router.post('/admin/edit-practice-area/:id', auth, siteAuth, csrfProtection, (req, res) =>{
 	PracticeArea.findAll({
 		where: {
 			code: req.body.edit_code,
@@ -703,7 +707,7 @@ router.post('/admin/edit-practice-area/:id', auth, csrfProtection, (req, res) =>
 	});
 });
 
-router.post('/admin/delete-practice-area/:id', auth, csrfProtection, (req, res) =>{
+router.post('/admin/delete-practice-area/:id', auth, siteAuth, csrfProtection, (req, res) =>{
 	PracticeArea.destroy({
 		where: {id: req.params['id']}
 	}).then(result =>{
@@ -715,7 +719,7 @@ router.post('/admin/delete-practice-area/:id', auth, csrfProtection, (req, res) 
 
 /*==========================Start Section//Bratin Meheta 13-06-2018=============================*/
 
-router.get('/section', csrfProtection, auth, (req, res) =>{
+router.get('/section', csrfProtection, auth, siteAuth, (req, res) =>{
 	var sectionFilter = {};
 	if(req.query.section_name) {
 		sectionFilter.name = req.query.section_name;
@@ -732,7 +736,7 @@ router.get('/section', csrfProtection, auth, (req, res) =>{
 	});
 });
 
-router.post('/section/add', auth, csrfProtection, (req, res) =>{
+router.post('/section/add', auth, siteAuth, csrfProtection, (req, res) =>{
 	Section.findAndCountAll({
 		where:
 		{
@@ -755,7 +759,7 @@ router.post('/section/add', auth, csrfProtection, (req, res) =>{
 		}
 	});
 });
-router.post('/admin/edit-section/:id', auth, csrfProtection, (req, res) =>{
+router.post('/admin/edit-section/:id', auth, siteAuth, csrfProtection, (req, res) =>{
 	Section.findAll({
 		where: {
 			name: req.body.edit_name,
@@ -781,7 +785,7 @@ router.post('/admin/edit-section/:id', auth, csrfProtection, (req, res) =>{
 	});
 });
 
-router.post('/admin/delete-section/:id', auth, csrfProtection, (req, res) =>{
+router.post('/admin/delete-section/:id', auth, siteAuth, csrfProtection, (req, res) =>{
 	Section.destroy({
 		where: {id: req.params['id']}
 	}).then(result =>{
@@ -793,7 +797,7 @@ router.post('/admin/delete-section/:id', auth, csrfProtection, (req, res) =>{
 
 /*==========================Start Jurisdiction//Bratin Meheta 13-06-2018=============================*/
 
-router.get('/jurisdiction', csrfProtection, auth, (req, res) =>{
+router.get('/jurisdiction', csrfProtection, auth, siteAuth, (req, res) =>{
 	var whereCondition = {};
 	if(req.query.jurisdiction_code) {
 		whereCondition.code = req.query.jurisdiction_code;
@@ -814,7 +818,7 @@ router.get('/jurisdiction', csrfProtection, auth, (req, res) =>{
 	});
 });
 
-router.post('/jurisdiction/add', auth, csrfProtection, (req, res) =>{
+router.post('/jurisdiction/add', auth, siteAuth, csrfProtection, (req, res) =>{
 	Jurisdiction.findAndCountAll({
 		where:
 		{
@@ -837,7 +841,7 @@ router.post('/jurisdiction/add', auth, csrfProtection, (req, res) =>{
 		}
 	});
 });
-router.post('/admin/edit-jurisdiction/:id', auth, csrfProtection, (req, res) =>{
+router.post('/admin/edit-jurisdiction/:id', auth, siteAuth, csrfProtection, (req, res) =>{
 	Jurisdiction.findAll({
 		where: {
 			code: req.body.edit_code,
@@ -863,7 +867,7 @@ router.post('/admin/edit-jurisdiction/:id', auth, csrfProtection, (req, res) =>{
 	});
 });
 
-router.post('/admin/delete-jurisdiction/:id', auth, csrfProtection, (req, res) =>{
+router.post('/admin/delete-jurisdiction/:id', auth, siteAuth, csrfProtection, (req, res) =>{
 	Jurisdiction.destroy({
 		where: {id: req.params['id']}
 	}).then(result =>{
@@ -872,5 +876,87 @@ router.post('/admin/delete-jurisdiction/:id', auth, csrfProtection, (req, res) =
 });
 
 /*========================================End Jurisdiction========================================*/
+
+/*==========================Start Group//Bratin Meheta 13-06-2018=============================*/
+
+router.get('/group', csrfProtection, auth, siteAuth, (req, res) =>{
+	var whereCondition = {};
+	if(req.query.group_code) {
+		whereCondition.code = req.query.group_code;
+	}
+	if(req.query.group_name) {
+		whereCondition.name = req.query.group_name;
+	}
+	Group.findAll({
+		where: whereCondition
+	}).then(show =>{
+		res.render('group/index',{
+			layout: 'dashboard',
+			csrfToken: req.csrfToken(),
+			group:show,
+			group_code: req.query.group_code ? req.query.group_code : '',
+			group_name: req.query.group_name ? req.query.group_name : ''
+		});
+	});
+});
+
+router.post('/group/add', auth, siteAuth, csrfProtection, (req, res) =>{
+	Group.findAndCountAll({
+		where:
+		{
+			code: req.body.code
+		}
+	}).then(result =>{
+		var count = result.count;
+		if(count == 0)
+		{
+			Group.create({
+				code: req.body.code,
+				name: req.body.name,
+				remarks:req.body.remarks
+			}).then(store =>{
+				res.json({"add_group":1});
+			});
+		}
+		else{
+			res.json({"add_group":2});
+		}
+	});
+});
+router.post('/admin/edit-group/:id', auth, siteAuth, csrfProtection, (req, res) =>{
+	Group.findAll({
+		where: {
+			code: req.body.edit_code,
+			id: {
+				[Op.ne]: req.params['id']
+			}
+		}
+	}).then(group => {
+		if(group.length === 0) {
+			Group.update({
+				code: req.body.edit_code,
+				name: req.body.edit_name,
+				remarks: req.body.edit_remarks
+			},{where: {id: req.params['id']}
+			}).then(result =>{
+				res.json({"edit_group":1});
+			});
+		}
+		else {
+
+			res.json({"edit_group":2});
+		}
+	});
+});
+
+router.post('/admin/delete-group/:id', auth, siteAuth, csrfProtection, (req, res) =>{
+	Group.destroy({
+		where: {id: req.params['id']}
+	}).then(result =>{
+		res.json({"del_group":1});
+	});
+});
+
+/*========================================End group========================================*/
 
 module.exports = router;
