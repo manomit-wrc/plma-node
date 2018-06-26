@@ -12,74 +12,81 @@
       <div class="content container-fluid">
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2">
-              {{#each data}}
+
+
+
 							<form name="addname" id="addname" >
-                <input type="hidden" id="hidden_field" value={{this.id}}>
+                <input type="hidden" id="hidden_field" value={{data.id}}>
 								<h3 class="page-title">Company Details</h3>
 								<div class="row">
 									<div class="col-sm-6">
 										<div class="form-group">
 											<label>Company Name <span class="text-danger">*</span></label>
-											<input class="form-control" type="text" name="companyname"  id="companyname" value="{{this.company_name}}">
+											<input class="form-control" type="text" name="companyname"  id="companyname" value="{{data.company_name}}">
 										</div>
 									</div>
 									<div class="col-sm-6">
 										<div class="form-group">
 											<label>Contact Person</label>
-											<input class="form-control " type="text" name="contactperson" id="contactperson" value="{{this.contact_person}}">
+											<input class="form-control " type="text" name="contactperson" id="contactperson" value="{{data.contact_person}}">
 										</div>
 									</div>
-								</div>
-								<div class="row">
+                  <div class="row">
 									<div class="col-sm-12">
 										<div class="form-group">
 											<label>Address</label>
-											<input class="form-control " type="text" name="address" id="address" value={{this.address}}>
+											<input class="form-control " type="text" name="address" id="address" value={{data.address}}>
 										</div>
+                  </div>
 									</div>
-									<div class="col-sm-6 col-md-6 col-lg-3">
-										<div class="form-group">
-											<label>Country</label>
-											 <select class="form-control select" name="country" id="country" value={{this.country}}>
-												<option>USA</option>
-												<option>United Kingdom</option>
-											</select>
-										</div>
-									</div>
-									<div class="col-sm-6 col-md-6 col-lg-3">
-										<div class="form-group">
-											<label>City</label>
-											<input class="form-control" type="text" name="city" id="city" value={{this.city}}>
-										</div>
-									</div>
-									<div class="col-sm-6 col-md-6 col-lg-3">
-										<div class="form-group">
-											<label>State/Province</label>
-											<select class="form-control select" name="state" id="state" value={{this.state}}>
-												<option>California</option>
-												<option>Alaska</option>
-												<option>Alabama</option>
-											</select>
-										</div>
-									</div>
-									<div class="col-sm-6 col-md-6 col-lg-3">
-										<div class="form-group">
-											<label>Postal Code</label>
-											<input class="form-control" type="text" name="postalcode" id="postalcode" value={{this.postal_code}}>
-										</div>
-									</div>
-								</div>
-								<div class="row">
+                  <div class="col-md-6">
+                     <div class="form-group">
+                       <label>Country</label>
+                        <select class="select form-control floating" id="country" name="country">
+                           <option value="">Select Country</option>
+                           {{#each country}}
+                           <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{data.name}}</option>
+                           {{/each}}
+                       </select>
+                     </div>
+                  </div>
+                  <div class="col-md-6">
+                     <div class="form-group">
+                       <label>State</label>
+                        <select class="select form-control floating" id="state" name="state">
+                           {{#each state}}
+                           <option value="{{this.id}}">{{this.name}}</option>
+                           {{/each}}
+                       </select>
+                     </div>
+                  </div>
+                  <div class="col-md-6">
+                     <div class="form-group">
+                       <label>City</label>
+                        <select class="select form-control floating" id="city" name="city">
+                             <option value="">Select City</option>
+                       </select>
+                     </div>
+                  </div>
+                  <div class="col-md-6">
+                     <div class="form-group">
+                       <label>Zip Code</label>
+                           <select class="select form-control floating" id="zipcode" name="zipcode">
+                           <option value="">Select Zipcode</option>
+
+                       </select>
+                     </div>
+                    </div>
 									<div class="col-sm-6">
 										<div class="form-group">
 											<label>Email</label>
-											<input class="form-control" type="email" name="email" id="email" value={{this.email}}>
+											<input class="form-control" type="email" name="email" id="email" value={{data.email}}>
 										</div>
 									</div>
 									<div class="col-sm-6">
 										<div class="form-group">
 											<label>Phone Number</label>
-											<input class="form-control" type="text" name="phnumber" id="phnumber" value={{this.phone_number}}>
+											<input class="form-control" type="text" name="phnumber" id="phnumber" value={{data.phone_number}}>
 										</div>
 									</div>
 								</div>
@@ -87,31 +94,28 @@
 									<div class="col-sm-6">
 										<div class="form-group">
 											<label>Mobile Number</label>
-											<input class="form-control" type="text" name="mbnumber" id="mbnumber" value={{this.mobile_number}}>
+											<input class="form-control" type="text" name="mbnumber" id="mbnumber" value={{data.mobile_number}}>
 										</div>
 									</div>
 									<div class="col-sm-6">
 										<div class="form-group">
 											<label>Fax</label>
-											<input class="form-control"  type="text" name="fax" id="fax" value= {{this.fax}}>
+											<input class="form-control"  type="text" name="fax" id="fax" value= {{data.fax}}>
 										</div>
 									</div>
 								</div>
-								<div class="row">
-									<div class="col-sm-12">
+									<div class="col-sm-6">
 										<div class="form-group">
 											<label>Website Url</label>
-											<input class="form-control" type="text" name="weburl" id="weburl" value={{this.website_url}}>
+											<input class="form-control" type="text" name="weburl" id="weburl" value={{data.website_url}}>
 										</div>
 									</div>
-								</div>
 								<div class="row">
 									<div class="col-sm-12 text-center m-t-20">
 										<button type="button" class="btn btn-primary" id="insert" value = "Validate" onclick = "Validate()" >Save &amp; update</button>
 									</div>
 								</div>
 							</form>
-              {{/each}}
 						</div>
 					</div>
         </div>
@@ -332,17 +336,6 @@
 
 
 
-
-
-
-
-		<!-- <div class="sidebar-overlay" data-reff="#sidebar"></div>
-        <script type="text/javascript" src="assets/js/jquery-3.2.1.min.js"></script>
-        <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="assets/js/jquery.slimscroll.js"></script>
-		<script type="text/javascript" src="assets/js/select2.min.js"></script>
-		<script type="text/javascript" src="assets/js/app.js"></script> -->
-
     {{#content "script" mode="append"}}
         <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
@@ -351,6 +344,72 @@
         <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+
+        <script>
+        	function cityByState(){
+
+        		var state = $('#state').val();
+        		$.ajax({
+        			url: "/client/findCityByState",
+        			method: "POST",
+        			data: {state_id: state},
+        			beforeSend: function(xhr) {
+        										xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+
+        									},
+        			success: function(resp){
+        				console.log(resp);
+        				var test = document.getElementsByClassName('test');
+        							for(var i = 0; i < test.length; i++){
+        								test[i].remove();
+
+        							}
+        							$.each(resp.city, function(key, value) {
+        							console.log(value);
+
+        		$("#city").append('<option class="test" value="'+value.id+'">'+value.name+'</option>');
+        	});
+        			},
+        			error: function(xhr){
+
+        			}
+        		});
+        	}
+        	function pinByCity(){
+        		var city = document.getElementById('city').value;
+
+        		$.ajax({
+        			url: "/client/findPinByCity",
+        			method: "POST",
+        			data: {
+        				city_id: city
+        			},
+        			beforeSend: function(xhr) {
+        										xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+
+        									},
+        			success: function(resp){
+        				var test1 = document.getElementsByClassName('pin');
+        							for(var i = 0; i < test1.length; i++){
+        								test1[i].remove();
+
+        							}
+        							$.each(resp.pin, function(key, value) {
+        							console.log(value);
+
+        		$("#zipcode").append('<option class="pin" value="'+value.id+'">'+value.zip+'</option>');
+        	});
+        			},
+        			error: function(xhr){
+
+        			}
+        		});
+        	}
+        </script>
+
+
 
             <script type="text/javascript">
             $.validator.addMethod('mobilenumber', function (value, element) {

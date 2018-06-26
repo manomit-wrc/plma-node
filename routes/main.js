@@ -244,9 +244,19 @@ res.render('industry_type/update', { layout: 'dashboard', csrfToken: req.csrfTok
  });
 //============================================={{{{{{settings}}}}}}==========================================
 router.get('/settings',auth,csrfProtection, (req,res) => {
-	setting.findAll().then(data => {
-		console.log(data);
-		res.render('superadminsetting/settings', { layout: 'dashboard', csrfToken: req.csrfToken(), data: data, test: 'test' });
+
+	country.findAll().then(country => {
+		state.findAll().then(state => {
+
+
+			setting.findById(1).then(data => {
+	// setting.findAll().then(data => {
+	// 	console.log(country);
+	console.log(data);
+		res.render('superadminsetting/settings', { layout: 'dashboard', csrfToken: req.csrfToken(), data: data, test: 'test', country: country, state: state });
+});
+});
+
  });
 });
 router.post('/settings/insert',auth,csrfProtection, (req,res) => {
@@ -278,7 +288,41 @@ router.post('/settings/insert',auth,csrfProtection, (req,res) => {
 		});
   }
 	});
-//============================================={{{{{}}}}}=========================================
+
+
+
+
+	router.post('/client/findCityByState',auth, firmAttrAuth, csrfProtection, (req,res) => {
+
+		city.findAll({
+			where:{
+				state_id: req.body.state_id
+			}
+		}
+		).then(city => {
+			// res.send(city);
+			res.json({city: city});
+		});
+	});
+	router.post('/client/findPinByCity',auth, firmAttrAuth, csrfProtection, (req,res) => {
+		city.findById(req.body.city_id).then(row => {
+			console.log(row.name);
+			zipcode.findAll({
+				where:{
+					city_name: row.name
+				}
+			}
+			).then(pin => {
+				console.log(JSON.stringify(pin, undefined, 2));
+				// res.send(city);
+				res.json({pin: pin});
+			});
+
+		});
+
+
+		});
+
 //===================================================Designation route starts==========================================================
 router.get('/designations', csrfProtection, auth, siteAuth, (req, res) => {
 	console.log(req.user);
