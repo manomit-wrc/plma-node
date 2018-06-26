@@ -24,7 +24,7 @@
             <li {{#if_eq client_url "employees" }} class="active" {{/if_eq}}>
                <a href="/employees">Employees</a>
             </li>
-            <li {{#if_eq client_url "industry-type" }} class="active" {{/if_eq}}>
+            <li {{#if_eq client_url "industry" }} class="active" {{/if_eq}}>
                <a href="/industry">Industry Type</a>
             </li>
             <li {{#if_eq client_url "designations" }} class="active" {{/if_eq}}>
@@ -37,6 +37,9 @@
             </li>
             {{/if_eq}}
             {{#if_eq user.role_id "2"}}
+            <li {{#if_eq client_url "firm-details" }} class="active" {{/if_eq}}>
+               <a href="/firm-details">Firm Details</a>
+            </li>
              <li {{#if_eq client_url "attorneys" }} class="active" {{/if_eq}}>
                <a href="/attorneys">Attorneys</a>
             <li {{#if_eq client_url "activity-goal" }} class="active" {{/if_eq}}>
@@ -44,9 +47,6 @@
             </li>
             <li {{#if_eq client_url "financial-goal" }} class="active" {{/if_eq}}>
                <a href="/financial-goal">Financial Goal</a>
-            </li>
-            <li {{#if_eq client_url "firm-details" }} class="active" {{/if_eq}}>
-               <a href="/firm-details">Firm Details</a>
             </li>
             <li {{#if_eq client_url "target" }} class="active" {{/if_eq}}>
                <a href="/target">Target</a>
