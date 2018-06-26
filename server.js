@@ -47,6 +47,7 @@ const hbs = exphbs.create({
     extname: '.hbs',
     helpers: {
         if_eq: function (a, b, opts) {
+            
             if (a == b)
                 return opts.fn(this);
             else

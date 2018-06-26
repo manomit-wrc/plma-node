@@ -12,10 +12,10 @@ const PracticeArea = require('../models').practicearea;
 const Section = require('../models').section;
 const Group = require('../models').group;
 const budget = require('../models').budget;
-const zipcode = require('../models').zipcode;
-const city = require('../models').city;
-const state = require('../models').state;
-const country = require('../models').country;
+const Zipcode = require('../models').zipcode;
+const City = require('../models').city;
+const State = require('../models').state;
+const Country = require('../models').country;
 const industry_type = require('../models').industry_type;
 
 const setting = require('../models').setting;
@@ -50,8 +50,8 @@ res.render('target/targets', { layout: 'dashboard', csrfToken: req.csrfToken(), 
 
 router.get('/addtarget',auth, csrfProtection, (req,res) => {
 
-	country.findAll().then(country => {
-		state.findAll().then(state => {
+	Country.findAll().then(country => {
+		State.findAll().then(state => {
 
 			res.render('target/addtarget',{ layout: 'dashboard', csrfToken: req.csrfToken(), country: country, state: state });
 		});
@@ -103,8 +103,8 @@ router.post('/targetinsert/add', auth, csrfProtection, (req, res) => {
 router.get('/target/edit/:id',auth, csrfProtection, (req,res) => {
 	 target.findById(req.params.id).then(edata => {
 
-		 country.findAll().then(country => {
-	 		state.findAll().then(state => {
+		 Country.findAll().then(country => {
+	 		State.findAll().then(state => {
 
 		 //console.log(JSON.stringify(edata, undefined, 2));
 		 res.render('target/targetupdate',{ layout: 'dashboard', csrfToken: req.csrfToken(), target: edata ,country: country,state: state});
@@ -243,21 +243,21 @@ res.render('industry_type/update', { layout: 'dashboard', csrfToken: req.csrfTok
    });
  });
 //============================================={{{{{{settings}}}}}}==========================================
-router.get('/settings',auth,csrfProtection, (req,res) => {
-
-	country.findAll().then(country => {
-		state.findAll().then(state => {
-
-
-			setting.findById(1).then(data => {
-	// setting.findAll().then(data => {
-	// 	console.log(country);
-	console.log(data);
-		res.render('superadminsetting/settings', { layout: 'dashboard', csrfToken: req.csrfToken(), data: data, test: 'test', country: country, state: state });
-});
-});
-
- });
+router.get('/settings',auth,csrfProtection, async (req,res) => {
+	const country = await Country.findAll({});
+	const state = await State.findAll({});
+	const settings = await 	setting.findById(1);
+	const cities = await City.findAll({
+		where: {
+			state_id: settings.state
+		}
+	});
+	const zipcodes = await Zipcode.findAll({
+		where: {
+			city
+		}
+	});
+	res.render('superadminsetting/settings', { layout: 'dashboard', csrfToken: req.csrfToken(), data: settings, country: country, state: state });
 });
 router.post('/settings/insert',auth,csrfProtection, (req,res) => {
 
@@ -295,7 +295,7 @@ router.post('/settings/insert',auth,csrfProtection, (req,res) => {
 
 	router.post('/client/findCityByState',auth, firmAttrAuth, csrfProtection, (req,res) => {
 
-		city.findAll({
+		City.findAll({
 			where:{
 				state: req.body.state
 			}
@@ -308,7 +308,7 @@ router.post('/settings/insert',auth,csrfProtection, (req,res) => {
 	router.post('/client/findPinByCity',auth, firmAttrAuth, csrfProtection, (req,res) => {
 		city.findById(req.body.city_id).then(row => {
 			console.log(row.name);
-			zipcode.findAll({
+			Zipcode.findAll({
 				where:{
 					city_name: row.name
 				}
@@ -624,9 +624,9 @@ router.get('/client',auth, firmAttrAuth, csrfProtection, (req,res) => {
 router.get('/client/add',auth, firmAttrAuth, csrfProtection, (req,res) => {
 	designation.findAll().then(designation => {
 		industry_type.findAll().then(industry => {
-	country.findAll().then(country => {
+	Country.findAll().then(country => {
 
-		state.findAll().then(state => {
+		State.findAll().then(state => {
 		//  console.log(JSON.stringify(state, undefined, 2));
 			res.render('client/addclient',{ layout: 'dashboard', csrfToken: req.csrfToken(), country: country, state: state, designations: designation, industry: industry  });
 		});
@@ -640,9 +640,9 @@ var clientId = req.params.id;
 
 	designation.findAll().then(designation => {
 		industry_type.findAll().then(industry => {
-			country.findAll().then(country => {
+			Country.findAll().then(country => {
 
-		state.findAll().then(state => {
+		State.findAll().then(state => {
 		//  console.log(JSON.stringify(state, undefined, 2));
 		client.findById(clientId).then(client => {
 			res.render('client/editClient',{ layout: 'dashboard', csrfToken: req.csrfToken(), country: country, state: state, designations: designation, industry: industry,client: client  });
@@ -799,7 +799,7 @@ router.get('/client/delete/:id',auth, firmAttrAuth, (req,res) => {
 });
 router.post('/client/findCityByState',auth, firmAttrAuth, csrfProtection, (req,res) => {
 
-	city.findAll({
+	City.findAll({
 		where:{
 			state_id: req.body.state_id
 		}
@@ -812,7 +812,7 @@ router.post('/client/findCityByState',auth, firmAttrAuth, csrfProtection, (req,r
 router.post('/client/findPinByCity',auth, firmAttrAuth, csrfProtection, (req,res) => {
 	city.findById(req.body.city_id).then(row => {
 		console.log(row.name);
-		zipcode.findAll({
+		Zipcode.findAll({
 			where:{
 				city_name: row.name
 			}

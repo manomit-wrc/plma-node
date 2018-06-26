@@ -50,12 +50,15 @@
                        </select>
                      </div>
                   </div>
+
+
+
                   <div class="col-md-6">
                      <div class="form-group">
                        <label>State</label>
                         <select class="select form-control floating" id="state" name="state">
                            {{#each state}}
-                           <option value="{{this.id}}">{{this.name}}</option>
+                           <option value="{{this.id}}" {{#if_eq this.id ../data.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
                            {{/each}}
                        </select>
                      </div>
@@ -345,72 +348,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 
-        <script>
-        	function cityByState(){
-
-        		var state = $('#state').val();
-        		$.ajax({
-        			url: "/client/findCityByState",
-        			method: "POST",
-        			data: {state_id: state},
-        			beforeSend: function(xhr) {
-        										xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
-
-
-        									},
-        			success: function(resp){
-        				console.log(resp);
-        				var test = document.getElementsByClassName('test');
-        							for(var i = 0; i < test.length; i++){
-        								test[i].remove();
-
-        							}
-        							$.each(resp.city, function(key, value) {
-        							console.log(value);
-
-        		$("#city").append('<option class="test" value="'+value.id+'">'+value.name+'</option>');
-        	});
-        			},
-        			error: function(xhr){
-
-        			}
-        		});
-        	}
-        	function pinByCity(){
-        		var city = document.getElementById('city').value;
-
-        		$.ajax({
-        			url: "/client/findPinByCity",
-        			method: "POST",
-        			data: {
-        				city_id: city
-        			},
-        			beforeSend: function(xhr) {
-        										xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
-
-
-        									},
-        			success: function(resp){
-        				var test1 = document.getElementsByClassName('pin');
-        							for(var i = 0; i < test1.length; i++){
-        								test1[i].remove();
-
-        							}
-        							$.each(resp.pin, function(key, value) {
-        							console.log(value);
-
-        		$("#zipcode").append('<option class="pin" value="'+value.id+'">'+value.zip+'</option>');
-        	});
-        			},
-        			error: function(xhr){
-
-        			}
-        		});
-        	}
-        </script>
-
-
-
+        
             <script type="text/javascript">
             $.validator.addMethod('mobilenumber', function (value, element) {
                     return this.optional(element) || /^(\+91-|\+91|0)?\d{10}$/.test(value);
@@ -453,93 +391,6 @@
        // }
    }
 </script>
-
-
-
-        <!-- <script type="text/javascript">
-        add designation ajax and form validation starts
-        $(document).ready(function(e) {
-
-            $("#insert").click(function() {
-                $("#addname").submit();
-            });
-
-            $("#addname").validate({
-                rules: {
-                    companyname: {
-                        required: true
-                    },
-                    contactperson: {
-                        required: true
-                    },
-                    address: {
-                        required: true
-                    },
-                    country: {
-                        required: true
-                    },
-                    email: {
-                        required: true
-                    },
-                    city: {
-                        required: true
-                    },
-                    phnumber: {
-                        required: true
-                    },
-                    mbnumber: {
-                        required: true
-                    },
-
-                    fax: {
-                        required: true
-                    },
-                    weburl: {
-                        required: true
-                    },
-                    postalcode: {
-                        required: true
-                        }
-                },
-                messages: {
-                    companyname: {
-                        required: "company_name can't be blank"
-                    },
-                    contactperson: {
-                        required: "contact_person can't be blank"
-                    },
-                    address: {
-                        required: "address can't be blank"
-                    },
-                    country: {
-                        required: "country can't be blank"
-                    },
-                    email: {
-                        required: "email can't be blank"
-                    },
-                    state: {
-                        required: "state can't be blank"
-                    },
-                    mbnumber: {
-                        required: "mobile_number can't be blank"
-                    },
-                    phnumber: {
-                        required: "phone_number can't be blank"
-                    },
-                    state: {
-                        required: "state title can't be blank"
-                    },
-                    fax: {
-                        required: " fax can't be blank"
-                    },
-                    postalcode: {
-                        required: "postal_code can't be blank"
-                    },
-                    weburl: {
-                        required: "website_url can't be blank"
-                    }
-                }, -->
-
 
                 <script type="text/javascript">
                 // submitHandler:function(form) {
