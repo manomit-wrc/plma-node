@@ -77,7 +77,7 @@
 								</div>
 								<div class="col-md-6">
 									<div class="form-group form-focus">
-										<label class="">Country :</label>
+										<label class="control-label">Country :</label>
 										<select id="country" name="country" class="form-control">
                                             {{#each country}}
                                             <option value="{{this.id}}">{{this.name}}</option>
@@ -87,7 +87,7 @@
 								</div>
 								<div class="col-md-6">
 									<div class="form-group form-focus">
-										<label class=" ">State :</label>
+										<label class="control-label ">State :</label>
 										<select id="state" name="state" class="form-control"  onchange="return cityByState();">
                                             {{#each state}}
                                             <option value="{{this.id}}">{{this.name}}</option>
@@ -97,7 +97,7 @@
 								</div>
 								<div class="col-md-6">
 									<div class="form-group form-focus">
-										<label class=" ">City :</label>
+										<label class="control-label ">City :</label>
 										 <select id="city" name="city" class="form-control" onchange="return pinByCity()">
                                               
                                             
@@ -106,7 +106,7 @@
 								</div>
 								<div class="col-md-6">
 									<div class="form-group form-focus">
-										<label class=" ">Pin Code :</label>
+										<label class=" control-label">Pin Code :</label>
 										<select id="pin_code" name="pin_code" class="form-control">
                                              
                                         </select>
@@ -119,7 +119,7 @@
 							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group form-focus">
-										<label class="">Designation :</label>
+										<label class="control-label">Designation :</label>
 										<select id="designation" name="designation" class="form-control">
                                             {{#each designations}}
                                             <option value="{{this.id}}">{{this.code}}</option>
@@ -129,7 +129,7 @@
 								</div>
 								<div class="col-md-6">
 									<div class="form-group form-focus">
-										<label class="">Type :</label>
+										<label class="control-label">Type :</label>
 										<select id="type" name="country" class="form-control">
                                              
                                             <option value="I">I</option>
@@ -169,7 +169,7 @@
 								</div>
 								<div class="col-md-6">
 									<div class="form-group form-focus">
-										<label class="">Association Status :</label>
+										<label class="control-label">Association Status :</label>
 										<select id="association" name="association" class="form-control">
                                              
                                             <option value="NEW TARGET">NEW TARGET</option>
@@ -182,7 +182,7 @@
 								</div>
 								<div class="col-md-6">
 									<div class="form-group form-focus">
-										<label class="">Industry Type :</label>
+										<label class="control-label">Industry Type :</label>
 										<select id="industry_type" name="industry_type" class="form-control">
                                              {{#each industry}}
                                             <option value="{{this.id}}">{{this.code}}</option>
