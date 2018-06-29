@@ -68,20 +68,20 @@
                        <label>City</label>
                         <select class="select form-control floating" id="city" name="city">
 							<option value="">Select City</option>
-							 {{#each cities}}	
+							 {{#each cities}}
                              	<option value="{{this.id}}" {{#if_eq this.id ../data.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
-							 {{/each}} 
+							 {{/each}}
                        </select>
                      </div>
                   </div>
-				  {{data.postal_code}}
+				  <!-- {{data.postal_code}} -->
                   <div class="col-md-6">
                      <div class="form-group">
                        <label>Zip Code</label>
                            <select class="select form-control floating" id="zipcode" name="zipcode">
 							   <option value="">Select Zipcode</option>
-							{{#each zipcodes}}   
-                           		
+							{{#each zipcodes}}
+
 								<option value="{{this.id}}" {{#if_eq this.id ../data.postal_code}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
 							{{/each}}
                        </select>
@@ -131,7 +131,7 @@
         </div>
 
 
-			
+
       </div>
 
 
@@ -145,7 +145,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 
-        
+
             <script type="text/javascript">
             $.validator.addMethod('mobilenumber', function (value, element) {
                     return this.optional(element) || /^(\+91-|\+91|0)?\d{10}$/.test(value);

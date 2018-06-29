@@ -1,25 +1,25 @@
- 'use strict';
+'use strict';
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
+
     return [
       queryInterface.addColumn(
-        'firms',
-        'firm_code',
+        'targets',
+        'target_type',
         {
           type: Sequelize.STRING,
           allowNull: true
         }
       ),
-      queryInterface.addColumn(
-        'firms',
-        'firm_registration',
-        {
-          type: Sequelize.STRING,
-          allowNull: true
-        }
-      ),
-    ];
+    ]
+    /*
+      Add altering commands here.
+      Return a promise to correctly handle asynchronicity.
+
+      Example:
+      return queryInterface.createTable('users', { id: Sequelize.INTEGER });
+    */
   },
 
   down: (queryInterface, Sequelize) => {

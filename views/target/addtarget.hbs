@@ -13,6 +13,8 @@
 					<form id="targetform">
 						<div class="card-box">
 							<h3 class="card-title">Basic Informations</h3>
+
+
 							<div class="row">
 								<div class="col-md-12">
 									{{!-- <div class="profile-img-wrap">
@@ -24,18 +26,57 @@
 									</div> --}}
 									<div class="profile-basic">
 										<div class="row">
-											<div class="col-md-6">
+
+
+<div class="col-md-12">
+					<div class="form-group  ">
+
+						<input type="radio" class="  " id="target_type" name="target_type" value="individual" onclick="target()" checked/>Individual Client
+						<input type="radio" class="   " id="org_type" name="target_type" value="organization" onclick="organizationfrom()"/>Organization
+					</div>
+				</div>
+
+
+
+											<div class="col-md-6" id="target_first_name">
 												<div class="form-group form-focus">
 													<label class="control-label">First Name</label>
 													<input type="text" class="form-control floating" id="first_name" name="first_name" />
 												</div>
 											</div>
-											<div class="col-md-6">
+											<div class="col-md-6" id="target_last_name">
 												<div class="form-group form-focus">
 													<label class="control-label">Last Name</label>
 													<input type="text" class="form-control floating" id="last_name" name="last_name"/>
 												</div>
 											</div>
+
+
+
+
+
+                      <div class="col-md-6" id="organization_name_div" style="display:none">
+                        <div class="form-group form-focus">
+                          <label class="control-label"> Organization Name:</label>
+                          <input type="text" class="form-control floating" id="organization_name" name="organization_name"/>
+                        </div>
+                      </div>
+                      <div class="col-md-6" id="organization_id_div" style="display:none">
+                        <div class="form-group form-focus">
+                          <label class="control-label"> Organization id :</label>
+                          <input type="text" class="form-control floating" id="organization_id" name="organization_id"/>
+                        </div>
+                      </div>
+                      <div class="col-md-6" id="organization_code_div" style="display:none">
+                        <div class="form-group form-focus">
+                          <label class="control-label"> Organization code :</label>
+                          <input type="text" class="form-control floating" id="organization_code" name="organization_code"/>
+                        </div>
+                      </div>
+
+
+
+
 											<div class="col-md-6">
 												<div class="form-group form-focus">
 													<label class="control-label">Email Id :</label>
@@ -43,13 +84,33 @@
                           <span id="uniqueEmailId" style="color: red"><span>
 												</div>
 											</div>
-
 											<div class="col-md-6">
 												<div class="form-group form-focus select-focus">
 													<label class="control-label">Mobile Number :</label>
 													<input type="text" class="form-control floating" id="mobile_no" name="mobile_no"/>
 												</div>
 											</div>
+                      <div class="col-md-6">
+                        <div class="form-group form-focus select-focus">
+                          <label class="control-label">Phone Number :</label>
+                          <input type="text" class="form-control floating" id="phone_no" name="phone_no"/>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group form-focus select-focus">
+                          <label class="control-label">Website_Url :</label>
+                          <input type="text" class="form-control floating" id="website_url" name="website_url"/>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group form-focus select-focus">
+                          <label class="control-label">Social_Url :</label>
+                          <input type="text" class="form-control floating" id="social_url" name="social_url"/>
+                        </div>
+                      </div>
+
+
 										</div>
 									</div>
 								</div>
@@ -64,13 +125,19 @@
 										<input type="text" class="form-control floating" id="address1" name="address1"/>
 									</div>
 								</div>
-                                <div class="col-md-12">
+                <div class="col-md-12">
 									<div class="form-group form-focus">
 										<label class="control-label">Address 2 :</label>
 										<input type="text" class="form-control floating" id="address2" name="address2"/>
 									</div>
 								</div>
-                            <div class="col-md-12">
+                <div class="col-md-12">
+									<div class="form-group form-focus">
+										<label class="control-label">Address 3 :</label>
+										<input type="text" class="form-control floating" id="address3" name="address3"/>
+									</div>
+								</div>
+              <div class="col-md-12">
               <div class="form-group form-focus">
                 <label class="control-label">Fax:</label>
                 <input type="text" class="form-control floating" id="fax" name="fax"/>
@@ -124,15 +191,15 @@
                 </div>
 								<div class="col-md-6">
 									<div class="form-group form-focus">
-										<label class="">Type :</label>
-										<select id="type" name="type" class="form-control">
+										<!-- <label class="">Type :</label> -->
+										<select id="type" name="type" value="Type" class="form-control">
 
                                             <option value="I">I</option>
 
                                         </select>
 									</div>
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-6" id="target_company_div">
 									<div class="form-group form-focus">
 										<label class="control-label">Comapnay Name :</label>
 										<input type="text" class="form-control floating" id="company_name" name="company_name"/>
@@ -146,39 +213,118 @@
 								</div>
                 <div class="col-md-6">
 									<div class="form-group form-focus">
-										<label class="control-label">Industry Type</label>
+										<label class="control-label">Industry Type :</label>
 										<input type="text" class="form-control floating" id="industry_type" name="industry_type"/>
 									</div>
 								</div>
                 <div class="col-md-6">
                   <div class="form-group form-focus">
-                    <label class="control-label">Twitter</label>
+                    <label class="control-label">Twitter :</label>
                     <input type="text" class="form-control floating" id="twitter" name="twitter"/>
                   </div>
                 </div>
-
 								<div class="col-md-6">
 									<div class="form-group form-focus">
-										<label class="control-label">Facebook </label>
+										<label class="control-label">Facebook :</label>
 										<input type="text" class="form-control floating" id="facebook" name="facebook"/>
 									</div>
 								</div>
+                <div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Linked_In :</label>
+										<input type="text" class="form-control floating" id="linked_in" name="linked_in"/>
+									</div>
+								</div>
 								<div class="col-md-6">
 									<div class="form-group form-focus">
-										<label class="control-label">Google </label>
+										<label class="control-label">Google Plus :</label>
 										<input type="text" class="form-control floating" id="google" name="google"/>
 									</div>
 								</div>
+                <div class="col-md-6">
+                  <div class="form-group form-focus">
+                    <label class="control-label">Youtube :</label>
+                    <input type="text" class="form-control floating" id="youtube" name="youtube"/>
+                  </div>
+                </div>
 
+                <div class="col-md-6" id="target_id_div">
+                  <div class="form-group form-focus">
+                    <label class="control-label"> Target Id :</label>
+                    <input type="text" class="form-control floating" id="id" name="id"/>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group form-focus">
+                    <label class="control-label">Target Code :</label>
+                    <input type="text" class="form-control floating" id="code" name="code"/>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group form-focus">
+                    <label class="control-label">Social Sequrity No :</label>
+                    <input type="text" class="form-control floating" id="sequrity" name="sequrity"/>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group form-focus">
+                    <label class="control-label">Status:</label>
+                    <input type="text" class="form-control floating" id="status" name="status"/>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group form-focus">
+                    <label class="control-label">Remarks :</label>
+                    <input type="text" class="form-control floating" id="remarks" name="remarks"/>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group form-focus">
+                    <label class="control-label"> Address Remarks :</label>
+                    <input type="text" class="form-control floating" id="addremarks" name="addremarks"/>
+                  </div>
+                </div>
 							</div>
-
 						</div>
 
-						<div class="text-center m-t-20">
-							<button class="btn btn-primary btn-lg" type="submit" id="submit">Add Client</button>
-						</div>
-					</form>
-				</div>
+
+
+
+
+              <div class="card-box">
+                  <h3 class="card-title">Individual Information :</h3>
+                    <div class="row">
+                        <div class="col-md-6" id="date_of_birth">
+                          <div class="form-group form-focus">
+                            <label class="control-label">Date Of Birth :</label>
+                            <input class="form-control floating datetimepicker"
+                                type="text" id="dob" name="dob">
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-md-6" id="genderid">
+                          <div class="form-group form-focus">
+                                  <select id="gender" class="gender" class="form-control gender">
+                                      <option value="male">Male</option>
+                                      <option value="female">Female</option>
+                                  </select>
+                            </div>
+                         </div>
+                      </div>
+                    </div>
+
+
+
+                <div class="text-center m-t-20">
+                	<button class="btn btn-primary btn-lg" type="submit" id="submit">Add Client</button>
+                </div>
+          </form>
+      </div>
+
+
 				<div class="notification-box">
 					<div class="msg-sidebar notifications msg-noti">
 						<div class="topnav-dropdown-header">
@@ -397,6 +543,36 @@
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+
+
+<script type="text/javascript">
+
+function organizationfrom(){
+
+  document.getElementById('organization_code_div').style.display = "block";
+  document.getElementById('organization_id_div').style.display = "block";
+  document.getElementById('organization_name_div').style.display = "block";
+  document.getElementById('target_first_name').style.display = "none";
+  document.getElementById('target_last_name').style.display = "none";
+  document.getElementById('target_id_div').style.display = "none";
+  document.getElementById('date_of_birth').style.display = "none";
+  document.getElementById('genderid').style.display = "none";
+  document.getElementById('target_company_div').style.display = "none";
+
+
+}
+function target(){
+  document.getElementById('organization_code_div').style.display = "none";
+  document.getElementById('organization_id_div').style.display = "none";
+  document.getElementById('organization_name_div').style.display = "none";
+  document.getElementById('target_first_name').style.display = "block";
+  document.getElementById('target_last_name').style.display = "block";
+  document.getElementById('target_id_div').style.display = "block";
+  document.getElementById('date_of_birth').style.display = "block";
+  document.getElementById('genderid').style.display = "block";
+  document.getElementById('target_company_div').style.display = "block";
+}
+</script>
 <script type="text/javascript">
 // add ajax and form validation starts
 $(document).ready(function(e) {
@@ -413,33 +589,7 @@ $(document).ready(function(e) {
             last_name: {
                 required: true
             },
-             email: {
-                  required: true
-              },
-                mobile_no: {
-                    required: true
-                },
-                address1: {
-                    required: true
-                },
-                address2: {
-                    required: true
-                },
-                country: {
-                    required: true
-                },
-                state: {
-                    required: true
-                },
-                city: {
-                    required: true
-                },
-                zipcode: {
-                    required: true
-                },
-                industry_type: {
-                    required: true
-                },
+
                 designation: {
                     required: true
                 }
@@ -451,33 +601,7 @@ $(document).ready(function(e) {
             last_name: {
                 required: "name title can't be blank"
             },
-            email: {
-                required: "Code can't be blank"
-            },
-            mobile_no: {
-                required: "Code can't be blank"
-            },
-            address1: {
-                required: "Code can't be blank"
-            },
-            address2: {
-                required: "Code can't be blank"
-            },
-            country: {
-                required: "Code can't be blank"
-            },
-            state: {
-                required: "Code can't be blank"
-            },
-            city: {
-                required: "Code can't be blank"
-            },
-            zipcode: {
-                required: "Code can't be blank"
-            },
-            industry_type: {
-                required: "Code can't be blank"
-            },
+
             designation: {
                 required: "Code can't be blank"
             }
@@ -486,6 +610,10 @@ $(document).ready(function(e) {
         //=====end validation==================================================================================
         //==========sumit form==================================//
         submitHandler:function(form) {
+
+          var target_type = $('#target_type').val();
+          var org_type = $('#org_type').val();
+
           var firstname = $('#first_name').val();
           var lastname = $('#last_name').val();
           var mail = $('#email').val();
@@ -506,6 +634,25 @@ $(document).ready(function(e) {
           var industry_type = $('#industry_type').val();
           var type = $('#type').val();
 
+          var phone_no = $('#phone_no').val();
+          var website_url = $('#website_url').val();
+          var youtube = $('#youtube').val();
+          var linked_in = $('#linked_in').val();
+          var dob = $('#dob').val();
+          var gender = $('#gender').val();
+          var remarks = $('#remarks').val();
+          var addremarks = $('#addremarks').val();
+          var address3 = $('#address3').val();
+          var social_url = $('#social_url').val();
+          var code = $('#code').val();
+          var id = $('#id').val();
+          var sequrity = $('#sequrity').val();
+          var status = $('#status').val();
+          var organization_name = $('#organization_name').val();
+          var organization_id = $('#organization_id').val();
+          var organization_code = $('#organization_code').val();
+
+
 
 
 
@@ -513,6 +660,10 @@ $(document).ready(function(e) {
                 type: "POST",
                 url: "/targetinsert/add",
                 data: {
+
+                  target_type: target_type,
+                 	org_type: org_type,
+
                   first_name: firstname,
                   last_name: lastname,
                   email: mail,
@@ -531,8 +682,25 @@ $(document).ready(function(e) {
                   google: google,
                   company_name: company_name,
                   type: type,
-                  industry_type: industry_type
+                  industry_type: industry_type,
 
+                  phone_no: phone_no,
+                  website_url: website_url,
+                  youtube: youtube,
+                  linked_in: linked_in,
+                  dob: dob,
+                  gender: gender,
+                  remarks: remarks,
+                  addremarks: addremarks,
+                  address3: address3,
+                  social_url: social_url,
+                  code: code,
+                  id: id,
+                  sequrity: sequrity,
+                  status: status,
+                  organization_name: organization_name,
+                  organization_id: organization_id,
+                  organization_code: organization_code
 
                 },
                 beforeSend: function(xhr) {
@@ -559,5 +727,7 @@ $(document).ready(function(e) {
 });
 
 </script>
+
+
 
 {{/content}}

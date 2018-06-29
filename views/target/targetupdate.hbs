@@ -5,6 +5,12 @@
 {{/content}}
 <div class="page-wrapper">
                 <div class="content container-fluid">
+
+                  <div class="row">
+
+
+
+
 					<div class="row">
 						<div class="col-sm-8">
 							<h4 class="page-title">Update Target</h4>
@@ -16,14 +22,25 @@
 						<div class="card-box">
 							<!-- <h3 class="card-title">Contact Informations</h3> -->
               <div class="row">
-                <div class="col-md-12">
+
+<div class="col-md-12">
+				<div class="form-group  ">
+					<input type="radio" class="  " id="target_type" name="target_type" value="individual" onclick="target()" checked/>Individual Client
+					<input type="radio" class="   " id="org_type" name="target_type" value="organization" onclick="organization()"/>Organization
+				</div>
+			</div>
+
+
+
+
+                <div class="col-md-12" id="client_first_name">
                   <div class="form-group">
                     <label class="control-label">First Name: <span class="text-danger">*</span></label>
                     <input class="form-control" type="text" id="first_name" name="first_name" value="{{target.firstName}}">
                     <span id="uniqueCode" style="color: red;font-weight: bold;"></span>
                   </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12" id="client_last_name">
                   <div class="form-group">
                     <label class="control-label">Last Name :<span class="text-danger">*</span></label>
                     <input class="form-control" type="text" id="last_name" name="last_name" value="{{target.lastName}}">
@@ -119,7 +136,7 @@
                     <input class="form-control" type="text" id="type" name="type" value="{{target.type}}">
                   </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12" id="client_company_div">
                   <div class="form-group">
                     <label class="control-label">company name :<span class="text-danger">*</span></label>
                     <input class="form-control" type="text" id="company_name" name="company_name" value="{{target.company_name}}">
@@ -155,6 +172,116 @@
                     <input class="form-control" type="text" id="google" name="google" value="{{target.google}}">
                   </div>
                 </div>
+
+
+
+
+
+
+
+
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label"> Address Remarks :</label>
+                    <input type="text" class="form-control floating" id="addremarks" name="addremarks" value="{{target.address_remarks}}"/>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">Remarks :</label>
+                    <input type="text" class="form-control floating" id="remarks" name="remarks" value="{{target.remarks}}"/>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">Status:</label>
+                    <input type="text" class="form-control floating" id="status" name="status" value="{{target.status}}"/>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">Social Sequrity No :</label>
+                    <input type="text" class="form-control floating" id="sequrity" name="sequrity" value="{{target.social_sequrity_no}}"  />
+                  </div>
+                </div>
+                <div class="col-md-12" id="client_id_div">
+                  <div class="form-group">
+                    <label class="control-label"> Target Id :</label>
+                    <input type="text" class="form-control floating" id="id" name="id" value="{{target.id}}"  />
+                  </div>
+                </div>
+                <div class="col-md-12" id="target_code">
+                  <div class="form-group">
+                    <label class="control-label">Target Code :</label>
+                    <input type="text" class="form-control floating" id="code" name="code" value="{{target.code}}"  />
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">Youtube :</label>
+                    <input type="text" class="form-control floating" id="youtube" name="youtube"  value="{{target.youtube}}" />
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">Linked_In :</label>
+                    <input type="text" class="form-control floating" id="linked_in" name="linked_in" value="{{target.linked_in}}"  />
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">Website_Url :</label>
+                    <input type="text" class="form-control floating" id="website_url" name="website_url" value="{{target.website_url}}"  />
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">Social_Url :</label>
+                    <input type="text" class="form-control floating" id="social_url" name="social_url" value="{{target.social_url}}"  />
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">Phone Number :</label>
+                    <input type="text" class="form-control floating" id="phone_no" name="phone_no" value="{{target.phone_no}}"  />
+                  </div>
+                </div>
+                <div class="col-md-12" id="organization_code_div" style="display:none">
+                  <div class="form-group" >
+                    <label class="control-label"> Organization code :</label>
+                    <input type="text" class="form-control floating" id="organization_code" name="organization_code" value="{{target.organization_code}}" />
+                  </div>
+                </div>
+                <div class="col-md-12" id="organization_id_div" style="display:none">
+                  <div class="form-group" >
+                    <label class="control-label"> Organization id :</label>
+                    <input type="text" class="form-control floating" id="organization_id" name="organization_id" value="{{target.organization_id}}" />
+                  </div>
+                </div>
+                <div class="col-md-12" id="organization_name_div" style="display:none">
+                  <div class="form-group">
+                    <label class="control-label"> Organization Name:</label>
+                    <input type="text" class="form-control floating" id="organization_name" name="organization_name" value="{{target.organization_name}}" />
+                  </div>
+                </div>
+
+                <div class="col-md-12" id="date_of_birth">
+                  <div class="form-group">
+                    <label class="control-label">Date Of Birth :</label>
+                    <input class="form-control floating datetimepicker"
+                        type="text" id="dob" name="dob" value="{{target.date_of_birth}}" >
+                  </div>
+                </div>
+                <div class="col-md-12" id="gender">
+                  <div class="form-group">
+                    <select id="gender" class="gender" class="form-control gender" value="{{target.gender}}" >
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                  </div>
+                </div>
+
               </div>
 						</div>
 
@@ -383,6 +510,42 @@
             <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+
+
+
+            <script type="text/javascript">
+
+          function organization(){
+          		document.getElementById('organization_code_div').style.display = "block";
+          		document.getElementById('organization_id_div').style.display = "block";
+          		document.getElementById('organization_name_div').style.display = "block";
+          		document.getElementById('client_first_name').style.display = "none";
+          		document.getElementById('client_last_name').style.display = "none";
+          		document.getElementById('client_id_div').style.display = "none";
+          		document.getElementById('target_code').style.display = "none";
+
+          		document.getElementById('date_of_birth').style.display = "none";
+          		document.getElementById('gender').style.display = "none";
+          		document.getElementById('client_company_div').style.display = "none";
+
+
+          }
+          function target(){
+          		document.getElementById('organization_code_div').style.display = "none";
+          		document.getElementById('organization_id_div').style.display = "none";
+          		document.getElementById('organization_name_div').style.display = "none";
+          		document.getElementById('client_first_name').style.display = "block";
+          		document.getElementById('client_last_name').style.display = "block";
+          		document.getElementById('client_id_div').style.display = "block";
+          		document.getElementById('master_id_div').style.display = "block";
+          		document.getElementById('date_of_birth').style.display = "block";
+          		document.getElementById('gender').style.display = "block";
+          		document.getElementById('client_company_div').style.display = "block";
+          }
+          </script>
+
+
+
             <script type="text/javascript">
             $(document).ready(function(e) {
 
@@ -436,10 +599,34 @@
                         var type = $('#type').val();
 
 
+
+                        var phone_no = $('#phone_no').val();
+                        var website_url = $('#website_url').val();
+                        var youtube = $('#youtube').val();
+                        var linked_in = $('#linked_in').val();
+                        var dob = $('#dob').val();
+                        var gender = $('#gender').val();
+                        var remarks = $('#remarks').val();
+                        var addremarks = $('#addremarks').val();
+                        var address3 = $('#address3').val();
+                        var social_url = $('#social_url').val();
+                        var code = $('#code').val();
+                        var id = $('#id').val();
+                        var sequrity = $('#sequrity').val();
+                        var status = $('#status').val();
+                        var organization_name = $('#organization_name').val();
+                        var organization_id = $('#organization_id').val();
+                        var organization_code = $('#organization_code').val();
+
                         $.ajax({
                             type: "POST",
                             url: "/target/updateTarget/{{target.id}}",
                             data: {
+
+                              id: id,
+                              target_type: target_type,
+                              org_type: org_type,
+
                               first_name: firstname,
                               last_name: lastname,
                               email: mail,
@@ -458,7 +645,25 @@
                               google: google,
                               company_name: company_name,
                               type: type,
-                              industry_type: industry_type
+                              industry_type: industry_type,
+
+                              phone_no: phone_no,
+                              website_url: website_url,
+                              youtube: youtube,
+                              linked_in: linked_in,
+                              dob: dob,
+                              gender: gender,
+                              remarks: remarks,
+                              addremarks: addremarks,
+                              address3: address3,
+                              social_url: social_url,
+                              code: code,
+                              id: id,
+                              sequrity: sequrity,
+                              status: status,
+                              organization_name: organization_name,
+                              organization_id: organization_id,
+                              organization_code: organization_code
 
                             },
                             beforeSend: function(xhr) {

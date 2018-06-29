@@ -29,9 +29,11 @@ var csv = require('fast-csv');
 var path      = require('path');
 var fs = require('fs');
 const router = express.Router();
-//============================================={{{{target}}}}
-router.get('/target', csrfProtection, auth, (req, res) => {
 
+
+//============================================={{{{target}}}}==============================================================
+
+router.get('/target', csrfProtection, auth, (req, res) => {
 
 	var whereCondition = {};
 	if(req.query.searchCode) {
@@ -63,6 +65,10 @@ router.get('/addtarget',auth, csrfProtection, (req,res) => {
 
 router.post('/targetinsert/add', auth, csrfProtection, (req, res) => {
     console.log(req.body);
+
+		var target_type = req.body.target_type;
+    var org_type = req.body.org_type;
+
     var first_name = req.body.first_name;
     var last_name = req.body.last_name;
     var email = req.body.email;
@@ -85,6 +91,26 @@ router.post('/targetinsert/add', auth, csrfProtection, (req, res) => {
 		var type = req.body.type;
 
 
+	var	phone_no = req.body.phone_no;
+	var	website_url = req.body.website_url;
+	var	youtube = req.body.youtube;
+	var	linked_in = req.body.linked_in;
+	var	dob = req.body.dob;
+	var	gender = req.body.gender;
+	var	remarks = req.body.remarks;
+	var	addremarks = req.body.addremarks;
+	var	address3 = req.body.address3;
+	var	social_url = req.body.social_url;
+	var	code = req.body.code;
+	var	id = req.body.id;
+	var	sequrity = req.body.sequrity;
+	var	status = req.body.status;
+	var	organization_name = req.body.organization_name;
+	var	organization_id = req.body.organization_id;
+	var	organization_code = req.body.organization_code
+
+
+
     target.findAndCountAll({
       where:{
          email: email
@@ -93,13 +119,100 @@ router.post('/targetinsert/add', auth, csrfProtection, (req, res) => {
       if(result.count > 0){
         res.json({msg: 'ERRR'});
       }else{
-        target.create({firstName: first_name,lastName: last_name,email: email,mobile_no: mobile_no,country: country,state: state,city: city,postal_code: zipcode,address_1: address1,address_2: address2,fax: fax,designation_id: designation,company_name: company_name,industry_type: industry_type,type: type,association: association,facebook: facebook,twitter: twitter,google: google,firm_id: req.user.firm_id}).then(resp => {
-          res.end("Success");
-				});
-			}
-		 });
-			});
+					if(org_type == ""){
+        target.create({
 
+	        target_type: target_type,
+					address_remarks: addremarks,
+					gender: gender,
+					address3: address3,
+					remarks: remarks,
+					target_code: code,
+					target_id: id,
+					website_url: website_url,
+					social_sequrity_no: sequrity,
+					status: status,
+
+					date_of_birth: dob,
+					linked_in: linked_in,
+					phone_no: phone_no,
+					youtube: youtube,
+					firstName: first_name,
+					lastName: last_name,
+					email: email,
+					mobile_no: mobile_no,
+					country: country,
+					state: state,
+					city: city,
+					postal_code: zipcode,
+					address_1: address1,
+					address_2: address2,
+					fax: fax,
+					designation_id: designation,
+					company_name: company_name,
+					industry_type: industry_type,
+					type: type,
+					association: association,
+					facebook: facebook,
+					twitter: twitter,
+					google: google,
+
+
+
+
+				}).then(resp =>  {
+								res.json({msg: 'Success'});
+							});
+						}else{
+							target.create({
+								target_type: org_type,
+								address_remarks: addremarks,
+								gender: gender,
+								address3: address3,
+								remarks: remarks,
+
+								website_url: website_url,
+								social_url: social_url,
+								social_sequrity_no: sequrity,
+								status: status,
+
+								organization_code: organization_code,
+								organization_id: organization_id,
+								organization_name: organization_name,
+
+								linked_in: linked_in,
+								phone_no: phone_no,
+								youtube: youtube,
+
+								email: email,
+								mobile_no: mobile_no,
+								country: country,
+								state: state,
+								city: city,
+								postal_code: zipcode,
+								address_1: address1,
+								address_2: address2,
+								fax: fax,
+								designation_id: designation,
+								company_name: company_name,
+								industry_type: industry_type,
+								type: type,
+								association: association,
+								facebook: facebook,
+								twitter: twitter,
+								google: google,
+
+
+
+
+
+					firm_id: req.user.firm_id}).then(resp => {
+          res.end("Success");
+	});
+			}
+		  }
+	});
+	});
 router.get('/target/edit/:id',auth, csrfProtection, (req,res) => {
 	 target.findById(req.params.id).then(edata => {
 
@@ -114,7 +227,14 @@ router.get('/target/edit/:id',auth, csrfProtection, (req,res) => {
 });
 
 
+
+
+
 router.post('/target/updateTarget/:id',auth,csrfProtection, (req,res) => {
+	var id = req.body.id;
+  var target_type = req.body.target_type;
+  var org_type = req.body.org_type;
+
 	var first_name = req.body.first_name;
 	var last_name = req.body.last_name;
 	var email = req.body.email;
@@ -135,6 +255,28 @@ router.post('/target/updateTarget/:id',auth,csrfProtection, (req,res) => {
 	var industry_type = req.body.industry_type;
 	var association = req.body.association;
 	var type = req.body.type;
+
+
+	var	phone_no = req.body.phone_no;
+	var	website_url = req.body.website_url;
+	var	youtube = req.body.youtube;
+	var	linked_in = req.body.linked_in;
+	var	dob = req.body.dob;
+	var	gender = req.body.gender;
+	var	remarks = req.body.remarks;
+	var	addremarks = req.body.addremarks;
+	var	address3 = req.body.address3;
+	var	social_url = req.body.social_url;
+	var	code = req.body.code;
+	var	id = req.body.id;
+	var	sequrity = req.body.sequrity;
+	var	status = req.body.status;
+	var	organization_name = req.body.organization_name;
+	var	organization_id = req.body.organization_id;
+	var	organization_code = req.body.organization_code
+
+
+
 	console.log(req.params.id);
 	target.findAndCountAll({
 		where:{
@@ -144,7 +286,50 @@ router.post('/target/updateTarget/:id',auth,csrfProtection, (req,res) => {
 		if(result.count > 0){
 			res.json({msg: 'ERRR'});
 		}else{
-			target.update({firstName: first_name,lastName: last_name,email: email,mobile_no: mobile_no,country: country,state: state,city: city,postal_code: zipcode,address_1: address1,address_2: address2,fax: fax,designation_id: designation,company_name: company_name,industry_type: industry_type,type: type,association: association,facebook: facebook,twitter: twitter,google: google,firm_id: req.user.firm_id},{where:{id: req.params.id}}).then(resp => {
+			target.update({
+				firstName: first_name,
+				lastName: last_name,
+				email: email,
+				mobile_no: mobile_no,
+				country: country,
+				state: state,
+				city: city,
+				postal_code: zipcode,
+				address_1: address1,
+				address_2: address2,
+				fax: fax,
+				designation_id: designation,
+				company_name: company_name,
+				industry_type: industry_type,
+				type: type,
+				association: association,
+				facebook: facebook,
+				twitter: twitter,
+				google: google,
+
+				address_remarks: addremarks,
+				gender: gender,
+				address3: address3,
+				remarks: remarks,
+
+				website_url: website_url,
+				social_url: social_url,
+				social_sequrity_no: sequrity,
+				status: status,
+
+				organization_code: organization_code,
+				organization_id: organization_id,
+				organization_name: organization_name,
+
+				linked_in: linked_in,
+				phone_no: phone_no,
+				youtube: youtube,
+
+
+
+
+
+				firm_id: req.user.firm_id},{where:{id: req.params.id}}).then(resp => {
 				res.end("success");
 			});
 		}
@@ -255,19 +440,17 @@ router.get('/settings',auth,csrfProtection, async (req,res) => {
 	});
 	if(settings.city) {
 		const current_city = await City.findById(parseInt(settings.city));
-		
+
 		zipcodes = await Zipcode.findAll({
 			where: {
 				city_name: current_city.name
 			}
 		});
-		
 	}
-	
-	//
-	
+
 	res.render('superadminsetting/settings', { layout: 'dashboard', csrfToken: req.csrfToken(), data: settings, country: country, state: state, cities, zipcodes });
 });
+//insert
 router.post('/settings/insert',auth,csrfProtection, (req,res) => {
 
     console.log(req.body);
