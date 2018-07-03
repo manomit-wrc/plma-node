@@ -496,6 +496,10 @@ router.get('/client',auth, firmAttrAuth, csrfProtection, (req,res) => {
 		whereCondition.email = req.query.searchEmail;
 	}
 	whereCondition.firm_id = req.user.firm_id.toString();
+	if(req.user.role_id != 2)
+	{
+		whereCondition.user_id = req.user.id;
+	}
 	client.findAll({
 		 where: whereCondition
 	}).then(clients => {
@@ -581,6 +585,7 @@ router.post('/client/addClient',auth, firmAttrAuth,csrfProtection, async (req,re
 				association_type: req.body.association,
 				industry_type: req.body.industry_type,
 				firm_id: req.user.firm_id,
+				user_id: req.user.id,
 				fax: removePhoneMask(req.body.fax),
 				client_type: req.body.client_type,
 				IM: req.body.im,
@@ -613,6 +618,7 @@ router.post('/client/addClient',auth, firmAttrAuth,csrfProtection, async (req,re
 				association_type: req.body.association,
 				industry_type: req.body.industry_type,
 				firm_id: req.user.firm_id,
+				user_id: req.user.id,
 				fax: removePhoneMask(req.body.fax),
 				client_type: req.body.client_type,
 				IM: req.body.im,

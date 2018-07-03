@@ -41,6 +41,7 @@ module.exports = (sequelize, DataTypes) => {
     industry_type: DataTypes.STRING,
     company_name: DataTypes.STRING,
     association: DataTypes.STRING,
+    user_id: DataTypes.INTEGER,
     target_type: DataTypes.STRING
   }, {});
   target.associate = function(models) {

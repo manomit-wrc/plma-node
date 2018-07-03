@@ -48,6 +48,10 @@ router.get('/target',auth, firmAttrAuth, csrfProtection, (req,res) => {
 		whereCondition.email = req.query.searchEmail;
 	}
 	whereCondition.firm_id = req.user.firm_id.toString();
+	if(req.user.role_id != 2)
+	{
+		whereCondition.user_id = req.user.id;
+	}
 	Target.findAll({
 		where: whereCondition
 	}).then(targets => {
@@ -110,6 +114,7 @@ router.post('/target/addtarget',auth, firmAttrAuth,csrfProtection, async (req,re
 				association: req.body.association,
 				industry_type: req.body.industry_type,
 				firm_id: req.user.firm_id,
+				user_id: req.user.id,
 				fax: removePhoneMask(req.body.fax),
 				target_type: req.body.target_type,
 				im: req.body.im,
@@ -142,6 +147,7 @@ router.post('/target/addtarget',auth, firmAttrAuth,csrfProtection, async (req,re
 				association: req.body.association,
 				industry_type: req.body.industry_type,
 				firm_id: req.user.firm_id,
+				user_id: req.user.id,
 				fax: removePhoneMask(req.body.fax),
 				target_type: req.body.target_type,
 				im: req.body.im,
