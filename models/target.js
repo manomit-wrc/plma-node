@@ -1,8 +1,8 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var target = sequelize.define('target', {
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
+    first_name: DataTypes.STRING,
+    last_name: DataTypes.STRING,
     email: DataTypes.STRING,
     mobile_no: DataTypes.STRING,
     country: DataTypes.STRING,
@@ -13,13 +13,13 @@ module.exports = (sequelize, DataTypes) => {
     address_2: DataTypes.STRING,
     firm_id: DataTypes.STRING,
     designation_id: DataTypes.STRING,
-    type: DataTypes.STRING,
-    company_name: DataTypes.STRING,
     fax: DataTypes.STRING,
     twitter: DataTypes.STRING,
+    youtube: DataTypes.STRING,
+    im: DataTypes.STRING,
+
     facebook: DataTypes.STRING,
     google: DataTypes.STRING,
-    association: DataTypes.STRING,
     date_of_birth: DataTypes.STRING,
     gender: DataTypes.STRING,
     linked_in: DataTypes.STRING,
@@ -38,8 +38,8 @@ module.exports = (sequelize, DataTypes) => {
     organization_code: DataTypes.STRING,
     organization_id: DataTypes.STRING,
     address3: DataTypes.STRING,
-    address_remarks: DataTypes.STRING,
-    industry_type: DataTypes.STRING
+    industry_type: DataTypes.STRING,
+    target_type: DataTypes.STRING
   }, {});
   target.associate = function(models) {
     // associations can be defined here

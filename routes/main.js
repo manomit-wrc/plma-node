@@ -45,6 +45,7 @@ function removePhoneMask (phone_no){
 
 router.get('/target', csrfProtection, auth, (req, res) => {
 
+
 	var whereCondition = {};
 	if(req.query.searchCode) {
 		whereCondition.email = req.query.searchCode;
@@ -62,291 +63,231 @@ res.render('target/targets', { layout: 'dashboard', csrfToken: req.csrfToken(), 
 
 router.get('/addtarget',auth, csrfProtection, (req,res) => {
 
+	designation.findAll().then(designation => {
+			industry_type.findAll().then(industry => {
+
 	Country.findAll().then(country => {
 		State.findAll().then(state => {
 
-			res.render('target/addtarget',{ layout: 'dashboard', csrfToken: req.csrfToken(), country: country, state: state });
+			res.render('target/addtarget',{ layout: 'dashboard', csrfToken: req.csrfToken(), country: country, state: state, designation: designation, industry:industry });
 		});
 	});
 });
 
 
 });
+});
 
-router.post('/targetinsert/add', auth, csrfProtection, (req, res) => {
-    console.log(req.body);
+});
 
-		var target_type = req.body.target_type;
-    var org_type = req.body.org_type;
-
-    var first_name = req.body.first_name;
-    var last_name = req.body.last_name;
-    var email = req.body.email;
-		var mobile_no = req.body.mobile_no;
-		var country = req.body.country;
-		var state = req.body.state;
-		var city = req.body.city;
-		var zipcode = req.body.zipcode;
-		var address1 = req.body.address1;
-		var address2 = req.body.address2;
-		var designation = req.body.designation;
-		var firm = req.user.firm_id;
-		var company_name = req.body.company_name;
-		var fax = req.body.fax;
-		var google = req.body.google;
-		var facebook = req.body.facebook;
-		var twitter = req.body.twitter;
-		var industry_type = req.body.industry_type;
-		var association = req.body.association;
-		var type = req.body.type;
-
-
-	var	phone_no = req.body.phone_no;
-	var	website_url = req.body.website_url;
-	var	youtube = req.body.youtube;
-	var	linked_in = req.body.linked_in;
-	var	dob = req.body.dob;
-	var	gender = req.body.gender;
-	var	remarks = req.body.remarks;
-	var	addremarks = req.body.addremarks;
-	var	address3 = req.body.address3;
-	var	social_url = req.body.social_url;
-	var	code = req.body.code;
-	var	id = req.body.id;
-	var	sequrity = req.body.sequrity;
-	var	status = req.body.status;
-	var	organization_name = req.body.organization_name;
-	var	organization_id = req.body.organization_id;
-	var	organization_code = req.body.organization_code
-
-
-
-    target.findAndCountAll({
-      where:{
-         email: email
-      }
-    }).then(result => {
-      if(result.count > 0){
-        res.json({msg: 'ERRR'});
-      }else{
-					if(org_type == ""){
-        target.create({
-
-	        target_type: target_type,
-					address_remarks: addremarks,
-					gender: gender,
-					address3: address3,
-					remarks: remarks,
-					target_code: code,
-					target_id: id,
-					website_url: website_url,
-					social_sequrity_no: sequrity,
-					status: status,
-
-					date_of_birth: dob,
-					linked_in: linked_in,
-					phone_no: phone_no,
-					youtube: youtube,
-					firstName: first_name,
-					lastName: last_name,
-					email: email,
-					mobile_no: mobile_no,
-					country: country,
-					state: state,
-					city: city,
-					postal_code: zipcode,
-					address_1: address1,
-					address_2: address2,
-					fax: fax,
-					designation_id: designation,
-					company_name: company_name,
-					industry_type: industry_type,
-					type: type,
-					association: association,
-					facebook: facebook,
-					twitter: twitter,
-					google: google,
-
-
-
-
-				}).then(resp =>  {
-								res.json({msg: 'Success'});
-							});
-						}else{
-							target.create({
-								target_type: org_type,
-								address_remarks: addremarks,
-								gender: gender,
-								address3: address3,
-								remarks: remarks,
-
-								website_url: website_url,
-								social_url: social_url,
-								social_sequrity_no: sequrity,
-								status: status,
-
-								organization_code: organization_code,
-								organization_id: organization_id,
-								organization_name: organization_name,
-
-								linked_in: linked_in,
-								phone_no: phone_no,
-								youtube: youtube,
-
-								email: email,
-								mobile_no: mobile_no,
-								country: country,
-								state: state,
-								city: city,
-								postal_code: zipcode,
-								address_1: address1,
-								address_2: address2,
-								fax: fax,
-								designation_id: designation,
-								company_name: company_name,
-								industry_type: industry_type,
-								type: type,
-								association: association,
-								facebook: facebook,
-								twitter: twitter,
-								google: google,
-
-
-
-
-
-					firm_id: req.user.firm_id}).then(resp => {
-          res.end("Success");
+router.post('/targetinsert/add', auth, csrfProtection, async(req, res) => {
+	const target_mail = await target.findOne({
+		where: {
+			email: req.body.email
+		}
 	});
-			}
-		  }
-	});
-	});
-router.get('/target/edit/:id',auth, csrfProtection, (req,res) => {
-	 target.findById(req.params.id).then(edata => {
+	if(target_mail === null)
+	{
+		if(req.body.target_type == "I")
+		{
+			 const target_store = await target.create({
+					target_type: req.body.target_type,
+					first_name: req.body.target_first_name,
+					last_name: req.body.target_last_name,
+					target_id : req.body.target_id,
+				  target_code : req.body.target_code,
+          email: req.body.email,
+					date_of_birth : req.body.date_of_birth,
+					gender : req.body.gender,
+         phone_no : req.body.phone_no,
+				  mobile_no : req.body.mobile_no,
+					fax : req.body.fax,
+					address_1 : req.body.address_1,
+					address_2 : req.body.address_2,
+					address3 : req.body.address3,
+				  country : req.body.country,
+				  state : req.body.state,
+				  city : req.body.city,
+				  postal_code : req.body.zipcode,
+					designation_id : req.body.designation_id,
+					social_security_no : req.body.social_security_no,
+					twitter : req.body.twitter,
+					linked_in : req.body.linked_in,
+					facebook : req.body.facebook,
+					google : req.body.google,
+					website_url : req.body.website_url,
+				  social_url : req.body.social_url,
+					youtube : req.body.google,
+					im : req.body.im,
+          association : req.body.association,
+				  industry_type : req.body.industry_type,
+				  remarks : req.body.remarks
 
-		 Country.findAll().then(country => {
-	 		State.findAll().then(state => {
+				});
+				console.log("inserted");
+		}
+		{
+			const target_store1 = await target.create({
+					 target_type: req.body.target_type,
+					 organization_name : req.body.organization_name,
+					 organization_id  : req.body.organization_id,
+					 organization_code : req.body.organization_code,
+					 email: req.body.email,
+					 phone_no : req.body.phone_no,
+						mobile_no : req.body.mobile_no,
+						fax : req.body.fax,
+						address_1 : req.body.address_1,
+						address_2 : req.body.address_2,
+						address3 : req.body.address3,
+						country : req.body.country,
+						state : req.body.state,
+						city : req.body.city,
+						postal_code : req.body.zipcode,
+						designation_id : req.body.designation_id,
+						social_security_no : req.body.social_security_no,
+						twitter : req.body.twitter,
+						linked_in : req.body.linked_in,
+						facebook : req.body.facebook,
+						google : req.body.google,
+						website_url : req.body.website_url,
+						social_url : req.body.social_url,
+						youtube : req.body.google,
+						im : req.body.im,
+						association : req.body.association,
+						industry_type : req.body.industry_type,
+						remarks : req.body.remarks
+					});
+				console.log("inserted organization");
+		}
+	}
+	else
+	{
+		req.flash('error-message', 'Email already taken.');
+		res.redirect('/addtarget');
+	}
+});
+////{{{{{{{{{{{    update    }}}}}}}}}}}
 
-		 //console.log(JSON.stringify(edata, undefined, 2));
-		 res.render('target/targetupdate',{ layout: 'dashboard', csrfToken: req.csrfToken(), target: edata ,country: country,state: state});
-	 });
- });
-	 });
+router.post('/target/updateTarget/:id', auth, csrfProtection, async(req, res) => {
+	console.log(req.params['id'])
+	const target_mail = await target.findOne({
+		where: {
+			email: req.body.email
+		}
+	});
+	if(target_mail === null)
+	{
+		if(req.body.target_type == "I")
+		{
+			 const target_store = await target.update({
+					target_type: req.body.target_type,
+					first_name: req.body.edit_target_first_name,
+					last_name: req.body.edit_target_last_name,
+					target_id : req.body.target_id,
+				  target_code : req.body.target_code,
+          email: req.body.email,
+					date_of_birth : req.body.date_of_birth,
+					gender : req.body.gender,
+         phone_no : req.body.phone_no,
+				  mobile_no : req.body.mobile_no,
+					fax : req.body.fax,
+					address_1 : req.body.address_1,
+					address_2 : req.body.address_2,
+					address3 : req.body.address3,
+				  country : req.body.country,
+				  state : req.body.state,
+				  city : req.body.city,
+				  postal_code : req.body.zipcode,
+					designation_id : req.body.designation_id,
+					social_security_no : req.body.social_security_no,
+					twitter : req.body.twitter,
+					linked_in : req.body.linked_in,
+					facebook : req.body.facebook,
+					google : req.body.google,
+					website_url : req.body.website_url,
+				  social_url : req.body.social_url,
+					youtube : req.body.google,
+					im : req.body.im,
+          association : req.body.association,
+				  industry_type : req.body.industry_type,
+				  remarks : req.body.remarks
+
+				}, {where: {id: req.params['id']}
+				});
+				console.log("inserted");
+		}
+		{
+			const target_store1 = await target.update({
+					 target_type: req.body.target_type,
+					 organization_name : req.body.organization_name,
+					 organization_id  : req.body.organization_id,
+					 organization_code : req.body.organization_code,
+					 email: req.body.email,
+					 phone_no : req.body.phone_no,
+						mobile_no : req.body.mobile_no,
+						fax : req.body.fax,
+						address_1 : req.body.address_1,
+						address_2 : req.body.address_2,
+						address3 : req.body.address3,
+						country : req.body.country,
+						state : req.body.state,
+						city : req.body.city,
+						postal_code : req.body.zipcode,
+						designation_id : req.body.designation_id,
+						social_security_no : req.body.social_security_no,
+						twitter : req.body.twitter,
+						linked_in : req.body.linked_in,
+						facebook : req.body.facebook,
+						google : req.body.google,
+						website_url : req.body.website_url,
+						social_url : req.body.social_url,
+						youtube : req.body.google,
+						im : req.body.im,
+						association : req.body.association,
+						industry_type : req.body.industry_type,
+						remarks : req.body.remarks
+					}, {where: {id: req.params['id']}
+				});
+				console.log("inserted organization");
+		}
+	}
+	else
+	{
+		req.flash('error-message', 'Email already taken.');
+		res.redirect('/addtarget');
+	}
+});
+
+
+////{{{{{{{{{{{    EDIT   }}}}}}}}}}}
+
+router.get('/target/edit/:id',auth,csrfProtection, async (req,res) => {
+	const targets = await target.findById(req.params['id']);
+
+	const country = await Country.findAll();
+	const state = await State.findAll();
+	const city = await City.findAll({
+		where: {
+			state_id : targets.city
+		}
+	});
+	const cities = await City.findById(targets.city);
+	const zipcode = await Zipcode.findAll({
+		where: {
+			city_name : cities.name
+		}
+	});
+	console.log(zipcode);
+
+
+	res.render('target/targetupdate', { layout: 'dashboard', csrfToken: req.csrfToken(), targets, country, state, city, zipcode});
 });
 
 
 
 
 
-router.post('/target/updateTarget/:id',auth,csrfProtection, (req,res) => {
-	var id = req.body.id;
-  var target_type = req.body.target_type;
-  var org_type = req.body.org_type;
-
-	var first_name = req.body.first_name;
-	var last_name = req.body.last_name;
-	var email = req.body.email;
-	var mobile_no = req.body.mobile_no;
-	var country = req.body.country;
-	var state = req.body.state;
-	var city = req.body.city;
-	var zipcode = req.body.zipcode;
-	var address1 = req.body.address1;
-	var address2 = req.body.address2;
-	var designation = req.body.designation;
-	var firm = req.user.firm_id;
-	var company_name = req.body.company_name;
-	var fax = req.body.fax;
-	var google = req.body.google;
-	var facebook = req.body.facebook;
-	var twitter = req.body.twitter;
-	var industry_type = req.body.industry_type;
-	var association = req.body.association;
-	var type = req.body.type;
-
-
-	var	phone_no = req.body.phone_no;
-	var	website_url = req.body.website_url;
-	var	youtube = req.body.youtube;
-	var	linked_in = req.body.linked_in;
-	var	dob = req.body.dob;
-	var	gender = req.body.gender;
-	var	remarks = req.body.remarks;
-	var	addremarks = req.body.addremarks;
-	var	address3 = req.body.address3;
-	var	social_url = req.body.social_url;
-	var	code = req.body.code;
-	var	id = req.body.id;
-	var	sequrity = req.body.sequrity;
-	var	status = req.body.status;
-	var	organization_name = req.body.organization_name;
-	var	organization_id = req.body.organization_id;
-	var	organization_code = req.body.organization_code
-
-
-
-	console.log(req.params.id);
-	target.findAndCountAll({
-		where:{
-			email: email
-		}
-	}).then(result => {
-		if(result.count > 0){
-			res.json({msg: 'ERRR'});
-		}else{
-			target.update({
-				firstName: first_name,
-				lastName: last_name,
-				email: email,
-				mobile_no: mobile_no,
-				country: country,
-				state: state,
-				city: city,
-				postal_code: zipcode,
-				address_1: address1,
-				address_2: address2,
-				fax: fax,
-				designation_id: designation,
-				company_name: company_name,
-				industry_type: industry_type,
-				type: type,
-				association: association,
-				facebook: facebook,
-				twitter: twitter,
-				google: google,
-
-				address_remarks: addremarks,
-				gender: gender,
-				address3: address3,
-				remarks: remarks,
-
-				website_url: website_url,
-				social_url: social_url,
-				social_sequrity_no: sequrity,
-				status: status,
-
-				organization_code: organization_code,
-				organization_id: organization_id,
-				organization_name: organization_name,
-
-				linked_in: linked_in,
-				phone_no: phone_no,
-				youtube: youtube,
-
-
-
-
-
-				firm_id: req.user.firm_id},{where:{id: req.params.id}}).then(resp => {
-				res.end("success");
-			});
-		}
-	});
-});
-
-
+////{{{{{{{{{{{    DELETEedit_client_first_name   }}}}}}}}}}}
 
 		router.get('/target/delete/:id',auth, (req,res) => {
 		  console.log(req.params.id);

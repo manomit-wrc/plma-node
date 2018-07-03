@@ -1,696 +1,322 @@
 {{#content "style" mode="prepend"}}
-    <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
 {{/content}}
 <div class="page-wrapper">
                 <div class="content container-fluid">
-
-                  <div class="row">
-
-
-
-
 					<div class="row">
+						{{#if error_message}}
+					        <div class="alert alert-danger">
+					            <strong>Error! </strong>{{error_message}}
+					        </div>
+					    {{/if}}
 						<div class="col-sm-8">
-							<h4 class="page-title">Update Target</h4>
+							<h4 class="page-title">Edit Client</h4>
 						</div>
 					</div>
-					<form id="updateTargetForm" >
-           <input type ="hidden" value="{{target.id}}" id="updatedata">
-
+					<form id="clientform" method="POST" action="/target/updateTarget/{{targets.id}}">
+						<input type="hidden" name="_csrf" value="{{csrfToken}}">
+						<input type="hidden" value="{{targets.id}}" id="id" />
+						<input type="radio" id="individual_client" name="client_type" value="I" {{#if_eq targets.target_type "I"}} checked {{/if_eq}} disabled />Individual
+						<input type="radio" id="organization_client" name="client_type" value="O" {{#if_eq targets.target_type "O"}} checked {{/if_eq}} disabled />Organization
 						<div class="card-box">
-							<!-- <h3 class="card-title">Contact Informations</h3> -->
-              <div class="row">
+							<h3 class="card-title">Basic Informations</h3>
+							<div class="row">
+								<div class="col-md-12">
+									{{!-- <div class="profile-img-wrap">
+										<img class="inline-block" src="assets/img/user.jpg" alt="user">
+										<div class="fileupload btn btn-default">
+											<span class="btn-text">edit</span>
+											<input class="upload" type="file">
+										</div>
+									</div> --}}
+									<div class="profile-basic">
+										<div class="row">
+											<div id="org_type" {{#if_eq targets.target_type "I"}} style="display:none;" {{/if_eq}}>
+												<div class="col-md-12">
+													<div class="form-group form-focus">
+														<label class="control-label">Organisation Name</label>
+														<input type="text" class="form-control floating" id="organization_name" name="organization_name" value="{{targets.organization_name}}" />
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group form-focus">
+														<label class="control-label">Organisation ID</label>
+														<input type="text" class="form-control floating" id="organization_id" name="organization_id" value="{{targets.organization_id}}"/>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group form-focus">
+														<label class="control-label">Organisation Code </label>
+														<input type="text" class="form-control floating" id="organization_code" name="organization_code" value="{{targets.organization_code}}"/>
+													</div>
+												</div>
+											</div>
+											<div id="individual_type" {{#if_eq targets.target_type "O"}} style="display:none;" {{/if_eq}}>
+												<div class="col-md-6">
+													<div class="form-group form-focus">
+														<label class="control-label">First Name</label>
+														<input type="text" class="form-control floating" id="edit_target_first_name" name="edit_target_first_name" value="{{targets.first_name}}"/>
+													</div>
+												</div>
+                        	<div id="individual_type" {{#if_eq targets.target_type "O"}} style="display:none;" {{/if_eq}}>
+												<div class="col-md-6">
+													<div class="form-group form-focus">
+														<label class="control-label">Last Name</label>
+														<input type="text" class="form-control floating" id="edit_target_last_name" name="edit_target_last_name" value="{{targets.last_name}}"/>
+													</div>
+												</div>
+                        	<div id="individual_type" {{#if_eq targets.target_type "O"}} style="display:none;" {{/if_eq}}>
+												<div class="col-md-6">
+													<div class="form-group form-focus">
+														<label class="control-label">Target ID </label>
+														<input type="text" class="form-control floating" id="target_id" name="target_id" value="{{targets.target_id}}"/>
+													</div>
+												</div>
+                        	<div id="individual_type" {{#if_eq targets.target_type "O"}} style="display:none;" {{/if_eq}}>
+												<div class="col-md-6">
+													<div class="form-group form-focus">
+														<label class="control-label">Target Code </label>
+														<input type="text" class="form-control floating" id="target_code" name="target_code" value="{{targets.target_code}}"/>
+													</div>
+												</div>
+                        <div id="organization_type" {{#if_eq targets.target_type "I"}} style="display:none;" {{/if_eq}}>
+												<div class="col-md-6">
+													<div class="form-group form-focus">
+														<label class="control-label">Birth Date</label>
+														<div class="cal-icon">
+															<input class="form-control floating datetimepicker"
+															type="text" id="date_of_birth" name="date_of_birth" value="{{dateFormat targets.date_of_birth "DD-MM-YYYY"}}"
+															>
+														</div>
+													</div>
+												</div>
+                        <div id="organization_type" {{#if_eq targets.target_type "I"}} style="display:none;" {{/if_eq}}>
 
-<div class="col-md-12">
-				<div class="form-group  ">
-					<input type="radio" class="  " id="target_type" name="target_type" value="individual" onclick="target()" checked/>Individual Client
-					<input type="radio" class="   " id="org_type" name="target_type" value="organization" onclick="organization()"/>Organization
-				</div>
-			</div>
+												<div class="col-md-6">
+													<div class="form-group form-focus select-focus">
+														<label class="control-label">Gender</label>
+														<select class="select form-control floating" id="gender" name="gender">
+															<option value="">Select Gender</option>
+															<option value="M" {{#if_eq targets.gender "M"}} selected {{/if_eq}}>Male</option>
+															<option value="F" {{#if_eq targets.gender "F"}} selected {{/if_eq}}>Female</option>
+														</select>
+													</div>
+												</div>
+
+											</div>
+											<div class="col-md-12">
+												<div class="form-group form-focus">
+													<label class="control-label">Email Id</label>
+													<input type="text" class="form-control floating" id="email" name="email" value="{{targets.email}}"/>
+													<span id="uniqueEmail" style="color: red"><span>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group form-focus select-focus">
+													<label class="control-label">Mobile Number</label>
+													<input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" value="{{targets.mobile_no}}"/>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group form-focus select-focus">
+													<label class="control-label">Fax</label>
+													<input type="text" class="form-control floating number_validator" id="fax" name="fax" value="{{targets.fax}}"/>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card-box">
+							<h3 class="card-title">Contact Informations</h3>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group form-focus">
+										<label class="control-label">Address Line 1</label>
+										<input type="text" class="form-control floating" id="address_1" name="address_1" value="{{targets.address_1}}"/>
+									</div>
+								</div>
+                                <div class="col-md-12">
+									<div class="form-group form-focus">
+										<label class="control-label">Address Line 2</label>
+										<input type="text" class="form-control floating" id="address_2" name="address_2" value="{{targets.address_2}}"/>
+									</div>
+								</div>
+                                <div class="col-md-12">
+									<div class="form-group form-focus">
+										<label class="control-label">Address Line 3</label>
+										<input type="text" class="form-control floating" id="address3" name="address3" value="{{targets.address3}}"/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus select-focus">
+										<label class="control-label">Country</label>
+										<select id="country" name="country" class="form-control">
+                                            {{#each country}}
+                                            <option value="{{this.id}}">{{this.name}}</option>
+											{{/each}}
+                                        </select>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus select-focus">
+										<label class="control-label ">State</label>
+										<select id="state" name="state" class="form-control">
+											<option value="">Select State</option>
+                                            {{#each state}}
+                                            <option value="{{this.id}}" {{#if_eq this.id ../target.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+											{{/each}}
+                                        </select>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus select-focus">
+										<label class="control-label ">City</label>
+										 <select id="city" name="city" class="form-control">
+										 	<option value="">Select City</option>
+                                          {{#each city}}
+                                            <option value="{{this.id}}" {{#if_eq this.id ../targetss.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+											{{/each}}
+                                        </select>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus select-focus">
+										<label class=" control-label">Zipcode Code</label>
+										<select id="zipcode" name="zipcode" class="form-control">
+                                             <option value="">Select Zipcode</option>
+                                          {{#each zipcode}}
+                                            <option value="{{this.id}}" {{#if_eq this.id ../targetss.pin_code}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
+											{{/each}}
+                                        </select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card-box">
+							<h3 class="card-title">Other Informations</h3>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group form-focus select-focus">
+										<label class="control-label">Designation</label>
+										<select id="designation_id" name="designation_id" class="select form-control">
+											<option value="">Select Designation</option>
+                                            {{#each designations}}
+                                            <option value="{{this.id}}" {{#if_eq this.id ../targets.designation_id}} selected="selected" {{/if_eq}}>{{this.code}}</option>
+											{{/each}}
+                                        </select>
+									</div>
+								</div>
+								<div class="col-md-6">
+										<div class="form-group form-focus">
+											<label class="control-label">IM</label>
+											<input type="text" class="form-control floating" id="im" name="im" value="{{targets.im}}"/>
+										</div>
+									</div>
+
+								<div class="col-md-6">
+										<div class="form-group form-focus">
+											<label class="control-label">Social Security No</label>
+											<input type="text" class="form-control floating number_validator" id="social_sequrity_no" name="social_sequrity_no" value="{{targets.social_security_no}}"/>
+										</div>
+									</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus select-focus">
+										<label class="control-label">Twitter</label>
+										<input type="text" class="form-control floating url_selector" id="twitter" name="twitter" value="{{targets.twitter}}"/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus select-focus">
+										<label class="control-label">Linkdn</label>
+										<input type="text" class="form-control floating url_selector" id="linked_in" name="linked_in" value="{{targets.linked_in}}"/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus select-focus">
+										<label class="control-label">Facebook </label>
+										<input type="text" class="form-control floating url_selector" id="facebook" name="facebook" value="{{targets.facebook}}"/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus select-focus">
+										<label class="control-label">Google </label>
+										<input type="text" class="form-control floating url_selector" id="google" name="google" value="{{targets.google}}"/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus select-focus">
+										<label class="control-label">Association Status :</label>
+										<select id="association" name="association" class="select form-control">
+
+                                            <option value="NEW TARGET" {{#if_eq client.association_type "NEW TARGET"}} selected="selected" {{/if_eq}} >NEW TARGET</option>
+											<option value="CONVERTED" {{#if_eq client.association_type "CONVERTED"}} selected="selected" {{/if_eq}}  >CONVERTED</option>
+											<option value="TS-INTERIM" {{#if_eq client.association_type "TS-INTERIM"}} selected="selected" {{/if_eq}} >TS-INTERIM</option>
 
 
+                                        </select>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus select-focus">
+										<label class="control-label">Industry Type :</label>
+										<select id="industry_type" name="industry_type" class="select form-control">
+                                             {{#each industry}}
+                                            <option value="{{this.id}}" {{#if_eq this.id ../targets.industry_type}} selected="selected" {{/if_eq}}>{{this.code}}</option>
+										 {{/each}}
+                                        </select>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group form-focus">
+										<label class="control-label">Remarks </label>
+										<textarea class="form-control floating" id="remarks" name="remarks" rows="5">{{targets.remarks}}</textarea>
+									</div>
+		                        </div>
+							</div>
 
-
-                <div class="col-md-12" id="client_first_name">
-                  <div class="form-group">
-                    <label class="control-label">First Name: <span class="text-danger">*</span></label>
-                    <input class="form-control" type="text" id="first_name" name="first_name" value="{{target.firstName}}">
-                    <span id="uniqueCode" style="color: red;font-weight: bold;"></span>
-                  </div>
-                </div>
-                <div class="col-md-12" id="client_last_name">
-                  <div class="form-group">
-                    <label class="control-label">Last Name :<span class="text-danger">*</span></label>
-                    <input class="form-control" type="text" id="last_name" name="last_name" value="{{target.lastName}}">
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">Email : <span class="text-danger">*</span></label>
-                    <!-- <input class="form-control" type="text"> -->
-                    <input class="form-control" rows="12" id="email" name="email" value="{{target.email}}" >
-                    <span id="sameemail" style="color: red"><span>
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">Mobile No :<span class="text-danger">*</span></label>
-                    <input class="form-control" type="text" id="mobile_no" name="mobile_no" value="{{target.mobile_no}}">
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">Address 1 :<span class="text-danger">*</span></label>
-                    <input class="form-control" type="text" id="address1" name="address1" value="{{target.address_1}}">
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">Address 2 :<span class="text-danger">*</span></label>
-                    <input class="form-control" type="text" id="address2" name="address2" value="{{target.address_2}}">
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">Fax:<span class="text-danger">*</span></label>
-                    <input class="form-control" type="text" id="fax" name="fax" value="{{target.fax}}">
-                  </div>
-                </div>
-                <!-- <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">Country :<span class="text-danger">*</span></label>
-                    <input class="form-control" type="text" id="country" name="country" value="{{target.country}}">
-                  </div>
-                </div> -->
-                <div class="col-md-12">
-                   <div class="form-group">
-                     <label class="control-label">Country<span class="text-danger">*</span></label>
-                      <select class="select form-control floating" id="country" name="country">
-                         <option value="">Select Country</option>
-                         {{#each country}}
-                         <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
-                         {{/each}}
-                     </select>
-                   </div>
-                </div>
-
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">State<span class="text-danger">*</span></label>
-                    <select class="select form-control floating" id="state" name="state">
-                       <option value="">select State</option>
-                       {{#each state}}
-                       <option value="{{this.id}}">{{this.name}}</option>
-                       {{/each}}
-                   </select>
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">City<span class="text-danger">*</span></label>
-                    <select class="select form-control floating" id="city" name="city">
-                         <option value="">Select City</option>
-                         {{#each state}}
-                         <option value="{{this.id}}">{{this.name}}</option>
-                         {{/each}}
-                   </select>
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">Pincode :<span class="text-danger">*</span></label>
-                    <input class="form-control" type="text" id="zipcode" name="zipcode" value="{{target.postal_code}}">
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">Designation :<span class="text-danger">*</span></label>
-                    <input class="form-control" type="text" id="designation" name="designation" value="{{target.designation_id}}">
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">Type :<span class="text-danger">*</span></label>
-                    <input class="form-control" type="text" id="type" name="type" value="{{target.type}}">
-                  </div>
-                </div>
-                <div class="col-md-12" id="client_company_div">
-                  <div class="form-group">
-                    <label class="control-label">company name :<span class="text-danger">*</span></label>
-                    <input class="form-control" type="text" id="company_name" name="company_name" value="{{target.company_name}}">
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">association :<span class="text-danger">*</span></label>
-                    <input class="form-control" type="text" id="association" name="association" value="{{target.association}}">
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">industry_type :<span class="text-danger">*</span></label>
-                    <input class="form-control" type="text" id="industry_type" name="industry_type" value="{{target.industry_type}}">
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">Twitter :<span class="text-danger">*</span></label>
-                    <input class="form-control" type="text" id="twitter" name="twitter" value="{{target.twitter}}">
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">facebook :<span class="text-danger">*</span></label>
-                    <input class="form-control" type="text" id="facebook" name="facebook" value="{{target.facebook}}">
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">google :<span class="text-danger">*</span></label>
-                    <input class="form-control" type="text" id="google" name="google" value="{{target.google}}">
-                  </div>
-                </div>
-
-
-
-
-
-
-
-
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label"> Address Remarks :</label>
-                    <input type="text" class="form-control floating" id="addremarks" name="addremarks" value="{{target.address_remarks}}"/>
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">Remarks :</label>
-                    <input type="text" class="form-control floating" id="remarks" name="remarks" value="{{target.remarks}}"/>
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">Status:</label>
-                    <input type="text" class="form-control floating" id="status" name="status" value="{{target.status}}"/>
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">Social Sequrity No :</label>
-                    <input type="text" class="form-control floating" id="sequrity" name="sequrity" value="{{target.social_sequrity_no}}"  />
-                  </div>
-                </div>
-                <div class="col-md-12" id="client_id_div">
-                  <div class="form-group">
-                    <label class="control-label"> Target Id :</label>
-                    <input type="text" class="form-control floating" id="id" name="id" value="{{target.id}}"  />
-                  </div>
-                </div>
-                <div class="col-md-12" id="target_code">
-                  <div class="form-group">
-                    <label class="control-label">Target Code :</label>
-                    <input type="text" class="form-control floating" id="code" name="code" value="{{target.code}}"  />
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">Youtube :</label>
-                    <input type="text" class="form-control floating" id="youtube" name="youtube"  value="{{target.youtube}}" />
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">Linked_In :</label>
-                    <input type="text" class="form-control floating" id="linked_in" name="linked_in" value="{{target.linked_in}}"  />
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">Website_Url :</label>
-                    <input type="text" class="form-control floating" id="website_url" name="website_url" value="{{target.website_url}}"  />
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">Social_Url :</label>
-                    <input type="text" class="form-control floating" id="social_url" name="social_url" value="{{target.social_url}}"  />
-                  </div>
-                </div>
-
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">Phone Number :</label>
-                    <input type="text" class="form-control floating" id="phone_no" name="phone_no" value="{{target.phone_no}}"  />
-                  </div>
-                </div>
-                <div class="col-md-12" id="organization_code_div" style="display:none">
-                  <div class="form-group" >
-                    <label class="control-label"> Organization code :</label>
-                    <input type="text" class="form-control floating" id="organization_code" name="organization_code" value="{{target.organization_code}}" />
-                  </div>
-                </div>
-                <div class="col-md-12" id="organization_id_div" style="display:none">
-                  <div class="form-group" >
-                    <label class="control-label"> Organization id :</label>
-                    <input type="text" class="form-control floating" id="organization_id" name="organization_id" value="{{target.organization_id}}" />
-                  </div>
-                </div>
-                <div class="col-md-12" id="organization_name_div" style="display:none">
-                  <div class="form-group">
-                    <label class="control-label"> Organization Name:</label>
-                    <input type="text" class="form-control floating" id="organization_name" name="organization_name" value="{{target.organization_name}}" />
-                  </div>
-                </div>
-
-                <div class="col-md-12" id="date_of_birth">
-                  <div class="form-group">
-                    <label class="control-label">Date Of Birth :</label>
-                    <input class="form-control floating datetimepicker"
-                        type="text" id="dob" name="dob" value="{{target.date_of_birth}}" >
-                  </div>
-                </div>
-                <div class="col-md-12" id="gender">
-                  <div class="form-group">
-                    <select id="gender" class="gender" class="form-control gender" value="{{target.gender}}" >
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                    </select>
-                  </div>
-                </div>
-
-              </div>
 						</div>
 
-
 						<div class="text-center m-t-20">
-							<button class="btn btn-primary btn-lg" type="button" id="btnAdd"> update target</button>
+							<button class="btn btn-primary btn-lg" type="submit" id="addclient">Save &amp; Update Target</button>
 						</div>
 					</form>
 				</div>
-				<div class="notification-box">
-					<div class="msg-sidebar notifications msg-noti">
-						<div class="topnav-dropdown-header">
-							<span>Messages</span>
-						</div>
-						<div class="drop-scroll msg-list-scroll">
-							<ul class="list-box">
-								<li>
-									<a href="chat.html">
-										<div class="list-item">
-											<div class="list-left">
-												<span class="avatar">R</span>
-											</div>
-											<div class="list-body">
-												<span class="message-author">Richard Miles </span>
-												<span class="message-time">12:28 AM</span>
-												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="chat.html">
-										<div class="list-item new-message">
-											<div class="list-left">
-												<span class="avatar">J</span>
-											</div>
-											<div class="list-body">
-												<span class="message-author">John Doe</span>
-												<span class="message-time">1 Aug</span>
-												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="chat.html">
-										<div class="list-item">
-											<div class="list-left">
-												<span class="avatar">T</span>
-											</div>
-											<div class="list-body">
-												<span class="message-author"> Tarah Shropshire </span>
-												<span class="message-time">12:28 AM</span>
-												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="chat.html">
-										<div class="list-item">
-											<div class="list-left">
-												<span class="avatar">M</span>
-											</div>
-											<div class="list-body">
-												<span class="message-author">Mike Litorus</span>
-												<span class="message-time">12:28 AM</span>
-												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="chat.html">
-										<div class="list-item">
-											<div class="list-left">
-												<span class="avatar">C</span>
-											</div>
-											<div class="list-body">
-												<span class="message-author"> Catherine Manseau </span>
-												<span class="message-time">12:28 AM</span>
-												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="chat.html">
-										<div class="list-item">
-											<div class="list-left">
-												<span class="avatar">D</span>
-											</div>
-											<div class="list-body">
-												<span class="message-author"> Domenic Houston </span>
-												<span class="message-time">12:28 AM</span>
-												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="chat.html">
-										<div class="list-item">
-											<div class="list-left">
-												<span class="avatar">B</span>
-											</div>
-											<div class="list-body">
-												<span class="message-author"> Buster Wigton </span>
-												<span class="message-time">12:28 AM</span>
-												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="chat.html">
-										<div class="list-item">
-											<div class="list-left">
-												<span class="avatar">R</span>
-											</div>
-											<div class="list-body">
-												<span class="message-author"> Rolland Webber </span>
-												<span class="message-time">12:28 AM</span>
-												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="chat.html">
-										<div class="list-item">
-											<div class="list-left">
-												<span class="avatar">C</span>
-											</div>
-											<div class="list-body">
-												<span class="message-author"> Claire Mapes </span>
-												<span class="message-time">12:28 AM</span>
-												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="chat.html">
-										<div class="list-item">
-											<div class="list-left">
-												<span class="avatar">M</span>
-											</div>
-											<div class="list-body">
-												<span class="message-author">Melita Faucher</span>
-												<span class="message-time">12:28 AM</span>
-												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="chat.html">
-										<div class="list-item">
-											<div class="list-left">
-												<span class="avatar">J</span>
-											</div>
-											<div class="list-body">
-												<span class="message-author">Jeffery Lalor</span>
-												<span class="message-time">12:28 AM</span>
-												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="chat.html">
-										<div class="list-item">
-											<div class="list-left">
-												<span class="avatar">L</span>
-											</div>
-											<div class="list-body">
-												<span class="message-author">Loren Gatlin</span>
-												<span class="message-time">12:28 AM</span>
-												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="chat.html">
-										<div class="list-item">
-											<div class="list-left">
-												<span class="avatar">T</span>
-											</div>
-											<div class="list-body">
-												<span class="message-author">Tarah Shropshire</span>
-												<span class="message-time">12:28 AM</span>
-												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-											</div>
-										</div>
-									</a>
-								</li>
-							</ul>
-						</div>
-						<div class="topnav-dropdown-footer">
-							<a href="chat.html">See all messages</a>
-						</div>
-					</div>
-				</div>
 			</div>
-		</div>
-        {{#content "script" mode="append"}}
-            <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
-            <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
-            <script type="text/javascript" src="/assets/js/select2.min.js"></script>
-            <script type="text/javascript" src="/assets/js/moment.min.js"></script>
-            <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
-
-
-
-            <script type="text/javascript">
-
-          function organization(){
-          		document.getElementById('organization_code_div').style.display = "block";
-          		document.getElementById('organization_id_div').style.display = "block";
-          		document.getElementById('organization_name_div').style.display = "block";
-          		document.getElementById('client_first_name').style.display = "none";
-          		document.getElementById('client_last_name').style.display = "none";
-          		document.getElementById('client_id_div').style.display = "none";
-          		document.getElementById('target_code').style.display = "none";
-
-          		document.getElementById('date_of_birth').style.display = "none";
-          		document.getElementById('gender').style.display = "none";
-          		document.getElementById('client_company_div').style.display = "none";
-
-
-          }
-          function target(){
-          		document.getElementById('organization_code_div').style.display = "none";
-          		document.getElementById('organization_id_div').style.display = "none";
-          		document.getElementById('organization_name_div').style.display = "none";
-          		document.getElementById('client_first_name').style.display = "block";
-          		document.getElementById('client_last_name').style.display = "block";
-          		document.getElementById('client_id_div').style.display = "block";
-          		document.getElementById('master_id_div').style.display = "block";
-          		document.getElementById('date_of_birth').style.display = "block";
-          		document.getElementById('gender').style.display = "block";
-          		document.getElementById('client_company_div').style.display = "block";
-          }
-          </script>
-
-
-
-            <script type="text/javascript">
+			 {{#content "script" mode="append"}}
+<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="/assets/js/select2.min.js"></script>
+<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+<script type="text/javascript">
             $(document).ready(function(e) {
-
-                $("#btnAdd").click(function() {
-                    $("#updateTargetForm").submit();
-                });
-
-                $("#updateTargetForm").validate({
+                $("#clientform").validate({
                     rules: {
                         first_name: {
                             required: true
                         },
                         last_name: {
                             required: true
-                        },
-                        email: {
-                            required: true
-
-                        }
+                      }
                     },
-                    first_name: {
+                    messages: {
                         first_name: {
-                            required: "first name can't be blank"
+                            required: "First Name can't be blank"
                         },
                         last_name: {
-                            required: "last name can't be blank"
-                        },
-                        email: {
-                            required: "email title can't be blank"
+                            required: "Last name  title can't be blank"
                         }
-                    },
-                      submitHandler:function(form) {
-                        var firstname = $('#first_name').val();
-                        var lastname = $('#last_name').val();
-                        var mail = $('#email').val();
-                        var mobile = $('#mobile_no').val();
-                        var address1 = $('#address1').val();
-                        var address2 = $('#address2').val();
-                        var con = $('#country').val();
-                        var state = $('#state').val();
-                        var city = $('#city').val();
-                        var zipcode = $('#zipcode').val();
-                        var fax = $('#fax').val();
-                        var facebook = $('#facebook').val();
-                        var google = $('#google').val();
-                        var twitter = $('#twitter').val();
-                        var designation = $('#designation').val();
-                        var company_name = $('#company_name').val();
-                        var association = $('#association').val();
-                        var industry_type = $('#industry_type').val();
-                        var type = $('#type').val();
-
-
-
-                        var phone_no = $('#phone_no').val();
-                        var website_url = $('#website_url').val();
-                        var youtube = $('#youtube').val();
-                        var linked_in = $('#linked_in').val();
-                        var dob = $('#dob').val();
-                        var gender = $('#gender').val();
-                        var remarks = $('#remarks').val();
-                        var addremarks = $('#addremarks').val();
-                        var address3 = $('#address3').val();
-                        var social_url = $('#social_url').val();
-                        var code = $('#code').val();
-                        var id = $('#id').val();
-                        var sequrity = $('#sequrity').val();
-                        var status = $('#status').val();
-                        var organization_name = $('#organization_name').val();
-                        var organization_id = $('#organization_id').val();
-                        var organization_code = $('#organization_code').val();
-
-                        $.ajax({
-                            type: "POST",
-                            url: "/target/updateTarget/{{target.id}}",
-                            data: {
-
-                              id: id,
-                              target_type: target_type,
-                              org_type: org_type,
-
-                              first_name: firstname,
-                              last_name: lastname,
-                              email: mail,
-                              mobile_no: mobile,
-                              country: con,
-                              state: state,
-                              city: city,
-                              zipcode: zipcode,
-                              address1: address1,
-                              address2: address2,
-                              fax: fax,
-                              facebook: facebook,
-                              designation: designation,
-                              association: association,
-                              twitter: twitter,
-                              google: google,
-                              company_name: company_name,
-                              type: type,
-                              industry_type: industry_type,
-
-                              phone_no: phone_no,
-                              website_url: website_url,
-                              youtube: youtube,
-                              linked_in: linked_in,
-                              dob: dob,
-                              gender: gender,
-                              remarks: remarks,
-                              addremarks: addremarks,
-                              address3: address3,
-                              social_url: social_url,
-                              code: code,
-                              id: id,
-                              sequrity: sequrity,
-                              status: status,
-                              organization_name: organization_name,
-                              organization_id: organization_id,
-                              organization_code: organization_code
-
-                            },
-                            beforeSend: function(xhr) {
-                                xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
-
-
-                            },
-                            success: function(response) {
-
-                              if(response.msg == "ERRR"){
-                                document.getElementById('sameemail').innerHTML = "Code already been assigned";
-                              }else{
-                                window.location.href = '/target';
-                              }
-                               // window.location.href = '/designations';
-                            },
-                            error: function(xhr){
-
-                            }
-                        });
-
-                    }
-                });
+          }
+        target;
 
                   // add designation ajax operation and form validation ends
 
             });
             </script>
-
-            {{/content}}
+{{/content}}
