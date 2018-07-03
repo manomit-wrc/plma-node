@@ -264,7 +264,7 @@ router.post('/add-office', auth, firmAuth, csrfProtection, (req, res) => {
         zipcode: req.body.zipcode,
         mobile: req.body.mobile_no
     }).then(store => {
-        removePhoneMask
+        res.json({"add_office":true});
     });
 });
 

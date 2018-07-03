@@ -31,6 +31,16 @@ var fs = require('fs');
 const router = express.Router();
 
 
+function removePhoneMask (phone_no){
+        var phone_no = phone_no.replace("-","");
+        phone_no = phone_no.replace(")","");
+        phone_no = phone_no.replace("(","");
+        phone_no = phone_no.replace(" ","");
+        return phone_no;
+
+}
+
+
 //============================================={{{{target}}}}==============================================================
 
 router.get('/target', csrfProtection, auth, (req, res) => {
@@ -796,186 +806,209 @@ router.get('/attorneys/delete/:id',auth, firmAuth, (req,res) => {
 
 /*==========================================Client route starts==============================================*/
 router.get('/client',auth, firmAttrAuth, csrfProtection, (req,res) => {
+	var success_message = req.flash('success-message')[0];
+	var success_edit_message = req.flash('success-edit-message')[0];
 	var whereCondition = {};
 	if(req.query.searchName) {
-		whereCondition.first_name = req.query.searchName;
+		whereCondition.client_type = req.query.searchName;
 	}
 	if(req.query.searchEmail) {
 		whereCondition.email = req.query.searchEmail;
 	}
-
-			 client.findAll({
-				 where: whereCondition
-			 }).then(clients => {
-				res.render('client/index',{ layout: 'dashboard',  csrfToken: req.csrfToken() ,clients: clients, searchName: req.query.searchName, searchMail: req.query.searchEmail });
-			 });
-
-
-
+	whereCondition.firm_id = req.user.firm_id.toString();
+	client.findAll({
+		 where: whereCondition
+	}).then(clients => {
+		res.render('client/index',{ 
+			layout: 'dashboard',  
+			csrfToken: req.csrfToken() ,
+			clients: clients, 
+			searchName: req.query.searchName ? req.query.searchName : '', 
+			searchMail: req.query.searchEmail ? req.query.searchEmail : '', 
+			success_message, 
+			success_edit_message
+		});
+	});
 });
 router.get('/client/add',auth, firmAttrAuth, csrfProtection, (req,res) => {
+	var error_message = req.flash('error-client-message')[0];
 	designation.findAll().then(designation => {
 		industry_type.findAll().then(industry => {
 	Country.findAll().then(country => {
 
 		State.findAll().then(state => {
-		//  console.log(JSON.stringify(state, undefined, 2));
-			res.render('client/addclient',{ layout: 'dashboard', csrfToken: req.csrfToken(), country: country, state: state, designations: designation, industry: industry  });
+			res.render('client/addclient',{ layout: 'dashboard', csrfToken: req.csrfToken(), country: country, state: state, designations: designation, industry: industry, error_message  });
 		});
 	});
 });
 });
 
 });
-router.get('/client/edit/:id',auth, firmAttrAuth, csrfProtection, (req,res) => {
-var clientId = req.params.id;
-
-	designation.findAll().then(designation => {
-		industry_type.findAll().then(industry => {
-			Country.findAll().then(country => {
-
-		State.findAll().then(state => {
-		//  console.log(JSON.stringify(state, undefined, 2));
-		client.findById(clientId).then(client => {
-			res.render('client/editClient',{ layout: 'dashboard', csrfToken: req.csrfToken(), country: country, state: state, designations: designation, industry: industry,client: client  });
-		});
-
-		});
+router.get('/client/edit/:id',auth, firmAttrAuth, csrfProtection, async(req,res) => {
+	var error_message = req.flash('error-clientEdit-message')[0];
+	const clients = await client.findById(req.params['id']);
+	const designations = await designation.findAll();
+	const industrys = await industry_type.findAll();
+	const client_country = await Country.findAll();
+	const client_state = await State.findAll({
+		where: {country_id : "233"}
 	});
-});
-});
-
-});
-router.post('/client/addClient',auth, firmAttrAuth,csrfProtection, (req,res) => {
-	var first_name = req.body.first_name;
-	var last_name = req.body.last_name;
-	var email = req.body.email;
-	var mobile_no = req.body.mobile_no;
-	var address1 = req.body.address1;
-	var address2 = req.body.address2;
-	var country = req.body.country;
-	var state = req.body.state;
-	var city = req.body.city;
-	var pin_code = req.body.pin_code;
-	var designation = req.body.designation;
-	var type = req.body.type;
-	var company_name = req.body.company_name;
-	var twitter = req.body.twitter;
-	var linkdn = req.body.linkdn;
-	var facebook = req.body.facebook;
-	var google = req.body.google;
-	var association = req.body.association;
-	var industry_type = req.body.industry_type;
-	var fax = req.body.fax;
-	console.log("HELLO");
-	console.log(first_name);
-	console.log(first_name+last_name+email+mobile_no+address1+address2+country+state+city+pin_code+designation+type+company_name+twitter+linkdn);
-	client.findAndCountAll({
-		where:{
-			email: email
+	const client_city = await City.findAll({
+		where: {
+			state_id : clients.state.toString()
 		}
-	}).then(result => {
-		if(result.count > 0){
-			res.json({msg: 'error'});
-		}else{
-			client.create({
-				first_name: first_name,
-				last_name: last_name,
-				email: email,
-				mobile_no: mobile_no,
-				address1: address1,
-				address2: address2,
-				country: country,
-				state: state,
-				city: city,
-				pin_code: pin_code,
-				designation_id: designation,
-				type: type,
-				company_name: company_name,
-				twitter: twitter,
-				linkdn: linkdn,
-				facebook: facebook,
-				google: google,
-				association_type: association,
-				industry_type: industry_type,
+	});
+	const client_cities = await City.findById(clients.city.toString());
+	const client_zipcode = await Zipcode.findAll({
+		where: {
+			city_name: client_cities.name
+		}
+	});
+
+	res.render('client/editClient',{ layout: 'dashboard', csrfToken: req.csrfToken(),designation: designations,industry: industrys,client:clients,country: client_country, state: client_state, city: client_city, zipcode: client_zipcode, error_message });
+});
+
+router.post('/client/addClient',auth, firmAttrAuth,csrfProtection, async (req,res) => {
+	const formatDate = req.body.client_dob ? req.body.client_dob.split("-") : '';
+	const client_data = await client.findOne({
+		where: {
+            email: req.body.email
+        }
+	});
+	if(client_data === null)
+	{
+		if(req.body.client_type === "O")
+		{
+			const store_org_data = await client.create({
+				organization_name: req.body.org_name,
+				organization_id: req.body.org_id,
+				organization_code: req.body.org_code,
+				email: req.body.email,
+				mobile_no: removePhoneMask(req.body.mobile_no),
+				address1: req.body.address1,
+				address2: req.body.address2,
+				address_line_3: req.body.address3,
+				country: req.body.country,
+				state: req.body.state,
+				city: req.body.city,
+				pin_code: req.body.zipcode,
+				designation_id: req.body.designation,
+				company_name: req.body.company_name,
+				twitter: req.body.twitter,
+				linkdn: req.body.linkdn,
+				facebook: req.body.facebook,
+				google: req.body.google,
+				association_type: req.body.association,
+				industry_type: req.body.industry_type,
 				firm_id: req.user.firm_id,
-				fax: fax
-			}).then(resp =>  {
-				res.json({msg: 'Success'});
+				fax: removePhoneMask(req.body.fax),
+				client_type: req.body.client_type,
+				IM: req.body.im,
+				social_security_no: removePhoneMask(req.body.social_sec_no),
+				remarks: req.body.remarks
 			});
+			req.flash('success-message', 'Client Added Successfully');
+            res.redirect('/client')
 		}
-	});
-
-
-
-});
-router.post('/client/editClient',auth, firmAttrAuth,csrfProtection, (req,res) => {
-	var id = req.body.id;
-	var first_name = req.body.first_name;
-	var last_name = req.body.last_name;
-	var email = req.body.email;
-	var mobile_no = req.body.mobile_no;
-	var address1 = req.body.address1;
-	var address2 = req.body.address2;
-	var country = req.body.country;
-	var state = req.body.state;
-	var city = req.body.city;
-	var pin_code = req.body.pin_code;
-	var designation = req.body.designation;
-	var type = req.body.type;
-	var company_name = req.body.company_name;
-	var twitter = req.body.twitter;
-	var linkdn = req.body.linkdn;
-	var facebook = req.body.facebook;
-	var google = req.body.google;
-	var association = req.body.association;
-	var industry_type = req.body.industry_type;
-	var fax = req.body.fax;
-	console.log("HELLO");
-	console.log(first_name);
-	console.log(first_name+last_name+email+mobile_no+address1+address2+country+state+city+pin_code+designation+type+company_name+twitter+linkdn);
-	client.findAndCountAll({
-		where:{
-			email: email
-		}
-	}).then(result => {
-		if(result.count > 1){
-			res.json({msg: 'error'});
-		}else{
-			client.update({
-				first_name: first_name,
-				last_name: last_name,
-				email: email,
-				mobile_no: mobile_no,
-				address1: address1,
-				address2: address2,
-				country: country,
-				state: state,
-				city: city,
-				pin_code: pin_code,
-				designation_id: designation,
-				type: type,
-				company_name: company_name,
-				twitter: twitter,
-				linkdn: linkdn,
-				facebook: facebook,
-				google: google,
-				association_type: association,
-				industry_type: industry_type,
+		else
+		{
+			const store_ind_data = await client.create({
+				first_name: req.body.client_first_name,
+				last_name: req.body.client_last_name,
+				email: req.body.email,
+				mobile_no: removePhoneMask(req.body.mobile_no),
+				address1: req.body.address1,
+				address2: req.body.address2,
+				address_line_3: req.body.address3,
+				country: req.body.country,
+				state: req.body.state,
+				city: req.body.city,
+				pin_code: req.body.zipcode,
+				designation_id: req.body.designation,
+				company_name: req.body.company_name,
+				twitter: req.body.twitter,
+				linkdn: req.body.linkdn,
+				facebook: req.body.facebook,
+				google: req.body.google,
+				association_type: req.body.association,
+				industry_type: req.body.industry_type,
 				firm_id: req.user.firm_id,
-				fax: fax
-			},{
-				where: {
-					id: id
-				}
-			}).then(resp =>  {
-				res.json({msg: 'Success'});
+				fax: removePhoneMask(req.body.fax),
+				client_type: req.body.client_type,
+				IM: req.body.im,
+				social_security_no: removePhoneMask(req.body.social_sec_no),
+				date_of_birth: formatDate ? formatDate[2]+"-"+formatDate[1]+"-"+formatDate[0] : null,
+				gender: req.body.client_gender,
+				client_id : req.body.client_id,
+				master_id : req.body.master_id,
+				client_company : req.body.client_company,
+				remarks: req.body.remarks
 			});
+			req.flash('success-message', 'Client Added Successfully');
+            res.redirect('/client')
 		}
-	});
-
-
-
+	}
+	else
+	{
+		req.flash('error-client-message', 'Email already taken.');
+        res.redirect('/client/add');
+	}
+});
+router.post('/client/editClient/:id',auth, firmAttrAuth,csrfProtection, async (req,res) => {
+	const formatDate = req.body.client_dob ? req.body.client_dob.split("-") : '';
+	const client_edit_data = await client.findOne({
+        where: {
+            email: req.body.email,
+            id: {
+                [Op.ne]: req.params['id']
+            }
+        }
+    });
+	if(client_edit_data === null)
+	{
+		const edit_client = await client.update({
+			organization_name: req.body.org_name,
+			organization_id: req.body.org_id,
+			organization_code: req.body.org_code,
+			first_name: req.body.edit_client_first_name,
+			last_name: req.body.edit_client_last_name,
+			email: req.body.email,
+			mobile_no: removePhoneMask(req.body.mobile_no),
+			address1: req.body.address1,
+			address2: req.body.address2,
+			address_line_3: req.body.address3,
+			country: req.body.country,
+			state: req.body.state,
+			city: req.body.city,
+			pin_code: req.body.zipcode,
+			designation_id: req.body.designation,
+			company_name: req.body.company_name,
+			twitter: req.body.twitter,
+			linkdn: req.body.linkdn,
+			facebook: req.body.facebook,
+			google: req.body.google,
+			association_type: req.body.association,
+			industry_type: req.body.industry_type,
+			firm_id: req.user.firm_id,
+			fax: removePhoneMask(req.body.fax),
+			IM: req.body.im,
+			social_security_no: removePhoneMask(req.body.social_sec_no),
+			date_of_birth: formatDate ? formatDate[2]+"-"+formatDate[1]+"-"+formatDate[0] : null,
+			gender: req.body.client_gender,
+			client_id : req.body.client_id,
+			master_id : req.body.master_id,
+			client_company : req.body.client_company,
+			remarks: req.body.remarks
+		},{where: {id: req.params['id']}
+		});
+		req.flash('success-edit-message', 'Client Updated Successfully');
+        res.redirect('/client')
+	} 
+	else
+	{
+		req.flash('error-clientEdit-message', 'Email already taken.');
+        res.redirect('/client/edit/'+req.params['id']);
+	}
 });
 
 router.get('/client/delete/:id',auth, firmAttrAuth, (req,res) => {

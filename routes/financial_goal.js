@@ -88,7 +88,7 @@ router.get("/financial-goal/edit/:id", auth, firmAuth, csrfProtection, async (re
 		year.push(i);
 	}
 	const edit_financial_goal = await FinancialGoal.findById(req.params['id']);
-	const attorney = await await User.findAll({
+	const attorney = await User.findAll({
 		where: {role_id: 3}
 	});
 	res.render('financial_goal/edit', {layout: 'dashboard', csrfToken: req.csrfToken(), finan_goal: edit_financial_goal, attorney, year});
