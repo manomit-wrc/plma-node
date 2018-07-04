@@ -26,17 +26,34 @@ var csrfProtection = csrf({ cookie: true });
 var csv = require('fast-csv');
 var path      = require('path');
 var fs = require('fs');
+const multer  = require('multer');
+var xlsx = require('node-xlsx');
 const router = express.Router();
+var fileExt = '';
+var fileName = '';
 
+var storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, 'public/import-client-excel');
+	},
+	filename: function (req, file, cb) {
+		fileExt = 'xlsx';
+		fileName = req.user.id + '-' + Date.now() + '.' + fileExt;
+		cb(null, fileName);
+	}
+})
+var upload_client_excel = multer({ storage: storage });
 
 function removePhoneMask (phone_no){
-        var phone_no = phone_no.replace("-","");
-        phone_no = phone_no.replace(")","");
-        phone_no = phone_no.replace("(","");
-        phone_no = phone_no.replace(" ","");
-        return phone_no;
+	var phone_no = phone_no.replace("-","");
+	phone_no = phone_no.replace(")","");
+	phone_no = phone_no.replace("(","");
+	phone_no = phone_no.replace(" ","");
+	return phone_no;
 
 }
+
+
 
 //============================================={{{{{industry type}}}}}=========================================
 
@@ -56,67 +73,67 @@ router.get('/industry',auth,csrfProtection, (req,res) => {
 
 
 		// }
-}).then(name => {
+	}).then(name => {
 		// console.log(data);
 		res.render('industry_type/industry', { layout: 'dashboard', csrfToken: req.csrfToken(), name: name});
- });
- });
+	});
+});
 router.post('/industry/add', auth, csrfProtection, (req, res) => {
-    console.log(req.body);
-    var code = req.body.code;
-    var industryname = req.body.industryname;
-    var remarks = req.body.remarks;
-    industry_type.findAndCountAll({
-      where:{
-        code: code
-      }
-    }).then(result => {
-      if(result.count > 0){
-        res.json({msg: 'ERRR'});
-      }else{
-        industry_type.create({code: code,industry_name: industryname,remarks: remarks}).then(resp => {
-					res.json({msg: 'sucess'});
-        });
-      }
-    });
+	console.log(req.body);
+	var code = req.body.code;
+	var industryname = req.body.industryname;
+	var remarks = req.body.remarks;
+	industry_type.findAndCountAll({
+		where:{
+			code: code
+		}
+	}).then(result => {
+		if(result.count > 0){
+			res.json({msg: 'ERRR'});
+		}else{
+			industry_type.create({code: code,industry_name: industryname,remarks: remarks}).then(resp => {
+				res.json({msg: 'sucess'});
+			});
+		}
+	});
 });
 
 
 router.get('/industry/edit/:id',auth,csrfProtection, (req,res) => {
-industry_type.findById(req.params.id).then(editdata => {
-res.render('industry_type/update', { layout: 'dashboard', csrfToken: req.csrfToken(), editdata :editdata});
+	industry_type.findById(req.params.id).then(editdata => {
+		res.render('industry_type/update', { layout: 'dashboard', csrfToken: req.csrfToken(), editdata :editdata});
+	});
 });
- });
 
- router.post('/industry/updateindustry/:id',auth,csrfProtection, (req,res) => {
-   var code = req.body.code;
-   var industryname = req.body.industryname;
-   var remarks = req.body.remarks;
-   console.log(req.params.id);
-   industry_type.findAndCountAll({
-     where:{
-       code: code
-     }
-   }).then(result => {
-     if(result.count > 1){
-       res.json({msg: 'ERRR'});
-     }else if(result.count == 1 || result.count == 0){
-       industry_type.update({code: code,industry_name: industryname,remarks: remarks},{where:{id: req.params.id}}).then(resp => {
-         res.end("success");
-       });
-     }
-   });
- });
- router.get('/industry/delete/:id',auth, (req,res) => {
-   console.log(req.params.id);
-   industry_type.destroy({
-     where:{
-       id: req.params.id
-     }
-   }).then(resp => {
-     res.redirect('/industry');
-   });
- });
+router.post('/industry/updateindustry/:id',auth,csrfProtection, (req,res) => {
+	var code = req.body.code;
+	var industryname = req.body.industryname;
+	var remarks = req.body.remarks;
+	console.log(req.params.id);
+	industry_type.findAndCountAll({
+		where:{
+			code: code
+		}
+	}).then(result => {
+		if(result.count > 1){
+			res.json({msg: 'ERRR'});
+		}else if(result.count == 1 || result.count == 0){
+			industry_type.update({code: code,industry_name: industryname,remarks: remarks},{where:{id: req.params.id}}).then(resp => {
+				res.end("success");
+			});
+		}
+	});
+});
+router.get('/industry/delete/:id',auth, (req,res) => {
+	console.log(req.params.id);
+	industry_type.destroy({
+		where:{
+			id: req.params.id
+		}
+	}).then(resp => {
+		res.redirect('/industry');
+	});
+});
 //============================================={{{{{{settings}}}}}}==========================================
 router.get('/settings',auth,csrfProtection, async (req,res) => {
 	let zipcodes;
@@ -143,157 +160,157 @@ router.get('/settings',auth,csrfProtection, async (req,res) => {
 //insert
 router.post('/settings/insert',auth,csrfProtection, (req,res) => {
 
-    console.log(req.body);
-    var companyname = req.body.companyname;
-    var contactperson = req.body.contactperson;
-    var address = req.body.address;
-		var country = req.body.country;
-		var city = req.body.city;
-		var state = req.body.state;
-		var postalcode = req.body.postalcode;
-		var email = req.body.email;
-		var phnumber = req.body.phnumber;
-		var mbnumber = req.body.mbnumber;
-		var fax = req.body.fax;
-    var weburl = req.body.weburl;
+	console.log(req.body);
+	var companyname = req.body.companyname;
+	var contactperson = req.body.contactperson;
+	var address = req.body.address;
+	var country = req.body.country;
+	var city = req.body.city;
+	var state = req.body.state;
+	var postalcode = req.body.postalcode;
+	var email = req.body.email;
+	var phnumber = req.body.phnumber;
+	var mbnumber = req.body.mbnumber;
+	var fax = req.body.fax;
+	var weburl = req.body.weburl;
 
-		var hidden_field =  req.body.hidden_field;
+	var hidden_field =  req.body.hidden_field;
 
-   if(hidden_field != ""){
-		 setting.update({company_name: companyname,contact_person: contactperson,address: address,country: country,city: city,state: state,postal_code: postalcode,phone_number: phnumber,mobile_number: mbnumber,email: email,fax: fax,website_url: weburl},{where:{id: hidden_field}}).then(resp => {
-		 res.end("success");
+	if(hidden_field != ""){
+		setting.update({company_name: companyname,contact_person: contactperson,address: address,country: country,city: city,state: state,postal_code: postalcode,phone_number: phnumber,mobile_number: mbnumber,email: email,fax: fax,website_url: weburl},{where:{id: hidden_field}}).then(resp => {
+			res.end("success");
 		});
-   }else{
-		 setting.create({company_name: companyname,contact_person: contactperson,address: address,country: country,city: city,state: state,postal_code: postalcode,phone_number: phnumber,mobile_number: mbnumber,email: email,fax: fax,website_url: weburl}).then(resp => {
-		 res.end("success");
+	}else{
+		setting.create({company_name: companyname,contact_person: contactperson,address: address,country: country,city: city,state: state,postal_code: postalcode,phone_number: phnumber,mobile_number: mbnumber,email: email,fax: fax,website_url: weburl}).then(resp => {
+			res.end("success");
 
 		});
-  }
-	});
+	}
+});
 
 
 //============================
 
 
-	router.post('/client/findCityByState',auth, firmAttrAuth, csrfProtection, (req,res) => {
+router.post('/client/findCityByState',auth, firmAttrAuth, csrfProtection, (req,res) => {
 
-		City.findAll({
-			where:{
-				state: req.body.state
-			}
+	City.findAll({
+		where:{
+			state: req.body.state
 		}
-		).then(city => {
+	}
+	).then(city => {
 			// res.send(city);
 			res.json({city: city});
 		});
-	});
-	router.post('/client/findPinByCity',auth, firmAttrAuth, csrfProtection, (req,res) => {
-		city.findById(req.body.city_id).then(row => {
-			console.log(row.name);
-			Zipcode.findAll({
-				where:{
-					city_name: row.name
-				}
+});
+router.post('/client/findPinByCity',auth, firmAttrAuth, csrfProtection, (req,res) => {
+	city.findById(req.body.city_id).then(row => {
+		console.log(row.name);
+		Zipcode.findAll({
+			where:{
+				city_name: row.name
 			}
-			).then(pin => {
-				console.log(JSON.stringify(pin, undefined, 2));
+		}
+		).then(pin => {
+			console.log(JSON.stringify(pin, undefined, 2));
 				// res.send(city);
 				res.json({pin: pin});
 			});
-		});
-		});
+	});
+});
 
 //===================================================Designation route starts==========================================================
 router.get('/designations', csrfProtection, auth, siteAuth, (req, res) => {
 	console.log(req.user);
-		var whereCondition = {};
-		if(req.query.searchCode) {
-			whereCondition.code = req.query.searchCode;
-		}
-		if(req.query.searchTitle) {
-			whereCondition.title = req.query.searchTitle;
-		}
-		var success_add_designation = req.flash('success_add_designation')[0];
-		var success_edit_designation = req.flash('success_edit_designation')[0];
-		var success_delete_designation = req.flash('success_delete_designation')[0];
-    designation.findAll({
-			where: whereCondition
-		}).then(rows => {
+	var whereCondition = {};
+	if(req.query.searchCode) {
+		whereCondition.code = req.query.searchCode;
+	}
+	if(req.query.searchTitle) {
+		whereCondition.title = req.query.searchTitle;
+	}
+	var success_add_designation = req.flash('success_add_designation')[0];
+	var success_edit_designation = req.flash('success_edit_designation')[0];
+	var success_delete_designation = req.flash('success_delete_designation')[0];
+	designation.findAll({
+		where: whereCondition
+	}).then(rows => {
       // console.log(JSON.stringify(rows,undefined,2));
-        res.render('designations/index', { layout: 'dashboard', csrfToken: req.csrfToken(), rows:  rows,success_add_designation,success_edit_designation,success_delete_designation, searchTitle: req.query.searchTitle, searchCode: req.query.searchCode  });
-    });
+      res.render('designations/index', { layout: 'dashboard', csrfToken: req.csrfToken(), rows:  rows,success_add_designation,success_edit_designation,success_delete_designation, searchTitle: req.query.searchTitle, searchCode: req.query.searchCode  });
+  });
 
 });
 router.post('/designations/add', auth, siteAuth, csrfProtection, (req, res) => {
-    console.log(req.body);
-    var code = req.body.code;
-    var title = req.body.designation;
-    var remarks = req.body.remarks;
-    designation.findAndCountAll({
-      where:{
-        code: code
-      }
-    }).then(result => {
-      if(result.count > 0){
-        res.json({msg: 'ERRR'});
-      }else{
-        designation.create({code: code,title: title,remarks: remarks}).then(resp => {
-					req.flash('success_add_designation','Designation added successfully');
-        res.json({msg: 'success'});
+	console.log(req.body);
+	var code = req.body.code;
+	var title = req.body.designation;
+	var remarks = req.body.remarks;
+	designation.findAndCountAll({
+		where:{
+			code: code
+		}
+	}).then(result => {
+		if(result.count > 0){
+			res.json({msg: 'ERRR'});
+		}else{
+			designation.create({code: code,title: title,remarks: remarks}).then(resp => {
+				req.flash('success_add_designation','Designation added successfully');
+				res.json({msg: 'success'});
 
-        });
-      }
+			});
+		}
 
 
-    });
+	});
 
 });
 router.get('/designations/find',auth, siteAuth, (req,res) => {
-  var id = req.body.id;
-  designation.findById(27).then(rows => {
-    console.log(rows);
-    res.send(rows);
-  });
+	var id = req.body.id;
+	designation.findById(27).then(rows => {
+		console.log(rows);
+		res.send(rows);
+	});
 });
 router.get('/designations/update/:id',auth, siteAuth, csrfProtection, (req,res) => {
-  designation.findById(req.params.id).then(row => {
-    console.log(JSON.stringify(row,undefined,10));
-    res.render('designations/update',{layout: 'dashboard', csrfToken: req.csrfToken(), designation: row});
-  });
+	designation.findById(req.params.id).then(row => {
+		console.log(JSON.stringify(row,undefined,10));
+		res.render('designations/update',{layout: 'dashboard', csrfToken: req.csrfToken(), designation: row});
+	});
 
 
 });
 router.post('/designations/updateDesignation/:id',auth, siteAuth,csrfProtection, (req,res) => {
-  var code = req.body.code;
-  var title = req.body.designation;
-  var remarks = req.body.remarks;
-  console.log(req.params.id);
-  designation.findAndCountAll({
-    where:{
-      code: code
-    }
-  }).then(result => {
-    if(result.count > 1){
-      res.json({msg: 'ERRR'});
-    }else if(result.count == 1 || result.count == 0){
-      designation.update({code: code,title: title,remarks: remarks},{where:{id: req.params.id}}).then(resp => {
+	var code = req.body.code;
+	var title = req.body.designation;
+	var remarks = req.body.remarks;
+	console.log(req.params.id);
+	designation.findAndCountAll({
+		where:{
+			code: code
+		}
+	}).then(result => {
+		if(result.count > 1){
+			res.json({msg: 'ERRR'});
+		}else if(result.count == 1 || result.count == 0){
+			designation.update({code: code,title: title,remarks: remarks},{where:{id: req.params.id}}).then(resp => {
 				req.flash('success_edit_designation','Designation edited successfully');
 				res.json({msg: 'success'});
-      });
-    }
-  });
+			});
+		}
+	});
 
 });
 router.get('/designations/delete/:id',auth, siteAuth, (req,res) => {
-  console.log(req.params.id);
-  designation.destroy({
-    where:{
-      id: req.params.id
-    }
-  }).then(resp => {
+	console.log(req.params.id);
+	designation.destroy({
+		where:{
+			id: req.params.id
+		}
+	}).then(resp => {
 		req.flash('success_delete_designation','Designation deleted successfully');
-    res.redirect('/designations');
-  });
+		res.redirect('/designations');
+	});
 });
 
 
@@ -318,7 +335,7 @@ router.get('/attorneys',auth, firmAuth,csrfProtection, (req,res) => {
 	}).then(rows => {
 
 
-	res.render('attorney/index', { layout: 'dashboard', csrfToken: req.csrfToken(), rows: rows,  success_create_attorney, success_delete_attorney,success_edit_attorney,   searchName: req.query.searchName, searchEmail: req.query.searchEmail});
+		res.render('attorney/index', { layout: 'dashboard', csrfToken: req.csrfToken(), rows: rows,  success_create_attorney, success_delete_attorney,success_edit_attorney,   searchName: req.query.searchName, searchEmail: req.query.searchEmail});
 	});
 
 });
@@ -356,31 +373,31 @@ router.post('/attorneys/add',auth, firmAuth,csrfProtection, (req,res) => {
 
 			user.create({
 				first_name: first_name,
-				 last_name: last_name,
-					email: email,
-					password: password,
-					date_of_birth:  req.body.dob,
-					gender: gender,
-					address: address,
-					city: city,
-					state: state,
-					country: country,
-					mobile_no: mobile_no,
-					firm_id: firm_id,
-					role_id: '3'
-				}).then(rows => {
-				  req.flash('success_create_attorney','Attorney successfully added');
-					res.json({msg: "Success"});
-				});
+				last_name: last_name,
+				email: email,
+				password: password,
+				date_of_birth:  req.body.dob,
+				gender: gender,
+				address: address,
+				city: city,
+				state: state,
+				country: country,
+				mobile_no: mobile_no,
+				firm_id: firm_id,
+				role_id: '3'
+			}).then(rows => {
+				req.flash('success_create_attorney','Attorney successfully added');
+				res.json({msg: "Success"});
+			});
 		}
 
 	});
 
 });
 router.get('/attorneys/editAttorneys/:id',auth, firmAuth, csrfProtection, (req,res) => {
-	 user.findById(req.params.id).then(rows => {
-		 res.render('attorney/updateattorney',{ layout: 'dashboard', csrfToken: req.csrfToken(), rows: rows });
-	 });
+	user.findById(req.params.id).then(rows => {
+		res.render('attorney/updateattorney',{ layout: 'dashboard', csrfToken: req.csrfToken(), rows: rows });
+	});
 });
 router.post('/attorneys/updateAttorney/:id',auth, firmAuth,csrfProtection, (req,res) => {
 	console.log(req.params.id);
@@ -408,31 +425,31 @@ router.post('/attorneys/updateAttorney/:id',auth, firmAuth,csrfProtection, (req,
 			res.json({msg: 'error'});
 		}else {
 			user.update({
-								first_name: first_name,
-								last_name: last_name,
-								email: email,
-								password: password,
-								date_of_birth: dob,
-								gender: gender,
-								address: address,
-								city: city,
-								state: state,
-								country: country,
-								mobile_no: mobile_no,
-								firm_id: firm_id
-							},{
-								where:{
-									id: req.params.id}
-								}).then(resp => {
-									console.log(req.params.id);
-									req.flash('success_edit_attorney','Attorney edited successfully');
-									res.json({msg: 'success'});
-								console.log(req.params.id);
-					    });
-		}
+				first_name: first_name,
+				last_name: last_name,
+				email: email,
+				password: password,
+				date_of_birth: dob,
+				gender: gender,
+				address: address,
+				city: city,
+				state: state,
+				country: country,
+				mobile_no: mobile_no,
+				firm_id: firm_id
+			},{
+				where:{
+					id: req.params.id}
+				}).then(resp => {
+					console.log(req.params.id);
+					req.flash('success_edit_attorney','Attorney edited successfully');
+					res.json({msg: 'success'});
+					console.log(req.params.id);
+				});
+			}
 
 
-	});
+		});
 
 	// user.findAndCountAll({
 	// 	where:{
@@ -472,15 +489,15 @@ router.post('/attorneys/updateAttorney/:id',auth, firmAuth,csrfProtection, (req,
 });
 
 router.get('/attorneys/delete/:id',auth, firmAuth, (req,res) => {
-  console.log(req.params.id);
-  user.destroy({
-    where:{
-      id: req.params.id
-    }
-  }).then(resp => {
+	console.log(req.params.id);
+	user.destroy({
+		where:{
+			id: req.params.id
+		}
+	}).then(resp => {
 		req.flash('success_delete_attorney','Attorney deleted successfully');
-    res.redirect('/attorneys');
-  });
+		res.redirect('/attorneys');
+	});
 });
 /*==========================================Attorney route ends==============================================*/
 
@@ -501,7 +518,7 @@ router.get('/client',auth, firmAttrAuth, csrfProtection, (req,res) => {
 		whereCondition.user_id = req.user.id;
 	}
 	client.findAll({
-		 where: whereCondition
+		where: whereCondition
 	}).then(clients => {
 		res.render('client/index',{ 
 			layout: 'dashboard',  
@@ -518,14 +535,14 @@ router.get('/client/add',auth, firmAttrAuth, csrfProtection, (req,res) => {
 	var error_message = req.flash('error-client-message')[0];
 	designation.findAll().then(designation => {
 		industry_type.findAll().then(industry => {
-	Country.findAll().then(country => {
+			Country.findAll().then(country => {
 
-		State.findAll().then(state => {
-			res.render('client/addclient',{ layout: 'dashboard', csrfToken: req.csrfToken(), country: country, state: state, designations: designation, industry: industry, error_message  });
+				State.findAll().then(state => {
+					res.render('client/addclient',{ layout: 'dashboard', csrfToken: req.csrfToken(), country: country, state: state, designations: designation, industry: industry, error_message  });
+				});
+			});
 		});
 	});
-});
-});
 
 });
 router.get('/client/edit/:id',auth, firmAttrAuth, csrfProtection, async(req,res) => {
@@ -537,17 +554,23 @@ router.get('/client/edit/:id',auth, firmAttrAuth, csrfProtection, async(req,res)
 	const client_state = await State.findAll({
 		where: {country_id : "233"}
 	});
-	const client_city = await City.findAll({
-		where: {
-			state_id : clients.state.toString()
-		}
-	});
-	const client_cities = await City.findById(clients.city.toString());
-	const client_zipcode = await Zipcode.findAll({
-		where: {
-			city_name: client_cities.name
-		}
-	});
+	var client_city = [];
+	var client_zipcode = [];
+	if(clients.state != null){
+		var client_city = await City.findAll({
+			where: {
+				state_id : clients.state.toString()
+			}
+		});	
+	}
+	if(clients.city !== null){
+		var client_cities = await City.findById(clients.city.toString());
+		var client_zipcode = await Zipcode.findAll({
+			where: {
+				city_name: client_cities.name
+			}
+		});
+	}
 
 	res.render('client/editClient',{ layout: 'dashboard', csrfToken: req.csrfToken(),designation: designations,industry: industrys,client:clients,country: client_country, state: client_state, city: client_city, zipcode: client_zipcode, error_message });
 });
@@ -556,8 +579,8 @@ router.post('/client/addClient',auth, firmAttrAuth,csrfProtection, async (req,re
 	const formatDate = req.body.client_dob ? req.body.client_dob.split("-") : '';
 	const client_data = await client.findOne({
 		where: {
-            email: req.body.email
-        }
+			email: req.body.email
+		}
 	});
 	if(client_data === null)
 	{
@@ -593,7 +616,7 @@ router.post('/client/addClient',auth, firmAttrAuth,csrfProtection, async (req,re
 				remarks: req.body.remarks
 			});
 			req.flash('success-message', 'Client Added Successfully');
-            res.redirect('/client')
+			res.redirect('/client')
 		}
 		else
 		{
@@ -631,25 +654,25 @@ router.post('/client/addClient',auth, firmAttrAuth,csrfProtection, async (req,re
 				remarks: req.body.remarks
 			});
 			req.flash('success-message', 'Client Added Successfully');
-            res.redirect('/client')
+			res.redirect('/client')
 		}
 	}
 	else
 	{
 		req.flash('error-client-message', 'Email already taken.');
-        res.redirect('/client/add');
+		res.redirect('/client/add');
 	}
 });
 router.post('/client/editClient/:id',auth, firmAttrAuth,csrfProtection, async (req,res) => {
 	const formatDate = req.body.client_dob ? req.body.client_dob.split("-") : '';
 	const client_edit_data = await client.findOne({
-        where: {
-            email: req.body.email,
-            id: {
-                [Op.ne]: req.params['id']
-            }
-        }
-    });
+		where: {
+			email: req.body.email,
+			id: {
+				[Op.ne]: req.params['id']
+			}
+		}
+	});
 	if(client_edit_data === null)
 	{
 		const edit_client = await client.update({
@@ -686,27 +709,27 @@ router.post('/client/editClient/:id',auth, firmAttrAuth,csrfProtection, async (r
 			client_company : req.body.client_company,
 			remarks: req.body.remarks
 		},{where: {id: req.params['id']}
-		});
+	});
 		req.flash('success-edit-message', 'Client Updated Successfully');
-        res.redirect('/client')
+		res.redirect('/client')
 	} 
 	else
 	{
 		req.flash('error-clientEdit-message', 'Email already taken.');
-        res.redirect('/client/edit/'+req.params['id']);
+		res.redirect('/client/edit/'+req.params['id']);
 	}
 });
 
 router.get('/client/delete/:id',auth, firmAttrAuth, (req,res) => {
-  console.log(req.params.id);
-  client.destroy({
-    where:{
-      id: req.params.id
-    }
-  }).then(resp => {
+	console.log(req.params.id);
+	client.destroy({
+		where:{
+			id: req.params.id
+		}
+	}).then(resp => {
 		// req.flash('success_delete_attorney','Attorney deleted successfully');
-    res.redirect('/client');
-  });
+		res.redirect('/client');
+	});
 });
 router.post('/client/findCityByState',auth, firmAttrAuth, csrfProtection, (req,res) => {
 
@@ -737,7 +760,7 @@ router.post('/client/findPinByCity',auth, firmAttrAuth, csrfProtection, (req,res
 	});
 
 
-	});
+});
 
 
 /*==========================================Client route ends==============================================*/
@@ -749,16 +772,16 @@ router.get('/import/csv',auth,csrfProtection, (req,res) => {
 	csv
 	.fromPath("./public/states (1).csv")
 	.on("data", function(data){
-			console.log(data[2]);
-			state.create({id:data[0],code: data[1],name: data[2],country_id: data[3]}).then(result =>{
-				console.log("END");
-			});
+		console.log(data[2]);
+		state.create({id:data[0],code: data[1],name: data[2],country_id: data[3]}).then(result =>{
+			console.log("END");
+		});
 	})
 	.on("end", function(){
 			// console.log("done");
 
 			res.redirect('/');
-	});
+		});
 
 
 
@@ -775,72 +798,72 @@ router.get('/budgets', csrfProtection, siteAuth, auth, (req, res) => {
 	if(req.query.searchName) {
 		whereCondition.name = req.query.searchName;
 	}
-     budget.findAll({
-			 where: whereCondition
-		 }).then(rows => {
-        res.render('budgets/index', { layout: 'dashboard', csrfToken: req.csrfToken(),rows:  rows, searchName: req.query.searchName, searchCode: req.query.searchCode   });
-    });
+	budget.findAll({
+		where: whereCondition
+	}).then(rows => {
+		res.render('budgets/index', { layout: 'dashboard', csrfToken: req.csrfToken(),rows:  rows, searchName: req.query.searchName, searchCode: req.query.searchCode   });
+	});
 
 });
 //insert
 router.post('/budgets/addbudget', auth, siteAuth, csrfProtection, (req, res) => {
-    console.log(req.body);
-    var code = req.body.code;
-    var name = req.body.name;
-    var remarks = req.body.remarks;
-    budget.findAndCountAll({
-      where:{
-        code: code
-      }
-    }).then(result => {
-      if(result.count > 0){
-        res.json({msg: 'ERRR'});
-      }else{
-        budget.create({code: code,name: name,remarks: remarks}).then(resp => {
-          res.end("Success");
-        });
-      }
+	console.log(req.body);
+	var code = req.body.code;
+	var name = req.body.name;
+	var remarks = req.body.remarks;
+	budget.findAndCountAll({
+		where:{
+			code: code
+		}
+	}).then(result => {
+		if(result.count > 0){
+			res.json({msg: 'ERRR'});
+		}else{
+			budget.create({code: code,name: name,remarks: remarks}).then(resp => {
+				res.end("Success");
+			});
+		}
 
 
-    });
+	});
 });
- router.get('/budgets/edit/:id',auth, siteAuth,csrfProtection, (req,res) => {
+router.get('/budgets/edit/:id',auth, siteAuth,csrfProtection, (req,res) => {
 
 
-	 budget.findById(req.params.id).then(rows => {
+	budget.findById(req.params.id).then(rows => {
 
-	 res.render('budgets/edit', { layout: 'dashboard', csrfToken: req.csrfToken(),rows:  rows   });
-});
+		res.render('budgets/edit', { layout: 'dashboard', csrfToken: req.csrfToken(),rows:  rows   });
+	});
 });
 router.post('/budgets/update/:id',auth, siteAuth,csrfProtection, (req,res) => {
-  var code = req.body.code;
-  var name = req.body.name;
-  var remarks = req.body.remarks;
-  console.log(req.params.id);
-  budget.findAndCountAll({
-    where:{
-      code: code
-    }
-  }).then(result => {
-    if(result.count > 0){
-      res.json({msg: 'ERRR'});
-    }else{
-      budget.update({code: code,name: name,remarks: remarks},{where:{id: req.params.id}}).then(resp => {
-        res.end("success");
-      });
-    }
-  });
+	var code = req.body.code;
+	var name = req.body.name;
+	var remarks = req.body.remarks;
+	console.log(req.params.id);
+	budget.findAndCountAll({
+		where:{
+			code: code
+		}
+	}).then(result => {
+		if(result.count > 0){
+			res.json({msg: 'ERRR'});
+		}else{
+			budget.update({code: code,name: name,remarks: remarks},{where:{id: req.params.id}}).then(resp => {
+				res.end("success");
+			});
+		}
+	});
 
 });
 router.get('/budgets/delete/:id',auth, siteAuth, (req,res) => {
-  console.log(req.params.id);
-  budget.destroy({
-    where:{
-      id: req.params.id
-    }
-  }).then(resp => {
-    res.redirect('/budgets');
-  });
+	console.log(req.params.id);
+	budget.destroy({
+		where:{
+			id: req.params.id
+		}
+	}).then(resp => {
+		res.redirect('/budgets');
+	});
 });
 /*==========================Start practice area//Bratin Meheta 12-06-2018=============================*/
 
@@ -899,19 +922,19 @@ router.post('/admin/edit-practice-area/:id', auth, siteAuth, csrfProtection, (re
 	}).then(practice_area => {
 		if(practice_area.length === 0) {
 			PracticeArea.update({
-					code: req.body.edit_code,
-					name: req.body.edit_name,
-					remarks: req.body.edit_remarks
-				},{where: {id: req.params['id']}
-			}).then(result =>{
-				res.json({"b":1});
-			});
-		}
-		else {
+				code: req.body.edit_code,
+				name: req.body.edit_name,
+				remarks: req.body.edit_remarks
+			},{where: {id: req.params['id']}
+		}).then(result =>{
+			res.json({"b":1});
+		});
+	}
+	else {
 
-			res.json({"b":2});
-		}
-	});
+		res.json({"b":2});
+	}
+});
 });
 
 router.post('/admin/delete-practice-area/:id', auth, siteAuth, csrfProtection, (req, res) =>{
@@ -977,19 +1000,19 @@ router.post('/admin/edit-section/:id', auth, siteAuth, csrfProtection, (req, res
 	}).then(section => {
 		if(section.length === 0) {
 			Section.update({
-			name: req.body.edit_name,
-			description: req.body.edit_description,
-			remarks: req.body.edit_remarks
+				name: req.body.edit_name,
+				description: req.body.edit_description,
+				remarks: req.body.edit_remarks
 			},{where: {id: req.params['id']}
-			}).then(result =>{
-				res.json({"edit_section":1});
-			});
-		}
-		else {
+		}).then(result =>{
+			res.json({"edit_section":1});
+		});
+	}
+	else {
 
-			res.json({"edit_section":2});
-		}
-	});
+		res.json({"edit_section":2});
+	}
+});
 });
 
 router.post('/admin/delete-section/:id', auth, siteAuth, csrfProtection, (req, res) =>{
@@ -1063,15 +1086,15 @@ router.post('/admin/edit-jurisdiction/:id', auth, siteAuth, csrfProtection, (req
 				name: req.body.edit_name,
 				remarks: req.body.edit_remarks
 			},{where: {id: req.params['id']}
-			}).then(result =>{
-				res.json({"edit_jurisdiction":1});
-			});
-		}
-		else {
+		}).then(result =>{
+			res.json({"edit_jurisdiction":1});
+		});
+	}
+	else {
 
-			res.json({"edit_jurisdiction":2});
-		}
-	});
+		res.json({"edit_jurisdiction":2});
+	}
+});
 });
 
 router.post('/admin/delete-jurisdiction/:id', auth, siteAuth, csrfProtection, (req, res) =>{
@@ -1145,15 +1168,15 @@ router.post('/admin/edit-group/:id', auth, siteAuth, csrfProtection, (req, res) 
 				name: req.body.edit_name,
 				remarks: req.body.edit_remarks
 			},{where: {id: req.params['id']}
-			}).then(result =>{
-				res.json({"edit_group":1});
-			});
-		}
-		else {
+		}).then(result =>{
+			res.json({"edit_group":1});
+		});
+	}
+	else {
 
-			res.json({"edit_group":2});
-		}
-	});
+		res.json({"edit_group":2});
+	}
+});
 });
 
 router.post('/admin/delete-group/:id', auth, siteAuth, csrfProtection, (req, res) =>{
@@ -1165,5 +1188,137 @@ router.post('/admin/delete-group/:id', auth, siteAuth, csrfProtection, (req, res
 });
 
 /*========================================End group========================================*/
+
+/*============================Starts Import Client Excel Data =====================================*/
+function convertToJSON(array) {
+	var first = array[0].join()
+	var headers = first.split(',');
+
+	var jsonData = [];
+	for ( var i = 1, length = array.length; i < length; i++ )
+	{
+		var myRow = array[i].join();
+		var row = myRow.split(',');
+
+		var data = {};
+		for ( var x = 0; x < row.length; x++ )
+		{
+			data[headers[x]] = row[x];
+		}
+		jsonData.push(data);
+	}
+	return jsonData;
+}
+
+String.prototype.capitalize = function() {
+	return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
+router.post('/client/upload-excel', auth, upload_client_excel.single('client_xls_file'), csrfProtection, async(req, res)=>{
+	var client_xl = xlsx.parse(fs.readFileSync('public/import-client-excel/'+fileName));
+	var importedData = JSON.stringify(convertToJSON(client_xl[0].data));
+	var excelClient = JSON.parse(importedData);
+	for(var i=0; i<excelClient.length; i++)
+	{
+		const formatDate = excelClient[i].dob ? excelClient[i].dob.split("-") : '';
+		var excel_state = excelClient[i].state.capitalize();
+		var excel_city = excelClient[i].city.capitalize();
+		var excel_zip = excelClient[i].zipcode.capitalize();
+		var fetchState = [];
+		var fetchCity = [];
+		var fetchZip = [];
+		if(excelClient[i].state !== null){
+			var fetchState = await State.findAll({
+				where: {name: excel_state }
+			});
+		}
+		if(excelClient[i].city !== null){
+			var fetchCity = await City.findAll({
+				where: {name: excel_city }
+			});
+		}
+		if(excelClient[i].zipcode !== null){
+			var fetchZip = await Zipcode.findAll({
+				where: {zip: excel_zip }
+			});
+		}
+		const client_excel_data = await client.findOne({
+			where: {
+				email: excelClient[i].email
+			}
+		});
+		if(client_excel_data === null){
+			if(excelClient[i].client_type == "organization")
+			{
+
+				const storeClientXlO = await client.create({
+					organization_name: excelClient[i].oraganisation_name,
+					organization_id: excelClient[i].organisation_id,
+					organization_code: excelClient[i].organisation_code,
+					email: excelClient[i].email,
+					mobile_no: excelClient[i].mobile,
+					address1: excelClient[i].address1,
+					address2: excelClient[i].address2,
+					address_line_3: excelClient[i].address3,
+					company_name: excelClient[i].company_name,
+					firm_id: req.user.firm_id,
+					user_id: req.user.id,
+					fax: excelClient[i].fax,
+					twitter: "http://"+excelClient[i].twitter,
+					linkdn: "http://"+excelClient[i].linkdn,
+					facebook: "http://"+excelClient[i].facebook,
+					google: "http://"+excelClient[i].google,
+					client_type: "O",
+					IM: excelClient[i].im,
+					social_security_no: excelClient[i].social_security_no,
+					country: 233,
+					state: fetchState[0].id,
+					city: fetchCity[0].id,
+					pin_code: fetchZip[0].id,
+					remarks: excelClient[i].edit_remarks
+				});
+			}
+			else
+			{
+				const storeClientXlI = await client.create({
+					first_name: excelClient[i].first_name,
+					last_name: excelClient[i].last_name,
+					email: excelClient[i].email,
+					mobile_no: excelClient[i].mobile,
+					address1: excelClient[i].address1,
+					address2: excelClient[i].address2,
+					address_line_3: excelClient[i].address3,
+					company_name: excelClient[i].company_name,
+					firm_id: req.user.firm_id,
+					user_id: req.user.id,
+					fax: excelClient[i].fax,
+					twitter: "http://"+excelClient[i].twitter,
+					linkdn: "http://"+excelClient[i].linkdn,
+					facebook: "http://"+excelClient[i].facebook,
+					google: "http://"+excelClient[i].google,
+					client_type: "I",
+					IM: excelClient[i].im,
+					social_security_no: excelClient[i].social_security_no,
+					date_of_birth: formatDate ? formatDate[2]+"-"+formatDate[1]+"-"+formatDate[0] : null,
+					gender: excelClient[i].gender,
+					client_id : excelClient[i].client_id,
+					master_id : excelClient[i].master_id,
+					client_company : excelClient[i].client_company,
+					country: 233,
+					state: fetchState[0].id,
+					city: fetchCity[0].id,
+					pin_code: fetchZip[0].id,
+					remarks: excelClient[i].remarks
+				});
+			}
+		}
+	}
+	req.flash('success-message', 'Client Imported Successfully');
+	res.redirect('/client');
+});
+
+
+
+/*============================Ends Import Client Excel Data =====================================*/
 
 module.exports = router;
