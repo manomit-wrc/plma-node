@@ -1250,7 +1250,6 @@ router.post('/client/upload-excel', auth, upload_client_excel.single('client_xls
 		if(client_excel_data === null){
 			if(excelClient[i].client_type == "organization")
 			{
-
 				const storeClientXlO = await client.create({
 					organization_name: excelClient[i].oraganisation_name,
 					organization_id: excelClient[i].organisation_id,
