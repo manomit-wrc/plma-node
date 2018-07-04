@@ -1264,10 +1264,17 @@ router.post('/client/upload-excel', auth, upload_client_excel.single('client_xls
 					firm_id: req.user.firm_id,
 					user_id: req.user.id,
 					fax: excelClient[i].fax,
+<<<<<<< HEAD
 					twitter: "http://"+excelClient[i].twitter,
 					linkdn: "http://"+excelClient[i].linkdn,
 					facebook: "http://"+excelClient[i].facebook,
 					google: "http://"+excelClient[i].google,
+=======
+					twitter: `http://${excelClient[i].twitter}`,
+					linkdn: `http://${excelClient[i].linkdn}`,
+					facebook: `http://${excelClient[i].facebook}`,
+					google: `http://${excelClient[i].google}`,
+>>>>>>> ed2ed6d9bcc2a758ce2f3a067061b558397749a8
 					client_type: "O",
 					IM: excelClient[i].im,
 					social_security_no: excelClient[i].social_security_no,

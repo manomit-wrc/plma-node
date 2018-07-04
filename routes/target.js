@@ -8,7 +8,6 @@ const bCrypt = require('bcrypt-nodejs');
 const designation = require('../models').designation;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
-const excel = require('node-excel-export');
 const multer = require('multer');
 const PracticeArea = require('../models').practicearea;
 const Section = require('../models').section;
