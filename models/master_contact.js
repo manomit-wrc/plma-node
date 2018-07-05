@@ -1,6 +1,6 @@
 'use strict';
-module.exports = function(sequelize, DataTypes) {
-  var create - master - contact = sequelize.define('create-master-contact', {
+module.exports = (sequelize, DataTypes) => {
+  var master_contact = sequelize.define('master_contact', {
     first_name: DataTypes.STRING,
     last_name: DataTypes.STRING,
     email: DataTypes.STRING,
@@ -32,12 +32,9 @@ module.exports = function(sequelize, DataTypes) {
     im: DataTypes.STRING,
     address_remarks: DataTypes.TEXT,
     remarks: DataTypes.TEXT
-  }, {
-    classMethods: {
-      associate: function(models) {
-        // associations can be defined here
-      }
-    }
-  });
-  return create - master - contact;
+  }, {});
+  master_contact.associate = function(models) {
+    // associations can be defined here
+  };
+  return master_contact;
 };
