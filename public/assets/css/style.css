@@ -1600,6 +1600,12 @@ table.table-inbox tbody tr.checked {background-color: #ffffcc;}
    background-color: #4ab657;
 }
 
+.err_span {
+    color: red;
+    font-size: 14px;
+    font-weight: 500;
+}
+
 
 /*...File Input*/
 
