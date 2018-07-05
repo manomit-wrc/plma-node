@@ -21,6 +21,7 @@ const Country = require('../models').country;
 const industry_type = require('../models').industry_type;
 const setting = require('../models').setting;
 const Target = require('../models').target;
+const Client = require('../models').client;
 const Jurisdiction = require('../models').jurisdiction;
 const user = require('../models').user;
 var csrfProtection = csrf({ cookie: true });
@@ -67,6 +68,7 @@ router.get('/target', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	if (req.user.role_id != 2) {
 		whereCondition.user_id = req.user.id;
 	}
+	whereCondition.status = '1';
 	Target.findAll({
 		where: whereCondition
 	}).then(targets => {
@@ -134,7 +136,7 @@ router.post('/target/addtarget', auth, firmAttrAuth, csrfProtection, async (req,
 				remarks: req.body.remarks
 			});
 			req.flash('success-message', 'Target Added Successfully');
-			res.redirect('/target')
+			res.redirect('/target');
 		} else {
 			const store_ind_data = await Target.create({
 				first_name: req.body.target_first_name,
@@ -243,9 +245,9 @@ router.post('/target/edittarget/:id', auth, firmAttrAuth, csrfProtection, async 
 			target_id : req.body.client_id,
 			target_code : req.body.master_id,
 			remarks: req.body.remarks
-		}, {where: {id: req.params['id']}
-	});
-		req.flash('success-edit-message', 'Client Updated Successfully');
+			}, {where: {id: req.params['id']}
+		});
+		req.flash('success-edit-message', 'Target Updated Successfully');
 		res.redirect('/target')
 	} else {
 		req.flash('error-clientEdit-message', 'Email already taken.');
@@ -379,6 +381,67 @@ router.post('/target/import', auth, upload.single('file_name'), csrfProtection, 
 	}
 	req.flash('success-message', 'Target Imported Successfully');
 	res.redirect('/target');
+});
+
+router.post('/target/move-to-client', auth, async (req, res) => {
+	var target_ids = req.body.target_id;
+	var n = req.body.target_id.length;
+	for (i = 0; i < n; i++) {
+		//target_ids[i]
+		var target_data = await Target.findOne({
+			where: {
+				id: target_ids[i]
+			}
+		});
+		//console.log(target_data);
+		await Client.create({
+			first_name: target_data.first_name,
+			last_name: target_data.last_name,
+			email: target_data.email,
+			mobile_no: target_data.mobile_no,
+			fax: target_data.fax,
+			address1: target_data.address_1,
+			address2: target_data.address_2,
+			address_line_3: target_data.address3,
+			country: target_data.country,
+			state: target_data.state,
+			city: target_data.city,
+			pin_code: target_data.postal_code,
+			firm_id: target_data.firm_id,
+			designation_id: target_data.designation_id,
+			type: target_data.type,
+			association_type: target_data.association,
+			industry_type: target_data.industry_type,
+			company_name: target_data.company_name,
+			twitter: target_data.twitter,
+			linkdn: target_data.linked_in,
+			facebook: target_data.facebook,
+			google: target_data.google,
+			client_id: target_data.target_id,
+			master_id: target_data.target_code,
+			gender: target_data.gender,
+			date_of_birth: target_data.date_of_birth,
+			social_security_no: target_data.social_sequrity_no,
+			IM: target_data.im,
+			organization_name: target_data.organization_name,
+			organization_id: target_data.organization_id,
+			organization_code: target_data.organization_code,
+			user_id: target_data.user_id,
+			client_type: target_data.target_type,
+			remarks: target_data.remarks
+		});
+
+		await Target.update({
+			status: '0'
+			}, { where: {
+				id: target_ids[i]
+			}
+		});
+	}
+	res.json({
+		code: "200",
+        message: 'Success'
+	});
 });
 
 module.exports = router;
