@@ -9,6 +9,7 @@ const designation = require('../models').designation;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const multer = require('multer');
+const xlsx = require('node-xlsx');
 const PracticeArea = require('../models').practicearea;
 const Section = require('../models').section;
 const Group = require('../models').group;
@@ -31,16 +32,15 @@ const router = express.Router();
 var fileExt = '';
 var fileName = '';
 
-
 var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'public/target');
-    },
-    filename: function (req, file, cb) {
-      fileExt = file.originalname.split('.')[1];
-      fileName = req.user.id + '-' + Date.now() + '.' + fileExt;
-      cb(null, fileName);
-    }
+	destination: function (req, file, cb) {
+		cb(null, 'public/target');
+	},
+	filename: function (req, file, cb) {
+		fileExt = file.originalname.split('.')[1];
+		fileName = req.user.id + '-' + Date.now() + '.' + fileExt;
+		cb(null, fileName);
+	}
 })
 
 var upload = multer({ storage: storage });
@@ -264,8 +264,121 @@ router.get('/target/delete/:id', auth, firmAttrAuth, (req, res) => {
 	});
 });
 
-router.post('/target/import', auth, upload.single('file_name'), csrfProtection, (req, res) => {
-	console.log('target uploaded successfully');
+function convertToJSON(array) {
+	var first = array[0].join()
+	var headers = first.split(',');
+	var jsonData = [];
+	for ( var i = 1, length = array.length; i < length; i++ ) {
+		var myRow = array[i].join();
+		var row = myRow.split(',');
+		var data = {};
+		for ( var x = 0; x < row.length; x++ ) {
+			data[headers[x]] = row[x];
+		}
+		jsonData.push(data);
+	}
+	return jsonData;
+}
+
+String.prototype.capitalize = function() {
+	return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
+router.post('/target/import', auth, upload.single('file_name'), csrfProtection, async (req, res) => {
+	var target_xl = xlsx.parse(fs.readFileSync('public/target/' + fileName));
+	var importedData = JSON.stringify(convertToJSON(target_xl[0].data));
+	var excelTarget = JSON.parse(importedData);
+	for (var i = 0; i < excelTarget.length; i++) {
+		const formatDate = excelTarget[i].dob ? excelTarget[i].dob.split("-") : '';
+		var excel_state = excelTarget[i].state.capitalize();
+		var excel_city = excelTarget[i].city.capitalize();
+		var excel_zip = excelTarget[i].zipcode.capitalize();
+		var fetchState = [];
+		var fetchCity = [];
+		var fetchZip = [];
+		if (excelTarget[i].state !== null) {
+			var fetchState = await State.findAll({
+				where: { name: excel_state }
+			});
+		}
+		if (excelTarget[i].city !== null) {
+			var fetchCity = await City.findAll({
+				where: { name: excel_city }
+			});
+		}
+		if (excelTarget[i].zipcode !== null) {
+			var fetchZip = await Zipcode.findAll({
+				where: { zip: excel_zip }
+			});
+		}
+		const target_excel_data = await Target.findOne({
+			where: {
+				email: excelTarget[i].email
+			}
+		});
+		if (target_excel_data === null) {
+			if (excelTarget[i].target_type == "organization") {
+				const storeTargetXlO = await Target.create({
+					organization_name: excelTarget[i].oraganisation_name,
+					organization_id: excelTarget[i].organisation_id,
+					organization_code: excelTarget[i].organisation_code,
+					email: excelTarget[i].email,
+					mobile_no: excelTarget[i].mobile,
+					fax: excelTarget[i].fax,
+					address_1: excelTarget[i].address_1,
+					address_2: excelTarget[i].address_2,
+					address3: excelTarget[i].address3,
+					country: 233,
+					state: fetchState[0].id,
+					city: fetchCity[0].id,
+					pin_code: fetchZip[0].id,
+					IM: excelTarget[i].im,
+					company_name: excelTarget[i].company_name,
+					social_security_no: excelTarget[i].social_security_no,
+					twitter: `http://${excelTarget[i].twitter}`,
+					linked_in: `http://${excelTarget[i].linked_in}`,
+					facebook: `http://${excelTarget[i].facebook}`,
+					google: `http://${excelTarget[i].google}`,
+					firm_id: req.user.firm_id,
+					user_id: req.user.id,
+					target_type: "O",
+					remarks: excelTarget[i].edit_remarks
+				});
+			} else {
+				const storeTargetXlI = await Target.create({
+					first_name: excelTarget[i].first_name,
+					last_name: excelTarget[i].last_name,
+					target_id: excelTarget[i].target_id,
+					target_code: excelTarget[i].master_id,
+					date_of_birth: formatDate ? formatDate[2]+"-"+formatDate[1]+"-"+formatDate[0] : null,
+					gender: excelTarget[i].gender,
+					email: excelTarget[i].email,
+					mobile_no: excelTarget[i].mobile,
+					fax: excelTarget[i].fax,
+					address_1: excelTarget[i].address_1,
+					address_2: excelTarget[i].address_2,
+					address3: excelTarget[i].address3,
+					country: 233,
+					state: fetchState[0].id,
+					city: fetchCity[0].id,
+					pin_code: fetchZip[0].id,
+					firm_id: req.user.firm_id,
+					user_id: req.user.id,
+					IM: excelTarget[i].im,
+					company_name: excelTarget[i].company_name,
+					social_security_no: excelTarget[i].social_security_no,
+					twitter: `http://${excelTarget[i].twitter}`,
+					linked_in: `http://${excelTarget[i].linked_in}`,
+					facebook: `http://${excelTarget[i].facebook}`,
+					google: `http://${excelTarget[i].google}`,
+					target_type: "I",
+					remarks: excelTarget[i].remarks
+				});
+			}
+		}
+	}
+	req.flash('success-message', 'Target Imported Successfully');
+	res.redirect('/target');
 });
 
 module.exports = router;
