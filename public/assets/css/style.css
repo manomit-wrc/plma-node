@@ -1515,6 +1515,10 @@ table.table-inbox tbody tr.checked {background-color: #ffffcc;}
     height: auto;
     display: none;
 }
+#ref_excel_file {
+    height: auto;
+    display: none;
+}
 
 .inputfile + label {
     max-width: 100%;
@@ -1582,6 +1586,7 @@ table.table-inbox tbody tr.checked {background-color: #ffffcc;}
     white-space: nowrap;
     overflow: hidden;
     vertical-align: top;
+    float: right;
 }
 
 .inputfile-6 + label strong {
