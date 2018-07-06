@@ -11,9 +11,26 @@ const Firm = require('../models').firm;
 const Client = require('../models').client;
 const Target = require('../models').target;
 const Referral = require('../models').referral;
-var csrfProtection = csrf({ cookie: true });
+var fs = require('fs');
+const multer  = require('multer');
+var xlsx = require('node-xlsx');
 
+var csrfProtection = csrf({ cookie: true });
 const router = express.Router();
+var fileExt = '';
+var fileName = '';
+
+var storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, 'public/import-referral-excel');
+	},
+	filename: function (req, file, cb) {
+		fileExt = 'xlsx';
+		fileName = req.user.id + '-' + Date.now() + '.' + fileExt;
+		cb(null, fileName);
+	}
+})
+var referral_xcel = multer({ storage: storage });
 
 function removePhoneMask(phone_no) {
 	var phone_no = phone_no.replace("-","");
@@ -187,6 +204,134 @@ router.get('/referral/delete/:id', auth, firmAttrAuth, (req, res) => {
 		req.flash('success_delete_referral','Referral deleted successfully');
 		res.redirect('/referral');
 	});
+});
+
+function convertToJSON(array) {
+	var first = array[0].join()
+	var headers = first.split(',');
+
+	var jsonData = [];
+	for ( var i = 1, length = array.length; i < length; i++ )
+	{
+		var myRow = array[i].join();
+		var row = myRow.split(',');
+
+		var data = {};
+		for ( var x = 0; x < row.length; x++ )
+		{
+			data[headers[x]] = row[x];
+		}
+		jsonData.push(data);
+	}
+	return jsonData;
+}
+
+router.post('/referral/upload-excel', auth, referral_xcel.single('ref_excel_file'), async(req, res) => {
+	var referral_excel = xlsx.parse(fs.readFileSync('public/import-referral-excel/'+fileName));
+	var importedData = JSON.stringify(convertToJSON(referral_excel[0].data));
+	var excelReferral = JSON.parse(importedData);
+	for(var i=0; i<excelReferral.length; i++)
+	{
+		var attr = excelReferral[i].attorney_email;
+		var target = excelReferral[i].target_email; 
+		var client = excelReferral[i].client_email; 
+		var attr_id = [];
+		var target_id = [];
+		var client_id = [];
+		if(attr !== null)
+		{
+			var attr_id = await User.findAll({
+				where: {
+					email: attr
+				}
+			});
+		}
+		if(target)
+		{
+			var target_id = await Target.findAll({
+				where: {
+					email: target
+				}
+			});
+		}
+		if(client)
+		{
+			var client_id = await Client.findAll({
+				where: {
+					email: client
+				}
+			});
+		}
+		try {
+		    var targetID = target_id[0].id;
+		  } catch (ex) {
+		   var targetID =null;
+		  }
+		try {
+		    var clientID = client_id[0].id;
+		  } catch (ex) {
+		    var clientID = null;
+		  }
+		  try {
+		    var attrID = attr_id[0].id;
+		  } catch (ex) {
+		   var attrID =null;
+		  }
+		const referral_excel_data = await Referral.findOne({
+			where: {
+				email: excelReferral[i].email
+			}
+		});
+		if(referral_excel_data === null)
+		{
+			if(excelReferral[i].referral_type == "Individual")
+			{
+				var store_excel = await Referral.create({
+					referral_type: "I",
+					attorney_id: attrID,
+					first_name: excelReferral[i].first_name,
+					last_name: excelReferral[i].last_name,
+					email: excelReferral[i].email,
+					mobile: excelReferral[i].mobile,
+					remarks: excelReferral[i].remarks
+				});
+			}
+			else if(excelReferral[i].referral_type == "Organization")
+			{
+				var store_excel = await Referral.create({
+					referral_type: "O",
+					attorney_id: attrID,
+					organization_name: excelReferral[i].organization_name,
+					email: excelReferral[i].email,
+					mobile: excelReferral[i].mobile,
+					remarks: excelReferral[i].remarks
+				});
+			}
+			if(store_excel)
+			{
+				if(excelReferral[i].referred_type == "target")
+				{
+					const store_ref = await Referral.update({
+						referred_type: "T",
+						target_id: targetID,
+						client_id: 0
+					},{ where: { id: store_excel.id}
+					});
+				}
+				else if(excelReferral[i].referred_type == "client")
+				{
+					const store_ref = await Referral.update({
+						referred_type: "C",
+						client_id: clientID,
+						target_id: 0
+					},{ where: { id: store_excel.id}
+					});
+				}
+			}
+		}
+	}
+	req.flash('success-ref-message', 'Referral Imported Successfully');
+	res.redirect('/referral');
 });
 
 
