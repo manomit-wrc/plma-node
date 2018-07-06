@@ -51,9 +51,11 @@
             <li {{#if_eq client_url "target" }} class="active" {{/if_eq}}>
                <a href="/target">Target</a>
             </li>
-            
              <li {{#if_eq client_url "client" }} class="active" {{/if_eq}}>
                <a href="/client">Clients</a>
+            </li>
+            <li {{#if_eq client_url "referral" }} class="active" {{/if_eq}}>
+               <a href="/referral">Referral</a>
             </li>
             {{/if_eq}}
             {{#if_eq user.role_id "3"}}
@@ -65,6 +67,9 @@
             </li>
             <li {{#if_eq client_url "client" }} class="active" {{/if_eq}}>
                <a href="/client">Clients</a>
+            <li {{#if_eq client_url "referral" }} class="active" {{/if_eq}}>
+               <a href="/referral">Referral</a>
+            </li>
             </li>
             {{/if_eq}}
          </ul>
