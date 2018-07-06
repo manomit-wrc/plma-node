@@ -588,7 +588,7 @@ router.get('/client',auth, firmAttrAuth, csrfProtection, (req,res) => {
 router.get('/client/add',auth, firmAttrAuth, csrfProtection, (req,res) => {
 	var error_message = req.flash('error-client-message')[0];
 	designation.findAll().then(designation => {
-		industry_type.findAll().then(industry => {
+		industry.findAll().then(industry => {
 			Country.findAll().then(country => {
 
 				State.findAll().then(state => {
@@ -603,7 +603,7 @@ router.get('/client/edit/:id',auth, firmAttrAuth, csrfProtection, async(req,res)
 	var error_message = req.flash('error-clientEdit-message')[0];
 	const clients = await client.findById(req.params['id']);
 	const designations = await designation.findAll();
-	const industrys = await industry_type.findAll();
+	const industrys = await industry.findAll();
 	const client_country = await Country.findAll();
 	const client_state = await State.findAll({
 		where: {country_id : "233"}

@@ -194,7 +194,7 @@
 											<label class="control-label">Designation</label>
 											<select id="designation" name="designation" class="select form-control floating">
 												{{#each designations}}
-												<option value="{{this.id}}">{{this.code}}</option>
+												<option value="{{this.id}}">{{this.title}}</option>
 												{{/each}}
 											</select>
 										</div>
@@ -259,7 +259,7 @@
 											<label class="control-label">Industry Type</label>
 											<select id="industry_type" name="industry_type" class="select form-control">
 												{{#each industry}}
-												<option value="{{this.id}}">{{this.code}}</option>
+												<option value="{{this.id}}">{{this.industry_name}}</option>
 												{{/each}}
 											</select>
 										</div>
