@@ -16,24 +16,17 @@
         </div>
         <div class="row filter-row">
             <form name="filter" method="GET">
-                <div class="col-sm-3 col-xs-6">
-                    <div class="form-group form-focus">
-                        <label class="control-label">Jurisdiction Code</label>
-                        <input type="text" name="jurisdiction_code" id="jurisdiction_code" class="form-control floating"
-                        value="{{jurisdiction_code}}" />
-                    </div>
-                </div>
-                <div class="col-sm-3 col-xs-6">
+                <div class="col-sm-4 col-xs-6">
                     <div class="form-group form-focus">
                         <label class="control-label">Jurisdiction Name</label>
                         <input type="text"  name="jurisdiction_name" id="jurisdiction_name" class="form-control floating"
                         value="{{jurisdiction_name}}" />
                     </div>
                 </div>
-                <div class="col-sm-3 col-xs-6">  
+                <div class="col-sm-4 col-xs-6">  
                     <button type="submit" class="btn btn-success btn-block">Search</button>
                 </div>
-                <div class="col-sm-3 col-xs-6">
+                <div class="col-sm-4 col-xs-6">
                     <a href="/jurisdiction" class="btn btn-success btn-block"> Clear </a>
                 </div>  
             </form>
@@ -44,8 +37,7 @@
                     <table class="table table-striped custom-table datatable">
                         <thead>
                             <tr>
-                                <th style="width:30%;">Jurisdiction Code</th>
-                                <th>Jurisdiction Name</th>
+                                <th style="width:30%;">Jurisdiction Name</th>
                                 <th>Remarks</th>
                                 <th>Created Date &amp; Time</th>
                                 <th class="text-right">Action</th>
@@ -54,7 +46,6 @@
                         <tbody>
                             {{#each jurisdiction}}
                             <tr>
-                                <td>{{this.code}}</td>
                                 <td>{{this.name}}</td>
                                 <td>{{this.remarks}}</td>
                                 <td>{{dateFormat this.createdAt "DD-MM-YYYY, hh:mm a"}}</td>
@@ -90,12 +81,6 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="control-label">Jurisdiction Code<span class="text-danger">*</span></label>
-                                <input class="form-control" type="text" name="code" id="code">
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
                                 <label class="control-label">Jurisdiction Name<span class="text-danger">*</span></label>
                                 <input class="form-control" type="text" id="name" name="name">
                             </div>
@@ -126,13 +111,7 @@
             <div class="modal-body">
                 <form class="m-b-30" name="edit_jurisdiction" id="edit_jurisdiction" method="post">
                     <div class="row">
-                        <div class="col-md-12">
-                            <input type="hidden" name="_csrf" value="{{csrfToken}}">
-                            <div class="form-group">
-                                <label class="control-label">Jurisdiction Code<span class="text-danger">*</span></label>
-                                <input class="form-control" type="text" name="edit_code" id="edit_code">
-                            </div>
-                        </div>
+                        <input type="hidden" name="_csrf" value="{{csrfToken}}">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">Jurisdiction Name<span class="text-danger">*</span></label>
@@ -189,9 +168,6 @@ $(document).ready(function(e) {
 
     $("#addjurisdiction").validate({
         rules: {
-            code: {
-                required: true
-            },
             name: {
                 required: true
             },
@@ -200,9 +176,6 @@ $(document).ready(function(e) {
             }
         },
         messages: {
-            code: {
-                required: "Jurisdiction Code can't be blank"
-            },
             name: {
                 required: "Jurisdiction Name can't be blank"
             },
@@ -211,14 +184,12 @@ $(document).ready(function(e) {
             }
         },
         submitHandler:function(form) {
-            var code = $("#code").val(),
-            name = $("#name").val(),
+            var name = $("#name").val(),
             remarks = $("#remarks").val();
             $.ajax({
                 type: "POST",
                 url: "/jurisdiction/add",
                 data: {
-                    code: code,
                     name: name,
                     remarks: remarks
                 },
@@ -254,11 +225,9 @@ $(document).ready(function(e) {
 
 $(document).on('click', '#edit-jurisdiction', function(e){
     var jurisdiction_id = $(this).data('jurisdiction-id');
-    var code = $(this).data('code');
     var name = $(this).data('name');
     var remarks = $(this).data('remarks');
 
-    $("#edit_code").val(code);
     $("#edit_name").val(name);
     $("#edit_remarks").val(remarks);
 
@@ -275,9 +244,6 @@ $(document).ready(function(e) {
 
     $("#edit_jurisdiction").validate({
         rules: {
-            edit_code: {
-                required: true
-            },
             edit_name: {
                 required: true
             },
@@ -286,9 +252,6 @@ $(document).ready(function(e) {
             }
         },
         messages: {
-            edit_code: {
-                required: "Jurisdiction Code can't be blank"
-            },
             edit_name: {
                 required: "Jurisdiction Name can't be blank"
             },
