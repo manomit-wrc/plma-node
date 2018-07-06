@@ -8,8 +8,6 @@ const path = require('path');
 const flash    = require('connect-flash');
 const lodash = require('lodash');
 
-
-
 const port = process.env.PORT || 5000;
 
 var handlebars = require('handlebars'),
@@ -27,6 +25,7 @@ const employee = require('./routes/employee');
 const activity_goal = require('./routes/activity_goal');
 const financial_goal = require('./routes/financial_goal');
 const target = require('./routes/target');
+const master_contact = require('./routes/master_contact');
 const referral = require('./routes/referral');
 
 const allowCrossDomain = function(req, res, next) {
@@ -36,12 +35,13 @@ const allowCrossDomain = function(req, res, next) {
 
     // intercept OPTIONS method
     if ('OPTIONS' == req.method) {
-      res.send(200);
-  }
-  else {
-      next();
-  }
+        res.send(200);
+    }
+    else {
+        next();
+    }
 };
+
 app.use(allowCrossDomain);
 require('./config/passport')(passport);
 
@@ -49,28 +49,27 @@ const hbs = exphbs.create({
     extname: '.hbs',
     helpers: {
         if_eq: function (a, b, opts) {
-            
             if (a == b)
                 return opts.fn(this);
             else
                 return opts.inverse(this);
         },
+
         first_letter: function(a) {
             return a.charAt(0);
         },
 
-
-
         inArray: function(array, value, block) {
-          if (array.indexOf(value) !== -1) {
-            return block.fn(this);
-        }
-        else {
-          return block.inverse(this);
-        }
-    },
-     dateFormat: require('handlebars-dateformat')
-}
+            if (array.indexOf(value) !== -1) {
+                return block.fn(this);
+            }
+            else {
+                return block.inverse(this);
+            }
+        },
+
+        dateFormat: require('handlebars-dateformat')
+    }
 });
 
 app.engine('.hbs', hbs.engine);
@@ -82,8 +81,8 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.use(session({
-	secret: 'W$q4=25*8%v-}UV',
-	resave: false,
+    secret: 'W$q4=25*8%v-}UV',
+    resave: false,
     saveUninitialized: true,
     cookie: {
         path: "/",
@@ -92,13 +91,14 @@ app.use(session({
     name: "id",
     ttl: (1* 60* 60)
 }));
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-/******** Routes *****/
+/******** Routes ********/
 app.use(index);
 app.use(dashboard);
 app.use(firm);
@@ -107,6 +107,8 @@ app.use(employee);
 app.use(activity_goal);
 app.use(financial_goal);
 app.use(target);
+app.use(master_contact);
 app.use(referral);
-/******** End  *******/
+/********** End **********/
+
 app.listen(port, () => console.log(`Server listening to port ${port}`));

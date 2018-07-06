@@ -30,6 +30,8 @@ module.exports = (sequelize, DataTypes) => {
     google: DataTypes.STRING,
     youtube: DataTypes.STRING,
     im: DataTypes.STRING,
+    firm_id: DataTypes.INTEGER,
+    user_id: DataTypes.INTEGER,
     address_remarks: DataTypes.TEXT,
     remarks: DataTypes.TEXT
   }, {});
