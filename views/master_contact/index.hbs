@@ -1,0 +1,159 @@
+{{#content "style" mode="prepend"}}
+<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+{{/content}}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="row">
+            {{#if success_message}}
+            <div class="alert alert-success">
+                <strong>Success! </strong>{{success_message}}
+            </div>
+            {{/if}}
+            {{#if success_edit_message}}
+            <div class="alert alert-success">
+                <strong>Success! </strong>{{success_edit_message}}
+            </div>
+            {{/if}}
+            <div class="col-sm-4 col-xs-3">
+                <h4 class="page-title">Master Contacts</h4>
+            </div>
+            <div class="col-sm-8 col-xs-9 text-right m-b-20">
+                <a href="javascript:void(0)" data-toggle="modal" data-target="#import" class="btn btn-primary rounded pull-right"><i class="fa fa-cloud-download"></i> Import Master Contact</a>
+                <a href="/master_contact/add" class="btn btn-primary rounded pull-right m-r-5"><i class="fa fa-plus"></i> Add Contact</a>
+            </div>
+        </div>
+        <div class="row filter-row">
+            <form method="GET">
+                <div class="col-md-3 col-sm-3 col-xs-6">  
+                    <div class="form-group form-focus">
+                        <label class="control-label">Contact Email</label>
+                        <input type="text" class="form-control floating" name="searchEmail" value="{{searchMail}}" />
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <input type="submit" value="Search" class="btn btn-success btn-block">
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <a href="/master_contact" class="btn btn-success btn-block"> Clear </a>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <a href="javascript:void(0);" class="btn btn-success btn-block move-target"> Move to Target </a>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped custom-table datatable">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" onClick="checkall(this);" /></th>
+                                <th>Name</th>
+                                <th>Email Id</th>
+                                <th>Contact Code</th>
+                                <th>Mobile Number</th>
+                                <th>Company Name</th>
+                                <th>Status</th>
+                                <th class="text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each contacts}}
+                            <tr>
+                                <td><input type="checkbox" name="contact_id" value="{{this.id}}" /></td>
+                                <td>{{this.first_name}} {{this.last_name}}</td>
+                                <td>{{this.email}}</td>
+                                <td>{{this.master_contact_code}}</td>
+                                <td class="number_validator">{{this.mobile_no}}</td>
+                                <td>{{this.company_name}}</td>
+                                <td>{{this.status}}</td>
+                                <td class="text-right">
+                                    <div class="dropdown">
+                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                        <ul class="dropdown-menu pull-right">
+                                            <li><a href="/master_contact/edit/{{this.id}}" ><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+                                            <li><a href="javascript:void(0)" data-toggle="modal" data-target="#{{this.id}}"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <div class="modal fade" id="{{this.id}}" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <p>Are you sure to delete ?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="/master_contact/delete/{{this.id}}" class="btn btn-danger"> Delete </a>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal"> Close </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="import" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header"> <strong>Import Excel for Contact</strong> <button type="button" class="close" data-dismiss="modal">×</button></div>
+            <div class="modal-body">
+                <form name="import" method="POST" action="/master_contact/import" enctype="multipart/form-data">
+                    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                    <div class="form-group">
+                        <input type="file" class="form-control" style="height: auto;" name="file_name" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" name="import" value="Import" class="btn btn-info" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+{{#content "script" mode="append"}}
+<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="/assets/js/select2.min.js"></script>
+<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript">
+    function checkall(source) {
+        var checkboxes = document.getElementsByName('contact_id');
+        for(var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+
+    $('.move-target').on('click', function(e) {
+        var contact_ids = [];
+        $('input[name="contact_id"]:checked').each(function() {
+            contact_ids.push(this.value);
+        });
+        $.ajax({
+            url: '/master_contact/move-to-target',
+            type: 'POST',
+            data: {contact_id: contact_ids},
+            success: function(response) {
+                console.log(response);
+                if (response.code === '200') {
+                    window.location.reload();
+                }
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+    });
+</script>
+{{/content}}

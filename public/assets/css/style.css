@@ -384,7 +384,6 @@ table.dataTable {margin-bottom: 15px !important;margin-top: 15px !important;}
 .account-box {margin: 0 auto;width: 400px; box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);}
 .account-wrapper {background-color: #fff;padding: 30px;}
 .account-logo {margin-bottom: 20px;text-align: center;}
-.account-box .form-group {margin-bottom: 25px;}
 .account-box .account-btn {
 	background: #ff9b44;
 	background: -moz-linear-gradient(left, #ff9b44 0%, #fc6075 100%);
@@ -1609,6 +1608,24 @@ table.table-inbox tbody tr.checked {background-color: #ffffcc;}
 
 /*...File Input*/
 
+
+.form-focus {
+  margin-bottom: 30px;
+}
+
+.form-focus  label.error {
+  margin-top: 8px;
+}
+
+.select-focus .select.error + label + .select2 {
+  position: relative;
+  top: -27px;
+}
+
+.select-focus .select.error + label {
+  position: relative;
+  top: 50px;
+}
 
 /*------------------------------------------------------------------
 [39-a.... Custom Styles]
