@@ -204,7 +204,7 @@
 										<select id="designation" name="designation" class="select form-control">
 											<option value="">Select Designation</option>
                                             {{#each designation}}
-                                            <option value="{{this.id}}" {{#if_eq this.id ../client.designation_id}} selected="selected" {{/if_eq}}>{{this.code}}</option>
+                                            <option value="{{this.id}}" {{#if_eq this.id ../client.designation_id}} selected="selected" {{/if_eq}}>{{this.title}}</option>
 											{{/each}}
                                         </select>
 									</div>
@@ -269,7 +269,7 @@
 										<label class="control-label">Industry Type :</label>
 										<select id="industry_type" name="industry_type" class="select form-control">
                                              {{#each industry}}
-                                            <option value="{{this.id}}" {{#if_eq this.id ../client.industry_type}} selected="selected" {{/if_eq}}>{{this.code}}</option>
+                                            <option value="{{this.id}}" {{#if_eq this.id ../client.industry_type}} selected="selected" {{/if_eq}}>{{this.industry_name}}</option>
 										 {{/each}}
                                         </select>
 									</div>

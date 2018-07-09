@@ -6,9 +6,6 @@
                <a href="/dashboard">Dashboard</a>
             </li>
          {{#if_eq user.role_id "1"}}
-            <li {{#if_eq client_url "firms" }} class="active" {{/if_eq}}>
-                <a href="/firms">Firms</a>
-            </li>
             <li {{#if_eq client_url "section" }} class="active" {{/if_eq}}>
                <a href="/section">Section</a>
             </li>
@@ -21,19 +18,20 @@
             <li {{#if_eq client_url "group" }} class="active" {{/if_eq}}>
                <a href="/group">Group</a>
             </li>
-            <li {{#if_eq client_url "employees" }} class="active" {{/if_eq}}>
-               <a href="/employees">Employees</a>
-            </li>
             <li {{#if_eq client_url "industry" }} class="active" {{/if_eq}}>
                <a href="/industry">Industry Type</a>
             </li>
-            <li {{#if_eq client_url "designations" }} class="active" {{/if_eq}}>
-               <a href="/designations">Designations</a>
+            <li {{#if_eq client_url "designation" }} class="active" {{/if_eq}}>
+               <a href="/designation">Designations</a>
             </li>
-
-
-            <li {{#if_eq client_url "budgets" }} class="active" {{/if_eq}}>
-               <a href="/budgets">Budgets</a>
+            <li {{#if_eq client_url "budget" }} class="active" {{/if_eq}}>
+               <a href="/budget">Budgets</a>
+            </li>
+            <li {{#if_eq client_url "firms" }} class="active" {{/if_eq}}>
+                <a href="/firms">Firms</a>
+            </li>
+            <li {{#if_eq client_url "employees" }} class="active" {{/if_eq}}>
+               <a href="/employees">Employees</a>
             </li>
             {{/if_eq}}
             {{#if_eq user.role_id "2"}}
@@ -52,12 +50,21 @@
             <li {{#if_eq client_url "financial-goal" }} class="active" {{/if_eq}}>
                <a href="/financial-goal">Financial Goal</a>
             </li>
+            <li {{#if_eq client_url "master_contact" }} class="active" {{/if_eq}}>
+               <a href="/master_contact">Master Contact</a>
+            </li>
             <li {{#if_eq client_url "target" }} class="active" {{/if_eq}}>
                <a href="/target">Target</a>
             </li>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 219b9129f7587d755f9f36cba1e0f0dba42810a6
              <li {{#if_eq client_url "client" }} class="active" {{/if_eq}}>
                <a href="/client">Clients</a>
+            </li>
+            <li {{#if_eq client_url "referral" }} class="active" {{/if_eq}}>
+               <a href="/referral">Referral</a>
             </li>
             {{/if_eq}}
 
@@ -71,6 +78,9 @@
             </li>
             <li {{#if_eq client_url "client" }} class="active" {{/if_eq}}>
                <a href="/client">Clients</a>
+            <li {{#if_eq client_url "referral" }} class="active" {{/if_eq}}>
+               <a href="/referral">Referral</a>
+            </li>
             </li>
 
             <li {{#if_eq client_url "attorneys" }} class="active" {{/if_eq}}>

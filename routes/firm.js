@@ -193,6 +193,7 @@ router.get('/firm-details', auth, firmAuth, csrfProtection, async (req, res) => 
     Firm.hasMany(PracticeAreaToFirm, {foreignKey: 'firm_id'});
     const office = await Office.findAll(
         {
+            where: {firm_id: req.user.firm_id},
             include: [{
             model: Firm
         }]
