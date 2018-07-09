@@ -71,7 +71,7 @@ router.get('/activitypage',auth, firmAttrAuth, csrfProtection, (req,res) => {
 // ========{{    insert data to the database  }}=====================//
 
 router.post('/activity/add',auth, firmAttrAuth,csrfProtection, async (req,res) => {
-	console.log(JSON.stringify(req.body, undefined, 2));
+	// console.log(JSON.stringify(req.body, undefined, 2));
 
 		var target_user = req.body.target_user;
 		var client_user = req.body.client_user;
@@ -131,6 +131,38 @@ router.post('/activity/add',auth, firmAttrAuth,csrfProtection, async (req,res) =
 //.....................{{   edit data  }}.......................................//
 
 router.get('/activity/edit/:id',auth,csrfProtection, async (req,res) => {
+	 //
+	 // Activity_to_user_type.belongsTo(Activity, {foreignKey: 'activity_id'});
+		// 		Activity_to_user_type.findAll({
+	 //         include: [{
+	 //             model: Activity
+	 //         }]
+	 //     }).then(function(qadata){
+		// 		 	console.log(JSON.stringify(qadata, undefined, 2));
+		// 				console.log(qadata.length);
+		// 			for(var i=0;i<qadata.length;i++) {
+		// 				console.log("TEST", JSON.stringify(typeof qadata[i].activity.id, undefined, 2));
+
+
+									//for(var j=0;j<qadata[i].activity.id.length;j++) {
+
+
+											// var tempArr = lodash.filter(answer_data, x => x.option_id === qadata[i].Options[j].id);
+											// if(tempArr.length > 0) {
+											// 		qadata[i].Options[j].answer_status = true;
+											// }
+											// else {
+											// 		qadata[i].Options[j].answer_status = false;
+											// }
+								//	}
+							// }
+					//
+
+			 // });
+
+
+
+
 	const firm = await Firm.findAll();
 	const activity_goal = await ActivityGoal.findAll();
   const practice_area = await PracticeArea.findAll();
