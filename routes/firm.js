@@ -54,13 +54,13 @@ router.get('/firms', csrfProtection, auth, siteAuth, async (req, res) => {
     });
 
     const firms = await Firm.findAll({});
-     
-    res.render('firms/index', { 
-        layout: 'dashboard', 
-        csrfToken: req.csrfToken(), 
-        users, 
-        firms, 
-        search_email: req.query ? req.query.search_email : '', 
+
+    res.render('firms/index', {
+        layout: 'dashboard',
+        csrfToken: req.csrfToken(),
+        users,
+        firms,
+        search_email: req.query ? req.query.search_email : '',
         search_firm: req.query ? req.query.search_firm : ''
     });
 });
@@ -111,7 +111,7 @@ router.post('/firms/add', auth, siteAuth, csrfProtection, async (req, res) => {
             message: 'Email alreday taken'
         });
     }
-    
+
 });
 
 router.post('/firms/edit', auth, siteAuth, csrfProtection, async (req, res) => {
@@ -125,7 +125,7 @@ router.post('/firms/edit', auth, siteAuth, csrfProtection, async (req, res) => {
     });
     if(user_data === null) {
         const firms = await Firm.update({
-            title: req.body.title, 
+            title: req.body.title,
             address: req.body.address
         }, {
             where :{
@@ -158,7 +158,7 @@ router.post('/firms/edit', auth, siteAuth, csrfProtection, async (req, res) => {
             message: 'Email alreday taken'
         });
     }
-}); 
+});
 
 router.post('/firm/delete', auth, siteAuth, csrfProtection, async (req, res) => {
     const user_delete = User.destroy({
@@ -249,7 +249,7 @@ router.get('/firm-details', auth, firmAuth, csrfProtection, async (req, res) => 
     for(var k=0; k<firmPracticeArea.length; k++){
         PracticeAreaArr.push(firmPracticeArea[k].practice_area_id);
     }
-    
+
     res.render('firms/master_settings', {layout: 'dashboard', csrfToken: req.csrfToken(), office, designation, contact, country, state, city, zipcode, firm: firm[0], firm_city, firm_zipcode, section, practice_area, jurisdiction, arr, jurisdictionArr, PracticeAreaArr});
 });
 
@@ -453,7 +453,7 @@ router.post('/update-own-firmDetails', auth, firmAuth, csrfProtection, async(req
 
     const section_to_firm_des = await SectionToFirm.destroy({
         where: { firm_id : req.user.firm_id}
-    }); 
+    });
 
     const practice_area_to_firm_des = await PracticeAreaToFirm.destroy({
         where: { firm_id : req.user.firm_id}
@@ -466,21 +466,21 @@ router.post('/update-own-firmDetails', auth, firmAuth, csrfProtection, async(req
     for(var i=0; i<section.length; i++){
         const section_to_firm = await SectionToFirm.create({
             firm_id: req.user.firm_id,
-            section_id: section[i] 
+            section_id: section[i]
         });
     }
 
     for(var j=0; j<practice_area.length; j++){
         const practice_area_to_firm = await PracticeAreaToFirm.create({
             firm_id: req.user.firm_id,
-            practice_area_id: practice_area[j] 
+            practice_area_id: practice_area[j]
         });
     }
 
     for(var k=0; k<jurisdiction.length; k++){
         const jurisdiction_to_firm = await JurisdictionToFirm.create({
             firm_id: req.user.firm_id,
-            jurisdiction_id: jurisdiction[k] 
+            jurisdiction_id: jurisdiction[k]
         });
     }
     res.json({"update_firm_details": true});

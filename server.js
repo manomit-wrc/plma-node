@@ -27,6 +27,8 @@ const employee = require('./routes/employee');
 const activity_goal = require('./routes/activity_goal');
 const financial_goal = require('./routes/financial_goal');
 const target = require('./routes/target');
+const activity = require('./routes/activity');
+
 
 const allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -48,7 +50,7 @@ const hbs = exphbs.create({
     extname: '.hbs',
     helpers: {
         if_eq: function (a, b, opts) {
-            
+
             if (a == b)
                 return opts.fn(this);
             else
@@ -106,5 +108,7 @@ app.use(employee);
 app.use(activity_goal);
 app.use(financial_goal);
 app.use(target);
+app.use(activity);
+
 /******** End  *******/
 app.listen(port, () => console.log(`Server listening to port ${port}`));

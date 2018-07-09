@@ -25,30 +25,30 @@
     </div>
     <div class="row filter-row">
       <form method="GET">
-        <div class="col-sm-3 col-xs-6">  
+        <div class="col-sm-3 col-xs-6">
           <div class="form-group form-focus select-focus">
             <label class="control-label">Target Type</label>
             {{!-- <input type="text" class="form-control floating" name="searchName" value="{{searchName}}"/> --}}
-            <select class="select floating" name="searchName"> 
+            <select class="select floating" name="searchName">
               <option value="">Select Target Type</option>
               <option value="I" {{#if_eq searchName "I" }} selected="selected" {{/if_eq}}>Individual</option>
               <option value="O" {{#if_eq searchName "O" }} selected="selected" {{/if_eq}}>Organisation</option>
             </select>
           </div>
         </div>
-        <div class="col-sm-3 col-xs-6">  
+        <div class="col-sm-3 col-xs-6">
           <div class="form-group form-focus">
             <label class="control-label">Target Email</label>
             <input type="text" class="form-control floating" name="searchEmail" value="{{searchMail}}"/>
           </div>
         </div>
-        <div class="col-sm-3 col-xs-6"> 
+        <div class="col-sm-3 col-xs-6">
           <input type="submit" value="Search" class="btn btn-success btn-block">
-        </div>  
-        <div class="col-sm-3 col-xs-6"> 
-          <a href="/target" class="btn btn-success btn-block"> Clear </a>  
-        </div>  
-      </form>   
+        </div>
+        <div class="col-sm-3 col-xs-6">
+          <a href="/target" class="btn btn-success btn-block"> Clear </a>
+        </div>
+      </form>
     </div>
     <div class="row">
       <div class="col-md-12">

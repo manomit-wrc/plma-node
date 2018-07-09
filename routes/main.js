@@ -503,13 +503,13 @@ router.get('/client',auth, firmAttrAuth, csrfProtection, (req,res) => {
 	client.findAll({
 		 where: whereCondition
 	}).then(clients => {
-		res.render('client/index',{ 
-			layout: 'dashboard',  
+		res.render('client/index',{
+			layout: 'dashboard',
 			csrfToken: req.csrfToken() ,
-			clients: clients, 
-			searchName: req.query.searchName ? req.query.searchName : '', 
-			searchMail: req.query.searchEmail ? req.query.searchEmail : '', 
-			success_message, 
+			clients: clients,
+			searchName: req.query.searchName ? req.query.searchName : '',
+			searchMail: req.query.searchEmail ? req.query.searchEmail : '',
+			success_message,
 			success_edit_message
 		});
 	});
@@ -631,7 +631,7 @@ router.post('/client/addClient',auth, firmAttrAuth,csrfProtection, async (req,re
 				remarks: req.body.remarks
 			});
 			req.flash('success-message', 'Client Added Successfully');
-            res.redirect('/client')
+            res.redirect('/client');
 		}
 	}
 	else
@@ -689,7 +689,7 @@ router.post('/client/editClient/:id',auth, firmAttrAuth,csrfProtection, async (r
 		});
 		req.flash('success-edit-message', 'Client Updated Successfully');
         res.redirect('/client')
-	} 
+	}
 	else
 	{
 		req.flash('error-clientEdit-message', 'Email already taken.');

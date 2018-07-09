@@ -19,11 +19,12 @@ const Country = require('../models').country;
 const industry_type = require('../models').industry_type;
 const setting = require('../models').setting;
 const Target = require('../models').target;
+
 const Jurisdiction = require('../models').jurisdiction;
 const user = require('../models').user;
 var csrfProtection = csrf({ cookie: true });
 var csv = require('fast-csv');
-var path      = require('path');
+var path = require('path');
 var fs = require('fs');
 const router = express.Router();
 
@@ -34,8 +35,8 @@ function removePhoneMask (phone_no){
 	phone_no = phone_no.replace("(","");
 	phone_no = phone_no.replace(" ","");
 	return phone_no;
-
 }
+
 
 router.get('/target',auth, firmAttrAuth, csrfProtection, (req,res) => {
 	var success_message = req.flash('success-message')[0];
@@ -55,13 +56,13 @@ router.get('/target',auth, firmAttrAuth, csrfProtection, (req,res) => {
 	Target.findAll({
 		where: whereCondition
 	}).then(targets => {
-		res.render('target/targets',{ 
-			layout: 'dashboard',  
+		res.render('target/targets',{
+			layout: 'dashboard',
 			csrfToken: req.csrfToken(),
-			targets: targets, 
-			searchName: req.query.searchName ? req.query.searchName : '', 
-			searchMail: req.query.searchEmail ? req.query.searchEmail : '', 
-			success_message, 
+			targets: targets,
+			searchName: req.query.searchName ? req.query.searchName : '',
+			searchMail: req.query.searchEmail ? req.query.searchEmail : '',
+			success_message,
 			success_edit_message
 		});
 	});
@@ -241,7 +242,7 @@ router.post('/target/edittarget/:id',auth, firmAttrAuth,csrfProtection, async (r
 		});
 		req.flash('success-edit-message', 'Client Updated Successfully');
         res.redirect('/target')
-	} 
+	}
 	else
 	{
 		req.flash('error-clientEdit-message', 'Email already taken.');
@@ -259,5 +260,9 @@ router.get('/target/delete/:id',auth, firmAttrAuth, (req,res) => {
     res.redirect('/target');
   });
 });
+//==================================================END TARGET================================================================================//
+
+
+
 
 module.exports = router;

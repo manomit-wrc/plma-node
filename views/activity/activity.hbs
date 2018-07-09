@@ -1,0 +1,105 @@
+{{#content "style" mode="prepend"}}
+    <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+{{/content}}
+<div class="page-wrapper">
+                <div class="content container-fluid">
+					<div class="row">
+            {{#if success_message}}
+              <div class="alert alert-danger">
+                  <strong>Error! </strong>{{success_message}}
+              </div>
+            {{/if}}
+						<div class="col-xs-4">
+							<h4 class="page-title">ACTIVITY</h4>
+						</div>
+						<div class="col-xs-8 text-right m-b-30">
+							<a href="/activityseen" class="btn btn-primary rounded"><i class="fa fa-plus"></i> Add Activity</a>
+						</div>
+					</div>
+          <form method="GET">
+					<div class="row filter-row">
+						<div class="col-sm-3 col-xs-6">
+							<div class="form-group form-focus">
+								<label class="control-label">Firm</label>
+								<input type="text" class="form-control floating" id="searchCode" name="searchCode" value="{{searchCode}}"/>
+							</div>
+						</div>
+						<div class="col-sm-3 col-xs-6">
+              <div class="form-group form-focus">
+                <label class="control-label">Activity Type</label>
+                <input type="text" class="form-control floating" id="searchName" name="searchName" value="{{searchName}}"/>
+              </div>
+						</div>
+
+						<div class="col-sm-3 col-xs-6">
+							<!-- <a href="javascript:void(0)" class="btn btn-success btn-block" onclick="searchDataTable()"> Search </a> -->
+							 <button type="submit" class="btn btn-success btn-block"> Search </button>
+						</div>
+						<div class="col-sm-3 col-xs-6">
+							<!-- <a href="javascript:void(0)" class="btn btn-success btn-block" onclick="searchDataTable()"> Search </a> -->
+							 <a href="/designations" class="btn btn-success btn-block"> Clear </a>
+						</div>
+                    </div>
+                  </form>
+					<div class="row" >
+						<div class="col-md-12">
+							<div class="table-responsive"  >
+								<table class="table table-striped custom-table datatable" id="searchData">
+									<thead>
+										<tr>
+
+                      <th>Activity Name</th>
+                      <th>Activity Reason</th>
+                      <th>From Date</th>
+                      <th>To Date</th>
+                      <th>Remarks</th>
+											<th class="text-right">Action</th>
+										</tr>
+</thead>
+<tbody  id="mainTable">
+  {{#each row}}
+  <tr>
+
+    <td>{{this.activity_name}}</td>
+    <td>{{this.activity_reason}}</td>
+    <td>{{this.from_date}}</td>
+    <td>{{this.to_date}}</td>
+    <td>{{this.remarks}}</td>
+
+
+    <td class="text-right">
+      <div class="dropdown">
+        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+        <ul class="dropdown-menu pull-right">
+          <li><a href="/activity/edit/{{this.id}}" ><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+
+          <li><a href="/activity/deletedata/{{this.id}}"  ><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+        </ul>
+      </div>
+    </td>
+  </tr>
+  {{/each}}
+
+</tbody>
+</table>
+
+
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+{{#content "script" mode="append"}}
+    <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript" src="/assets/js/select2.min.js"></script>
+    <script type="text/javascript" src="/assets/js/moment.min.js"></script>
+    <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>ACTIVITY
+
+                    {{/content}}
