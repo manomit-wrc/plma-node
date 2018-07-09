@@ -107,7 +107,7 @@
       <label class="control-label">Activity Creation Date</label>
       <div class="cal-icon">
         <input class="form-control floating datetimepicker"
-      type="text" id="creation_date" name="creation_date" value="{{dateFormat editdata.creation_date "DD-MM-YYYY"}}">
+      type="text" id="activity_creation_date" name="activity_creation_date" value="{{dateFormat editdata.activity_creation_date "DD-MM-YYYY"}}">
       </div>
     </div>
   </div>
@@ -120,14 +120,14 @@
         <label class="control-label">FROM DATE</label>
         <div class="cal-icon">
           <input class="form-control floating datetimepicker"
-        type="text" id="from_date" name="from_date" value="{{dateFormat editdata.from_date "DD-MM-YYYY"}}">
+        type="text" id="activity_from_date" name="activity_from_date" value="{{dateFormat editdata.activity_from_date "DD-MM-YYYY"}}">
         </div>
       </div>
       <div class="form-group col-sm-6">
           <label class="control-label">TO DATE</label>
           <div class="cal-icon">
             <input class="form-control floating datetimepicker"
-          type="text" id="to_date" name="to_date" value="{{dateFormat editdata.to_date "DD-MM-YYYY"}}">
+          type="text" id="activity_to_date" name="activity_to_date" value="{{dateFormat editdata.activity_to_date "DD-MM-YYYY"}}">
           </div>
         </div>
     </div>
@@ -199,10 +199,10 @@
               </div>
               </div>
 
+<!-- //
               <div id="ModalTarget" class="modal fade" role="dialog">
                 <div class="modal-dialog">
 
-                  <!-- Modal content-->
                   <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -229,7 +229,6 @@
 
               <div id="ModalClient" class="modal fade" role="dialog">
                 <div class="modal-dialog">
-                  <!-- Modal content-->
                   <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -253,7 +252,7 @@
               </div>
 
 
-
+// -->
               <div class="text-center m-t-20">
   							<button class="btn btn-primary btn-lg" type="submit" id="btnAdd">Update Activity</button>
   						</div>
@@ -331,13 +330,13 @@
                 remarks: {
                     required: true
                 },
-                creation_date: {
+                activity_creation_date: {
                     required: true
                 },
-                from_date: {
+                activity_from_date: {
                     required: true
                 },
-                to_date: {
+                activity_to_date: {
                     required: true
                 },
                 activity_name: {
@@ -373,13 +372,13 @@
                 remarks: {
                     required: "remarks title can't be blank"
                 },
-                creation_date: {
+                activity_creation_date: {
                     required: "creation date title can't be blank"
                 },
-                from_date: {
+                activity_from_date: {
                     required: "from date title can't be blank"
                 },
-                to_date: {
+                activity_to_date: {
                     required: "to date title can't be blank"
                 },
                 activity_name: {

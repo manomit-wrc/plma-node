@@ -71,9 +71,17 @@ router.get('/activitypage',auth, firmAttrAuth, csrfProtection, (req,res) => {
 // ========{{    insert data to the database  }}=====================//
 
 router.post('/activity/add',auth, firmAttrAuth,csrfProtection, async (req,res) => {
+	console.log(JSON.stringify(req.body, undefined, 2));
+
 		var target_user = req.body.target_user;
 		var client_user = req.body.client_user;
 		//console.log(client_user);
+		const CreationDate = req.body.activity_creation_date ? req.body.activity_creation_date.split("-") : '';
+		const FromDate = req.body.activity_from_date ? req.body.activity_from_date.split("-") : '';
+		const ToDate = req.body.activity_to_date ? req.body.activity_to_date.split("-") : '';
+
+
+
 	  const activity_store = await	Activity.create({
      firm : req.body.firm,
      activity_type : req.body.activity_type,
@@ -81,9 +89,12 @@ router.post('/activity/add',auth, firmAttrAuth,csrfProtection, async (req,res) =
 		 practice_area : req.body.practice_area,
 		 potiential_revenue : req.body.potiential_revenue,
 		 remarks : req.body.remarks,
-		 creation_date : req.body.creation_date,
-		 from_date : req.body.from_date,
-		 to_date : req.body.to_date,
+
+		 activity_creation_date: CreationDate ? CreationDate[2]+"-"+CreationDate[1]+"-"+CreationDate[0] : null,
+		 activity_from_date: FromDate ? FromDate[2]+"-"+FromDate[1]+"-"+FromDate[0] : null,
+		 activity_to_date: ToDate ? ToDate[2]+"-"+ToDate[1]+"-"+ToDate[0] : null,
+
+
 		 activity_name : req.body.activity_name,
 		 activity_reason : req.body.activity_reason,
      budget_status : req.body.budget_status,
@@ -146,6 +157,13 @@ res.render('activity/update', { layout: 'dashboard', csrfToken: req.csrfToken(),
 router.post('/activity/update/:id',auth, firmAttrAuth, csrfProtection, async (req,res) => {
 		var target_user = req.body.target_user;
 		var client_user = req.body.client_user;
+
+		const CreationDate1 = req.body.activity_creation_date ? req.body.activity_creation_date.split("-") : '';
+		const FormDate1 = req.body.activity_from_date ? req.body.activity_from_date.split("-") : '';
+		const ToDate1 = req.body.activity_to_date ? req.body.activity_to_date.split("-") : '';
+
+
+
 		//console.log(client_user);
 	  const activity_store1 = await	Activity.update({
      firm : req.body.firm,
@@ -154,9 +172,12 @@ router.post('/activity/update/:id',auth, firmAttrAuth, csrfProtection, async (re
 		 practice_area : req.body.practice_area,
 		 potiential_revenue : req.body.potiential_revenue,
 		 remarks : req.body.remarks,
-		 creation_date : req.body.creation_date,
-		 from_date : req.body.from_date,
-		 to_date : req.body.to_date,
+
+		 activity_creation_date: CreationDate1 ? CreationDate1[2]+"-"+CreationDate1[1]+"-"+CreationDate1[0] : null,
+ 		 activity_from_date: FormDate1 ? FormDate1[2]+"-"+FormDate1[1]+"-"+FormDate1[0] : null,
+		 activity_to_date: FormDate1 ? ToDate1[2]+"-"+ToDate1[1]+"-"+ToDate1[0] : null,
+
+
 		 activity_name : req.body.activity_name,
 		 activity_reason : req.body.activity_reason,
      budget_status : req.body.budget_status,
