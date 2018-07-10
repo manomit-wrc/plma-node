@@ -5,7 +5,6 @@ const firmAuth = require('../middlewares/firm_auth');
 const firmAttrAuth = require('../middlewares/firm_attr_auth');
 const csrf = require('csurf');
 const bCrypt = require('bcrypt-nodejs');
-const designation = require('../models').designation;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const multer = require('multer');
@@ -17,7 +16,6 @@ const Country = require('../models').country;
 const industry_type = require('../models').industry_type;
 const Contact = require('../models').master_contact;
 const Target = require('../models').target;
-const Client = require('../models').client;
 const user = require('../models').user;
 var csrfProtection = csrf({ cookie: true });
 var csv = require('fast-csv');
@@ -56,6 +54,7 @@ router.get('/master_contact', auth, firmAttrAuth, csrfProtection, (req, res) => 
 	if (req.query.searchEmail) {
 		whereCondition.email = req.query.searchEmail;
 	}
+	whereCondition.contact_status = 1;
 	Contact.findAll({
 		where: whereCondition
 	}).then(result => {
@@ -235,68 +234,68 @@ function convertToJSON(array) {
 	return jsonData;
 }
 
-String.prototype.capitalize = function() {
-	return this.charAt(0).toUpperCase() + this.slice(1);
-}
-
-/*router.post('/master_contact/import', auth, upload.single('file_name'), csrfProtection, async (req, res) => {
-	var target_xl = xlsx.parse(fs.readFileSync('public/master_contact/' + fileName));
-	var importedData = JSON.stringify(convertToJSON(target_xl[0].data));
-	var excelTarget = JSON.parse(importedData);
-	for (var i = 0; i < excelTarget.length; i++) {
-		const formatDate = excelTarget[i].dob ? excelTarget[i].dob.split("-") : '';
-		var excel_state = excelTarget[i].state.capitalize();
-		var excel_city = excelTarget[i].city.capitalize();
-		var excel_zip = excelTarget[i].zipcode.capitalize();
+router.post('/master_contact/import', auth, upload.single('file_name'), csrfProtection, async (req, res) => {
+	var contact_xl = xlsx.parse(fs.readFileSync('public/contact/' + fileName));
+	var importedData = JSON.stringify(convertToJSON(contact_xl[0].data));
+	var excelContact = JSON.parse(importedData);
+	for (var i = 0; i < excelContact.length; i++) {
+		const formatDate = excelContact[i].dob ? excelContact[i].dob.split("-") : '';
+		var excel_state = excelContact[i].state.capitaLize();
+		var excel_city = excelContact[i].city.capitaLize();
+		var excel_zip = excelContact[i].zipcode;
 		var fetchState = [];
 		var fetchCity = [];
 		var fetchZip = [];
-		if (excelTarget[i].state !== null) {
+		if (excelContact[i].state !== null) {
 			var fetchState = await State.findAll({
 				where: { name: excel_state }
 			});
 		}
-		if (excelTarget[i].city !== null) {
+		if (excelContact[i].city !== null) {
 			var fetchCity = await City.findAll({
 				where: { name: excel_city }
 			});
 		}
-		if (excelTarget[i].zipcode !== null) {
+		if (excelContact[i].zipcode !== null) {
 			var fetchZip = await Zipcode.findAll({
 				where: { zip: excel_zip }
 			});
 		}
-		const target_excel_data = await Target.findOne({
+		const contact_excel_data = await Contact.findOne({
 			where: {
-				email: excelTarget[i].email
+				email: excelContact[i].email
 			}
 		});
-		if (target_excel_data === null) {
-			const storeTargetXlO = await Target.create({
-				organization_name: excelTarget[i].oraganisation_name,
-				organization_id: excelTarget[i].organisation_id,
-				organization_code: excelTarget[i].organisation_code,
-				email: excelTarget[i].email,
-				mobile_no: excelTarget[i].mobile,
-				fax: excelTarget[i].fax,
-				address_1: excelTarget[i].address_1,
-				address_2: excelTarget[i].address_2,
-				address3: excelTarget[i].address3,
+		if (contact_excel_data === null) {
+			await Contact.create({
+				first_name: excelContact[i].first_name,
+				last_name: excelContact[i].last_name,
+				email: excelContact[i].email,
+				phone_no: excelContact[i].phone,
+				fax: excelContact[i].fax,
+				mobile_no: excelContact[i].mobile,
+				master_contact_id: excelContact[i].master_contact_id,
+				master_contact_code: excelContact[i].master_contact_code,
+				master_designation: excelContact[i].master_designation,
+				company_name: excelContact[i].company_name,
+				date_of_birth: formatDate ? formatDate[2]+"-"+formatDate[1]+"-"+formatDate[0] : null,
+				gender: excelContact[i].gender,
+				address1: excelContact[i].address1,
+				address2: excelContact[i].address2,
+				address3: excelContact[i].address3,
 				country: 233,
 				state: fetchState[0].id,
 				city: fetchCity[0].id,
-				pin_code: fetchZip[0].id,
-				IM: excelTarget[i].im,
-				company_name: excelTarget[i].company_name,
-				social_security_no: excelTarget[i].social_security_no,
-				twitter: `http://${excelTarget[i].twitter}`,
-				linked_in: `http://${excelTarget[i].linked_in}`,
-				facebook: `http://${excelTarget[i].facebook}`,
-				google: `http://${excelTarget[i].google}`,
+				zip_code: fetchZip[0].id,
+				im: excelContact[i].im,
+				social_security_no: excelContact[i].social_security_no,
+				twitter: `http://${excelContact[i].twitter}`,
+				linkedin: `http://${excelContact[i].linkedin}`,
+				google: `http://${excelContact[i].google}`,
+				youtube: `http://${excelContact[i].youtube}`,
 				firm_id: req.user.firm_id,
 				user_id: req.user.id,
-				target_type: "O",
-				remarks: excelTarget[i].edit_remarks
+				remarks: excelContact[i].remarks
 			});
 		}
 	}
@@ -320,41 +319,32 @@ router.post('/master_contact/move-to-target', auth, async (req, res) => {
 			email: contact_data.email,
 			mobile_no: contact_data.mobile_no,
 			fax: contact_data.fax,
-			address1: contact_data.address_1,
-			address2: contact_data.address_2,
-			address_line_3: contact_data.address3,
+			date_of_birth: contact_data.date_of_birth,
+			gender: contact_data.gender,
+			address_1: contact_data.address1,
+			address_2: contact_data.address2,
+			address3: contact_data.address3,
 			country: contact_data.country,
 			state: contact_data.state,
 			city: contact_data.city,
-			pin_code: contact_data.postal_code,
-			firm_id: contact_data.firm_id,
-			designation_id: contact_data.designation_id,
-			type: contact_data.type,
-			association_type: contact_data.association,
-			industry_type: contact_data.industry_type,
+			postal_code: contact_data.zip_code,
 			company_name: contact_data.company_name,
+			im: contact_data.im,
+			social_security_no: contact_data.social_security_no,
 			twitter: contact_data.twitter,
-			linkdn: contact_data.linked_in,
-			facebook: contact_data.facebook,
+			linked_in: contact_data.linkedin,
 			google: contact_data.google,
-			client_id: contact_data.target_id,
-			master_id: contact_data.target_code,
-			gender: contact_data.gender,
-			date_of_birth: contact_data.date_of_birth,
-			social_security_no: contact_data.social_sequrity_no,
-			IM: contact_data.im,
-			organization_name: contact_data.organization_name,
-			organization_id: contact_data.organization_id,
-			organization_code: contact_data.organization_code,
+			youtube: contact_data.youtube,
+			target_type: 'I',
+			firm_id: contact_data.firm_id,
 			user_id: contact_data.user_id,
-			client_type: contact_data.target_type,
 			remarks: contact_data.remarks
 		});
 
 		await Contact.update({
-			status: '0'
+			contact_status: 0
 			}, { where: {
-				id: target_ids[i]
+				id: contact_ids[i]
 			}
 		});
 	}
@@ -362,6 +352,10 @@ router.post('/master_contact/move-to-target', auth, async (req, res) => {
 		code: "200",
         message: 'Success'
 	});
-});*/
+});
+
+String.prototype.capitaLize = function() {
+	return this.charAt(0).toUpperCase() + this.slice(1);
+}
 
 module.exports = router;
