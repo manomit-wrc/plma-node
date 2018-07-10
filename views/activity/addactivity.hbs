@@ -27,12 +27,13 @@
             		<div class="col-sm-4 col-xs-6">
             			<div class="form-group form-focus select-focus">
             				<label class="control-label">Firm </label>
-            				<select class="select floating">
+                    <select id="firm" name="firm" class="select form-control floating">
+
                       <option value="">Select Firm</option>
                       {{#each firm}}
                       <option value="{{this.id}}">{{this.title}}</option>
                       {{/each}}
-            				</select>
+                    </select>
             			</div>
             		</div>
 
@@ -158,14 +159,14 @@
   		</div>
 
       <div class="col-sm-4 col-xs-6">
-        <div class="form-group form-focus">
+        <div class="form-group form-focus select-focus">
           <input type="radio" id="referral_type" name="ref_type" value="T" checked />Target
           <input type="radio" id="organization_type" name="ref_type" value="C"/>Client
         </div>
      </div>
 
-
-     <div class="col-sm-4 col-xs-6" id="target_list">
+     <div class="col-sm-4 col-xs-6">
+     <div class="form-group form-focus select-focus" id="target_list">
        <div class="form-group form-focus select-focus">
          <select id="target_id" name="target_user" class=" form-control floating" multiple="multiple">
              <option value="">Select Target</option>
@@ -180,8 +181,8 @@
            </select>
          </div>
        </div>
-
-       <div class="col-md-12" id="client_list" style="display:none;">
+       <div class="col-sm-4 col-xs-6">
+       <div class="form-group form-focus select-focus" id="client_list" style="display:none;">
          <div class="form-group form-focus select-focus">
            <select id="client_id" name="client_user" class=" form-control floating" multiple="multiple">
              <option value="">Select Client</option>
