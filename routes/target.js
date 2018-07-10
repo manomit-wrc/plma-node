@@ -5,24 +5,18 @@ const firmAuth = require('../middlewares/firm_auth');
 const firmAttrAuth = require('../middlewares/firm_attr_auth');
 const csrf = require('csurf');
 const bCrypt = require('bcrypt-nodejs');
-const designation = require('../models').designation;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const multer = require('multer');
 const xlsx = require('node-xlsx');
-const PracticeArea = require('../models').practicearea;
-const Section = require('../models').section;
-const Group = require('../models').group;
-const budget = require('../models').budget;
+const Designation = require('../models').designation;
 const Zipcode = require('../models').zipcode;
 const City = require('../models').city;
 const State = require('../models').state;
 const Country = require('../models').country;
 const industry_type = require('../models').industry_type;
-const setting = require('../models').setting;
 const Target = require('../models').target;
 const Client = require('../models').client;
-const Jurisdiction = require('../models').jurisdiction;
 const user = require('../models').user;
 var csrfProtection = csrf({ cookie: true });
 var csv = require('fast-csv');
@@ -84,17 +78,15 @@ router.get('/target', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	});
 });
 
-router.get('/target/add', auth, firmAttrAuth, csrfProtection, (req, res) => {
+router.get('/target/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var error_message = req.flash('error-target-message')[0];
-	designation.findAll().then(designation => {
-		industry_type.findAll().then(industry => {
-			Country.findAll().then(country => {
-				State.findAll().then(state => {
-					res.render('target/addtarget',{ layout: 'dashboard', csrfToken: req.csrfToken(), country: country, state: state, designations: designation, industry: industry, error_message  });
-				});
-			});
-		});
+	var designation = await Designation.findAll();
+	var industry = await industry_type.findAll();
+	var country = await Country.findAll();
+	const state = await State.findAll({
+		where: { country_id : "233" }
 	});
+	res.render('target/addtarget', { layout: 'dashboard', csrfToken: req.csrfToken(), country: country, state: state, designations: designation, industry: industry, error_message  });
 });
 
 router.post('/target/addtarget', auth, firmAttrAuth, csrfProtection, async (req, res) => {
@@ -180,29 +172,29 @@ router.post('/target/addtarget', auth, firmAttrAuth, csrfProtection, async (req,
 });
 
 router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
-	var error_message = req.flash('error-clientEdit-message')[0];
-	const clients = await Target.findById(req.params['id']);
-	const designations = await designation.findAll();
+	var error_message = req.flash('error-target-message')[0];
+	const target = await Target.findById(req.params['id']);
+	const designation = await Designation.findAll();
 	const industrys = await industry_type.findAll();
-	const client_country = await Country.findAll();
-	const client_state = await State.findAll({
+	const country = await Country.findAll();
+	const state = await State.findAll({
 		where: { country_id : "233" }
 	});
-	const client_city = await City.findAll({
+	const city = await City.findAll({
 		where: {
-			state_id : clients.state.toString()
+			state_id : target.state.toString()
 		}
 	});
-	const client_cities = await City.findById(clients.city.toString());
-	const client_zipcode = await Zipcode.findAll({
+	const cities = await City.findById(target.city.toString());
+	const zipcode = await Zipcode.findAll({
 		where: {
-			city_name: client_cities.name
+			city_name: cities.name
 		}
 	});
-	res.render('target/targetupdate', { layout: 'dashboard', csrfToken: req.csrfToken(), designation: designations, industry: industrys, client:clients, country: client_country, state: client_state, city: client_city, zipcode: client_zipcode, error_message });
+	res.render('target/targetupdate', { layout: 'dashboard', csrfToken: req.csrfToken(), designation: designation, industry: industrys, client: target, country: country, state: state, city: city, zipcode: zipcode, error_message });
 });
 
-router.post('/target/edittarget/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	const formatDate = req.body.client_dob ? req.body.client_dob.split("-") : '';
 	const target_edit_data = await Target.findOne({
 		where: {
@@ -213,7 +205,7 @@ router.post('/target/edittarget/:id', auth, firmAttrAuth, csrfProtection, async 
 		}
 	});
 	if (target_edit_data === null) {
-		const edit_client = await Target.update({
+		await Target.update({
 			organization_name: req.body.org_name,
 			organization_id: req.body.org_id,
 			organization_code: req.body.org_code,
@@ -247,10 +239,10 @@ router.post('/target/edittarget/:id', auth, firmAttrAuth, csrfProtection, async 
 			remarks: req.body.remarks
 			}, {where: {id: req.params['id']}
 		});
-		req.flash('success-edit-message', 'Target Updated Successfully');
+		req.flash('success-message', 'Target Updated Successfully');
 		res.redirect('/target')
 	} else {
-		req.flash('error-clientEdit-message', 'Email already taken.');
+		req.flash('error-target-message', 'Email already taken.');
 		res.redirect('/target/edit/'+req.params['id']);
 	}
 });
@@ -261,7 +253,7 @@ router.get('/target/delete/:id', auth, firmAttrAuth, (req, res) => {
 			id: req.params.id
 		}
 	}).then(resp => {
-		// req.flash('success_delete_attorney','Attorney deleted successfully');
+		req.flash('success-message','Target Deleted Successfully');
 		res.redirect('/target');
 	});
 });
