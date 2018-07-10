@@ -68,8 +68,8 @@
                                             <strong>Note: </strong><a href="/activity-goal/add">add activity_goals</a>
                                           </div>
                                           </div>
-
                                         </div>
+
                                         <div class="form-group col-sm-6">
                                           <label>Practice Area Type: <span class="text-danger">*</span></label>
                                           <select id="practice_area" name="practice_area" class="select form-control floating">
@@ -98,37 +98,54 @@
                                   <textarea class="form-control floating" id="remarks" name="remarks" rows="5"></textarea>
                                 </div>
                   </div>
-  <div class="row">
-    <div class="form-group col-sm-6">
-        <label class="control-label">Activity Creation Date</label>
-        <div class="cal-icon">
-          <input class="form-control floating datetimepicker"
-          type="text" id="creation_date" name="creation_date">
-        </div>
-      </div>
-    </div>
+              <div class="row">
+                <div class="">
+                  <h1 class="page-title">Activity Creation Date</h1>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group form-focus">
+                        <label class="control-label">From Date</label>
+                        <div class="cal-icon">
+                            <input class="form-control floating datetimepicker"
+                                type="text" id="activity_creation_date" name="activity_creation_date"
+                            >
+                        </div>
+                    </div>
+                </div>
+              </div>
+
+
+
+
     <div class="row">
       <div class="">
         <h4 class="page-title">Duration</h4>
       </div>
 
-      <div class="form-group col-sm-6">
-          <label class="control-label">FROM DATE</label>
-          <div class="cal-icon">
-            <input class="form-control floating datetimepicker"
-            type="text" id="from_date" name="from_date"
-            >
-          </div>
-        </div>
-        <div class="form-group col-sm-6">
-            <label class="control-label">TO DATE</label>
-            <div class="cal-icon">
-              <input class="form-control floating datetimepicker"
-              type="text" id="to_date" name="to_date"
-              >
-            </div>
+      <div class="col-md-6">
+          <div class="form-group form-focus">
+              <label class="control-label">From Date</label>
+              <div class="cal-icon">
+                  <input class="form-control floating datetimepicker"
+                      type="text" id="activity_from_date" name="activity_from_date"
+                  >
+              </div>
           </div>
       </div>
+
+      <div class="col-md-6">
+          <div class="form-group form-focus">
+              <label class="control-label">From Date</label>
+              <div class="cal-icon">
+                  <input class="form-control floating datetimepicker"
+                      type="text" id="activity_to_date" name="activity_to_date"
+                  >
+              </div>
+          </div>
+      </div>
+      </div>
+
+
 
       <div class="row">
         <div class="form-group col-sm-6">
@@ -175,78 +192,50 @@
     </select>
   </div>
 
-    <div class="form-group col-sm-6">
-      <h4 class="page-title">Relation Type:</h4>
-      <label class="container">Target
-
-        <input type="radio" id="target" name="target" value="T" >
-        <span class="checkmark"></span>
-      </label>
-      <label class="container">Client
-        <input type="radio" id="client" name="target" value="C">
-        <span class="checkmark"></span>
-      </label>
+  <div class="col-md-6">
+    <div class="form-group">
+      <label class="control-label">Refferred By: </label>
+      <input type="radio" id="referral_type" name="ref_type" value="T" checked />Target
+      <input type="radio" id="organization_type" name="ref_type" value="C"/>Client
     </div>
+  </div>
+  <div class="col-md-6" id="target_list">
+    <div class="form-group form-focus select-focus">
+      <select id="target_id" name="target_user" class=" form-control floating" multiple="multiple">
+          <option value="">Select Target</option>
+          {{#each target}}
+            {{#if_eq target_type "I"}}
+            <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
+            {{/if_eq}}
+            {{#if_eq target_type "O"}}
+            <option value="{{this.id}}">{{this.organization_name}}</option>
+            {{/if_eq}}
+          {{/each}}
+        </select>
+      </div>
+    </div>
+    <div class="col-md-6" id="client_list" style="display:none;">
+      <div class="form-group form-focus select-focus">
+        <select id="client_id" name="client_user" class=" form-control floating" multiple="multiple">
+          <option value="">Select Client</option>
+          {{#each client}}
+          {{#if_eq client_type "I"}}
+          <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
+          {{/if_eq}}
+          {{#if_eq client_type "O"}}
+          <option value="{{this.id}}">{{this.organization_name}}</option>
+          {{/if_eq}}
+          {{/each}}
+        </select>
+      </div>
   </div>
 <!-- target modal -->
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Target Details</h4>
-      </div>
-      <div class="col-md-12">
-        <label class="control-label">Section <span class="text-danger">*</span></label>
-        <div class="form-group form-focus select-focus">
-          <select class="form-control floating" id="target_user" name="target_user" multiple="multiple">
-
-            {{#each target}}
-            <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
-            {{/each}}
-          </select>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- end target modal -->
-<!-- clint modal -->
-<div id="myModalC" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Client Details</h4>
-      </div>
-      <div class="col-md-12">
-        <label class="control-label">Section <span class="text-danger">*</span></label>
-        <div class="form-group form-focus select-focus">
-          <select class="form-control floating" id="client_user" name="client_user" multiple="multiple">
-            {{#each client}}
-            <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
-            {{/each}}
-          </select>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!--  end clint modal -->
 
   <div class="m-t-20 text-center">
-    <button class="btn btn-primary" type="submit"  id="btnAdd">Update Activity</button>
+    <button class="btn btn-primary" type="submit"  id="btnAdd">Add Activity</button>
   </div>
 </form>
         {{#content "script" mode="append"}}
@@ -259,37 +248,37 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 
-<script>
-$(document).ready(function(){
-  $('#target').change(function() {
-     if($(this).is(':checked') ) {
-          $('#myModal').modal('show');
-     }
-  });
-  $('#target_user').multiselect({
-    nonSelectedText: 'Select Section',
-    includeSelectAllOption: true,
-    buttonWidth: '100%'
-  });
 
-});
 
-</script>
-<script>
-$(document).ready(function(){
-  $('#client').change(function() {
-     if($(this).is(':checked') ) {
-          $('#myModalC').modal('show');
-     }
-  });
-  $('#client_user').multiselect({
-    nonSelectedText: 'Select Section',
-    includeSelectAllOption: true,
-    buttonWidth: '100%'
-  });
-});
+                    <script type="text/javascript">
 
-</script>
+                            $(document).on('click', '#referral_type', function(){
+                              $('#target_list').show();
+                              $('#client_list').hide();
+                            });
+
+                            $(document).on('click', '#organization_type', function(){
+                              $('#target_list').hide();
+                              $('#client_list').show();
+                            });
+
+                            $('#target_id').multiselect({
+                                nonSelectedText: 'Select Targets',
+                                includeSelectAllOption: true,
+                                buttonWidth: '100%'
+                            });
+
+                            $('#client_id').multiselect({
+                                nonSelectedText: 'Select Clients',
+                                includeSelectAllOption: true,
+                                buttonWidth: '100%'
+                            });
+                           </script>
+
+
+
+
+
 
 <script type="text/javascript">
 // add designation ajax and form validation starts
@@ -315,13 +304,13 @@ $(document).ready(function(e) {
             remarks: {
                 required: true
             },
-            creation_date: {
+            activity_creation_date: {
                 required: true
             },
-            from_date: {
+            activity_from_date: {
                 required: true
             },
-            to_date: {
+            activity_to_date: {
                 required: true
             },
             activity_name: {
@@ -357,13 +346,13 @@ $(document).ready(function(e) {
             remarks: {
                 required: "remarks title can't be blank"
             },
-            creation_date: {
+            activity_creation_date: {
                 required: "creation date title can't be blank"
             },
-            from_date: {
+            activity_from_date: {
                 required: "from date title can't be blank"
             },
-            to_date: {
+            activity_to_date: {
                 required: "to date title can't be blank"
             },
             activity_name: {

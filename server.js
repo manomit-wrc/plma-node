@@ -8,6 +8,8 @@ const path = require('path');
 const flash    = require('connect-flash');
 const lodash = require('lodash');
 
+
+
 const port = process.env.PORT || 5000;
 
 var handlebars = require('handlebars'),
@@ -36,13 +38,12 @@ const allowCrossDomain = function(req, res, next) {
 
     // intercept OPTIONS method
     if ('OPTIONS' == req.method) {
-        res.send(200);
-    }
-    else {
-        next();
-    }
+      res.send(200);
+  }
+  else {
+      next();
+  }
 };
-
 app.use(allowCrossDomain);
 require('./config/passport')(passport);
 
@@ -55,22 +56,22 @@ const hbs = exphbs.create({
             else
                 return opts.inverse(this);
         },
-
         first_letter: function(a) {
             return a.charAt(0);
         },
 
-        inArray: function(array, value, block) {
-            if (array.indexOf(value) !== -1) {
-                return block.fn(this);
-            }
-            else {
-                return block.inverse(this);
-            }
-        },
 
-        dateFormat: require('handlebars-dateformat')
-    }
+
+        inArray: function(array, value, block) {
+          if (array.indexOf(value) !== -1) {
+            return block.fn(this);
+        }
+        else {
+          return block.inverse(this);
+        }
+    },
+     dateFormat: require('handlebars-dateformat')
+}
 });
 
 app.engine('.hbs', hbs.engine);
@@ -82,8 +83,8 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.use(session({
-    secret: 'W$q4=25*8%v-}UV',
-    resave: false,
+	secret: 'W$q4=25*8%v-}UV',
+	resave: false,
     saveUninitialized: true,
     cookie: {
         path: "/",
@@ -92,14 +93,13 @@ app.use(session({
     name: "id",
     ttl: (1* 60* 60)
 }));
-
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-/******** Routes ********/
+/******** Routes *****/
 app.use(index);
 app.use(dashboard);
 app.use(firm);
