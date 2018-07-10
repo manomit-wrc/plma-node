@@ -1294,8 +1294,5 @@ router.post('/client/upload-excel', auth, upload_client_excel.single('client_xls
 	res.redirect('/client');
 });
 
-
-
 /*============================Ends Import Client Excel Data =====================================*/
-
 module.exports = router;

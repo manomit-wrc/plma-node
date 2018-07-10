@@ -31,15 +31,15 @@ router.get('/employees', auth, siteAuth, async (req, res) => {
     var success_message = req.flash('success-message')[0];
     var success_edit_message = req.flash('success-edit-message')[0];
     const users = await User.findAll({
-      where:employeeFilter,  
+      where:employeeFilter,
     });
-    res.render('employees/index', { 
-        layout: 'dashboard', 
-        success_message, 
-        employee:users, 
+    res.render('employees/index', {
+        layout: 'dashboard',
+        success_message,
+        employee:users,
         success_edit_message,
-        employee_names: req.query.employee_name ? req.query.employee_name : '', 
-        employee_emails: req.query.employee_email ? req.query.employee_email : '', 
+        employee_names: req.query.employee_name ? req.query.employee_name : '',
+        employee_emails: req.query.employee_email ? req.query.employee_email : '',
     });
 }).get('/employees/add', csrfProtection, siteAuth, auth, async (req, res) => {
     var error_message1 = req.flash('error-message1')[0];
@@ -47,13 +47,13 @@ router.get('/employees', auth, siteAuth, async (req, res) => {
     const firms = await Firm.findAll({});
     const country = await Country.findAll({});
     const state = await State.findAll({});
-    res.render('employees/add', { 
-        layout: 'dashboard', 
-        csrfToken: req.csrfToken(), 
-        firms,error_message, 
+    res.render('employees/add', {
+        layout: 'dashboard',
+        csrfToken: req.csrfToken(),
+        firms,error_message,
         error_message1 ,
         country,
-        state 
+        state
     });
 });
 
@@ -94,7 +94,7 @@ router.post('/employees/add', auth, siteAuth, csrfProtection, async (req, res) =
         {
             for(var i=0; i<firm_id.length; i++){
                 const empToFirm = await EmployeeToFirm.create({
-                    user_id: employee_data.id, 
+                    user_id: employee_data.id,
                     firm_id: firm_id[i]
                 });
             }
@@ -147,18 +147,18 @@ router.get('/employee/edit/:id', csrfProtection, siteAuth, auth, async (req, res
                 city_name: cities.name
             }
         });
-    } 
-    res.render('employees/edit', { 
+    }
+    res.render('employees/edit', {
         layout: 'dashboard',
-        csrfToken: req.csrfToken(), 
-        empl: users[0], 
-        firms, 
-        error_edit_message, 
+        csrfToken: req.csrfToken(),
+        empl: users[0],
+        firms,
+        error_edit_message,
         arr,
         country,
         state,
-        city, 
-        zipcode 
+        city,
+        zipcode
     });
 });
 
@@ -202,7 +202,7 @@ router.post('/employees/edit/:id', auth, siteAuth, csrfProtection, async (req, r
         });
         for(var i=0; i<firms_id.length; i++){
             const empToFirms = await EmployeeToFirm.create({
-                user_id: req.params['id'], 
+                user_id: req.params['id'],
                 firm_id: firms_id[i]
             });
         }
@@ -212,7 +212,7 @@ router.post('/employees/edit/:id', auth, siteAuth, csrfProtection, async (req, r
     else {
         req.flash('error-edit-message', 'Email already taken.');
         res.redirect('/employees/edit/'+ req.params['id']);
-    }   
+    }
 });
 
 router.get('/employee/delete/:id',  auth, siteAuth, csrfProtection, async (req, res) =>{

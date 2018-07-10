@@ -10,6 +10,10 @@ const Op = Sequelize.Op;
 const multer = require('multer');
 const xlsx = require('node-xlsx');
 const Designation = require('../models').designation;
+const PracticeArea = require('../models').practicearea;
+const Section = require('../models').section;
+const Group = require('../models').group;
+const budget = require('../models').budget;
 const Zipcode = require('../models').zipcode;
 const City = require('../models').city;
 const State = require('../models').state;
@@ -17,6 +21,7 @@ const Country = require('../models').country;
 const industry_type = require('../models').industry_type;
 const Target = require('../models').target;
 const Client = require('../models').client;
+const Jurisdiction = require('../models').jurisdiction;
 const user = require('../models').user;
 var csrfProtection = csrf({ cookie: true });
 var csv = require('fast-csv');
@@ -41,10 +46,10 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 function removePhoneMask(phone_no) {
-	var phone_no = phone_no.replace("-","");
-	phone_no = phone_no.replace(")","");
-	phone_no = phone_no.replace("(","");
-	phone_no = phone_no.replace(" ","");
+	var phone_no = phone_no.replace("-", "");
+	phone_no = phone_no.replace(")", "");
+	phone_no = phone_no.replace("(", "");
+	phone_no = phone_no.replace(" ", "");
 	return phone_no;
 }
 
@@ -62,17 +67,16 @@ router.get('/target', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	if (req.user.role_id != 2) {
 		whereCondition.user_id = req.user.id;
 	}
-	whereCondition.status = '1';
 	Target.findAll({
 		where: whereCondition
 	}).then(targets => {
-		res.render('target/targets', { 
-			layout: 'dashboard',  
+		res.render('target/targets', {
+			layout: 'dashboard',
 			csrfToken: req.csrfToken(),
-			targets: targets, 
-			searchName: req.query.searchName ? req.query.searchName : '', 
-			searchMail: req.query.searchEmail ? req.query.searchEmail : '', 
-			success_message, 
+			targets: targets,
+			searchName: req.query.searchName ? req.query.searchName : '',
+			searchMail: req.query.searchEmail ? req.query.searchEmail : '',
+			success_message,
 			success_edit_message
 		});
 	});
@@ -89,12 +93,12 @@ router.get('/target/add', auth, firmAttrAuth, csrfProtection, async (req, res) =
 	res.render('target/addtarget', { layout: 'dashboard', csrfToken: req.csrfToken(), country: country, state: state, designations: designation, industry: industry, error_message  });
 });
 
-router.post('/target/addtarget', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+router.post('/target/addtarget',auth, firmAttrAuth,csrfProtection, async (req,res) => {
 	const formatDate = req.body.target_dob ? req.body.target_dob.split("-") : '';
 	const target_data = await Target.findOne({
 		where: {
-			email: req.body.email
-		}
+            email: req.body.email
+        }
 	});
 	if (target_data === null) {
 		if (req.body.target_type === "O") {
@@ -128,7 +132,7 @@ router.post('/target/addtarget', auth, firmAttrAuth, csrfProtection, async (req,
 				remarks: req.body.remarks
 			});
 			req.flash('success-message', 'Target Added Successfully');
-			res.redirect('/target');
+            res.redirect('/target')
 		} else {
 			const store_ind_data = await Target.create({
 				first_name: req.body.target_first_name,
@@ -163,11 +167,11 @@ router.post('/target/addtarget', auth, firmAttrAuth, csrfProtection, async (req,
 				remarks: req.body.remarks
 			});
 			req.flash('success-message', 'Target Added Successfully');
-			res.redirect('/target')
+            res.redirect('/target')
 		}
 	} else {
 		req.flash('error-target-message', 'Email already taken.');
-		res.redirect('/target/add');
+        res.redirect('/target/add');
 	}
 });
 
@@ -237,7 +241,7 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, 
 			target_id : req.body.client_id,
 			target_code : req.body.master_id,
 			remarks: req.body.remarks
-			}, {where: {id: req.params['id']}
+			},{where: {id: req.params['id']}
 		});
 		req.flash('success-message', 'Target Updated Successfully');
 		res.redirect('/target')

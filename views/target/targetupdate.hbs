@@ -17,7 +17,7 @@
 					</div>
 					<form id="targetform" method="POST" action="/target/edit/{{client.id}}">
 						<input type="hidden" name="_csrf" value="{{csrfToken}}">
-						<input type="hidden" value="{{client.id}}" id="id" /> 
+						<input type="hidden" value="{{client.id}}" id="id" />
 						<input type="radio" id="individual_client" name="client_type" value="I" {{#if_eq client.target_type "I"}} checked {{/if_eq}} disabled />Individual
 						<input type="radio" id="organization_client" name="client_type" value="O" {{#if_eq client.target_type "O"}} checked {{/if_eq}} disabled />Organization
 						<div class="card-box">
@@ -83,7 +83,7 @@
 														<label class="control-label">Birth Date</label>
 														<div class="cal-icon">
 															<input class="form-control floating datetimepicker"
-															type="text" id="client_dob" name="client_dob" value="{{dateFormat client.date_of_birth "DD-MM-YYYY"}}" 
+															type="text" id="client_dob" name="client_dob" value="{{dateFormat client.date_of_birth "DD-MM-YYYY"}}"
 															>
 														</div>
 													</div>
@@ -172,7 +172,7 @@
 										 	<option value="">Select City</option>
                                           {{#each city}}
                                             <option value="{{this.id}}" {{#if_eq this.id ../client.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
-											{{/each}}    
+											{{/each}}
                                         </select>
 									</div>
 								</div>
@@ -183,7 +183,7 @@
                                              <option value="">Select Zipcode</option>
                                           {{#each zipcode}}
                                             <option value="{{this.id}}" {{#if_eq this.id ../client.postal_code}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
-											{{/each}} 
+											{{/each}}
                                         </select>
 									</div>
 								</div>
@@ -249,12 +249,12 @@
 									<div class="form-group form-focus select-focus">
 										<label class="control-label">Association Status :</label>
 										<select id="association" name="association" class="select form-control">
-                                             
+
                                             <option value="NEW TARGET" {{#if_eq client.association "NEW TARGET"}} selected="selected" {{/if_eq}} >NEW TARGET</option>
 											<option value="CONVERTED" {{#if_eq client.association "CONVERTED"}} selected="selected" {{/if_eq}}  >CONVERTED</option>
 											<option value="TS-INTERIM" {{#if_eq client.association "TS-INTERIM"}} selected="selected" {{/if_eq}} >TS-INTERIM</option>
-											 
-										 
+
+
                                         </select>
 									</div>
 								</div>
@@ -275,9 +275,9 @@
 									</div>
 		                        </div>
 							</div>
-							 
+
 						</div>
-						 
+
 						<div class="text-center m-t-20">
 							<button class="btn btn-primary btn-lg" type="submit" id="addclient">Save &amp; Update Target</button>
 						</div>
