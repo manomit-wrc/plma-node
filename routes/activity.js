@@ -161,7 +161,17 @@ router.get('/activity/edit/:id',auth,csrfProtection, async (req,res) => {
 //console.log(arr);
 
 
-res.render('activity/update', { layout: 'dashboard', csrfToken: req.csrfToken(),client: client,target: target , arr, editdata :editdata[0],firm: firm,activity_goal: activity_goal,practice_area: practice_area });
+res.render('activity/update', { 
+	layout: 'dashboard',
+	 csrfToken: req.csrfToken(),
+	 client: client,
+	 target: target,
+	arr,
+	editdata :editdata[0],
+	firm: firm,
+	activity_goal: activity_goal,
+	practice_area: practice_area
+ });
 
  });
 
@@ -185,43 +195,45 @@ router.post('/activity/update/:id',auth, firmAttrAuth, csrfProtection, async (re
 		 practice_area : req.body.practice_area,
 		 potiential_revenue : req.body.potiential_revenue,
 		 remarks : req.body.remarks,
-
 		 activity_creation_date: CreationDate1 ? CreationDate1[2]+"-"+CreationDate1[1]+"-"+CreationDate1[0] : null,
  		 activity_from_date: FormDate1 ? FormDate1[2]+"-"+FormDate1[1]+"-"+FormDate1[0] : null,
 		 activity_to_date: FormDate1 ? ToDate1[2]+"-"+ToDate1[1]+"-"+ToDate1[0] : null,
-
-
 		 activity_name : req.body.activity_name,
 		 activity_reason : req.body.activity_reason,
      budget_status : req.body.budget_status,
      budget_details_status : req.body.budget_details_status,
-     target : req.body.target,
+     target: req.body.ref_type,
 	 },{where: {id : req.params['id']}
- 	});
-	 // if(activity_store1)
-	 // {
-		//  if(req.body.target == "T"){
-		// 	 for(var i=0; i<target_user.length; i++){
-		// 		 const store_activity_user = await Activity_to_user_type.update({
-		// 			 activity_id: activity_store1.id,
-		// 			 target_client_type: req.body.target,
-		// 			 type: target_user[i]
-		// 		 });
-		// 	 }
-		//  }
-		//  else {
-		//  	{
-		// 		for(var j=0; j<client_user.length; j++){
-		// 			const store_activity_user = await Activity_to_user_type.update({
-		// 				activity_id: activity_store1.id,
-		// 				target_client_type: req.body.target,
-		// 				type: client_user[j]
- 		// 		 });
- 		// 	 }
-		// 	}
-		//  }
-	 // }
-	 // req.flash('success-activity-message', 'Activity  Created Successfully');
+	 });
+	 
+	 const del_ref = await Activity_to_user_type.destroy({
+		where: {
+			activity_id: req.params['id']
+			}
+	});
+
+	if (req.body.ref_type == "T") {
+		for (var i = 0; i < target_user.length; i++) {
+			const store_activity_user = await Activity_to_user_type.create({
+				activity_id: req.params['id'],
+				target_client_type: req.body.ref_type,
+				type: target_user[i]
+			});
+		}
+	} else {
+		{
+			for (var j = 0; j < client_user.length; j++) {
+				const store_activity_user = await Activity_to_user_type.create({
+					activity_id: req.params['id'],
+					target_client_type: req.body.ref_type,
+					type: client_user[j]
+				});
+			}
+		}
+	}
+
+
+	 
 	 res.redirect('/activitypage');
 });
 
