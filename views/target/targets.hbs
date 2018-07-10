@@ -4,53 +4,6 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
 {{/content}}
 <div class="page-wrapper">
-<<<<<<< HEAD
-  <div class="content container-fluid">
-    <div class="row">
-      {{#if success_message}}
-      <div class="alert alert-success">
-        <strong>Success! </strong>{{success_message}}
-      </div>
-      {{/if}}
-      {{#if success_edit_message}}
-      <div class="alert alert-success">
-        <strong>Success! </strong>{{success_edit_message}}
-      </div>
-      {{/if}}
-      <div class="col-sm-4 col-xs-3">
-        <h4 class="page-title">Targets</h4>
-      </div>
-      <div class="col-sm-8 col-xs-9 text-right m-b-20">
-        <a href="/target/add" class="btn btn-primary rounded pull-right"  ><i class="fa fa-plus"></i> Add Target</a>
-      </div>
-    </div>
-    <div class="row filter-row">
-      <form method="GET">
-        <div class="col-sm-3 col-xs-6">
-          <div class="form-group form-focus select-focus">
-            <label class="control-label">Target Type</label>
-            {{!-- <input type="text" class="form-control floating" name="searchName" value="{{searchName}}"/> --}}
-            <select class="select floating" name="searchName">
-              <option value="">Select Target Type</option>
-              <option value="I" {{#if_eq searchName "I" }} selected="selected" {{/if_eq}}>Individual</option>
-              <option value="O" {{#if_eq searchName "O" }} selected="selected" {{/if_eq}}>Organisation</option>
-            </select>
-          </div>
-        </div>
-        <div class="col-sm-3 col-xs-6">
-          <div class="form-group form-focus">
-            <label class="control-label">Target Email</label>
-            <input type="text" class="form-control floating" name="searchEmail" value="{{searchMail}}"/>
-          </div>
-        </div>
-        <div class="col-sm-3 col-xs-6">
-          <input type="submit" value="Search" class="btn btn-success btn-block">
-        </div>
-        <div class="col-sm-3 col-xs-6">
-          <a href="/target" class="btn btn-success btn-block"> Clear </a>
-        </div>
-      </form>
-=======
     <div class="content container-fluid">
         <div class="row">
             {{#if success_message}}
@@ -169,7 +122,6 @@
                 </div>
             </div>
         </div>
->>>>>>> 219b9129f7587d755f9f36cba1e0f0dba42810a6
     </div>
 </div>
 <div class="modal fade" id="import" role="dialog">
@@ -206,9 +158,6 @@
         }
     }
 
-<<<<<<< HEAD
-{{/content}}
-=======
     $('.move-client').on('click', function(e) {
         var target_ids = [];
         $('input[name="target_id"]:checked').each(function() {
@@ -231,4 +180,3 @@
     });
 </script>
 {{/content}}
->>>>>>> 219b9129f7587d755f9f36cba1e0f0dba42810a6

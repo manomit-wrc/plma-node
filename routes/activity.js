@@ -103,7 +103,7 @@ router.post('/activity/add',auth, firmAttrAuth,csrfProtection, async (req,res) =
 	 });
 	 if(activity_store)
 	 {
-		 if(req.body.target == "T"){
+		 if(req.body.ref_type == "T"){
 			 for(var i=0; i<target_user.length; i++){
 				 const store_activity_user = await Activity_to_user_type.create({
 					 activity_id: activity_store.id,
@@ -156,7 +156,7 @@ router.get('/activity/edit/:id',auth,csrfProtection, async (req,res) => {
 	//console.log(result);
 	var arr = [];
 	for(var i=0; i<result.length; i++){
-			arr.push(result[i].type);
+			arr.push(parseInt(result[i].type));
 	}
 //console.log(arr);
 

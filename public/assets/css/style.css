@@ -1382,7 +1382,7 @@ table.table-inbox tbody tr.checked {background-color: #ffffcc;}
   color:#fff;
   text-transform:uppercase;
   position: relative;
-  border:1px solid transparent;
+  border: 0;
   z-index: 1;
   transition: all 0.3s ease 0s;
   border-radius: 70px;
@@ -1425,6 +1425,7 @@ table.table-inbox tbody tr.checked {background-color: #ffffcc;}
 .nav-tabs li.active a:hover{
   color:#fff;
   background: #ff851a;
+  border: 0;
 }
 .nav-tabs li.active a:hover:before{
   background: none;
