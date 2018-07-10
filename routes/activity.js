@@ -40,11 +40,11 @@ const Client = require('../models').client;
 //===================================================START ACTIVITY===============================================================================//
 router.get('/activityseen',auth, firmAttrAuth, csrfProtection, async (req,res) => {
 //	var error_message = req.flash('success-activity-message')[0];
-var success_message = req.flash('success-activity-message')[0];
-const firm = await Firm.findAll();
-const activity_goal = await ActivityGoal.findAll();
-const practice_area = await PracticeArea.findAll();
-const target = await Target.findAll({
+	var success_message = req.flash('success-activity-message')[0];
+	const firm = await Firm.findAll();
+  const activity_goal = await ActivityGoal.findAll();
+  const practice_area = await PracticeArea.findAll();
+  const target = await Target.findAll({
 	where: {target_type: "I"}
 });
 const client = await Client.findAll({
@@ -54,116 +54,150 @@ const client = await Client.findAll({
 });
 
 
-res.render('activity/addactivity',{ layout: 'dashboard', csrfToken: req.csrfToken(),firm: firm, success_message,activity_goal: activity_goal,practice_area: practice_area,client: client,target: target});
-});
+	res.render('activity/addactivity',{ layout: 'dashboard', csrfToken: req.csrfToken(),firm: firm, success_message,activity_goal: activity_goal,practice_area: practice_area,client: client,target: target});
+				});
 
 
 
 router.get('/activitypage',auth, firmAttrAuth, csrfProtection, (req,res) => {
 	Activity.findAll({
 
-	}).then(row => {
-		res.render('activity/activity',{ layout: 'dashboard', csrfToken: req.csrfToken(),row: row });
+}).then(row => {
+	res.render('activity/activity',{ layout: 'dashboard', csrfToken: req.csrfToken(),row: row });
+		});
 	});
-});
 
 
 // ========{{    insert data to the database  }}=====================//
 
 router.post('/activity/add',auth, firmAttrAuth,csrfProtection, async (req,res) => {
-	var target_user = req.body.target_user;
-	var client_user = req.body.client_user;
+	// console.log(JSON.stringify(req.body, undefined, 2));
+
+		var target_user = req.body.target_user;
+		var client_user = req.body.client_user;
 		//console.log(client_user);
-		const activity_store = await	Activity.create({
-			firm : req.body.firm,
-			activity_type : req.body.activity_type,
-			activity_goal : req.body.activity_goal,
-			practice_area : req.body.practice_area,
-			potiential_revenue : req.body.potiential_revenue,
-			remarks : req.body.remarks,
-			creation_date : req.body.creation_date,
-			from_date : req.body.from_date,
-			to_date : req.body.to_date,
-			activity_name : req.body.activity_name,
-			activity_reason : req.body.activity_reason,
-			budget_status : req.body.budget_status,
-			budget_details_status : req.body.budget_details_status,
-			target : req.body.target,
-		});
-		if(activity_store)
-		{
-			if(req.body.target == "T"){
-				for(var i=0; i<target_user.length; i++){
+		const CreationDate = req.body.activity_creation_date ? req.body.activity_creation_date.split("-") : '';
+		const FromDate = req.body.activity_from_date ? req.body.activity_from_date.split("-") : '';
+		const ToDate = req.body.activity_to_date ? req.body.activity_to_date.split("-") : '';
+
+
+
+	  const activity_store = await	Activity.create({
+     firm : req.body.firm,
+     activity_type : req.body.activity_type,
+     activity_goal : req.body.activity_goal,
+		 practice_area : req.body.practice_area,
+		 potiential_revenue : req.body.potiential_revenue,
+		 remarks : req.body.remarks,
+
+		 activity_creation_date: CreationDate ? CreationDate[2]+"-"+CreationDate[1]+"-"+CreationDate[0] : null,
+		 activity_from_date: FromDate ? FromDate[2]+"-"+FromDate[1]+"-"+FromDate[0] : null,
+		 activity_to_date: ToDate ? ToDate[2]+"-"+ToDate[1]+"-"+ToDate[0] : null,
+
+
+		 activity_name : req.body.activity_name,
+		 activity_reason : req.body.activity_reason,
+     budget_status : req.body.budget_status,
+     budget_details_status : req.body.budget_details_status,
+     target : req.body.ref_type,
+	 });
+	 if(activity_store)
+	 {
+		 if(req.body.ref_type == "T"){
+			 for(var i=0; i<target_user.length; i++){
+				 const store_activity_user = await Activity_to_user_type.create({
+					 activity_id: activity_store.id,
+					 target_client_type: req.body.ref_type,
+					 type: target_user[i]
+				 });
+			 }
+		 }
+		 else {
+		 	{
+				for(var j=0; j<client_user.length; j++){
 					const store_activity_user = await Activity_to_user_type.create({
 						activity_id: activity_store.id,
-						target_client_type: req.body.target,
-						type: target_user[i]
-					});
-				}
+						target_client_type: req.body.ref_type,
+						type: client_user[j]
+ 				 });
+ 			 }
 			}
-			else {
-				{
-					for(var j=0; j<client_user.length; j++){
-						const store_activity_user = await Activity_to_user_type.create({
-							activity_id: activity_store.id,
-							target_client_type: req.body.target,
-							type: client_user[j]
-						});
-					}
-				}
-			}
-		}
-		req.flash('success-activity-message', 'Activity  Created Successfully');
-		res.redirect('/activitypage');
-	});
+		 }
+	 }
+	 req.flash('success-activity-message', 'Activity  Created Successfully');
+	 res.redirect('/activitypage');
+});
 
 //.....................{{   edit data  }}.......................................//
 
 router.get('/activity/edit/:id',auth,csrfProtection, async (req,res) => {
+  Activity.hasMany(Activity_to_user_type, {foreignKey: 'activity_id'});
 	const firm = await Firm.findAll();
 	const activity_goal = await ActivityGoal.findAll();
-	const practice_area = await PracticeArea.findAll();
+  const practice_area = await PracticeArea.findAll();
 
 
 	const target = await Target.findAll({
-		where: {target_type: "I"}
+	where: {target_type: "I"}
 	});
 	const client = await Client.findAll({
-		where: {
-			client_type : "I"
-		}
+	where: {
+		client_type : "I"
+	}
 	});
 
-
-	Activity.findById(req.params.id).then(editdata => {
-
-		res.render('activity/update', { layout: 'dashboard', csrfToken: req.csrfToken(),client: client,target: target, editdata :editdata,firm: firm,activity_goal: activity_goal,practice_area: practice_area });
+	const editdata = await Activity.findAll({
+			where: {id: req.params['id']},
+			include: [{
+					model: Activity_to_user_type
+			}]
 	});
-});
+	var result = JSON.parse(JSON.stringify(editdata[0].jointactivities));
+	//console.log(result);
+	var arr = [];
+	for(var i=0; i<result.length; i++){
+			arr.push(parseInt(result[i].type));
+	}
+//console.log(arr);
+
+
+res.render('activity/update', { layout: 'dashboard', csrfToken: req.csrfToken(),client: client,target: target , arr, editdata :editdata[0],firm: firm,activity_goal: activity_goal,practice_area: practice_area });
+
+ });
 
 
 //update data
 router.post('/activity/update/:id',auth, firmAttrAuth, csrfProtection, async (req,res) => {
-	var target_user = req.body.target_user;
-	var client_user = req.body.client_user;
+		var target_user = req.body.target_user;
+		var client_user = req.body.client_user;
+
+		const CreationDate1 = req.body.activity_creation_date ? req.body.activity_creation_date.split("-") : '';
+		const FormDate1 = req.body.activity_from_date ? req.body.activity_from_date.split("-") : '';
+		const ToDate1 = req.body.activity_to_date ? req.body.activity_to_date.split("-") : '';
+
+
+
 		//console.log(client_user);
-		const activity_store1 = await	Activity.update({
-			firm : req.body.firm,
-			activity_type : req.body.activity_type,
-			activity_goal : req.body.activity_goal,
-			practice_area : req.body.practice_area,
-			potiential_revenue : req.body.potiential_revenue,
-			remarks : req.body.remarks,
-			creation_date : req.body.creation_date,
-			from_date : req.body.from_date,
-			to_date : req.body.to_date,
-			activity_name : req.body.activity_name,
-			activity_reason : req.body.activity_reason,
-			budget_status : req.body.budget_status,
-			budget_details_status : req.body.budget_details_status,
-			target : req.body.target,
-		},{where: {id : req.params['id']}
-	});
+	  const activity_store1 = await	Activity.update({
+     firm : req.body.firm,
+     activity_type : req.body.activity_type,
+     activity_goal : req.body.activity_goal,
+		 practice_area : req.body.practice_area,
+		 potiential_revenue : req.body.potiential_revenue,
+		 remarks : req.body.remarks,
+
+		 activity_creation_date: CreationDate1 ? CreationDate1[2]+"-"+CreationDate1[1]+"-"+CreationDate1[0] : null,
+ 		 activity_from_date: FormDate1 ? FormDate1[2]+"-"+FormDate1[1]+"-"+FormDate1[0] : null,
+		 activity_to_date: FormDate1 ? ToDate1[2]+"-"+ToDate1[1]+"-"+ToDate1[0] : null,
+
+
+		 activity_name : req.body.activity_name,
+		 activity_reason : req.body.activity_reason,
+     budget_status : req.body.budget_status,
+     budget_details_status : req.body.budget_details_status,
+     target : req.body.target,
+	 },{where: {id : req.params['id']}
+ 	});
 	 // if(activity_store1)
 	 // {
 		//  if(req.body.target == "T"){
@@ -189,29 +223,29 @@ router.post('/activity/update/:id',auth, firmAttrAuth, csrfProtection, async (re
 	 // }
 	 // req.flash('success-activity-message', 'Activity  Created Successfully');
 	 res.redirect('/activitypage');
-	});
+});
 
 
   //        {{   delete data  }}
 
 
-  router.get('/activity/deletedata/:id',auth, async(req,res) => {
+	router.get('/activity/deletedata/:id',auth, async(req,res) => {
 
 		// outer.post('/firm/delete', auth, siteAuth, csrfProtection, async (req, res) => {
-			const activity_delete = await Activity.destroy({
-				where: {
-					id: req.params['id']
-				}
-			});
+    const activity_delete = await Activity.destroy({
+        where: {
+            id: req.params['id']
+        }
+    });
 
-			const jointactivity_delete = await Activity_to_user_type.destroy({
-				where: {
-					activity_id: req.params['id']
-				}
-			});
-			res.redirect('/activitypage');
+    const jointactivity_delete = await Activity_to_user_type.destroy({
+        where: {
+            activity_id: req.params['id']
+        }
+    });
+		res.redirect('/activitypage');
 
 
-		});
+});
 //====================================END ACTIVITY=============================================================================//
 module.exports = router;
