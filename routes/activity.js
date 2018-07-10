@@ -40,6 +40,14 @@ const Client = require('../models').client;
 //===================================================START ACTIVITY===============================================================================//
 router.get('/activityseen',auth, firmAttrAuth, csrfProtection, async (req,res) => {
 //	var error_message = req.flash('success-activity-message')[0];
+
+var activityFilter = {};
+		if(req.query.searchActive)
+		{
+				activityFilter.activity_type = req.query.searchActive;
+		}
+
+
 	var success_message = req.flash('success-activity-message')[0];
 	const firm = await Firm.findAll();
   const activity_goal = await ActivityGoal.findAll();
@@ -48,20 +56,27 @@ router.get('/activityseen',auth, firmAttrAuth, csrfProtection, async (req,res) =
 	where: {target_type: "I"}
 });
 const client = await Client.findAll({
-	where: {
+
+
+	 where: {
 		client_type : "I"
 	}
 });
 
-
 	res.render('activity/addactivity',{ layout: 'dashboard', csrfToken: req.csrfToken(),firm: firm, success_message,activity_goal: activity_goal,practice_area: practice_area,client: client,target: target});
 				});
 
-
+//fetch
 
 router.get('/activitypage',auth, firmAttrAuth, csrfProtection, (req,res) => {
-	Activity.findAll({
+	var activityFilter = {};
+			if(req.query.searchActive)
+			{
+					activityFilter.activity_name = req.query.searchActive;
+			}
 
+	Activity.findAll({
+where: activityFilter,
 }).then(row => {
 	res.render('activity/activity',{ layout: 'dashboard', csrfToken: req.csrfToken(),row: row });
 		});
@@ -161,7 +176,7 @@ router.get('/activity/edit/:id',auth,csrfProtection, async (req,res) => {
 //console.log(arr);
 
 
-res.render('activity/update', { 
+res.render('activity/update', {
 	layout: 'dashboard',
 	 csrfToken: req.csrfToken(),
 	 client: client,
@@ -205,7 +220,7 @@ router.post('/activity/update/:id',auth, firmAttrAuth, csrfProtection, async (re
      target: req.body.ref_type,
 	 },{where: {id : req.params['id']}
 	 });
-	 
+
 	 const del_ref = await Activity_to_user_type.destroy({
 		where: {
 			activity_id: req.params['id']
@@ -233,7 +248,7 @@ router.post('/activity/update/:id',auth, firmAttrAuth, csrfProtection, async (re
 	}
 
 
-	 
+
 	 res.redirect('/activitypage');
 });
 
