@@ -99,15 +99,15 @@ router.post('/activity/add',auth, firmAttrAuth,csrfProtection, async (req,res) =
 		 activity_reason : req.body.activity_reason,
      budget_status : req.body.budget_status,
      budget_details_status : req.body.budget_details_status,
-     target : req.body.ref_type,
+     target : req.body.target,
 	 });
 	 if(activity_store)
 	 {
-		 if(req.body.ref_type == "T"){
+		 if(req.body.target == "T"){
 			 for(var i=0; i<target_user.length; i++){
 				 const store_activity_user = await Activity_to_user_type.create({
 					 activity_id: activity_store.id,
-					 target_client_type: req.body.ref_type,
+					 target_client_type: req.body.target,
 					 type: target_user[i]
 				 });
 			 }
@@ -117,7 +117,7 @@ router.post('/activity/add',auth, firmAttrAuth,csrfProtection, async (req,res) =
 				for(var j=0; j<client_user.length; j++){
 					const store_activity_user = await Activity_to_user_type.create({
 						activity_id: activity_store.id,
-						target_client_type: req.body.ref_type,
+						target_client_type: req.body.target,
 						type: client_user[j]
  				 });
  			 }
@@ -131,7 +131,38 @@ router.post('/activity/add',auth, firmAttrAuth,csrfProtection, async (req,res) =
 //.....................{{   edit data  }}.......................................//
 
 router.get('/activity/edit/:id',auth,csrfProtection, async (req,res) => {
-  Activity.hasMany(Activity_to_user_type, {foreignKey: 'activity_id'});
+	 //
+	 // Activity_to_user_type.belongsTo(Activity, {foreignKey: 'activity_id'});
+		// 		Activity_to_user_type.findAll({
+	 //         include: [{
+	 //             model: Activity
+	 //         }]
+	 //     }).then(function(qadata){
+		// 		 	console.log(JSON.stringify(qadata, undefined, 2));
+		// 				console.log(qadata.length);
+		// 			for(var i=0;i<qadata.length;i++) {
+		// 				console.log("TEST", JSON.stringify(typeof qadata[i].activity.id, undefined, 2));
+
+
+									//for(var j=0;j<qadata[i].activity.id.length;j++) {
+
+
+											// var tempArr = lodash.filter(answer_data, x => x.option_id === qadata[i].Options[j].id);
+											// if(tempArr.length > 0) {
+											// 		qadata[i].Options[j].answer_status = true;
+											// }
+											// else {
+											// 		qadata[i].Options[j].answer_status = false;
+											// }
+								//	}
+							// }
+					//
+
+			 // });
+
+
+
+
 	const firm = await Firm.findAll();
 	const activity_goal = await ActivityGoal.findAll();
   const practice_area = await PracticeArea.findAll();
@@ -146,23 +177,11 @@ router.get('/activity/edit/:id',auth,csrfProtection, async (req,res) => {
 	}
 	});
 
-	const editdata = await Activity.findAll({
-			where: {id: req.params['id']},
-			include: [{
-					model: Activity_to_user_type
-			}]
-	});
-	var result = JSON.parse(JSON.stringify(editdata[0].jointactivities));
-	//console.log(result);
-	var arr = [];
-	for(var i=0; i<result.length; i++){
-			arr.push(result[i].type);
-	}
-//console.log(arr);
 
+Activity.findById(req.params.id).then(editdata => {
 
-res.render('activity/update', { layout: 'dashboard', csrfToken: req.csrfToken(),client: client,target: target , arr, editdata :editdata[0],firm: firm,activity_goal: activity_goal,practice_area: practice_area });
-
+res.render('activity/update', { layout: 'dashboard', csrfToken: req.csrfToken(),client: client,target: target, editdata :editdata,firm: firm,activity_goal: activity_goal,practice_area: practice_area });
+});
  });
 
 
