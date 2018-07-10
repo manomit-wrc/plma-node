@@ -156,7 +156,7 @@ router.get('/activity/edit/:id',auth,csrfProtection, async (req,res) => {
 	//console.log(result);
 	var arr = [];
 	for(var i=0; i<result.length; i++){
-			arr.push(parseInt(result[i].type));
+			arr.push(result[i].type);
 	}
 //console.log(arr);
 
