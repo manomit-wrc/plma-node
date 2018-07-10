@@ -25,13 +25,9 @@ const employee = require('./routes/employee');
 const activity_goal = require('./routes/activity_goal');
 const financial_goal = require('./routes/financial_goal');
 const target = require('./routes/target');
-<<<<<<< HEAD
 const activity = require('./routes/activity');
-
-=======
 const master_contact = require('./routes/master_contact');
 const referral = require('./routes/referral');
->>>>>>> 219b9129f7587d755f9f36cba1e0f0dba42810a6
 
 const allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -54,10 +50,6 @@ const hbs = exphbs.create({
     extname: '.hbs',
     helpers: {
         if_eq: function (a, b, opts) {
-<<<<<<< HEAD
-
-=======
->>>>>>> 219b9129f7587d755f9f36cba1e0f0dba42810a6
             if (a == b)
                 return opts.fn(this);
             else
@@ -116,14 +108,8 @@ app.use(employee);
 app.use(activity_goal);
 app.use(financial_goal);
 app.use(target);
-<<<<<<< HEAD
 app.use(activity);
-
-/******** End  *******/
-=======
 app.use(master_contact);
 app.use(referral);
 /********** End **********/
-
->>>>>>> 219b9129f7587d755f9f36cba1e0f0dba42810a6
 app.listen(port, () => console.log(`Server listening to port ${port}`));
