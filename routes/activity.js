@@ -25,6 +25,7 @@ var csrfProtection = csrf({ cookie: true });
 var csv = require('fast-csv');
 var path = require('path');
 var fs = require('fs');
+const lodash = require("lodash");
 const router = express.Router();
 const Firm = require('../models').firm;
 const ActivityGoal = require('../models').activity_goal;
@@ -35,7 +36,7 @@ const Budget = require('../models').budget;
 
 
 //===================================================START ACTIVITY===============================================================================//
-router.get('/activityseen',auth, firmAttrAuth, csrfProtection, async (req,res) => {
+router.get('/activityseen',auth,  csrfProtection, async (req,res) => {
 //	var error_message = req.flash('success-activity-message')[0];
 
 var activityFilter = {};
@@ -55,41 +56,43 @@ var activityFilter = {};
 			client_type : "I"
 		}
 	});
-	const budgetArr = await Budget.findAll({
-		include: [{
-			model: Budget,
-			as: 'BudgetHead'
-		}]
+	// const data = await Budget.findAll({
+	// 	include: [{
+	// 		model: Budget,
+	// 		as: 'BudgetHead'
+	// 	}]
+	// });
+	const budgetList = await Budget.findAll();
+
+	var budgetArr = [];
+	for (var i = 0; i < budgetList.length; i++) {
+		if (budgetList[i].parent_id === 0) {
+			const parent_name = budgetList[i].name;
+			const child_budget = lodash.filter(budgetList, arr => arr.parent_id === budgetList[i].id);
+			budgetArr.push({
+				"parent_name": parent_name,
+				"child_budget": child_budget
+			});
+			
+		}
+	}
+	
+	res.render('activity/addactivity', {
+		layout: 'dashboard',
+		csrfToken: req.csrfToken(),
+		firm: firm,
+		success_message,
+		activity_goal: activity_goal,
+		practice_area: practice_area,
+		client: client,
+		target: target,
+		budgetArr
 	});
-	console.log(budgetArr);
-	// const budget = await Budget.findAll();
-	// for(var i=0; i< budget.length; i++)
-	// {
-	// 	if (budget[i].parent_id == "0"){
-	// 		var budegetHead = budget[i].name;
-	// 		const subBudget = await Budget.findAll({
-	// 			where: {
-	// 				parent_id: budget[i].id
-	// 			}
-	// 		});
-	// 		console.log(subBudget.length)
-	// 		for(var j=0; j<subBudget.length; j++)
-	// 		{
-	// 			subBudgetArr.push(subBudget[j].name);
-	// 		}
-	// 		budgetArr.push({
-	// 			"budget_head": budegetHead,
-	// 			"sub_budget": subBudgetArr
-	// 		});
-	// 	}
-	// }
-	//console.log(budgetArr);
-	res.render('activity/addactivity',{ layout: 'dashboard', csrfToken: req.csrfToken(),firm: firm, success_message,activity_goal: activity_goal,practice_area: practice_area,client: client,target: target});
 				});
 
 //fetch
 
-router.get('/activitypage',auth, firmAttrAuth, csrfProtection, (req,res) => {
+router.get('/activitypage',auth,  csrfProtection, (req,res) => {
 	var activityFilter = {};
 			if(req.query.searchActive)
 			{
@@ -103,65 +106,77 @@ where: activityFilter,
 		});
 	});
 
+	// Start budget add section
+
+router.post('/insertActivity', auth, csrfProtection, async(req, res) => {
+	const addActivityId = await Activity.create({
+		activity_name: req.body.activityName
+	});
+	res.json({
+		success: true,
+		activityId: addActivityId.id
+	});
+});
+
 
 // ========{{    insert data to the database  }}=====================//
 
-router.post('/activity/add',auth, firmAttrAuth,csrfProtection, async (req,res) => {
-	// console.log(JSON.stringify(req.body, undefined, 2));
+router.post('/activity/add',auth, csrfProtection, async (req,res) => {
+	// // console.log(JSON.stringify(req.body, undefined, 2));
 
-		var target_user = req.body.target_user;
-		var client_user = req.body.client_user;
-		//console.log(client_user);
-		const CreationDate = req.body.activity_creation_date ? req.body.activity_creation_date.split("-") : '';
-		const FromDate = req.body.activity_from_date ? req.body.activity_from_date.split("-") : '';
-		const ToDate = req.body.activity_to_date ? req.body.activity_to_date.split("-") : '';
-
-
-
-	  const activity_store = await	Activity.create({
-     firm : req.body.firm,
-     activity_type : req.body.activity_type,
-     activity_goal : req.body.activity_goal,
-		 practice_area : req.body.practice_area,
-		 potiential_revenue : req.body.potiential_revenue,
-		 remarks : req.body.remarks,
-
-		 activity_creation_date: CreationDate ? CreationDate[2]+"-"+CreationDate[1]+"-"+CreationDate[0] : null,
-		 activity_from_date: FromDate ? FromDate[2]+"-"+FromDate[1]+"-"+FromDate[0] : null,
-		 activity_to_date: ToDate ? ToDate[2]+"-"+ToDate[1]+"-"+ToDate[0] : null,
+	// 	var target_user = req.body.target_user;
+	// 	var client_user = req.body.client_user;
+	// 	//console.log(client_user);
+	// 	const CreationDate = req.body.activity_creation_date ? req.body.activity_creation_date.split("-") : '';
+	// 	const FromDate = req.body.activity_from_date ? req.body.activity_from_date.split("-") : '';
+	// 	const ToDate = req.body.activity_to_date ? req.body.activity_to_date.split("-") : '';
 
 
-		 activity_name : req.body.activity_name,
-		 activity_reason : req.body.activity_reason,
-     budget_status : req.body.budget_status,
-     budget_details_status : req.body.budget_details_status,
-     target : req.body.ref_type,
-	 });
-	 if(activity_store)
-	 {
-		 if(req.body.ref_type == "T"){
-			 for(var i=0; i<target_user.length; i++){
-				 const store_activity_user = await Activity_to_user_type.create({
-					 activity_id: activity_store.id,
-					 target_client_type: req.body.ref_type,
-					 type: target_user[i]
-				 });
-			 }
-		 }
-		 else {
-		 	{
-				for(var j=0; j<client_user.length; j++){
-					const store_activity_user = await Activity_to_user_type.create({
-						activity_id: activity_store.id,
-						target_client_type: req.body.ref_type,
-						type: client_user[j]
- 				 });
- 			 }
-			}
-		 }
-	 }
-	 req.flash('success-activity-message', 'Activity  Created Successfully');
-	 res.redirect('/activitypage');
+
+	//   const activity_store = await	Activity.create({
+    //  firm : req.body.firm,
+    //  activity_type : req.body.activity_type,
+    //  activity_goal : req.body.activity_goal,
+	// 	 practice_area : req.body.practice_area,
+	// 	 potiential_revenue : req.body.potiential_revenue,
+	// 	 remarks : req.body.remarks,
+
+	// 	 activity_creation_date: CreationDate ? CreationDate[2]+"-"+CreationDate[1]+"-"+CreationDate[0] : null,
+	// 	 activity_from_date: FromDate ? FromDate[2]+"-"+FromDate[1]+"-"+FromDate[0] : null,
+	// 	 activity_to_date: ToDate ? ToDate[2]+"-"+ToDate[1]+"-"+ToDate[0] : null,
+
+
+	// 	 activity_name : req.body.activity_name,
+	// 	 activity_reason : req.body.activity_reason,
+    //  budget_status : req.body.budget_status,
+    //  budget_details_status : req.body.budget_details_status,
+    //  target : req.body.ref_type,
+	//  });
+	//  if(activity_store)
+	//  {
+	// 	 if(req.body.ref_type == "T"){
+	// 		 for(var i=0; i<target_user.length; i++){
+	// 			 const store_activity_user = await Activity_to_user_type.create({
+	// 				 activity_id: activity_store.id,
+	// 				 target_client_type: req.body.ref_type,
+	// 				 type: target_user[i]
+	// 			 });
+	// 		 }
+	// 	 }
+	// 	 else {
+	// 	 	{
+	// 			for(var j=0; j<client_user.length; j++){
+	// 				const store_activity_user = await Activity_to_user_type.create({
+	// 					activity_id: activity_store.id,
+	// 					target_client_type: req.body.ref_type,
+	// 					type: client_user[j]
+ 	// 			 });
+ 	// 		 }
+	// 		}
+	// 	 }
+	//  }
+	//  req.flash('success-activity-message', 'Activity  Created Successfully');
+	//  res.redirect('/activitypage');
 });
 
 //.....................{{   edit data  }}.......................................//
@@ -213,7 +228,7 @@ res.render('activity/update', {
 
 
 //update data
-router.post('/activity/update/:id',auth, firmAttrAuth, csrfProtection, async (req,res) => {
+router.post('/activity/update/:id',auth,  csrfProtection, async (req,res) => {
 		var target_user = req.body.target_user;
 		var client_user = req.body.client_user;
 

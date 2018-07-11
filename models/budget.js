@@ -7,14 +7,14 @@ module.exports = (sequelize, DataTypes) => {
     remarks: DataTypes.TEXT
   }, {});
   budget.associate = function(models) {
-    budget.belongsTo(models.budget, {
-      onDelete: 'CASCADE',
-      foreignKey: {
-        name: 'parent_id',
-        allowNull: true
-      },
-      as: 'BudgetHead'
-    });
+    // budget.belongsTo(models.budget, {
+    //   onDelete: 'CASCADE',
+    //   foreignKey: {
+    //     name: 'parent_id',
+    //     allowNull: true
+    //   },
+    //   as: 'BudgetHead'
+    // });
   };
   return budget;
 };
