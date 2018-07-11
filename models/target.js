@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     target_id: DataTypes.STRING,
     target_code: DataTypes.STRING,
     status: DataTypes.STRING,
-    social_sequrity_no: DataTypes.STRING,
+    social_security_no: DataTypes.STRING,
     im: DataTypes.STRING,
     remarks: DataTypes.STRING,
     website_url: DataTypes.STRING,
