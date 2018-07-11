@@ -74,6 +74,9 @@ textarea.form-control {resize: vertical;}
 .input-group .form-control {height: 34px;}
 .input-group.input-group-lg .form-control {height: 46px;}
 
+
+
+
 /*------------------------------------------------------------------
 [2. Table]
 */
@@ -1632,6 +1635,30 @@ table.table-inbox tbody tr.checked {background-color: #ffffcc;}
   position: relative;
   top: 50px;
 }
+
+.panel-primary {
+	margin-bottom: 15px;
+}
+
+.panel-primary>.panel-heading {
+	color: #fff;
+	background-color: #717372;
+	border-color: #717372;
+}
+
+.panel-primary .form-focus {
+	margin-bottom: 15px;
+}
+
+.panel-primary h5 {
+	margin-bottom: 0;
+}
+
+.panel-primary .form-control {
+	height: 34px;
+}
+
+
 
 /*------------------------------------------------------------------
 [39-a.... Custom Styles]

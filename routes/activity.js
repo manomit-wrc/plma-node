@@ -21,20 +21,17 @@ const Jurisdiction = require('../models').jurisdiction;
 const user = require('../models').user;
 const Activity = require('../models').activity;
 const Activity_to_user_type = require('../models').jointactivity;
-
 var csrfProtection = csrf({ cookie: true });
 var csv = require('fast-csv');
 var path = require('path');
 var fs = require('fs');
 const router = express.Router();
-
-
-
 const Firm = require('../models').firm;
 const ActivityGoal = require('../models').activity_goal;
 const PracticeArea = require('../models').practicearea;
 const Target = require('../models').target;
 const Client = require('../models').client;
+const Budget = require('../models').budget;
 
 
 //===================================================START ACTIVITY===============================================================================//
@@ -42,27 +39,51 @@ router.get('/activityseen',auth, firmAttrAuth, csrfProtection, async (req,res) =
 //	var error_message = req.flash('success-activity-message')[0];
 
 var activityFilter = {};
-		if(req.query.searchActive)
-		{
-				activityFilter.activity_type = req.query.searchActive;
-		}
-
-
+	if(req.query.searchActive)
+	{
+			activityFilter.activity_type = req.query.searchActive;
+	}
 	var success_message = req.flash('success-activity-message')[0];
 	const firm = await Firm.findAll();
-  const activity_goal = await ActivityGoal.findAll();
-  const practice_area = await PracticeArea.findAll();
-  const target = await Target.findAll({
-	where: {target_type: "I"}
-});
-const client = await Client.findAll({
-
-
-	 where: {
-		client_type : "I"
-	}
-});
-
+	const activity_goal = await ActivityGoal.findAll();
+	const practice_area = await PracticeArea.findAll();
+	const target = await Target.findAll({
+		where: {target_type: "I"}
+	});
+	const client = await Client.findAll({
+		where: {
+			client_type : "I"
+		}
+	});
+	const budgetArr = await Budget.findAll({
+		include: [{
+			model: Budget,
+			as: 'BudgetHead'
+		}]
+	});
+	console.log(budgetArr);
+	// const budget = await Budget.findAll();
+	// for(var i=0; i< budget.length; i++)
+	// {
+	// 	if (budget[i].parent_id == "0"){
+	// 		var budegetHead = budget[i].name;
+	// 		const subBudget = await Budget.findAll({
+	// 			where: {
+	// 				parent_id: budget[i].id
+	// 			}
+	// 		});
+	// 		console.log(subBudget.length)
+	// 		for(var j=0; j<subBudget.length; j++)
+	// 		{
+	// 			subBudgetArr.push(subBudget[j].name);
+	// 		}
+	// 		budgetArr.push({
+	// 			"budget_head": budegetHead,
+	// 			"sub_budget": subBudgetArr
+	// 		});
+	// 	}
+	// }
+	//console.log(budgetArr);
 	res.render('activity/addactivity',{ layout: 'dashboard', csrfToken: req.csrfToken(),firm: firm, success_message,activity_goal: activity_goal,practice_area: practice_area,client: client,target: target});
 				});
 
