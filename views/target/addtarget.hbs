@@ -24,107 +24,109 @@
 				<h3 class="card-title">Basic Informations</h3>
 				<div class="row">
 					<div class="col-md-12">
-						<div id="org_type" style="display:none;">
-							<div class="col-md-12">
-								<div class="form-group form-focus">
-									<label class="control-label">Organisation Name</label>
-									<input type="text" class="form-control floating" id="org_name" name="org_name" />
+						<div class="row">
+							<div id="org_type" style="display:none;">
+								<div class="col-md-12">
+									<div class="form-group form-focus">
+										<label class="control-label">Organisation Name</label>
+										<input type="text" class="form-control floating" id="org_name" name="org_name" />
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Organisation ID</label>
+										<input type="text" class="form-control floating" id="org_id" name="org_id" />
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Organisation Code </label>
+										<input type="text" class="form-control floating" id="org_code" name="org_code" />
+									</div>
 								</div>
 							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Organisation ID</label>
-									<input type="text" class="form-control floating" id="org_id" name="org_id" />
+							<div id="individual_type">
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">First Name</label>
+										<input type="text" class="form-control floating" id="first_name" name="first_name" />
+									</div>
 								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Organisation Code </label>
-									<input type="text" class="form-control floating" id="org_code" name="org_code" />
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Last Name</label>
+										<input type="text" class="form-control floating" id="last_name" name="last_name" />
+									</div>
 								</div>
-							</div>
-						</div>
-						<div id="individual_type">
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">First Name</label>
-									<input type="text" class="form-control floating" id="first_name" name="first_name" />
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Target ID </label>
+										<input type="text" class="form-control floating" id="target_id" name="target_id" />
+									</div>
 								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Last Name</label>
-									<input type="text" class="form-control floating" id="last_name" name="last_name" />
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Target Code </label>
+										<input type="text" class="form-control floating" id="target_code" name="target_code" />
+									</div>
 								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Target ID </label>
-									<input type="text" class="form-control floating" id="target_id" name="target_id" />
+								<div class="col-md-6">
+									<div class="form-group form-focus select-focus">
+										<label class="control-label">Designation</label>
+										<select id="designation" name="designation" class="select form-control floating">
+											{{#each designations}}
+											<option value="{{this.id}}">{{this.title}}</option>
+											{{/each}}
+										</select>
+									</div>
 								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Target Code </label>
-									<input type="text" class="form-control floating" id="target_code" name="target_code" />
+								<div class="col-md-6">
+									<div class="form-group form-focus select-focus"></div>
 								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus select-focus">
-									<label class="control-label">Designation</label>
-									<select id="designation" name="designation" class="select form-control floating">
-										{{#each designations}}
-										<option value="{{this.id}}">{{this.title}}</option>
-										{{/each}}
-									</select>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Date of Birth</label>
+										<div class="cal-icon">
+											<input class="form-control floating datetimepicker" type="text" id="dob" name="dob">
+										</div>
+									</div>
 								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus select-focus"></div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Date of Birth</label>
-									<div class="cal-icon">
-										<input class="form-control floating datetimepicker" type="text" id="dob" name="dob">
+								<div class="col-md-6">
+									<div class="form-group form-focus select-focus">
+										<label class="control-label">Gender</label>
+										<select class="select form-control floating" id="gender" name="gender">
+											<option value="">Select Gender</option>
+											<option value="M">Male</option>
+											<option value="F">Female</option>
+										</select>
 									</div>
 								</div>
 							</div>
 							<div class="col-md-6">
-								<div class="form-group form-focus select-focus">
-									<label class="control-label">Gender</label>
-									<select class="select form-control floating" id="gender" name="gender">
-										<option value="">Select Gender</option>
-										<option value="M">Male</option>
-										<option value="F">Female</option>
-									</select>
+								<div class="form-group form-focus">
+									<label class="control-label">Email Id </label>
+									<input type="text" class="form-control floating" id="email" name="email" />
+									<span id="uniqueEmail" style="color: red">
+										<span>
 								</div>
 							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group form-focus">
-								<label class="control-label">Email Id </label>
-								<input type="text" class="form-control floating" id="email" name="email" />
-								<span id="uniqueEmail" style="color: red">
-									<span>
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Phone Number</label>
+									<input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" />
+								</div>
 							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group form-focus">
-								<label class="control-label">Phone Number</label>
-								<input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" />
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Fax</label>
+									<input type="text" class="form-control floating number_validator" id="fax" name="fax" />
+								</div>
 							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group form-focus">
-								<label class="control-label">Fax</label>
-								<input type="text" class="form-control floating number_validator" id="fax" name="fax" />
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group form-focus">
-								<label class="control-label">Mobile Number</label>
-								<input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" />
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Mobile Number</label>
+									<input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" />
+								</div>
 							</div>
 						</div>
 					</div>
@@ -313,10 +315,10 @@
 
 		$("#targetform").validate({
 			rules: {
-				target_first_name: {
+				first_name: {
 					required: true
 				},
-				target_last_name: {
+				last_name: {
 					required: true
 				},
 				org_name: {
@@ -331,7 +333,7 @@
 				target_id: {
 					required: true
 				},
-				master_id: {
+				target_code: {
 					required: true
 				},
 				email: {
@@ -361,10 +363,10 @@
 				}
 			},
 			messages: {
-				target_first_name: {
+				first_name: {
 					required: "First Name can't be blank"
 				},
-				target_last_name: {
+				last_name: {
 					required: "Last name  title can't be blank"
 				},
 				org_name: {
@@ -379,8 +381,8 @@
 				target_id: {
 					required: "Target ID can't be blank"
 				},
-				master_id: {
-					required: "Master ID can't be blank"
+				target_code: {
+					required: "Target Code can't be blank"
 				},
 				email: {
 					required: "Email id can't be blank",
