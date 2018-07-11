@@ -15,7 +15,7 @@
 							<h4 class="page-title">Edit Target</h4>
 						</div>
 					</div>
-					<form id="targetform" method="POST" action="/target/edittarget/{{client.id}}">
+					<form id="targetform" method="POST" action="/target/edit/{{client.id}}">
 						<input type="hidden" name="_csrf" value="{{csrfToken}}">
 						<input type="hidden" value="{{client.id}}" id="id" />
 						<input type="radio" id="individual_client" name="client_type" value="I" {{#if_eq client.target_type "I"}} checked {{/if_eq}} disabled />Individual
