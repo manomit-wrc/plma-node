@@ -198,6 +198,29 @@ router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 	res.render('target/targetupdate', { layout: 'dashboard', csrfToken: req.csrfToken(), designation: designation, industry: industrys, client: target, country: country, state: state, city: city, zipcode: zipcode, error_message });
 });
 
+router.get('/target/view/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+	var error_message = req.flash('error-target-message')[0];
+	const target = await Target.findById(req.params['id']);
+	const designation = await Designation.findAll();
+	const industrys = await industry_type.findAll();
+	const country = await Country.findAll();
+	const state = await State.findAll({
+		where: { country_id : "233" }
+	});
+	const city = await City.findAll({
+		where: {
+			state_id : target.state.toString()
+		}
+	});
+	const cities = await City.findById(target.city.toString());
+	const zipcode = await Zipcode.findAll({
+		where: {
+			city_name: cities.name
+		}
+	});
+	res.render('target/targetview', { layout: 'dashboard', csrfToken: req.csrfToken(), designation: designation, industry: industrys, client: target, country: country, state: state, city: city, zipcode: zipcode, error_message });
+});
+
 router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	const formatDate = req.body.client_dob ? req.body.client_dob.split("-") : '';
 	const target_edit_data = await Target.findOne({
