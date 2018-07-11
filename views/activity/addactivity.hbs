@@ -61,6 +61,7 @@
           <option value="{{this.id}}">{{this.activity_goal}}</option>
           {{/each}}
         </select>
+        <strong>Note: </strong><a href="/activity-goal/add">add activity_goals</a>
       </div>
     </div>
 
@@ -77,13 +78,16 @@
         </select>
       </div>
     </div>
+
+
     <div class="col-sm-4 col-xs-6">
   			<div class="form-group form-focus">
-  				<label class="control-label">Potential Revenue</label>
+          <label class="control-label">Potential Revenue:<span class="text-danger">*</span></label>
           <input class="form-control" type="text" id="potiential_revenue" name="potiential_revenue">
-  				<input type="text" class="form-control floating" />
   			</div>
   		</div>
+
+
   	<div class="col-sm-4 col-xs-6">
       <div class="form-group form-focus">
           <label class="control-label">Creation Date</label>
