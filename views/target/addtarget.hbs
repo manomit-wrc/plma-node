@@ -14,7 +14,7 @@
 				<h4 class="page-title">Add Target</h4>
 			</div>
 		</div>
-		<form id="targetform" method="POST" action="/target/addtarget">
+		<form id="targetform" method="POST" action="/target/add">
 			<input type="hidden" name="_csrf" value="{{csrfToken}}">
 			<label>
 				<input type="radio" id="individual_target" name="target_type" value="I" checked /> Individual</label>
@@ -24,7 +24,6 @@
 				<h3 class="card-title">Basic Informations</h3>
 				<div class="row">
 					<div class="col-md-12">
-
 						<div id="org_type" style="display:none;">
 							<div class="col-md-12">
 								<div class="form-group form-focus">
@@ -49,13 +48,13 @@
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">First Name</label>
-									<input type="text" class="form-control floating" id="target_first_name" name="target_first_name" />
+									<input type="text" class="form-control floating" id="first_name" name="first_name" />
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Last Name</label>
-									<input type="text" class="form-control floating" id="target_last_name" name="target_last_name" />
+									<input type="text" class="form-control floating" id="last_name" name="last_name" />
 								</div>
 							</div>
 							<div class="col-md-6">
@@ -66,36 +65,43 @@
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus">
-									<label class="control-label">Master ID </label>
-									<input type="text" class="form-control floating" id="master_id" name="master_id" />
+									<label class="control-label">Target Code </label>
+									<input type="text" class="form-control floating" id="target_code" name="target_code" />
 								</div>
 							</div>
 							<div class="col-md-6">
+								<div class="form-group form-focus select-focus">
+									<label class="control-label">Designation</label>
+									<select id="designation" name="designation" class="select form-control floating">
+										{{#each designations}}
+										<option value="{{this.id}}">{{this.title}}</option>
+										{{/each}}
+									</select>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus select-focus"></div>
+							</div>
+							<div class="col-md-6">
 								<div class="form-group form-focus">
-									<label class="control-label">Birth Date</label>
+									<label class="control-label">Date of Birth</label>
 									<div class="cal-icon">
-										<input class="form-control floating datetimepicker" type="text" id="target_dob" name="target_dob">
+										<input class="form-control floating datetimepicker" type="text" id="dob" name="dob">
 									</div>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus select-focus">
 									<label class="control-label">Gender</label>
-									<select class="select form-control floating" id="target_gender" name="target_gender">
+									<select class="select form-control floating" id="gender" name="gender">
 										<option value="">Select Gender</option>
 										<option value="M">Male</option>
 										<option value="F">Female</option>
 									</select>
 								</div>
 							</div>
-							<div class="col-md-12">
-								<div class="form-group form-focus">
-									<label class="control-label">Target Company </label>
-									<input type="text" class="form-control floating" id="target_company" name="target_company" />
-								</div>
-							</div>
 						</div>
-						<div class="col-md-12">
+						<div class="col-md-6">
 							<div class="form-group form-focus">
 								<label class="control-label">Email Id </label>
 								<input type="text" class="form-control floating" id="email" name="email" />
@@ -105,8 +111,8 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-focus">
-								<label class="control-label">Mobile Number</label>
-								<input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" />
+								<label class="control-label">Phone Number</label>
+								<input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" />
 							</div>
 						</div>
 						<div class="col-md-6">
@@ -115,7 +121,12 @@
 								<input type="text" class="form-control floating number_validator" id="fax" name="fax" />
 							</div>
 						</div>
-
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<label class="control-label">Mobile Number</label>
+								<input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" />
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -141,8 +152,9 @@
 						</div>
 					</div>
 					<div class="col-md-6">
-						<div class="form-group form-focus">
-							<select id="country" name="country" class="select form-control">
+						<div class="form-group form-focus select-focus">
+							<label class="control-label">Country</label>
+							<select id="country" name="country" class="select form-control floating">
 								<option value="">Select Country</option>
 								{{#each country}}
 								<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
@@ -151,8 +163,9 @@
 						</div>
 					</div>
 					<div class="col-md-6">
-						<div class="form-group form-focus">
-							<select id="state" name="state" class="select form-control">
+						<div class="form-group form-focus select-focus">
+							<label class="control-label">State</label>
+							<select id="state" name="state" class="select form-control floating">
 								<option value="">Select State</option>
 								{{#each state}}
 								<option value="{{this.id}}">{{this.name}}</option>
@@ -161,18 +174,26 @@
 						</div>
 					</div>
 					<div class="col-md-6">
-						<div class="form-group form-focus">
-							<select id="city" name="city" class="select form-control">
+						<div class="form-group form-focus select-focus">
+							<label class="control-label">City</label>
+							<select id="city" name="city" class="select form-control floating">
 								<option value="">Select City</option>
 
 							</select>
 						</div>
 					</div>
 					<div class="col-md-6">
-						<div class="form-group form-focus">
-							<select id="zipcode" name="zipcode" class="select form-control">
+						<div class="form-group form-focus select-focus">
+							<label class="control-label">Zip Code</label>
+							<select id="zipcode" name="zipcode" class="select form-control floating">
 								<option value="">Select Zipcode</option>
 							</select>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group form-focus">
+							<label class="control-label">Address Remarks </label>
+							<textarea class="form-control floating" id="address_remarks" name="address_remarks" rows="5"></textarea>
 						</div>
 					</div>
 				</div>
@@ -181,25 +202,38 @@
 				<h3 class="card-title">Other Informations</h3>
 				<div class="row">
 					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Target Company </label>
+							<input type="text" class="form-control floating" id="company_name" name="company_name" />
+						</div>
+					</div>
+					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
-							<label class="control-label">Designation</label>
-							<select id="designation" name="designation" class="select form-control floating">
-								{{#each designations}}
-								<option value="{{this.id}}">{{this.title}}</option>
+							<label class="control-label">Attorney </label>
+							<select id="attorney" name="attorney" class="select form-control floating">
+								<option value="">Select Attorney</option>
+								{{#each attorney}}
+								<option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
 								{{/each}}
 							</select>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus">
-							<label class="control-label">IM</label>
-							<input type="text" class="form-control floating" id="im" name="im" />
+							<label class="control-label">Website URL </label>
+							<input type="text" class="form-control floating url_selector" id="website_url" name="website_url" />
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus">
-							<label class="control-label">Comapnay Name</label>
-							<input type="text" class="form-control floating" id="company_name" name="company_name" />
+							<label class="control-label">Social URL </label>
+							<input type="text" class="form-control floating url_selector" id="social_url" name="social_url" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">IM</label>
+							<input type="text" class="form-control floating" id="im" name="im" />
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -216,14 +250,8 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus">
-							<label class="control-label">Linkdn</label>
-							<input type="text" class="form-control floating url_selector" id="linkdn" name="linkdn" />
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group form-focus">
-							<label class="control-label">Facebook </label>
-							<input type="text" class="form-control floating url_selector" id="facebook" name="facebook" />
+							<label class="control-label">Linkedin</label>
+							<input type="text" class="form-control floating url_selector" id="linkedin" name="linkedin" />
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -233,15 +261,18 @@
 						</div>
 					</div>
 					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Youtube </label>
+							<input type="text" class="form-control floating url_selector" id="youtube" name="youtube" />
+						</div>
+					</div>
+					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Association Status</label>
 							<select id="association" name="association" class="select form-control">
-
 								<option value="NEW TARGET">NEW TARGET</option>
 								<option value="CONVERTED">CONVERTED</option>
 								<option value="TS-INTERIM">TS-INTERIM</option>
-
-
 							</select>
 						</div>
 					</div>
@@ -262,9 +293,7 @@
 						</div>
 					</div>
 				</div>
-
 			</div>
-
 			<div class="text-center m-t-20">
 				<button class="btn btn-primary btn-lg" type="submit">Add Target</button>
 			</div>
