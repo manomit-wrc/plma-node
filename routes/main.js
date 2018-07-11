@@ -85,6 +85,7 @@ router.post('/budget/add', auth, siteAuth, csrfProtection, (req, res) =>{
 		{
 			budget.create({
 				name: req.body.name,
+				parent_id: req.body.parent_id,
 				remarks:req.body.remarks
 			}).then(store =>{
 				res.json({"add_budget":1});
@@ -107,6 +108,7 @@ router.post('/admin/edit-budget/:id', auth, siteAuth, csrfProtection, (req, res)
 		if(budgets.length === 0) {
 			budget.update({
 				name: req.body.edit_name,
+				parent_id: req.body.parent_id,
 				remarks: req.body.edit_remarks
 			},{where: {id: req.params['id']}
 		}).then(result =>{
