@@ -90,11 +90,14 @@ router.get('/target/add', auth, firmAttrAuth, csrfProtection, async (req, res) =
 	const state = await State.findAll({
 		where: { country_id : "233" }
 	});
-	res.render('target/addtarget', { layout: 'dashboard', csrfToken: req.csrfToken(), country: country, state: state, designations: designation, industry: industry, error_message  });
+	const attorney = await user.findAll({
+		where: { role_id : 3, firm_id: req.user.firm_id }
+	});
+	res.render('target/addtarget', { layout: 'dashboard', csrfToken: req.csrfToken(), country: country, state: state, designations: designation, industry: industry, attorney: attorney, error_message  });
 });
 
-router.post('/target/addtarget',auth, firmAttrAuth,csrfProtection, async (req,res) => {
-	const formatDate = req.body.target_dob ? req.body.target_dob.split("-") : '';
+router.post('/target/add',auth, firmAttrAuth,csrfProtection, async (req,res) => {
+	const formatDate = req.body.dob ? req.body.dob.split("-") : '';
 	const target_data = await Target.findOne({
 		where: {
             email: req.body.email
@@ -102,69 +105,78 @@ router.post('/target/addtarget',auth, firmAttrAuth,csrfProtection, async (req,re
 	});
 	if (target_data === null) {
 		if (req.body.target_type === "O") {
-			const store_org_data = await Target.create({
+			await Target.create({
 				organization_name: req.body.org_name,
 				organization_id: req.body.org_id,
 				organization_code: req.body.org_code,
 				email: req.body.email,
+				phone_no: removePhoneMask(req.body.phone_no),
+				fax: removePhoneMask(req.body.fax),
 				mobile_no: removePhoneMask(req.body.mobile_no),
-				address_1: req.body.address1,
-				address_2: req.body.address2,
+				address1: req.body.address1,
+				address2: req.body.address2,
 				address3: req.body.address3,
 				country: req.body.country,
 				state: req.body.state,
 				city: req.body.city,
 				postal_code: req.body.zipcode,
-				designation_id: req.body.designation,
+				address_remarks: req.body.address_remarks,
 				company_name: req.body.company_name,
+				attorney_id: req.body.attorney,
+				website_url: req.body.website_url,
+				social_url: req.body.social_url,
 				twitter: req.body.twitter,
-				linked_in: req.body.linkdn,
-				facebook: req.body.facebook,
+				linkedin: req.body.linkedin,
+				youtube: req.body.youtube,
 				google: req.body.google,
+				im: req.body.im,
+				social_security_no: removePhoneMask(req.body.social_sec_no),
 				association: req.body.association,
 				industry_type: req.body.industry_type,
+				remarks: req.body.remarks,
 				firm_id: req.user.firm_id,
 				user_id: req.user.id,
-				fax: removePhoneMask(req.body.fax),
-				target_type: req.body.target_type,
-				im: req.body.im,
-				social_sequrity_no: removePhoneMask(req.body.social_sec_no),
-				remarks: req.body.remarks
+				target_type: req.body.target_type
 			});
 			req.flash('success-message', 'Target Added Successfully');
             res.redirect('/target')
 		} else {
-			const store_ind_data = await Target.create({
-				first_name: req.body.target_first_name,
-				last_name: req.body.target_last_name,
+			await Target.create({
+				first_name: req.body.first_name,
+				last_name: req.body.last_name,
+				date_of_birth: formatDate ? formatDate[2]+"-"+formatDate[1]+"-"+formatDate[0] : null,
+				gender: req.body.gender,
+				target_id : req.body.target_id,
+				target_code : req.body.target_code,
+				designation_id: req.body.designation,
 				email: req.body.email,
+				phone_no: removePhoneMask(req.body.phone_no),
+				fax: removePhoneMask(req.body.fax),
 				mobile_no: removePhoneMask(req.body.mobile_no),
-				address_1: req.body.address1,
-				address_2: req.body.address2,
+				address1: req.body.address1,
+				address2: req.body.address2,
 				address3: req.body.address3,
 				country: req.body.country,
 				state: req.body.state,
 				city: req.body.city,
 				postal_code: req.body.zipcode,
-				designation_id: req.body.designation,
+				address_remarks: req.body.address_remarks,
 				company_name: req.body.company_name,
+				attorney_id: req.body.attorney,
+				website_url: req.body.website_url,
+				social_url: req.body.social_url,
 				twitter: req.body.twitter,
-				linked_in: req.body.linkdn,
-				facebook: req.body.facebook,
+				linkedin: req.body.linkedin,
+				youtube: req.body.youtube,
 				google: req.body.google,
+				im: req.body.im,
+				social_security_no: removePhoneMask(req.body.social_sec_no),
+				remarks: req.body.remarks,
 				association: req.body.association,
 				industry_type: req.body.industry_type,
 				firm_id: req.user.firm_id,
 				user_id: req.user.id,
-				fax: removePhoneMask(req.body.fax),
-				target_type: req.body.target_type,
-				im: req.body.im,
-				social_sequrity_no: removePhoneMask(req.body.social_sec_no),
-				date_of_birth: formatDate ? formatDate[2]+"-"+formatDate[1]+"-"+formatDate[0] : null,
-				gender: req.body.target_gender,
-				target_id : req.body.target_id,
-				target_code : req.body.master_id,
-				remarks: req.body.remarks
+				target_type: req.body.target_type
 			});
 			req.flash('success-message', 'Target Added Successfully');
             res.redirect('/target')
@@ -198,6 +210,32 @@ router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 	res.render('target/targetupdate', { layout: 'dashboard', csrfToken: req.csrfToken(), designation: designation, industry: industrys, client: target, country: country, state: state, city: city, zipcode: zipcode, error_message });
 });
 
+router.get('/target/view/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+	var error_message = req.flash('error-target-message')[0];
+	const target = await Target.findById(req.params['id']);
+	const designation = await Designation.findAll();
+	const industrys = await industry_type.findAll();
+	const country = await Country.findAll();
+	const attorney = await user.findAll({
+		where: { role_id : 3, firm_id: req.user.firm_id }
+	});
+	const state = await State.findAll({
+		where: { country_id : "233" }
+	});
+	const city = await City.findAll({
+		where: {
+			state_id : target.state.toString()
+		}
+	});
+	const cities = await City.findById(target.city.toString());
+	const zipcode = await Zipcode.findAll({
+		where: {
+			city_name: cities.name
+		}
+	});
+	res.render('target/targetview', { layout: 'dashboard', csrfToken: req.csrfToken(), designation: designation, industry: industrys, client: target, country: country, state: state, city: city, attorney: attorney, zipcode: zipcode, error_message });
+});
+
 router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	const formatDate = req.body.client_dob ? req.body.client_dob.split("-") : '';
 	const target_edit_data = await Target.findOne({
@@ -217,8 +255,8 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, 
 			last_name: req.body.edit_target_last_name,
 			email: req.body.email,
 			mobile_no: removePhoneMask(req.body.mobile_no),
-			address_1: req.body.address1,
-			address_2: req.body.address2,
+			address1: req.body.address1,
+			address2: req.body.address2,
 			address3: req.body.address3,
 			country: req.body.country,
 			state: req.body.state,
@@ -227,8 +265,8 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, 
 			designation_id: req.body.designation,
 			company_name: req.body.company_name,
 			twitter: req.body.twitter,
-			linked_in: req.body.linkdn,
-			facebook: req.body.facebook,
+			linkedin: req.body.linkedin,
+			youtube: req.body.youtube,
 			google: req.body.google,
 			association: req.body.association,
 			industry_type: req.body.industry_type,
@@ -323,8 +361,8 @@ router.post('/target/import', auth, upload.single('file_name'), csrfProtection, 
 					email: excelTarget[i].email,
 					mobile_no: excelTarget[i].mobile,
 					fax: excelTarget[i].fax,
-					address_1: excelTarget[i].address_1,
-					address_2: excelTarget[i].address_2,
+					address1: excelTarget[i].address1,
+					address2: excelTarget[i].address2,
 					address3: excelTarget[i].address3,
 					country: 233,
 					state: fetchState[0].id,
@@ -334,8 +372,8 @@ router.post('/target/import', auth, upload.single('file_name'), csrfProtection, 
 					company_name: excelTarget[i].company_name,
 					social_security_no: excelTarget[i].social_security_no,
 					twitter: `http://${excelTarget[i].twitter}`,
-					linked_in: `http://${excelTarget[i].linked_in}`,
-					facebook: `http://${excelTarget[i].facebook}`,
+					linkedin: `http://${excelTarget[i].linkedin}`,
+					youtube: `http://${excelTarget[i].youtube}`,
 					google: `http://${excelTarget[i].google}`,
 					firm_id: req.user.firm_id,
 					user_id: req.user.id,
@@ -353,8 +391,8 @@ router.post('/target/import', auth, upload.single('file_name'), csrfProtection, 
 					email: excelTarget[i].email,
 					mobile_no: excelTarget[i].mobile,
 					fax: excelTarget[i].fax,
-					address_1: excelTarget[i].address_1,
-					address_2: excelTarget[i].address_2,
+					address1: excelTarget[i].address1,
+					address2: excelTarget[i].address2,
 					address3: excelTarget[i].address3,
 					country: 233,
 					state: fetchState[0].id,
@@ -366,8 +404,8 @@ router.post('/target/import', auth, upload.single('file_name'), csrfProtection, 
 					company_name: excelTarget[i].company_name,
 					social_security_no: excelTarget[i].social_security_no,
 					twitter: `http://${excelTarget[i].twitter}`,
-					linked_in: `http://${excelTarget[i].linked_in}`,
-					facebook: `http://${excelTarget[i].facebook}`,
+					linkedin: `http://${excelTarget[i].linkedin}`,
+					youtube: `http://${excelTarget[i].youtube}`,
 					google: `http://${excelTarget[i].google}`,
 					target_type: "I",
 					remarks: excelTarget[i].remarks
@@ -396,9 +434,9 @@ router.post('/target/move-to-client', auth, async (req, res) => {
 			email: target_data.email,
 			mobile_no: target_data.mobile_no,
 			fax: target_data.fax,
-			address1: target_data.address_1,
-			address2: target_data.address_2,
-			address_line_3: target_data.address3,
+			address1: target_data.address1,
+			address2: target_data.address2,
+			address3: target_data.address3,
 			country: target_data.country,
 			state: target_data.state,
 			city: target_data.city,
@@ -410,8 +448,8 @@ router.post('/target/move-to-client', auth, async (req, res) => {
 			industry_type: target_data.industry_type,
 			company_name: target_data.company_name,
 			twitter: target_data.twitter,
-			linkdn: target_data.linked_in,
-			facebook: target_data.facebook,
+			linkedin: target_data.linkedin,
+			youtube: target_data.youtube,
 			google: target_data.google,
 			client_id: target_data.target_id,
 			master_id: target_data.target_code,

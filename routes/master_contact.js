@@ -152,6 +152,30 @@ router.get('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, async
 	res.render('master_contact/edit', { layout: 'dashboard', csrfToken: req.csrfToken(), industry_types: industry_types, contact:contact, country: country, state: state, city: city, zipcode: zipcode, error_message });
 });
 
+
+router.get('/master_contact/view/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+	var error_message = req.flash('error-contact-message')[0];
+	const contact = await Contact.findById(req.params['id']);
+	const industry_types = await industry_type.findAll();
+	const country = await Country.findAll();
+	const state = await State.findAll({
+		where: { country_id : "233" }
+	});
+	const city = await City.findAll({
+		where: {
+			state_id : contact.state.toString()
+		}
+	});
+	const cities = await City.findById(contact.city.toString());
+	const zipcode = await Zipcode.findAll({
+		where: {
+			city_name: cities.name
+		}
+	});
+	res.render('master_contact/view', { layout: 'dashboard', csrfToken: req.csrfToken(), industry_types: industry_types, contact:contact, country: country, state: state, city: city, zipcode: zipcode, error_message });
+});
+
+
 router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	const formatDate = req.body.dob ? req.body.dob.split("-") : '';
 	const contact_edit_data = await Contact.findOne({
