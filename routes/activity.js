@@ -33,6 +33,7 @@ const PracticeArea = require('../models').practicearea;
 const Target = require('../models').target;
 const Client = require('../models').client;
 const Budget = require('../models').budget;
+const ActivityBudget = require('../models').activity_budget;
 
 
 //===================================================START ACTIVITY===============================================================================//
@@ -108,7 +109,7 @@ where: activityFilter,
 
 	// Start budget add section
 
-router.post('/insertActivity', auth, csrfProtection, async(req, res) => {
+router.post('/insertActivity', auth, async(req, res) => {
 	const addActivityId = await Activity.create({
 		activity_name: req.body.activityName
 	});
@@ -118,65 +119,81 @@ router.post('/insertActivity', auth, csrfProtection, async(req, res) => {
 	});
 });
 
+router.post('/activity/add-budget', auth, csrfProtection, async (req, res) => {
+	var budget = JSON.parse(req.body.budget);
+	for(var b=0; b<budget.length; b++)
+	{
+		const storeBudget = await ActivityBudget.create({
+			activity_id: req.body.activity_id,
+			level_type: req.body.activity_level_type,
+			budget_id: budget[b].budget_id,
+			hour: budget[b].budget_hour,
+			amount: budget[b].budget_amount,
+		});
+	}
+	res.json({
+		success: true
+	});
+})
+
 
 // ========{{    insert data to the database  }}=====================//
 
 router.post('/activity/add',auth, csrfProtection, async (req,res) => {
-	// // console.log(JSON.stringify(req.body, undefined, 2));
+	// console.log(JSON.stringify(req.body, undefined, 2));
 
-	// 	var target_user = req.body.target_user;
-	// 	var client_user = req.body.client_user;
-	// 	//console.log(client_user);
-	// 	const CreationDate = req.body.activity_creation_date ? req.body.activity_creation_date.split("-") : '';
-	// 	const FromDate = req.body.activity_from_date ? req.body.activity_from_date.split("-") : '';
-	// 	const ToDate = req.body.activity_to_date ? req.body.activity_to_date.split("-") : '';
-
-
-
-	//   const activity_store = await	Activity.create({
-    //  firm : req.body.firm,
-    //  activity_type : req.body.activity_type,
-    //  activity_goal : req.body.activity_goal,
-	// 	 practice_area : req.body.practice_area,
-	// 	 potiential_revenue : req.body.potiential_revenue,
-	// 	 remarks : req.body.remarks,
-
-	// 	 activity_creation_date: CreationDate ? CreationDate[2]+"-"+CreationDate[1]+"-"+CreationDate[0] : null,
-	// 	 activity_from_date: FromDate ? FromDate[2]+"-"+FromDate[1]+"-"+FromDate[0] : null,
-	// 	 activity_to_date: ToDate ? ToDate[2]+"-"+ToDate[1]+"-"+ToDate[0] : null,
+		var target_user = req.body.target_user;
+		var client_user = req.body.client_user;
+		//console.log(client_user);
+		const CreationDate = req.body.activity_creation_date ? req.body.activity_creation_date.split("-") : '';
+		const FromDate = req.body.activity_from_date ? req.body.activity_from_date.split("-") : '';
+		const ToDate = req.body.activity_to_date ? req.body.activity_to_date.split("-") : '';
 
 
-	// 	 activity_name : req.body.activity_name,
-	// 	 activity_reason : req.body.activity_reason,
-    //  budget_status : req.body.budget_status,
-    //  budget_details_status : req.body.budget_details_status,
-    //  target : req.body.ref_type,
-	//  });
-	//  if(activity_store)
-	//  {
-	// 	 if(req.body.ref_type == "T"){
-	// 		 for(var i=0; i<target_user.length; i++){
-	// 			 const store_activity_user = await Activity_to_user_type.create({
-	// 				 activity_id: activity_store.id,
-	// 				 target_client_type: req.body.ref_type,
-	// 				 type: target_user[i]
-	// 			 });
-	// 		 }
-	// 	 }
-	// 	 else {
-	// 	 	{
-	// 			for(var j=0; j<client_user.length; j++){
-	// 				const store_activity_user = await Activity_to_user_type.create({
-	// 					activity_id: activity_store.id,
-	// 					target_client_type: req.body.ref_type,
-	// 					type: client_user[j]
- 	// 			 });
- 	// 		 }
-	// 		}
-	// 	 }
-	//  }
-	//  req.flash('success-activity-message', 'Activity  Created Successfully');
-	//  res.redirect('/activitypage');
+
+	  const activity_store = await	Activity.update({
+		firm : req.body.firm,
+		activity_type : req.body.activity_type,
+		activity_goal : req.body.activity_goal,
+		practice_area : req.body.practice_area,
+		potiential_revenue : req.body.potiential_revenue,
+		remarks : req.body.remarks,
+		activity_creation_date: CreationDate ? CreationDate[2]+"-"+CreationDate[1]+"-"+CreationDate[0] : null,
+		activity_from_date: FromDate ? FromDate[2]+"-"+FromDate[1]+"-"+FromDate[0] : null,
+		activity_to_date: ToDate ? ToDate[2]+"-"+ToDate[1]+"-"+ToDate[0] : null,
+		activity_name : req.body.activity_name,
+		activity_reason : req.body.activity_reason,
+		budget_status : req.body.budget_status,
+		budget_details_status : req.body.budget_details_status,
+		target : req.body.ref_type,
+		user_id: req.user.id,
+		total_budget_hour: req.body.total_hour,
+		total_budget_amount: req.body.total_amount,
+	 },{where: {id: req.body.activity_id}});
+	 
+		 if(req.body.ref_type == "T"){
+			 for(var i=0; i<target_user.length; i++){
+				 const store_activity_user = await Activity_to_user_type.create({
+					 activity_id: req.body.activity_id,
+					 target_client_type: req.body.ref_type,
+					 type: target_user[i]
+				 });
+			 }
+		 }
+		 else {
+		 	{
+				for(var j=0; j<client_user.length; j++){
+					const store_activity_user = await Activity_to_user_type.create({
+						activity_id: req.body.activity_id,
+						target_client_type: req.body.ref_type,
+						type: client_user[j]
+ 				 });
+ 			 }
+			}
+		 }
+	 
+	 req.flash('success-activity-message', 'Activity  Created Successfully');
+	 res.redirect('/activitypage');
 });
 
 //.....................{{   edit data  }}.......................................//
