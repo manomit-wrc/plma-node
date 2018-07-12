@@ -122,7 +122,7 @@ router.post('/target/add',auth, firmAttrAuth,csrfProtection, async (req,res) => 
 				postal_code: req.body.zipcode,
 				address_remarks: req.body.address_remarks,
 				company_name: req.body.company_name,
-				attorney_id: req.body.attorney_id,
+				attorney_id: req.body.attorney,
 				website_url: req.body.website_url,
 				social_url: req.body.social_url,
 				twitter: req.body.twitter,
@@ -162,7 +162,7 @@ router.post('/target/add',auth, firmAttrAuth,csrfProtection, async (req,res) => 
 				postal_code: req.body.zipcode,
 				address_remarks: req.body.address_remarks,
 				company_name: req.body.company_name,
-				attorney_id: req.body.attorney_id,
+				attorney_id: req.body.attorney,
 				website_url: req.body.website_url,
 				social_url: req.body.social_url,
 				twitter: req.body.twitter,
@@ -216,6 +216,9 @@ router.get('/target/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 	const designation = await Designation.findAll();
 	const industrys = await industry_type.findAll();
 	const country = await Country.findAll();
+	const attorney = await user.findAll({
+		where: { role_id : 3, firm_id: req.user.firm_id }
+	});
 	const state = await State.findAll({
 		where: { country_id : "233" }
 	});
@@ -230,7 +233,7 @@ router.get('/target/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 			city_name: cities.name
 		}
 	});
-	res.render('target/targetview', { layout: 'dashboard', csrfToken: req.csrfToken(), designation: designation, industry: industrys, client: target, country: country, state: state, city: city, zipcode: zipcode, error_message });
+	res.render('target/targetview', { layout: 'dashboard', csrfToken: req.csrfToken(), designation: designation, industry: industrys, client: target, country: country, state: state, city: city, attorney: attorney, zipcode: zipcode, error_message });
 });
 
 router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {

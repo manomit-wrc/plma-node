@@ -27,96 +27,96 @@
 				<h3 class="card-title">Basic Informations</h3>
 				<div class="row">
 					<div class="col-md-12">
-
-						<div id="org_type" {{#if_eq client.target_type "I"}} style="display:none;" {{/if_eq}}>
+						<div class="row">
+							<div id="org_type" {{#if_eq client.target_type "I"}} style="display:none;" {{/if_eq}}>
+								<div class="col-md-12">
+									<div class="form-group form-focus">
+										<label class="control-label">Organisation Name</label>
+										<input type="text" class="form-control floating" id="org_name" name="org_name" value="{{client.organization_name}}" />
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Organisation ID</label>
+										<input type="text" class="form-control floating" id="org_id" name="org_id" value="{{client.organization_id}}" />
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Organisation Code </label>
+										<input type="text" class="form-control floating" id="org_code" name="org_code" value="{{client.organization_code}}" />
+									</div>
+								</div>
+							</div>
+							<div id="individual_type" {{#if_eq client.target_type "O"}} style="display:none;" {{/if_eq}}>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">First Name</label>
+										<input type="text" class="form-control floating" id="edit_target_first_name" name="edit_target_first_name" value="{{client.first_name}}"
+										/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Last Name</label>
+										<input type="text" class="form-control floating" id="edit_target_last_name" name="edit_target_last_name" value="{{client.last_name}}"
+										/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Target ID </label>
+										<input type="text" class="form-control floating" id="client_id" name="client_id" value="{{client.target_id}}" />
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Master ID </label>
+										<input type="text" class="form-control floating" id="master_id" name="master_id" value="{{client.target_code}}" />
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Birth Date</label>
+										<div class="cal-icon">
+											<input class="form-control floating datetimepicker" type="text" id="client_dob" name="client_dob" value="{{dateFormat client.date_of_birth "
+											 DD-MM-YYYY "}}">
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus select-focus">
+										<label class="control-label">Gender</label>
+										<select class="select form-control floating" id="client_gender" name="client_gender">
+											<option value="">Select Gender</option>
+											<option value="M" {{#if_eq client.gender "M"}} selected {{/if_eq}}>Male</option>
+											<option value="F" {{#if_eq client.gender "F"}} selected {{/if_eq}}>Female</option>
+										</select>
+									</div>
+								</div>
+							</div>
 							<div class="col-md-12">
 								<div class="form-group form-focus">
-									<label class="control-label">Organisation Name</label>
-									<input type="text" class="form-control floating" id="org_name" name="org_name" value="{{client.organization_name}}" />
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Organisation ID</label>
-									<input type="text" class="form-control floating" id="org_id" name="org_id" value="{{client.organization_id}}" />
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Organisation Code </label>
-									<input type="text" class="form-control floating" id="org_code" name="org_code" value="{{client.organization_code}}" />
-								</div>
-							</div>
-						</div>
-						<div id="individual_type" {{#if_eq client.target_type "O"}} style="display:none;" {{/if_eq}}>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">First Name</label>
-									<input type="text" class="form-control floating" id="edit_target_first_name" name="edit_target_first_name" value="{{client.first_name}}"
-									/>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Last Name</label>
-									<input type="text" class="form-control floating" id="edit_target_last_name" name="edit_target_last_name" value="{{client.last_name}}"
-									/>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Target ID </label>
-									<input type="text" class="form-control floating" id="client_id" name="client_id" value="{{client.target_id}}" />
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Master ID </label>
-									<input type="text" class="form-control floating" id="master_id" name="master_id" value="{{client.target_code}}" />
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Birth Date</label>
-									<div class="cal-icon">
-										<input class="form-control floating datetimepicker" type="text" id="client_dob" name="client_dob" value="{{dateFormat client.date_of_birth "
-										 DD-MM-YYYY "}}">
-									</div>
+									<label class="control-label">Email Id</label>
+									<input type="text" class="form-control floating" id="email" name="email" value="{{client.email}}" />
+									<span id="uniqueEmail" style="color: red">
+										<span>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus select-focus">
-									<label class="control-label">Gender</label>
-									<select class="select form-control floating" id="client_gender" name="client_gender">
-										<option value="">Select Gender</option>
-										<option value="M" {{#if_eq client.gender "M"}} selected {{/if_eq}}>Male</option>
-										<option value="F" {{#if_eq client.gender "F"}} selected {{/if_eq}}>Female</option>
-									</select>
+									<label class="control-label">Mobile Number</label>
+									<input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" value="{{client.mobile_no}}"
+									/>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus select-focus">
+									<label class="control-label">Fax</label>
+									<input type="text" class="form-control floating number_validator" id="fax" name="fax" value="{{client.fax}}" />
 								</div>
 							</div>
 						</div>
-						<div class="col-md-12">
-							<div class="form-group form-focus">
-								<label class="control-label">Email Id</label>
-								<input type="text" class="form-control floating" id="email" name="email" value="{{client.email}}" />
-								<span id="uniqueEmail" style="color: red">
-									<span>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group form-focus select-focus">
-								<label class="control-label">Mobile Number</label>
-								<input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" value="{{client.mobile_no}}"
-								/>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group form-focus select-focus">
-								<label class="control-label">Fax</label>
-								<input type="text" class="form-control floating number_validator" id="fax" name="fax" value="{{client.fax}}" />
-							</div>
-						</div>
-
 					</div>
 				</div>
 			</div>
