@@ -262,7 +262,6 @@ String.prototype.capitaLize = function() {
 	return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
-
 router.post('/master_contact/import', auth, upload.single('file_name'), csrfProtection, async (req, res) => {
 	var contact_xl = xlsx.parse(fs.readFileSync('public/contact/' + fileName));
 	var importedData = JSON.stringify(convertToJSON(contact_xl[0].data));
@@ -333,7 +332,6 @@ router.post('/master_contact/import', auth, upload.single('file_name'), csrfProt
 			req.flash('success-message', 'Master Contact Imported Successfully');
 			res.redirect('/master_contact');
 		}
-		
 	}
 	req.flash('success-message', 'Master Contact Imported Successfully');
 	res.redirect('/master_contact');
@@ -348,7 +346,6 @@ router.post('/master_contact/move-to-target', auth, async (req, res) => {
 				id: contact_ids[i]
 			}
 		});
-		//console.log(contact_data);
 		await Target.create({
 			first_name: contact_data.first_name,
 			last_name: contact_data.last_name,
@@ -389,6 +386,5 @@ router.post('/master_contact/move-to-target', auth, async (req, res) => {
         message: 'Success'
 	});
 });
-
 
 module.exports = router;
