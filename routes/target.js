@@ -237,7 +237,7 @@ router.get('/target/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 });
 
 router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
-	const formatDate = req.body.client_dob ? req.body.client_dob.split("-") : '';
+	const formatDate = req.body.dob ? req.body.dob.split("-") : '';
 	const target_edit_data = await Target.findOne({
 		where: {
 			email: req.body.email,
@@ -251,10 +251,12 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, 
 			organization_name: req.body.org_name,
 			organization_id: req.body.org_id,
 			organization_code: req.body.org_code,
-			first_name: req.body.edit_target_first_name,
-			last_name: req.body.edit_target_last_name,
+			first_name: req.body.first_name,
+			last_name: req.body.last_name,
 			email: req.body.email,
+			phone_no: removePhoneMask(req.body.phone_no),
 			mobile_no: removePhoneMask(req.body.mobile_no),
+			fax: removePhoneMask(req.body.fax),
 			address1: req.body.address1,
 			address2: req.body.address2,
 			address3: req.body.address3,
@@ -262,8 +264,12 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, 
 			state: req.body.state,
 			city: req.body.city,
 			postal_code: req.body.zipcode,
+			address_remarks: req.body.address_remarks,
 			designation_id: req.body.designation,
 			company_name: req.body.company_name,
+			attorney_id: req.body.attorney,
+			website_url: req.body.website_url,
+			social_url: req.body.social_url,
 			twitter: req.body.twitter,
 			linkedin: req.body.linkedin,
 			youtube: req.body.youtube,
@@ -271,13 +277,12 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, 
 			association: req.body.association,
 			industry_type: req.body.industry_type,
 			firm_id: req.user.firm_id,
-			fax: removePhoneMask(req.body.fax),
 			im: req.body.im,
-			social_sequrity_no: removePhoneMask(req.body.social_sec_no),
+			social_security_no: removePhoneMask(req.body.social_sec_no),
 			date_of_birth: formatDate ? formatDate[2]+"-"+formatDate[1]+"-"+formatDate[0] : null,
-			gender: req.body.client_gender,
-			target_id : req.body.client_id,
-			target_code : req.body.master_id,
+			gender: req.body.gender,
+			target_id : req.body.target_id,
+			target_code : req.body.target_code,
 			remarks: req.body.remarks
 			},{where: {id: req.params['id']}
 		});

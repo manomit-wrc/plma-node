@@ -1,17 +1,19 @@
 {{#content "style" mode="prepend"}}
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
-{{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
 <div class="page-wrapper">
     <div class="content container-fluid">
         <div class="row">
+            {{!--
+            <div id="success-move" class="alert alert-success" style="display:none">
+                <strong>Success! </strong>Target records moved to client successfully.
+            </div> --}} 
             {{#if success_message}}
             <div class="alert alert-success">
                 <strong>Success! </strong>{{success_message}}
             </div>
-            {{/if}}
-            {{#if success_edit_message}}
+            {{/if}} {{#if success_edit_message}}
             <div class="alert alert-success">
                 <strong>Success! </strong>{{success_edit_message}}
             </div>
@@ -20,24 +22,27 @@
                 <h4 class="page-title">Targets</h4>
             </div>
             <div class="col-sm-8 col-xs-9 text-right m-b-20">
-                <a href="javascript:void(0)" data-toggle="modal" data-target="#import" class="btn btn-primary rounded pull-right"><i class="fa fa-cloud-download"></i> Import Target</a>
-                <a href="/target/add" class="btn btn-primary rounded pull-right m-r-5"><i class="fa fa-plus"></i> Add Target</a>
+                <a href="javascript:void(0)" data-toggle="modal" data-target="#import" class="btn btn-primary rounded pull-right">
+                    <i class="fa fa-cloud-download"></i> Import Target</a>
+                <a href="/target/add" class="btn btn-primary rounded pull-right m-r-5">
+                    <i class="fa fa-plus"></i> Add Target</a>
             </div>
         </div>
         <div class="row filter-row">
             <form method="GET">
-                <div class="col-md-3 col-sm-3 col-xs-6">  
+                <div class="col-md-3 col-sm-3 col-xs-6">
                     <div class="form-group form-focus select-focus">
                         <label class="control-label">Target Type</label>
-                        {{!-- <input type="text" class="form-control floating" name="searchName" value="{{searchName}}"/> --}}
-                        <select class="select floating" name="searchName"> 
+                        {{!--
+                        <input type="text" class="form-control floating" name="searchName" value="{{searchName}}" /> --}}
+                        <select class="select floating" name="searchName">
                             <option value="">Select Target Type</option>
                             <option value="I" {{#if_eq searchName "I" }} selected="selected" {{/if_eq}}>Individual</option>
                             <option value="O" {{#if_eq searchName "O" }} selected="selected" {{/if_eq}}>Organisation</option>
                         </select>
                     </div>
                 </div>
-                <div class="col-md-3 col-sm-3 col-xs-6">  
+                <div class="col-md-3 col-sm-3 col-xs-6">
                     <div class="form-group form-focus">
                         <label class="control-label">Target Email</label>
                         <input type="text" class="form-control floating" name="searchEmail" value="{{searchMail}}" />
@@ -62,7 +67,9 @@
                     <table class="table table-striped custom-table datatable">
                         <thead>
                             <tr>
-                                <th><input type="checkbox" onClick="checkall(this);" /></th>
+                                <th>
+                                    <input type="checkbox" onClick="checkall(this);" />
+                                </th>
                                 <th>Name</th>
                                 <th>Target Type</th>
                                 <th>Email Id</th>
@@ -73,32 +80,38 @@
                         <tbody>
                             {{#each targets}}
                             <tr>
-                                <td><input type="checkbox" name="target_id" value="{{this.id}}" /></td>
                                 <td>
-                                    {{#if_eq target_type "O"}}
-                                    {{this.organization_name}}
-                                    {{/if_eq}}
-                                    {{#if_eq target_type "I"}}
-                                    {{this.first_name}} {{this.last_name}}
-                                    {{/if_eq}}
+                                    <input type="checkbox" name="target_id" value="{{this.id}}" />
                                 </td>
                                 <td>
-                                    {{#if_eq target_type "O"}}
-                                    Organization
-                                    {{/if_eq}}
-                                    {{#if_eq target_type "I"}}
-                                    Individual
-                                    {{/if_eq}}
+                                    <a href="/target/view/{{this.id}}">
+                                        {{#if_eq target_type "O"}} {{this.organization_name}} {{/if_eq}} {{#if_eq target_type "I"}} {{this.first_name}} {{this.last_name}}
+                                        {{/if_eq}}
+                                    </a>
+                                </td>
+                                <td>
+                                    {{#if_eq target_type "O"}} Organization {{/if_eq}} {{#if_eq target_type "I"}} Individual {{/if_eq}}
                                 </td>
                                 <td>{{this.email}}</td>
                                 <td class="number_validator">{{this.mobile_no}}</td>
                                 <td class="text-right">
                                     <div class="dropdown">
-                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </a>
                                         <ul class="dropdown-menu pull-right">
-                                            <li><a href="/target/view/{{this.id}}" ><i class="fa fa-eye m-r-5"></i> View</a></li>
-                                            <li><a href="/target/edit/{{this.id}}" ><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                            <li><a href="javascript:void(0)" data-toggle="modal" data-target="#{{this.id}}"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                                            <li>
+                                                <a href="/target/view/{{this.id}}">
+                                                    <i class="fa fa-eye m-r-5"></i> View</a>
+                                            </li>
+                                            <li>
+                                                <a href="/target/edit/{{this.id}}">
+                                                    <i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#{{this.id}}">
+                                                    <i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </td>
@@ -125,11 +138,41 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="move_to_client_1" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Please select one</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="move_to_client_2" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Are you sure to move this record to client ?</p>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:void(0)" class="btn btn-danger move-to-client">ok</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="import" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
-            <div class="modal-header"> <strong>Import Excel for Target</strong> <button type="button" class="close" data-dismiss="modal">×</button></div>
+            <div class="modal-header">
+                <strong>Import Excel for Target</strong>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
             <div class="modal-body">
                 <form name="import" method="POST" action="/target/import" enctype="multipart/form-data">
                     <input type="hidden" name="_csrf" value="{{csrfToken}}">
@@ -154,30 +197,44 @@
 <script type="text/javascript">
     function checkall(source) {
         var checkboxes = document.getElementsByName('target_id');
-        for(var i = 0; i < checkboxes.length; i++) {
+        for (var i = 0; i < checkboxes.length; i++) {
             checkboxes[i].checked = source.checked;
         }
     }
 
-    $('.move-client').on('click', function(e) {
+    $('.move-client').on('click', function (e) {
         var target_ids = [];
-        $('input[name="target_id"]:checked').each(function() {
+        $('input[name="target_id"]:checked').each(function () {
+            target_ids.push(this.value);
+        });
+        if (target_ids.length == 0) {
+            $('#move_to_client_1').modal('show');
+        } else {
+            $('#move_to_client_2').modal('show');
+        }
+
+    });
+
+
+    $('.move-to-client').on('click', function (e) {
+        var target_ids = [];
+        $('input[name="target_id"]:checked').each(function () {
             target_ids.push(this.value);
         });
         $.ajax({
             url: '/target/move-to-client',
             type: 'POST',
-            data: {target_id: target_ids},
-            success: function(response) {
-                console.log(response);
+            data: { target_id: target_ids },
+            success: function (response) {
+                // console.log(response);
                 if (response.code === '200') {
+                    //$('#success-move').css('display','block');
                     window.location.reload();
                 }
             },
-            error: function(err) {
+            error: function (err) {
                 console.log(err);
             }
         });
     });
-</script>
-{{/content}}
+</script> {{/content}}
