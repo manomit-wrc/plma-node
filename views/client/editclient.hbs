@@ -141,7 +141,7 @@
 										<label class="control-label">Add New Tags
 											<span class="req-lbl">*</span>
 										</label>
-										<input type="text" class="form-control floating" id="add-new-tags" name="add_new_tags" />
+										<input type="text" class="form-control floating" id="add-new-tags" name="add_new_tags"  value="{{client.tags}}" />
 									</div>
 								</div>
 							</div>
@@ -175,11 +175,19 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-12">
+						<div class="col-md-6">
 							<div class="form-group form-focus">
 								<label class="control-label">Email Id</label>
 								<input type="text" class="form-control floating" id="email" name="email" value="{{client.email}}" />
 								<span id="uniqueEmail" style="color: red">
+									<span>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<label class="control-label">Phone Number <span class="req-lbl">*</span></label>
+								<input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" value="{{client.phone_no}}" />
+								<span id="uniquePhone" style="color: red">
 									<span>
 							</div>
 						</div>

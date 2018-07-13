@@ -17,6 +17,7 @@ const City = require('../models').city;
 const State = require('../models').state;
 const Country = require('../models').country;
 const Industry = require('../models').industry_type;
+const Tag = require('../models').tag;
 const setting = require('../models').setting;
 const target = require('../models').target;
 const Jurisdiction = require('../models').jurisdiction;
@@ -567,12 +568,13 @@ router.get('/client/add', auth, firmAttrAuth, csrfProtection, async (req, res) =
 	const industry = await Industry.findAll();
 	const country = await Country.findAll();
 	const state = await State.findAll();
+	const tags = await Tag.findAll();
 
 	const attorney = await user.findAll({
 		where: { role_id: 3, firm_id: req.user.firm_id }
 	});
 
-	res.render('client/addclient', { layout: 'dashboard', csrfToken: req.csrfToken(), country: country, state: state, designations: designation, industry: industry, attorney: attorney, error_message });
+	res.render('client/addclient', { layout: 'dashboard', csrfToken: req.csrfToken(),tags: tags, country: country, state: state, designations: designation, industry: industry, attorney: attorney, error_message });
 });
 
 
@@ -667,6 +669,24 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 			email: req.body.email
 		}
 	});
+	var tag_ids;
+	if (req.body.tag_type === 'e') {
+		tag_ids = req.body.existing_tags.toString();
+	} else {
+		var new_tags = req.body.add_new_tags;
+		var all_tags = new_tags.split(",");
+		for(i = 0; i < all_tags.length; i++) {
+			await Tag.create({
+				firm_id: req.user.firm_id,
+				user_id: req.user.id,
+				tags: all_tags[i]
+			}).then(result => {
+				tag_ids += result.id + ',';
+				//console.log(result.id);
+			});
+		}
+		tag_ids = tag_ids.slice(0, -1);
+	}
 	if (client_data === null) {
 		if (req.body.client_type === "O") {
 			await client.create({
@@ -685,9 +705,8 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				pin_code: req.body.zipcode,
 				designation_id: req.body.designation,
 				attorney_id: req.body.attorney_id,
-				//existing_tags: req.body.existing_tags,
-				//new_tags: req.body.add_new_tags,
-				//add_new_tags: req.body.add_new_tags,
+				tag_type: req.body.tag_type,
+				tags: tag_ids,
 				company_name: req.body.company_name,
 				twitter: req.body.twitter,
 				linkdn: req.body.linkdn,
@@ -721,8 +740,8 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				city: req.body.city,
 				pin_code: req.body.zipcode,
 				designation_id: req.body.designation,
-				// new_tags: req.body.add_new_tags,
-				// existing_tags: req.body.existing_tags,
+				tag_type: req.body.tag_type,
+				tags: tag_ids,
 				attorney_id: req.body.attorney_id,
 				company_name: req.body.company_name,
 				twitter: req.body.twitter,
@@ -753,6 +772,7 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 		res.redirect('/client/add');
 	}
 });
+
 router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	const formatDate = req.body.client_dob ? req.body.client_dob.split("-") : '';
 	const client_edit_data = await client.findOne({
@@ -764,7 +784,7 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 		}
 	});
 	if (client_edit_data === null) {
-		const edit_client = await client.update({
+		await client.update({
 			organization_name: req.body.org_name,
 			organization_id: req.body.org_id,
 			organization_code: req.body.org_code,
@@ -772,6 +792,7 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 			last_name: req.body.edit_client_last_name,
 			email: req.body.email,
 			mobile_no: removePhoneMask(req.body.mobile_no),
+			phone_no: removePhoneMask(req.body.phone_no),
 			address1: req.body.address1,
 			address2: req.body.address2,
 			address_line_3: req.body.address3,
@@ -780,10 +801,13 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 			city: req.body.city,
 			pin_code: req.body.zipcode,
 			designation_id: req.body.designation,
+			attorney_id: req.body.attorney_id,
+			tag_type: req.body.tag_type,
+			tags: req.body.add_new_tags,
 			company_name: req.body.company_name,
 			twitter: req.body.twitter,
 			linkdn: req.body.linkdn,
-			facebook: req.body.facebook,
+			youtub: req.body.youtub,
 			google: req.body.google,
 			association_type: req.body.association,
 			industry_type: req.body.industry_type,
@@ -1259,7 +1283,7 @@ router.post('/client/upload-excel', auth, upload_client_excel.single('client_xls
 		});
 		if (client_excel_data === null) {
 			if (excelClient[i].client_type == "organization") {
-				const storeClientXlO = await client.create({
+				await client.create({
 					organization_name: excelClient[i].oraganisation_name,
 					organization_id: excelClient[i].organisation_id,
 					organization_code: excelClient[i].organisation_code,
@@ -1287,7 +1311,7 @@ router.post('/client/upload-excel', auth, upload_client_excel.single('client_xls
 				});
 			}
 			else {
-				const storeClientXlI = await client.create({
+				await client.create({
 					first_name: excelClient[i].first_name,
 					last_name: excelClient[i].last_name,
 					email: excelClient[i].email,
