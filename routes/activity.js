@@ -170,7 +170,7 @@ router.post('/activity/add',auth, csrfProtection, async (req,res) => {
 		total_budget_hour: req.body.total_hour,
 		total_budget_amount: req.body.total_amount,
 	 },{where: {id: req.body.activity_id}});
-	 
+
 		 if(req.body.ref_type == "T"){
 			 for(var i=0; i<target_user.length; i++){
 				 const store_activity_user = await Activity_to_user_type.create({
@@ -227,7 +227,39 @@ router.get('/activity/edit/:id',auth,csrfProtection, async (req,res) => {
 			arr.push(parseInt(result[i].type));
 	}
 //console.log(arr);
+const budgetList = await Budget.findAll();
 
+var budgetArr = [];
+
+var child_budget;
+var budget_hour;
+for (var i = 0; i < budgetList.length; i++) {
+	
+	if (budgetList[i].parent_id === 0) {
+		const parent_name = budgetList[i].name;
+		child_budget = lodash.filter(budgetList, arr => arr.parent_id === budgetList[i].id);
+		budgetArr.push({
+			"parent_name": parent_name,
+			"child_budget": child_budget
+		});
+
+	}
+}
+
+
+//console.log(budget_details);
+// var xxx = [];
+// for (var i = 0; i < budget_details.length; i++) {
+// 	if (budget_details[i].parent_id === 0) {
+// 		const parent_name = budget_details[i].name;
+// 		const child_budget = lodash.filter(budget_details, arr => arr.parent_id === budget_details[i].id);
+// 		budgetArr.push({
+// 			"parent_name": parent_name,
+// 			"child_budget": child_budget
+// 		});
+
+// 	}
+// }
 
 res.render('activity/update', {
 	layout: 'dashboard',
@@ -238,10 +270,10 @@ res.render('activity/update', {
 	editdata :editdata[0],
 	firm: firm,
 	activity_goal: activity_goal,
+	budgetArr,
 	practice_area: practice_area
- });
-
- });
+	 });
+});
 
 
 //update data
