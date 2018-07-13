@@ -23,6 +23,7 @@
 			<label>
 				<input type="radio" id="organization_client" name="client_type" value="O" {{#if_eq client.target_type "O"}} checked {{/if_eq}}
 				 disabled />Organization</label>
+
 			<div class="card-box">
 				<h3 class="card-title">Basic Informations</h3>
 				<div class="row">
@@ -59,35 +60,48 @@
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Last Name</label>
-										<input type="text" class="form-control floating" id="edit_target_last_name" name="edit_target_last_name" value="{{client.last_name}}"
-										/>
+										<input type="text" class="form-control floating" id="last_name" name="last_name" value="{{client.last_name}}" />
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Target ID </label>
-										<input type="text" class="form-control floating" id="client_id" name="client_id" value="{{client.target_id}}" />
+										<input type="text" class="form-control floating" id="target_id" name="target_id" value="{{client.target_id}}" />
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group form-focus">
-										<label class="control-label">Master ID </label>
-										<input type="text" class="form-control floating" id="master_id" name="master_id" value="{{client.target_code}}" />
+										<label class="control-label">Target Code </label>
+										<input type="text" class="form-control floating" id="target_code" name="target_code" value="{{client.target_code}}" />
 									</div>
 								</div>
 								<div class="col-md-6">
+									<div class="form-group form-focus select-focus">
+										<label class="control-label">Designation</label>
+										<select id="designation" name="designation" class="select form-control floating">
+											<option value="">Select Designation</option>
+											{{#each designation}}
+											<option value="{{this.id}}" {{#if_eq this.id ../client.designation_id}} selected="selected" {{/if_eq}}>{{this.title}}</option>
+											{{/each}}
+										</select>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus select-focus"></div>
+								</div>
+								<div class="col-md-6">
 									<div class="form-group form-focus">
-										<label class="control-label">Birth Date</label>
+										<label class="control-label">Date of Birth</label>
 										<div class="cal-icon">
-											<input class="form-control floating datetimepicker" type="text" id="client_dob" name="client_dob" value="{{dateFormat client.date_of_birth "
-											 DD-MM-YYYY "}}">
+											<input class="form-control floating datetimepicker" type="text" id="dob" name="dob" value="{{dateFormat client.date_of_birth "
+											 DD-MM-YYYY "}}" />
 										</div>
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group form-focus select-focus">
 										<label class="control-label">Gender</label>
-										<select class="select form-control floating" id="client_gender" name="client_gender">
+										<select class="select form-control floating" id="gender" name="gender">
 											<option value="">Select Gender</option>
 											<option value="M" {{#if_eq client.gender "M"}} selected {{/if_eq}}>Male</option>
 											<option value="F" {{#if_eq client.gender "F"}} selected {{/if_eq}}>Female</option>
@@ -95,7 +109,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-12">
+							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Email Id</label>
 									<input type="text" class="form-control floating" id="email" name="email" value="{{client.email}}" />
@@ -105,8 +119,8 @@
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus select-focus">
-									<label class="control-label">Mobile Number</label>
-									<input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" value="{{client.mobile_no}}"
+									<label class="control-label">Phone Number</label>
+									<input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" value="{{client.phone_no}}"
 									/>
 								</div>
 							</div>
@@ -116,23 +130,31 @@
 									<input type="text" class="form-control floating number_validator" id="fax" name="fax" value="{{client.fax}}" />
 								</div>
 							</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus select-focus">
+									<label class="control-label">Mobile Number</label>
+									<input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" value="{{client.mobile_no}}"
+									/>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+
 			<div class="card-box">
 				<h3 class="card-title">Contact Informations</h3>
 				<div class="row">
 					<div class="col-md-12">
 						<div class="form-group form-focus">
 							<label class="control-label">Address Line 1</label>
-							<input type="text" class="form-control floating" id="address1" name="address1" value="{{client.address_1}}" />
+							<input type="text" class="form-control floating" id="address1" name="address1" value="{{client.address1}}" />
 						</div>
 					</div>
 					<div class="col-md-12">
 						<div class="form-group form-focus">
 							<label class="control-label">Address Line 2</label>
-							<input type="text" class="form-control floating" id="address2" name="address2" value="{{client.address_2}}" />
+							<input type="text" class="form-control floating" id="address2" name="address2" value="{{client.address2}}" />
 						</div>
 					</div>
 					<div class="col-md-12">
@@ -144,7 +166,7 @@
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Country</label>
-							<select id="country" name="country" class="form-control">
+							<select id="country" name="country" class="form-control floating">
 								{{#each country}}
 								<option value="{{this.id}}">{{this.name}}</option>
 								{{/each}}
@@ -154,7 +176,7 @@
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
 							<label class="control-label ">State</label>
-							<select id="state" name="state" class="form-control">
+							<select id="state" name="state" class="form-control floating">
 								<option value="">Select State</option>
 								{{#each state}}
 								<option value="{{this.id}}" {{#if_eq this.id ../client.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
@@ -165,7 +187,7 @@
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
 							<label class="control-label ">City</label>
-							<select id="city" name="city" class="form-control">
+							<select id="city" name="city" class="form-control floating">
 								<option value="">Select City</option>
 								{{#each city}}
 								<option value="{{this.id}}" {{#if_eq this.id ../client.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
@@ -175,8 +197,8 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
-							<label class=" control-label">Zipcode Code</label>
-							<select id="zipcode" name="zipcode" class="form-control">
+							<label class=" control-label">Zip Code</label>
+							<select id="zipcode" name="zipcode" class="form-control floating">
 								<option value="">Select Zipcode</option>
 								{{#each zipcode}}
 								<option value="{{this.id}}" {{#if_eq this.id ../client.postal_code}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
@@ -184,20 +206,47 @@
 							</select>
 						</div>
 					</div>
+					<div class="col-md-12">
+						<div class="form-group form-focus">
+							<label class="control-label">Address Remarks </label>
+							<textarea class="form-control floating" id="address_remarks" name="address_remarks" rows="5">{{client.address_remarks}}</textarea>
+						</div>
+					</div>
 				</div>
 			</div>
+
 			<div class="card-box">
 				<h3 class="card-title">Other Informations</h3>
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
-							<label class="control-label">Designation</label>
-							<select id="designation" name="designation" class="select form-control">
-								<option value="">Select Designation</option>
-								{{#each designation}}
-								<option value="{{this.id}}" {{#if_eq this.id ../client.designation_id}} selected="selected" {{/if_eq}}>{{this.title}}</option>
+							<label class="control-label">Target Company</label>
+							<input type="text" class="form-control floating" id="company_name" name="company_name" value="{{client.company_name}}" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus select-focus">
+							<label class="control-label">Attorney </label>
+							<select id="attorney" name="attorney" class="select form-control floating">
+								<option value="">Select Attorney</option>
+								{{#each attorney}}
+								<option value="{{this.id}}" {{#if_eq this.id ../client.attorney_id}} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
 								{{/each}}
 							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Website URL </label>
+							<input type="text" class="form-control floating url_selector" id="website_url" name="website_url" value="{{client.website_url}}"
+							/>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Social URL </label>
+							<input type="text" class="form-control floating url_selector" id="social_url" name="social_url" value="{{client.social_url}}"
+							/>
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -207,15 +256,9 @@
 						</div>
 					</div>
 					<div class="col-md-6">
-						<div class="form-group form-focus select-focus">
-							<label class="control-label">Comapnay Name</label>
-							<input type="text" class="form-control floating" id="company_name" name="company_name" value="{{client.company_name}}" />
-						</div>
-					</div>
-					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Social Security No</label>
-							<input type="text" class="form-control floating number_validator" id="social_sec_no" name="social_sec_no" value="{{client.social_sequrity_no}}"
+							<input type="text" class="form-control floating number_validator" id="social_sec_no" name="social_sec_no" value="{{client.social_security_no}}"
 							/>
 						</div>
 					</div>
@@ -233,32 +276,29 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
-							<label class="control-label">Facebook </label>
-							<input type="text" class="form-control floating url_selector" id="facebook" name="facebook" value="{{client.facebook}}" />
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group form-focus select-focus">
 							<label class="control-label">Google </label>
 							<input type="text" class="form-control floating url_selector" id="google" name="google" value="{{client.google}}" />
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
-							<label class="control-label">Association Status :</label>
+							<label class="control-label">Youtube </label>
+							<input type="text" class="form-control floating url_selector" id="youtube" name="youtube" value="{{client.youtube}}" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus select-focus">
+							<label class="control-label">Association Status </label>
 							<select id="association" name="association" class="select form-control">
-
 								<option value="NEW TARGET" {{#if_eq client.association "NEW TARGET"}} selected="selected" {{/if_eq}}>NEW TARGET</option>
 								<option value="CONVERTED" {{#if_eq client.association "CONVERTED"}} selected="selected" {{/if_eq}}>CONVERTED</option>
 								<option value="TS-INTERIM" {{#if_eq client.association "TS-INTERIM"}} selected="selected" {{/if_eq}}>TS-INTERIM</option>
-
-
 							</select>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
-							<label class="control-label">Industry Type :</label>
+							<label class="control-label">Industry Type </label>
 							<select id="industry_type" name="industry_type" class="select form-control">
 								{{#each industry}}
 								<option value="{{this.id}}" {{#if_eq this.id ../client.industry_type}} selected="selected" {{/if_eq}}>{{this.industry_name}}</option>
@@ -273,7 +313,6 @@
 						</div>
 					</div>
 				</div>
-
 			</div>
 
 			<div class="text-center m-t-20">
