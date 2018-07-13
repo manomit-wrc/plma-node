@@ -575,12 +575,34 @@ router.get('/client/add', auth, firmAttrAuth, csrfProtection, async (req, res) =
 	res.render('client/addclient', { layout: 'dashboard', csrfToken: req.csrfToken(), country: country, state: state, designations: designation, industry: industry, attorney: attorney, error_message });
 });
 
+
+router.post('/client/multi-delete/', auth, firmAttrAuth, async (req, res) => {
+
+	var client_ids = req.body.client_id;
+	var n = req.body.client_id.length;
+	for (i = 0; i < n; i++) {
+
+		await client.destroy({
+			where: {
+				id: client_ids[i]
+			}
+		});
+	}
+	res.json({
+		code: "200",
+		message: 'Success'
+	});
+});
+
 router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var error_message = req.flash('error-clientEdit-message')[0];
 	const clients = await client.findById(req.params['id']);
 	const designations = await Designation.findAll();
 	const industrys = await Industry.findAll();
 	const client_country = await Country.findAll();
+	const attorney = await user.findAll({
+		where: { role_id: 3, firm_id: req.user.firm_id }
+	});
 	const client_state = await State.findAll({
 		where: { country_id: "233" }
 	});
@@ -602,7 +624,40 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		});
 	}
 
-	res.render('client/editClient', { layout: 'dashboard', csrfToken: req.csrfToken(), designation: designations, industry: industrys, client: clients, country: client_country, state: client_state, city: client_city, zipcode: client_zipcode, error_message });
+	res.render('client/editClient', { layout: 'dashboard', csrfToken: req.csrfToken(), designation: designations, industry: industrys, client: clients, country: client_country, attorney: attorney, state: client_state, city: client_city, zipcode: client_zipcode, error_message });
+});
+
+router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+	var error_message = req.flash('error-clientEdit-message')[0];
+	const clients = await client.findById(req.params['id']);
+	const designations = await Designation.findAll();
+	const industrys = await Industry.findAll();
+	const client_country = await Country.findAll();
+	const attorney = await user.findAll({
+		where: { role_id: 3, firm_id: req.user.firm_id }
+	});
+	const client_state = await State.findAll({
+		where: { country_id: "233" }
+	});
+	var client_city = [];
+	var client_zipcode = [];
+	if (clients.state != null) {
+		var client_city = await City.findAll({
+			where: {
+				state_id: clients.state.toString()
+			}
+		});
+	}
+	if (clients.city !== null) {
+		var client_cities = await City.findById(clients.city.toString());
+		var client_zipcode = await Zipcode.findAll({
+			where: {
+				city_name: client_cities.name
+			}
+		});
+	}
+
+	res.render('client/viewClient', { layout: 'dashboard', csrfToken: req.csrfToken(), designation: designations, industry: industrys, client: clients, country: client_country, attorney: attorney, state: client_state, city: client_city, zipcode: client_zipcode, error_message });
 });
 
 router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req, res) => {
@@ -630,8 +685,9 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				pin_code: req.body.zipcode,
 				designation_id: req.body.designation,
 				attorney_id: req.body.attorney_id,
-				select_existing_tags: req.body.select_existing_tags,
-				add_new_tags: req.body.add_new_tags,
+				//existing_tags: req.body.existing_tags,
+				//new_tags: req.body.add_new_tags,
+				//add_new_tags: req.body.add_new_tags,
 				company_name: req.body.company_name,
 				twitter: req.body.twitter,
 				linkdn: req.body.linkdn,
@@ -665,8 +721,8 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				city: req.body.city,
 				pin_code: req.body.zipcode,
 				designation_id: req.body.designation,
-				new_tags: req.body.add_new_tags,
-				existing_tags: req.body.existing_tags,
+				// new_tags: req.body.add_new_tags,
+				// existing_tags: req.body.existing_tags,
 				attorney_id: req.body.attorney_id,
 				company_name: req.body.company_name,
 				twitter: req.body.twitter,

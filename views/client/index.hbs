@@ -38,18 +38,36 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-sm-3 col-xs-6">
+				<div class="col-sm-3 col-xs-3">
 					<div class="form-group form-focus">
 						<label class="control-label">Client Email</label>
 						<input type="text" class="form-control floating" name="searchEmail" value="{{searchMail}}" />
 					</div>
 				</div>
-				<div class="col-sm-3 col-xs-6">
+				{{!-- <div class="col-sm-3 col-xs-3">
 					<input type="submit" value="Search" class="btn btn-success btn-block">
 				</div>
-				<div class="col-sm-3 col-xs-6">
+				<div class="col-sm-3 col-xs-3">
 					<a href="/client" class="btn btn-success btn-block"> Clear </a>
 				</div>
+				<div class="col-sm-3 col-xs-3">
+					<a href="/client" class="btn btn-success btn-block"> Delete </a>
+				</div> --}}
+
+				<div class="col-md-6 col-sm-6 col-xs-6">
+                    <div class="col-md-3 col-sm-3 col-xs-3" style="padding: 0">
+                        <input type="submit" value="Search" class="btn btn-success btn-block">
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-3" style="padding-right: 0">
+                        <a href="/client" class="btn btn-success btn-block"> Clear </a>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-3" style="padding-right: 0">
+                        <a href="javascript:void(0);" class="btn btn-success client-delete"> Delete </a>
+                    </div>
+                </div>
+
+
+
 			</form>
 		</div>
 		<div class="row">
@@ -58,6 +76,9 @@
 					<table class="table table-striped custom-table datatable">
 						<thead>
 							<tr>
+								<th>
+                                    <input type="checkbox" onClick="checkall(this);" />
+                                </th>
 								<th>Name</th>
 								<th>Client Type</th>
 								<th>Email Id</th>
@@ -68,6 +89,9 @@
 						<tbody>
 							{{#each clients}}
 							<tr>
+								<td>
+                                    <input type="checkbox" name="client_check_id" value="{{this.id}}" />
+                                </td>
 								<td>
 									{{#if_eq client_type "O"}} {{this.organization_name}} {{/if_eq}} {{#if_eq client_type "I"}} {{this.first_name}} {{this.last_name}}
 									{{/if_eq}}
@@ -83,6 +107,10 @@
 											<i class="fa fa-ellipsis-v"></i>
 										</a>
 										<ul class="dropdown-menu pull-right">
+											<li>
+												<a href="/client/view/{{this.id}}">
+													<i class="fa fa-eye m-r-5"></i> View</a>
+											</li>
 											<li>
 												<a href="/client/edit/{{this.id}}">
 													<i class="fa fa-pencil m-r-5"></i> Edit</a>
@@ -162,6 +190,35 @@
 		</div>
 	</div>
 </div>
+
+{{!-- modal for delete start --}}
+<div class="modal fade" id="client-delete-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Please select one</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="client-delete-2" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Are you sure to delete this record ?</p>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:void(0)" class="btn btn-danger client-delete-done">ok</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{!-- modal for delete end--}}
+
 {{#content "script" mode="append"}}
 <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
@@ -215,5 +272,47 @@
 			return true;
 		}
 	}
+
+	function checkall(source) {
+        var checkboxes = document.getElementsByName('client_check_id');
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+
+
+	$('.client-delete').on('click',function(e) {
+		var client_id = [];
+        $('input[name="client_check_id"]:checked').each(function () {
+            client_id.push(this.value);
+        });
+        if (client_id.length == 0) {
+            $('#client-delete-1').modal('show');
+        } else {
+            $('#client-delete-2').modal('show');
+        }
+	})
+
+	$('.client-delete-done').on('click', function (e) {
+        var client_id = [];
+         $('input[name="client_check_id"]:checked').each(function () {
+            client_id.push(this.value);
+        });
+        $.ajax({
+            url: '/client/multi-delete/',
+            type: 'POST',
+            data: { client_id: client_id },
+            success: function (response) {
+                // console.log(response);
+                if (response.code === '200') {
+                    //$('#success-move').css('display','block');
+                    window.location.reload();
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    })
 
 </script> {{/content}}

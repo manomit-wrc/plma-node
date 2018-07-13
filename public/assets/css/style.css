@@ -1658,6 +1658,9 @@ table.table-inbox tbody tr.checked {background-color: #ffffcc;}
 	height: 34px;
 }
 
+.req-lbl {
+	color: #ff0000;
+}
 
 
 /*------------------------------------------------------------------
@@ -1839,3 +1842,4 @@ select.gender {
    .chat-menu.navbar-nav > li > a {margin-left: 10px;}
    .contact-alphapets {top:113px;}
  }
+}
