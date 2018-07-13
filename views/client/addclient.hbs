@@ -1,285 +1,375 @@
 {{#content "style" mode="prepend"}}
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
-{{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
 <div class="page-wrapper">
 	<div class="content container-fluid">
 		<div class="row">
 			{{#if error_message}}
-		        <div class="alert alert-danger">
-		            <strong>Error! </strong>{{error_message}}
-		        </div>
-		    {{/if}}
+			<div class="alert alert-danger">
+				<strong>Error! </strong>{{error_message}}
+			</div>
+			{{/if}}
 			<div class="col-sm-8">
 				<h4 class="page-title">Add Client</h4>
 			</div>
 		</div>
 		<form id="clientform" method="POST" action="/client/addClient">
-			<input type="hidden" name="_csrf" value="{{csrfToken}}"> 
-			<input type="radio" id="individual_client" name="client_type" value="I" checked />Individual
-			<input type="radio" id="organization_client" name="client_type" value="O"/>Organization
+			<input type="hidden" name="_csrf" value="{{csrfToken}}"> {{!--
+			<label>
+				<input type="radio" id="individual_client" name="client_type" value="I" checked />Individual</label>
+			<label>
+				<input type="radio" id="organization_client" name="client_type" value="O" />Organization</label> --}}
+
+
+			<div class="form-inline m-b-15">
+				<div class="form-group m-r-5">
+					<label class="input-group">
+						<span class="input-group-addon">
+							<input type="radio" id="individual_client" name="client_type" value="I" checked/>
+						</span>
+						<div class="form-control form-control-static">Individual</div>
+						<span class="glyphicon form-control-feedback "></span>
+					</label>
+				</div>
+				<div class="form-group ">
+					<label class="input-group">
+						<span class="input-group-addon">
+							<input type="radio" id="organization_client" name="client_type" value="O" />
+						</span>
+						<div class="form-control form-control-static">Organization</div>
+						<span class="glyphicon form-control-feedback "></span>
+					</label>
+				</div>
+			</div>
+
 			<div class="card-box">
 				<h3 class="card-title">Basic Informations</h3>
 				<div class="row">
 					<div class="col-md-12">
-									{{!-- <div class="profile-img-wrap">
-										<img class="inline-block" src="assets/img/user.jpg" alt="user">
-										<div class="fileupload btn btn-default">
-											<span class="btn-text">edit</span>
-											<input class="upload" type="file">
-										</div>
-									</div> --}}
-									<div class="profile-basic">
-										<div class="row">
-											<div id="org_type" style="display:none;">
-												<div class="col-md-12">
-													<div class="form-group form-focus">
-														<label class="control-label">Organisation Name</label>
-														<input type="text" class="form-control floating" id="org_name" name="org_name" />
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group form-focus">
-														<label class="control-label">Organisation ID</label>
-														<input type="text" class="form-control floating" id="org_id" name="org_id"/>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group form-focus">
-														<label class="control-label">Organisation Code </label>
-														<input type="text" class="form-control floating" id="org_code" name="org_code"/>
-													</div>
-												</div>
-											</div>
-											<div id="individual_type">
-												<div class="col-md-6">
-													<div class="form-group form-focus">
-														<label class="control-label">First Name</label>
-														<input type="text" class="form-control floating" id="client_first_name" name="client_first_name" />
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group form-focus">
-														<label class="control-label">Last Name</label>
-														<input type="text" class="form-control floating" id="client_last_name" name="client_last_name"/>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group form-focus">
-														<label class="control-label">Client ID </label>
-														<input type="text" class="form-control floating" id="client_id" name="client_id"/>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group form-focus">
-														<label class="control-label">Master ID </label>
-														<input type="text" class="form-control floating" id="master_id" name="master_id"/>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group form-focus">
-														<label class="control-label">Birth Date</label>
-														<div class="cal-icon">
-															<input class="form-control floating datetimepicker"
-															type="text" id="client_dob" name="client_dob"
-															>
-														</div>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group form-focus select-focus">
-														<label class="control-label">Gender</label>
-														<select class="select form-control floating" id="client_gender" name="client_gender">
-															<option value="">Select Gender</option>
-															<option value="M">Male</option>
-															<option value="F">Female</option>
-														</select>
-													</div>
-												</div>
-												<div class="col-md-12">
-													<div class="form-group form-focus">
-														<label class="control-label">Client Company </label>
-														<input type="text" class="form-control floating" id="client_company" name="client_company"/>
-													</div>
-												</div>
-											</div>
-												<div class="col-md-12">
-													<div class="form-group form-focus">
-														<label class="control-label">Email Id </label>
-														<input type="text" class="form-control floating" id="email" name="email"/>
-														<span id="uniqueEmail" style="color: red"><span>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group form-focus">
-														<label class="control-label">Mobile Number</label>
-														<input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no"/>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group form-focus">
-														<label class="control-label">Fax</label>
-														<input type="text" class="form-control floating number_validator" id="fax" name="fax"/>
-													</div>
-												</div>
-											</div>
-										</div>
+
+						<div id="org_type" style="display:none;">
+							<div class="col-md-12">
+								<div class="form-group form-focus">
+									<label class="control-label">Organisation Name</label>
+									<input type="text" class="form-control floating" id="org_name" name="org_name" />
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Organisation ID</label>
+									<input type="text" class="form-control floating" id="org_id" name="org_id" />
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Organisation Code </label>
+									<input type="text" class="form-control floating" id="org_code" name="org_code" />
+								</div>
+							</div>
+						</div>
+						<div id="individual_type">
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">First Name</label>
+									<input type="text" class="form-control floating" id="client_first_name" name="client_first_name" />
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Last Name</label>
+									<input type="text" class="form-control floating" id="client_last_name" name="client_last_name" />
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Client ID </label>
+									<input type="text" class="form-control floating" id="client_id" name="client_id" />
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Master ID </label>
+									<input type="text" class="form-control floating" id="master_id" name="master_id" />
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Birth Date</label>
+									<div class="cal-icon">
+										<input class="form-control floating datetimepicker" type="text" id="client_dob" name="client_dob">
 									</div>
 								</div>
 							</div>
-							<div class="card-box">
-								<h3 class="card-title">Contact Informations</h3>
-								<div class="row">
-									<div class="col-md-12">
-										<div class="form-group form-focus">
-											<label class="control-label">Address Line 1</label>
-											<input type="text" class="form-control floating" id="address1" name="address1"/>
-										</div>
-									</div>
-									<div class="col-md-12">
-										<div class="form-group form-focus">
-											<label class="control-label">Address Line 2</label>
-											<input type="text" class="form-control floating" id="address2" name="address2"/>
-										</div>
-									</div>
-									<div class="col-md-12">
-										<div class="form-group form-focus">
-											<label class="control-label">Address Line 3</label>
-											<input type="text" class="form-control floating" id="address3" name="address3"/>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus">
-											<select id="country" name="country" class="select form-control">
-												<option value="">Select Country</option>
-												{{#each country}}
-												<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
-												{{/each}}
-											</select>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus">
-											<select id="state" name="state" class="select form-control">
-												<option value="">Select State</option>
-												{{#each state}}
-												<option value="{{this.id}}">{{this.name}}</option>
-												{{/each}}
-											</select>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus">
-											<select id="city" name="city" class="select form-control">
-												<option value="">Select City</option>    
-
-											</select>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus">
-											<select id="zipcode" name="zipcode" class="select form-control">
-												<option value="">Select Zipcode</option>
-											</select>
-										</div>
-									</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus select-focus">
+									<label class="control-label">Gender</label>
+									<select class="select form-control floating" id="client_gender" name="client_gender">
+										<option value="">Select Gender</option>
+										<option value="M">Male</option>
+										<option value="F">Female</option>
+									</select>
 								</div>
 							</div>
-							<div class="card-box">
-								<h3 class="card-title">Other Informations</h3>
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-group form-focus select-focus">
-											<label class="control-label">Designation</label>
-											<select id="designation" name="designation" class="select form-control floating">
-												{{#each designations}}
-												<option value="{{this.id}}">{{this.title}}</option>
-												{{/each}}
-											</select>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus">
-											<label class="control-label">IM</label>
-											<input type="text" class="form-control floating" id="im" name="im"/>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus">
-											<label class="control-label">Comapnay Name</label>
-											<input type="text" class="form-control floating" id="company_name" name="company_name"/>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus">
-											<label class="control-label">Social Security No</label>
-											<input type="text" class="form-control floating number_validator" id="social_sec_no" name="social_sec_no"/>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus">
-											<label class="control-label">Twitter</label>
-											<input type="text" class="form-control floating url_selector" id="twitter" name="twitter" />
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus">
-											<label class="control-label">Linkdn</label>
-											<input type="text" class="form-control floating url_selector" id="linkdn" name="linkdn" />
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus">
-											<label class="control-label">Facebook </label>
-											<input type="text" class="form-control floating url_selector" id="facebook" name="facebook" />
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus">
-											<label class="control-label">Google </label>
-											<input type="text" class="form-control floating url_selector" id="google" name="google" />
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus select-focus">
-											<label class="control-label">Association Status</label>
-											<select id="association" name="association" class="select form-control">
-
-												<option value="NEW TARGET">NEW TARGET</option>
-												<option value="CONVERTED">CONVERTED</option>
-												<option value="TS-INTERIM">TS-INTERIM</option>
-
-
-											</select>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus select-focus">
-											<label class="control-label">Industry Type</label>
-											<select id="industry_type" name="industry_type" class="select form-control">
-												{{#each industry}}
-												<option value="{{this.id}}">{{this.industry_name}}</option>
-												{{/each}}
-											</select>
-										</div>
-									</div>
-									<div class="col-md-12">
-										<div class="form-group form-focus">
-											<label class="control-label">Remarks </label>
-											<textarea class="form-control floating" id="remarks" name="remarks" rows="5"></textarea>
-										</div>
-			                        </div>	
+							<div class="col-md-12">
+								<div class="form-group form-focus">
+									<label class="control-label">Client Company </label>
+									<input type="text" class="form-control floating" id="client_company" name="client_company" />
 								</div>
-
 							</div>
-
-							<div class="text-center m-t-20">
-								<button class="btn btn-primary btn-lg" type="submit">Add Client</button>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<label class="control-label">Email Id </label>
+								<input type="text" class="form-control floating" id="email" name="email" />
+								<span id="uniqueEmail" style="color: red">
+									<span>
 							</div>
-						</form>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<label class="control-label">Phone Number </label>
+								<input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" />
+								<span id="uniquePhone" style="color: red">
+									<span>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<label class="control-label">Mobile Number</label>
+								<input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" />
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<label class="control-label">Fax</label>
+								<input type="text" class="form-control floating number_validator" id="fax" name="fax" />
+							</div>
+						</div>
+
 					</div>
 				</div>
+			</div>
+			<div class="card-box">
+				<h3 class="card-title">Contact Informations</h3>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Social URL</label>
+							<input type="text" class="form-control floating" id="social" name="social" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Website</label>
+							<input type="text" class="form-control floating" id="website" name="website" />
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group form-focus">
+							<label class="control-label">Address Line 1</label>
+							<input type="text" class="form-control floating" id="address1" name="address1" />
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group form-focus">
+							<label class="control-label">Address Line 2</label>
+							<input type="text" class="form-control floating" id="address2" name="address2" />
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group form-focus">
+							<label class="control-label">Address Line 3</label>
+							<input type="text" class="form-control floating" id="address3" name="address3" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<select id="country" name="country" class="select form-control">
+								<option value="">Select Country</option>
+								{{#each country}}
+								<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<select id="state" name="state" class="select form-control">
+								<option value="">Select State</option>
+								{{#each state}}
+								<option value="{{this.id}}">{{this.name}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<select id="city" name="city" class="select form-control">
+								<option value="">Select City</option>
+
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<select id="zipcode" name="zipcode" class="select form-control">
+								<option value="">Select Zipcode</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card-box">
+				<h3 class="card-title">Other Informations</h3>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group form-focus select-focus">
+							<label class="control-label">Designation</label>
+							<select id="designation" name="designation" class="select form-control floating">
+								{{#each designations}}
+								<option value="{{this.id}}">{{this.title}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<div class="form-group form-focus select-focus">
+							<label class="control-label">Attorney</label>
+							<select id="designation" name="attorney_id" class="select form-control floating">
+								{{#each attorney}}
+								<option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<div class="form-inline m-b-15">
+							<div class="form-group m-r-5">
+								<label class="input-group">
+									<span class="input-group-addon">
+										<input type="radio" id="new-add-tag" name="add-tag" value="new" checked/>
+									</span>
+									<div class="form-control form-control-static">New Tags</div>
+									<span class="glyphicon form-control-feedback "></span>
+								</label>
+							</div>
+							<div class="form-group ">
+								<label class="input-group">
+									<span class="input-group-addon">
+										<input type="radio" id="existing-tag" name="add-tag" value="existing" />
+									</span>
+									<div class="form-control form-control-static">Existing Tags</div>
+									<span class="glyphicon form-control-feedback "></span>
+								</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<div id="add-tag-existing-client" style="display:none;">
+							<div class="form-group form-focus select-focus">
+								<label class="control-label">Select From Existing Tags</label>
+								<select id="select-existing-tags" name="select_existing_tags" class="select form-control floating">
+									{{#each designations}}
+									<option value="{{this.id}}">{{this.title}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div id="add-tag-client">
+							<div class="form-group form-focus">
+								<label class="control-label">Add New Tags</label>
+								<input type="text" class="form-control floating" id="add-new-tags" name="add_new_tags" />
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">IM</label>
+							<input type="text" class="form-control floating" id="im" name="im" />
+						</div>
+					</div>
+
+
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Comapnay Name</label>
+							<input type="text" class="form-control floating" id="company_name" name="company_name" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Social Security No</label>
+							<input type="text" class="form-control floating number_validator" id="social_sec_no" name="social_sec_no" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Twitter</label>
+							<input type="text" class="form-control floating url_selector" id="twitter" name="twitter" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Linkdn</label>
+							<input type="text" class="form-control floating url_selector" id="linkdn" name="linkdn" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Youtube</label>
+							<input type="text" class="form-control floating url_selector" id="youtub" name="youtub" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Google </label>
+							<input type="text" class="form-control floating url_selector" id="google" name="google" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus select-focus">
+							<label class="control-label">Association Status</label>
+							<select id="association" name="association" class="select form-control">
+
+								<option value="NEW TARGET">NEW TARGET</option>
+								<option value="CONVERTED">CONVERTED</option>
+								<option value="TS-INTERIM">TS-INTERIM</option>
+
+
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus select-focus">
+							<label class="control-label">Industry Type</label>
+							<select id="industry_type" name="industry_type" class="select form-control">
+								{{#each industry}}
+								<option value="{{this.id}}">{{this.industry_name}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group form-focus">
+							<label class="control-label">Remarks </label>
+							<textarea class="form-control floating" id="remarks" name="remarks" rows="5"></textarea>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="text-center m-t-20">
+				<button class="btn btn-primary btn-lg" type="submit">Add Client</button>
+			</div>
+		</form>
+	</div>
+</div>
 {{#content "script" mode="append"}}
 <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
@@ -289,118 +379,137 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 <script type="text/javascript">
-				$(document).ready(function(e) {
+	$(document).ready(function (e) {
 
-					$("#clientform").validate({
-						rules: {
-							client_first_name: {
-								required: true
-							},
-							client_last_name: {
-								required: true
-							},
-							org_name: {
-								required: true
-							},
-							org_id: {
-								required: true
-							},
-							org_code: {
-								required: true
-							},
-							client_id: {
-								required: true
-							},
-							master_id: {
-								required: true
-							},
-							email: {
-								required: true,
-								email: true
-							},
-							mobile_no: {
-								required: true
-							},
-							fax: {
-								required: true
-							},
-							address1: {
-								required: true
-							},
-							country: {
-								required: true
-							},
-							state: {
-								required: true
-							},
-							city: {
-								required: true
-							},
-							zipcode: {
-								required: true
-							}
-						},
-						messages: {
-							client_first_name: {
-								required: "First Name can't be blank"
-							},
-							client_last_name: {
-								required: "Last name  title can't be blank"
-							},
-							org_name: {
-								required: "Organisation Name can't be blank"
-							},
-							org_id: {
-								required: "Organisation ID can't be blank"
-							},
-							org_code: {
-								required: "Organisation code can't be blank"
-							},
-							client_id: {
-								required: "Client ID can't be blank"
-							},
-							master_id: {
-								required: "Master ID can't be blank"
-							},
-							email: {
-								required: "Email id can't be blank",
-								email: "Enter valid email id"
-							},
-							mobile_no: {
-								required: "Mobile number can't blank"
-							},
-							fax: {
-								required: "Fax  can't be blank"
-							},
-							address1: {
-								required: "Must provide address"
-							},
-							country: {
-								required: "Choose your country"
-							},
-							state: {
-								required: "Choose your state"
-							},
-							city: {
-								required: "Choose your city"
-							},
-							zipcode: {
-								required: "Choose your zipcode"
-							}
-						}
-					});
+		$("#clientform").validate({
+			rules: {
+				client_first_name: {
+					required: true
+				},
+				client_last_name: {
+					required: true
+				},
+				org_name: {
+					required: true
+				},
+				org_id: {
+					required: true
+				},
+				org_code: {
+					required: true
+				},
+				client_id: {
+					required: true
+				},
+				master_id: {
+					required: true
+				},
+				email: {
+					required: true,
+					email: true
+				},
+				mobile_no: {
+					required: true
+				},
+				phone_no: {
+					required: true
+				},
+				fax: {
+					required: true
+				},
+				address1: {
+					required: true
+				},
+				country: {
+					required: true
+				},
+				state: {
+					required: true
+				},
+				city: {
+					required: true
+				},
+				zipcode: {
+					required: true
+				}
+			},
+			messages: {
+				client_first_name: {
+					required: "First Name can't be blank"
+				},
+				client_last_name: {
+					required: "Last name  title can't be blank"
+				},
+				org_name: {
+					required: "Organisation Name can't be blank"
+				},
+				org_id: {
+					required: "Organisation ID can't be blank"
+				},
+				org_code: {
+					required: "Organisation code can't be blank"
+				},
+				client_id: {
+					required: "Client ID can't be blank"
+				},
+				master_id: {
+					required: "Master ID can't be blank"
+				},
+				email: {
+					required: "Email id can't be blank",
+					email: "Enter valid email id"
+				},
+				mobile_no: {
+					required: "Mobile number can't blank"
+				},
+				phone_no: {
+					required: "Phone number can't blank"
+				},
+				fax: {
+					required: "Fax  can't be blank"
+				},
+				address1: {
+					required: "Must provide address"
+				},
+				country: {
+					required: "Choose your country"
+				},
+				state: {
+					required: "Choose your state"
+				},
+				city: {
+					required: "Choose your city"
+				},
+				zipcode: {
+					required: "Choose your zipcode"
+				}
+			}
+		});
 
-                // add designation ajax operation and form validation ends
-            });
+		// add designation ajax operation and form validation ends
+	});
 
-				$(document).on('click', '#individual_client', function(){
-					$('#individual_type').show();
-					$('#org_type').hide();
-				});
+	$(document).on('click', '#individual_client', function () {
+		$('#individual_type').show();
+		$('#org_type').hide();
+	});
 
-				$(document).on('click', '#organization_client', function(){
-					$('#individual_type').hide();
-					$('#org_type').show();
-				});
-				</script>
-	{{/content}}
+	$(document).on('click', '#organization_client', function () {
+		$('#individual_type').hide();
+		$('#org_type').show();
+	});
+
+
+	// show hide for add tag and existing tag
+	$(document).on('click', '#new-add-tag', function () {
+		$('#add-tag-client').show();
+		$('#add-tag-existing-client').hide();
+	});
+
+	$(document).on('click', '#existing-tag', function () {
+		$('#add-tag-existing-client').show();
+		$('#add-tag-client').hide();
+	})
+
+
+</script> {{/content}}

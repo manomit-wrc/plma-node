@@ -88,20 +88,20 @@ router.get('/target/add', auth, firmAttrAuth, csrfProtection, async (req, res) =
 	var industry = await industry_type.findAll();
 	var country = await Country.findAll();
 	const state = await State.findAll({
-		where: { country_id : "233" }
+		where: { country_id: "233" }
 	});
 	const attorney = await user.findAll({
-		where: { role_id : 3, firm_id: req.user.firm_id }
+		where: { role_id: 3, firm_id: req.user.firm_id }
 	});
-	res.render('target/addtarget', { layout: 'dashboard', csrfToken: req.csrfToken(), country: country, state: state, designations: designation, industry: industry, attorney: attorney, error_message  });
+	res.render('target/addtarget', { layout: 'dashboard', csrfToken: req.csrfToken(), country: country, state: state, designations: designation, industry: industry, attorney: attorney, error_message });
 });
 
-router.post('/target/add',auth, firmAttrAuth,csrfProtection, async (req,res) => {
+router.post('/target/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	const formatDate = req.body.dob ? req.body.dob.split("-") : '';
 	const target_data = await Target.findOne({
 		where: {
-            email: req.body.email
-        }
+			email: req.body.email
+		}
 	});
 	if (target_data === null) {
 		if (req.body.target_type === "O") {
@@ -139,15 +139,15 @@ router.post('/target/add',auth, firmAttrAuth,csrfProtection, async (req,res) => 
 				target_type: req.body.target_type
 			});
 			req.flash('success-message', 'Target Added Successfully');
-            res.redirect('/target')
+			res.redirect('/target')
 		} else {
 			await Target.create({
 				first_name: req.body.first_name,
 				last_name: req.body.last_name,
-				date_of_birth: formatDate ? formatDate[2]+"-"+formatDate[1]+"-"+formatDate[0] : null,
+				date_of_birth: formatDate ? formatDate[2] + "-" + formatDate[1] + "-" + formatDate[0] : null,
 				gender: req.body.gender,
-				target_id : req.body.target_id,
-				target_code : req.body.target_code,
+				target_id: req.body.target_id,
+				target_code: req.body.target_code,
 				designation_id: req.body.designation,
 				email: req.body.email,
 				phone_no: removePhoneMask(req.body.phone_no),
@@ -179,11 +179,11 @@ router.post('/target/add',auth, firmAttrAuth,csrfProtection, async (req,res) => 
 				target_type: req.body.target_type
 			});
 			req.flash('success-message', 'Target Added Successfully');
-            res.redirect('/target')
+			res.redirect('/target')
 		}
 	} else {
 		req.flash('error-target-message', 'Email already taken.');
-        res.redirect('/target/add');
+		res.redirect('/target/add');
 	}
 });
 
@@ -194,11 +194,11 @@ router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 	const industrys = await industry_type.findAll();
 	const country = await Country.findAll();
 	const state = await State.findAll({
-		where: { country_id : "233" }
+		where: { country_id: "233" }
 	});
 	const city = await City.findAll({
 		where: {
-			state_id : target.state.toString()
+			state_id: target.state.toString()
 		}
 	});
 	const cities = await City.findById(target.city.toString());
@@ -217,14 +217,14 @@ router.get('/target/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 	const industrys = await industry_type.findAll();
 	const country = await Country.findAll();
 	const attorney = await user.findAll({
-		where: { role_id : 3, firm_id: req.user.firm_id }
+		where: { role_id: 3, firm_id: req.user.firm_id }
 	});
 	const state = await State.findAll({
-		where: { country_id : "233" }
+		where: { country_id: "233" }
 	});
 	const city = await City.findAll({
 		where: {
-			state_id : target.state.toString()
+			state_id: target.state.toString()
 		}
 	});
 	const cities = await City.findById(target.city.toString());
@@ -279,18 +279,19 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, 
 			firm_id: req.user.firm_id,
 			im: req.body.im,
 			social_security_no: removePhoneMask(req.body.social_sec_no),
-			date_of_birth: formatDate ? formatDate[2]+"-"+formatDate[1]+"-"+formatDate[0] : null,
+			date_of_birth: formatDate ? formatDate[2] + "-" + formatDate[1] + "-" + formatDate[0] : null,
 			gender: req.body.gender,
-			target_id : req.body.target_id,
-			target_code : req.body.target_code,
+			target_id: req.body.target_id,
+			target_code: req.body.target_code,
 			remarks: req.body.remarks
-			},{where: {id: req.params['id']}
-		});
+		}, {
+			where: { id: req.params['id'] }
+			});
 		req.flash('success-message', 'Target Updated Successfully');
 		res.redirect('/target')
 	} else {
 		req.flash('error-target-message', 'Email already taken.');
-		res.redirect('/target/edit/'+req.params['id']);
+		res.redirect('/target/edit/' + req.params['id']);
 	}
 });
 
@@ -300,8 +301,26 @@ router.get('/target/delete/:id', auth, firmAttrAuth, (req, res) => {
 			id: req.params.id
 		}
 	}).then(resp => {
-		req.flash('success-message','Target Deleted Successfully');
+		req.flash('success-message', 'Target Deleted Successfully');
 		res.redirect('/target');
+	});
+});
+
+router.post('/target/multi-delete/', auth, firmAttrAuth, async (req, res) => {
+
+	var target_ids = req.body.target_id;
+	var n = req.body.target_id.length;
+	for (i = 0; i < n; i++) {
+		
+		await Target.destroy({
+			where: {
+				id: target_ids[i]
+			}
+		});
+	}
+	res.json({
+		code: "200",
+		message: 'Success'
 	});
 });
 
@@ -309,11 +328,11 @@ function convertToJSON(array) {
 	var first = array[0].join()
 	var headers = first.split(',');
 	var jsonData = [];
-	for ( var i = 1, length = array.length; i < length; i++ ) {
+	for (var i = 1, length = array.length; i < length; i++) {
 		var myRow = array[i].join();
 		var row = myRow.split(',');
 		var data = {};
-		for ( var x = 0; x < row.length; x++ ) {
+		for (var x = 0; x < row.length; x++) {
 			data[headers[x]] = row[x];
 		}
 		jsonData.push(data);
@@ -321,7 +340,7 @@ function convertToJSON(array) {
 	return jsonData;
 }
 
-String.prototype.capitalize = function() {
+String.prototype.capitalize = function () {
 	return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
@@ -391,7 +410,7 @@ router.post('/target/import', auth, upload.single('file_name'), csrfProtection, 
 					last_name: excelTarget[i].last_name,
 					target_id: excelTarget[i].target_id,
 					target_code: excelTarget[i].master_id,
-					date_of_birth: formatDate ? formatDate[2]+"-"+formatDate[1]+"-"+formatDate[0] : null,
+					date_of_birth: formatDate ? formatDate[2] + "-" + formatDate[1] + "-" + formatDate[0] : null,
 					gender: excelTarget[i].gender,
 					email: excelTarget[i].email,
 					mobile_no: excelTarget[i].mobile,
@@ -472,14 +491,15 @@ router.post('/target/move-to-client', auth, async (req, res) => {
 
 		await Target.update({
 			status: '0'
-			}, { where: {
+		}, {
+			where: {
 				id: target_ids[i]
 			}
-		});
+			});
 	}
 	res.json({
 		code: "200",
-        message: 'Success'
+		message: 'Success'
 	});
 });
 

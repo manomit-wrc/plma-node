@@ -40,10 +40,10 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 function removePhoneMask(phone_no) {
-	var phone_no = phone_no.replace("-","");
-	phone_no = phone_no.replace(")","");
-	phone_no = phone_no.replace("(","");
-	phone_no = phone_no.replace(" ","");
+	var phone_no = phone_no.replace("-", "");
+	phone_no = phone_no.replace(")", "");
+	phone_no = phone_no.replace("(", "");
+	phone_no = phone_no.replace(" ", "");
 	return phone_no;
 }
 
@@ -58,12 +58,12 @@ router.get('/master_contact', auth, firmAttrAuth, csrfProtection, (req, res) => 
 	Contact.findAll({
 		where: whereCondition
 	}).then(result => {
-		res.render('master_contact/index', { 
-			layout: 'dashboard',  
+		res.render('master_contact/index', {
+			layout: 'dashboard',
 			csrfToken: req.csrfToken(),
-			contacts: result, 
-			searchMail: req.query.searchEmail ? req.query.searchEmail : '', 
-			success_message, 
+			contacts: result,
+			searchMail: req.query.searchEmail ? req.query.searchEmail : '',
+			success_message,
 			success_edit_message
 		});
 	});
@@ -74,7 +74,7 @@ router.get('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (req
 	var industry_types = await industry_type.findAll();
 	var country = await Country.findAll();
 	const state = await State.findAll({
-		where: { country_id : "233" }
+		where: { country_id: "233" }
 	});
 	res.render('master_contact/add', { layout: 'dashboard', csrfToken: req.csrfToken(), industry_types: industry_types, country: country, state: state, error_message });
 });
@@ -98,7 +98,7 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 			master_contact_code: req.body.master_contact_code,
 			master_designation: req.body.master_contact_desg,
 			company_name: req.body.master_contact_comp,
-			date_of_birth: formatDate ? formatDate[2]+"-"+formatDate[1]+"-"+formatDate[0] : null,
+			date_of_birth: formatDate ? formatDate[2] + "-" + formatDate[1] + "-" + formatDate[0] : null,
 			gender: req.body.gender,
 			address1: req.body.address1,
 			address2: req.body.address2,
@@ -136,11 +136,11 @@ router.get('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, async
 	const industry_types = await industry_type.findAll();
 	const country = await Country.findAll();
 	const state = await State.findAll({
-		where: { country_id : "233" }
+		where: { country_id: "233" }
 	});
 	const city = await City.findAll({
 		where: {
-			state_id : contact.state.toString()
+			state_id: contact.state.toString()
 		}
 	});
 	const cities = await City.findById(contact.city.toString());
@@ -149,7 +149,7 @@ router.get('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, async
 			city_name: cities.name
 		}
 	});
-	res.render('master_contact/edit', { layout: 'dashboard', csrfToken: req.csrfToken(), industry_types: industry_types, contact:contact, country: country, state: state, city: city, zipcode: zipcode, error_message });
+	res.render('master_contact/edit', { layout: 'dashboard', csrfToken: req.csrfToken(), industry_types: industry_types, contact: contact, country: country, state: state, city: city, zipcode: zipcode, error_message });
 });
 
 
@@ -159,11 +159,11 @@ router.get('/master_contact/view/:id', auth, firmAttrAuth, csrfProtection, async
 	const industry_types = await industry_type.findAll();
 	const country = await Country.findAll();
 	const state = await State.findAll({
-		where: { country_id : "233" }
+		where: { country_id: "233" }
 	});
 	const city = await City.findAll({
 		where: {
-			state_id : contact.state.toString()
+			state_id: contact.state.toString()
 		}
 	});
 	const cities = await City.findById(contact.city.toString());
@@ -172,7 +172,7 @@ router.get('/master_contact/view/:id', auth, firmAttrAuth, csrfProtection, async
 			city_name: cities.name
 		}
 	});
-	res.render('master_contact/view', { layout: 'dashboard', csrfToken: req.csrfToken(), industry_types: industry_types, contact:contact, country: country, state: state, city: city, zipcode: zipcode, error_message });
+	res.render('master_contact/view', { layout: 'dashboard', csrfToken: req.csrfToken(), industry_types: industry_types, contact: contact, country: country, state: state, city: city, zipcode: zipcode, error_message });
 });
 
 
@@ -198,7 +198,7 @@ router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, asyn
 			master_contact_code: req.body.master_contact_code,
 			master_designation: req.body.master_contact_desg,
 			company_name: req.body.master_contact_comp,
-			date_of_birth: formatDate ? formatDate[2]+"-"+formatDate[1]+"-"+formatDate[0] : null,
+			date_of_birth: formatDate ? formatDate[2] + "-" + formatDate[1] + "-" + formatDate[0] : null,
 			gender: req.body.gender,
 			address1: req.body.address1,
 			address2: req.body.address2,
@@ -221,13 +221,14 @@ router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, asyn
 			firm_id: req.user.firm_id,
 			user_id: req.user.id,
 			remarks: req.body.remarks
-			}, {where: {id: req.params['id']}
-		});
+		}, {
+				where: { id: req.params['id'] }
+			});
 		req.flash('success-message', 'Master Contact Updated Successfully');
 		res.redirect('/master_contact')
 	} else {
 		req.flash('error-contact-message', 'Email already taken.');
-		res.redirect('/master_contact/edit/'+req.params['id']);
+		res.redirect('/master_contact/edit/' + req.params['id']);
 	}
 });
 
@@ -242,15 +243,33 @@ router.get('/master_contact/delete/:id', auth, firmAttrAuth, (req, res) => {
 	});
 });
 
+router.post('/master_contact/multiple-delete/', auth, firmAttrAuth, async (req, res) => {
+	var contact_ids = req.body.contact_id;
+	var n = req.body.contact_id.length;
+	for (i = 0; i < n; i++) {
+
+		Contact.destroy({
+			where: {
+				id: contact_ids[i]
+			}
+		})
+	}
+	res.json({
+		code: "200",
+		message: 'Success'
+	});
+
+});
+
 function convertToJSON(array) {
 	var first = array[0].join()
 	var headers = first.split(',');
 	var jsonData = [];
-	for ( var i = 1, length = array.length; i < length; i++ ) {
+	for (var i = 1, length = array.length; i < length; i++) {
 		var myRow = array[i].join();
 		var row = myRow.split(',');
 		var data = {};
-		for ( var x = 0; x < row.length; x++ ) {
+		for (var x = 0; x < row.length; x++) {
 			data[headers[x]] = row[x];
 		}
 		jsonData.push(data);
@@ -258,7 +277,7 @@ function convertToJSON(array) {
 	return jsonData;
 }
 
-String.prototype.capitaLize = function() {
+String.prototype.capitaLize = function () {
 	return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
@@ -307,7 +326,7 @@ router.post('/master_contact/import', auth, upload.single('file_name'), csrfProt
 					master_contact_code: excelContact[i].master_contact_code,
 					master_designation: excelContact[i].master_designation,
 					company_name: excelContact[i].company_name,
-					date_of_birth: formatDate ? formatDate[2]+"-"+formatDate[1]+"-"+formatDate[0] : null,
+					date_of_birth: formatDate ? formatDate[2] + "-" + formatDate[1] + "-" + formatDate[0] : null,
 					gender: excelContact[i].gender,
 					address1: excelContact[i].address1,
 					address2: excelContact[i].address2,
@@ -328,7 +347,7 @@ router.post('/master_contact/import', auth, upload.single('file_name'), csrfProt
 				});
 			}
 		}
-		catch(error) {
+		catch (error) {
 			req.flash('success-message', 'Master Contact Imported Successfully');
 			res.redirect('/master_contact');
 		}
@@ -376,14 +395,15 @@ router.post('/master_contact/move-to-target', auth, async (req, res) => {
 
 		await Contact.update({
 			contact_status: 0
-			}, { where: {
-				id: contact_ids[i]
-			}
-		});
+		}, {
+				where: {
+					id: contact_ids[i]
+				}
+			});
 	}
 	res.json({
 		code: "200",
-        message: 'Success'
+		message: 'Success'
 	});
 });
 

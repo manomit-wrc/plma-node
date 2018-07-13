@@ -8,8 +8,7 @@
             {{!--
             <div id="success-move" class="alert alert-success" style="display:none">
                 <strong>Success! </strong>Target records moved to client successfully.
-            </div> --}} 
-            {{#if success_message}}
+            </div> --}} {{#if success_message}}
             <div class="alert alert-success">
                 <strong>Success! </strong>{{success_message}}
             </div>
@@ -49,14 +48,17 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-6">
-                    <div class="col-md-4 col-sm-4 col-xs-4" style="padding: 0">
+                    <div class="col-md-3 col-sm-3 col-xs-3" style="padding: 0">
                         <input type="submit" value="Search" class="btn btn-success btn-block">
                     </div>
-                    <div class="col-md-4 col-sm-4 col-xs-4" style="padding-right: 0">
+                    <div class="col-md-3 col-sm-3 col-xs-3" style="padding-right: 0">
                         <a href="/target" class="btn btn-success btn-block"> Clear </a>
                     </div>
-                    <div class="col-md-4 col-sm-4 col-xs-4" style="padding-right: 0">
+                    <div class="col-md-3 col-sm-3 col-xs-3" style="padding-right: 0">
                         <a href="javascript:void(0);" class="btn btn-success btn-block move-client"> Move to Client </a>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-3" style="padding-right: 0">
+                        <a href="javascript:void(0);" class="btn btn-success btn-block target-delete"> Delete </a>
                     </div>
                 </div>
             </form>
@@ -138,9 +140,10 @@
         </div>
     </div>
 </div>
+
+{{!-- modal for move to client start --}}
 <div class="modal fade" id="move_to_client_1" role="dialog">
     <div class="modal-dialog">
-        <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-body">
                 <p>Please select one</p>
@@ -153,7 +156,6 @@
 </div>
 <div class="modal fade" id="move_to_client_2" role="dialog">
     <div class="modal-dialog">
-        <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-body">
                 <p>Are you sure to move this record to client ?</p>
@@ -165,6 +167,34 @@
         </div>
     </div>
 </div>
+{{!-- modal for move to client end--}} {{!-- modal for delete start --}}
+<div class="modal fade" id="target-delete-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Please select one</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="target-delete-2" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Are you sure to delete this record ?</p>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:void(0)" class="btn btn-danger target-delete-done">ok</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{!-- modal for delete end--}}
+
 <div class="modal fade" id="import" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -237,4 +267,44 @@
             }
         });
     });
+
+
+
+    $('.target-delete').on('click', function (e) {
+        var target_ids = [];
+        $('input[name="target_id"]:checked').each(function () {
+            target_ids.push(this.value);
+        });
+        if (target_ids.length == 0) {
+            $('#target-delete-1').modal('show');
+        } else {
+            $('#target-delete-2').modal('show');
+        }
+
+    });
+
+    $('.target-delete-done').on('click', function (e) {
+        var target_ids = [];
+        $('input[name="target_id"]:checked').each(function () {
+            target_ids.push(this.value);
+        });
+        $.ajax({
+            url: '/target/multi-delete/',
+            type: 'POST',
+            data: { target_id: target_ids },
+            success: function (response) {
+                // console.log(response);
+                if (response.code === '200') {
+                    //$('#success-move').css('display','block');
+                    window.location.reload();
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    })
+
+
+
 </script> {{/content}}

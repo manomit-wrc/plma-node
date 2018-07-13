@@ -26,20 +26,23 @@
         </div>
         <div class="row filter-row">
             <form method="GET">
-                <div class="col-md-3 col-sm-3 col-xs-6">
+                <div class="col-md-2 col-sm-2 col-xs-6">
                     <div class="form-group form-focus">
                         <label class="control-label">Contact Email</label>
                         <input type="text" class="form-control floating" name="searchEmail" value="{{searchMail}}" />
                     </div>
                 </div>
-                <div class="col-md-3 col-sm-3 col-xs-3">
+                <div class="col-md-2 col-sm-2 col-xs-2">
                     <input type="submit" value="Search" class="btn btn-success btn-block">
                 </div>
-                <div class="col-md-3 col-sm-3 col-xs-3">
+                <div class="col-md-2 col-sm-2 col-xs-2">
                     <a href="/master_contact" class="btn btn-success btn-block"> Clear </a>
                 </div>
-                <div class="col-md-3 col-sm-3 col-xs-3">
+                <div class="col-md-2 col-sm-2 col-xs-2">
                     <a href="javascript:void(0);" class="btn btn-success btn-block move-target"> Move to Target </a>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-2">
+                    <a href="javascript:void(0);" class="btn btn-success btn-block master-contact-delete"> Delete </a>
                 </div>
             </form>
         </div>
@@ -119,6 +122,62 @@
         </div>
     </div>
 </div>
+
+
+
+<div class="modal fade" id="move_to_target_1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Please select one</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="move_to_target_2" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Are you sure to move this record to client ?</p>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:void(0)" class="btn btn-danger move-to-target">ok</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="master-contact-delete-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Please select one</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="master-contact-delete-2" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Are you sure to delete this record ?</p>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:void(0)" class="btn btn-danger master-contact-delete-done">ok</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div class="modal fade" id="import" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -161,6 +220,15 @@
         $('input[name="contact_id"]:checked').each(function () {
             contact_ids.push(this.value);
         });
+
+        if (contact_ids.length == 0) {
+            $('#move_to_target_1').modal('show');
+        } else {
+            $('#move_to_target_2').modal('show');
+        }
+    });
+
+    $('.move-to-target').on('click', function (e) {
         $.ajax({
             url: '/master_contact/move-to-target',
             type: 'POST',
@@ -176,4 +244,39 @@
             }
         });
     });
+
+    $('.master-contact-delete').on('click', function (e) {
+        var contact_ids = [];
+        $('input[name="contact_id"]:checked').each(function () {
+            contact_ids.push(this.value);
+        });
+
+        if (contact_ids.length == 0) {
+            $('#master-contact-delete-1').modal('show');
+        } else {
+            $('#master-contact-delete-2').modal('show');
+        }
+    });
+
+    $('.master-contact-delete-done').on('click',function (e) {
+         var contact_ids = [];
+        $('input[name="contact_id"]:checked').each(function () {
+            contact_ids.push(this.value);
+        });
+        $.ajax({
+            url: '/master_contact/multiple-delete/',
+            type: 'POST',
+            data: { contact_id: contact_ids },
+            success: function (response) {
+                console.log(response);
+                if (response.code === '200') {
+                    window.location.reload();
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+    });
+
 </script> {{/content}}
