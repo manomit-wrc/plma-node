@@ -95,6 +95,7 @@ router.post('/budget/add', auth, siteAuth, csrfProtection, (req, res) => {
 		}
 	});
 });
+
 router.post('/admin/edit-budget/:id', auth, siteAuth, csrfProtection, (req, res) => {
 	budget.findAll({
 		where: {
@@ -173,6 +174,7 @@ router.post('/designation/add', auth, siteAuth, csrfProtection, (req, res) => {
 		}
 	});
 });
+
 router.post('/admin/edit-designation/:id', auth, siteAuth, csrfProtection, (req, res) => {
 	Designation.findAll({
 		where: {
@@ -250,6 +252,7 @@ router.post('/industry/add', auth, siteAuth, csrfProtection, (req, res) => {
 		}
 	});
 });
+
 router.post('/admin/edit-industry/:id', auth, siteAuth, csrfProtection, (req, res) => {
 	Industry.findAll({
 		where: {
@@ -309,6 +312,7 @@ router.get('/settings', auth, csrfProtection, async (req, res) => {
 
 	res.render('superadminsetting/settings', { layout: 'dashboard', csrfToken: req.csrfToken(), data: settings, country: country, state: state, cities, zipcodes });
 });
+
 //insert
 router.post('/settings/insert', auth, csrfProtection, (req, res) => {
 
@@ -356,6 +360,7 @@ router.post('/client/findCityByState', auth, firmAttrAuth, csrfProtection, (req,
 		res.json({ city: city });
 	});
 });
+
 router.post('/client/findPinByCity', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	city.findById(req.body.city_id).then(row => {
 		console.log(row.name);
@@ -395,6 +400,7 @@ router.get('/attorneys', auth, firmAuth, csrfProtection, (req, res) => {
 	});
 
 });
+
 router.get('/attorney/addAttorney', auth, firmAuth, csrfProtection, (req, res) => {
 	res.render('attorney/addattorney', { layout: 'dashboard', csrfToken: req.csrfToken() });
 });
@@ -450,11 +456,13 @@ router.post('/attorneys/add', auth, firmAuth, csrfProtection, (req, res) => {
 	});
 
 });
+
 router.get('/attorneys/editAttorneys/:id', auth, firmAuth, csrfProtection, (req, res) => {
 	user.findById(req.params.id).then(rows => {
 		res.render('attorney/updateattorney', { layout: 'dashboard', csrfToken: req.csrfToken(), rows: rows });
 	});
 });
+
 router.post('/attorneys/updateAttorney/:id', auth, firmAuth, csrfProtection, (req, res) => {
 	console.log(req.params.id);
 	var first_name = req.body.first_name;
@@ -507,42 +515,6 @@ router.post('/attorneys/updateAttorney/:id', auth, firmAuth, csrfProtection, (re
 
 
 	});
-
-	// user.findAndCountAll({
-	// 	where:{
-	// 		email: email
-	// 	}
-	// }).then(result => {
-	// 	if(result.count > 1){
-	// 		console.log(req.params.id);
-	// 		res.json({msg: 'error'});
-	// 		console.log(req.params.id);
-	// 	}else if(result.count == 0 ){
-	// 		console.log(req.params.id);
-	// 		user.update({
-	// 			first_name: first_name,
-	// 			last_name: last_name,
-	// 			email: email,
-	// 			password: password,
-	// 			date_of_birth: dob,
-	// 			gender: gender,
-	// 			address: address,
-	// 			city: city,
-	// 			state: state,
-	// 			country: country,
-	// 			mobile_no: mobile_no,
-	// 			firm_id: firm_id
-	// 		},{
-	// 			where:{
-	// 				id: req.params.id}
-	// 			}).then(resp => {
-	// 				console.log(req.params.id);
-	// 			res.send("success");
-	// 			console.log(req.params.id);
-	//     });
-	// 	}
-	// });
-
 });
 
 router.get('/attorneys/delete/:id', auth, firmAuth, (req, res) => {
@@ -642,7 +614,7 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 	});
 	if (client_data === null) {
 		if (req.body.client_type === "O") {
-			const store_org_data = await client.create({
+			await client.create({
 				organization_name: req.body.org_name,
 				organization_id: req.body.org_id,
 				organization_code: req.body.org_code,
@@ -679,11 +651,12 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 			res.redirect('/client')
 		}
 		else {
-			const store_ind_data = await client.create({
+			await client.create({
 				first_name: req.body.client_first_name,
 				last_name: req.body.client_last_name,
 				email: req.body.email,
 				mobile_no: removePhoneMask(req.body.mobile_no),
+				phone_no: removePhoneMask(req.body.phone_no),
 				address1: req.body.address1,
 				address2: req.body.address2,
 				address_line_3: req.body.address3,
@@ -692,10 +665,13 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				city: req.body.city,
 				pin_code: req.body.zipcode,
 				designation_id: req.body.designation,
+				new_tags: req.body.add_new_tags,
+				existing_tags: req.body.existing_tags,
+				attorney_id: req.body.attorney_id,
 				company_name: req.body.company_name,
 				twitter: req.body.twitter,
 				linkdn: req.body.linkdn,
-				facebook: req.body.facebook,
+				youtub: req.body.youtub,
 				google: req.body.google,
 				association_type: req.body.association,
 				industry_type: req.body.industry_type,
