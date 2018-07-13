@@ -1,7 +1,10 @@
 {{#content "style" mode="prepend"}}
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+{{!-- <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-tagsinput.css"> --}}
+<link rel="stylesheet" type="text/css" href="/assets/css/jquery.tagsinput.css">
+{{/content}}
 <div class="page-wrapper">
 	<div class="content container-fluid">
 		<div class="row">
@@ -55,6 +58,9 @@
 									<input type="text" class="form-control floating" id="org_name" name="org_name" />
 								</div>
 							</div>
+
+	
+
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Organisation ID</label>
@@ -280,10 +286,7 @@
 							</div>
 						</div>
 						<div id="add-tag-client">
-							<div class="form-group form-focus">
-								<label class="control-label">Add New Tags</label>
-								<input type="text" class="form-control floating" id="add-new-tags" name="add_new_tags" />
-							</div>
+								<input type="text" class="tags" id="add-new-tags" name="add_new_tags"  />
 						</div>
 					</div>
 
@@ -376,11 +379,13 @@
 <script type="text/javascript" src="/assets/js/select2.min.js"></script>
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+{{!-- <script type="text/javascript" src="/assets/js/bootstrap-tagsinput.js"></script> --}}
+<script type="text/javascript" src="/assets/js/jquery.tagsinput.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function (e) {
-
+		$('#add-new-tags').tagsInput({width:'auto'});
 		$("#clientform").validate({
 			rules: {
 				client_first_name: {
