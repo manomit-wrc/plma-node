@@ -18,27 +18,29 @@
 							<a href="/activityseen" class="btn btn-primary rounded"><i class="fa fa-plus"></i> Add Activity</a>
 						</div>
 					</div>
-          <form method="GET">
 					<div class="row filter-row">
-						<!-- <div class="col-sm-3 col-xs-6">
-							<div class="form-group form-focus">
-								<label class="control-label">Firm</label>
-								<input type="text" class="form-control floating" id="searchCode" name="searchCode" value="{{searchCode}}"/>
-							</div>
-						</div> -->
-						<div class="col-sm-3 col-xs-6">
-              <div class="form-group form-focus">
-                <label class="control-label">Activity Type</label>
-                <input type="text" class="form-control floating" id="searchActive" name="searchActive" />
+          <form method="GET">
+          <div class="col-sm-3 col-xs-6">
+            <div class="form-group form-focus">
+              <label class="control-label">From Date</label>
+              <div class="cal-icon">
+                <input class="form-control floating datetimepicker" type="text" id="from_activity_goal_date" name="from_activity_goal_date"
+                  value="{{from_activity_goal_date}}">
               </div>
-						</div>
-
+            </div>
+          </div>
+          <div class="col-sm-3 col-xs-6">
+            <div class="form-group form-focus">
+              <label class="control-label">To Date</label>
+              <div class="cal-icon">
+                <input class="form-control floating datetimepicker" type="text" id="to_activity_goal_date" name="to_activity_goal_date" value="{{to_activity_goal_date}}">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3 col-xs-6">
+            <button type="submit" class="btn btn-success btn-block">Search</button>
+          </div>
 						<div class="col-sm-3 col-xs-6">
-							<!-- <a href="javascript:void(0)" class="btn btn-success btn-block" onclick="searchDataTable()"> Search </a> -->
-							 <button type="submit" class="btn btn-success btn-block"> Search </button>
-						</div>
-						<div class="col-sm-3 col-xs-6">
-							<!-- <a href="javascript:void(0)" class="btn btn-success btn-block" onclick="searchDataTable()"> Search </a> -->
 							 <a href="/activitypage" class="btn btn-success btn-block"> Clear </a>
 						</div>
                     </div>
@@ -49,11 +51,10 @@
 								<table class="table table-striped custom-table datatable" id="searchData">
 									<thead>
 										<tr>
-
                       <th>Activity Name</th>
-                      <th>Activity Reason</th>
                       <th>From Date</th>
                       <th>To Date</th>
+                      <th>Total Budget Costs</th>
                       <th>Remarks</th>
 											<th class="text-right">Action</th>
 										</tr>
@@ -63,9 +64,9 @@
   <tr>
 
     <td>{{this.activity_name}}</td>
-    <td>{{this.activity_reason}}</td>
     <td>{{dateFormat this.activity_from_date "DD-MM-YYYY"}}</td>
     <td>{{dateFormat this.activity_to_date "DD-MM-YYYY"}}</td>
+    <td>$ {{this.total_budget_amount}}</td>
     <td>{{this.remarks}}</td>
 
 

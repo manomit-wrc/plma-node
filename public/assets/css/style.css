@@ -1658,6 +1658,10 @@ table.table-inbox tbody tr.checked {background-color: #ffffcc;}
 	height: 34px;
 }
 
+.req-lbl {
+	color: #ff0000;
+}
+
 /* BUDGET-TABLE-CSS */
 
 .activity-budget-report>tbody>tr>td {
@@ -1728,7 +1732,6 @@ table.table-inbox tbody tr.checked {background-color: #ffffcc;}
 }
 
 /* BUDGET-TABLE-CSS */
-
 
 
 /*------------------------------------------------------------------
@@ -1910,3 +1913,4 @@ select.gender {
    .chat-menu.navbar-nav > li > a {margin-left: 10px;}
    .contact-alphapets {top:113px;}
  }
+}
