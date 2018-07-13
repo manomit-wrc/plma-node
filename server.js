@@ -82,17 +82,6 @@ const hbs = exphbs.create({
             return parent_category_name[0].name;
         }
     },
-    get_budget_value: async function(value) {
-        const data = await ActivityBudget.findAll({
-            where: {
-                budget_id: value
-            }
-        });
-       return data;
-    },
-    get_promise: function(data) {
-        console.log(data);
-    },
      dateFormat: require('handlebars-dateformat')
 }
 });
