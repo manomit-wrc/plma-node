@@ -74,27 +74,27 @@
 						<div id="individual_type" {{#if_eq client.client_type "O"}} style="display:none;" {{/if_eq}}>
 							<div class="col-md-6">
 								<div class="form-group form-focus">
-									<label class="control-label">First Name</label>
+									<label class="control-label">First Name<span class="req-lbl">*</span></label>
 									<input type="text" class="form-control floating" id="edit_client_first_name" name="edit_client_first_name" value="{{client.first_name}}"
 									/>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus">
-									<label class="control-label">Last Name</label>
+									<label class="control-label">Last Name<span class="req-lbl">*</span></label>
 									<input type="text" class="form-control floating" id="edit_client_last_name" name="edit_client_last_name" value="{{client.last_name}}"
 									/>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus">
-									<label class="control-label">Client ID </label>
+									<label class="control-label">Client ID <span class="req-lbl">*</span> </label>
 									<input type="text" class="form-control floating" id="client_id" name="client_id" value="{{client.client_id}}" />
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus">
-									<label class="control-label">Master ID </label>
+									<label class="control-label">Master ID <span class="req-lbl">*</span> </label>
 									<input type="text" class="form-control floating" id="master_id" name="master_id" value="{{client.master_id}}" />
 								</div>
 							</div>
@@ -150,7 +150,7 @@
 
 							<div class="col-md-6">
 								<div class="form-group form-focus">
-									<label class="control-label">Birth Date</label>
+									<label class="control-label">Birth Date<span class="req-lbl">*</span></label>
 									<div class="cal-icon">
 										<input class="form-control floating datetimepicker" type="text" id="client_dob" name="client_dob" value="{{dateFormat client.date_of_birth "
 										 DD-MM-YYYY "}}">
@@ -159,7 +159,7 @@
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus select-focus">
-									<label class="control-label">Gender</label>
+									<label class="control-label">Gender<span class="req-lbl">*</span></label>
 									<select class="select form-control floating" id="client_gender" name="client_gender">
 										<option value="">Select Gender</option>
 										<option value="M" {{#if_eq client.gender "M"}} selected {{/if_eq}}>Male</option>
@@ -177,7 +177,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-focus">
-								<label class="control-label">Email Id</label>
+								<label class="control-label">Email Id<span class="req-lbl">*</span></label>
 								<input type="text" class="form-control floating" id="email" name="email" value="{{client.email}}" />
 								<span id="uniqueEmail" style="color: red">
 									<span>
@@ -193,7 +193,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-focus select-focus">
-								<label class="control-label">Mobile Number</label>
+								<label class="control-label">Mobile Number<span class="req-lbl">*</span></label>
 								<input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" value="{{client.mobile_no}}"
 								/>
 							</div>
@@ -212,7 +212,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="form-group form-focus">
-							<label class="control-label">Address Line 1</label>
+							<label class="control-label">Address Line 1<span class="req-lbl">*</span></label>
 							<input type="text" class="form-control floating" id="address1" name="address1" value="{{client.address1}}" />
 						</div>
 					</div>
@@ -230,7 +230,7 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
-							<label class="control-label">Country</label>
+							<label class="control-label">Country<span class="req-lbl">*</span></label>
 							<select id="country" name="country" class="form-control">
 								{{#each country}}
 								<option value="{{this.id}}">{{this.name}}</option>
@@ -240,7 +240,7 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
-							<label class="control-label ">State</label>
+							<label class="control-label ">State<span class="req-lbl">*</span></label>
 							<select id="state" name="state" class="form-control">
 								<option value="">Select State</option>
 								{{#each state}}
@@ -251,7 +251,7 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
-							<label class="control-label ">City</label>
+							<label class="control-label ">City<span class="req-lbl">*</span></label>
 							<select id="city" name="city" class="form-control">
 								<option value="">Select City</option>
 								{{#each city}}
@@ -262,7 +262,7 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
-							<label class=" control-label">Zipcode Code</label>
+							<label class=" control-label">Zipcode Code<span class="req-lbl">*</span></label>
 							<select id="zipcode" name="zipcode" class="form-control">
 								<option value="">Select Zipcode</option>
 								{{#each zipcode}}
@@ -286,7 +286,7 @@
 					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Website</label>
-							<input type="text" class="form-control floating" id="website" name="website"  value="{{client.website_url}}"  />
+							<input type="text" class="form-control floating url_selector" id="website" name="website"  value="{{client.website_url}}"  />
 						</div>
 					</div>
 

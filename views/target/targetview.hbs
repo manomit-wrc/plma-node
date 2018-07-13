@@ -31,19 +31,19 @@
                             <div id="org_type" {{#if_eq client.target_type "I"}} style="display:none;" {{/if_eq}}>
                                 <div class="col-md-12">
                                     <div class="form-group form-focus">
-                                        <label class="control-label">Organisation Name</label>
+                                        <label class="control-label">Organisation Name <span class="req-lbl">*</span></label>
                                         <input type="text" class="form-control floating" id="org_name" name="org_name" value="{{client.organization_name}}" disabled="disabled" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group form-focus">
-                                        <label class="control-label">Organisation ID</label>
+                                        <label class="control-label">Organisation ID <span class="req-lbl">*</span></label>
                                         <input type="text" class="form-control floating" id="org_id" name="org_id" value="{{client.organization_id}}" disabled="disabled" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group form-focus">
-                                        <label class="control-label">Organisation Code </label>
+                                        <label class="control-label">Organisation Code  <span class="req-lbl">*</span></label>
                                         <input type="text" class="form-control floating" id="org_code" name="org_code" value="{{client.organization_code}}" disabled="disabled" />
                                     </div>
                                 </div>
@@ -51,31 +51,31 @@
                             <div id="individual_type" {{#if_eq client.target_type "O"}} style="display:none;" {{/if_eq}}>
                                 <div class="col-md-6">
                                     <div class="form-group form-focus">
-                                        <label class="control-label">First Name</label>
+                                        <label class="control-label">First Name <span class="req-lbl">*</span></label>
                                         <input type="text" class="form-control floating" id="edit_target_first_name" name="edit_target_first_name" value="{{client.first_name}}" disabled="disabled" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group form-focus">
-                                        <label class="control-label">Last Name</label>
+                                        <label class="control-label">Last Name <span class="req-lbl">*</span></label>
                                         <input type="text" class="form-control floating" id="last_name" name="last_name" value="{{client.last_name}}" disabled="disabled" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group form-focus">
-                                        <label class="control-label">Target ID </label>
+                                        <label class="control-label">Target ID  <span class="req-lbl">*</span></label>
                                         <input type="text" class="form-control floating" id="target_id" name="target_id" value="{{client.target_id}}" disabled="disabled" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group form-focus">
-                                        <label class="control-label">Target Code </label>
+                                        <label class="control-label">Target Code  <span class="req-lbl">*</span></label>
                                         <input type="text" class="form-control floating" id="target_code" name="target_code" value="{{client.target_code}}" disabled="disabled" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group form-focus select-focus">
-                                        <label class="control-label">Designation</label>
+                                        <label class="control-label">Designation <span class="req-lbl">*</span></label>
                                         <select id="designation" name="designation" class="select form-control floating" disabled="disabled">
                                             <option value="">Select Designation</option>
                                             {{#each designation}}
@@ -89,7 +89,7 @@
 								</div>
                                 <div class="col-md-6">
                                     <div class="form-group form-focus">
-                                        <label class="control-label">Date of Birth</label>
+                                        <label class="control-label">Date of Birth <span class="req-lbl">*</span></label>
                                         <div class="cal-icon">
                                             <input class="form-control floating datetimepicker" type="text" id="dob" name="dob" value="{{dateFormat client.date_of_birth "DD-MM-YYYY"}}" disabled="disabled" />
                                         </div>
@@ -97,7 +97,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group form-focus select-focus">
-                                        <label class="control-label">Gender</label>
+                                        <label class="control-label">Gender <span class="req-lbl">*</span></label>
                                         <select class="select form-control floating" id="gender" name="gender" disabled="disabled">
                                             <option value="">Select Gender</option>
                                             <option value="M" {{#if_eq client.gender "M"}} selected {{/if_eq}}>Male</option>
@@ -108,14 +108,14 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">Email Id</label>
+                                    <label class="control-label">Email Id <span class="req-lbl">*</span></label>
                                     <input type="text" class="form-control floating" id="email" name="email" value="{{client.email}}" disabled="disabled" />
                                     <span id="uniqueEmail" style="color: red"><span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Phone Number</label>
+                                    <label class="control-label">Phone Number <span class="req-lbl">*</span></label>
                                     <input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" value="{{client.phone_no}}" disabled="disabled" />
                                 </div>
                             </div>
@@ -127,7 +127,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Mobile Number</label>
+                                    <label class="control-label">Mobile Number <span class="req-lbl">*</span></label>
                                     <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" value="{{client.mobile_no}}" disabled="disabled" />
                                 </div>
                             </div>
@@ -221,7 +221,7 @@
                     </div>
                     <div class="col-md-6">
 						<div class="form-group form-focus select-focus">
-							<label class="control-label">Attorney </label>
+							<label class="control-label">Attorney <span class="req-lbl">*</span> </label>
 							<select id="attorney" name="attorney" class="select form-control floating" disabled="disabled">
 								<option value="">Select Attorney</option>
 								{{#each attorney}}
