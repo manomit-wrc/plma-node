@@ -37,7 +37,8 @@
                     <table class="table table-striped custom-table datatable">
                         <thead>
                             <tr>
-                                <th style="width:30%;">budget Name</th>
+                                <th style="width:30%;">Budget sub head</th>
+                                <th>Budget main head </th>
                                 <th>Remarks</th>
                                 <th>Created Date &amp; Time</th>
                                 <th class="text-right">Action</th>
@@ -47,13 +48,14 @@
                             {{#each budget}}
                             <tr>
                                 <td>{{this.name}}</td>
+                                <td>{{get_parent_head this.id ../budget}}</td>
                                 <td>{{this.remarks}}</td>
                                 <td>{{dateFormat this.createdAt "DD-MM-YYYY, hh:mm a"}}</td>
                                 <td class="text-right">
                                     <div class="dropdown">
                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                         <ul class="dropdown-menu pull-right">
-                                            <li><a href="#" data-toggle="modal" data-target="#edit_users" data-budget-id="{{this.id}}" data-code="{{this.code}}" data-name="{{this.name}}" data-remarks="{{this.remarks}}" id="edit-budget"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#edit_users" data-budget-id="{{this.id}}" data-parent-id="{{this.parent_id}}" data-name="{{this.name}}" data-remarks="{{this.remarks}}" id="edit-budget"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
                                             <li><a href="#" data-toggle="modal" data-target="#delete_users" data-budget-id="{{this.id}}" id="delete-budget"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
                                         </ul>
                                     </div>
@@ -79,6 +81,19 @@
                 <form class="m-b-30" name="addBudget" id="addBudget" method="POST">
                     <input type="hidden" name="_csrf" value="{{csrfToken}}">
                     <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Budget Head</label>
+                                <select class="select form-control" id="parent_id" name="parent_id">
+                                    <option value="0">Select Budget Head</option>
+                                    {{#each budget}}
+                                    {{#if_eq this.parent_id "0"}}
+                                    <option value="{{this.id}}">{{this.name}}</option>
+                                    {{/if_eq}}
+                                    {{/each}}
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">Budget Name<span class="text-danger">*</span></label>
@@ -112,6 +127,19 @@
                 <form class="m-b-30" name="edit_budget" id="edit_budget" method="post">
                     <div class="row">
                         <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Budget Head</label>
+                                <select class="select form-control" id="edit_parent_id" name="edit_parent_id">
+                                    <option value="0">Select Budget Head</option>
+                                    {{#each budget}}
+                                     {{#if_eq this.parent_id "0"}}
+                                    <option value="{{this.id}}">{{this.name}}</option>
+                                    {{/if_eq}}
+                                    {{/each}}
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">Budget Name<span class="text-danger">*</span></label>
@@ -185,12 +213,14 @@ $(document).ready(function(e) {
         },
         submitHandler:function(form) {
             var name = $("#name").val(),
+            parent_id = $("#parent_id").val(),
             remarks = $("#remarks").val();
             $.ajax({
                 type: "POST",
                 url: "/budget/add",
                 data: {
                     name: name,
+                    parent_id: parent_id,
                     remarks: remarks
                 },
                 beforeSend: function(xhr) {
@@ -225,10 +255,13 @@ $(document).ready(function(e) {
 
 $(document).on('click', '#edit-budget', function(e){
     var budget_id = $(this).data('budget-id');
+    var parent_id = $(this).data('parent-id');
     var name = $(this).data('name');
     var remarks = $(this).data('remarks');
 
     $("#edit_name").val(name);
+    $('#edit_parent_id').val(parent_id);
+    $('#edit_parent_id').trigger('change');
     $("#edit_remarks").val(remarks);
 
     localStorage.setItem('budget_id',budget_id);

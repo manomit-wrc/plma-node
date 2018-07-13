@@ -2,6 +2,9 @@
    <div class="sidebar-inner slimscroll">
       <div id="sidebar-menu" class="sidebar-menu">
          <ul>
+          <li {{#if_eq client_url "activitypage" }} class="active" {{/if_eq}}>
+            <a href="/activitypage">Activity</a>
+          </li>
             <li {{#if_eq client_url "dashboard" }} class="active" {{/if_eq}}>
                <a href="/dashboard">Dashboard</a>
             </li>
@@ -79,9 +82,7 @@
             </li>
             </li>
 
-            <li {{#if_eq client_url "attorneys" }} class="active" {{/if_eq}}>
-               <a href="/activitypage">Activity</a>
-            </li>
+            
             {{/if_eq}}
          </ul>
       </div>

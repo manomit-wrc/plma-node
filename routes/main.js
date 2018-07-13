@@ -84,6 +84,7 @@ router.post('/budget/add', auth, siteAuth, csrfProtection, (req, res) => {
 		if (count == 0) {
 			budget.create({
 				name: req.body.name,
+				parent_id: req.body.parent_id,
 				remarks: req.body.remarks
 			}).then(store => {
 				res.json({ "add_budget": 1 });
@@ -106,9 +107,10 @@ router.post('/admin/edit-budget/:id', auth, siteAuth, csrfProtection, (req, res)
 		if (budgets.length === 0) {
 			budget.update({
 				name: req.body.edit_name,
+				parent_id: req.body.parent_id,
 				remarks: req.body.edit_remarks
 			}, {
-				where: { id: req.params['id'] }
+					where: { id: req.params['id'] }
 				}).then(result => {
 					res.json({ "edit_budget": 1 });
 				});
@@ -185,7 +187,7 @@ router.post('/admin/edit-designation/:id', auth, siteAuth, csrfProtection, (req,
 				title: req.body.edit_name,
 				remarks: req.body.edit_remarks
 			}, {
-				where: { id: req.params['id'] }
+					where: { id: req.params['id'] }
 				}).then(result => {
 					res.json({ "edit_designation": 1 });
 				});
@@ -262,7 +264,7 @@ router.post('/admin/edit-industry/:id', auth, siteAuth, csrfProtection, (req, re
 				industry_name: req.body.edit_name,
 				remarks: req.body.edit_remarks
 			}, {
-				where: { id: req.params['id'] }
+					where: { id: req.params['id'] }
 				}).then(result => {
 					res.json({ "edit_industry": 1 });
 				});
@@ -598,7 +600,7 @@ router.get('/client/add', auth, firmAttrAuth, csrfProtection, async (req, res) =
 		where: { role_id: 3, firm_id: req.user.firm_id }
 	});
 
-	res.render('client/addclient', { layout: 'dashboard', csrfToken: req.csrfToken(), country: country, state: state, designations: designation, industry: industry,attorney:attorney, error_message });
+	res.render('client/addclient', { layout: 'dashboard', csrfToken: req.csrfToken(), country: country, state: state, designations: designation, industry: industry, attorney: attorney, error_message });
 });
 
 router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
@@ -764,7 +766,7 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 			client_company: req.body.client_company,
 			remarks: req.body.remarks
 		}, {
-			where: { id: req.params['id'] }
+				where: { id: req.params['id'] }
 			});
 		req.flash('success-edit-message', 'Client Updated Successfully');
 		res.redirect('/client')
@@ -904,7 +906,7 @@ router.post('/admin/edit-practice-area/:id', auth, siteAuth, csrfProtection, (re
 				name: req.body.edit_name,
 				remarks: req.body.edit_remarks
 			}, {
-				where: { id: req.params['id'] }
+					where: { id: req.params['id'] }
 				}).then(result => {
 					res.json({ "b": 1 });
 				});
@@ -982,7 +984,7 @@ router.post('/admin/edit-section/:id', auth, siteAuth, csrfProtection, (req, res
 				description: req.body.edit_description,
 				remarks: req.body.edit_remarks
 			}, {
-				where: { id: req.params['id'] }
+					where: { id: req.params['id'] }
 				}).then(result => {
 					res.json({ "edit_section": 1 });
 				});
@@ -1064,7 +1066,7 @@ router.post('/admin/edit-jurisdiction/:id', auth, siteAuth, csrfProtection, (req
 				name: req.body.edit_name,
 				remarks: req.body.edit_remarks
 			}, {
-				where: { id: req.params['id'] }
+					where: { id: req.params['id'] }
 				}).then(result => {
 					res.json({ "edit_jurisdiction": 1 });
 				});
@@ -1146,7 +1148,7 @@ router.post('/admin/edit-group/:id', auth, siteAuth, csrfProtection, (req, res) 
 				name: req.body.edit_name,
 				remarks: req.body.edit_remarks
 			}, {
-				where: { id: req.params['id'] }
+					where: { id: req.params['id'] }
 				}).then(result => {
 					res.json({ "edit_group": 1 });
 				});
