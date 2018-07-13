@@ -37,7 +37,7 @@ const ActivityBudget = require('../models').activity_budget;
 
 
 //===================================================START ACTIVITY===============================================================================//
-router.get('/activityseen',auth,  csrfProtection, async (req,res) => {
+router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 //	var error_message = req.flash('success-activity-message')[0];
 
 var activityFilter = {};
@@ -93,7 +93,7 @@ var activityFilter = {};
 
 //fetch
 
-router.get('/activitypage',auth,  csrfProtection, (req,res) => {
+router.get('/activitypage', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	var activityFilter = {};
 			if(req.query.searchActive)
 			{
@@ -119,7 +119,7 @@ router.post('/insertActivity', auth, async(req, res) => {
 	});
 });
 
-router.post('/activity/add-budget', auth, csrfProtection, async (req, res) => {
+router.post('/activity/add-budget', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var budget = JSON.parse(req.body.budget);
 	for(var b=0; b<budget.length; b++)
 	{
@@ -139,7 +139,7 @@ router.post('/activity/add-budget', auth, csrfProtection, async (req, res) => {
 
 // ========{{    insert data to the database  }}=====================//
 
-router.post('/activity/add',auth, csrfProtection, async (req,res) => {
+router.post('/activity/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	// console.log(JSON.stringify(req.body, undefined, 2));
 
 		var target_user = req.body.target_user;
@@ -198,7 +198,7 @@ router.post('/activity/add',auth, csrfProtection, async (req,res) => {
 
 //.....................{{   edit data  }}.......................................//
 
-router.get('/activity/edit/:id',auth,csrfProtection, async (req,res) => {
+router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
   	Activity.hasMany(Activity_to_user_type, {foreignKey: 'activity_id'});
 	const firm = await Firm.findAll();
 	const activity_goal = await ActivityGoal.findAll();
@@ -273,7 +273,7 @@ res.render('activity/update', {
 
 
 //update data
-router.post('/activity/edit-budget', auth, csrfProtection, async (req, res) => {
+router.post('/activity/edit-budget', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	const del_budget = await ActivityBudget.destroy({
 		where: {
 			activity_id: req.body.activity_id
@@ -299,7 +299,7 @@ router.post('/activity/edit-budget', auth, csrfProtection, async (req, res) => {
 	});
 });
 
-router.post('/activity/update/:id',auth,  csrfProtection, async (req,res) => {
+router.post('/activity/update/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 		var target_user = req.body.target_user;
 		var client_user = req.body.client_user;
 
@@ -356,7 +356,7 @@ router.post('/activity/update/:id',auth,  csrfProtection, async (req,res) => {
   //        {{   delete data  }}
 
 
-router.get('/activity/deletedata/:id',auth, async(req,res) => {
+router.get('/activity/deletedata/:id', auth, firmAttrAuth, async (req, res) => {
 	const activity_delete = await Activity.destroy({
 		where: {
 			id: req.params['id']
