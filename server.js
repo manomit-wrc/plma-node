@@ -7,6 +7,7 @@ const passport = require('passport');
 const path = require('path');
 const flash    = require('connect-flash');
 const lodash = require('lodash');
+const ActivityBudget = require('./models').activity_budget;
 
 
 
@@ -79,6 +80,17 @@ const hbs = exphbs.create({
             var parent_category_name = lodash.filter(array, arr => arr.id === parent_category[0].parent_id);
             return parent_category_name[0].name;
         }
+    },
+    get_budget_value: async function(value) {
+        const data = await ActivityBudget.findAll({
+            where: {
+                budget_id: value
+            }
+        });
+       return data;
+    },
+    get_promise: function(data) {
+        console.log(data);
     },
      dateFormat: require('handlebars-dateformat')
 }
