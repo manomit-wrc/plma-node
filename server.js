@@ -30,6 +30,8 @@ const target = require('./routes/target');
 const activity = require('./routes/activity');
 const master_contact = require('./routes/master_contact');
 const referral = require('./routes/referral');
+const attorney = require('./routes/attorney');
+
 
 const allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -111,5 +113,6 @@ app.use(target);
 app.use(activity);
 app.use(master_contact);
 app.use(referral);
+app.use(attorney);
 /********** End **********/
 app.listen(port, () => console.log(`Server listening to port ${port}`));

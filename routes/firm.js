@@ -64,6 +64,7 @@ router.get('/firms', csrfProtection, auth, siteAuth, async (req, res) => {
         search_firm: req.query ? req.query.search_firm : ''
     });
 });
+
 router.post('/firms/add', auth, siteAuth, csrfProtection, async (req, res) => {
     const user_data = await User.findOne({
         where: {

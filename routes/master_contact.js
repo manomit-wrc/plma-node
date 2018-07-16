@@ -58,12 +58,12 @@ router.get('/master_contact', auth, firmAttrAuth, csrfProtection, (req, res) => 
 	Contact.findAll({
 		where: whereCondition
 	}).then(result => {
-		res.render('master_contact/index', { 
-			layout: 'dashboard',  
+		res.render('master_contact/index', {
+			layout: 'dashboard',
 			csrfToken: req.csrfToken(),
-			contacts: result, 
-			searchMail: req.query.searchEmail ? req.query.searchEmail : '', 
-			success_message, 
+			contacts: result,
+			searchMail: req.query.searchEmail ? req.query.searchEmail : '',
+			success_message,
 			success_edit_message
 		});
 	});
