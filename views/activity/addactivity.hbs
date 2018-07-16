@@ -133,7 +133,7 @@
                                     </select>
                                 </div>
                             </div>
-                           
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Refferred By: </label>
@@ -228,7 +228,7 @@
                                         <h3 class="panel-title">{{this.parent_name}}</h3>
                                     </div>
                                     <div class="panel-body">
-                                        {{#each this.child_budget}} 
+                                        {{#each this.child_budget}}
                                         <div class="list">
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -238,7 +238,7 @@
                                                 </div>
                                                 <div class="col-md-3">
                                                     <div class="form-group">
-                                                        
+
                                                         <input class="form-control budget_hour number_budget" type="text" data-budget-id="{{this.id}}" id="budget_hour" name="budget_hour" placeholder="Hours">
                                                     </div>
                                                 </div>
@@ -250,7 +250,7 @@
                                             </div>
                                         </div>
                                         {{/each}}
-                                       
+
                                     </div>
                                 </div>
                                 {{/each}}
@@ -302,7 +302,7 @@
 
         var count = 0;
     $(document).on('click', '#budgetAdd', function(e){
-        count++ 
+        count++
         if(count === 1)
         {
             var activityName = $('#activity_name').val();
@@ -321,7 +321,7 @@
                 },
                 error:function(xhr)
                 {
-                    
+
                 }
             });
         }

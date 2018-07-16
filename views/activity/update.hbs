@@ -261,8 +261,68 @@
                 {{/each}}
               </div>
             </div>
+<<<<<<< HEAD
+
+
+
+
+
+            <div class="col-sm-4 col-xs-6">
+              <div class="form-group form-focus select-focus">
+                <label class="control-label">Activity Details Status:</label>
+                <select id="budget_status" name="budget_status" class="select form-control floating" >
+                <option value=""> Select Activity status</option>
+                <option value="section_one" {{#if_eq editdata.budget_status "section_one"}} selected="selected" {{/if_eq}}>SECTION ONE</option>
+                <option value="planned" {{#if_eq editdata.budget_status "planned"}} selected="selected" {{/if_eq}}>PLANNED </option>
+                <option value="unplanned" {{#if_eq editdata.budget_status "unplanned"}} selected="selected" {{/if_eq}}>UNPLANNED</option>
+                <option value="delete_team" {{#if_eq editdata.budget_status "delete_team"}} selected="selected" {{/if_eq}}>DELETE ITEM</option>
+              </select>
+            </div>
+       </div>
+
+       <div class="col-sm-4 col-xs-6">
+         <div class="form-group form-focus select-focus">
+           <label class="control-label">Relation Type: </label>
+           <input type="radio" id="referral_type" name="ref_type" value="T" {{#if_eq editdata.target "T"}} checked {{/if_eq}} />Target
+           <input type="radio" id="organization_type" name="ref_type" value="C" {{#if_eq editdata.target "C"}} checked {{/if_eq}}/>Client
+         </div>
+       </div>
+
+       <div class="col-sm-4 col-xs-6">
+       <div class="form-group form-focus select-focus" id="target_list" {{#if_eq editdata.target "C"}} style="display:none;" {{/if_eq}}>
+         <div class="form-group form-focus select-focus">
+           <select id="target_id" name="target_user" class=" form-control floating" multiple="multiple">
+               <option value="">Select Target</option>
+               {{#each target}}
+                 <option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.first_name}} {{this.last_name}}</option>
+               {{/each}}
+             </select>
+           </div>
+         </div>
+       </div>
+       <div class="col-sm-4 col-xs-6">
+         <div class="form-group form-focus select-focus" id="client_list" {{#if_eq editdata.target "T"}} style="display:none;" {{/if_eq}}>
+           <div class="form-group form-focus select-focus">
+             <select id="client_id" name="client_user" class=" form-control floating" multiple="multiple">
+               <option value="">Select Client</option>
+               {{#each client}}
+               <option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.first_name}} {{this.last_name}}</option>
+               {{/each}}
+             </select>
+           </div>
+       </div>
+     </div>
+
+
+              <div class="text-center m-t-20">
+  							<button class="btn btn-primary btn-lg" type="submit" id="btnAdd">Update Activity</button>
+  						</div>
+  					</form>
+
+=======
             <div class="m-t-15 text-center">
               <button class="btn btn-primary btn-lg" type="button" id="btnEditActivityBudget">Update</button>
+>>>>>>> 84deacecca006db04b7e1abcae2110ff1b7039ed
             </div>
           </form>
         </div>
