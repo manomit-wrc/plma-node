@@ -74,6 +74,9 @@ textarea.form-control {resize: vertical;}
 .input-group .form-control {height: 34px;}
 .input-group.input-group-lg .form-control {height: 46px;}
 
+
+
+
 /*------------------------------------------------------------------
 [2. Table]
 */
@@ -1633,6 +1636,104 @@ table.table-inbox tbody tr.checked {background-color: #ffffcc;}
   top: 50px;
 }
 
+.panel-primary {
+	margin-bottom: 15px;
+}
+
+.panel-primary>.panel-heading {
+	color: #fff;
+	background-color: #717372;
+	border-color: #717372;
+}
+
+.panel-primary .form-focus {
+	margin-bottom: 15px;
+}
+
+.panel-primary h5 {
+	margin-bottom: 0;
+}
+
+.panel-primary .form-control {
+	height: 34px;
+}
+
+.req-lbl {
+	color: #ff0000;
+}
+
+/* BUDGET-TABLE-CSS */
+
+.activity-budget-report>tbody>tr>td {
+	border: 0 none;
+	padding: 0;
+}
+
+.activity-budget-report table.table.table-bordered {
+	margin: 0;
+}
+
+.div_left {
+	margin: 0;
+	width: 100%;
+	padding-top: 8px;
+	display: inline-block;
+}
+
+.div_right {
+	margin: 0;
+	width: 100%;
+	padding-top: 0px;
+	display: inline-block;
+}
+
+.table-scrollable {
+	width: 100%;
+	overflow-x: auto;
+	overflow-y: hidden;
+	border: none;
+	margin: 8px 0 !important;
+}
+
+.persist-header {
+	width: 100%;
+	background: #fff;
+	border-top: 1px solid #e7ecf1;
+	border-bottom: 1px solid #e7ecf1;
+}
+
+.table-scrollable>.table {
+	width: 100% !important;
+	margin: 0 !important;
+}
+
+.table-scrollable .table {
+	background: transparent;
+}
+
+.div_right table.table-bordered {
+	background: #fff;
+}
+
+.div_left table.table-bordered {
+	background: #fff;
+}
+
+.table>tbody>tr>td,
+.table>tbody>tr>th,
+.table>tfoot>tr>td,
+.table>tfoot>tr>th,
+.table>thead>tr>td,
+.table>thead>tr>th {
+	padding: 0 0 0 5px;
+	line-height: 12px;
+	vertical-align: top;
+	border-top: none;
+}
+
+/* BUDGET-TABLE-CSS */
+
+
 /*------------------------------------------------------------------
 [39-a.... Custom Styles]
 */
@@ -1812,3 +1913,4 @@ select.gender {
    .chat-menu.navbar-nav > li > a {margin-left: 10px;}
    .contact-alphapets {top:113px;}
  }
+}

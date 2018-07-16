@@ -15,6 +15,9 @@ module.exports = (sequelize, DataTypes) => {
     budget_status: DataTypes.STRING,
     budget_details_status: DataTypes.STRING,
     target: DataTypes.STRING,
+    total_budget_hour: DataTypes.STRING,
+    total_budget_amount: DataTypes.STRING,
+    user_id: DataTypes.INTEGER,
     clint: DataTypes.STRING
   }, {});
   activity.associate = function(models) {

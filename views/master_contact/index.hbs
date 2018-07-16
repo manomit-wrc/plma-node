@@ -1,8 +1,7 @@
 {{#content "style" mode="prepend"}}
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
-{{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
 <div class="page-wrapper">
     <div class="content container-fluid">
         <div class="row">
@@ -10,8 +9,7 @@
             <div class="alert alert-success">
                 <strong>Success! </strong>{{success_message}}
             </div>
-            {{/if}}
-            {{#if success_edit_message}}
+            {{/if}} {{#if success_edit_message}}
             <div class="alert alert-success">
                 <strong>Success! </strong>{{success_edit_message}}
             </div>
@@ -20,26 +18,31 @@
                 <h4 class="page-title">Master Contacts</h4>
             </div>
             <div class="col-sm-8 col-xs-9 text-right m-b-20">
-                <a href="javascript:void(0)" data-toggle="modal" data-target="#import" class="btn btn-primary rounded pull-right"><i class="fa fa-cloud-download"></i> Import Master Contact</a>
-                <a href="/master_contact/add" class="btn btn-primary rounded pull-right m-r-5"><i class="fa fa-plus"></i> Add Contact</a>
+                <a href="javascript:void(0)" data-toggle="modal" data-target="#import" class="btn btn-primary rounded pull-right">
+                    <i class="fa fa-cloud-download"></i> Import Master Contact</a>
+                <a href="/master_contact/add" class="btn btn-primary rounded pull-right m-r-5">
+                    <i class="fa fa-plus"></i> Add Contact</a>
             </div>
         </div>
         <div class="row filter-row">
             <form method="GET">
-                <div class="col-md-3 col-sm-3 col-xs-6">  
+                <div class="col-md-2 col-sm-2 col-xs-6">
                     <div class="form-group form-focus">
                         <label class="control-label">Contact Email</label>
                         <input type="text" class="form-control floating" name="searchEmail" value="{{searchMail}}" />
                     </div>
                 </div>
-                <div class="col-md-3 col-sm-3 col-xs-3">
+                <div class="col-md-2 col-sm-2 col-xs-2">
                     <input type="submit" value="Search" class="btn btn-success btn-block">
                 </div>
-                <div class="col-md-3 col-sm-3 col-xs-3">
+                <div class="col-md-2 col-sm-2 col-xs-2">
                     <a href="/master_contact" class="btn btn-success btn-block"> Clear </a>
                 </div>
-                <div class="col-md-3 col-sm-3 col-xs-3">
+                <div class="col-md-2 col-sm-2 col-xs-2">
                     <a href="javascript:void(0);" class="btn btn-success btn-block move-target"> Move to Target </a>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-2">
+                    <a href="javascript:void(0);" class="btn btn-success btn-block master-contact-delete"> Delete </a>
                 </div>
             </form>
         </div>
@@ -49,7 +52,9 @@
                     <table class="table table-striped custom-table datatable">
                         <thead>
                             <tr>
-                                <th><input type="checkbox" onClick="checkall(this);" /></th>
+                                <th>
+                                    <input type="checkbox" onClick="checkall(this);" />
+                                </th>
                                 <th>Name</th>
                                 <th>Email Id</th>
                                 <th>Contact Code</th>
@@ -62,8 +67,12 @@
                         <tbody>
                             {{#each contacts}}
                             <tr>
-                                <td><input type="checkbox" name="contact_id" value="{{this.id}}" /></td>
-                                <td>{{this.first_name}} {{this.last_name}}</td>
+                                <td>
+                                    <input type="checkbox" name="contact_id" value="{{this.id}}" />
+                                </td>
+                                <td>
+                                    <a href="/master_contact/view/{{this.id}}"> {{this.first_name}} {{this.last_name}} </a>
+                                </td>
                                 <td>{{this.email}}</td>
                                 <td>{{this.master_contact_code}}</td>
                                 <td class="number_validator">{{this.mobile_no}}</td>
@@ -71,10 +80,22 @@
                                 <td>{{this.status}}</td>
                                 <td class="text-right">
                                     <div class="dropdown">
-                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </a>
                                         <ul class="dropdown-menu pull-right">
-                                            <li><a href="/master_contact/edit/{{this.id}}" ><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                            <li><a href="javascript:void(0)" data-toggle="modal" data-target="#{{this.id}}"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                                            <li>
+                                                <a href="/master_contact/view/{{this.id}}">
+                                                    <i class="fa fa-eye m-r-5"></i> View</a>
+                                            </li>
+                                            <li>
+                                                <a href="/master_contact/edit/{{this.id}}">
+                                                    <i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#{{this.id}}">
+                                                    <i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </td>
@@ -101,11 +122,70 @@
         </div>
     </div>
 </div>
+
+
+
+<div class="modal fade" id="move_to_target_1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Please select one</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="move_to_target_2" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Are you sure to move this record to client ?</p>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:void(0)" class="btn btn-danger move-to-target">ok</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="master-contact-delete-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Please select one</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="master-contact-delete-2" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Are you sure to delete this record ?</p>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:void(0)" class="btn btn-danger master-contact-delete-done">ok</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div class="modal fade" id="import" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
-            <div class="modal-header"> <strong>Import Excel for Contact</strong> <button type="button" class="close" data-dismiss="modal">×</button></div>
+            <div class="modal-header">
+                <strong>Import Excel for Contact</strong>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
             <div class="modal-body">
                 <form name="import" method="POST" action="/master_contact/import" enctype="multipart/form-data">
                     <input type="hidden" name="_csrf" value="{{csrfToken}}">
@@ -130,30 +210,73 @@
 <script type="text/javascript">
     function checkall(source) {
         var checkboxes = document.getElementsByName('contact_id');
-        for(var i = 0; i < checkboxes.length; i++) {
+        for (var i = 0; i < checkboxes.length; i++) {
             checkboxes[i].checked = source.checked;
         }
     }
 
-    $('.move-target').on('click', function(e) {
+    $('.move-target').on('click', function (e) {
         var contact_ids = [];
-        $('input[name="contact_id"]:checked').each(function() {
+        $('input[name="contact_id"]:checked').each(function () {
             contact_ids.push(this.value);
         });
+
+        if (contact_ids.length == 0) {
+            $('#move_to_target_1').modal('show');
+        } else {
+            $('#move_to_target_2').modal('show');
+        }
+    });
+
+    $('.move-to-target').on('click', function (e) {
         $.ajax({
             url: '/master_contact/move-to-target',
             type: 'POST',
-            data: {contact_id: contact_ids},
-            success: function(response) {
+            data: { contact_id: contact_ids },
+            success: function (response) {
                 console.log(response);
                 if (response.code === '200') {
                     window.location.reload();
                 }
             },
-            error: function(err) {
+            error: function (err) {
                 console.log(err);
             }
         });
     });
-</script>
-{{/content}}
+
+    $('.master-contact-delete').on('click', function (e) {
+        var contact_ids = [];
+        $('input[name="contact_id"]:checked').each(function () {
+            contact_ids.push(this.value);
+        });
+
+        if (contact_ids.length == 0) {
+            $('#master-contact-delete-1').modal('show');
+        } else {
+            $('#master-contact-delete-2').modal('show');
+        }
+    });
+
+    $('.master-contact-delete-done').on('click',function (e) {
+         var contact_ids = [];
+        $('input[name="contact_id"]:checked').each(function () {
+            contact_ids.push(this.value);
+        });
+        $.ajax({
+            url: '/master_contact/multiple-delete/',
+            type: 'POST',
+            data: { contact_id: contact_ids },
+            success: function (response) {
+                console.log(response);
+                if (response.code === '200') {
+                    window.location.reload();
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+    });
+
+</script> {{/content}}

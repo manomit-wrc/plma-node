@@ -40,10 +40,10 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 function removePhoneMask(phone_no) {
-	var phone_no = phone_no.replace("-","");
-	phone_no = phone_no.replace(")","");
-	phone_no = phone_no.replace("(","");
-	phone_no = phone_no.replace(" ","");
+	var phone_no = phone_no.replace("-", "");
+	phone_no = phone_no.replace(")", "");
+	phone_no = phone_no.replace("(", "");
+	phone_no = phone_no.replace(" ", "");
 	return phone_no;
 }
 
@@ -74,7 +74,7 @@ router.get('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (req
 	var industry_types = await industry_type.findAll();
 	var country = await Country.findAll();
 	const state = await State.findAll({
-		where: { country_id : "233" }
+		where: { country_id: "233" }
 	});
 	res.render('master_contact/add', { layout: 'dashboard', csrfToken: req.csrfToken(), industry_types: industry_types, country: country, state: state, error_message });
 });
@@ -98,7 +98,7 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 			master_contact_code: req.body.master_contact_code,
 			master_designation: req.body.master_contact_desg,
 			company_name: req.body.master_contact_comp,
-			date_of_birth: formatDate ? formatDate[2]+"-"+formatDate[1]+"-"+formatDate[0] : null,
+			date_of_birth: formatDate ? formatDate[2] + "-" + formatDate[1] + "-" + formatDate[0] : null,
 			gender: req.body.gender,
 			address1: req.body.address1,
 			address2: req.body.address2,
@@ -136,11 +136,11 @@ router.get('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, async
 	const industry_types = await industry_type.findAll();
 	const country = await Country.findAll();
 	const state = await State.findAll({
-		where: { country_id : "233" }
+		where: { country_id: "233" }
 	});
 	const city = await City.findAll({
 		where: {
-			state_id : contact.state.toString()
+			state_id: contact.state.toString()
 		}
 	});
 	const cities = await City.findById(contact.city.toString());
@@ -149,8 +149,32 @@ router.get('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, async
 			city_name: cities.name
 		}
 	});
-	res.render('master_contact/edit', { layout: 'dashboard', csrfToken: req.csrfToken(), industry_types: industry_types, contact:contact, country: country, state: state, city: city, zipcode: zipcode, error_message });
+	res.render('master_contact/edit', { layout: 'dashboard', csrfToken: req.csrfToken(), industry_types: industry_types, contact: contact, country: country, state: state, city: city, zipcode: zipcode, error_message });
 });
+
+
+router.get('/master_contact/view/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+	var error_message = req.flash('error-contact-message')[0];
+	const contact = await Contact.findById(req.params['id']);
+	const industry_types = await industry_type.findAll();
+	const country = await Country.findAll();
+	const state = await State.findAll({
+		where: { country_id: "233" }
+	});
+	const city = await City.findAll({
+		where: {
+			state_id: contact.state.toString()
+		}
+	});
+	const cities = await City.findById(contact.city.toString());
+	const zipcode = await Zipcode.findAll({
+		where: {
+			city_name: cities.name
+		}
+	});
+	res.render('master_contact/view', { layout: 'dashboard', csrfToken: req.csrfToken(), industry_types: industry_types, contact: contact, country: country, state: state, city: city, zipcode: zipcode, error_message });
+});
+
 
 router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	const formatDate = req.body.dob ? req.body.dob.split("-") : '';
@@ -174,7 +198,7 @@ router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, asyn
 			master_contact_code: req.body.master_contact_code,
 			master_designation: req.body.master_contact_desg,
 			company_name: req.body.master_contact_comp,
-			date_of_birth: formatDate ? formatDate[2]+"-"+formatDate[1]+"-"+formatDate[0] : null,
+			date_of_birth: formatDate ? formatDate[2] + "-" + formatDate[1] + "-" + formatDate[0] : null,
 			gender: req.body.gender,
 			address1: req.body.address1,
 			address2: req.body.address2,
@@ -197,13 +221,14 @@ router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, asyn
 			firm_id: req.user.firm_id,
 			user_id: req.user.id,
 			remarks: req.body.remarks
-			}, {where: {id: req.params['id']}
-		});
+		}, {
+				where: { id: req.params['id'] }
+			});
 		req.flash('success-message', 'Master Contact Updated Successfully');
 		res.redirect('/master_contact')
 	} else {
 		req.flash('error-contact-message', 'Email already taken.');
-		res.redirect('/master_contact/edit/'+req.params['id']);
+		res.redirect('/master_contact/edit/' + req.params['id']);
 	}
 });
 
@@ -218,15 +243,33 @@ router.get('/master_contact/delete/:id', auth, firmAttrAuth, (req, res) => {
 	});
 });
 
+router.post('/master_contact/multiple-delete/', auth, firmAttrAuth, async (req, res) => {
+	var contact_ids = req.body.contact_id;
+	var n = req.body.contact_id.length;
+	for (i = 0; i < n; i++) {
+
+		Contact.destroy({
+			where: {
+				id: contact_ids[i]
+			}
+		})
+	}
+	res.json({
+		code: "200",
+		message: 'Success'
+	});
+
+});
+
 function convertToJSON(array) {
 	var first = array[0].join()
 	var headers = first.split(',');
 	var jsonData = [];
-	for ( var i = 1, length = array.length; i < length; i++ ) {
+	for (var i = 1, length = array.length; i < length; i++) {
 		var myRow = array[i].join();
 		var row = myRow.split(',');
 		var data = {};
-		for ( var x = 0; x < row.length; x++ ) {
+		for (var x = 0; x < row.length; x++) {
 			data[headers[x]] = row[x];
 		}
 		jsonData.push(data);
@@ -234,69 +277,79 @@ function convertToJSON(array) {
 	return jsonData;
 }
 
+String.prototype.capitaLize = function () {
+	return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
 router.post('/master_contact/import', auth, upload.single('file_name'), csrfProtection, async (req, res) => {
 	var contact_xl = xlsx.parse(fs.readFileSync('public/contact/' + fileName));
 	var importedData = JSON.stringify(convertToJSON(contact_xl[0].data));
 	var excelContact = JSON.parse(importedData);
 	for (var i = 0; i < excelContact.length; i++) {
-		const formatDate = excelContact[i].dob ? excelContact[i].dob.split("-") : '';
-		var excel_state = excelContact[i].state.capitaLize();
-		var excel_city = excelContact[i].city.capitaLize();
-		var excel_zip = excelContact[i].zipcode;
-		var fetchState = [];
-		var fetchCity = [];
-		var fetchZip = [];
-		if (excelContact[i].state !== null) {
-			var fetchState = await State.findAll({
-				where: { name: excel_state }
-			});
-		}
-		if (excelContact[i].city !== null) {
-			var fetchCity = await City.findAll({
-				where: { name: excel_city }
-			});
-		}
-		if (excelContact[i].zipcode !== null) {
-			var fetchZip = await Zipcode.findAll({
-				where: { zip: excel_zip }
-			});
-		}
-		const contact_excel_data = await Contact.findOne({
-			where: {
-				email: excelContact[i].email
+		try {
+			const formatDate = excelContact[i].dob ? excelContact[i].dob.split("-") : '';
+			var excel_state = excelContact[i].state.capitaLize();
+			var excel_city = excelContact[i].city.capitaLize();
+			var excel_zip = excelContact[i].zipcode;
+			var fetchState = [];
+			var fetchCity = [];
+			var fetchZip = [];
+			if (excelContact[i].state !== null) {
+				var fetchState = await State.findAll({
+					where: { name: excel_state }
+				});
 			}
-		});
-		if (contact_excel_data === null) {
-			await Contact.create({
-				first_name: excelContact[i].first_name,
-				last_name: excelContact[i].last_name,
-				email: excelContact[i].email,
-				phone_no: excelContact[i].phone,
-				fax: excelContact[i].fax,
-				mobile_no: excelContact[i].mobile,
-				master_contact_id: excelContact[i].master_contact_id,
-				master_contact_code: excelContact[i].master_contact_code,
-				master_designation: excelContact[i].master_designation,
-				company_name: excelContact[i].company_name,
-				date_of_birth: formatDate ? formatDate[2]+"-"+formatDate[1]+"-"+formatDate[0] : null,
-				gender: excelContact[i].gender,
-				address1: excelContact[i].address1,
-				address2: excelContact[i].address2,
-				address3: excelContact[i].address3,
-				country: 233,
-				state: fetchState[0].id,
-				city: fetchCity[0].id,
-				zip_code: fetchZip[0].id,
-				im: excelContact[i].im,
-				social_security_no: excelContact[i].social_security_no,
-				twitter: `http://${excelContact[i].twitter}`,
-				linkedin: `http://${excelContact[i].linkedin}`,
-				google: `http://${excelContact[i].google}`,
-				youtube: `http://${excelContact[i].youtube}`,
-				firm_id: req.user.firm_id,
-				user_id: req.user.id,
-				remarks: excelContact[i].remarks
+			if (excelContact[i].city !== null) {
+				var fetchCity = await City.findAll({
+					where: { name: excel_city }
+				});
+			}
+			if (excelContact[i].zipcode !== null) {
+				var fetchZip = await Zipcode.findAll({
+					where: { zip: excel_zip }
+				});
+			}
+			const contact_excel_data = await Contact.findOne({
+				where: {
+					email: excelContact[i].email
+				}
 			});
+			if (contact_excel_data === null) {
+				await Contact.create({
+					first_name: excelContact[i].first_name,
+					last_name: excelContact[i].last_name,
+					email: excelContact[i].email,
+					phone_no: excelContact[i].phone,
+					fax: excelContact[i].fax,
+					mobile_no: excelContact[i].mobile,
+					master_contact_id: excelContact[i].master_contact_id,
+					master_contact_code: excelContact[i].master_contact_code,
+					master_designation: excelContact[i].master_designation,
+					company_name: excelContact[i].company_name,
+					date_of_birth: formatDate ? formatDate[2] + "-" + formatDate[1] + "-" + formatDate[0] : null,
+					gender: excelContact[i].gender,
+					address1: excelContact[i].address1,
+					address2: excelContact[i].address2,
+					address3: excelContact[i].address3,
+					country: 233,
+					state: fetchState[0].id,
+					city: fetchCity[0].id,
+					zip_code: fetchZip[0].id,
+					im: excelContact[i].im,
+					social_security_no: excelContact[i].social_security_no,
+					twitter: `http://${excelContact[i].twitter}`,
+					linkedin: `http://${excelContact[i].linkedin}`,
+					google: `http://${excelContact[i].google}`,
+					youtube: `http://${excelContact[i].youtube}`,
+					firm_id: req.user.firm_id,
+					user_id: req.user.id,
+					remarks: excelContact[i].remarks
+				});
+			}
+		}
+		catch (error) {
+			req.flash('success-message', 'Master Contact Imported Successfully');
+			res.redirect('/master_contact');
 		}
 	}
 	req.flash('success-message', 'Master Contact Imported Successfully');
@@ -312,7 +365,6 @@ router.post('/master_contact/move-to-target', auth, async (req, res) => {
 				id: contact_ids[i]
 			}
 		});
-		//console.log(contact_data);
 		await Target.create({
 			first_name: contact_data.first_name,
 			last_name: contact_data.last_name,
@@ -343,19 +395,16 @@ router.post('/master_contact/move-to-target', auth, async (req, res) => {
 
 		await Contact.update({
 			contact_status: 0
-			}, { where: {
-				id: contact_ids[i]
-			}
-		});
+		}, {
+				where: {
+					id: contact_ids[i]
+				}
+			});
 	}
 	res.json({
 		code: "200",
-        message: 'Success'
+		message: 'Success'
 	});
 });
-
-String.prototype.capitaLize = function() {
-	return this.charAt(0).toUpperCase() + this.slice(1);
-}
 
 module.exports = router;

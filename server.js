@@ -7,6 +7,7 @@ const passport = require('passport');
 const path = require('path');
 const flash    = require('connect-flash');
 const lodash = require('lodash');
+const ActivityBudget = require('./models').activity_budget;
 
 
 
@@ -72,6 +73,16 @@ const hbs = exphbs.create({
           return block.inverse(this);
         }
     },
+    get_parent_head: function(value, array) {
+        var parent_category = lodash.filter(array, arr => arr.id === value);
+        if (parent_category[0].parent_id == "0") {
+            return "N/A";
+        }
+        else {
+            var parent_category_name = lodash.filter(array, arr => arr.id === parent_category[0].parent_id);
+            return parent_category_name[0].name;
+        }
+    },
      dateFormat: require('handlebars-dateformat')
 }
 });
@@ -113,6 +124,10 @@ app.use(target);
 app.use(activity);
 app.use(master_contact);
 app.use(referral);
+<<<<<<< HEAD
 app.use(attorney);
+=======
+app.use(budget_report);
+>>>>>>> 84deacecca006db04b7e1abcae2110ff1b7039ed
 /********** End **********/
 app.listen(port, () => console.log(`Server listening to port ${port}`));
