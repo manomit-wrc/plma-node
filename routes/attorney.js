@@ -218,6 +218,7 @@ router.get('/attorney/edit/:id', auth, csrfProtection, async (req, res) => {
 			model: Attorney_Details
 		}]
 	});
+	// console.log(edata);
 	var state_id = edata[0].state;
 	var city_id = edata[0].city;
 	var city = [];

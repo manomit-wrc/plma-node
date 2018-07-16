@@ -5,6 +5,8 @@
     <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 {{/content}}
 
+
+
 <div class="page-wrapper">
    <div class="content container-fluid">
       <div class="row">
@@ -102,8 +104,10 @@
                        </div>
                    </div>
                </div>
+               <!-- GENDER <h1>{{edata.0.gender}}</h1> -->
                <div class="col-md-6">
                    <div class="form-group form-focus select-focus">
+
                        <select class="form-control floating" id="gender" name="gender">
                            <option value="">Select Gender</option>
                            <option value="M" {{#if_eq edata.0.gender "M"}} selected {{/if_eq}}>Male</option>
