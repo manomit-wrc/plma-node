@@ -28,8 +28,8 @@
                            <div class="form-group form-focus">
                               <label class="control-label">Email</label>
                               <input type="text" class="form-control floating"
-                                     id="email" name="email" value="{{edata.0.email}}"/>
-                              <span id="uniqueEmail" style="color: red; font-weight:bolder"></span>
+                                     id="email" name="email" value="{{edata.0.email}}" readonly/>
+                              <span id="uniqueEmail" style="color: red; font-weight:bolder" ></span>
                            </div>
                         </div>
 
@@ -37,10 +37,10 @@
                           <label class="control-label">Group</label>
 
                            <div class="form-group form-focus">
-                        <select id="group" name="group" class="select form-control floating">
+                        <select disabled id="group" name="group" class="select form-control floating">
                           <option value="">Select Group</option>
                           {{#each group}}
-                          <option value="{{this.id}}" {{#if_eq this.id ../edata.0.attorney_details.0.group}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                          <option value="{{this.id}}" {{#if_eq this.id ../edata.0.attorney_details.0.group}} selected="selected" {{/if_eq}}>{{this.name}} </option>
 
 
 
@@ -52,7 +52,7 @@
                           <label class="control-label">Section</label>
 
                            <div class="form-group form-focus">
-                        <select id="section" name="section" class="select form-control floating">
+                        <select  disabled id="section" name="section" class="select form-control floating">
                         <option value="">Select Section</option>
                         {{#each section}}
                         <option value="{{this.id}}" {{#if_eq this.id ../edata.0.attorney_details.0.section}} selected="selected" {{/if_eq}}>{{this.name}}</option>
@@ -64,7 +64,7 @@
                           <label class="control-label">Designation</label>
 
                            <div class="form-group form-focus">
-                        <select id="designation" name="designation" class="select form-control floating">
+                        <select disabled id="designation" name="designation" class="select form-control floating">
                           <option value="">Select Designation</option>
                           {{#each designation}}
                           <option value="{{this.id}}" {{#if_eq this.id ../edata.0.attorney_details.0.designation}} selected="selected" {{/if_eq}}>{{this.title}}</option>
@@ -89,14 +89,14 @@
                   <div class="form-group form-focus">
                      <label class="control-label">First Name</label>
                      <input type="text" class="form-control floating"
-                            id="first_name" name="first_name" value="{{edata.0.first_name}}"/>
+                            id="first_name" name="first_name" value="{{edata.0.first_name}}" readonly/>
                     </div>
                </div>
                    <div class="col-md-6">
                       <div class="form-group form-focus">
                          <label class="control-label">Last Name</label>
                          <input type="text" class="form-control floating"
-                         id="last_name" name="last_name" value="{{edata.0.last_name}}"/>
+                         id="last_name" name="last_name" value="{{edata.0.last_name}}" readonly/>
                       </div>
                    </div>
                <div class="col-md-6">
@@ -104,7 +104,7 @@
                        <label class="control-label">Birth Date</label>
                        <div class="cal-icon">
                            <input class="form-control floating datetimepicker"
-                               type="text" id="dob" name="dob" value="{{dateFormat edata.dob "DD-MM-YYYY"}}">
+                               type="text" id="dob" name="dob" value="{{dateFormat edata.dob "DD-MM-YYYY"}}" readonly>
                        </div>
                    </div>
                </div>
@@ -112,7 +112,7 @@
                  <label class="control-label">Gender</label>
 
                    <div class="form-group form-focus select-focus">
-                       <select class="form-control floating" id="gender" name="gender">
+                       <select disabled class="form-control floating" id="gender" name="gender">
                            <option value="">Select Gender</option>
                            <option value="M" {{#if_eq edata.0.gender "M"}} selected {{/if_eq}}>Male</option>
                            <option value="F" {{#if_eq edata.0.gender "F"}} selected {{/if_eq}}>Female</option>
@@ -124,21 +124,21 @@
                   <div class="form-group form-focus">
                      <label class="control-label">Attorney ID</label>
                      <input type="text" class="form-control floating"
-                     id="attorney_id" name="attorney_id" value="{{edata.0.attorney_details.0.attorney_id}}" onkeypress="return onlyNumbers();"/>
+                     id="attorney_id" name="attorney_id" value="{{edata.0.attorney_details.0.attorney_id}}" readonly onkeypress="return onlyNumbers();"/>
                   </div>
                </div>
                <div class="col-md-6">
                   <div class="form-group form-focus">
                      <label class="control-label">Attorney Code</label>
                      <input type="text" class="form-control floating"
-                     id="attorney_code" name="attorney_code" value="{{edata.0.attorney_details.0.attorney_code}}"/>
+                     id="attorney_code" name="attorney_code" value="{{edata.0.attorney_details.0.attorney_code}}" readonly/>
                   </div>
                </div>
                <div class="col-md-6">
                  <label class="control-label">Attorney Type</label>
 
                    <div class="form-group form-focus select-focus">
-                       <select class="form-control floating" id="attorney_type" name="attorney_type">
+                       <select disabled class="form-control floating" id="attorney_type" name="attorney_type">
                            <option value="">Select Attorney Type</option>
                           <option value="AT-INTERIM" {{#if_eq edata.0.attorney_details.0.attorney_type "AT-INTERIM"}} selected="selected" {{/if_eq}}>INTERIM ATTORNEY</option>
                           <option value="AT-APPROVED" {{#if_eq edata.0.attorney_details.0.attorney_type "AT-APPROVED"}} selected="selected" {{/if_eq}}>APPROVED ATTORNEY</option>
@@ -152,7 +152,7 @@
                   <div class="form-group form-focus">
                      <label class="control-label">Education</label>
                      <input type="text" class="form-control floating"
-                     id="education" name="education" value="{{edata.0.attorney_details.0.education}}" />
+                     id="education" name="education" value="{{edata.0.attorney_details.0.education}}" readonly/>
                   </div>
                </div>
              </div>
@@ -168,14 +168,14 @@
     <div class="col-md-6">
       <div class="form-group form-focus">
         <label class="control-label">Bar Registration</label>
-        <input type="text" class="form-control floating" id="bar_registration" name="bar_registration" value="{{edata.0.attorney_details.0.bar_registration}}"/>
+        <input type="text" class="form-control floating" id="bar_registration" name="bar_registration" value="{{edata.0.attorney_details.0.bar_registration}}" readonly/>
       </div>
     </div>
     <div class="col-md-6">
       <label class="control-label">Job Type</label>
 
         <div class="form-group form-focus select-focus">
-            <select class="form-control floating" id="job_type" name="job_type">
+            <select disabled class="form-control floating" id="job_type" name="job_type">
                 <option value="">Select Job Type</option>
                 <option value="FULLTIME" {{#if_eq edata.0.attorney_details.0.job_type "FULLTIME"}} selected="selected" {{/if_eq}}>FULLTIME</option>
                 <option value="STERMCON" {{#if_eq edata.0.attorney_details.0.job_type "STERMCON"}} selected="selected" {{/if_eq}}>SHORT TERM CONTRACT</option>
@@ -189,7 +189,7 @@
             <label class="control-label">Bar Practice Date</label>
             <div class="cal-icon">
                 <input class="form-control floating datetimepicker"
-                    type="text" id="bar_practice_date" name="bar_practice_date" value="{{dateFormat edata.bar_practice_date "DD-MM-YYYY"}}">
+                    type="text" id="bar_practice_date" name="bar_practice_date" value="{{dateFormat edata.bar_practice_date "DD-MM-YYYY"}}" readonly>
             </div>
         </div>
     </div>
@@ -198,7 +198,7 @@
             <label class="control-label">Firm Join Date</label>
             <div class="cal-icon">
                 <input class="form-control floating datetimepicker"
-                    type="text" id="firm_join_date" name="firm_join_date" value="{{dateFormat edata.firm_join_date "DD-MM-YYYY"}}">
+                    type="text" id="firm_join_date" name="firm_join_date" value="{{dateFormat edata.firm_join_date "DD-MM-YYYY"}}" readonly>
             </div>
         </div>
     </div>
@@ -207,7 +207,7 @@
       <label class="control-label">Jurisdiction</label>
 
        <div class="form-group form-focus">
-    <select id="jurisdiction" name="jurisdiction" class="select form-control floating">
+    <select disabled id="jurisdiction" name="jurisdiction" class="select form-control floating">
     <option value="">Select Jurisdiction</option>
     {{#each jurisdiction}}
     <option value="{{this.id}}" {{#if_eq this.id ../edata.0.attorney_details.0.jurisdiction}} selected="selected" {{/if_eq}}>{{this.name}}</option>
@@ -219,7 +219,7 @@
    <label class="control-label">Industry Type</label>
 
     <div class="form-group form-focus">
- <select id="industry_type" name="industry_type" class="select form-control floating">
+ <select disabled id="industry_type" name="industry_type" class="select form-control floating">
  <option value="">Select Industry Type</option>
  {{#each industry_type}}
  <option value="{{this.id}}" {{#if_eq this.id ../edata.0.attorney_details.0.industry_type}} selected="selected" {{/if_eq}}>{{this.industry_name}}</option>
@@ -232,14 +232,14 @@
          <div class="form-group form-focus">
            <label class="control-label">Hourly Cost</label>
             <input type="text" class="form-control floating"
-            id="hourly_cost" name="hourly_cost" value="{{edata.0.attorney_details.0.hourly_cost}}" onkeypress="return onlyNumbers();"/>
+            id="hourly_cost" name="hourly_cost" value="{{edata.0.attorney_details.0.hourly_cost}}" readonly onkeypress="return onlyNumbers();"/>
          </div>
       </div>
       <div class="col-md-6">
                <div class="form-group form-focus">
                  <label class="control-label">Benefit Factor %</label>
                   <input type="text" class="form-control floating"
-                  id="benefit_factor" name="benefit_factor" value="{{edata.0.attorney_details.0.benefit_factor}}" onkeypress="return onlyNumbers();"/>
+                  id="benefit_factor" name="benefit_factor" value="{{edata.0.attorney_details.0.benefit_factor}}" readonly onkeypress="return onlyNumbers();"/>
                </div>
             </div>
 
@@ -247,7 +247,7 @@
                      <div class="form-group form-focus">
                        <label class="control-label">Overhead Amount</label>
                         <input type="text" class="form-control floating"
-                        id="overhead_amount" name="overhead_amount" value="{{edata.0.attorney_details.0.overhead_amount}}" onkeypress="return onlyNumbers();"/>
+                        id="overhead_amount" name="overhead_amount" value="{{edata.0.attorney_details.0.overhead_amount}}" readonly onkeypress="return onlyNumbers();"/>
                      </div>
                   </div>
 
@@ -257,7 +257,7 @@
                            <div class="form-group form-focus">
                              <label class="control-label">Billing Opp Cost</label>
                               <input type="text" class="form-control floating"
-                              id="billing_opp_cost" name="billing_opp_cost" value="{{edata.0.attorney_details.0.billing_opp_cost}}" onkeypress="return onlyNumbers();"/>
+                              id="billing_opp_cost" name="billing_opp_cost" value="{{edata.0.attorney_details.0.billing_opp_cost}}" readonly onkeypress="return onlyNumbers();"/>
                            </div>
                         </div>
 
@@ -277,19 +277,19 @@
     <div class="col-md-12">
       <div class="form-group form-focus">
         <label class="control-label">Address Line 1</label>
-        <input type="text" class="form-control floating" id="address" name="address" value="{{edata.0.address}}"/>
+        <input type="text" class="form-control floating" id="address" name="address" value="{{edata.0.address}}" readonly/>
       </div>
     </div>
     <div class="col-md-12">
       <div class="form-group form-focus">
         <label class="control-label">Address Line 2</label>
-        <input type="text" class="form-control floating" id="address2" name="address2"  value="{{edata.0.attorney_details.0.address2}}"/>
+        <input type="text" class="form-control floating" id="address2" name="address2"  value="{{edata.0.attorney_details.0.address2}}" readonly/>
       </div>
     </div>
     <div class="col-md-12">
       <div class="form-group form-focus">
         <label class="control-label">Address Line 3</label>
-        <input type="text" class="form-control floating" id="address3" name="address3"  value="{{edata.0.attorney_details.0.address3}}"/>
+        <input type="text" class="form-control floating" id="address3" name="address3"  value="{{edata.0.attorney_details.0.address3}}" readonly/>
       </div>
     </div>
 
@@ -297,7 +297,7 @@
       <label class="control-label">Country</label>
 
        <div class="form-group form-focus">
-          <select class="select form-control floating" id="country" name="country">
+          <select disabled class="select form-control floating" id="country" name="country">
              <option value="">Select Country</option>
              {{#each country}}
              <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
@@ -309,7 +309,7 @@
       <label class="control-label">State</label>
 
        <div class="form-group form-focus">
-          <select class="select form-control floating" id="state" name="state">
+          <select disabled class="select form-control floating" id="state" name="state">
              <option value="">select State</option>
              {{#each state}}
              <option value="{{this.id}}" {{#if_eq this.id ../edata.0.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
@@ -321,7 +321,7 @@
       <label class="control-label">City</label>
 
        <div class="form-group form-focus">
-          <select class="select form-control floating" id="city" name="city">
+          <select disabled class="select form-control floating" id="city" name="city">
                <option value="">Select City</option>
                {{#each city}}
                  <option value="{{this.id}}" {{#if_eq this.id ../edata.0.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
@@ -333,7 +333,7 @@
       <label class="control-label">Zipcode</label>
 
        <div class="form-group form-focus">
-             <select class="select form-control floating" id="zipcode" name="zipcode">
+             <select disabled class="select form-control floating" id="zipcode" name="zipcode">
              <option value="">Select Zipcode</option>
              {{#each zipcode}}
                  <option value="{{this.id}}" {{#if_eq this.id ../edata.0.zipcode}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
@@ -346,7 +346,7 @@
                   <div class="form-group form-focus">
                      <label class="control-label">Mobile No</label>
                      <input type="text" class="form-control floating number_validator"
-                     id="mobile_no" name="mobile_no" value="{{edata.0.mobile_no}}"/>
+                     id="mobile_no" name="mobile_no" value="{{edata.0.mobile_no}}" readonly/>
                   </div>
                </div>
 
@@ -355,7 +355,7 @@
          <div class="form-group form-focus">
             <label class="control-label">Phone No</label>
             <input type="text" class="form-control floating number_validator"
-            id="phone_no" name="phone_no" value="{{edata.0.attorney_details.0.phone_no}}"/>
+            id="phone_no" name="phone_no" value="{{edata.0.attorney_details.0.phone_no}}" readonly/>
          </div>
       </div>
 
@@ -363,21 +363,21 @@
                     <div class="form-group form-focus">
                        <label class="control-label">Fax</label>
                        <input type="text" class="form-control floating"
-                       id="fax" name="fax" value="{{edata.0.attorney_details.0.social_url}}"/>
+                       id="fax" name="fax" value="{{edata.0.attorney_details.0.social_url}}" readonly/>
                     </div>
                  </div>
 <div class="col-md-6">
 <div class="form-group form-focus">
       <label class="control-label">Website URL</label>
       <input type="text" class="form-control floating url_selector"
-      id="website_url" name="website_url" value="{{edata.0.attorney_details.0.website_url}}"/>
+      id="website_url" name="website_url" value="{{edata.0.attorney_details.0.website_url}}" readonly/>
 </div>
 </div>
 <div class="col-md-6">
           <div class="form-group form-focus">
              <label class="control-label">Social URL</label>
              <input type="text" class="form-control floating url_selector"
-             id="social_url" name="social_url" value="{{edata.0.attorney_details.0.social_url}}"/>
+             id="social_url" name="social_url" value="{{edata.0.attorney_details.0.social_url}}" readonly/>
           </div>
        </div>
 
@@ -391,7 +391,7 @@
           <div class="col-md-12">
           <div class="form-group form-focus">
          <label class="control-label">Remarks </label>
-    <textarea class="form-control floating" id="remarks" name="remarks" rows="5">{{edata.0.attorney_details.0.remarks}}</textarea>
+    <textarea disabled class="form-control floating" id="remarks" name="remarks" rows="5">{{edata.0.attorney_details.0.remarks}}</textarea>
 
 
 
@@ -401,23 +401,7 @@
 </div>
 
 
-    <!-- <div class="card-box">
-      <h3 class="card-title">Profile Picture</h3>
-      <div class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-                <label for="post_featured_image">Upload Image</label>
-                <input name="fileName" class="form-control" id="fileName" type="file">
-            </div>
 
-        </div>
-      </div>
-      </div> -->
-
-
-         <div class="text-center m-t-20">
-           <button class="btn btn-primary" type="submit"  id="btnAdd">Add Attorney</button>
-         </div>
       </form>
    </div>
 </div>
@@ -430,115 +414,6 @@
     <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
     <script type="text/javascript" src="/assets/js/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 
-    <script type="text/javascript">
-    // add designation ajax and form validation starts
-    $(document).ready(function(e) {
-
-        $("#addattorneyform").validate({
-            rules: {
-
-                group: {
-                    required: true
-                },
-                section: {
-                    required: true
-                },
-                designation: {
-                    required: true
-                },
-                first_name: {
-                    required: true
-                },
-                last_name: {
-                    required: true
-                },
-                attorney_id: {
-                    required: true
-                },
-                attorney_code: {
-                    required: true
-                },
-                phone_no: {
-                    required: true
-                },
-
-                address: {
-                    required: true
-                },
-                country: {
-                    required: true
-                },
-                state: {
-                    required: true
-                },
-                city: {
-                    required: true
-                }
-
-            },
-            messages: {
-                email: {
-                    required: "email can't be blank"
-                },
-                password: {
-                    required: "password  can't be blank"
-                },
-                group: {
-                    required: "group  can't be blank"
-                },
-                section: {
-                    required: "section  can't be blank"
-                },
-                designation: {
-                    required: "designation can't be blank"
-                },
-                first_name: {
-                    required: "first_name can't be blank"
-                },
-                last_name: {
-                    required: "last_name can't be blank"
-                },
-                attorney_id: {
-                    required: "attorney_id  can't be blank"
-                },
-                attorney_code: {
-                  required: "attorney_code  can't be blank"
-                },
-                phone_no: {
-                    required: "phone_no can't be blank"
-                },
-
-                address: {
-                    required: "address  can't be blank"
-                },
-                country: {
-                    required: "country  can't be blank"
-                },
-                state: {
-                    required: "state  can't be blank"
-                },
-                city: {
-                    required: "city can't be blank"
-                }
-            }
-        });
-      });
-    </script>
-    <script language="JavaScript">
-    function onlyNumbers(evt)
-    {
-    var e = event || evt; // for trans-browser compatibility
-    var charCode = e.which || e.keyCode;
-
-    if (charCode > 31 && (charCode < 48 || charCode > 57))
-        return false;
-
-    return true;
-
-    }
-    </script>
 
 {{/content}}

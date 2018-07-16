@@ -4,20 +4,18 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
 <div class="page-wrapper">
   <div class="content container-fluid">
-    <div class="pg-header">
-      <div class="row">
-        {{#if success_message}}
-        <div class="alert alert-danger">
-          <strong>Error! </strong>{{success_message}}
-        </div>
-        {{/if}}
-        <div class="col-xs-4">
-          <h4 class="page-title">ATTORNEY</h4>
-        </div>
-        <div class="col-xs-8 text-right">
-          <a href="/attorney/addAttorney" class="btn btn-primary rounded">
-            <i class="fa fa-plus"></i> Add Attorney</a>
-        </div>
+    <div class="row">
+      {{#if success_message}}
+      <div class="alert alert-danger">
+        <strong>Error! </strong>{{success_message}}
+      </div>
+      {{/if}}
+      <div class="col-xs-4">
+        <h4 class="page-title">ATTORNEY</h4>
+      </div>
+      <div class="col-xs-8 text-right m-b-30">
+        <a href="/attorneys/addAttorney" class="btn btn-primary rounded">
+          <i class="fa fa-plus"></i> Add Attorney</a>
       </div>
     </div>
     <form method="GET">
@@ -76,14 +74,16 @@
                     </a>
                     <ul class="dropdown-menu pull-right">
                       <li>
-                        <a href="/attorney/edit/{{this.id}}">
+                        <a href="/attorneys/edit/{{this.id}}">
                           <i class="fa fa-pencil m-r-5"></i> Edit</a>
                       </li>
 
                       <li>
-                        <a href="/attorney/deletedata/{{this.id}}">
-                          <i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                        <a href="/attorneys/viewdata/{{this.id}}">
+                          <i class="fa fa-eye"></i> View</a>
                       </li>
+
+
                     </ul>
                   </div>
                 </td>

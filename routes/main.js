@@ -390,7 +390,12 @@ router.get('/client', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	if (req.query.searchEmail) {
 		whereCondition.email = req.query.searchEmail;
 	}
-	whereCondition.firm_id = req.user.firm_id.toString();
+	if (req.user.firm_id) {
+		whereCondition.firm_id = req.user.firm_id.toString();
+	} else {
+		whereCondition.firm_id = req.user.firm_id;
+	}
+	
 	if (req.user.role_id != 2) {
 		whereCondition.user_id = req.user.id;
 	}
@@ -682,7 +687,7 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 });
 
 router.get('/client/delete/:id', auth, firmAttrAuth, (req, res) => {
-	console.log(req.params.id);
+	// console.log(req.params.id);
 	client.destroy({
 		where: {
 			id: req.params.id
@@ -706,7 +711,7 @@ router.post('/client/findCityByState', auth, firmAttrAuth, csrfProtection, (req,
 });
 router.post('/client/findPinByCity', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	city.findById(req.body.city_id).then(row => {
-		console.log(row.name);
+		// console.log(row.name);
 		Zipcode.findAll({
 			where: {
 				city_name: row.name
