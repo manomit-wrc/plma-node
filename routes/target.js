@@ -207,7 +207,10 @@ router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 			city_name: cities.name
 		}
 	});
-	res.render('target/targetupdate', { layout: 'dashboard', csrfToken: req.csrfToken(), designation: designation, industry: industrys, client: target, country: country, state: state, city: city, zipcode: zipcode, error_message });
+	const attorney = await user.findAll({
+		where: { role_id: 3, firm_id: req.user.firm_id }
+	});
+	res.render('target/targetupdate', { attorney:attorney,layout: 'dashboard', csrfToken: req.csrfToken(), designation: designation, industry: industrys, client: target, country: country, state: state, city: city, zipcode: zipcode, error_message });
 });
 
 router.get('/target/view/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
@@ -246,6 +249,9 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, 
 			}
 		}
 	});
+
+	console.log('req.body',req.body);
+
 	if (target_edit_data === null) {
 		await Target.update({
 			organization_name: req.body.org_name,
