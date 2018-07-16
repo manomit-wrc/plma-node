@@ -16,10 +16,34 @@
 		</div>
 		<form id="targetform" method="POST" action="/target/add">
 			<input type="hidden" name="_csrf" value="{{csrfToken}}">
-			<label>
+
+			{{!-- <label>
 				<input type="radio" id="individual_target" name="target_type" value="I" checked /> Individual</label>
 			<label>
-				<input type="radio" id="organization_target" name="target_type" value="O" /> Organization</label>
+				<input type="radio" id="organization_target" name="target_type" value="O" /> Organization</label> --}}
+
+
+			<div class="form-inline m-b-15">
+				<div class="form-group m-r-5">
+					<label class="input-group">
+						<span class="input-group-addon">
+							<input type="radio" id="individual_target" name="target_type" value="I" checked/>
+						</span>
+						<div class="form-control form-control-static">Individual</div>
+						<span class="glyphicon form-control-feedback "></span>
+					</label>
+				</div>
+				<div class="form-group ">
+					<label class="input-group">
+						<span class="input-group-addon">
+							<input type="radio" id="organization_target" name="target_type" value="O" />
+						</span>
+						<div class="form-control form-control-static">Organization</div>
+						<span class="glyphicon form-control-feedback "></span>
+					</label>
+				</div>
+			</div>
+
 			<div class="card-box">
 				<h3 class="card-title">Basic Informations</h3>
 				<div class="row">
@@ -360,6 +384,9 @@
 				},
 				zipcode: {
 					required: true
+				},
+				attorney: {
+					required: true
 				}
 			},
 			messages: {
@@ -367,7 +394,7 @@
 					required: "First Name can't be blank"
 				},
 				last_name: {
-					required: "Last name  title can't be blank"
+					required: "Last name can't be blank"
 				},
 				org_name: {
 					required: "Organisation Name can't be blank"
@@ -395,7 +422,7 @@
 					required: "Fax  can't be blank"
 				},
 				address1: {
-					required: "Must provide address"
+					required: "Must provide address1"
 				},
 				country: {
 					required: "Choose your country"
@@ -408,6 +435,9 @@
 				},
 				zipcode: {
 					required: "Choose your zipcode"
+				},
+				attorney: {
+					required: "Attorney can't be blank"
 				}
 			}
 		});
