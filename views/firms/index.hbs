@@ -1,95 +1,100 @@
 {{#content "style" mode="prepend"}}
-    <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
-{{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
 
 <div class="page-wrapper">
     <div class="content container-fluid">
-        <div class="row">
-            <div class="col-xs-4">
-                <h4 class="page-title">Firms</h4>
-            </div>
-            <div class="col-xs-8 text-right m-b-30">
-                <a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_user"><i class="fa fa-plus"></i> Add Firm</a>
+        <div class="pg-header">
+            <div class="row">
+                <div class="col-xs-4">
+                    <h4 class="page-title">Firms</h4>
+                </div>
+                <div class="col-xs-8 text-right">
+                    <a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_user">
+                        <i class="fa fa-plus"></i> Add Firm</a>
+                </div>
             </div>
         </div>
         <div class="row filter-row">
             <form name="frmFirmSearch" id="frmFirmSearch" method="GET">
-            <div class="col-sm-3 col-xs-6">
-                <div class="form-group form-focus">
-                <label class="control-label">Email</label>
-                <input type="text" class="form-control floating" name="search_email" id="search_email" value="{{search_email}}" />
+                <div class="col-sm-3 col-xs-6">
+                    <div class="form-group form-focus">
+                        <label class="control-label">Email</label>
+                        <input type="text" class="form-control floating" name="search_email" id="search_email" value="{{search_email}}" />
+                    </div>
                 </div>
-            </div>
-            <div class="col-sm-3 col-xs-6">
-                <div class="form-group form-focus select-focus">
-                <label class="control-label">Firms</label>
-                <select class="select floating" name="search_firm" id="search_firm">
-                    <option value="">Select Company</option>
-                    {{#each firms}}
-                    <option value="{{this.id}}" {{#if_eq ../search_firm this.id }} selected="selected" {{/if_eq}}>{{this.title}}</option>
-                    {{/each}}
-                </select>
+                <div class="col-sm-3 col-xs-6">
+                    <div class="form-group form-focus select-focus">
+                        <label class="control-label">Firms</label>
+                        <select class="select floating" name="search_firm" id="search_firm">
+                            <option value="">Select Company</option>
+                            {{#each firms}}
+                            <option value="{{this.id}}" {{#if_eq ../search_firm this.id }} selected="selected" {{/if_eq}}>{{this.title}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="col-sm-3 col-xs-6">  
-                <button type="submit" class="btn btn-success btn-block"> Search </button>  
-            </div>
-            <div class="col-sm-3 col-xs-6">  
-                <a href="javascript:void(0)" id="clearSearch" class="btn btn-success btn-block"> Clear </a>  
-            </div>
+
+                <div class="col-sm-3 col-xs-6">
+                    <button type="submit" class="btn btn-success btn-block"> Search </button>
+                </div>
+                <div class="col-sm-3 col-xs-6">
+                    <a href="javascript:void(0)" id="clearSearch" class="btn btn-success btn-block"> Clear </a>
+                </div>
             </form>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive">
-                <table class="table table-striped custom-table datatable">
-                    <thead>
-                        <tr>
-                            <th style="width:30%;">Name</th>
-                            <th>Email</th>
-                            <th>Firm</th>
-                            <th>Created Date</th>
-                            
-                            <th class="text-right">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each users}}
-                            <tr data-first-name="{{this.first_name}}"
-                                data-last-name="{{this.last_name}}"
-                                data-email="{{this.email}}"
-                                data-firm-title="{{this.firm.title}}"
-                                data-firm-address="{{this.firm.address}}"
-                                data-mobile-no="{{this.mobile_no}}"
-                                data-gender="{{this.gender}}"
-                                data-firm-id="{{this.firm.id}}"
-                                data-user-id="{{this.id}}"
-                            >
+                    <table class="table table-striped custom-table datatable">
+                        <thead>
+                            <tr>
+                                <th style="width:30%;">Name</th>
+                                <th>Email</th>
+                                <th>Firm</th>
+                                <th>Created Date</th>
+
+                                <th class="text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each users}}
+                            <tr data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}" data-email="{{this.email}}" data-firm-title="{{this.firm.title}}"
+                                data-firm-address="{{this.firm.address}}" data-mobile-no="{{this.mobile_no}}" data-gender="{{this.gender}}"
+                                data-firm-id="{{this.firm.id}}" data-user-id="{{this.id}}">
                                 <td>
-                                <a href="javascript:void(0)" class="avatar">{{first_letter this.first_name}}</a>
-                                <h2><a href="javascript:void(0)">{{this.first_name}}&nbsp;{{this.last_name}}</a></h2>
+                                    <a href="javascript:void(0)" class="avatar">{{first_letter this.first_name}}</a>
+                                    <h2>
+                                        <a href="javascript:void(0)">{{this.first_name}}&nbsp;{{this.last_name}}</a>
+                                    </h2>
                                 </td>
                                 <td>{{this.email}}</td>
                                 <td>{{this.firm.title}}</td>
                                 <td>{{dateFormat this.createdAt "DD-MM-YYYY"}}</td>
-                                
+
                                 <td class="text-right">
-                                <div class="dropdown">
-                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                    <ul class="dropdown-menu pull-right">
-                                        <li><a href="javascript:void(0)" data-toggle="modal" class="edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                        <li><a href="javascript:void(0)" data-toggle="modal" class="delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                    </ul>
-                                </div>
+                                    <div class="dropdown">
+                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </a>
+                                        <ul class="dropdown-menu pull-right">
+                                            <li>
+                                                <a href="javascript:void(0)" data-toggle="modal" class="edit">
+                                                    <i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)" data-toggle="modal" class="delete">
+                                                    <i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </td>
                             </tr>
-                        {{/each}}
-                        
-                    </tbody>
-                </table>
+                            {{/each}}
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -104,31 +109,39 @@
                 <h4 class="modal-title">Add Firm</h4>
             </div>
             <div class="modal-body">
-                
+
                 <form class="m-b-30" name="frmAddFirm" id="frmAddFirm" method="POST">
                     <input type="hidden" name="_csrf" value="{{csrfToken}}">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="control-label">Firm Name<span class="text-danger">*</span></label>
+                                <label class="control-label">Firm Name
+                                    <span class="text-danger">*</span>
+                                </label>
                                 <input class="form-control" type="text" name="title" id="title">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="control-label">Address<span class="text-danger">*</span></label>
+                                <label class="control-label">Address
+                                    <span class="text-danger">*</span>
+                                </label>
                                 <textarea class="form-control" id="address" name="address" rows="5"></textarea>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="control-label">Email<span class="text-danger">*</span></label>
+                                <label class="control-label">Email
+                                    <span class="text-danger">*</span>
+                                </label>
                                 <input class="form-control" type="email" id="email" name="email">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="control-label">Password <span class="text-danger">*</span></label>
+                                <label class="control-label">Password
+                                    <span class="text-danger">*</span>
+                                </label>
                                 <input class="form-control" type="password" id="password" name="password">
                             </div>
                         </div>
@@ -157,15 +170,15 @@
                             <div class="form-group">
                                 <label class="control-label">Gender</label>
                                 <select class="select" id="gender" name="gender">
-                                <option value="">Select Gender</option>
-                                <option value="M">Male</option>
-                                <option value="F">Female</option>
+                                    <option value="">Select Gender</option>
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
                                 </select>
                             </div>
                         </div>
-                        
+
                     </div>
-                    
+
                     <div class="m-t-20 text-center">
                         <button class="btn btn-primary" type="button" id="btnAdd">Create Firm</button>
                     </div>
@@ -182,36 +195,44 @@
                 <h4 class="modal-title">Edit Firm</h4>
             </div>
             <div class="modal-body">
-                
+
                 <form class="m-b-30" name="frmEditFirm" id="frmEditFirm" method="POST">
                     <input type="hidden" name="_csrf" value="{{csrfToken}}">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="control-label">Firm Name<span class="text-danger">*</span></label>
+                                <label class="control-label">Firm Name
+                                    <span class="text-danger">*</span>
+                                </label>
                                 <input class="form-control" type="text" name="title_edit" id="title_edit">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="control-label">Address<span class="text-danger">*</span></label>
+                                <label class="control-label">Address
+                                    <span class="text-danger">*</span>
+                                </label>
                                 <textarea class="form-control" id="address_edit" name="address_edit" rows="5"></textarea>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="control-label">Email<span class="text-danger">*</span></label>
+                                <label class="control-label">Email
+                                    <span class="text-danger">*</span>
+                                </label>
                                 <input class="form-control" type="email" id="email_edit" name="email_edit">
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="control-label">Password<span class="text-danger">*</span></label>
+                                <label class="control-label">Password
+                                    <span class="text-danger">*</span>
+                                </label>
                                 <input class="form-control" type="password" id="password_edit" name="password_edit">
                             </div>
                         </div>
-                        
+
                         <div class="modal-header">
                             <h4 class="modal-title">Contact person name</h4>
                         </div>
@@ -237,15 +258,15 @@
                             <div class="form-group">
                                 <label class="control-label">Gender</label>
                                 <select class="select" id="gender_edit" name="gender_edit">
-                                <option value="">Select Gender</option>
-                                <option value="M">Male</option>
-                                <option value="F">Female</option>
+                                    <option value="">Select Gender</option>
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
                                 </select>
                             </div>
                         </div>
-                        
+
                     </div>
-                    
+
                     <div class="m-t-20 text-center">
                         <button class="btn btn-primary" type="button" id="btnEdit">Update Firm</button>
                     </div>
@@ -262,10 +283,11 @@
             </div>
             <form id="frmFirmDelete">
                 <div class="modal-body card-box">
-                <p>Are you sure want to delete this?</p>
-                <div class="m-t-20"> <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
-                    <button type="button" id="btnDelete" class="btn btn-danger">Delete</button>
-                </div>
+                    <p>Are you sure want to delete this?</p>
+                    <div class="m-t-20">
+                        <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                        <button type="button" id="btnDelete" class="btn btn-danger">Delete</button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -273,247 +295,246 @@
 </div>
 
 {{#content "script" mode="append"}}
-    <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
-    <script type="text/javascript" src="/assets/js/select2.min.js"></script>
-    <script type="text/javascript" src="/assets/js/moment.min.js"></script>
-    <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function(e) {
+<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="/assets/js/select2.min.js"></script>
+<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function (e) {
 
-            $("#btnAdd").click(function() {
-                $("#frmAddFirm").submit();
-            });          
+        $("#btnAdd").click(function () {
+            $("#frmAddFirm").submit();
+        });
 
-            $("#btnEdit").click(function() {
-                $("#frmEditFirm").submit();
-            });
+        $("#btnEdit").click(function () {
+            $("#frmEditFirm").submit();
+        });
 
-            $("#frmAddFirm").validate({
-                rules: {
-                    title: {
-                        required: true
-                    },
-                    address: {
-                        required: true
-                    },
-                    email: {
-                        required: true,
-                        email: true
-                    },
-                    password: {
-                        required: true
-                    }
+        $("#frmAddFirm").validate({
+            rules: {
+                title: {
+                    required: true
                 },
-                messages: {
-                    title: {
-                        required: "Firm name can't be blank"
-                    },
-                    address: {
-                        required: "Address can't be blank"
-                    },
-                    email: {
-                        required: "Email can't be blank",
-                        email: "Must be valid email"
-                    },
-                    password: {
-                        required: "Password can't be blank"
-                    }
+                address: {
+                    required: true
                 },
-                submitHandler:function(form) {
-                    var title = $("#title").val(),
-                        address = $("#address").val(),
-                        email = $("#email").val(),
-                        password = $("#password").val(),
-                        first_name = $("#first_name").val(),
-                        last_name = $("#last_name").val(),
-                        mobile_no = $("#mobile_no").val(),
-                        gender = $("#gender").val();
-                    $.ajax({
-                        type: "POST",
-                        url: "/firms/add",
-                        data: {
-                            title: title,
-                            address: address,
-                            email: email,
-                            password: password,
-                            first_name: first_name,
-                            last_name: last_name,
-                            mobile_no: mobile_no,
-                            gender: gender
-                        },
-                        beforeSend: function(xhr) {
-                            xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
-                            
-                            $("#btnAdd").prop('disabled', true);
-                            $("#btnAdd").html("Loading...");
-                        },
-                        success:function(response) {
-                            $("#add_user").animate({ scrollTop: 0 }, 1000);
-                            
-                            if(response.success == true) {
-                                $(`<div class="alert alert-success"><strong>Success! </strong>${response.message}</div>`).insertBefore("#frmAddFirm");
-                                setTimeout(function() {
-                                    window.location.href="/firms";
-                                }, 2000);
-                            }
-                            else {
-                                
-                                $(`<div class="alert alert-danger"><strong>Error! </strong>${response.message}</div>`).insertBefore("#frmAddFirm");
-                                $(".alert").fadeTo(2000, 500).slideUp(500, function(){
-                                        $(".alert").remove();
-                                });
-                            }
-                            $("#btnAdd").prop('disabled', false);
-                            $("#btnAdd").html("Create Firm");
-                        }
-                    });
-                    
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true
                 }
-            });
-
-            $("#frmEditFirm").validate({
-                rules: {
-                    title_edit: {
-                        required: true
-                    },
-                    address_edit: {
-                        required: true
-                    },
-                    email_edit: {
-                        required: true,
-                        email: true
-                    },
-                    password_edit: {
-                        required: true
-                    }
+            },
+            messages: {
+                title: {
+                    required: "Firm name can't be blank"
                 },
-                messages: {
-                    title_edit: {
-                        required: "Firm name can't be blank"
-                    },
-                    address_edit: {
-                        required: "Address can't be blank"
-                    },
-                    email_edit: {
-                        required: "Email can't be blank",
-                        email: "Must be valid email"
-                    },
-                    password_edit: {
-                        required: "Password can't be blank"
-                    }
+                address: {
+                    required: "Address can't be blank"
                 },
-                submitHandler:function(form) {
-                    var title = $("#title_edit").val(),
-                        address = $("#address_edit").val(),
-                        email = $("#email_edit").val(),
-                        password = $("#password_edit").val(),
-                        first_name = $("#first_name_edit").val(),
-                        last_name = $("#last_name_edit").val(),
-                        mobile_no = $("#mobile_no_edit").val(),
-                        gender = $("#gender_edit").val();
-                    $.ajax({
-                        type: "POST",
-                        url: "/firms/edit",
-                        data: {
-                            title: title,
-                            address: address,
-                            email: email,
-                            password: password,
-                            first_name: first_name,
-                            last_name: last_name,
-                            mobile_no: mobile_no,
-                            gender: gender,
-                            firm_id: localStorage.getItem('firm_id'),
-                            user_id: localStorage.getItem('user_id')
-                        },
-                        beforeSend: function(xhr) {
-                            xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
-                            
-                            $("#btnEdit").prop('disabled', true);
-                            $("#btnEdit").html("Loading...");
-                        },
-                        success:function(response) {
-                            $("#edit_user").animate({ scrollTop: 0 }, 1000);
-                            
-                            if(response.success == true) {
-                                $(`<div class="alert alert-success"><strong>Success! </strong>${response.message}</div>`).insertBefore("#frmEditFirm");
-                                setTimeout(function() {
-                                    window.location.href="/firms";
-                                }, 2000);
-                            }
-                            else {
-                                
-                                $(`<div class="alert alert-danger"><strong>Error! </strong>${response.message}</div>`).insertBefore("#frmEditFirm");
-                                $(".alert").fadeTo(2000, 500).slideUp(500, function(){
-                                        $(".alert").remove();
-                                });
-                            }
-                            $("#btnEdit").prop('disabled', false);
-                            $("#btnEdit").html("Update Firm");
-                        }
-                    });
-                    
+                email: {
+                    required: "Email can't be blank",
+                    email: "Must be valid email"
+                },
+                password: {
+                    required: "Password can't be blank"
                 }
-            });
-
-            $("#btnDelete").click(function(){
+            },
+            submitHandler: function (form) {
+                var title = $("#title").val(),
+                    address = $("#address").val(),
+                    email = $("#email").val(),
+                    password = $("#password").val(),
+                    first_name = $("#first_name").val(),
+                    last_name = $("#last_name").val(),
+                    mobile_no = $("#mobile_no").val(),
+                    gender = $("#gender").val();
                 $.ajax({
-                   type: "POST",
-                   url: "/firm/delete",
-                   data: {
-                       firm_id: localStorage.getItem('firm_id'),
-                       user_id: localStorage.getItem('user_id')
-                   },
-                   beforeSend:function(xhr) {
-                        xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");   
-                        $("#btnDelete").prop('disabled', true);
-                        $("#btnDelete").html("Deleting...");
-                   },
-                   success: function(response) {
-                       if(response.success == true) {
-                            $(`<div class="alert alert-success"><strong>Success! </strong>${response.message}</div>`).insertBefore("#frmFirmDelete");
-                            setTimeout(function() {
-                                window.location.href="/firms";
+                    type: "POST",
+                    url: "/firms/add",
+                    data: {
+                        title: title,
+                        address: address,
+                        email: email,
+                        password: password,
+                        first_name: first_name,
+                        last_name: last_name,
+                        mobile_no: mobile_no,
+                        gender: gender
+                    },
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+                        $("#btnAdd").prop('disabled', true);
+                        $("#btnAdd").html("Loading...");
+                    },
+                    success: function (response) {
+                        $("#add_user").animate({ scrollTop: 0 }, 1000);
+
+                        if (response.success == true) {
+                            $(`<div class="alert alert-success"><strong>Success! </strong>${response.message}</div>`).insertBefore("#frmAddFirm");
+                            setTimeout(function () {
+                                window.location.href = "/firms";
                             }, 2000);
                         }
                         else {
-                            
-                            $(`<div class="alert alert-danger"><strong>Error! </strong>${response.message}</div>`).insertBefore("#frmFirmDelete");
-                            $(".alert").fadeTo(2000, 500).slideUp(500, function(){
-                                    $(".alert").remove();
+
+                            $(`<div class="alert alert-danger"><strong>Error! </strong>${response.message}</div>`).insertBefore("#frmAddFirm");
+                            $(".alert").fadeTo(2000, 500).slideUp(500, function () {
+                                $(".alert").remove();
                             });
                         }
-                        $("#btnDelete").prop('disabled', false);
-                        $("#btnDelete").html("Delete");
-                   } 
+                        $("#btnAdd").prop('disabled', false);
+                        $("#btnAdd").html("Create Firm");
+                    }
                 });
-            });
 
-            $("#clearSearch").click(function() {
-                window.location.href = "/firms";
-            });
-        });
-        $(document).on("click", ".edit", function() {
-            $("#first_name_edit").val($(this).closest('tr').data('first-name'));
-            $("#last_name_edit").val($(this).closest('tr').data('last-name'));
-            $("#email_edit").val($(this).closest('tr').data('email'));
-            $("#mobile_no_edit").val($(this).closest('tr').data('mobile-no'));
-            $('#gender_edit option[value="'+$(this).closest('tr').data('gender')+'"]').attr('selected', true);
-            $('#gender_edit').trigger('change');
-            $("#title_edit").val($(this).closest('tr').data('firm-title'));
-            $("#address_edit").val($(this).closest('tr').data('firm-address'));
-            localStorage.setItem('firm_id', $(this).closest('tr').data('firm-id'));
-            localStorage.setItem('user_id', $(this).closest('tr').data('user-id'));
-            $("#edit_user").modal('show');
+            }
         });
 
-        $(document).on("click", ".delete", function() {
-            localStorage.setItem('firm_id', $(this).closest('tr').data('firm-id'));
-            localStorage.setItem('user_id', $(this).closest('tr').data('user-id'));
-            $("#delete_user").modal('show');
+        $("#frmEditFirm").validate({
+            rules: {
+                title_edit: {
+                    required: true
+                },
+                address_edit: {
+                    required: true
+                },
+                email_edit: {
+                    required: true,
+                    email: true
+                },
+                password_edit: {
+                    required: true
+                }
+            },
+            messages: {
+                title_edit: {
+                    required: "Firm name can't be blank"
+                },
+                address_edit: {
+                    required: "Address can't be blank"
+                },
+                email_edit: {
+                    required: "Email can't be blank",
+                    email: "Must be valid email"
+                },
+                password_edit: {
+                    required: "Password can't be blank"
+                }
+            },
+            submitHandler: function (form) {
+                var title = $("#title_edit").val(),
+                    address = $("#address_edit").val(),
+                    email = $("#email_edit").val(),
+                    password = $("#password_edit").val(),
+                    first_name = $("#first_name_edit").val(),
+                    last_name = $("#last_name_edit").val(),
+                    mobile_no = $("#mobile_no_edit").val(),
+                    gender = $("#gender_edit").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/firms/edit",
+                    data: {
+                        title: title,
+                        address: address,
+                        email: email,
+                        password: password,
+                        first_name: first_name,
+                        last_name: last_name,
+                        mobile_no: mobile_no,
+                        gender: gender,
+                        firm_id: localStorage.getItem('firm_id'),
+                        user_id: localStorage.getItem('user_id')
+                    },
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+                        $("#btnEdit").prop('disabled', true);
+                        $("#btnEdit").html("Loading...");
+                    },
+                    success: function (response) {
+                        $("#edit_user").animate({ scrollTop: 0 }, 1000);
+
+                        if (response.success == true) {
+                            $(`<div class="alert alert-success"><strong>Success! </strong>${response.message}</div>`).insertBefore("#frmEditFirm");
+                            setTimeout(function () {
+                                window.location.href = "/firms";
+                            }, 2000);
+                        }
+                        else {
+
+                            $(`<div class="alert alert-danger"><strong>Error! </strong>${response.message}</div>`).insertBefore("#frmEditFirm");
+                            $(".alert").fadeTo(2000, 500).slideUp(500, function () {
+                                $(".alert").remove();
+                            });
+                        }
+                        $("#btnEdit").prop('disabled', false);
+                        $("#btnEdit").html("Update Firm");
+                    }
+                });
+
+            }
         });
-    </script>
-{{/content}}
+
+        $("#btnDelete").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "/firm/delete",
+                data: {
+                    firm_id: localStorage.getItem('firm_id'),
+                    user_id: localStorage.getItem('user_id')
+                },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+                    $("#btnDelete").prop('disabled', true);
+                    $("#btnDelete").html("Deleting...");
+                },
+                success: function (response) {
+                    if (response.success == true) {
+                        $(`<div class="alert alert-success"><strong>Success! </strong>${response.message}</div>`).insertBefore("#frmFirmDelete");
+                        setTimeout(function () {
+                            window.location.href = "/firms";
+                        }, 2000);
+                    }
+                    else {
+
+                        $(`<div class="alert alert-danger"><strong>Error! </strong>${response.message}</div>`).insertBefore("#frmFirmDelete");
+                        $(".alert").fadeTo(2000, 500).slideUp(500, function () {
+                            $(".alert").remove();
+                        });
+                    }
+                    $("#btnDelete").prop('disabled', false);
+                    $("#btnDelete").html("Delete");
+                }
+            });
+        });
+
+        $("#clearSearch").click(function () {
+            window.location.href = "/firms";
+        });
+    });
+    $(document).on("click", ".edit", function () {
+        $("#first_name_edit").val($(this).closest('tr').data('first-name'));
+        $("#last_name_edit").val($(this).closest('tr').data('last-name'));
+        $("#email_edit").val($(this).closest('tr').data('email'));
+        $("#mobile_no_edit").val($(this).closest('tr').data('mobile-no'));
+        $('#gender_edit option[value="' + $(this).closest('tr').data('gender') + '"]').attr('selected', true);
+        $('#gender_edit').trigger('change');
+        $("#title_edit").val($(this).closest('tr').data('firm-title'));
+        $("#address_edit").val($(this).closest('tr').data('firm-address'));
+        localStorage.setItem('firm_id', $(this).closest('tr').data('firm-id'));
+        localStorage.setItem('user_id', $(this).closest('tr').data('user-id'));
+        $("#edit_user").modal('show');
+    });
+
+    $(document).on("click", ".delete", function () {
+        localStorage.setItem('firm_id', $(this).closest('tr').data('firm-id'));
+        localStorage.setItem('user_id', $(this).closest('tr').data('user-id'));
+        $("#delete_user").modal('show');
+    });
+</script> {{/content}}

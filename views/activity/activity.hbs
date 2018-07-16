@@ -4,18 +4,20 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
 <div class="page-wrapper">
   <div class="content container-fluid">
-    <div class="row">
-      {{#if success_message}}
-      <div class="alert alert-danger">
-        <strong>Error! </strong>{{success_message}}
-      </div>
-      {{/if}}
-      <div class="col-xs-4">
-        <h4 class="page-title">ACTIVITY</h4>
-      </div>
-      <div class="col-xs-8 text-right m-b-30">
-        <a href="/activityseen" class="btn btn-primary rounded">
-          <i class="fa fa-plus"></i> Add Activity</a>
+    <div class="pg-header">
+      <div class="row">
+        {{#if success_message}}
+        <div class="alert alert-danger">
+          <strong>Error! </strong>{{success_message}}
+        </div>
+        {{/if}}
+        <div class="col-xs-4">
+          <h4 class="page-title">ACTIVITY</h4>
+        </div>
+        <div class="col-xs-8 text-right">
+          <a href="/activityseen" class="btn btn-primary rounded">
+            <i class="fa fa-plus"></i> Add Activity</a>
+        </div>
       </div>
     </div>
     <div class="row filter-row">

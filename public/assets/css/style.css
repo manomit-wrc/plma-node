@@ -377,7 +377,7 @@ table.dataTable {margin-bottom: 15px !important;margin-top: 15px !important;}
 */
 
 .page-wrapper {left: 0;margin-left: 230px;padding-top: 60px;position: relative;-webkit-transition: all 0.4s ease;-moz-transition: all 0.4s ease;transition: all 0.4s ease;}
-.page-wrapper > .content{padding:30px;}
+.page-wrapper > .content{padding:20px;}
 
 /*------------------------------------------------------------------
 [9. Login]
@@ -1733,6 +1733,57 @@ table.table-inbox tbody tr.checked {background-color: #ffffcc;}
 
 /* BUDGET-TABLE-CSS */
 
+
+.account-wrapper {
+	padding: 20px;
+}
+
+.account-logo {
+	margin-bottom: 15px;
+}
+
+.account-logo a {
+	display: table;
+	margin: 0 auto;
+}
+
+
+.role-header h4 {
+	margin: 0;
+	position: relative;
+	border-right: 2px solid #717372;
+	top: 21px;
+	padding-right: 15px;
+	color: #717372;
+}
+
+.pg-header .page-title {
+	margin-bottom: 20px;
+}
+
+.pg-header a.btn.btn-primary.rounded {
+	position: relative;
+	top: -5px;
+}
+
+.sidebar-hide  {
+	left: -230px;
+	transition: all 0.2s linear 0s;
+}
+
+.page-wrapper-full {
+	transition: all 0.2s linear 0s;
+	margin-left: 0;
+}
+
+.nav-menu a {
+	color: #717372;
+	font-size: 10px;
+	position: relative;
+	left: -20px;
+	top: 20px;
+	z-index: 1000;
+}
 
 /*------------------------------------------------------------------
 [39-a.... Custom Styles]

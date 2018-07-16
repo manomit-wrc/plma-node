@@ -4,24 +4,26 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
 <div class="page-wrapper">
     <div class="content container-fluid">
-        <div class="row">
-            {{#if success_message}}
-            <div class="alert alert-success">
-                <strong>Success! </strong>{{success_message}}
-            </div>
-            {{/if}} {{#if success_edit_message}}
-            <div class="alert alert-success">
-                <strong>Success! </strong>{{success_edit_message}}
-            </div>
-            {{/if}}
-            <div class="col-sm-4 col-xs-3">
-                <h4 class="page-title">Master Contacts</h4>
-            </div>
-            <div class="col-sm-8 col-xs-9 text-right m-b-20">
-                <a href="javascript:void(0)" data-toggle="modal" data-target="#import" class="btn btn-primary rounded pull-right">
-                    <i class="fa fa-cloud-download"></i> Import Master Contact</a>
-                <a href="/master_contact/add" class="btn btn-primary rounded pull-right m-r-5">
-                    <i class="fa fa-plus"></i> Add Contact</a>
+        <div class="pg-header">
+            <div class="row">
+                {{#if success_message}}
+                <div class="alert alert-success">
+                    <strong>Success! </strong>{{success_message}}
+                </div>
+                {{/if}} {{#if success_edit_message}}
+                <div class="alert alert-success">
+                    <strong>Success! </strong>{{success_edit_message}}
+                </div>
+                {{/if}}
+                <div class="col-sm-4 col-xs-3">
+                    <h4 class="page-title">Master Contacts</h4>
+                </div>
+                <div class="col-sm-8 col-xs-9 text-right">
+                    <a href="javascript:void(0)" data-toggle="modal" data-target="#import" class="btn btn-primary rounded pull-right">
+                        <i class="fa fa-cloud-download"></i> Import Master Contact</a>
+                    <a href="/master_contact/add" class="btn btn-primary rounded pull-right m-r-5">
+                        <i class="fa fa-plus"></i> Add Contact</a>
+                </div>
             </div>
         </div>
         <div class="row filter-row">
@@ -258,8 +260,8 @@
         }
     });
 
-    $('.master-contact-delete-done').on('click',function (e) {
-         var contact_ids = [];
+    $('.master-contact-delete-done').on('click', function (e) {
+        var contact_ids = [];
         $('input[name="contact_id"]:checked').each(function () {
             contact_ids.push(this.value);
         });
