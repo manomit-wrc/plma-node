@@ -63,7 +63,14 @@ router.get('/target', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	if (req.query.searchEmail) {
 		whereCondition.email = req.query.searchEmail;
 	}
-	whereCondition.firm_id = req.user.firm_id.toString();
+	// console.log('req.user.firm_id.toString()',req.user.firm_id);
+	if (req.user.firm_id) {
+		whereCondition.firm_id = req.user.firm_id.toString();
+	} else {
+		whereCondition.firm_id = req.user.firm_id;
+	}
+	
+	
 	if (req.user.role_id != 2) {
 		whereCondition.user_id = req.user.id;
 	}
@@ -207,10 +214,7 @@ router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 			city_name: cities.name
 		}
 	});
-	const attorney = await user.findAll({
-		where: { role_id: 3, firm_id: req.user.firm_id }
-	});
-	res.render('target/targetupdate', { attorney:attorney,layout: 'dashboard', csrfToken: req.csrfToken(), designation: designation, industry: industrys, client: target, country: country, state: state, city: city, zipcode: zipcode, error_message });
+	res.render('target/targetupdate', { layout: 'dashboard', csrfToken: req.csrfToken(), designation: designation, industry: industrys, client: target, country: country, state: state, city: city, zipcode: zipcode, error_message });
 });
 
 router.get('/target/view/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
@@ -249,9 +253,6 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, 
 			}
 		}
 	});
-
-	console.log('req.body',req.body);
-
 	if (target_edit_data === null) {
 		await Target.update({
 			organization_name: req.body.org_name,
