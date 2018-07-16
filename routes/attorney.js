@@ -40,6 +40,23 @@ const Group = require('../models').group;
 
 const router = express.Router();
 
+function removePhoneMask(phone_no) {
+	var phone_no = phone_no.replace("-", "");
+	phone_no = phone_no.replace(")", "");
+	phone_no = phone_no.replace("(", "");
+	phone_no = phone_no.replace(" ", "");
+	return phone_no;
+}
+
+function removeMobileMask(mobile_no) {
+	var mobile_no = mobile_no.replace("-", "");
+	mobile_no = mobile_no.replace(")", "");
+	mobile_no = mobile_no.replace("(", "");
+	mobile_no = mobile_no.replace(" ", "");
+	return mobile_no;
+}
+
+
 
 router.get('/attorneys', auth, csrfProtection, async (req, res) => {
 	var success_message = req.flash('success-message')[0];
@@ -123,7 +140,9 @@ router.post('/attorney/add', auth, firmAttrAuth, csrfProtection, async (req, res
 			state: req.body.state,
 			country: req.body.country,
 			zipcode: req.body.zipcode,
-			mobile_no: req.body.mobile_no,
+			mobile_no: removeMobileMask(req.body.mobile_no),
+
+
 			dob: Dob ? Dob[2] + "-" + Dob[1] + "-" + Dob[0] : null,
 
 		}).then(function (resp) {
@@ -150,8 +169,8 @@ router.post('/attorney/add', auth, firmAttrAuth, csrfProtection, async (req, res
 				billing_opp_cost: req.body.billing_opp_cost,
 				address2: req.body.address2,
 				address3: req.body.address3,
-				e_mail: req.body.e_mail,
-				phone_no: req.body.phone_no,
+				phone_no:  removePhoneMask(req.body.phone_no),
+
 
 				fax: req.body.fax,
 				website_url: req.body.website_url,
@@ -218,7 +237,7 @@ router.get('/attorney/edit/:id', auth, csrfProtection, async (req, res) => {
 			}
 		});
 	}
-	console.log(edata[0].state);
+	// console.log(edata[0].state);
 	res.render('attorney/updateattorney', {
 		layout: 'dashboard',
 		csrfToken: req.csrfToken(),
@@ -289,7 +308,8 @@ router.post('/attorney/update/:id', auth, firmAttrAuth, csrfProtection, async(re
 		state: req.body.state,
 		country: req.body.country,
 		zipcode: req.body.zipcode,
-		mobile_no: req.body.mobile_no,
+		mobile_no: removeMobileMask(req.body.mobile_no),
+
 		avatar: req.body.fileName,
 		dob: Dob1 ? Dob1[2] + "-" + Dob1[1] + "-" + Dob1[0] : null,
 	}, {
@@ -319,7 +339,7 @@ router.post('/attorney/update/:id', auth, firmAttrAuth, csrfProtection, async(re
 			address2: req.body.address2,
 			address3: req.body.address3,
 			e_mail: req.body.e_mail,
-			phone_no: req.body.phone_no,
+			phone_no: removePhoneMask(req.body.phone_no),
 			fax: req.body.fax,
 			website_url: req.body.website_url,
 			social_url: req.body.social_url,

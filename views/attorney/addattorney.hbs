@@ -121,7 +121,7 @@
                   <div class="form-group form-focus">
                      <label class="control-label">Attorney ID</label>
                      <input type="text" class="form-control floating"
-                     id="attorney_id" name="attorney_id"/>
+                     id="attorney_id" name="attorney_id" onkeypress="return onlyNumbers();"/>
                   </div>
                </div>
                <div class="col-md-6">
@@ -218,14 +218,14 @@
          <div class="form-group form-focus">
            <label class="control-label">Hourly Cost</label>
             <input type="text" class="form-control floating"
-            id="hourly_cost" name="hourly_cost"/>
+            id="hourly_cost" name="hourly_cost" onkeypress="return onlyNumbers();"/>
          </div>
       </div>
       <div class="col-md-6">
                <div class="form-group form-focus">
                  <label class="control-label">Benefit Factor %</label>
                   <input type="text" class="form-control floating"
-                  id="benefit_factor" name="benefit_factor"/>
+                  id="benefit_factor" name="benefit_factor" onkeypress="return onlyHourlyCostNumbers();"/>
                </div>
             </div>
 
@@ -233,7 +233,7 @@
                      <div class="form-group form-focus">
                        <label class="control-label">Overhead Amount</label>
                         <input type="text" class="form-control floating"
-                        id="overhead_amount" name="overhead_amount"/>
+                        id="overhead_amount" name="overhead_amount" onkeypress="return onlyNumbers();"/>
                      </div>
                   </div>
 
@@ -243,7 +243,7 @@
                            <div class="form-group form-focus">
                              <label class="control-label">Billing Opp Cost</label>
                               <input type="text" class="form-control floating"
-                              id="billing_opp_cost" name="billing_opp_cost"/>
+                              id="billing_opp_cost" name="billing_opp_cost" onkeypress="return onlyBenifitNumbers();"/>
                            </div>
                         </div>
 
@@ -317,9 +317,8 @@
     <div class="col-md-6">
                   <div class="form-group form-focus">
                      <label class="control-label">Mobile No</label>
-                     <input type="text" class="form-control floating"
-                     id="mobile_no" name="mobile_no"
-                     maxlength="10" minlength="10"/>
+                     <input type="text" class="form-control floating number_validator"
+                     id="mobile_no" name="mobile_no"/>
                   </div>
                </div>
 
@@ -327,18 +326,17 @@
 <div class="col-md-6">
          <div class="form-group form-focus">
             <label class="control-label">Phone No</label>
-            <input type="text" class="form-control floating"
-            id="phone_no" name="phone_no"
-            maxlength="10" minlength="10"/>
+            <input type="text" class="form-control floating number_validator"
+            id="phone_no" name="phone_no"/>
          </div>
       </div>
-      <div class="col-md-6">
+      <!-- <div class="col-md-6">
                <div class="form-group form-focus">
                   <label class="control-label">E-mail</label>
                   <input type="text" class="form-control floating"
                   id="e_mail" name="e_mail"/>
                </div>
-            </div>
+            </div> -->
       <div class="col-md-6">
                     <div class="form-group form-focus">
                        <label class="control-label">Fax</label>
@@ -349,14 +347,14 @@
 <div class="col-md-6">
 <div class="form-group form-focus">
       <label class="control-label">Website URL</label>
-      <input type="text" class="form-control floating"
+      <input type="text" class="form-control floating url_selector"
       id="website_url" name="website_url"/>
 </div>
 </div>
 <div class="col-md-6">
           <div class="form-group form-focus">
              <label class="control-label">Social URL</label>
-             <input type="text" class="form-control floating"
+             <input type="text" class="form-control floating url_selector"
              id="social_url" name="social_url"/>
           </div>
        </div>
@@ -378,7 +376,7 @@
 </div>
 
 
-    <div class="card-box">
+    <!-- <div class="card-box">
       <h3 class="card-title">Profile Picture</h3>
       <div class="row">
           <div class="col-md-12">
@@ -389,11 +387,11 @@
 
         </div>
       </div>
-      </div>
+      </div> -->
 
 
          <div class="text-center m-t-20">
-           <button class="btn btn-primary" type="submit"  id="btnAdd">Add Attorney</button>
+           <button class="btn btn-primary" type="submit"  id="btnAdd" >Add Attorney</button>
          </div>
       </form>
    </div>
@@ -433,12 +431,6 @@
                     required: true
                 },
 
-                phone_no: {
-                    required: true
-                },
-                e_mail: {
-                    required: true
-                },
                 address: {
                     required: true
                 },
@@ -475,13 +467,7 @@
                 last_name: {
                     required: "last_name can't be blank"
                 },
-              
-                phone_no: {
-                    required: "phone_no can't be blank"
-                },
-                e_mail: {
-                    required: "e_mail can't be blank"
-                },
+
                 address: {
                     required: "address  can't be blank"
                 },
@@ -498,6 +484,48 @@
         });
       });
     </script>
+    <script language="JavaScript">
+    function onlyNumbers(evt)
+    {
+    var e = event || evt; // for trans-browser compatibility
+    var charCode = e.which || e.keyCode;
+
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+
+    return true;
+
+    }
+    </script>
 
 
+    <script language="JavaScript">
+    function onlyHourlyCostNumbers(evt)
+    {
+    var e = event || evt; // for trans-browser compatibility
+    var charCode = e.which || e.keyCode;
+
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+
+    return true;
+
+    }
+    </script>
+
+
+
+    <script language="JavaScript">
+    function onlyBenifitNumbers(evt)
+    {
+    var e = event || evt; // for trans-browser compatibility
+    var charCode = e.which || e.keyCode;
+
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+
+    return true;
+
+    }
+    </script>
 {{/content}}

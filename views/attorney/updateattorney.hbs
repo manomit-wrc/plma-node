@@ -106,16 +106,17 @@
                    <div class="form-group form-focus select-focus">
                        <select class="form-control floating" id="gender" name="gender">
                            <option value="">Select Gender</option>
-                           <option value="M" {{#if_eq edata.0.gender "M"}} selected="selected" {{/if_eq}}>Male</option>
-                           <option value="F" {{#if_eq edata.0.gender "F"}} selected="selected" {{/if_eq}}>Female</option>
+                           <option value="M" {{#if_eq edata.0.gender "M"}} selected {{/if_eq}}>Male</option>
+                           <option value="F" {{#if_eq edata.0.gender "F"}} selected {{/if_eq}}>Female</option>
                        </select>
+
                    </div>
                </div>
                <div class="col-md-6">
                   <div class="form-group form-focus">
                      <label class="control-label">Attorney ID</label>
                      <input type="text" class="form-control floating"
-                     id="attorney_id" name="attorney_id" value="{{edata.0.attorney_details.0.attorney_id}}"/>
+                     id="attorney_id" name="attorney_id" value="{{edata.0.attorney_details.0.attorney_id}}" onkeypress="return onlyNumbers();"/>
                   </div>
                </div>
                <div class="col-md-6">
@@ -129,10 +130,12 @@
                    <div class="form-group form-focus select-focus">
                        <select class="form-control floating" id="attorney_type" name="attorney_type">
                            <option value="">Select Attorney Type</option>
-                          <option value="AT-INTERIM" {{#if_eq edata.0.attorney_type "AT-INTERIM"}} selected="selected" {{/if_eq}}>INTERIM ATTORNEY</option>
-                          <option value="AT-APPROVED" {{#if_eq edata.0.attorney_type "AT-APPROVED"}} selected="selected" {{/if_eq}}>APPROVED ATTORNEY</option>
-                          <option value="PENDING" {{#if_eq edata.0.attorney_type "PENDING"}} selected="selected" {{/if_eq}}>ATTORNEY TO BE ASSIGNED</option>
+                          <option value="AT-INTERIM" {{#if_eq edata.0.attorney_details.0.attorney_type "AT-INTERIM"}} selected="selected" {{/if_eq}}>INTERIM ATTORNEY</option>
+                          <option value="AT-APPROVED" {{#if_eq edata.0.attorney_details.0.attorney_type "AT-APPROVED"}} selected="selected" {{/if_eq}}>APPROVED ATTORNEY</option>
+                          <option value="PENDING" {{#if_eq edata.0.attorney_details.0.attorney_type "PENDING"}} selected="selected" {{/if_eq}}>ATTORNEY TO BE ASSIGNED</option>
                        </select>
+
+
                    </div>
                </div>
                <div class="col-md-6">
@@ -162,10 +165,11 @@
         <div class="form-group form-focus select-focus">
             <select class="form-control floating" id="job_type" name="job_type">
                 <option value="">Select Job Type</option>
-                <option value="FULLTIME" {{#if_eq edata.0.job_type "FULLTIME"}} selected="selected" {{/if_eq}}>FULLTIME</option>
-                <option value="STERMCON" {{#if_eq edata.0.job_type "STERMCON"}} selected="selected" {{/if_eq}}>SHORT TERM CONTRACT</option>
-                <option value="TEMP" {{#if_eq edata.0.job_type "TEMP"}} selected="selected" {{/if_eq}}>TEMPORARY</option>
+                <option value="FULLTIME" {{#if_eq edata.0.attorney_details.0.job_type "FULLTIME"}} selected="selected" {{/if_eq}}>FULLTIME</option>
+                <option value="STERMCON" {{#if_eq edata.0.attorney_details.0.job_type "STERMCON"}} selected="selected" {{/if_eq}}>SHORT TERM CONTRACT</option>
+                <option value="TEMP" {{#if_eq edata.0.attorney_details.0.job_type "TEMP"}} selected="selected" {{/if_eq}}>TEMPORARY</option>
             </select>
+
         </div>
     </div>
     <div class="col-md-6">
@@ -212,14 +216,14 @@
          <div class="form-group form-focus">
            <label class="control-label">Hourly Cost</label>
             <input type="text" class="form-control floating"
-            id="hourly_cost" name="hourly_cost" value="{{edata.0.attorney_details.0.hourly_cost}}"/>
+            id="hourly_cost" name="hourly_cost" value="{{edata.0.attorney_details.0.hourly_cost}}" onkeypress="return onlyNumbers();"/>
          </div>
       </div>
       <div class="col-md-6">
                <div class="form-group form-focus">
                  <label class="control-label">Benefit Factor %</label>
                   <input type="text" class="form-control floating"
-                  id="benefit_factor" name="benefit_factor" value="{{edata.0.attorney_details.0.benefit_factor}}"/>
+                  id="benefit_factor" name="benefit_factor" value="{{edata.0.attorney_details.0.benefit_factor}}" onkeypress="return onlyNumbers();"/>
                </div>
             </div>
 
@@ -227,7 +231,7 @@
                      <div class="form-group form-focus">
                        <label class="control-label">Overhead Amount</label>
                         <input type="text" class="form-control floating"
-                        id="overhead_amount" name="overhead_amount" value="{{edata.0.attorney_details.0.overhead_amount}}"/>
+                        id="overhead_amount" name="overhead_amount" value="{{edata.0.attorney_details.0.overhead_amount}}" onkeypress="return onlyNumbers();"/>
                      </div>
                   </div>
 
@@ -237,7 +241,7 @@
                            <div class="form-group form-focus">
                              <label class="control-label">Billing Opp Cost</label>
                               <input type="text" class="form-control floating"
-                              id="billing_opp_cost" name="billing_opp_cost" value="{{edata.0.attorney_details.0.billing_opp_cost}}"/>
+                              id="billing_opp_cost" name="billing_opp_cost" value="{{edata.0.attorney_details.0.billing_opp_cost}}" onkeypress="return onlyNumbers();"/>
                            </div>
                         </div>
 
@@ -317,9 +321,8 @@
     <div class="col-md-6">
                   <div class="form-group form-focus">
                      <label class="control-label">Mobile No</label>
-                     <input type="text" class="form-control floating"
-                     id="mobile_no" name="mobile_no"
-                     maxlength="10" minlength="10" value="{{edata.0.mobile_no}}"/>
+                     <input type="text" class="form-control floating number_validator"
+                     id="mobile_no" name="mobile_no" value="{{edata.0.mobile_no}}"/>
                   </div>
                </div>
 
@@ -327,18 +330,11 @@
 <div class="col-md-6">
          <div class="form-group form-focus">
             <label class="control-label">Phone No</label>
-            <input type="text" class="form-control floating"
-            id="phone_no" name="phone_no"
-            maxlength="10" minlength="10" value="{{edata.0.attorney_details.0.phone_no}}"/>
+            <input type="text" class="form-control floating number_validator"
+            id="phone_no" name="phone_no" value="{{edata.0.attorney_details.0.phone_no}}"/>
          </div>
       </div>
-      <div class="col-md-6">
-               <div class="form-group form-focus">
-                  <label class="control-label">E-mail</label>
-                  <input type="text" class="form-control floating"
-                  id="e_mail" name="e_mail" value="{{edata.0.attorney_details.0.e_mail}}"/>
-               </div>
-            </div>
+
       <div class="col-md-6">
                     <div class="form-group form-focus">
                        <label class="control-label">Fax</label>
@@ -349,14 +345,14 @@
 <div class="col-md-6">
 <div class="form-group form-focus">
       <label class="control-label">Website URL</label>
-      <input type="text" class="form-control floating"
+      <input type="text" class="form-control floating url_selector"
       id="website_url" name="website_url" value="{{edata.0.attorney_details.0.website_url}}"/>
 </div>
 </div>
 <div class="col-md-6">
           <div class="form-group form-focus">
              <label class="control-label">Social URL</label>
-             <input type="text" class="form-control floating"
+             <input type="text" class="form-control floating url_selector"
              id="social_url" name="social_url" value="{{edata.0.attorney_details.0.social_url}}"/>
           </div>
        </div>
@@ -381,7 +377,7 @@
 </div>
 
 
-    <div class="card-box">
+    <!-- <div class="card-box">
       <h3 class="card-title">Profile Picture</h3>
       <div class="row">
           <div class="col-md-12">
@@ -392,7 +388,7 @@
 
         </div>
       </div>
-      </div>
+      </div> -->
 
 
          <div class="text-center m-t-20">
@@ -444,9 +440,7 @@
                 phone_no: {
                     required: true
                 },
-                e_mail: {
-                    required: true
-                },
+
                 address: {
                     required: true
                 },
@@ -492,9 +486,7 @@
                 phone_no: {
                     required: "phone_no can't be blank"
                 },
-                e_mail: {
-                    required: "e_mail can't be blank"
-                },
+
                 address: {
                     required: "address  can't be blank"
                 },
@@ -511,6 +503,18 @@
         });
       });
     </script>
+    <script language="JavaScript">
+    function onlyNumbers(evt)
+    {
+    var e = event || evt; // for trans-browser compatibility
+    var charCode = e.which || e.keyCode;
 
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+
+    return true;
+
+    }
+    </script>
 
 {{/content}}
