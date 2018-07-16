@@ -8,6 +8,11 @@
 <div class="page-wrapper">
    <div class="content container-fluid">
       <div class="row">
+         {{#if err_message}}
+        <div class="alert alert-danger">
+            <strong>Error! </strong>{{err_message}}
+        </div>
+        {{/if}}
          <div class="col-sm-8">
             <h4 class="page-title">Update Attorney</h4>
          </div>
