@@ -72,7 +72,7 @@ router.get('/attorneys', auth, csrfProtection, async (req, res) => {
 	});
 });
 
-router.get('/attorney/addAttorney', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+router.get('/attorneys/addAttorney', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var err_message = req.flash('success-err-message')[0];
 	const designation = await Designation.findAll();
 	const group = await Group.findAll();
@@ -104,7 +104,7 @@ router.get('/attorney/addAttorney', auth, firmAttrAuth, csrfProtection, async (r
 
 
 
-router.post('/attorney/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 
 	var attrorney_details_id = '';
 	const Dob = req.body.dob ? req.body.dob.split("-") : '';
@@ -122,7 +122,7 @@ router.post('/attorney/add', auth, firmAttrAuth, csrfProtection, async (req, res
 	});
 	if (attorney_data != null) {
 		req.flash('success-err-message', 'Email ID already exists');
-		res.redirect('/attorney/addAttorney');
+		res.redirect('/attorneys/addAttorney');
 	} else {
 		const user_details = await User.create({
 			first_name: req.body.first_name,
@@ -197,7 +197,7 @@ router.post('/attorney/add', auth, firmAttrAuth, csrfProtection, async (req, res
 //
 //
 
-router.get('/attorney/edit/:id', auth, csrfProtection, async (req, res) => {
+router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 	User.hasMany(Attorney_Details, {
 		foreignKey: 'user_id'
 	});
@@ -218,7 +218,6 @@ router.get('/attorney/edit/:id', auth, csrfProtection, async (req, res) => {
 			model: Attorney_Details
 		}]
 	});
-	// console.log(edata);
 	var state_id = edata[0].state;
 	var city_id = edata[0].city;
 	var city = [];
@@ -266,35 +265,80 @@ router.get('/attorney/edit/:id', auth, csrfProtection, async (req, res) => {
 //
 //
 
-//  {{{    delete data}}}
-router.get('/attorney/deletedata/:id', auth, async (req, res) => {
+//  {{{    view data}}}
 
-	// outer.post('/firm/delete', auth, siteAuth, csrfProtection, async (req, res) => {
-	const user_delete = await User.destroy({
+
+	router.get('/attorneys/viewdata/:id', auth, csrfProtection, async (req, res) => {
+
+	User.hasMany(Attorney_Details, {
+		foreignKey: 'user_id'
+	});
+
+	const designation = await Designation.findAll();
+	const group = await Group.findAll();
+	const section = await Section.findAll();
+	const jurisdiction = await Jurisdiction.findAll();
+	const industry_type = await Industry_type.findAll();
+
+	const country = await Country.findAll({});
+	const state = await State.findAll({});
+	const edata = await User.findAll({
 		where: {
 			id: req.params['id']
-		}
+		},
+		include: [{
+			model: Attorney_Details
+		}]
 	});
-
-	const attorney_delete = await Attorney_Details.destroy({
-		where: {
-			user_id: req.params['id']
-		}
+	var state_id = edata[0].state;
+	var city_id = edata[0].city;
+	var city = [];
+	var zipcode = [];
+	if (state_id != null) {
+		city = await City.findAll({
+			where: {
+				state_id: state_id.toString()
+			}
+		});
+	}
+	if (city_id != null) {
+		const cities = await City.findById(city_id.toString());
+		zipcode = await Zipcode.findAll({
+			where: {
+				city_name: cities.name
+			}
+		});
+	}
+	// console.log(edata[0].state);
+	res.render('attorney/viewattorney', {
+		layout: 'dashboard',
+		csrfToken: req.csrfToken(),
+		country: country,
+		state: state,
+		designation: designation,
+		group: group,
+		section: section,
+		jurisdiction: jurisdiction,
+		industry_type: industry_type,
+		edata: edata,
+		zipcode,
+		city
 	});
-	res.redirect('/attorneys');
-
-
 });
+
+
+
+
 //
 //
 //
-//  {{{    delete data}}}
+//  {{{     end  view data}}}
 //
 //
 //
 
 
-router.post('/attorney/update/:id', auth, firmAttrAuth, csrfProtection, async(req, res) => {
+router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async(req, res) => {
 
 	const Dob1 = req.body.dob ? req.body.dob.split("-") : '';
 	const Firm_Join_Date1 = req.body.firm_join_date ? req.body.firm_join_date.split("-") : '';

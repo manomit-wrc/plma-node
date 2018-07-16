@@ -15,7 +15,7 @@
 							<h4 class="page-title">ATTORNEY</h4>
 						</div>
 						<div class="col-xs-8 text-right m-b-30">
-							<a href="/attorney/addAttorney" class="btn btn-primary rounded"><i class="fa fa-plus"></i> Add Attorney</a>
+							<a href="/attorneys/addAttorney" class="btn btn-primary rounded"><i class="fa fa-plus"></i> Add Attorney</a>
 						</div>
 					</div>
           <form method="GET">
@@ -71,9 +71,11 @@
       <div class="dropdown">
         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
         <ul class="dropdown-menu pull-right">
-          <li><a href="/attorney/edit/{{this.id}}" ><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+          <li><a href="/attorneys/edit/{{this.id}}" ><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
 
-          <li><a href="/attorney/deletedata/{{this.id}}"  ><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+          <li><a href="/attorneys/viewdata/{{this.id}}"  ><i class="fa fa-eye"></i> View</a></li>
+
+
         </ul>
       </div>
     </td>
