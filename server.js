@@ -124,10 +124,7 @@ app.use(target);
 app.use(activity);
 app.use(master_contact);
 app.use(referral);
-<<<<<<< HEAD
 app.use(attorney);
-=======
-app.use(budget_report);
->>>>>>> 84deacecca006db04b7e1abcae2110ff1b7039ed
+// app.use(budget_report);
 /********** End **********/
 app.listen(port, () => console.log(`Server listening to port ${port}`));
