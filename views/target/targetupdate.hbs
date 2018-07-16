@@ -53,7 +53,7 @@
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">First Name <span class="req-lbl">*</span></label>
-										<input type="text" class="form-control floating" id="edit_target_first_name" name="edit_target_first_name" value="{{client.first_name}}"
+										<input type="text" class="form-control floating" id="first_name" name="first_name" value="{{client.first_name}}"
 										/>
 									</div>
 								</div>
@@ -333,10 +333,10 @@
 	$(document).ready(function (e) {
 		$("#targetform").validate({
 			rules: {
-				edit_target_first_name: {
+				first_name: {
 					required: true
 				},
-				edit_target_last_name: {
+				last_name: {
 					required: true
 				},
 				org_name: {
@@ -375,10 +375,10 @@
 				}
 			},
 			messages: {
-				edit_target_first_name: {
+				first_name: {
 					required: "First Name can't be blank"
 				},
-				edit_target_last_name: {
+				last_name: {
 					required: "Last name  title can't be blank"
 				},
 				org_name: {
