@@ -1777,12 +1777,15 @@ table.table-inbox tbody tr.checked {background-color: #ffffcc;}
 }
 
 .nav-menu a {
-	color: #717372;
-	font-size: 10px;
-	position: relative;
-	left: -20px;
-	top: 20px;
-	z-index: 1000;
+	    color: #717372;
+	    font-size: 10px;
+	    position: relative;
+	    left: -20px;
+	    top: 20px;
+	    z-index: 1000;
+	    width: 20px;
+	    display: block;
+	    padding-left: 0px;
 }
 
 /*------------------------------------------------------------------

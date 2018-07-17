@@ -154,7 +154,7 @@ router.post('/activity/add', auth, firmAttrAuth, csrfProtection, async (req, res
 	const activity_store = await Activity.update({
 		firm: req.body.firm,
 		activity_type: req.body.activity_type,
-		activity_goal: req.body.activity_goal,
+		activity_goal_id: req.body.activity_goal,
 		practice_area: req.body.practice_area,
 		potiential_revenue: req.body.potiential_revenue,
 		remarks: req.body.remarks,
