@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   var activity = sequelize.define('activity', {
     firm: DataTypes.STRING,
     activity_type: DataTypes.STRING,
-    activity_goal: DataTypes.STRING,
+    activity_goal_id: DataTypes.INTEGER,
     practice_area: DataTypes.STRING,
     potiential_revenue: DataTypes.STRING,
     remarks: DataTypes.STRING,

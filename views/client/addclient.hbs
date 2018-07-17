@@ -2,8 +2,8 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
-{{!-- <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-tagsinput.css"> --}}
 <link rel="stylesheet" type="text/css" href="/assets/css/jquery.tagsinput.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
 {{/content}}
 <div class="page-wrapper">
 	<div class="content container-fluid">
@@ -104,7 +104,7 @@
 									<div class="form-group m-r-5">
 										<label class="input-group">
 											<span class="input-group-addon">
-												<input type="radio" id="new-add-tag" name="add-tag" value="new" checked/>
+												<input type="radio" id="new-add-tag" name="tag_type" value="n" checked />
 											</span>
 											<div class="form-control form-control-static">New Tags</div>
 											<span class="glyphicon form-control-feedback "></span>
@@ -113,7 +113,7 @@
 									<div class="form-group ">
 										<label class="input-group">
 											<span class="input-group-addon">
-												<input type="radio" id="existing-tag" name="add-tag" value="existing" />
+												<input type="radio" id="existing-tag" name="tag_type" value="e" />
 											</span>
 											<div class="form-control form-control-static">Existing Tags</div>
 											<span class="glyphicon form-control-feedback "></span>
@@ -125,10 +125,10 @@
 							<div class="col-md-6">
 								<div id="add-tag-existing-client" style="display:none;">
 									<div class="form-group form-focus select-focus">
-										<label class="control-label">Select From Existing Tags <span class="req-lbl">*</span></label>
-										<select id="select-existing-tags" name="existing_tags" class="select form-control floating">
-											{{#each designations}}
-											<option value="{{this.id}}">{{this.title}}</option>
+										{{!-- <label class="control-label">Select From Existing Tags <span class="req-lbl">*</span></label> --}}
+										<select id="select-existing-tags" name="existing_tags" class="form-control floating" multiple="multiple">
+											{{#each tags}}
+											<option value="{{this.id}}">{{this.tags}}</option>
 											{{/each}}
 										</select>
 									</div>
@@ -430,13 +430,18 @@
 <script type="text/javascript" src="/assets/js/select2.min.js"></script>
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
-{{!-- <script type="text/javascript" src="/assets/js/bootstrap-tagsinput.js"></script> --}}
 <script type="text/javascript" src="/assets/js/jquery.tagsinput.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function (e) {
 		$('#add-new-tags').tagsInput({width:'auto'});
+		$('#select-existing-tags').multiselect({
+			nonSelectedText: 'Select Existing Tags',
+			includeSelectAllOption: true,
+			buttonWidth: '100%'
+		});
 		$("#clientform").validate({
 			rules: {
 				client_first_name: {
