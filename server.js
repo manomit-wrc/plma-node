@@ -7,6 +7,7 @@ const passport = require('passport');
 const path = require('path');
 const flash    = require('connect-flash');
 const lodash = require('lodash');
+const ActivityBudget = require('./models').activity_budget;
 
 const port = process.env.PORT || 5000;
 
@@ -79,20 +80,13 @@ const hbs = exphbs.create({
             return parent_category_name[0].name;
         }
     },
-    get_activity_hour_by_goal: function(value, obj) {
-        if(value == obj.activity_goal_id) {
-            return obj.hour;
+    if_eq_budget: function(a, b, opts) {
+        console.log(a,b);
+        if(a == b.activity_goal_id) {
+            return opts.fn(this);
         }
         else {
-            return "-";
-        }
-    },
-    get_activity_amount_by_goal: function(value, obj) {
-        if(value == obj.activity_goal_id) {
-            return obj.amount;
-        }
-        else {
-            return "-";
+            return opts.inverse(this);
         }
     },
     dateFormat: require('handlebars-dateformat')

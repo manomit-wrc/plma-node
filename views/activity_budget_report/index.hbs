@@ -158,10 +158,11 @@
                                                     {{#each this.child_budget}}
                                                     <tr>
                                                         <td width="50%" height="40px" style="border-left: none; border-right: 1px solid #e7ecf1; text-align: center;">
-                                                            {{get_activity_hour_by_goal ../../this.activity_goal_id this}}
+                                                            
+                                                            {{#if_eq_budget ../../this.activity_goal_id this}} {{this.hour}} {{/if_eq_budget}}
                                                         </td>
                                                         <td width="50%" style="text-align: center" class="total_cost">
-                                                            {{get_activity_amount_by_goal ../../this.activity_goal_id this}}
+                                                            {{#if_eq_budget ../../this.activity_goal_id this}} {{this.amount}} {{/if_eq_budget}}
                                                         </td>
                                                     </tr>
                                                     {{/each}}

@@ -4,9 +4,10 @@ module.exports = (sequelize, DataTypes) => {
     activity_id: DataTypes.INTEGER,
     level_type: DataTypes.STRING,
     budget_id: DataTypes.INTEGER,
-    hour: DataTypes.STRING,
-    amount: DataTypes.STRING,
-    status: DataTypes.INTEGER
+    hour: DataTypes.INTEGER,
+    amount: DataTypes.INTEGER,
+    status: DataTypes.INTEGER,
+    activity_goal_id: DataTypes.INTEGER,
   }, {});
   activity_budget.associate = function(models) {
     // associations can be defined here

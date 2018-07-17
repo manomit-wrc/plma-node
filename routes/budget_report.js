@@ -14,6 +14,7 @@ const ActivityGoal = require('../models').activity_goal;
 const Budget = require('../models').budget;
 const ActivityBudget = require('../models').activity_budget;
 
+
 var csrfProtection = csrf({
     cookie: true
 });
@@ -32,6 +33,7 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
 	const budgetList = await Budget.findAll();
 
 	var activityArr = [];
+	var new_activity_goal_id;
 
 	var budgetArr = [];
 	for (var i = 0; i < budgetList.length; i++) {
@@ -41,27 +43,30 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
 			var child_budget_arr = [];
 			ActivityBudget.belongsTo(Activity, {foreignKey: 'activity_id'});
 			for (var j = 0; j < child_budget.length; j++) {
+
+
 				const activity_budget = await ActivityBudget.findAll({
-					where: {
-						budget_id: child_budget[j].id
-					},
-					include: [{
-            			model: Activity
-       	 			}]
+				    attributes: ['budget_id', 'activity_goal_id', [Sequelize.fn('sum', Sequelize.col('hour')), 'hour'], [Sequelize.fn('sum', Sequelize.col('amount')), 'amount']],
+				    group: ['budget_id', 'activity_goal_id']
 				});
+
 				
-				const hour = activity_budget.length > 0 ? activity_budget[0].hour : '';
-				const amount = activity_budget.length > 0 ? activity_budget[0].amount : '';
-				level_type = activity_budget.length > 0 ? activity_budget[0].level_type : level_type;
+				const temp_arr = lodash.filter(activity_budget, arr => arr.budget_id === child_budget[j].id);
+				
+				
+				const hour = temp_arr.length > 0 ? temp_arr[0].hour : '-';
+				const amount = temp_arr.length > 0 ? temp_arr[0].amount : '-';
+				const activity_goal_id = temp_arr.length > 0 ? temp_arr[0].activity_goal_id : 0;
+				
 				child_budget_arr.push({
 					"id": child_budget[j].id,
 					"name": child_budget[j].name,
 					"hour": hour,
 					"amount": amount,
-					"activity_goal_id": activity_budget.length > 0 ? activity_budget[0].activity.activity_goal_id : 0
+					"activity_goal_id": activity_goal_id
 				});
 			}
-			console.log(child_budget_arr);
+			
 			budgetArr.push({
 				"parent_name": parent_name,
 				"child_budget": child_budget_arr
