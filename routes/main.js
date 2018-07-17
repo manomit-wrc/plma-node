@@ -378,158 +378,6 @@ router.post('/client/findPinByCity', auth, firmAttrAuth, csrfProtection, (req, r
 	});
 });
 
-/*==========================================Attorney route starts==============================================*/
-router.get('/attorneys', auth, firmAuth, csrfProtection, (req, res) => {
-	var whereCondition = {};
-	if (req.query.searchName) {
-		whereCondition.first_name = req.query.searchName;
-	}
-	if (req.query.searchEmail) {
-		whereCondition.email = req.query.searchEmail;
-	}
-	var success_create_attorney = req.flash('success_create_attorney')[0];
-	var success_delete_attorney = req.flash('success_delete_attorney')[0];
-	var success_edit_attorney = req.flash('success_edit_attorney')[0];
-	whereCondition.role_id = '3';
-	user.findAll({
-		where: whereCondition
-
-	}).then(rows => {
-
-
-		res.render('attorney/index', { layout: 'dashboard', csrfToken: req.csrfToken(), rows: rows, success_create_attorney, success_delete_attorney, success_edit_attorney, searchName: req.query.searchName, searchEmail: req.query.searchEmail });
-	});
-
-});
-
-router.get('/attorney/addAttorney', auth, firmAuth, csrfProtection, (req, res) => {
-	res.render('attorney/addattorney', { layout: 'dashboard', csrfToken: req.csrfToken() });
-});
-router.post('/attorneys/add', auth, firmAuth, csrfProtection, (req, res) => {
-	// console.log(new Date());
-	var first_name = req.body.first_name;
-	var last_name = req.body.last_name;
-	var email = req.body.email;
-	var password = bCrypt.hashSync(req.body.password);
-
-	var dob = req.body.dob;
-
-	var gender = req.body.gender;
-	var address = req.body.address;
-	var city = req.body.city;
-	var state = req.body.state;
-	var country = req.body.country;
-	var mobile_no = req.body.mobile_no;
-	var firm_id = req.user.firm_id;
-	user.findAndCountAll({
-		where: {
-			email: email
-		}
-	}).then(result => {
-		if (result.count > 0) {
-			res.json({ msg: 'error' });
-		} else {
-			console.log(typeof new Date());
-			console.log(typeof dob);
-			console.log(typeof new Date(req.body.dob));
-			console.log(first_name + ',' + last_name + ',' + email + ',' + password + ',' + dob + ',' + gender + ',' + address + ',' + city + ',' + state + ',' + country + ',' + mobile_no + ',' + firm_id + ',');
-
-			user.create({
-				first_name: first_name,
-				last_name: last_name,
-				email: email,
-				password: password,
-				date_of_birth: req.body.dob,
-				gender: gender,
-				address: address,
-				city: city,
-				state: state,
-				country: country,
-				mobile_no: mobile_no,
-				firm_id: firm_id,
-				role_id: '3'
-			}).then(rows => {
-				req.flash('success_create_attorney', 'Attorney successfully added');
-				res.json({ msg: "Success" });
-			});
-		}
-
-	});
-
-});
-
-router.get('/attorneys/editAttorneys/:id', auth, firmAuth, csrfProtection, (req, res) => {
-	user.findById(req.params.id).then(rows => {
-		res.render('attorney/updateattorney', { layout: 'dashboard', csrfToken: req.csrfToken(), rows: rows });
-	});
-});
-
-router.post('/attorneys/updateAttorney/:id', auth, firmAuth, csrfProtection, (req, res) => {
-	console.log(req.params.id);
-	var first_name = req.body.first_name;
-	var last_name = req.body.last_name;
-	var email = req.body.email;
-	var password = bCrypt.hashSync(req.body.password);
-	var dob = req.body.dob;
-	var gender = req.body.gender;
-	var address = req.body.address;
-	var city = req.body.city;
-	var state = req.body.state;
-	var country = req.body.country;
-	var mobile_no = req.body.mobile_no;
-	var firm_id = req.user.firm_id;
-	console.log(req.params.id);
-	console.log(email);
-	user.findAndCountAll({
-		where: {
-			email: email
-		}
-	}).then(result => {
-		console.log(result.count);
-		if (result.count > 1) {
-			res.json({ msg: 'error' });
-		} else {
-			user.update({
-				first_name: first_name,
-				last_name: last_name,
-				email: email,
-				password: password,
-				date_of_birth: dob,
-				gender: gender,
-				address: address,
-				city: city,
-				state: state,
-				country: country,
-				mobile_no: mobile_no,
-				firm_id: firm_id
-			}, {
-					where: {
-						id: req.params.id
-					}
-				}).then(resp => {
-					console.log(req.params.id);
-					req.flash('success_edit_attorney', 'Attorney edited successfully');
-					res.json({ msg: 'success' });
-					console.log(req.params.id);
-				});
-		}
-
-
-	});
-});
-
-router.get('/attorneys/delete/:id', auth, firmAuth, (req, res) => {
-	console.log(req.params.id);
-	user.destroy({
-		where: {
-			id: req.params.id
-		}
-	}).then(resp => {
-		req.flash('success_delete_attorney', 'Attorney deleted successfully');
-		res.redirect('/attorneys');
-	});
-});
-/*==========================================Attorney route ends==============================================*/
 
 /*==========================================Client route starts==============================================*/
 router.get('/client', auth, firmAttrAuth, csrfProtection, (req, res) => {
@@ -542,7 +390,11 @@ router.get('/client', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	if (req.query.searchEmail) {
 		whereCondition.email = req.query.searchEmail;
 	}
-	whereCondition.firm_id = req.user.firm_id;
+	if (req.user.firm_id) {
+		whereCondition.firm_id = req.user.firm_id.toString();
+	} else {
+		whereCondition.firm_id = req.user.firm_id;
+	}
 	if (req.user.role_id != 2) {
 		whereCondition.user_id = req.user.id;
 	}
@@ -834,7 +686,7 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 });
 
 router.get('/client/delete/:id', auth, firmAttrAuth, (req, res) => {
-	console.log(req.params.id);
+	// console.log(req.params.id);
 	client.destroy({
 		where: {
 			id: req.params.id
@@ -858,7 +710,7 @@ router.post('/client/findCityByState', auth, firmAttrAuth, csrfProtection, (req,
 });
 router.post('/client/findPinByCity', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	city.findById(req.body.city_id).then(row => {
-		console.log(row.name);
+		// console.log(row.name);
 		Zipcode.findAll({
 			where: {
 				city_name: row.name

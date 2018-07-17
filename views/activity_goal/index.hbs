@@ -1,32 +1,32 @@
 {{#content "style" mode="prepend"}}
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
-{{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
 <div class="page-wrapper">
     <div class="content container-fluid">
-        <div class="row">
-            {{#if success_message}}
-            <div class="alert alert-success">
-                <strong>Success! </strong>{{success_message}}
-            </div>
-            {{/if}}
-            {{#if success_edit_message}}
-            <div class="alert alert-success">
-                <strong>Success! </strong>{{success_edit_message}}
-            </div>
-            {{/if}}
-            {{#if success_del_message}}
-            <div class="alert alert-danger">
-                <strong>Success! </strong>{{success_del_message}}
-            </div>
-            {{/if}}
-            <div class="col-xs-4">
-                <h4 class="page-title">Activity Goal</h4>
-            </div>
-            <div class="col-xs-8 text-right m-b-30">
-                <a href="/activity-goal/add" class="btn btn-primary pull-right rounded"><i class="fa fa-plus"></i> Add Activity Goal</a>
+        <div class="pg-header">
+            <div class="row">
+                {{#if success_message}}
+                <div class="alert alert-success">
+                    <strong>Success! </strong>{{success_message}}
+                </div>
+                {{/if}} {{#if success_edit_message}}
+                <div class="alert alert-success">
+                    <strong>Success! </strong>{{success_edit_message}}
+                </div>
+                {{/if}} {{#if success_del_message}}
+                <div class="alert alert-danger">
+                    <strong>Success! </strong>{{success_del_message}}
+                </div>
+                {{/if}}
+                <div class="col-xs-4">
+                    <h4 class="page-title">Activity Goal</h4>
+                </div>
+                <div class="col-xs-8 text-right">
+                    <a href="/activity-goal/add" class="btn btn-primary pull-right rounded">
+                        <i class="fa fa-plus"></i> Add Activity Goal</a>
 
+                </div>
             </div>
         </div>
         <div class="row filter-row">
@@ -35,7 +35,8 @@
                     <div class="form-group form-focus">
                         <label class="control-label">From Date</label>
                         <div class="cal-icon">
-                            <input class="form-control floating datetimepicker" type="text" id="from_activity_goal_date" name="from_activity_goal_date" value="{{from_activity_goal_date}}">
+                            <input class="form-control floating datetimepicker" type="text" id="from_activity_goal_date" name="from_activity_goal_date"
+                                value="{{from_activity_goal_date}}">
                         </div>
                     </div>
                 </div>
@@ -79,10 +80,18 @@
                                 <td>{{dateFormat this.createdAt "DD-MM-YYYY, hh:mm a"}}</td>
                                 <td class="text-right">
                                     <div class="dropdown">
-                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </a>
                                         <ul class="dropdown-menu pull-right">
-                                            <li><a href="/activity-goal/edit/{{this.id}}"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                            <li><a href="/activity-goal/delete/{{this.id}}"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                                            <li>
+                                                <a href="/activity-goal/edit/{{this.id}}">
+                                                    <i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                            </li>
+                                            <li>
+                                                <a href="/activity-goal/delete/{{this.id}}">
+                                                    <i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </td>
@@ -101,6 +110,4 @@
 <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript" src="/assets/js/select2.min.js"></script>
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
-<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
-
-{{/content}}
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script> {{/content}}
