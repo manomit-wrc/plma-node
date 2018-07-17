@@ -395,7 +395,6 @@ router.get('/client', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	} else {
 		whereCondition.firm_id = req.user.firm_id;
 	}
-	
 	if (req.user.role_id != 2) {
 		whereCondition.user_id = req.user.id;
 	}

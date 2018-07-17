@@ -2,6 +2,7 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/jquery.tagsinput.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
 {{/content}}
 <div class="page-wrapper">
@@ -57,6 +58,9 @@
 									<input type="text" class="form-control floating" id="org_name" name="org_name" />
 								</div>
 							</div>
+
+	
+
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Organisation ID</label>
@@ -297,6 +301,46 @@
 						</div>
 					</div>
 
+					<div class="col-md-12">
+						<div class="form-inline m-b-15">
+							<div class="form-group m-r-5">
+								<label class="input-group">
+									<span class="input-group-addon">
+										<input type="radio" id="new-add-tag" name="add-tag" value="new" checked/>
+									</span>
+									<div class="form-control form-control-static">New Tags</div>
+									<span class="glyphicon form-control-feedback "></span>
+								</label>
+							</div>
+							<div class="form-group ">
+								<label class="input-group">
+									<span class="input-group-addon">
+										<input type="radio" id="existing-tag" name="add-tag" value="existing" />
+									</span>
+									<div class="form-control form-control-static">Existing Tags</div>
+									<span class="glyphicon form-control-feedback "></span>
+								</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<div id="add-tag-existing-client" style="display:none;">
+							<div class="form-group form-focus select-focus">
+								<label class="control-label">Select From Existing Tags</label>
+								<select id="select-existing-tags" name="existing_tags" class="select form-control floating">
+									{{#each designations}}
+									<option value="{{this.id}}">{{this.title}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div id="add-tag-client">
+								<input type="text" class="tags" id="add-new-tags" name="add_new_tags"  />
+						</div>
+					</div>
+
+
 					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">IM</label>
@@ -386,11 +430,13 @@
 <script type="text/javascript" src="/assets/js/select2.min.js"></script>
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="/assets/js/jquery.tagsinput.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function (e) {
+		$('#add-new-tags').tagsInput({width:'auto'});
 		$('#select-existing-tags').multiselect({
 			nonSelectedText: 'Select Existing Tags',
 			includeSelectAllOption: true,

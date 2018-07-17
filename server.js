@@ -7,9 +7,6 @@ const passport = require('passport');
 const path = require('path');
 const flash    = require('connect-flash');
 const lodash = require('lodash');
-const ActivityBudget = require('./models').activity_budget;
-
-
 
 const port = process.env.PORT || 5000;
 
@@ -33,7 +30,7 @@ const master_contact = require('./routes/master_contact');
 const referral = require('./routes/referral');
 const attorney = require('./routes/attorney');
 const budget_report = require('./routes/budget_report');
-
+const forgot_password = require('./routes/forgot_password');
 
 const allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -64,8 +61,6 @@ const hbs = exphbs.create({
             return a.charAt(0);
         },
 
-
-
         inArray: function(array, value, block) {
           if (array.indexOf(value) !== -1) {
             return block.fn(this);
@@ -84,7 +79,23 @@ const hbs = exphbs.create({
             return parent_category_name[0].name;
         }
     },
-     dateFormat: require('handlebars-dateformat')
+    get_activity_hour_by_goal: function(value, obj) {
+        if(value == obj.activity_goal_id) {
+            return obj.hour;
+        }
+        else {
+            return "-";
+        }
+    },
+    get_activity_amount_by_goal: function(value, obj) {
+        if(value == obj.activity_goal_id) {
+            return obj.amount;
+        }
+        else {
+            return "-";
+        }
+    },
+    dateFormat: require('handlebars-dateformat')
 }
 });
 
@@ -126,7 +137,7 @@ app.use(activity);
 app.use(master_contact);
 app.use(referral);
 app.use(attorney);
-// app.use(budget_report);
- app.use(budget_report);
+app.use(budget_report);
+app.use(forgot_password);
 /********** End **********/
 app.listen(port, () => console.log(`Server listening to port ${port}`));
