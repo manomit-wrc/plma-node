@@ -15,16 +15,18 @@ const Budget = require('../models').budget;
 const ActivityBudget = require('../models').activity_budget;
 
 var csrfProtection = csrf({
-    cookie: true
+	cookie: true
 });
 
 const router = express.Router();
 
 router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => {
 	var user_id = req.user.id;
-	
+
 	var activity_goals = await ActivityGoal.findAll({
-		where: {user_id: user_id}
+		where: {
+			user_id: user_id
+		}
 	});
 
 
@@ -39,17 +41,19 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
 			const parent_name = budgetList[i].name;
 			const child_budget = lodash.filter(budgetList, arr => arr.parent_id === budgetList[i].id);
 			var child_budget_arr = [];
-			ActivityBudget.belongsTo(Activity, {foreignKey: 'activity_id'});
+			ActivityBudget.belongsTo(Activity, {
+				foreignKey: 'activity_id'
+			});
 			for (var j = 0; j < child_budget.length; j++) {
 				const activity_budget = await ActivityBudget.findAll({
 					where: {
 						budget_id: child_budget[j].id
 					},
 					include: [{
-            			model: Activity
-       	 			}]
+						model: Activity
+					}]
 				});
-				
+
 				const hour = activity_budget.length > 0 ? activity_budget[0].hour : '';
 				const amount = activity_budget.length > 0 ? activity_budget[0].amount : '';
 				level_type = activity_budget.length > 0 ? activity_budget[0].level_type : level_type;
@@ -61,7 +65,6 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
 					"activity_goal_id": activity_budget.length > 0 ? activity_budget[0].activity.activity_goal_id : 0
 				});
 			}
-			console.log(child_budget_arr);
 			budgetArr.push({
 				"parent_name": parent_name,
 				"child_budget": child_budget_arr
@@ -77,7 +80,77 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
 		});
 	}
 
-    res.render('activity_budget_report/index', {layout: 'dashboard', activityArr, budgetArr});
+	res.render('activity_budget_report/index', {
+		layout: 'dashboard',
+		activityArr,
+		budgetArr
+	});
+});
+
+router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req, res) => {
+	var user_id = req.user.id;
+
+	var activity_data = await Activity.findAll({
+		where: {
+			activity_goal_id: req.params['id']
+		}
+	});
+	const budgetList = await Budget.findAll();
+
+	var activityArr = [];
+
+	var budgetArr = [];
+	for (var i = 0; i < budgetList.length; i++) {
+		if (budgetList[i].parent_id === 0) {
+			const parent_name = budgetList[i].name;
+			const child_budget = lodash.filter(budgetList, arr => arr.parent_id === budgetList[i].id);
+			var child_budget_arr = [];
+			ActivityBudget.belongsTo(Activity, {
+				foreignKey: 'activity_id'
+			});
+			for (var j = 0; j < child_budget.length; j++) {
+				for (var a = 0; a < activity_data.length; a++) {
+					const activity_budget = await ActivityBudget.findAll({
+						where: {
+							budget_id: child_budget[j].id,
+							activity_id: activity_data[a].id
+						},
+						include: [{
+							model: Activity
+						}]
+					});
+					const hour = activity_budget.length > 0 ? activity_budget[0].hour : '';
+					const amount = activity_budget.length > 0 ? activity_budget[0].amount : '';
+					level_type = activity_budget.length > 0 ? activity_budget[0].level_type : level_type;
+					child_budget_arr.push({
+						"id": child_budget[j].id,
+						"name": child_budget[j].name,
+						"hour": hour,
+						"amount": amount,
+						"activity_goal_id": activity_budget.length > 0 ? activity_budget[0].activity.id : 0
+					});
+				}
+			}
+			budgetArr.push({
+				"parent_name": parent_name,
+				"child_budget": child_budget_arr
+			});
+		}
+	}
+
+
+	for (var j = 0; j < activity_data.length; j++) {
+		activityArr.push({
+			"activity_name": activity_data[j].activity_name,
+			"activity_goal_id": activity_data[j].id,
+			"budget_list": budgetArr
+		});
+	}
+	res.render('activity_budget_report/activity_details', {
+		layout: 'dashboard',
+		activityArr,
+		budgetArr
+	});
 });
 
 module.exports = router;
