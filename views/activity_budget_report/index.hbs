@@ -1,7 +1,8 @@
 {{#content "style" mode="prepend"}}
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+{{/content}}
 
 <div class="page-wrapper">
     <div class="content container-fluid">
@@ -17,13 +18,13 @@
                                 <td style="height: 91px; width: 200px; vertical-align: middle">
                                     <strong>Marketing Budget Summary</strong>
                                 </td>
-                                <td style=" height: 150px; text-align:center; height: 35px; vertical-align: middle">
+                                <td style="height: 150px; text-align:center; height: 35px; vertical-align: middle">
                                     <strong>Page Total</strong>
                                 </td>
                             </tr>
                             <tr>
                                 <td width="45%" style="height: 35px"></td>
-                                <td width="35%" style=" text-align:center; height: 35px; vertical-align: middle">
+                                <td width="35%" style="text-align: center; height: 35px; vertical-align: middle">
                                     <strong>Budget</strong>
                                 </td>
                             </tr>
@@ -31,14 +32,14 @@
                         <tbody>
                             {{#each budgetArr}}
                                 <tr>
-                                    <td colspan="3" style=" padding: 0;">
+                                    <td colspan="3" style="padding: 0;">
                                         <table width="100%" class="table table-bordered">
                                             <tbody>
                                                 <tr>
-                                                    <td width="45%" style=" border-top: none; height: 40px; vertical-align: middle; text-align: center;" title="{{this.parent_name}}">
+                                                    <td width="45%" style="border-top: none; height: 40px; vertical-align: middle; text-align: center;" title="{{this.parent_name}}">
                                                         <strong>{{this.parent_name}}</strong>
                                                     </td>
-                                                    <td width="35%" style=" padding:0; text-align:center; height: 40px">
+                                                    <td width="35%" style="padding:0; text-align:center; height: 40px">
                                                         <table width="100%" height="40px">
                                                             <tbody>
                                                                 <tr>
@@ -60,11 +61,12 @@
                                                             <table width="100%" style="height: 40px">
                                                                 <tbody>
                                                                     <tr>
-                                                                        <td width="50%" style=" border-right: 1px solid #e7ecf1; height: 40px; vertical-align: middle; text-align: center;">
+                                                                        <td width="50%" style="border-right: 1px solid #e7ecf1; height: 40px; vertical-align: middle; text-align: center;">
                                                                             2.00
                                                                         </td>
                                                                         <td width="50%" style="height: 40px; vertical-align: middle; text-align: center;">
-                                                                            50.00 </td>
+                                                                            50.00
+                                                                        </td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -105,7 +107,7 @@
                                     <table width="100%" height="35px">
                                         <tbody>
                                             <tr>
-                                                <td width="50%" style=" height: 35px; border-right: 1px solid #e7ecf1; background:#ddd; color:#000; font-weight:800; vertical-align: middle; text-align: center;">
+                                                <td width="50%" style=" height: 35px; border-right: 1px solid #e7ecf1; background:#ddd; color:#000; font-weight: 800; vertical-align: middle; text-align: center;">
                                                     <strong>113</strong>
                                                 </td>
                                                 <td width="50%" style=" height: 35px; background:#ddd; color:#000; font-weight:800; vertical-align: middle; text-align: center;">
@@ -146,7 +148,7 @@
                                             <table width="100%" class="table-bordered">
                                                 <tbody>
                                                     <tr>
-                                                        <td width="50px" height="40px" style=" border-right: 1px solid #e7ecf1; text-align: center">
+                                                        <td width="50px" height="40px" style="border-left: none; border-right: 1px solid #e7ecf1; text-align: center">
                                                             <strong>Hours</strong>
                                                         </td>
                                                         <td width="50px" style="text-align: center;">
@@ -155,35 +157,24 @@
                                                     </tr>
                                                     {{#each this.child_budget}}
                                                     <tr>
-                                                        <td width="50%" height="41px" style=" border-right: 1px solid #e7ecf1; text-align: center;">
+                                                        <td width="50%" height="40px" style="border-left: none; border-right: 1px solid #e7ecf1; text-align: center;">
                                                             {{get_activity_hour_by_goal ../../this.activity_goal_id this}}
-                                                            
-                                                            
                                                         </td>
                                                         <td width="50%" style="text-align: center" class="total_cost">
-                                                            {{get_activity_amount_by_goal ../../this.activity_goal_id this}}</td>
+                                                            {{get_activity_amount_by_goal ../../this.activity_goal_id this}}
+                                                        </td>
                                                     </tr>
                                                     {{/each}}
                                                     <tr>
-                                                        <td width="100%" height="35px" colspan="2" style=" border:none;">
-                                                            <table width="100%" height="35px">
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td width="50%" height="35px" style=" border-left:none; border-right: 1px solid #e7ecf1; background:#ddd; color:#000; font-weight:800; text-align: center">
-                                                                            14 </td>
-                                                                        <td width="50%" style=" background:#ddd; color:#000; font-weight:800; text-align: center">
-                                                                            250 </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
+                                                        <td width="50%" height="40px" style="border-left: none; border-right: 1px solid #e7ecf1; background:#ddd; color: #000; font-weight: 800; text-align: center">
+                                                            <div class="activity_goal_hr_total">4</div>
+                                                        </td>
+                                                        <td width="50%" style="background: #ddd; color: #000; font-weight: 800; text-align: center">
+                                                            <div class="activity_goal_amt_total">1500</div>
                                                         </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                        </div>
-                                        <div style=" width: 100%; display: block; margin-bottom: 20px">
-                                        </div>
-                                        <div style=" width: 100%; display: block; margin-bottom: 20px">
                                         </div>
                                     </td>
                                 </tr>
@@ -220,4 +211,5 @@
 <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript" src="/assets/js/select2.min.js"></script>
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
-<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script> {{/content}}
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+{{/content}}
