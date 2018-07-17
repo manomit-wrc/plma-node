@@ -81,12 +81,34 @@ const hbs = exphbs.create({
         }
     },
     if_eq_budget: function(a, b, opts) {
-        console.log(a,b);
+        //console.log(a,b);
         if(a == b.activity_goal_id) {
             return opts.fn(this);
         }
         else {
             return opts.inverse(this);
+        }
+    },
+    get_budget_hour: function(value, obj) {
+        var x = 0;
+        const hour = lodash.filter(obj, arr => arr.activity_goal_id === value)
+        if(hour.length > 0) {
+            const total_hour = lodash.map(hour, arr => x + parseInt(arr.hour));
+            return total_hour[0];
+        }
+        else {
+            return "-";
+        }
+    },
+    get_budget_amount: function(value, obj) {
+        var x = 0;
+        const amount = lodash.filter(obj, arr => arr.activity_goal_id === value)
+        if(amount.length > 0) {
+            const total_amount = lodash.map(amount, arr => x + parseInt(arr.amount));
+            return total_amount[0];
+        }
+        else {
+            return "-";
         }
     },
     dateFormat: require('handlebars-dateformat')

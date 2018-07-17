@@ -52,19 +52,11 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
 				    attributes: ['budget_id', 'activity_goal_id', [Sequelize.fn('sum', Sequelize.col('hour')), 'hour'], [Sequelize.fn('sum', Sequelize.col('amount')), 'amount']],
 				    group: ['budget_id', 'activity_goal_id']
 				});
-
 				const temp_arr = lodash.filter(activity_budget, arr => arr.budget_id === child_budget[j].id);
-				
-				const hour = temp_arr.length > 0 ? temp_arr[0].hour : '-';
-				const amount = temp_arr.length > 0 ? temp_arr[0].amount : '-';
-				const activity_goal_id = temp_arr.length > 0 ? temp_arr[0].activity_goal_id : 0;
-
 				child_budget_arr.push({
 					"id": child_budget[j].id,
 					"name": child_budget[j].name,
-					"hour": hour,
-					"amount": amount,
-					"activity_goal_id": activity_goal_id
+					"budget_display": temp_arr
 				});
 			}
 
