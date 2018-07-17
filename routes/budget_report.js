@@ -89,11 +89,16 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
 
 router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req, res) => {
 	var user_id = req.user.id;
-
+	Activity.hasMany(ActivityBudget, {
+		foreignKey: 'activity_id'
+	});
 	var activity_data = await Activity.findAll({
 		where: {
 			activity_goal_id: req.params['id']
-		}
+		},
+		include: [{
+			model: ActivityBudget
+		}]
 	});
 	const budgetList = await Budget.findAll();
 
@@ -109,27 +114,15 @@ router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req,
 				foreignKey: 'activity_id'
 			});
 			for (var j = 0; j < child_budget.length; j++) {
-				for (var a = 0; a < activity_data.length; a++) {
-					const activity_budget = await ActivityBudget.findAll({
-						where: {
-							budget_id: child_budget[j].id,
-							activity_id: activity_data[a].id
-						},
-						include: [{
-							model: Activity
-						}]
-					});
-					const hour = activity_budget.length > 0 ? activity_budget[0].hour : '';
-					const amount = activity_budget.length > 0 ? activity_budget[0].amount : '';
-					level_type = activity_budget.length > 0 ? activity_budget[0].level_type : level_type;
-					child_budget_arr.push({
-						"id": child_budget[j].id,
-						"name": child_budget[j].name,
-						"hour": hour,
-						"amount": amount,
-						"activity_goal_id": activity_budget.length > 0 ? activity_budget[0].activity.id : 0
-					});
-				}
+				const activity_budget = await ActivityBudget.findAll({
+					where: {
+						budget_id: child_budget[j].id
+					}
+				});
+				child_budget_arr.push({
+					"id": child_budget[j].id,
+					"name": child_budget[j].name,
+				});
 			}
 			budgetArr.push({
 				"parent_name": parent_name,
@@ -137,12 +130,16 @@ router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req,
 			});
 		}
 	}
+	for (var a = 0; a < activity_data.length; a++) {
+		const activity_budget_data = await ActivityBudget.findAll({
+			where: {
+				activity_id: activity_data[a].id
+			}
+		});
 
-
-	for (var j = 0; j < activity_data.length; j++) {
 		activityArr.push({
-			"activity_name": activity_data[j].activity_name,
-			"activity_goal_id": activity_data[j].id,
+			"activity_name": activity_data[a].activity_name,
+			"activity_id": activity_data[a].id,
 			"budget_list": budgetArr
 		});
 	}
