@@ -1,17 +1,19 @@
 {{#content "style" mode="prepend"}}
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
-{{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
 
 <div class="page-wrapper">
     <div class="content container-fluid">
-        <div class="row">
-            <div class="col-xs-4">
-                <h4 class="page-title">Industry Type</h4>
-            </div>
-            <div class="col-xs-8 text-right m-b-30">
-                <a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_user"><i class="fa fa-plus"></i> Add Industry Type</a>
+        <div class="pg-header">
+            <div class="row">
+                <div class="col-xs-4">
+                    <h4 class="page-title">Industry Type</h4>
+                </div>
+                <div class="col-xs-8 text-right">
+                    <a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_user">
+                        <i class="fa fa-plus"></i> Add Industry Type</a>
+                </div>
             </div>
         </div>
         <div class="row filter-row">
@@ -19,16 +21,15 @@
                 <div class="col-sm-4 col-xs-6">
                     <div class="form-group form-focus">
                         <label class="control-label">Industry Type Name</label>
-                        <input type="text"  name="industry_name" id="industry_name" class="form-control floating"
-                        value="{{industry_name}}" />
+                        <input type="text" name="industry_name" id="industry_name" class="form-control floating" value="{{industry_name}}" />
                     </div>
                 </div>
-                <div class="col-sm-4 col-xs-6">  
+                <div class="col-sm-4 col-xs-6">
                     <button type="submit" class="btn btn-success btn-block">Search</button>
                 </div>
                 <div class="col-sm-4 col-xs-6">
                     <a href="/industry" class="btn btn-success btn-block"> Clear </a>
-                </div>  
+                </div>
             </form>
         </div>
         <div class="row">
@@ -51,10 +52,21 @@
                                 <td>{{dateFormat this.createdAt "DD-MM-YYYY, hh:mm a"}}</td>
                                 <td class="text-right">
                                     <div class="dropdown">
-                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </a>
                                         <ul class="dropdown-menu pull-right">
-                                            <li><a href="#" data-toggle="modal" data-target="#edit_users" data-industry-id="{{this.id}}" data-code="{{this.code}}" data-name="{{this.industry_name}}" data-remarks="{{this.remarks}}" id="edit-industry"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                            <li><a href="#" data-toggle="modal" data-target="#delete_users" data-industry-id="{{this.id}}" id="delete-industry"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#edit_users" data-industry-id="{{this.id}}"
+                                                    data-code="{{this.code}}" data-name="{{this.industry_name}}" data-remarks="{{this.remarks}}"
+                                                    id="edit-industry">
+                                                    <i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#delete_users" data-industry-id="{{this.id}}"
+                                                    id="delete-industry">
+                                                    <i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </td>
@@ -81,18 +93,22 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="control-label">Industry Type Name<span class="text-danger">*</span></label>
+                                <label class="control-label">Industry Type Name
+                                    <span class="text-danger">*</span>
+                                </label>
                                 <input class="form-control" type="text" id="name" name="name">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="control-label">Remarks<span class="text-danger">*</span></label>
+                                <label class="control-label">Remarks
+                                    <span class="text-danger">*</span>
+                                </label>
                                 <textarea class="form-control" id="remarks" name="remarks" rows="5"></textarea>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="m-t-20 text-center">
                         <button class="btn btn-primary" type="button" id="btnAddIndustry">Create Industry Type</button>
                     </div>
@@ -114,13 +130,17 @@
                         <input type="hidden" name="_csrf" value="{{csrfToken}}">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="control-label">Industry Type Name<span class="text-danger">*</span></label>
+                                <label class="control-label">Industry Type Name
+                                    <span class="text-danger">*</span>
+                                </label>
                                 <input class="form-control" type="text" id="edit_name" name="edit_name">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="control-label">Remarks<span class="text-danger">*</span></label>
+                                <label class="control-label">Remarks
+                                    <span class="text-danger">*</span>
+                                </label>
                                 <textarea class="form-control" id="edit_remarks" name="edit_remarks" rows="5"></textarea>
                             </div>
                         </div>
@@ -142,7 +162,8 @@
             <form>
                 <div class="modal-body card-box">
                     <p>Are you sure want to delete this?</p>
-                    <div class="m-t-20"> <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                    <div class="m-t-20">
+                        <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
                         <button type="submit" class="btn btn-danger delIndustryBtn">Delete</button>
                     </div>
                 </div>
@@ -160,175 +181,171 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function(e) {
+    $(document).ready(function (e) {
 
-    $("#btnAddIndustry").click(function() {
-        $("#addIndustry").submit();
-    });          
+        $("#btnAddIndustry").click(function () {
+            $("#addIndustry").submit();
+        });
 
-    $("#addIndustry").validate({
-        rules: {
-            name: {
-                required: true
-            },
-            remarks: {
-                required: true
-            }
-        },
-        messages: {
-            name: {
-                required: "Industry Type Name can't be blank"
-            },
-            remarks: {
-                required: "Remarks can't be blank"
-            }
-        },
-        submitHandler:function(form) {
-            var name = $("#name").val(),
-            remarks = $("#remarks").val();
-            $.ajax({
-                type: "POST",
-                url: "/industry/add",
-                data: {
-                    name: name,
-                    remarks: remarks
+        $("#addIndustry").validate({
+            rules: {
+                name: {
+                    required: true
                 },
-                beforeSend: function(xhr) {
-                    xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
-
-                    $("#btnAddIndustry").prop('disabled', true);
-                    $("#btnAddIndustry").html("Loading...");
-                },
-                success:function(response) {
-                    if(response.add_industry == 1)
-                    {
-                        $(`<div class="alert alert-success"><strong>Success! </strong>Industry Type Added Successfully</div>`).insertBefore("#addIndustry");
-                        setTimeout(function() {
-                            window.location.href="/industry";
-                        }, 2000);
-                    }
-                    else if(response.add_industry == 2){
-                        $(`<div class="alert alert-danger"><strong>Error! </strong>Industry Type Code Already exist</div>`).insertBefore("#addIndustry");
-                        $(".alert").fadeTo(2000, 500).slideUp(500, function(){
-                            $(".alert").remove();
-                        });
-                        $("#btnAddIndustry").prop('disabled', false);
-                        $("#btnAddIndustry").html("Create Industry Type");
-                    }
+                remarks: {
+                    required: true
                 }
-            });
-        }
-    });
-});
-
-/*=========================Starts Edit industry==========================*/
-
-$(document).on('click', '#edit-industry', function(e){
-    var industry_id = $(this).data('industry-id');
-    var name = $(this).data('name');
-    var remarks = $(this).data('remarks');
-
-    $("#edit_name").val(name);
-    $("#edit_remarks").val(remarks);
-
-    localStorage.setItem('industry_id',industry_id);
-
-    $('.industry-modal').modal("show");
-});
-
-$(document).ready(function(e) {
-
-    $("#btnEditIndustry").click(function() {
-        $("#edit_industry").submit();
-    });          
-
-    $("#edit_industry").validate({
-        rules: {
-            edit_name: {
-                required: true
             },
-            edit_remarks: {
-                required: true
-            }
-        },
-        messages: {
-            edit_name: {
-                required: "Industry Type Name can't be blank"
-            },
-            edit_remarks: {
-                required: "Remarks can't be blank"
-            }
-        },
-        submitHandler:function(form) {
-            $.ajax({
-                type: "POST",
-                url:"/admin/edit-industry/"+localStorage.getItem("industry_id"),
-                data:$("#edit_industry").serialize()+"&industry_id="+localStorage.getItem("industry_id"),
-                beforeSend: function(xhr) {
-                    xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
-
-                    $("#btnEditIndustry").prop('disabled', true);
-                    $("#btnEditIndustry").html("Loading...");
+            messages: {
+                name: {
+                    required: "Industry Type Name can't be blank"
                 },
-                success:function(response){
-                    if(response.edit_industry == 1)
-                    {
-                        $(`<div class="alert alert-success"><strong>Success! </strong>Industry Type Edited Successfully</div>`).insertBefore("#edit_industry");
-                        setTimeout(function() {
-                            window.location.href="/industry";
-                        }, 2000);
-                    }
-                    else if(response.edit_industry == 2){
-                        $(`<div class="alert alert-danger"><strong>Error! </strong>Industry Type Code Already exist</div>`).insertBefore("#edit_industry");
-                        $(".alert").fadeTo(2000, 500).slideUp(500, function(){
-                            $(".alert").remove();
-                        });
-                        $("#btnEditIndustry").prop('disabled', false);
-                        $("#btnEditIndustry").html("Edit Industry Type");
-                    }
-                },
-                error:function(xhr){
-
+                remarks: {
+                    required: "Remarks can't be blank"
                 }
-            });
-        }
-    });
-});
+            },
+            submitHandler: function (form) {
+                var name = $("#name").val(),
+                    remarks = $("#remarks").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/industry/add",
+                    data: {
+                        name: name,
+                        remarks: remarks
+                    },
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
 
-
-
-/*=========================Ends Edit industry==========================*/
-/*=========================starts delete industry==========================*/
-
-$(document).on('click','#delete-industry', function(e){
-    var industry_id = $(this).data('industry-id');
-
-    localStorage.setItem('industry_id',industry_id);
-
-    $('.del-industry').modal("show");
-});
-$(document).on('click', '.delIndustryBtn', function(e){
-    $.ajax({
-        type: "POST",
-        url:"/admin/delete-industry/"+localStorage.getItem("industry_id"),
-        data:"&industry_id="+localStorage.getItem("industry_id"),
-        beforeSend: function(xhr) {
-            xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
-
-        },
-        success:function(response){
-            if(response.del_industry == 1)
-            {
-                window.location.href="/industry";
+                        $("#btnAddIndustry").prop('disabled', true);
+                        $("#btnAddIndustry").html("Loading...");
+                    },
+                    success: function (response) {
+                        if (response.add_industry == 1) {
+                            $(`<div class="alert alert-success"><strong>Success! </strong>Industry Type Added Successfully</div>`).insertBefore("#addIndustry");
+                            setTimeout(function () {
+                                window.location.href = "/industry";
+                            }, 2000);
+                        }
+                        else if (response.add_industry == 2) {
+                            $(`<div class="alert alert-danger"><strong>Error! </strong>Industry Type Code Already exist</div>`).insertBefore("#addIndustry");
+                            $(".alert").fadeTo(2000, 500).slideUp(500, function () {
+                                $(".alert").remove();
+                            });
+                            $("#btnAddIndustry").prop('disabled', false);
+                            $("#btnAddIndustry").html("Create Industry Type");
+                        }
+                    }
+                });
             }
-        },
-        error:function(xhr){
-
-        }
+        });
     });
-    e.preventDefault();
-})
+
+    /*=========================Starts Edit industry==========================*/
+
+    $(document).on('click', '#edit-industry', function (e) {
+        var industry_id = $(this).data('industry-id');
+        var name = $(this).data('name');
+        var remarks = $(this).data('remarks');
+
+        $("#edit_name").val(name);
+        $("#edit_remarks").val(remarks);
+
+        localStorage.setItem('industry_id', industry_id);
+
+        $('.industry-modal').modal("show");
+    });
+
+    $(document).ready(function (e) {
+
+        $("#btnEditIndustry").click(function () {
+            $("#edit_industry").submit();
+        });
+
+        $("#edit_industry").validate({
+            rules: {
+                edit_name: {
+                    required: true
+                },
+                edit_remarks: {
+                    required: true
+                }
+            },
+            messages: {
+                edit_name: {
+                    required: "Industry Type Name can't be blank"
+                },
+                edit_remarks: {
+                    required: "Remarks can't be blank"
+                }
+            },
+            submitHandler: function (form) {
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/edit-industry/" + localStorage.getItem("industry_id"),
+                    data: $("#edit_industry").serialize() + "&industry_id=" + localStorage.getItem("industry_id"),
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+                        $("#btnEditIndustry").prop('disabled', true);
+                        $("#btnEditIndustry").html("Loading...");
+                    },
+                    success: function (response) {
+                        if (response.edit_industry == 1) {
+                            $(`<div class="alert alert-success"><strong>Success! </strong>Industry Type Edited Successfully</div>`).insertBefore("#edit_industry");
+                            setTimeout(function () {
+                                window.location.href = "/industry";
+                            }, 2000);
+                        }
+                        else if (response.edit_industry == 2) {
+                            $(`<div class="alert alert-danger"><strong>Error! </strong>Industry Type Code Already exist</div>`).insertBefore("#edit_industry");
+                            $(".alert").fadeTo(2000, 500).slideUp(500, function () {
+                                $(".alert").remove();
+                            });
+                            $("#btnEditIndustry").prop('disabled', false);
+                            $("#btnEditIndustry").html("Edit Industry Type");
+                        }
+                    },
+                    error: function (xhr) {
+
+                    }
+                });
+            }
+        });
+    });
+
+
+
+    /*=========================Ends Edit industry==========================*/
+    /*=========================starts delete industry==========================*/
+
+    $(document).on('click', '#delete-industry', function (e) {
+        var industry_id = $(this).data('industry-id');
+
+        localStorage.setItem('industry_id', industry_id);
+
+        $('.del-industry').modal("show");
+    });
+    $(document).on('click', '.delIndustryBtn', function (e) {
+        $.ajax({
+            type: "POST",
+            url: "/admin/delete-industry/" + localStorage.getItem("industry_id"),
+            data: "&industry_id=" + localStorage.getItem("industry_id"),
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+            },
+            success: function (response) {
+                if (response.del_industry == 1) {
+                    window.location.href = "/industry";
+                }
+            },
+            error: function (xhr) {
+
+            }
+        });
+        e.preventDefault();
+    })
 
 /*=========================Ends delete budget==========================*/
-</script>
-{{/content}}
+</script> {{/content}}

@@ -1,17 +1,19 @@
 {{#content "style" mode="prepend"}}
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
-{{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
 
 <div class="page-wrapper">
     <div class="content container-fluid">
-        <div class="row">
-            <div class="col-xs-4">
-                <h4 class="page-title">Budget</h4>
-            </div>
-            <div class="col-xs-8 text-right m-b-30">
-                <a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_user"><i class="fa fa-plus"></i> Add Budget</a>
+        <div class="pg-header">
+            <div class="row">
+                <div class="col-xs-4">
+                    <h4 class="page-title">Budget</h4>
+                </div>
+                <div class="col-xs-8 text-right">
+                    <a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_user">
+                        <i class="fa fa-plus"></i> Add Budget</a>
+                </div>
             </div>
         </div>
         <div class="row filter-row">
@@ -19,16 +21,15 @@
                 <div class="col-sm-4 col-xs-6">
                     <div class="form-group form-focus">
                         <label class="control-label">Budget Name</label>
-                        <input type="text"  name="budget_name" id="budget_name" class="form-control floating"
-                        value="{{budget_name}}" />
+                        <input type="text" name="budget_name" id="budget_name" class="form-control floating" value="{{budget_name}}" />
                     </div>
                 </div>
-                <div class="col-sm-4 col-xs-6">  
+                <div class="col-sm-4 col-xs-6">
                     <button type="submit" class="btn btn-success btn-block">Search</button>
                 </div>
                 <div class="col-sm-4 col-xs-6">
                     <a href="/budget" class="btn btn-success btn-block"> Clear </a>
-                </div>  
+                </div>
             </form>
         </div>
         <div class="row">
@@ -53,10 +54,21 @@
                                 <td>{{dateFormat this.createdAt "DD-MM-YYYY, hh:mm a"}}</td>
                                 <td class="text-right">
                                     <div class="dropdown">
-                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </a>
                                         <ul class="dropdown-menu pull-right">
-                                            <li><a href="#" data-toggle="modal" data-target="#edit_users" data-budget-id="{{this.id}}" data-parent-id="{{this.parent_id}}" data-name="{{this.name}}" data-remarks="{{this.remarks}}" id="edit-budget"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                            <li><a href="#" data-toggle="modal" data-target="#delete_users" data-budget-id="{{this.id}}" id="delete-budget"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#edit_users" data-budget-id="{{this.id}}"
+                                                    data-parent-id="{{this.parent_id}}" data-name="{{this.name}}" data-remarks="{{this.remarks}}"
+                                                    id="edit-budget">
+                                                    <i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#delete_users" data-budget-id="{{this.id}}"
+                                                    id="delete-budget">
+                                                    <i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </td>
@@ -86,28 +98,30 @@
                                 <label class="control-label">Budget Head</label>
                                 <select class="select form-control" id="parent_id" name="parent_id">
                                     <option value="0">Select Budget Head</option>
-                                    {{#each budget}}
-                                    {{#if_eq this.parent_id "0"}}
+                                    {{#each budget}} {{#if_eq this.parent_id "0"}}
                                     <option value="{{this.id}}">{{this.name}}</option>
-                                    {{/if_eq}}
-                                    {{/each}}
+                                    {{/if_eq}} {{/each}}
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="control-label">Budget Name<span class="text-danger">*</span></label>
+                                <label class="control-label">Budget Name
+                                    <span class="text-danger">*</span>
+                                </label>
                                 <input class="form-control" type="text" id="name" name="name">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="control-label">Remarks<span class="text-danger">*</span></label>
+                                <label class="control-label">Remarks
+                                    <span class="text-danger">*</span>
+                                </label>
                                 <textarea class="form-control" id="remarks" name="remarks" rows="5"></textarea>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="m-t-20 text-center">
                         <button class="btn btn-primary" type="button" id="btnAddBudget">Create Budget</button>
                     </div>
@@ -132,23 +146,25 @@
                                 <label class="control-label">Budget Head</label>
                                 <select class="select form-control" id="edit_parent_id" name="edit_parent_id">
                                     <option value="0">Select Budget Head</option>
-                                    {{#each budget}}
-                                     {{#if_eq this.parent_id "0"}}
+                                    {{#each budget}} {{#if_eq this.parent_id "0"}}
                                     <option value="{{this.id}}">{{this.name}}</option>
-                                    {{/if_eq}}
-                                    {{/each}}
+                                    {{/if_eq}} {{/each}}
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="control-label">Budget Name<span class="text-danger">*</span></label>
+                                <label class="control-label">Budget Name
+                                    <span class="text-danger">*</span>
+                                </label>
                                 <input class="form-control" type="text" id="edit_name" name="edit_name">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="control-label">Remarks<span class="text-danger">*</span></label>
+                                <label class="control-label">Remarks
+                                    <span class="text-danger">*</span>
+                                </label>
                                 <textarea class="form-control" id="edit_remarks" name="edit_remarks" rows="5"></textarea>
                             </div>
                         </div>
@@ -170,7 +186,8 @@
             <form>
                 <div class="modal-body card-box">
                     <p>Are you sure want to delete this?</p>
-                    <div class="m-t-20"> <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                    <div class="m-t-20">
+                        <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
                         <button type="submit" class="btn btn-danger delBudgetBtn">Delete</button>
                     </div>
                 </div>
@@ -188,180 +205,176 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function(e) {
+    $(document).ready(function (e) {
 
-    $("#btnAddBudget").click(function() {
-        $("#addBudget").submit();
-    });          
+        $("#btnAddBudget").click(function () {
+            $("#addBudget").submit();
+        });
 
-    $("#addBudget").validate({
-        rules: {
-            name: {
-                required: true
-            },
-            remarks: {
-                required: true
-            }
-        },
-        messages: {
-            name: {
-                required: "Budget Name can't be blank"
-            },
-            remarks: {
-                required: "Remarks can't be blank"
-            }
-        },
-        submitHandler:function(form) {
-            var name = $("#name").val(),
-            parent_id = $("#parent_id").val(),
-            remarks = $("#remarks").val();
-            $.ajax({
-                type: "POST",
-                url: "/budget/add",
-                data: {
-                    name: name,
-                    parent_id: parent_id,
-                    remarks: remarks
+        $("#addBudget").validate({
+            rules: {
+                name: {
+                    required: true
                 },
-                beforeSend: function(xhr) {
-                    xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
-
-                    $("#btnAddBudget").prop('disabled', true);
-                    $("#btnAddBudget").html("Loading...");
-                },
-                success:function(response) {
-                    if(response.add_budget == 1)
-                    {
-                        $(`<div class="alert alert-success"><strong>Success! </strong>Budget Added Successfully</div>`).insertBefore("#addBudget");
-                        setTimeout(function() {
-                            window.location.href="/budget";
-                        }, 2000);
-                    }
-                    else if(response.add_budget == 2){
-                        $(`<div class="alert alert-danger"><strong>Error! </strong>Budget Code Already exist</div>`).insertBefore("#addBudget");
-                        $(".alert").fadeTo(2000, 500).slideUp(500, function(){
-                            $(".alert").remove();
-                        });
-                        $("#btnAddBudget").prop('disabled', false);
-                        $("#btnAddBudget").html("Create Budget");
-                    }
+                remarks: {
+                    required: true
                 }
-            });
-        }
-    });
-});
-
-/*=========================Starts Edit budget==========================*/
-
-$(document).on('click', '#edit-budget', function(e){
-    var budget_id = $(this).data('budget-id');
-    var parent_id = $(this).data('parent-id');
-    var name = $(this).data('name');
-    var remarks = $(this).data('remarks');
-
-    $("#edit_name").val(name);
-    $('#edit_parent_id').val(parent_id);
-    $('#edit_parent_id').trigger('change');
-    $("#edit_remarks").val(remarks);
-
-    localStorage.setItem('budget_id',budget_id);
-
-    $('.budget-modal').modal("show");
-});
-
-$(document).ready(function(e) {
-
-    $("#btnEditBudget").click(function() {
-        $("#edit_budget").submit();
-    });          
-
-    $("#edit_budget").validate({
-        rules: {
-            edit_name: {
-                required: true
             },
-            edit_remarks: {
-                required: true
-            }
-        },
-        messages: {
-            edit_name: {
-                required: "Budget Name can't be blank"
-            },
-            edit_remarks: {
-                required: "Remarks can't be blank"
-            }
-        },
-        submitHandler:function(form) {
-            $.ajax({
-                type: "POST",
-                url:"/admin/edit-budget/"+localStorage.getItem("budget_id"),
-                data:$("#edit_budget").serialize()+"&budget_id="+localStorage.getItem("budget_id"),
-                beforeSend: function(xhr) {
-                    xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
-
-                    $("#btnEditBudget").prop('disabled', true);
-                    $("#btnEditBudget").html("Loading...");
+            messages: {
+                name: {
+                    required: "Budget Name can't be blank"
                 },
-                success:function(response){
-                    if(response.edit_budget == 1)
-                    {
-                        $(`<div class="alert alert-success"><strong>Success! </strong>Budget Edited Successfully</div>`).insertBefore("#edit_budget");
-                        setTimeout(function() {
-                            window.location.href="/budget";
-                        }, 2000);
-                    }
-                    else if(response.edit_budget == 2){
-                        $(`<div class="alert alert-danger"><strong>Error! </strong>Budget Code Already exist</div>`).insertBefore("#edit_budget");
-                        $(".alert").fadeTo(2000, 500).slideUp(500, function(){
-                            $(".alert").remove();
-                        });
-                        $("#btnEditBudget").prop('disabled', false);
-                        $("#btnEditBudget").html("Edit Budget");
-                    }
-                },
-                error:function(xhr){
-
+                remarks: {
+                    required: "Remarks can't be blank"
                 }
-            });
-        }
-    });
-});
+            },
+            submitHandler: function (form) {
+                var name = $("#name").val(),
+                    parent_id = $("#parent_id").val(),
+                    remarks = $("#remarks").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/budget/add",
+                    data: {
+                        name: name,
+                        parent_id: parent_id,
+                        remarks: remarks
+                    },
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
 
-
-
-/*=========================Ends Edit Budget==========================*/
-/*=========================starts delete Budget==========================*/
-
-$(document).on('click','#delete-budget', function(e){
-    var budget_id = $(this).data('budget-id');
-
-    localStorage.setItem('budget_id',budget_id);
-
-    $('.del-budget').modal("show");
-});
-$(document).on('click', '.delBudgetBtn', function(e){
-    $.ajax({
-        type: "POST",
-        url:"/admin/delete-budget/"+localStorage.getItem("budget_id"),
-        data:"&budget_id="+localStorage.getItem("budget_id"),
-        beforeSend: function(xhr) {
-            xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
-
-        },
-        success:function(response){
-            if(response.del_budget == 1)
-            {
-                window.location.href="/budget";
+                        $("#btnAddBudget").prop('disabled', true);
+                        $("#btnAddBudget").html("Loading...");
+                    },
+                    success: function (response) {
+                        if (response.add_budget == 1) {
+                            $(`<div class="alert alert-success"><strong>Success! </strong>Budget Added Successfully</div>`).insertBefore("#addBudget");
+                            setTimeout(function () {
+                                window.location.href = "/budget";
+                            }, 2000);
+                        }
+                        else if (response.add_budget == 2) {
+                            $(`<div class="alert alert-danger"><strong>Error! </strong>Budget Code Already exist</div>`).insertBefore("#addBudget");
+                            $(".alert").fadeTo(2000, 500).slideUp(500, function () {
+                                $(".alert").remove();
+                            });
+                            $("#btnAddBudget").prop('disabled', false);
+                            $("#btnAddBudget").html("Create Budget");
+                        }
+                    }
+                });
             }
-        },
-        error:function(xhr){
-
-        }
+        });
     });
-    e.preventDefault();
-})
+
+    /*=========================Starts Edit budget==========================*/
+
+    $(document).on('click', '#edit-budget', function (e) {
+        var budget_id = $(this).data('budget-id');
+        var parent_id = $(this).data('parent-id');
+        var name = $(this).data('name');
+        var remarks = $(this).data('remarks');
+
+        $("#edit_name").val(name);
+        $('#edit_parent_id').val(parent_id);
+        $('#edit_parent_id').trigger('change');
+        $("#edit_remarks").val(remarks);
+
+        localStorage.setItem('budget_id', budget_id);
+
+        $('.budget-modal').modal("show");
+    });
+
+    $(document).ready(function (e) {
+
+        $("#btnEditBudget").click(function () {
+            $("#edit_budget").submit();
+        });
+
+        $("#edit_budget").validate({
+            rules: {
+                edit_name: {
+                    required: true
+                },
+                edit_remarks: {
+                    required: true
+                }
+            },
+            messages: {
+                edit_name: {
+                    required: "Budget Name can't be blank"
+                },
+                edit_remarks: {
+                    required: "Remarks can't be blank"
+                }
+            },
+            submitHandler: function (form) {
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/edit-budget/" + localStorage.getItem("budget_id"),
+                    data: $("#edit_budget").serialize() + "&budget_id=" + localStorage.getItem("budget_id"),
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+                        $("#btnEditBudget").prop('disabled', true);
+                        $("#btnEditBudget").html("Loading...");
+                    },
+                    success: function (response) {
+                        if (response.edit_budget == 1) {
+                            $(`<div class="alert alert-success"><strong>Success! </strong>Budget Edited Successfully</div>`).insertBefore("#edit_budget");
+                            setTimeout(function () {
+                                window.location.href = "/budget";
+                            }, 2000);
+                        }
+                        else if (response.edit_budget == 2) {
+                            $(`<div class="alert alert-danger"><strong>Error! </strong>Budget Code Already exist</div>`).insertBefore("#edit_budget");
+                            $(".alert").fadeTo(2000, 500).slideUp(500, function () {
+                                $(".alert").remove();
+                            });
+                            $("#btnEditBudget").prop('disabled', false);
+                            $("#btnEditBudget").html("Edit Budget");
+                        }
+                    },
+                    error: function (xhr) {
+
+                    }
+                });
+            }
+        });
+    });
+
+
+
+    /*=========================Ends Edit Budget==========================*/
+    /*=========================starts delete Budget==========================*/
+
+    $(document).on('click', '#delete-budget', function (e) {
+        var budget_id = $(this).data('budget-id');
+
+        localStorage.setItem('budget_id', budget_id);
+
+        $('.del-budget').modal("show");
+    });
+    $(document).on('click', '.delBudgetBtn', function (e) {
+        $.ajax({
+            type: "POST",
+            url: "/admin/delete-budget/" + localStorage.getItem("budget_id"),
+            data: "&budget_id=" + localStorage.getItem("budget_id"),
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+            },
+            success: function (response) {
+                if (response.del_budget == 1) {
+                    window.location.href = "/budget";
+                }
+            },
+            error: function (xhr) {
+
+            }
+        });
+        e.preventDefault();
+    })
 
 /*=========================Ends delete budget==========================*/
-</script>
-{{/content}}
+</script> {{/content}}

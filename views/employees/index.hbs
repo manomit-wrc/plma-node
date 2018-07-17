@@ -1,27 +1,28 @@
 {{#content "style" mode="prepend"}}
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
-{{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
 <div class="page-wrapper">
     <div class="content container-fluid">
-        <div class="row">
-            {{#if success_message}}
-            <div class="alert alert-success">
-                <strong>Success! </strong>{{success_message}}
-            </div>
-            {{/if}}
-            {{#if success_edit_message}}
-            <div class="alert alert-success">
-                <strong>Success! </strong>{{success_edit_message}}
-            </div>
-            {{/if}}
-            <div class="col-xs-4">
-                <h4 class="page-title">Employee</h4>
-            </div>
-            <div class="col-xs-8 text-right m-b-30">
-                <a href="/employees/add" class="btn btn-primary pull-right rounded"><i class="fa fa-plus"></i> Add Employee</a>
+        <div class="pg-header">
+            <div class="row">
+                {{#if success_message}}
+                <div class="alert alert-success">
+                    <strong>Success! </strong>{{success_message}}
+                </div>
+                {{/if}} {{#if success_edit_message}}
+                <div class="alert alert-success">
+                    <strong>Success! </strong>{{success_edit_message}}
+                </div>
+                {{/if}}
+                <div class="col-xs-4">
+                    <h4 class="page-title">Employee</h4>
+                </div>
+                <div class="col-xs-8 text-righ">
+                    <a href="/employees/add" class="btn btn-primary pull-right rounded">
+                        <i class="fa fa-plus"></i> Add Employee</a>
 
+                </div>
             </div>
         </div>
         <div class="row filter-row">
@@ -29,8 +30,7 @@
                 <div class="col-sm-6 col-xs-6">
                     <div class="form-group form-focus">
                         <label class="control-label">Employee Email</label>
-                        <input type="text" name="employee_email" id="employee_email" class="form-control floating"
-                        value="{{employee_emails}}" />
+                        <input type="text" name="employee_email" id="employee_email" class="form-control floating" value="{{employee_emails}}" />
                     </div>
                 </div>
                 <div class="col-sm-3 col-xs-6">
@@ -55,28 +55,36 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{#each employee}}
-                            {{#if_eq this.role_id "4"}}
+                            {{#each employee}} {{#if_eq this.role_id "4"}}
                             <tr>
                                 <td>
                                     <a href="javascript:void(0)" class="avatar">{{first_letter this.first_name}}</a>
-                                    <h2><a href="javascript:void(0)">{{this.first_name}}&nbsp;{{this.last_name}}</a></h2>
+                                    <h2>
+                                        <a href="javascript:void(0)">{{this.first_name}}&nbsp;{{this.last_name}}</a>
+                                    </h2>
                                 </td>
                                 <td>{{this.email}}</td>
                                 <td>{{this.mobile_no}}</td>
                                 <td>{{dateFormat this.createdAt "DD-MM-YYYY"}}</td>
                                 <td class="text-right">
                                     <div class="dropdown">
-                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </a>
                                         <ul class="dropdown-menu pull-right">
-                                            <li><a href="/employee/edit/{{this.id}}"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                            <li><a href="/employee/delete/{{this.id}}"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                                            <li>
+                                                <a href="/employee/edit/{{this.id}}">
+                                                    <i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                            </li>
+                                            <li>
+                                                <a href="/employee/delete/{{this.id}}">
+                                                    <i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </td>
                             </tr>
-                            {{/if_eq}}
-                            {{/each}}
+                            {{/if_eq}} {{/each}}
                         </tbody>
                     </table>
                 </div>
@@ -90,6 +98,4 @@
 <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript" src="/assets/js/select2.min.js"></script>
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
-<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
-
-{{/content}}
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script> {{/content}}

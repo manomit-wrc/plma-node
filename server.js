@@ -131,6 +131,6 @@ app.use(attorney);
 app.use(forgot_password);
 
 // app.use(budget_report);
-// app.use(budget_report);
+ app.use(budget_report);
 /********** End **********/
 app.listen(port, () => console.log(`Server listening to port ${port}`));
