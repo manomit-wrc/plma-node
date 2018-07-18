@@ -6,85 +6,184 @@
 <div class="page-wrapper">
     <div class="content container-fluid">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-xs-4">
                 <h4 class="page-title">Activity Budget Report</h4>
             </div>
-            <div class="col-md-4" style="padding-left: 0;">
-                <div class="div_left">
-                    <table width="100%" class="table table-bordered">
-                        <thead class="persist-header">
-                            <tr>
-                                <td style="height: 91px; width: 200px; vertical-align: middle">
-                                    <strong>Marketing Budget Summary</strong>
-                                </td>
-                                <td style=" height: 150px; text-align:center; height: 35px; vertical-align: middle">
-                                    <strong>Page Total</strong>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="45%" style="height: 35px"></td>
-                                <td width="35%" style=" text-align:center; height: 35px; vertical-align: middle">
-                                    <strong>Budget</strong>
-                                </td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{#each budgetArr}}
-                            <tr>
-                                <td colspan="3" style=" padding: 0;">
-                                    <table width="100%" class="table table-bordered">
+            <div class="col-xs-8 text-right">
+                <a href="/activity-budget-report" class="btn btn-primary rounded">
+                    Back</a>
+            </div>
+            <div style=" width: 78%; text-align: center; display:  inline-block; padding: 10px 15px">
+                <span style=" width: 100%; margin: 0 auto; font-weight: bold; line-height: 15px; font-size: 12px; text-transform: uppercase;"
+                    class=" font-dark">Activity Goal: {{activity_goal.activity_goal}}
+                </span>
+            </div>
+        </div>
+        <div class="col-md-4" style="padding-left: 0;">
+            <div class="div_left">
+                <table width="100%" class="table table-bordered">
+                    <thead class="persist-header">
+                        <tr>
+                            <td style="height: 91px; width: 200px; vertical-align: middle">
+                                <strong>Marketing Budget Summary</strong>
+                            </td>
+                            <td style=" height: 150px; text-align:center; height: 35px; vertical-align: middle">
+                                <strong>Page Total</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="45%" style="height: 35px"></td>
+                            <td width="35%" style=" text-align:center; height: 35px; vertical-align: middle">
+                                <strong>Budget</strong>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each budgetArr}}
+                        <tr>
+                            <td colspan="3" style=" padding: 0;">
+                                <table width="100%" class="table table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            <td width="45%" style=" border-top: none; height: 40px; vertical-align: middle; text-align: center;" title="{{this.parent_name}}">
+                                                <strong>{{this.parent_name}}</strong>
+                                            </td>
+                                            <td width="35%" style=" padding:0; text-align:center; height: 40px">
+                                                <table width="100%" height="40px">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td width="50%" style=" border-right: 1px solid #e7ecf1; vertical-align: middle; text-align: center;">
+                                                                <strong>Hours</strong>
+                                                            </td>
+                                                            <td width="50%" style="vertical-align: middle; text-align: center;">
+                                                                <strong>US $</strong>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        {{#each this.child_budget}}
+                                        <tr>
+                                            <td width="45%" style="height: 40px; vertical-align: middle;" title="{{this.name}}">{{this.name}}</td>
+                                            <td width="35%" style=" padding:0; text-align:center; height: 40px">
+                                                <table width="100%" style="height: 40px">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td width="50%" style=" border-right: 1px solid #e7ecf1; height: 40px; vertical-align: middle; text-align: center;">
+                                                                2.00
+                                                            </td>
+                                                            <td width="50%" style="height: 40px; vertical-align: middle; text-align: center;">
+                                                                50.00 </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        {{/each}}
+                                        <tr>
+                                            <td width="45%" style=" text-align:right; height: 35px; vertical-align: middle; text-align: center;">
+                                                <strong>Sub-total</strong>
+                                            </td>
+                                            <td width="35%" style=" padding:0; text-align:center" height="35px;">
+                                                <table width="100%" style=" height: 35px">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td width="50%" style=" height: 35px; border-right: 1px solid #e7ecf1; background:#ddd; color:#000; font-weight:800; vertical-align: middle; text-align: center;">
+                                                                <strong>14</strong>
+                                                            </td>
+                                                            <td width="50%" style=" height: 35px; background:#ddd; color:#000; font-weight:800; vertical-align: middle; text-align: center;">
+                                                                <strong>250</strong>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td width="45%" style=" text-align:right; height: 35px; vertical-align: middle; text-align: center;">
+                                <strong>Grand Total</strong>
+                            </td>
+                            <td width="35%" style=" padding:0; text-align:center; height: 35px">
+                                <table width="100%" height="35px">
+                                    <tbody>
+                                        <tr>
+                                            <td width="50%" style=" height: 35px; border-right: 1px solid #e7ecf1; background:#ddd; color:#000; font-weight:800; vertical-align: middle; text-align: center;">
+                                                <strong>113</strong>
+                                            </td>
+                                            <td width="50%" style=" height: 35px; background:#ddd; color:#000; font-weight:800; vertical-align: middle; text-align: center;">
+                                                <strong>3730</strong>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="div_right">
+                {{#each activityArr}}
+                <table class="table table-bordered m-t-10" style="width: 33%; display: inline-block;">
+                    <thead class="persist-header">
+                        <tr>
+                            <td height="91px" style=" width: 820px; text-align:center; vertical-align: middle">
+                                <a href="javascript:void(0)" title="{{this.activity_name}}">
+                                    <strong>{{this.activity_name}}</strong>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td height="35px" width="100%" style="text-align:center; vertical-align: middle">
+                                <strong>Budget</strong>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each this.budget_list}}
+                        <tr>
+                            <td width="100px" style=" padding:0; text-align:center">
+                                <div style=" width: 100%; display: block; margin-bottom: 20px">
+                                    <table width="100%" class="table-bordered">
                                         <tbody>
                                             <tr>
-                                                <td width="45%" style=" border-top: none; height: 40px; vertical-align: middle; text-align: center;" title="{{this.parent_name}}">
-                                                    <strong>{{this.parent_name}}</strong>
+                                                <td width="50px" height="40px" style=" border-right: 1px solid #e7ecf1; text-align: center">
+                                                    <strong>Hours</strong>
                                                 </td>
-                                                <td width="35%" style=" padding:0; text-align:center; height: 40px">
-                                                    <table width="100%" height="40px">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td width="50%" style=" border-right: 1px solid #e7ecf1; vertical-align: middle; text-align: center;">
-                                                                    <strong>Hours</strong>
-                                                                </td>
-                                                                <td width="50%" style="vertical-align: middle; text-align: center;">
-                                                                    <strong>US $</strong>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                                <td width="50px" style="text-align: center;">
+                                                    <strong>US $</strong>
                                                 </td>
                                             </tr>
                                             {{#each this.child_budget}}
-                                            <tr>
-                                                <td width="45%" style="height: 40px; vertical-align: middle;" title="{{this.name}}">{{this.name}}</td>
-                                                <td width="35%" style=" padding:0; text-align:center; height: 40px">
-                                                    <table width="100%" style="height: 40px">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td width="50%" style=" border-right: 1px solid #e7ecf1; height: 40px; vertical-align: middle; text-align: center;">
-                                                                    2.00
-                                                                </td>
-                                                                <td width="50%" style="height: 40px; vertical-align: middle; text-align: center;">
-                                                                    50.00 </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                            <tr class="total_parent">
+                                                <td width="50%" height="41px" style=" border-right: 1px solid #e7ecf1; text-align: center;">
+                                                    {{get_activity_budget_hour ../../this.activity_id this.budget_display}}
+
+
+                                                </td>
+                                                <td width="50%" style="text-align: center" class="total_cost">
+                                                    {{get_activity_budget_amount ../../this.activity_id this.budget_display}}
                                                 </td>
                                             </tr>
                                             {{/each}}
                                             <tr>
-                                                <td width="45%" style=" text-align:right; height: 35px; vertical-align: middle; text-align: center;">
-                                                    <strong>Sub-total</strong>
-                                                </td>
-                                                <td width="35%" style=" padding:0; text-align:center" height="35px;">
-                                                    <table width="100%" style=" height: 35px">
+                                                <td width="100%" height="35px" colspan="2" style=" border:none;">
+                                                    <table width="100%" height="35px">
                                                         <tbody>
                                                             <tr>
-                                                                <td width="50%" style=" height: 35px; border-right: 1px solid #e7ecf1; background:#ddd; color:#000; font-weight:800; vertical-align: middle; text-align: center;">
-                                                                    <strong>14</strong>
-                                                                </td>
-                                                                <td width="50%" style=" height: 35px; background:#ddd; color:#000; font-weight:800; vertical-align: middle; text-align: center;">
-                                                                    <strong>250</strong>
-                                                                </td>
+                                                                <td width="50%" height="35px" style=" border-left:none; border-right: 1px solid #e7ecf1; background:#ddd; color:#000; font-weight:800; text-align: center">
+                                                                    14 </td>
+                                                                <td width="50%" style=" background:#ddd; color:#000; font-weight:800; text-align: center">
+                                                                    250 </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -92,127 +191,39 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                </td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td width="45%" style=" text-align:right; height: 35px; vertical-align: middle; text-align: center;">
-                                    <strong>Grand Total</strong>
-                                </td>
-                                <td width="35%" style=" padding:0; text-align:center; height: 35px">
-                                    <table width="100%" height="35px">
-                                        <tbody>
-                                            <tr>
-                                                <td width="50%" style=" height: 35px; border-right: 1px solid #e7ecf1; background:#ddd; color:#000; font-weight:800; vertical-align: middle; text-align: center;">
-                                                    <strong>113</strong>
-                                                </td>
-                                                <td width="50%" style=" height: 35px; background:#ddd; color:#000; font-weight:800; vertical-align: middle; text-align: center;">
-                                                    <strong>3730</strong>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            </div>
-            <div class="col-md-8">
-                <div class="div_right">
-                    {{#each activityArr}}
-                    <table class="table table-bordered m-t-10" style="width: 33%; display: inline-block;">
-                        <thead class="persist-header">
-                            <tr>
-                                <td height="91px" style=" width: 820px; text-align:center; vertical-align: middle">
-                                    <a href="javascript:void(0)" title="{{this.activity_name}}">
-                                        <strong>{{this.activity_name}}</strong>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td height="35px" width="100%" style="text-align:center; vertical-align: middle">
-                                    <strong>Budget</strong>
-                                </td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{#each this.budget_list}}
-                            <tr>
-                                <td width="100px" style=" padding:0; text-align:center">
-                                    <div style=" width: 100%; display: block; margin-bottom: 20px">
-                                        <table width="100%" class="table-bordered">
-                                            <tbody>
-                                                <tr>
-                                                    <td width="50px" height="40px" style=" border-right: 1px solid #e7ecf1; text-align: center">
-                                                        <strong>Hours</strong>
-                                                    </td>
-                                                    <td width="50px" style="text-align: center;">
-                                                        <strong>US $</strong>
-                                                    </td>
-                                                </tr>
-                                                {{#each this.child_budget}}
-                                                <tr>
-                                                    <td width="50%" height="41px" style=" border-right: 1px solid #e7ecf1; text-align: center;">
-                                                        {{get_activity_hour_by_goal ../../this.activity_goal_id this}}
-
-
-                                                    </td>
-                                                    <td width="50%" style="text-align: center" class="total_cost">
-                                                        {{get_activity_amount_by_goal ../../this.activity_goal_id this}}</td>
-                                                </tr>
-                                                {{/each}}
-                                                <tr>
-                                                    <td width="100%" height="35px" colspan="2" style=" border:none;">
-                                                        <table width="100%" height="35px">
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td width="50%" height="35px" style=" border-left:none; border-right: 1px solid #e7ecf1; background:#ddd; color:#000; font-weight:800; text-align: center">
-                                                                        14 </td>
-                                                                    <td width="50%" style=" background:#ddd; color:#000; font-weight:800; text-align: center">
-                                                                        250 </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div style=" width: 100%; display: block; margin-bottom: 20px">
-                                    </div>
-                                    <div style=" width: 100%; display: block; margin-bottom: 20px">
-                                    </div>
-                                </td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td width="35%" style="padding: 0; text-align:center" height="35px;">
-                                    <table width="100%" height="35px">
-                                        <tbody>
-                                            <tr>
-                                                <td width="50%" height="35px" style=" border-right: 1px solid #e7ecf1; background:#ddd; color:#000; font-weight:800; text-align: center">
-                                                    <strong>74</strong>
-                                                </td>
-                                                <td width="50%" style=" background:#ddd; color:#000; font-weight:800; text-align: center">
-                                                    <strong>3310 </strong>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                    {{/each}}
-                </div>
+                                </div>
+                                <div style=" width: 100%; display: block; margin-bottom: 20px">
+                                </div>
+                                <div style=" width: 100%; display: block; margin-bottom: 20px">
+                                </div>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td width="35%" style="padding: 0; text-align:center" height="35px;">
+                                <table width="100%" height="35px">
+                                    <tbody>
+                                        <tr>
+                                            <td width="50%" height="35px" style=" border-right: 1px solid #e7ecf1; background:#ddd; color:#000; font-weight:800; text-align: center">
+                                                <strong>74</strong>
+                                            </td>
+                                            <td width="50%" style=" background:#ddd; color:#000; font-weight:800; text-align: center">
+                                                <strong>3310 </strong>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+                {{/each}}
             </div>
         </div>
     </div>
+</div>
 </div>
 
 {{#content "script" mode="append"}}
@@ -220,4 +231,5 @@
 <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript" src="/assets/js/select2.min.js"></script>
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
-<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script> {{/content}}
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+ {{/content}}

@@ -111,6 +111,26 @@ const hbs = exphbs.create({
             return "-";
         }
     },
+    get_activity_budget_hour: function(value, obj) {
+        const hour = lodash.filter(obj, arr => arr.activity_id === value)
+        if(hour.length > 0) {
+            const total_hour = lodash.map(hour, arr => parseInt(arr.hour));
+            return total_hour[0];
+        }
+        else {
+            return "-";
+        }
+    },
+    get_activity_budget_amount: function(value, obj) {
+        const amount = lodash.filter(obj, arr => arr.activity_id === value)
+        if(amount.length > 0) {
+            const total_amount = lodash.map(amount, arr => parseInt(arr.amount));
+            return total_amount[0];
+        }
+        else {
+            return "-";
+        }
+    },
     dateFormat: require('handlebars-dateformat')
 }
 });
