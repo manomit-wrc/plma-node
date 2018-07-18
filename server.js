@@ -81,7 +81,6 @@ const hbs = exphbs.create({
         }
     },
     if_eq_budget: function(a, b, opts) {
-        //console.log(a,b);
         if(a == b.activity_goal_id) {
             return opts.fn(this);
         }
