@@ -71,10 +71,10 @@
                                                     <tbody>
                                                         <tr>
                                                             <td width="50%" style=" border-right: 1px solid #e7ecf1; height: 40px; vertical-align: middle; text-align: center;">
-                                                                2.00
+                                                                {{this.hour}}
                                                             </td>
                                                             <td width="50%" style="height: 40px; vertical-align: middle; text-align: center;">
-                                                                50.00 </td>
+                                                                {{this.amount}} </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -90,10 +90,10 @@
                                                     <tbody>
                                                         <tr>
                                                             <td width="50%" style=" height: 35px; border-right: 1px solid #e7ecf1; background:#ddd; color:#000; font-weight:800; vertical-align: middle; text-align: center;">
-                                                                <strong>14</strong>
+                                                                <strong>{{get_hour_by_goal this.child_budget this.parent_id}}</strong>
                                                             </td>
                                                             <td width="50%" style=" height: 35px; background:#ddd; color:#000; font-weight:800; vertical-align: middle; text-align: center;">
-                                                                <strong>250</strong>
+                                                                <strong>{{get_amount_by_goal this.child_budget this.parent_id}}</strong>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -116,10 +116,10 @@
                                     <tbody>
                                         <tr>
                                             <td width="50%" style=" height: 35px; border-right: 1px solid #e7ecf1; background:#ddd; color:#000; font-weight:800; vertical-align: middle; text-align: center;">
-                                                <strong>113</strong>
+                                                <strong>{{activity_budget_grand.0.hour}}</strong>
                                             </td>
                                             <td width="50%" style=" height: 35px; background:#ddd; color:#000; font-weight:800; vertical-align: middle; text-align: center;">
-                                                <strong>3730</strong>
+                                                <strong>{{activity_budget_grand.0.amount}}</strong>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -181,9 +181,12 @@
                                                         <tbody>
                                                             <tr>
                                                                 <td width="50%" height="35px" style=" border-left:none; border-right: 1px solid #e7ecf1; background:#ddd; color:#000; font-weight:800; text-align: center">
-                                                                    14 </td>
+                                                                 
+                                                                {{get_sub_total_hour this.child_budget this.parent_id ../this.activity_id}}    
+                                                                </td>
                                                                 <td width="50%" style=" background:#ddd; color:#000; font-weight:800; text-align: center">
-                                                                    250 </td>
+                                                                   {{get_sub_total_amount this.child_budget this.parent_id ../this.activity_id}}
+                                                                    </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -207,10 +210,10 @@
                                     <tbody>
                                         <tr>
                                             <td width="50%" height="35px" style=" border-right: 1px solid #e7ecf1; background:#ddd; color:#000; font-weight:800; text-align: center">
-                                                <strong>74</strong>
+                                                <strong>{{get_all_total_hour this.activity_grand this.activity_id}}</strong>
                                             </td>
                                             <td width="50%" style=" background:#ddd; color:#000; font-weight:800; text-align: center">
-                                                <strong>3310 </strong>
+                                                <strong>{{get_all_total_amount this.activity_grand this.activity_id}} </strong>
                                             </td>
                                         </tr>
                                     </tbody>

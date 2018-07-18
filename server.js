@@ -131,6 +131,128 @@ const hbs = exphbs.create({
             return "-";
         }
     },
+    get_sub_total_hour: function(array, parent_id, activity_id) {
+       var sum = 0; 
+       var total_hour = 0;
+       const parent_details = lodash.filter(array, arr => arr.parent_id === parent_id);
+       for(var i=0;i<parent_details.length; i++) {
+           
+           const filter_data = lodash.filter(parent_details[i].budget_display, arr => arr.activity_id === activity_id);
+           const total = lodash.map(filter_data, arr => parseInt(sum) + parseInt(arr.hour));
+           const temp = total.length > 0 ? parseInt(total[0]) : 0;
+           total_hour+= parseInt(temp);
+           //console.log(total_hour)
+       }
+       return total_hour
+    },
+    get_sub_total_hour_activity_goal: function(array, parent_id, goal_id){
+        var sum = 0; 
+       var total_hour = 0;
+       const parent_details = lodash.filter(array, arr => arr.parent_id === parent_id);
+       for(var i=0;i<parent_details.length; i++) {
+           
+           const filter_data = lodash.filter(parent_details[i].budget_display, arr => arr.activity_goal_id === goal_id);
+           const total = lodash.map(filter_data, arr => parseInt(sum) + parseInt(arr.hour));
+           const temp = total.length > 0 ? parseInt(total[0]) : 0;
+           total_hour+= parseInt(temp);
+           //console.log(total_hour)
+       }
+       return total_hour
+    },
+    get_sub_total_amount: function(array, parent_id, activity_id) {
+        var sum = 0; 
+        var total_hour = 0;
+        const parent_details = lodash.filter(array, arr => arr.parent_id === parent_id);
+        for(var i=0;i<parent_details.length; i++) {
+            
+            const filter_data = lodash.filter(parent_details[i].budget_display, arr => arr.activity_id === activity_id);
+            const total = lodash.map(filter_data, arr => parseInt(sum) + parseInt(arr.amount));
+            const temp = total.length > 0 ? parseInt(total[0]) : 0;
+            total_hour+= parseInt(temp);
+            //console.log(total_hour)
+        }
+        return total_hour
+     },
+     get_sub_total_amount_activity_goal: function(array, parent_id, goal_id){
+        var sum = 0; 
+       var total_hour = 0;
+       const parent_details = lodash.filter(array, arr => arr.parent_id === parent_id);
+       for(var i=0;i<parent_details.length; i++) {
+           
+           const filter_data = lodash.filter(parent_details[i].budget_display, arr => arr.activity_goal_id === goal_id);
+           const total = lodash.map(filter_data, arr => parseInt(sum) + parseInt(arr.amount));
+           const temp = total.length > 0 ? parseInt(total[0]) : 0;
+           total_hour+= parseInt(temp);
+           //console.log(total_hour)
+       }
+       return total_hour
+    },
+     get_hour_by_goal: function(array, parent_id) {
+        var x = 0; 
+        var total_budget_hour = 0;
+        const hours = lodash.filter(array, arr => arr.parent_id === parent_id);
+        if(hours.length > 0) {
+            const total_hour = lodash.map(hours, arr => (arr.budget_sum.length > 0 ? x + parseInt(arr.budget_sum[0].hour) : 0));
+            for(var i=0; i<total_hour.length; i++){
+                total_budget_hour+= parseInt(total_hour[i]); 
+            }
+            return total_budget_hour;
+        }
+        else {
+            return "-";
+        }
+     },
+     get_amount_by_goal: function(array, parent_id) {
+        var x = 0; 
+        var total_budget_amount = 0;
+        const amounts = lodash.filter(array, arr => arr.parent_id === parent_id);
+        if(amounts.length > 0) {
+            const total_amount = lodash.map(amounts, arr => (arr.budget_sum.length > 0 ? x + parseInt(arr.budget_sum[0].amount) : 0));
+            for(var i=0; i<total_amount.length; i++){
+                total_budget_amount+= parseInt(total_amount[i]); 
+            }
+            return total_budget_amount;
+        }
+        else {
+            return "-";
+        }
+     },
+     get_all_total_hour: function(array, activity_id){
+        const tot_hour = lodash.filter(array, arr => arr.activity_id === activity_id);
+        if(tot_hour.length > 0){
+            return tot_hour[0].hour;
+        }
+        else{
+            return "-";
+        }
+     },
+     get_all_total_amount: function(array, activity_id){
+        const tot_amount = lodash.filter(array, arr => arr.activity_id === activity_id);
+        if(tot_amount.length > 0){
+            return tot_amount[0].amount;
+        }
+        else{
+            return "-";
+        }
+     },
+     get_all_total_hour_by_goal: function(array, goal_id){
+        const tot_hours = lodash.filter(array, arr => arr.activity_goal_id === goal_id);
+        if(tot_hours.length > 0){
+            return tot_hours[0].hour;
+        }
+        else{
+            return "-";
+        }
+     },
+     get_all_total_amount_by_goal: function(array, goal_id){
+        const tot_amounts = lodash.filter(array, arr => arr.activity_goal_id === goal_id);
+        if(tot_amounts.length > 0){
+            return tot_amounts[0].amount;
+        }
+        else{
+            return "-";
+        }
+     },
     dateFormat: require('handlebars-dateformat')
 }
 });
