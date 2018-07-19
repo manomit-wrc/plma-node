@@ -22,7 +22,6 @@ var csrfProtection = csrf({
 const router = express.Router();
 
 router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => {
-
 	if (req.user.role_id==2) {
 		var firm_id = req.user.firm_id;
 		var activity_goals = await ActivityGoal.findAll({
@@ -38,11 +37,9 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
 			}
 		});
 	}
-
 	const budgetList = await Budget.findAll();
 
 	var activityArr = [];
-	var new_activity_goal_id;
 
 	var budgetArr = [];
 	for (var i = 0; i < budgetList.length; i++) {
@@ -55,11 +52,11 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
 				foreignKey: 'activity_id'
 			});
 			for (var j = 0; j < child_budget.length; j++) {
-
 				const activity_budget = await ActivityBudget.findAll({
 				    attributes: ['budget_id', 'activity_goal_id', [Sequelize.fn('sum', Sequelize.col('hour')), 'hour'], [Sequelize.fn('sum', Sequelize.col('amount')), 'amount']],
 				    group: ['budget_id', 'activity_goal_id']
 				});
+
 				const temp_arr = lodash.filter(activity_budget, arr => arr.budget_id === child_budget[j].id);
 				const budget_wise_sum = await ActivityBudget.findAll({
 					where: {
@@ -72,7 +69,6 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
 				});
 				const hour = budget_wise_sum.length > 0 ? budget_wise_sum[0].hour : "-";
 				const amount = budget_wise_sum.length > 0 ? budget_wise_sum[0].amount : "-";
-
 				child_budget_arr.push({
 					"id": child_budget[j].id,
 					"name": child_budget[j].name,

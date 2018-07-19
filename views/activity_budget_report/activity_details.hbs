@@ -291,4 +291,16 @@
 <script type="text/javascript" src="/assets/js/select2.min.js"></script>
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
- {{/content}}
+<script type="text/javascript">
+    $(document).ready(function() {
+        if(window.location.pathname.split("/")[1] === "budget-report") {
+            $(".sidebar").addClass("sidebar-hide");
+            $(".page-wrapper").addClass("page-wrapper-full");
+        }
+        else {
+            $(".page-wrapper").removeClass("page-wrapper-full");
+            $(".sidebar").removeClass("sidebar-hide");
+        }
+    });
+</script>
+{{/content}}
