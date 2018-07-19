@@ -295,7 +295,7 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, 
 			where: { id: req.params['id'] }
 			});
 		req.flash('success-message', 'Target Updated Successfully');
-		res.redirect('/target')
+		res.redirect('/target');
 	} else {
 		req.flash('error-target-message', 'Email already taken.');
 		res.redirect('/target/edit/' + req.params['id']);
