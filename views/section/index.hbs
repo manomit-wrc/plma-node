@@ -54,13 +54,15 @@
                                 <td>{{this.remarks}}</td>
                                 <td>{{dateFormat this.createdAt "DD-MM-YYYY, hh:mm a"}}</td>
                                 <td class="text-right">
-                                    <div class="dropdown">
+                                    <a href="#" data-toggle="modal" data-target="#edit_users" data-section-id="{{this.id}}" data-description="{{this.description}}" data-name="{{this.name}}" data-remarks="{{this.remarks}}" id="edit-section" class="btn btn-info btn-sm"><i class="fa fa-pencil m-r-5"></i></a>
+                                    <a href="#" data-toggle="modal" data-target="#delete_users" data-section-id="{{this.id}}" id="delete-section" class="btn btn-danger btn-sm"><i class="fa fa-trash-o m-r-5"></i></a>
+                                    {{!-- <div class="dropdown">
                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                         <ul class="dropdown-menu pull-right">
                                             <li><a href="#" data-toggle="modal" data-target="#edit_users" data-section-id="{{this.id}}" data-description="{{this.description}}" data-name="{{this.name}}" data-remarks="{{this.remarks}}" id="edit-section"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
                                             <li><a href="#" data-toggle="modal" data-target="#delete_users" data-section-id="{{this.id}}" id="delete-section"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
                                         </ul>
-                                    </div>
+                                    </div> --}}
                                 </td>
                             </tr>
                             {{/each}}
