@@ -86,26 +86,24 @@
                                 <td class="text-right">
                                     <a href="/financial-goal/edit/{{this.id}}" class="btn btn-info btn-sm">
                                                     <i class="fa fa-pencil m-r-5"></i></a>
-                                     <a href="/financial-goal/delete/{{this.id}}" class="btn btn-danger btn-sm">
+                                     <a href="javascript:void(0);" data-toggle="modal" data-target="#{{this.id}}" class="btn btn-danger btn-sm">
                                                     <i class="fa fa-trash-o m-r-5"></i></a>
-
-                                    {{!-- <div class="dropdown">
-                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                            <i class="fa fa-ellipsis-v"></i>
-                                        </a>
-                                        <ul class="dropdown-menu pull-right">
-                                            <li>
-                                                <a href="/financial-goal/edit/{{this.id}}">
-                                                    <i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                            </li>
-                                            <li>
-                                                <a href="/financial-goal/delete/{{this.id}}">
-                                                    <i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                            </li>
-                                        </ul>
-                                    </div> --}}
                                 </td>
                             </tr>
+                            <div class="modal fade" id="{{this.id}}" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <p>Are you sure to delete ?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="/financial-goal/delete/{{this.id}}" class="btn btn-danger">Delete</a>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             {{/each}}
                         </tbody>
                     </table>
