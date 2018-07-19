@@ -1788,6 +1788,19 @@ table.table-inbox tbody tr.checked {background-color: #ffffcc;}
 	    padding-left: 0px;
 }
 
+.act-budgreport .table-bordered > thead > tr > td,
+.act-budgreport .table-bordered > thead > tr > th {
+  border-bottom-width: 1px;
+}
+
+.act-budgreport .table-bordered {
+  border: 0px solid #ddd;
+}
+
+i.fa.fa-pencil.m-r-5 , i.fa.fa-trash-o.m-r-5 {
+	margin-right: 0 !important;
+}
+
 /*------------------------------------------------------------------
 [39-a.... Custom Styles]
 */
