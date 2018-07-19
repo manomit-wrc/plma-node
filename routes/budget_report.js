@@ -22,15 +22,22 @@ var csrfProtection = csrf({
 const router = express.Router();
 
 router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => {
-	var user_id = req.user.id;
 
-	var activity_goals = await ActivityGoal.findAll({
-		where: {
-			user_id: user_id
-		}
-	});
-
-
+	if (req.user.role_id==2) {
+		var firm_id = req.user.firm_id;
+		var activity_goals = await ActivityGoal.findAll({
+			where: {
+				firm_id: firm_id
+			}
+		});
+	} else {
+		var user_id = req.user.id;
+		var activity_goals = await ActivityGoal.findAll({
+			where: {
+				user_id: user_id
+			}
+		});
+	}
 
 	const budgetList = await Budget.findAll();
 
@@ -99,7 +106,7 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
 			[Sequelize.fn('sum', Sequelize.col('amount')), 'amount']
 		],
 	});
-	console.log(activity_goal_grand_total[0].hour);
+	// console.log(activity_goal_grand_total[0].hour);
 
 	for (var j = 0; j < activity_goals.length; j++) {
 		activityArr.push({
