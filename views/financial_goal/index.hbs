@@ -84,7 +84,12 @@
                                 <td>{{this.year_goal_percentage}}</td>
                                 <td>{{this.remarks}}</td>
                                 <td class="text-right">
-                                    <div class="dropdown">
+                                    <a href="/financial-goal/edit/{{this.id}}" class="btn btn-info btn-sm">
+                                                    <i class="fa fa-pencil m-r-5"></i></a>
+                                     <a href="/financial-goal/delete/{{this.id}}" class="btn btn-danger btn-sm">
+                                                    <i class="fa fa-trash-o m-r-5"></i></a>
+
+                                    {{!-- <div class="dropdown">
                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                             <i class="fa fa-ellipsis-v"></i>
                                         </a>
@@ -98,7 +103,7 @@
                                                     <i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                             </li>
                                         </ul>
-                                    </div>
+                                    </div> --}}
                                 </td>
                             </tr>
                             {{/each}}
