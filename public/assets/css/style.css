@@ -1797,50 +1797,9 @@ table.table-inbox tbody tr.checked {background-color: #ffffcc;}
   border: 0px solid #ddd;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+i.fa.fa-pencil.m-r-5 , i.fa.fa-trash-o.m-r-5 {
+	margin-right: 0 !important;
+}
 
 /*------------------------------------------------------------------
 [39-a.... Custom Styles]

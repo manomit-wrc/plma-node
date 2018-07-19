@@ -22,14 +22,21 @@ var csrfProtection = csrf({
 const router = express.Router();
 
 router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => {
-	var user_id = req.user.id;
-
-	var activity_goals = await ActivityGoal.findAll({
-		where: {
-			user_id: user_id
-		}
-	});
-
+	if (req.user.role_id==2) {
+		var firm_id = req.user.firm_id;
+		var activity_goals = await ActivityGoal.findAll({
+			where: {
+				firm_id: firm_id
+			}
+		});
+	} else {
+		var user_id = req.user.id;
+		var activity_goals = await ActivityGoal.findAll({
+			where: {
+				user_id: user_id
+			}
+		});
+	}
 	const budgetList = await Budget.findAll();
 
 	var activityArr = [];

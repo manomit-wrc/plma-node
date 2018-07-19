@@ -29,7 +29,16 @@ var profile = multer({ storage: storage });
 
 router.get('/dashboard', auth,  (req, res) => {
     var auth_msg = req.flash('success-auth-message')[0];
-    res.render('dashboard', { layout: 'dashboard', auth_msg: auth_msg});
+    var changeFirmToAttr = req.flash('change-firm-login')[0];
+    var changeAttrToFirm = req.flash('change-attr-login')[0];
+    var changeSite = req.flash('change-site-login')[0];
+    res.render('dashboard', {
+        layout: 'dashboard',
+        auth_msg: auth_msg,
+        changeFirmToAttr,
+        changeSite,
+        changeAttrToFirm
+    });
 }).get('/logout', auth, (req, res) => {
     req.logout();
     res.redirect('/');
@@ -148,4 +157,80 @@ router.post('/firm-profiles/get-zipcode', auth, (req, res) =>{
     });
 });
 
+/*==================================Bratin Meheta 19-07-2018 (login as other role)========================================*/
+
+router.get('/change-role', auth, async (req, res)=>{
+    var actual_role = req.user.role_id;
+    const change_role = await User.update({
+        actual_role_id : actual_role,
+        role_id : 3
+    },{where: {id: req.user.id}});
+    req.flash('change-attr-login', ' You have logged in successfully as a attorney.');
+    res.redirect('/dashboard');
+});
+
+router.get('/change-role-firm', auth, async (req, res) => {
+    var actual_role = req.user.actual_role_id;
+    const change_role = await User.update({
+        role_id: actual_role,
+        actual_role_id : 0
+    },{where: {id: req.user.id}});
+    req.flash('change-firm-login', ' You have logged in successfully as a firm admin.');
+    res.redirect('/dashboard');
+});
+
+router.post('/change-site-to-firm', auth, async(req, res) =>{
+    var actual_role = req.user.role_id;
+    const change_role = await User.update({
+        actual_role_id: actual_role,
+        role_id: 2,
+        firm_id: req.body.firm_id 
+    }, {
+        where: {
+            id: req.user.id
+        }
+    });
+    req.flash('change-firm-login', ' You have logged in successfully as a firm admin.');
+    res.redirect('/dashboard');
+});
+
+router.get('/change-role-site', auth, async (req, res)=> {
+    const change_role = await User.update({
+        role_id: 3
+    }, {
+        where: {
+            id: req.user.id
+        }
+    });
+    req.flash('change-attr-login', ' You have logged in successfully as a attorney.');
+    res.redirect('/dashboard');
+});
+
+router.get('/change-role-firm-site', auth, async (req, res)=>{
+    const change_role = await User.update({
+        role_id: 2
+    }, {
+        where: {
+            id: req.user.id
+        }
+    });
+    req.flash('change-firm-login', ' You have logged in successfully as a firm admin.');
+    res.redirect('/dashboard');
+});
+
+router.get('/change-role-firm-site-all', auth, async (req, res)=> {
+    var actual_role = req.user.actual_role_id;
+    const change_role = await User.update({
+        role_id: actual_role,
+        firm_id: null,
+        actual_role_id: 0
+    }, {
+        where: {
+            id: req.user.id
+        }
+    });
+    req.flash('change-site-login', ' You have logged in successfully as a site admin.');
+    res.redirect('/dashboard');
+});
+/*==================================Bratin Meheta 19-07-2018 ========================================*/
 module.exports = router;

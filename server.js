@@ -235,6 +235,8 @@ const hbs = exphbs.create({
         }
      },
      get_all_total_hour_by_goal: function(array, goal_id){
+        //  console.log('array',array);
+        //  console.log('goal_id',goal_id);
         const tot_hours = lodash.filter(array, arr => arr.activity_goal_id === goal_id);
         if(tot_hours.length > 0){
             return tot_hours[0].hour;
