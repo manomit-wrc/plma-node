@@ -29,9 +29,6 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
 			user_id: user_id
 		}
 	});
-
-
-
 	const budgetList = await Budget.findAll();
 
 	var activityArr = [];
@@ -99,7 +96,6 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
 			[Sequelize.fn('sum', Sequelize.col('amount')), 'amount']
 		],
 	});
-	console.log(activity_goal_grand_total[0].hour);
 
 	for (var j = 0; j < activity_goals.length; j++) {
 		activityArr.push({
@@ -220,6 +216,7 @@ router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req,
 			"activity_grand": activity_grand
 		});
 	}
+	
 	const activity_goal = await ActivityGoal.findById(req.params['id']);
 	res.render('activity_budget_report/activity_details', {
 		layout: 'dashboard',
