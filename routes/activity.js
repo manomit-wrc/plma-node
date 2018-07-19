@@ -125,6 +125,7 @@ router.post('/activity/add-budget', auth, firmAttrAuth, csrfProtection, async (r
 	for (var b = 0; b < budget.length; b++) {
 		const storeBudget = await ActivityBudget.create({
 			activity_id: req.body.activity_id,
+			activity_goal_id: req.body.activity_goal,
 			level_type: req.body.activity_level_type,
 			budget_id: budget[b].budget_id,
 			hour: budget[b].budget_hour,
@@ -233,7 +234,7 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 	for (var i = 0; i < result.length; i++) {
 		arr.push(parseInt(result[i].type));
 	}
-	const budgetList = await Budget.findAll();
+	const budgetList = await Budget.findAll({});
 	var budgetArr = [];
 	var level_type = '';
 	for (var i = 0; i < budgetList.length; i++) {
@@ -244,7 +245,8 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 			for (var j = 0; j < child_budget.length; j++) {
 				const activity_budget = await ActivityBudget.findAll({
 					where: {
-						budget_id: child_budget[j].id
+						budget_id: child_budget[j].id,
+						activity_id: req.params['id']
 					}
 				});
 				const hour = activity_budget.length > 0 ? activity_budget[0].hour : '';
@@ -325,7 +327,8 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 			for (var j = 0; j < child_budget.length; j++) {
 				const activity_budget = await ActivityBudget.findAll({
 					where: {
-						budget_id: child_budget[j].id
+						budget_id: child_budget[j].id,
+						activity_id: req.params['id']
 					}
 				});
 				const hour = activity_budget.length > 0 ? activity_budget[0].hour : '';
