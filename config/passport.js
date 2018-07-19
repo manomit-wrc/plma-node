@@ -26,7 +26,7 @@ module.exports = (passport) => {
         });
     });
 
-    passport.use('local-login', 
+    passport.use('local-login',
         new LocalStrategy({
             usernameField: 'email',
             passwordField: 'password',
@@ -35,20 +35,27 @@ module.exports = (passport) => {
             var isValidPassword = function (userpass, password) {
                 return bCrypt.compareSync(password, userpass);
             }
+            if(req.body['g-recaptcha-response'] === undefined || req.body['g-recaptcha-response'] === '' || req.body['g-recaptcha-response'] === null) {
+                return done(null, false, req.flash('loginMessage', 'Please select captcha'));
+            }
+            
             User.findOne({
                 attributes: { exclude: ['createdAt','updatedAt'] },
                 where: {
                     email:email
                 }
             }).then(user => {
+
+
                 if (!user) {
                     return done(null, false, req.flash('loginMessage', 'Wrong Username or password'));
                 }
                 if (!isValidPassword(user.password, password)) {
                     return done(null, false, req.flash('loginMessage', 'Wrong Username or password'));
                 }
+
                 if (user.status !== 1) {
-                    return done(null, false, req.flash('loginMessage', 'Account not activated. Please contact administrator')); 
+                    return done(null, false, req.flash('loginMessage', 'Account not activated. Please contact administrator'));
                 }
                 var userinfo = user.get();
                 return done(null, userinfo);
