@@ -7,7 +7,6 @@ const csrf = require('csurf');
 const bCrypt = require('bcrypt-nodejs');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
-
 const User = require('../models').user;
 var csrfProtection = csrf({ cookie: true });
 var csv = require('fast-csv');
@@ -26,12 +25,10 @@ var crypto = require('crypto');
 
 router.get('/forgot-password', csrfProtection, (req, res) => {
   var err_message = req.flash('success-err-message')[0];
-  var password_message = req.flash('new_message')[0];
 
     res.render('forgot_password', {
       layout: 'login',
       err_message,
-      password_message,
       csrfToken: req.csrfToken()
   });
 });
@@ -44,19 +41,20 @@ router.get('/forgot-password', csrfProtection, (req, res) => {
 
 router.post('/forgot',csrfProtection, async (req, res) => {
   //console.log(req.body.u_mail);
-const user_email = await User.findOne({
+  let user_email;
+ user_email = await User.findOne({
   where: {
     email: req.body.u_mail
   }
 });
-//console.log(user_email);
 
 if (user_email == null) {
-
-  req.flash('success-err-message', 'This Email ID is not exists to database');
-   res.redirect('/forgot-password')
+   req.flash('success-err-message', 'This Email ID is not exists to database');
+  res.redirect('/forgot-password');
 
 }
+
+
 else{
 function generatePassword() {
    var length = 8,
@@ -81,10 +79,17 @@ var genPassword = generatePassword();
           	Recipients: [{'Email': req.body.u_mail}]
         })
 
+//updated
+await User.update({
+    password: bCrypt.hashSync(genPassword)
+    },{where: {id: user_email.id}
+});
+
+req.flash('loginMessage', 'msg sent to your gmail account');
+res.redirect('/');
 
 }
-req.flash('new_message', 'The new password is sent to tour mail');
- res.redirect('/forgot-password')
+
 });
 
 /*============================Ends Import Client Excel Data =====================================*/

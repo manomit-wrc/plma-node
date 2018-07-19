@@ -1,221 +1,245 @@
 {{#content "style" mode="prepend"}}
-    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
-    <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
-{{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
 
 <div class="page-wrapper">
-   <div class="content container-fluid">
-      <div class="row">
-         <div class="col-sm-8">
-            <h4 class="page-title">Edit Referral</h4>
-         </div>
+  <div class="content container-fluid">
+    <div class="row">
+      <div class="col-sm-8">
+        <h4 class="page-title">Edit Referral</h4>
       </div>
-      {{#if err_message}}
-        <div class="alert alert-danger">
-            <strong>Error! </strong>{{err_message}}
+    </div>
+    {{#if err_message}}
+    <div class="alert alert-danger">
+      <strong>Error! </strong>{{err_message}}
+    </div>
+    {{/if}} {{#if error_message}}
+    <div class="alert alert-danger">
+      <strong>Error! </strong>{{error_message}}
+    </div>
+    {{/if}}
+    <form id="frmEditReferral" method="POST" action="/referral/edit/{{referral.id}}">
+      <input type="hidden" name="_csrf" value="{{csrfToken}}"> {{!--
+      <input type="radio" id="individual_referral" name="referral_type" value="I" {{#if_eq referral.referral_type
+        "I"}} checked {{/if_eq}} disabled />Individual
+      <input type="radio" id="organization_referral" name="referral_type" value="O" {{#if_eq referral.referral_type "O"}} checked
+        {{/if_eq}} disabled/>Organization --}}
+
+
+      <div class="form-inline m-b-15">
+        <div class="form-group m-r-5">
+          <label class="input-group">
+            <span class="input-group-addon">
+              <input type="radio" id="individual_referral" name="referral_type" value="I" {{#if_eq referral.referral_type "I"}} checked
+                {{/if_eq}} disabled />
+            </span>
+            <div class="form-control form-control-static">Individual</div>
+            <span class="glyphicon form-control-feedback "></span>
+          </label>
         </div>
-      {{/if}}
-      {{#if error_message}}
-        <div class="alert alert-danger">
-            <strong>Error! </strong>{{error_message}}
+        <div class="form-group ">
+          <label class="input-group">
+            <span class="input-group-addon">
+              <input type="radio" id="organization_referral" name="referral_type" value="O" {{#if_eq referral.referral_type "O"}} checked
+                {{/if_eq}} disabled />
+            </span>
+            <div class="form-control form-control-static">Organization</div>
+            <span class="glyphicon form-control-feedback "></span>
+          </label>
         </div>
-      {{/if}}
-      <form id="frmEditReferral" method="POST" action="/referral/edit/{{referral.id}}">
-         <input type="hidden" name="_csrf" value="{{csrfToken}}">
-         <input type="radio" id="individual_referral" name="referral_type" value="I" {{#if_eq referral.referral_type "I"}} checked {{/if_eq}} disabled />Individual
-         <input type="radio" id="organization_referral" name="referral_type" value="O" {{#if_eq referral.referral_type "O"}} checked {{/if_eq}} disabled/>Organization   
-         <div class="card-box">
+      </div>
+
+
+
+
+
+      <div class="card-box">
+        <div class="row">
+          <div class="col-md-12">
             <div class="row">
-               <div class="col-md-12">
-                     <div class="row">
-                        <div class="col-md-12">
-                          <div class="form-group form-focus select-focus">
-                            <label class="control-label">Attorney Name</label>
-                            <select id="attr_id" name="attr_id" class="select form-control floating">
-                              <option value="">Select Attorney</option>
-                              {{#each attorney}}
-                              <option value="{{this.id}}" {{#if_eq this.id ../referral.attorney_id }} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
-                              {{/each}}
-                            </select>
-                          </div>
-                        </div>
-                        <div id="indi_referral" {{#if_eq referral.referral_type "O"}} style="display:none;" {{/if_eq}}>
-                          <div class="col-md-6">
-                            <div class="form-group form-focus" >
-                              <label class="control-label">First Name</label>
-                              <input type="text" class="form-control floating" id="first_name" name="first_name" value="{{referral.first_name}}" />
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group form-focus">
-                              <label class="control-label">Last Name</label>
-                              <input type="text" class="form-control floating" id="last_name" name="last_name" value="{{referral.last_name}}"/>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-12" id="org_referral" {{#if_eq referral.referral_type "I"}} style="display:none;" {{/if_eq}}>
-                          <div class="form-group form-focus">
-                            <label class="control-label">Organization Name</label>
-                            <input type="text" class="form-control floating" id="org_name" name="org_name" value="{{referral.organization_name}}"/>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group form-focus">
-                            <label class="control-label">Email Id </label>
-                            <input type="text" class="form-control floating" id="email" name="email" value="{{referral.email}}"/>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group form-focus">
-                            <label class="control-label">Mobile Number</label>
-                            <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" value="{{referral.mobile}}"/>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label class="control-label">Refferred By: </label>
-                            <input type="radio" id="referral_type" name="ref_type" value="T" {{#if_eq referral.referred_type "T"}} checked {{/if_eq}} />Target
-                            <input type="radio" id="organization_type" name="ref_type" value="C" {{#if_eq referral.referred_type "C"}} checked {{/if_eq}}/>Client 
-                          </div>
-                        </div>
-                        <div class="col-md-6" id="target_list" {{#if_eq referral.referred_type "C"}} style="display:none;" {{/if_eq}}>
-                          <div class="form-group form-focus">
-                            <select id="target_id" name="referred_id_t" class="select form-control floating">
-                                <option value="0" {{#if_eq referral.target_id "0"}} selected {{/if_eq}}>Select Target</option>
-                                {{#each target}}
-                                  {{#if_eq target_type "I"}}
-                                  <option value="{{this.id}}" {{#if_eq this.id ../referral.target_id}} selected {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
-                                  {{/if_eq}}
-                                  {{#if_eq target_type "O"}}
-                                  <option value="{{this.id}}" {{#if_eq this.id ../referral.target_id}} selected {{/if_eq}}>{{this.organization_name}}</option>
-                                  {{/if_eq}}
-                                {{/each}}
-                              </select>
-                            </div>
-                          </div>
-                          <div class="col-md-6" id="client_list" {{#if_eq referral.referred_type "T"}} style="display:none;" {{/if_eq}}>
-                            <div class="form-group form-focus">
-                              <select id="client_id" name="referred_id_c" class="select form-control floating">
-                                <option value="0" {{#if_eq referral.client_id "0"}} selected {{/if_eq}}>Select Client</option>
-                                {{#each client}}
-                                {{#if_eq client_type "I"}}
-                                <option value="{{this.id}}"{{#if_eq this.id ../referral.client_id}} selected {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
-                                {{/if_eq}}
-                                {{#if_eq client_type "O"}}
-                                <option value="{{this.id}}"{{#if_eq this.id ../referral.client_id}} selected {{/if_eq}}>{{this.organization_name}}</option>
-                                {{/if_eq}}
-                                {{/each}}
-                              </select>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                           <div class="form-group form-focus">
-                              <label class="control-label">Remarks</label>
-                              <textarea name="remarks" id="remarks" class="form-control floating">{{referral.remarks}}</textarea>
-                           </div>
-                        </div>
-                     </div>
-               </div>
+              <div class="col-md-12">
+                <div class="form-group form-focus select-focus">
+                  <label class="control-label">Attorney Name</label>
+                  <select id="attr_id" name="attr_id" class="select form-control floating">
+                    <option value="">Select Attorney</option>
+                    {{#each attorney}}
+                    <option value="{{this.id}}" {{#if_eq this.id ../referral.attorney_id }} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+                    {{/each}}
+                  </select>
+                </div>
+              </div>
+              <div id="indi_referral" {{#if_eq referral.referral_type "O"}} style="display:none;" {{/if_eq}}>
+                <div class="col-md-6">
+                  <div class="form-group form-focus">
+                    <label class="control-label">First Name</label>
+                    <input type="text" class="form-control floating" id="first_name" name="first_name" value="{{referral.first_name}}" />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group form-focus">
+                    <label class="control-label">Last Name</label>
+                    <input type="text" class="form-control floating" id="last_name" name="last_name" value="{{referral.last_name}}" />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12" id="org_referral" {{#if_eq referral.referral_type "I"}} style="display:none;" {{/if_eq}}>
+                <div class="form-group form-focus">
+                  <label class="control-label">Organization Name</label>
+                  <input type="text" class="form-control floating" id="org_name" name="org_name" value="{{referral.organization_name}}" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group form-focus">
+                  <label class="control-label">Email Id </label>
+                  <input type="text" class="form-control floating" id="email" name="email" value="{{referral.email}}" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group form-focus">
+                  <label class="control-label">Mobile Number</label>
+                  <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" value="{{referral.mobile}}"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="control-label">Refferred By: </label>
+                  <input type="radio" id="referral_type" name="ref_type" value="T" {{#if_eq referral.referred_type "T"}} checked {{/if_eq}}
+                  />Target
+                  <input type="radio" id="organization_type" name="ref_type" value="C" {{#if_eq referral.referred_type "C"}} checked {{/if_eq}}/>Client
+                </div>
+              </div>
+              <div class="col-md-6" id="target_list" {{#if_eq referral.referred_type "C"}} style="display:none;" {{/if_eq}}>
+                <div class="form-group form-focus">
+                  <select id="target_id" name="referred_id_t" class="select form-control floating">
+                    <option value="0" {{#if_eq referral.target_id "0"}} selected {{/if_eq}}>Select Target</option>
+                    {{#each target}} {{#if_eq target_type "I"}}
+                    <option value="{{this.id}}" {{#if_eq this.id ../referral.target_id}} selected {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+                    {{/if_eq}} {{#if_eq target_type "O"}}
+                    <option value="{{this.id}}" {{#if_eq this.id ../referral.target_id}} selected {{/if_eq}}>{{this.organization_name}}</option>
+                    {{/if_eq}} {{/each}}
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6" id="client_list" {{#if_eq referral.referred_type "T"}} style="display:none;" {{/if_eq}}>
+                <div class="form-group form-focus">
+                  <select id="client_id" name="referred_id_c" class="select form-control floating">
+                    <option value="0" {{#if_eq referral.client_id "0"}} selected {{/if_eq}}>Select Client</option>
+                    {{#each client}} {{#if_eq client_type "I"}}
+                    <option value="{{this.id}}" {{#if_eq this.id ../referral.client_id}} selected {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+                    {{/if_eq}} {{#if_eq client_type "O"}}
+                    <option value="{{this.id}}" {{#if_eq this.id ../referral.client_id}} selected {{/if_eq}}>{{this.organization_name}}</option>
+                    {{/if_eq}} {{/each}}
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group form-focus">
+                  <label class="control-label">Remarks</label>
+                  <textarea name="remarks" id="remarks" class="form-control floating">{{referral.remarks}}</textarea>
+                </div>
+              </div>
             </div>
-         </div>
-         <div class="text-center m-t-20">
-            <button class="btn btn-primary btn-lg" type="submit">Save &amp; create</button>
-         </div>
-      </form>
-   </div>
-   
+          </div>
+        </div>
+      </div>
+      <div class="text-center m-t-20">
+        <button class="btn btn-primary btn-lg" type="submit">Save &amp; create</button>
+      </div>
+    </form>
+  </div>
+
 </div>
 {{#content "script" mode="append"}}
-    <script type="text/javascript" src="/assets/js/moment.min.js"></script>
-    <script type="text/javascript" src="/assets/js/select2.min.js"></script>
-    <script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
-    <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $("#frmEditReferral").validate({
-                rules: {
-                    attr_id: {
-                        required: true
-                    },
-                    first_name: {
-                        required: true
-                    },
-                    last_name: {
-                        required: true
-                    },
-                    org_name: {
-                        required: true
-                    },
-                    email: {
-                        required: true
-                    },
-                    mobile_no: {
-                        required: true
-                    },
-                    target_id: {
-                        required: true
-                    },
-                    client_id: {
-                        required: true
-                    },
-                    remarks: {
-                        required: true
-                    }
-                },
-                messages: {
-                    attr_id: {
-                        required: "Please select one attorney"
-                    },
-                    first_name: {
-                        required: "First name can't be blank"
-                    },
-                    last_name: {
-                        required: "Last name can't be blank"
-                    },
-                    org_name: {
-                        required: "Organization name can't be blank"
-                    },
-                    email: {
-                        required: "Email ID can't be blank"
-                    },
-                    mobile_no: {
-                        required: "Mobile number can't be blank"
-                    },
-                    target_id: {
-                        required: "Please select reffered name"
-                    },
-                    client_id: {
-                        required: "Please select reffered name"
-                    },
-                    remarks: {
-                        required: "Remarsks can't be blank"
-                    }
-                }
-            });
-        });
+<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+<script type="text/javascript" src="/assets/js/select2.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    $("#frmEditReferral").validate({
+      rules: {
+        attr_id: {
+          required: true
+        },
+        first_name: {
+          required: true
+        },
+        last_name: {
+          required: true
+        },
+        org_name: {
+          required: true
+        },
+        email: {
+          required: true
+        },
+        mobile_no: {
+          required: true
+        },
+        target_id: {
+          required: true
+        },
+        client_id: {
+          required: true
+        },
+        remarks: {
+          required: true
+        }
+      },
+      messages: {
+        attr_id: {
+          required: "Please select one attorney"
+        },
+        first_name: {
+          required: "First name can't be blank"
+        },
+        last_name: {
+          required: "Last name can't be blank"
+        },
+        org_name: {
+          required: "Organization name can't be blank"
+        },
+        email: {
+          required: "Email ID can't be blank"
+        },
+        mobile_no: {
+          required: "Mobile number can't be blank"
+        },
+        target_id: {
+          required: "Please select reffered name"
+        },
+        client_id: {
+          required: "Please select reffered name"
+        },
+        remarks: {
+          required: "Remarsks can't be blank"
+        }
+      }
+    });
+  });
 
-        $(document).on('click', '#individual_referral', function(){
-          $('#indi_referral').show();
-          $('#org_referral').hide();
-        });
+  $(document).on('click', '#individual_referral', function () {
+    $('#indi_referral').show();
+    $('#org_referral').hide();
+  });
 
-        $(document).on('click', '#organization_referral', function(){
-          $('#indi_referral').hide();
-          $('#org_referral').show();
-        });
+  $(document).on('click', '#organization_referral', function () {
+    $('#indi_referral').hide();
+    $('#org_referral').show();
+  });
 
 
-        $(document).on('click', '#referral_type', function(){
-          $('#target_list').show();
-          $('#client_list').hide();
-        });
+  $(document).on('click', '#referral_type', function () {
+    $('#target_list').show();
+    $('#client_list').hide();
+  });
 
-        $(document).on('click', '#organization_type', function(){
-          $('#target_list').hide();
-          $('#client_list').show();
-        });
-    </script>
-{{/content}}
+  $(document).on('click', '#organization_type', function () {
+    $('#target_list').hide();
+    $('#client_list').show();
+  });
+</script> {{/content}}

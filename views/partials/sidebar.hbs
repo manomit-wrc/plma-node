@@ -63,8 +63,7 @@
                         Employees
                     </a>
                 </li>
-                {{/if_eq}}
-                {{#if_eq user.role_id "2"}}
+                {{/if_eq}} {{#if_eq user.role_id "2"}}
                 <li {{#if_eq client_url "firm-details" }} class="active" {{/if_eq}}>
                     <a href="/firm-details">
                         <i class="fa fa-table"></i>
@@ -77,12 +76,23 @@
                         Attorneys
                     </a>
                 </li>
+
+
+                {{#if_eq user.role_id "2"}}
+                <li {{#if_eq client_url "activity-budget-report" }} class="active" {{/if_eq}}>
+                    <a href="/activity-budget-report">
+                        <i class="fa fa-file-text"></i> Activity Budget Report</a>
+                </li>
+                {{/if_eq}} 
+
+
                 <li {{#if_eq client_url "activity-goal" }} class="active" {{/if_eq}}>
                     <a href="/activity-goal">
                         <i class="fa fa-bullseye"></i>
                         Activity Goals
                     </a>
                 </li>
+
                 <li {{#if_eq client_url "financial-goal" }} class="active" {{/if_eq}}>
                     <a href="/financial-goal">
                         <i class="fa fa-money"></i>
@@ -113,7 +123,10 @@
                         Referral
                     </a>
                 </li>
-                {{/if_eq}}
+                {{/if_eq}} 
+                
+                
+                
                 {{#if_eq user.role_id "3"}}
                 <li {{#if_eq client_url "activity-goal" }} class="active" {{/if_eq}}>
                     <a href="/activity-goal">
