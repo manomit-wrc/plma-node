@@ -3,7 +3,7 @@
     <div class="account-box">
         <div class="account-wrapper">
             <div class="account-logo">
-                <a href="/"><img src="/assets/img/Perform_Law.png" alt="Focus Technologies" class="img-responsive"></a>
+                <a href="#"><img src="/assets/img/Perform_Law.png" alt="Focus Technologies" class="img-responsive"></a>
             </div>
             {{#if message}}
             <div class="alert alert-danger">
@@ -18,7 +18,12 @@
 
             {{#if password_message}}
            <div class="alert alert-danger">
-               <strong>success! mail is sent</strong>{{password_message}}
+               <strong>Success! mail is sent</strong>{{password_message}}
+           </div>
+           {{/if}}
+            {{#if resetMsg}}
+           <div class="alert alert-success">
+               <strong>Success! </strong>{{resetMsg}}
            </div>
            {{/if}}
 

@@ -51,6 +51,19 @@
                     }
                 }
             });
+            $("#ForgotPasswordForm").validate({
+                rules: {
+                    u_mail: {
+                        required: true,
+                        email: true
+                    }
+                },
+                messages: {
+                    u_mail: {
+                        required: "Please enter email"
+                    }
+                }
+            });
         });
       </script>
    </body>
