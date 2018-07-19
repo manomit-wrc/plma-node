@@ -7,7 +7,6 @@ const csrf = require('csurf');
 const bCrypt = require('bcrypt-nodejs');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
-
 const User = require('../models').user;
 var csrfProtection = csrf({ cookie: true });
 var csv = require('fast-csv');
@@ -44,19 +43,25 @@ router.get('/forgot-password', csrfProtection, (req, res) => {
 
 router.post('/forgot',csrfProtection, async (req, res) => {
   //console.log(req.body.u_mail);
-const user_email = await User.findOne({
+  let user_email;
+try{
+ user_email = await User.findOne({
   where: {
     email: req.body.u_mail
   }
 });
+}
 //console.log(user_email);
-
+catch(e){
+}
 if (user_email == null) {
-
+  //console.log("error");
   req.flash('success-err-message', 'This Email ID is not exists to database');
-   res.redirect('/forgot-password')
+  res.redirect('/forgot-password');
 
 }
+
+
 else{
 function generatePassword() {
    var length = 8,
@@ -81,10 +86,24 @@ var genPassword = generatePassword();
           	Recipients: [{'Email': req.body.u_mail}]
         })
 
+//updated
+try{
+await User.update({
+    password: bCrypt.hashSync(genPassword)
+    },{where: {id: user_email.id}
+});
+
+}
+  catch(e){
+    console.log("Error111");
+}
+//
+
 
 }
 req.flash('new_message', 'The new password is sent to tour mail');
- res.redirect('/forgot-password')
+ res.redirect('/forgot-password');
+
 });
 
 /*============================Ends Import Client Excel Data =====================================*/
