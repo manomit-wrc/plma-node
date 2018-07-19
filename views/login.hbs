@@ -15,6 +15,13 @@
                 <strong>Success! </strong>{{success_password_message}}
             </div>
             {{/if}}
+
+            {{#if password_message}}
+           <div class="alert alert-danger">
+               <strong>success! mail is sent</strong>{{password_message}}
+           </div>
+           {{/if}}
+
             <form action="/" method="POST" id="frmLogin">
                 <input type="hidden" name="_csrf" value="{{csrfToken}}">
                 <div class="form-group form-focus">
