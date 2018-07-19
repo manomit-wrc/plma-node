@@ -37,13 +37,39 @@
          <i class="caret"></i>
          </a>
          <ul class="dropdown-menu">
-            <li><a href="/profile">My Profile</a></li>
-            <li><a href="/edit-profile">Edit Profile</a></li>
+            <li><a href="/profile"><i class="fa fa-user"></i> My Profile</a></li>
+            <li><a href="/edit-profile"><i class="fa fa-pencil-square-o"></i> Edit Profile</a></li>
             {{#if_eq user.role_id "1"}}
-            <li><a href="/settings">Settings</a></li>
+            <li><a href="/settings"><i class="fa fa-cog"></i> Settings</a></li>
+            <li><a href="javascript:void(0)" data-toggle="modal" data-target="#loginFirm"><i class="fa fa-sign-in"></i> Login as firm admin</a></li>
             {{/if_eq}}
-            <li><a href="/change-password">Change Password</a></li>
-            <li><a href="/logout">Logout</a></li>
+            <li><a href="/change-password"><i class="fa fa-key"></i> Change Password</a></li>
+             {{#if_eq user.role_id "2"}}
+               {{#if_eq user.actual_role_id "0"}}
+                 <li><a href="/change-role"><i class="fa fa-sign-in"></i> Login as Attorney</a></li>
+              {{/if_eq}}
+               {{#if_eq user.actual_role_id "1"}}
+                 <li><a href="/change-role-site"><i class="fa fa-sign-in"></i> Login as Attorney</a></li>
+              {{/if_eq}}
+            {{/if_eq}}
+             {{#if_eq user.actual_role_id "2"}}
+            <li>
+              <a href="/change-role-firm"><i class="fa fa-sign-in"></i> Login as firm admin </a>
+            </li>
+            {{/if_eq}}
+             {{#if_eq user.role_id "3"}}
+              {{#if_eq user.actual_role_id "1"}}
+                <li>
+                  <a href="/change-role-firm-site"><i class="fa fa-sign-in"></i> Login as firm admin </a>
+                </li>
+              {{/if_eq}}
+            {{/if_eq}}
+             {{#if_eq user.actual_role_id "1"}}
+            <li>
+              <a href="/change-role-firm-site-all"><i class="fa fa-sign-in"></i> Login as site admin </a>
+            </li>
+            {{/if_eq}}
+            <li><a href="/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
          </ul>
       </li>
    </ul>
@@ -57,3 +83,54 @@
       </ul>
    </div>
 </div>
+<div class="modal fade" id="loginFirm" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <strong>Login As Super User</strong>
+        <button type="button" class="close" data-dismiss="modal">×</button>
+      </div>
+      <div class="modal-body">
+        <form name="site_to_firm" id="site_to_firm" method="POST" action="/change-site-to-firm">
+            <label class="control-label">Select Firm</label>
+            <div class="form-group">
+                <select class="form-control floating" id="firm_id" name="firm_id">
+                  <option value="">Select Firm</option>
+                  <option value="2">Acme Corporation</option>
+                  <option value="5">WRC Technologies Pvt Ltd</option>
+                </select>
+            </div>
+          <div class="form-group">
+            <input type="submit" name="import" value="Submit" class="btn btn-primary rounded" />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer"></div>
+    </div>
+  </div>
+</div>
+
+{{#content "script" mode="append"}}
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+
+<script>
+  $(document).ready(function (e) {
+
+      $("#site_to_firm").validate({
+        rules: {
+          firm_id: {
+            required: true
+          }
+        },
+        messages: {
+          firm_id: {
+            required: "Please select a firm"
+          }
+        }
+      });
+    });
+</script>
+{{/content}}

@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     gender: DataTypes.STRING,
     dob: DataTypes.DATE,
     firm_id: DataTypes.INTEGER,
+    actual_role_id: DataTypes.INTEGER,
     date_of_birth: DataTypes.STRING
   }, {});
   user.associate = function(models) {
