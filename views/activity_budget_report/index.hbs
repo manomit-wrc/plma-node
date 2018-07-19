@@ -4,21 +4,21 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
 {{/content}}
 
-<div class="page-wrapper">
+<div class="page-wrapper act-budgreport">
     <div class="content container-fluid">
         <div class="row">
             <div class="col-md-12">
                 <h4 class="page-title">Activity Budget Report</h4>
             </div>
             <div class="col-md-4" style="padding-left: 0;">
-                <div class="div_left">
+                <div class="div_left table-responsive">
                     <table width="100%" class="table table-bordered">
                         <thead class="persist-header">
                             <tr>
-                                <td style="height: 91px; width: 200px; vertical-align: middle">
+                                <td width="45%" style="height: 91px; vertical-align: middle">
                                     <strong>Marketing Budget Summary</strong>
                                 </td>
-                                <td style="height: 150px; text-align:center; height: 35px; vertical-align: middle">
+                                <td width="35%" style="height: 91px; text-align: center; vertical-align: middle">
                                     <strong>Page Total</strong>
                                 </td>
                             </tr>
@@ -33,20 +33,20 @@
                             {{#each budgetArr}}
                                 <tr>
                                     <td colspan="3" style="padding: 0;">
-                                        <table width="100%" class="table table-bordered">
+                                        <table width="100%" class="table innertest">
                                             <tbody>
                                                 <tr>
-                                                    <td width="45%" style="border-top: none; height: 40px; vertical-align: middle; text-align: center;" title="{{this.parent_name}}">
+                                                    <td width="45%" style="border-right: 1px solid #e7ecf1; border-bottom: 1px solid #e7ecf1; border-top: none; height: 40px; vertical-align: middle; text-align: center;" title="{{this.parent_name}}">
                                                         <strong>{{this.parent_name}}</strong>
                                                     </td>
                                                     <td width="35%" style="padding:0; text-align:center; height: 40px">
                                                         <table width="100%" height="40px">
                                                             <tbody>
                                                                 <tr>
-                                                                    <td width="50%" style=" border-right: 1px solid #e7ecf1; vertical-align: middle; text-align: center;">
+                                                                    <td width="50%" style=" border-right: 1px solid #e7ecf1;border-bottom: 1px solid #e7ecf1; vertical-align: middle; text-align: center;">
                                                                         <strong>Hours</strong>
                                                                     </td>
-                                                                    <td width="50%" style="vertical-align: middle; text-align: center;">
+                                                                    <td width="50%" style="border-bottom: 1px solid #e7ecf1;vertical-align: middle; text-align: center;">
                                                                         <strong>US $</strong>
                                                                     </td>
                                                                 </tr>
@@ -56,15 +56,15 @@
                                                 </tr>
                                                 {{#each this.child_budget}}
                                                     <tr>
-                                                        <td width="45%" style="height: 40px; vertical-align: middle;" title="{{this.name}}">{{this.name}}</td>
+                                                        <td width="45%" style="border-right: 1px solid #e7ecf1; border-bottom: 1px solid #e7ecf1;height: 40px; vertical-align: middle;" title="{{this.name}}">{{this.name}}</td>
                                                         <td width="35%" style=" padding:0; text-align:center; height: 40px">
                                                             <table width="100%" style="height: 40px">
                                                                 <tbody>
                                                                     <tr>
-                                                                        <td width="50%" style="border-right: 1px solid #e7ecf1; height: 40px; vertical-align: middle; text-align: center;">
+                                                                        <td width="50%" style="border-right: 1px solid #e7ecf1;border-bottom: 1px solid #e7ecf1; height: 40px; vertical-align: middle; text-align: center;">
                                                                             {{hour}}
                                                                         </td>
-                                                                        <td width="50%" style="height: 40px; vertical-align: middle; text-align: center;">
+                                                                        <td width="50%" style="border-bottom: 1px solid #e7ecf1;height: 40px; vertical-align: middle; text-align: center;">
                                                                             {{amount}}
                                                                         </td>
                                                                     </tr>
@@ -74,17 +74,17 @@
                                                     </tr>
                                                 {{/each}}
                                                 <tr>
-                                                    <td width="45%" style=" text-align:right; height: 35px; vertical-align: middle; text-align: center;">
+                                                    <td width="45%" style="border-right: 1px solid #e7ecf1;border-bottom: 1px solid #e7ecf1; text-align:right; height: 35px; vertical-align: middle; text-align: center;">
                                                         <strong>Sub-total</strong>
                                                     </td>
                                                     <td width="35%" style=" padding:0; text-align:center" height="35px;">
                                                         <table width="100%" style=" height: 35px">
                                                             <tbody>
                                                                 <tr>
-                                                                    <td width="50%" style=" height: 35px; border-right: 1px solid #e7ecf1; background:#ddd; color:#000; font-weight:800; vertical-align: middle; text-align: center;">
+                                                                    <td width="50%" style=" height: 35px; border-right: 1px solid #e7ecf1; border-bottom: 1px solid #e7ecf1;background:#ddd; color:#000; font-weight:800; vertical-align: middle; text-align: center;">
                                                                         <strong>{{get_hour_by_goal this.child_budget this.parent_id}}</strong>
                                                                     </td>
-                                                                    <td width="50%" style=" height: 35px; background:#ddd; color:#000; font-weight:800; vertical-align: middle; text-align: center;">
+                                                                    <td width="50%" style=" border-bottom: 1px solid #e7ecf1;height: 35px; background:#ddd; color:#000; font-weight:800; vertical-align: middle; text-align: center;">
                                                                         <strong>{{get_amount_by_goal this.child_budget this.parent_id}}</strong>
                                                                     </td>
                                                                 </tr>
@@ -123,7 +123,7 @@
                 </div>
             </div>
             <div class="col-md-8">
-                <div class="div_right">
+                <div class="div_right table-responsive">
                     {{#each activityArr}}
                         <table class="table table-bordered m-t-10" style="width: 33%; display: inline-block;">
                             <thead class="persist-header">
@@ -212,4 +212,16 @@
 <script type="text/javascript" src="/assets/js/select2.min.js"></script>
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script>
+    $(document).ready(function() {
+        if(window.location.pathname.split("/")[1] === "activity-budget-report") {
+            $(".sidebar").addClass("sidebar-hide");
+            $(".page-wrapper").addClass("page-wrapper-full");
+        }
+        else {
+            $(".page-wrapper").removeClass("page-wrapper-full");
+            $(".sidebar").removeClass("sidebar-hide");
+        }
+    });
+</script>
 {{/content}}
