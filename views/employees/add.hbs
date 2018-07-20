@@ -144,7 +144,8 @@
 
                <div class="col-md-12">
                     <div class="form-group form-focus select-focus">
-                        <select class="form-control floating" id="firm_id" name="firm_id" multiple="multiple">
+                        <label class="control-label">Base Firm Name</label>
+                        <select class="form-control floating" id="firm_id" name="firm_id" >
                             {{#each firms}}
                             <option value="{{this.id}}">{{this.title}}</option>
                             {{/each}}
