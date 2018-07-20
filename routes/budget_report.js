@@ -19,13 +19,9 @@ var csrfProtection = csrf({
   cookie: true
 });
 
-
-
-
 const router = express.Router();
 
 router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => {
-
   if (req.user.role_id == 2) {
     var firm_id = req.user.firm_id;
     var activity_goals = await ActivityGoal.findAll({
@@ -46,7 +42,6 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
   var activityArr = [];
 
   var budgetArr = [];
-
   for (var i = 0; i < budgetList.length; i++) {
     if (budgetList[i].parent_id === 0) {
       const parent_name = budgetList[i].name;
@@ -65,7 +60,6 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
         });
 
         const temp_arr = lodash.filter(activity_budget, arr => arr.budget_id === child_budget[j].id);
-
         const budget_wise_sum = await ActivityBudget.findAll({
           where: {
             budget_id: child_budget[j].id,
@@ -75,10 +69,8 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
           ],
           group: ['budget_id']
         });
-
         const hour = budget_wise_sum.length > 0 ? budget_wise_sum[0].hour : "-";
         const amount = budget_wise_sum.length > 0 ? budget_wise_sum[0].amount : "-";
-
         child_budget_arr.push({
           "id": child_budget[j].id,
           "name": child_budget[j].name,
@@ -99,6 +91,7 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
   }
 
   const activity_goal_total = await ActivityBudget.findAll({
+
     attributes: ['activity_goal_id', [Sequelize.fn('sum', Sequelize.col('hour')), 'hour'],
       [Sequelize.fn('sum', Sequelize.col('amount')), 'amount']
     ],
@@ -112,9 +105,6 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
       [Sequelize.fn('sum', Sequelize.col('amount')), 'amount']
     ],
   });
-
-  //  console.log('activity_goal_grand_total=>',activity_goal_grand_total[0]['dataValues']['hour']);
-
 
   for (var j = 0; j < activity_goals.length; j++) {
     activityArr.push({
