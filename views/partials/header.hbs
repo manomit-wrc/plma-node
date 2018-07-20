@@ -97,8 +97,7 @@
             <div class="form-group">
                 <select class="form-control floating" id="firm_id" name="firm_id">
                   <option value="">Select Firm</option>
-                  <option value="2">Acme Corporation</option>
-                  <option value="5">WRC Technologies Pvt Ltd</option>
+                  
                 </select>
             </div>
           <div class="form-group">
@@ -118,6 +117,19 @@
 
 <script>
   $(document).ready(function (e) {
+    $.ajax({
+      type: "POST",
+      url: "/get-firm-name",
+      success: function (response) {
+        for (var i = 0; i < response.firms.length; i++) {
+          console.log(response.firms[i]);
+          $("#firm_id").append('<option value="' + response.firms[i].id + '">' + response.firms[i].title + '</option>');
+        }
+      },
+      error: function (xhr) {
+
+      }
+    });
 
       $("#site_to_firm").validate({
         rules: {

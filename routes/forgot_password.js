@@ -78,9 +78,9 @@ router.post('/forgot', csrfProtection, async (req, res) => {
       })
       .request({
         FromEmail: 'malini@wrctpl.com',
-        FromName: 'Mailjet Pilot',
+        FromName: 'plma.attorneymanagement.com',
         Subject: 'FORGOT PASSWORD',
-        'Text-part': 'new password: ' + genPassword,
+        'Text-part': 'Your new password is: ' + genPassword,
         Recipients: [{
           'Email': req.body.u_mail
         }]
