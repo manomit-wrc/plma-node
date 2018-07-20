@@ -181,12 +181,12 @@
                                                         <tbody>
                                                             <tr>
                                                                 <td width="50%" height="35px" style=" border-left:none; border-right: 1px solid #e7ecf1; background:#ddd; color:#000; font-weight:800; text-align: center">
-                                                                 
-                                                                {{get_sub_total_hour this.child_budget this.parent_id ../this.activity_id}}    
+
+                                                                    {{get_sub_total_hour this.child_budget this.parent_id ../this.activity_id}}
                                                                 </td>
                                                                 <td width="50%" style=" background:#ddd; color:#000; font-weight:800; text-align: center">
-                                                                   {{get_sub_total_amount this.child_budget this.parent_id ../this.activity_id}}
-                                                                    </td>
+                                                                    {{get_sub_total_amount this.child_budget this.parent_id ../this.activity_id}}
+                                                                </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -234,8 +234,8 @@
                                     <form class="m-b-10" name="editActivityBudgetFrm" id="editActivityBudgetFrm">
                                         <div class="row">
                                             <div class="col-md-12">
-                
-                                                 {{#each this.budget_list}}
+
+                                                {{#each this.budget_list}}
                                                 <div class="panel panel-primary">
                                                     <div class="panel-heading">
                                                         <h3 class="panel-title">{{this.parent_name}}</h3>
@@ -251,7 +251,7 @@
                                                                 </div>
                                                                 <div class="col-md-3">
                                                                     <div class="form-group">
-                
+
                                                                         <input class="form-control edit_budget_hour number_budget" type="text" data-budgets-id="{{this.id}}" id="edit_budget_hour"
                                                                             name="edit_budget_hour" placeholder="Hours" value="{{get_activity_budget_hour ../../this.activity_id this.budget_display}}"
                                                                             disabled>
@@ -260,13 +260,14 @@
                                                                 <div class="col-md-3">
                                                                     <div class="form-group">
                                                                         <input class="form-control edit_budget_amount number_budget" type="text" id="edit_budget_amount" name="edit_budget_amount"
-                                                                            placeholder="Dollars($)" value="{{get_activity_budget_amount ../../this.activity_id this.budget_display}}" disabled>
+                                                                            placeholder="Dollars($)" value="{{get_activity_budget_amount ../../this.activity_id this.budget_display}}"
+                                                                            disabled>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         {{/each}}
-                
+
                                                     </div>
                                                 </div>
                                                 {{/each}}
@@ -292,8 +293,8 @@
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function() {
-        if(window.location.pathname.split("/")[1] === "budget-report") {
+    $(document).ready(function () {
+        if (window.location.pathname.split("/")[1] === "budget-report") {
             $(".sidebar").addClass("sidebar-hide");
             $(".page-wrapper").addClass("page-wrapper-full");
         }
@@ -302,5 +303,4 @@
             $(".sidebar").removeClass("sidebar-hide");
         }
     });
-</script>
-{{/content}}
+</script> {{/content}}

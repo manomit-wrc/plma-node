@@ -122,7 +122,7 @@
       url: "/get-firm-name",
       success: function (response) {
         for (var i = 0; i < response.firms.length; i++) {
-          console.log(response.firms[i]);
+          // console.log(response.firms[i]);
           $("#firm_id").append('<option value="' + response.firms[i].id + '">' + response.firms[i].title + '</option>');
         }
       },
