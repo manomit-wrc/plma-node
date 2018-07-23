@@ -1,210 +1,197 @@
 {{#content "style" mode="prepend"}}
-    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
-    <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
-{{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
 
 <div class="page-wrapper">
-   <div class="content container-fluid">
-      <div class="row">
-         <div class="col-sm-8">
-            <h4 class="page-title">Edit Employee</h4>
-         </div>
-      </div>
-      {{#if error_edit_message}}
+    <div class="content container-fluid">
+        <div class="row">
+            <div class="col-sm-8">
+                <h4 class="page-title">Edit Employee</h4>
+            </div>
+        </div>
+        {{#if error_edit_message}}
         <div class="alert alert-danger">
             <strong>Error! </strong>{{error_edit_message}}
         </div>
-      {{/if}}
-      <form id="frmEditEmployee" method="POST" action="/employees/edit/{{empl.id}}">
-         <input type="hidden" name="_csrf" value="{{csrfToken}}">
-         <div class="card-box">
-            <h3 class="card-title">Basic Informations</h3>
-            <div class="row">
-               <div class="col-md-12">
-                     <div class="row">
-                        <div class="col-md-6">
-                           <div class="form-group form-focus">
-                              <label class="control-label">First Name</label>
-                              <input type="text" class="form-control floating"
-                                     id="first_name" name="first_name" value="{{empl.first_name}}"
-                              />
-                           </div>
-                        </div>
-                        <div class="col-md-6">
-                           <div class="form-group form-focus">
-                              <label class="control-label">Last Name</label>
-                              <input type="text" class="form-control floating"
-                              id="last_name" name="last_name" value="{{empl.last_name}}"
-                              />
-                           </div>
-                        </div>
-                        <div class="col-md-12">
-                           <div class="form-group form-focus">
-                              <label class="control-label">Email</label>
-                              <input type="text" class="form-control floating"
-                                     id="email" name="email" value="{{empl.email}}"
-                              />
-                           </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group form-focus">
-                                <label class="control-label">Birth Date</label>
-                                <div class="cal-icon">
-                                    <input class="form-control floating datetimepicker"
-                                        type="text" id="dob" name="dob" value="{{dateFormat empl.dob "DD-MM-YYYY"}}"
-                                    >
+        {{/if}}
+        <form id="frmEditEmployee" method="POST" action="/employees/edit/{{empl.id}}">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            <div class="card-box">
+                <h3 class="card-title">Basic Informations</h3>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group form-focus">
+                                    <label class="control-label">First Name</label>
+                                    <input type="text" class="form-control floating" id="first_name" name="first_name" value="{{empl.first_name}}" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-focus">
+                                    <label class="control-label">Last Name</label>
+                                    <input type="text" class="form-control floating" id="last_name" name="last_name" value="{{empl.last_name}}" />
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group form-focus">
+                                    <label class="control-label">Email</label>
+                                    <input type="text" class="form-control floating" id="email" name="email" value="{{empl.email}}" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-focus">
+                                    <label class="control-label">Birth Date</label>
+                                    <div class="cal-icon">
+                                        <input class="form-control floating datetimepicker" type="text" id="dob" name="dob" value="{{dateFormat empl.dob " DD-MM-YYYY
+                                            "}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-focus select-focus">
+                                    <label class="control-label">Gender</label>
+                                    <select class="form-control floating" id="gender" name="gender">
+                                        <option value="M" {{#if_eq empl.gender "M"}} selected="selected" {{/if_eq}}>Male</option>
+                                        <option value="F" {{#if_eq empl.gender "F"}} selected="selected" {{/if_eq}}>Female</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group form-focus select-focus">
-                                <label class="control-label">Gender</label>
-                                <select class="form-control floating" id="gender" name="gender">
-                                    <option value="M" {{#if_eq empl.gender "M"}} selected="selected" {{/if_eq}}>Male</option>
-                                    <option value="F" {{#if_eq empl.gender "F"}} selected="selected" {{/if_eq}}>Female</option>
-                                </select>
-                            </div>
-                        </div>
-                     </div>
 
-               </div>
-            </div>
-         </div>
-         <div class="card-box">
-            <h3 class="card-title">Contact Informations</h3>
-            <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group form-focus">
-                     <label class="control-label">Mobile No</label>
-                     <input type="text" class="form-control floating"
-                     id="mobile_no" name="mobile_no"
-                     maxlength="10" minlength="10" value="{{empl.mobile_no}}"
-                     />
-                  </div>
-               </div>
-               <div class="col-md-12">
-                  <div class="form-group form-focus">
-                     <label class="control-label">Address</label>
-                     <input type="text" class="form-control floating"
-                     id="address" name="address" value="{{empl.address}}"
-                     />
-                  </div>
-               </div>
-               <div class="col-md-6">
-                  <div class="form-group form-focus">
-                     <select class="select form-control floating" id="country" name="country">
-                        <option value="">Select Country</option>
-                        {{#each country}}
-                        <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
-                        {{/each}}
-                    </select>
-                  </div>
-               </div>
-               <div class="col-md-6">
-                  <div class="form-group form-focus">
-                     <select class="select form-control floating" id="state" name="state">
-                        <option value="">select State</option>
-                        {{#each state}}
-                        <option value="{{this.id}}" {{#if_eq this.id ../empl.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
-                        {{/each}}
-                    </select>
-                  </div>
-               </div>
-               <div class="col-md-6">
-                  <div class="form-group form-focus">
-                     <select class="select form-control floating" id="city" name="city">
-                          <option value="">Select City</option>
-                          {{#each city}}
-                            <option value="{{this.id}}" {{#if_eq this.id ../empl.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
-                          {{/each}}
-                    </select>
-                  </div>
-               </div>
-               <div class="col-md-6">
-                  <div class="form-group form-focus">
-                        <select class="select form-control floating" id="zipcode" name="zipcode">
-                        <option value="">Select Zipcode</option>
-                        {{#each zipcode}}
-                            <option value="{{this.id}}" {{#if_eq this.id ../empl.zipcode}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
-                          {{/each}}
-                    </select>
-                  </div>
-               </div>
-
-               <div class="col-md-12">
-                    <div class="form-group form-focus select-focus">
-
-                        <select class="form-control floating" id="firm_id" name="firm_id" multiple="multiple">
-                            {{#each firms}}
-                            <option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected"{{/inArray}}>{{this.title}}</option>
-                            {{/each}}
-                        </select>
                     </div>
-               </div>
+                </div>
             </div>
-         </div>
+            <div class="card-box">
+                <h3 class="card-title">Contact Informations</h3>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group form-focus">
+                            <label class="control-label">Mobile No</label>
+                            <input type="text" class="form-control floating" id="mobile_no" name="mobile_no" maxlength="10" minlength="10" value="{{empl.mobile_no}}"
+                            />
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group form-focus">
+                            <label class="control-label">Address</label>
+                            <input type="text" class="form-control floating" id="address" name="address" value="{{empl.address}}" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-focus">
+                            <select class="select form-control floating" id="country" name="country">
+                                <option value="">Select Country</option>
+                                {{#each country}}
+                                <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-focus">
+                            <select class="select form-control floating" id="state" name="state">
+                                <option value="">select State</option>
+                                {{#each state}}
+                                <option value="{{this.id}}" {{#if_eq this.id ../empl.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-focus">
+                            <select class="select form-control floating" id="city" name="city">
+                                <option value="">Select City</option>
+                                {{#each city}}
+                                <option value="{{this.id}}" {{#if_eq this.id ../empl.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-focus">
+                            <select class="select form-control floating" id="zipcode" name="zipcode">
+                                <option value="">Select Zipcode</option>
+                                {{#each zipcode}}
+                                <option value="{{this.id}}" {{#if_eq this.id ../empl.zipcode}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
 
-         <div class="text-center m-t-20">
-            <button class="btn btn-primary btn-lg" type="submit">Save &amp; Edit</button>
-         </div>
-      </form>
-   </div>
+                    <div class="col-md-12">
+                        <div class="form-group form-focus select-focus">
+                            <label class="control-label">Base Firm Name</label>
+                            <select class="form-control floating" id="firm_id" name="firm_id">
+                                {{#each firms}}
+                                <option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.title}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center m-t-20">
+                <button class="btn btn-primary btn-lg" type="submit">Save &amp; Edit</button>
+            </div>
+        </form>
+    </div>
 
 </div>
 {{#content "script" mode="append"}}
-    <script type="text/javascript" src="/assets/js/moment.min.js"></script>
-    <script type="text/javascript" src="/assets/js/select2.min.js"></script>
-    <script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
-    <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#firm_id').multiselect({
-                nonSelectedText: 'Select Firms',
-                includeSelectAllOption: true,
-                buttonWidth: '100%'
-            });
-            $("#frmEditEmployee").validate({
-                ignore: [],
-                rules: {
-                    first_name: {
-                        required: true
-                    },
-                    last_name: {
-                        required: true
-                    },
-                    email: {
-                        required: true,
-                        email: true
-                    },
-                    password: {
-                        required: true
-                    },
-                    firm_id: {
-                        required: true
-                    }
-                },
-                messages: {
-                    first_name: {
-                        required: "First name can't be blank"
-                    },
-                    last_name: {
-                        required: "Last name can't be blank"
-                    },
-                    email: {
-                        required: "Email can't be blank",
-                        email: "Must be valid email"
-                    },
-                    password: {
-                        required: "Password can't be blank"
-                    },
-                    firm_id: {
-                        required: "Select atleast one firm"
-                    }
-                }
-            });
+<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+<script type="text/javascript" src="/assets/js/select2.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#firm_id').multiselect({
+            nonSelectedText: 'Select Firms',
+            includeSelectAllOption: true,
+            buttonWidth: '100%'
         });
-    </script>
-{{/content}}
+        $("#frmEditEmployee").validate({
+            ignore: [],
+            rules: {
+                first_name: {
+                    required: true
+                },
+                last_name: {
+                    required: true
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true
+                },
+                firm_id: {
+                    required: true
+                }
+            },
+            messages: {
+                first_name: {
+                    required: "First name can't be blank"
+                },
+                last_name: {
+                    required: "Last name can't be blank"
+                },
+                email: {
+                    required: "Email can't be blank",
+                    email: "Must be valid email"
+                },
+                password: {
+                    required: "Password can't be blank"
+                },
+                firm_id: {
+                    required: "Select atleast one firm"
+                }
+            }
+        });
+    });
+</script> {{/content}}
