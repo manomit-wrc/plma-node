@@ -77,7 +77,6 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 				"parent_name": parent_name,
 				"child_budget": child_budget
 			});
-
 		}
 	}
 
