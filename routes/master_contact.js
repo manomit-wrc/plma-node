@@ -54,6 +54,15 @@ router.get('/master_contact', auth, firmAttrAuth, csrfProtection, (req, res) => 
 	if (req.query.searchEmail) {
 		whereCondition.email = req.query.searchEmail;
 	}
+	if (req.user.firm_id) {
+		whereCondition.firm_id = req.user.firm_id.toString();
+	} else {
+		whereCondition.firm_id = req.user.firm_id;
+	}
+
+	if (req.user.role_id != 2) {
+		whereCondition.user_id = req.user.id;
+	}
 	whereCondition.contact_status = 1;
 	Contact.findAll({
 		where: whereCondition

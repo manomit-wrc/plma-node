@@ -32,6 +32,11 @@ router.get('/activity-goal', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	{
 		whereGoals.to_date = formatToDate2[2]+"-"+formatToDate2[1]+"-"+formatToDate2[0];
 	}
+	if (req.user.firm_id) {
+		whereGoals.firm_id = req.user.firm_id.toString();
+	} else {
+		whereGoals.firm_id = req.user.firm_id;
+	}
 	//whereGoals.firm_id = req.user.firm_id
 	if(req.user.role_id != 2)
 	{
