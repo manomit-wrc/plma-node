@@ -43,8 +43,14 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
   var activity_goal_total = [];
   var activity_goal_grand_total = [];
   var success;
+  var activity_goal_arr = [];
 
   if (activity_goals.length > 0) {
+
+      for (var a = 0; a < activity_goals.length; a++) {
+        activity_goal_arr.push(activity_goals[a].id);
+      }
+
       const budgetList = await Budget.findAll();
 
       for (var i = 0; i < budgetList.length; i++) {
@@ -70,7 +76,8 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
 
             const budget_wise_sum = await ActivityBudget.findAll({
               where: {
-                budget_id: child_budget[j].id,
+                'budget_id': child_budget[j].id,
+                'activity_goal_id': {in: activity_goal_arr}
               },
               attributes: ['budget_id', [Sequelize.fn('sum', Sequelize.col('hour')), 'hour'],
                 [Sequelize.fn('sum', Sequelize.col('amount')), 'amount']
@@ -112,16 +119,10 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
           [Sequelize.fn('sum', Sequelize.col('hour')), 'hour'],
           [Sequelize.fn('sum', Sequelize.col('amount')), 'amount']
         ],
+        where: {'activity_goal_id': {
+          in: activity_goal_arr}
+        }
       });
-
-      /*for (var j = 0; j < child_budget.length; j++) {
-        const activity_budget = await ActivityBudget.findAll({
-          attributes: ['budget_id', 'activity_goal_id', [Sequelize.fn('sum', Sequelize.col('hour')), 'hour'],
-            [Sequelize.fn('sum', Sequelize.col('amount')), 'amount']
-          ],
-          group: ['budget_id', 'activity_goal_id']
-        });
-      }*/
 
       for (var j = 0; j < activity_goals.length; j++) {
         activityArr.push({
