@@ -36,7 +36,6 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
       }
     });
   }
-  const budgetList = await Budget.findAll();
   
   var activityArr = [];
   var budgetArr = [];
