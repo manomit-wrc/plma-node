@@ -291,6 +291,9 @@ router.post('/admin/delete-industry/:id', auth, siteAuth, csrfProtection, (req, 
 /*========================================End industry========================================*/
 
 //============================================={{{{{{settings}}}}}}==========================================
+
+
+
 router.get('/settings', auth, csrfProtection, async (req, res) => {
 	let zipcodes;
 	const country = await Country.findAll({});
