@@ -18,12 +18,7 @@
 			</div>
 		</div>
 		<form id="clientform" method="POST" action="/client/addClient">
-			<input type="hidden" name="_csrf" value="{{csrfToken}}"> {{!--
-			<label>
-				<input type="radio" id="individual_client" name="client_type" value="I" checked />Individual</label>
-			<label>
-				<input type="radio" id="organization_client" name="client_type" value="O" />Organization</label> --}}
-
+			<input type="hidden" name="_csrf" value="{{csrfToken}}"> 
 
 			<div class="form-inline m-b-15">
 				<div class="form-group m-r-5">
@@ -125,7 +120,6 @@
 							<div class="col-md-6">
 								<div id="add-tag-existing-client" style="display:none;">
 									<div class="form-group form-focus select-focus">
-										{{!-- <label class="control-label">Select From Existing Tags <span class="req-lbl">*</span></label> --}}
 										<select id="select-existing-tags" name="existing_tags" class="form-control floating" multiple="multiple">
 											{{#each tags}}
 											<option value="{{this.id}}">{{this.tags}}</option>
@@ -133,13 +127,15 @@
 										</select>
 									</div>
 								</div>
+								
 								<div id="add-tag-client">
 									<div class="form-group form-focus">
-										<label class="control-label">Add New Tags <span class="req-lbl">*</span></label>
+										<label class="control-label">Add New Tags<span class="req-lbl">*</span></label>
 										<input type="text" class="form-control floating" id="add-new-tags" name="add_new_tags" />
 									</div>
 								</div>
 							</div>
+							
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Birth Date<span class="req-lbl">*</span> </label>
@@ -301,46 +297,6 @@
 						</div>
 					</div>
 
-					<div class="col-md-12">
-						<div class="form-inline m-b-15">
-							<div class="form-group m-r-5">
-								<label class="input-group">
-									<span class="input-group-addon">
-										<input type="radio" id="new-add-tag" name="add-tag" value="new" checked/>
-									</span>
-									<div class="form-control form-control-static">New Tags</div>
-									<span class="glyphicon form-control-feedback "></span>
-								</label>
-							</div>
-							<div class="form-group ">
-								<label class="input-group">
-									<span class="input-group-addon">
-										<input type="radio" id="existing-tag" name="add-tag" value="existing" />
-									</span>
-									<div class="form-control form-control-static">Existing Tags</div>
-									<span class="glyphicon form-control-feedback "></span>
-								</label>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-md-6">
-						<div id="add-tag-existing-client" style="display:none;">
-							<div class="form-group form-focus select-focus">
-								<label class="control-label">Select From Existing Tags</label>
-								<select id="select-existing-tags" name="existing_tags" class="select form-control floating">
-									{{#each designations}}
-									<option value="{{this.id}}">{{this.title}}</option>
-									{{/each}}
-								</select>
-							</div>
-						</div>
-						<div id="add-tag-client">
-								<input type="text" class="tags" id="add-new-tags" name="add_new_tags"  />
-						</div>
-					</div>
-
-
 					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">IM</label>
@@ -436,7 +392,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function (e) {
-		$('#add-new-tags').tagsInput({width:'auto'});
 		$('#select-existing-tags').multiselect({
 			nonSelectedText: 'Select Existing Tags',
 			includeSelectAllOption: true,

@@ -38,7 +38,7 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
     });
   }
   const budgetList = await Budget.findAll();
-
+  
   var activityArr = [];
 
   var budgetArr = [];
@@ -53,6 +53,7 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
       ActivityBudget.belongsTo(Activity, {
         foreignKey: 'activity_id'
       });
+      
       for (var j = 0; j < child_budget.length; j++) {
         const activity_budget = await ActivityBudget.findAll({
           attributes: ['budget_id', 'activity_goal_id', [Sequelize.fn('sum', Sequelize.col('hour')), 'hour'],
