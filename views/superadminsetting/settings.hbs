@@ -9,132 +9,136 @@
             {{/content}}
 
 
-      <div class="content container-fluid">
-					<div class="row">
-						<div class="col-md-8 col-md-offset-2">
-
-
+            <div class="page-wrapper">
+                <div class="content container-fluid">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <h4 class="page-title">Company Details</h4>
+                        </div>
+                    </div>
 
 							<form name="addname" id="addname" >
                 <input type="hidden" id="hidden_field" value={{data.id}}>
-								<h3 class="page-title">Company Details</h3>
-								<div class="row">
-									<div class="col-sm-6">
-										<div class="form-group">
-											<label>Company Name <span class="text-danger">*</span></label>
-											<input class="form-control" type="text" name="companyname"  id="companyname" value="{{data.company_name}}">
-										</div>
-									</div>
-									<div class="col-sm-6">
-										<div class="form-group">
-											<label>Contact Person</label>
-											<input class="form-control " type="text" name="contactperson" id="contactperson" value="{{data.contact_person}}">
-										</div>
-									</div>
-                  <div class="row">
-									<div class="col-sm-12">
-										<div class="form-group">
-											<label>Address</label>
-											<input class="form-control " type="text" name="address" id="address" value={{data.address}}>
-										</div>
-                  </div>
-									</div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                       <label>Country</label>
-                        <select class="select form-control floating" id="country" name="country">
-                           <option value="">Select Country</option>
-                           {{#each country}}
-                           <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
-                           {{/each}}
-                       </select>
-                     </div>
-                  </div>
+								<!-- <h3 class="page-title">Company Details</h3> -->
+                <div class="card-box">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group form-focus select-focus">
+                											<label>Company Name <span class="text-danger">*</span></label>
+                											<input class="form-control" type="text" name="companyname"  id="companyname" value="{{data.company_name}}">
+										              </div>
+									             </div>
+            									<div class="col-sm-6">
+            										<div class="form-group form-focus select-focus">
+            											<label>Contact Person</label>
+            											<input class="form-control " type="text" name="contactperson" id="contactperson" value="{{data.contact_person}}">
+            										</div>
+            									</div>
+            									<div class="col-sm-12">
+            										<div class="form-group form-focus select-focus">
+            											<label>Address</label>
+
+
+            											<textarea class="form-control " type="text" name="address" id="address" rows="5">{{data.address}}</textarea>
+
+            										</div>
+                              </div>
+                              <div class="col-md-6">
+                                 <div class="form-group form-focus select-focus">
+                                   <label>Country</label>
+                                    <select class="select form-control floating" id="country" name="country">
+                                       <option value="">Select Country</option>
+                                       {{#each country}}
+                                       <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                                       {{/each}}
+                                   </select>
+                                 </div>
+                              </div>
 
 
 
-                  <div class="col-md-6">
-                     <div class="form-group">
-                       <label>State</label>
-                        <select class="select form-control floating" id="state" name="state">
-                           {{#each state}}
-                           <option value="{{this.id}}" {{#if_eq this.id ../data.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
-                           {{/each}}
-                       </select>
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                       <label>City</label>
-                        <select class="select form-control floating" id="city" name="city">
-							<option value="">Select City</option>
-							 {{#each cities}}
-                             	<option value="{{this.id}}" {{#if_eq this.id ../data.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
-							 {{/each}}
-                       </select>
-                     </div>
-                  </div>
+                            <div class="col-md-6">
+                               <div class="form-group form-focus select-focus">
+                                 <label>State</label>
+                                  <select class="select form-control floating" id="state" name="state">
+                                     {{#each state}}
+                                     <option value="{{this.id}}" {{#if_eq this.id ../data.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                                     {{/each}}
+                                 </select>
+                               </div>
+                            </div>
+                            <div class="col-md-6">
+                               <div class="form-group form-focus select-focus">
+                                 <label>City</label>
+                                  <select class="select form-control floating" id="city" name="city">
+          							<option value="">Select City</option>
+          							 {{#each cities}}
+                                       	<option value="{{this.id}}" {{#if_eq this.id ../data.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+          							 {{/each}}
+                                 </select>
+                               </div>
+                            </div>
 				  <!-- {{data.postal_code}} -->
-                  <div class="col-md-6">
-                     <div class="form-group">
-                       <label>Zip Code</label>
-                           <select class="select form-control floating" id="zipcode" name="zipcode">
-							   <option value="">Select Zipcode</option>
-							{{#each zipcodes}}
+                      <div class="col-md-6">
+                         <div class="form-group form-focus select-focus">
+                           <label>Zip Code</label>
+                               <select class="select form-control floating" id="zipcode" name="zipcode">
+    							   <option value="">Select Zipcode</option>
+    							{{#each zipcodes}}
 
-								<option value="{{this.id}}" {{#if_eq this.id ../data.postal_code}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
-							{{/each}}
-                       </select>
-                     </div>
-                    </div>
+    								<option value="{{this.id}}" {{#if_eq this.id ../data.postal_code}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
+    							{{/each}}
+                           </select>
+                         </div>
+                        </div>
 									<div class="col-sm-6">
-										<div class="form-group">
+										<div class="form-group form-focus select-focus">
 											<label>Email</label>
 											<input class="form-control" type="email" name="email" id="email" value={{data.email}}>
 										</div>
 									</div>
 									<div class="col-sm-6">
-										<div class="form-group">
+										<div class="form-group form-focus select-focus">
 											<label>Phone Number</label>
 											<input class="form-control" type="text" name="phnumber" id="phnumber" value={{data.phone_number}}>
 										</div>
 									</div>
-								</div>
-								<div class="row">
-									<div class="col-sm-6">
-										<div class="form-group">
+                <div class="col-sm-6">
+										<div class="form-group form-focus select-focus">
 											<label>Mobile Number</label>
 											<input class="form-control" type="text" name="mbnumber" id="mbnumber" value={{data.mobile_number}}>
 										</div>
-									</div>
+                  </div>
 									<div class="col-sm-6">
-										<div class="form-group">
+										<div class="form-group form-focus select-focus">
 											<label>Fax</label>
 											<input class="form-control"  type="text" name="fax" id="fax" value= {{data.fax}}>
 										</div>
 									</div>
-								</div>
 									<div class="col-sm-6">
-										<div class="form-group">
+										<div class="form-group form-focus select-focus">
 											<label>Website Url</label>
 											<input class="form-control" type="text" name="weburl" id="weburl" value={{data.website_url}}>
 										</div>
 									</div>
-								<div class="row">
-									<div class="col-sm-12 text-center m-t-20">
+                  <div class="col-md-12">
+                  <div class="text-center m-t-20">
 										<button type="button" class="btn btn-primary" id="insert" value = "Validate" onclick = "Validate()" >Save &amp; update</button>
 									</div>
-								</div>
-							</form>
-						</div>
-					</div>
+                 </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-
-
-      </div>
-
-
+							</form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 
     {{#content "script" mode="append"}}
         <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>

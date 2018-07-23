@@ -61,6 +61,7 @@ router.post('/forgot', csrfProtection, async (req, res) => {
     res.redirect('/forgot-password');
 
   } else {
+    
     function generatePassword() {
       var length = 8,
         charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
