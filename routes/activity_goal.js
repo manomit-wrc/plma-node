@@ -32,6 +32,11 @@ router.get('/activity-goal', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	{
 		whereGoals.to_date = formatToDate2[2]+"-"+formatToDate2[1]+"-"+formatToDate2[0];
 	}
+	if (req.user.firm_id) {
+		whereGoals.firm_id = req.user.firm_id.toString();
+	} else {
+		whereGoals.firm_id = req.user.firm_id;
+	}
 	//whereGoals.firm_id = req.user.firm_id
 	if(req.user.role_id != 2)
 	{
@@ -70,7 +75,7 @@ router.post('/activity-goal/add', auth, firmAttrAuth, csrfProtection, (req, res)
 		from_date: formatFromDate ? formatFromDate[2]+"-"+formatFromDate[1]+"-"+formatFromDate[0] : null,
 		to_date: formatToDate ? formatToDate[2]+"-"+formatToDate[1]+"-"+formatToDate[0] : null,
 		remarks: req.body.remarks
-	}).then(store =>{
+	   }).then(store =>{
 		req.flash('success-activityGoal-message', 'Activity Goal Created Successfully');
 		res.redirect('/activity-goal');
 	});
@@ -93,7 +98,7 @@ router.post('/activity-goal/edit/:id', auth, firmAttrAuth, csrfProtection, (req,
 	},{where: {id: req.params['id']}
 	}).then(values => {
 		req.flash('success-edit-goal-message', 'Activity Goal Edited Successfully');
-        res.redirect('/activity-goal');
+    res.redirect('/activity-goal');
 	});
 });
 

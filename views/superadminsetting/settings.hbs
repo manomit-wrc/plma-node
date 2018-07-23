@@ -1,241 +1,211 @@
+ {{#content "style" mode="prepend"}}
+<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
 
-            <div class="page-wrapper">
-
-
-            {{#content "style" mode="prepend"}}
-                <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
-                <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-                <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
-            {{/content}}
-
-
-      <div class="content container-fluid">
-					<div class="row">
-						<div class="col-md-8 col-md-offset-2">
-
-
-
-							<form name="addname" id="addname" >
-                <input type="hidden" id="hidden_field" value={{data.id}}>
-								<h3 class="page-title">Company Details</h3>
-								<div class="row">
-									<div class="col-sm-6">
-										<div class="form-group">
-											<label>Company Name <span class="text-danger">*</span></label>
-											<input class="form-control" type="text" name="companyname"  id="companyname" value="{{data.company_name}}">
-										</div>
-									</div>
-									<div class="col-sm-6">
-										<div class="form-group">
-											<label>Contact Person</label>
-											<input class="form-control " type="text" name="contactperson" id="contactperson" value="{{data.contact_person}}">
-										</div>
-									</div>
-                  <div class="row">
-									<div class="col-sm-12">
-										<div class="form-group">
-											<label>Address</label>
-											<input class="form-control " type="text" name="address" id="address" value={{data.address}}>
-										</div>
-                  </div>
-									</div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                       <label>Country</label>
-                        <select class="select form-control floating" id="country" name="country">
-                           <option value="">Select Country</option>
-                           {{#each country}}
-                           <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
-                           {{/each}}
-                       </select>
-                     </div>
-                  </div>
-
-
-
-                  <div class="col-md-6">
-                     <div class="form-group">
-                       <label>State</label>
-                        <select class="select form-control floating" id="state" name="state">
-                           {{#each state}}
-                           <option value="{{this.id}}" {{#if_eq this.id ../data.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
-                           {{/each}}
-                       </select>
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                       <label>City</label>
-                        <select class="select form-control floating" id="city" name="city">
-							<option value="">Select City</option>
-							 {{#each cities}}
-                             	<option value="{{this.id}}" {{#if_eq this.id ../data.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
-							 {{/each}}
-                       </select>
-                     </div>
-                  </div>
-				  <!-- {{data.postal_code}} -->
-                  <div class="col-md-6">
-                     <div class="form-group">
-                       <label>Zip Code</label>
-                           <select class="select form-control floating" id="zipcode" name="zipcode">
-							   <option value="">Select Zipcode</option>
-							{{#each zipcodes}}
-
-								<option value="{{this.id}}" {{#if_eq this.id ../data.postal_code}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
-							{{/each}}
-                       </select>
-                     </div>
-                    </div>
-									<div class="col-sm-6">
-										<div class="form-group">
-											<label>Email</label>
-											<input class="form-control" type="email" name="email" id="email" value={{data.email}}>
-										</div>
-									</div>
-									<div class="col-sm-6">
-										<div class="form-group">
-											<label>Phone Number</label>
-											<input class="form-control" type="text" name="phnumber" id="phnumber" value={{data.phone_number}}>
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-sm-6">
-										<div class="form-group">
-											<label>Mobile Number</label>
-											<input class="form-control" type="text" name="mbnumber" id="mbnumber" value={{data.mobile_number}}>
-										</div>
-									</div>
-									<div class="col-sm-6">
-										<div class="form-group">
-											<label>Fax</label>
-											<input class="form-control"  type="text" name="fax" id="fax" value= {{data.fax}}>
-										</div>
-									</div>
-								</div>
-									<div class="col-sm-6">
-										<div class="form-group">
-											<label>Website Url</label>
-											<input class="form-control" type="text" name="weburl" id="weburl" value={{data.website_url}}>
-										</div>
-									</div>
-								<div class="row">
-									<div class="col-sm-12 text-center m-t-20">
-										<button type="button" class="btn btn-primary" id="insert" value = "Validate" onclick = "Validate()" >Save &amp; update</button>
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="row">
+            <div class="col-sm-8">
+                <h4 class="page-title">Company Details</h4>
+            </div>
         </div>
 
-
-
-      </div>
-
-
-
-    {{#content "script" mode="append"}}
-        <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
-        <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
-        <script type="text/javascript" src="/assets/js/select2.min.js"></script>
-        <script type="text/javascript" src="/assets/js/moment.min.js"></script>
-        <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
-
-
-            <script type="text/javascript">
-            $.validator.addMethod('mobilenumber', function (value, element) {
-                    return this.optional(element) || /^(\+91-|\+91|0)?\d{10}$/.test(value);
-                }, "Please enter a valid mobile number");
-
-                $(document).ready(function () {
-                    $("#addname").validate({
-                        rules: {
-                            mbnumber: 'mobilenumber'
-                        }
-                    });
-                });
-         </script>
-
-         <script type="text/javascript">
-         function checkEmail() {
-
-             var email = document.getElementById('email');
-             var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-
-             if (!filter.test(email.value)) {
-             alert('Please provide a valid email address');
-             email.focus;
-             return false;
-          }
-         }</script>
+        <form name="addname" id="addname">
+            <input type="hidden" id="hidden_field" value={{data.id}}>
+            <!-- <h3 class="page-title">Company Details</h3> -->
+            <div class="card-box">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Company Name
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input class="form-control" type="text" name="companyname" id="companyname" value="{{data.company_name}}">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Contact Person</label>
+                                    <input class="form-control " type="text" name="contactperson" id="contactperson" value="{{data.contact_person}}">
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <textarea class="form-control " type="text" name="address" id="address">{{data.address}}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Country</label>
+                                    <select class="select form-control floating" id="country" name="country">
+                                        <option value="">Select Country</option>
+                                        {{#each country}}
+                                        <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
 
 
 
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>State</label>
+                                    <select class="select form-control floating" id="state" name="state">
+                                        {{#each state}}
+                                        <option value="{{this.id}}" {{#if_eq this.id ../data.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>City</label>
+                                    <select class="select form-control floating" id="city" name="city">
+                                        <option value="">Select City</option>
+                                        {{#each cities}}
+                                        <option value="{{this.id}}" {{#if_eq this.id ../data.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- {{data.postal_code}} -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Zip Code</label>
+                                    <select class="select form-control floating" id="zipcode" name="zipcode">
+                                        <option value="">Select Zipcode</option>
+                                        {{#each zipcodes}}
 
-         <script type="text/javascript">
-      function Validate() {
-       var regexp = new RegExp("^http(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$");
-       var weburl = document.getElementById("weburl").value;
-       if (!regexp.test(weburl)) {
-           alert("Not valid weburl!");
-       }
-       // else {
-       //     alert("Valid weburl!");
-       // }
-   }
+                                        <option value="{{this.id}}" {{#if_eq this.id ../data.postal_code}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input class="form-control" type="email" name="email" id="email" value={{data.email}}>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <input class="form-control" type="text" name="phnumber" id="phnumber" value={{data.phone_number}} onkeypress="return onlyNumbers();">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Mobile Number</label>
+                                    <input class="form-control" type="text" name="mbnumber" id="mbnumber" value={{data.mobile_number}} onkeypress="return onlyNumbers();">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Fax</label>
+                                    <input class="form-control" type="text" name="fax" id="fax" value={{data.fax}} onkeypress="return onlyNumbers();">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Website Url</label>
+                                    <input class="form-control floating url_selector" type="text" name="weburl" id="weburl" value={{data.website_url}}>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="text-center m-t-20">
+                                    <button type="button" class="btn btn-primary" id="insert" value="Validate" onclick="Validate()">Save &amp; update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+</div>
+</div>
+
+{{#content "script" mode="append"}}
+<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="/assets/js/select2.min.js"></script>
+<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+
+
+<script language="JavaScript">
+    function onlyNumbers(evt) {
+        var e = event || evt; // for trans-browser compatibility
+        var charCode = e.which || e.keyCode;
+
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+
+    }
 </script>
 
-                <script type="text/javascript">
-                // submitHandler:function(form) {
-                  $("#insert").on("click",function(){
-                    var companyname = $('#companyname').val();
-                    var contactperson = $('#contactperson').val();
-                    var address = $('#address').val();
-                    var country = $('#country').val();
-                    var state = $('#state').val();
-                    var city = $('#city').val();
-                    var email = $('#email').val();
-                    var phnumber = $('#phnumber').val();
-                    var mbnumber = $('#mbnumber').val();
-                    var postalcode = $('#zipcode').val();
-                    var fax = $('#fax').val();
-                    var wburl = $('#weburl').val();
-                    var hidden_field = $('#hidden_field').val();
 
 
-                    $.ajax({
-                        type: "POST",
-                        url: "/settings/insert",
-                        data: {
-                          hidden_field: hidden_field,
-                          companyname: companyname,
-                          contactperson: contactperson,
-                          address: address,
-                          country: country,
-                          email: email,
-                          state: state,
-                          city: city,
-                          phnumber: phnumber,
-                          mbnumber: mbnumber,
-                          postalcode: postalcode,
-                          fax: fax,
-                          weburl: wburl
-                        },
-                        beforeSend: function(xhr) {
-                            xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
-                        },
-                        success: function(response) {
 
-                            window.location.href = '/settings';
-                        },
-                        error: function(xhr){
-                        }
-                    });
-                  });
+<script type="text/javascript">
+    // submitHandler:function(form) {
+    $("#insert").on("click", function () {
+        var companyname = $('#companyname').val();
+        var contactperson = $('#contactperson').val();
+        var address = $('#address').val();
+        var country = $('#country').val();
+        var state = $('#state').val();
+        var city = $('#city').val();
+        var email = $('#email').val();
+        var phnumber = $('#phnumber').val();
+        var mbnumber = $('#mbnumber').val();
+        var postalcode = $('#zipcode').val();
+        var fax = $('#fax').val();
+        var wburl = $('#weburl').val();
+        var hidden_field = $('#hidden_field').val();
+
+
+        $.ajax({
+            type: "POST",
+            url: "/settings/insert",
+            data: {
+                hidden_field: hidden_field,
+                companyname: companyname,
+                contactperson: contactperson,
+                address: address,
+                country: country,
+                email: email,
+                state: state,
+                city: city,
+                phnumber: phnumber,
+                mbnumber: mbnumber,
+                postalcode: postalcode,
+                fax: fax,
+                weburl: wburl
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+            },
+            success: function (response) {
+
+                window.location.href = '/settings';
+            },
+            error: function (xhr) {
+            }
+        });
+    });
 
 
 
@@ -245,6 +215,4 @@
 
           //   });
           // });
-         </script>
-
-        {{/content}}
+</script> {{/content}}
