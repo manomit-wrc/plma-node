@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     state: DataTypes.INTEGER,
     country: DataTypes.INTEGER,
     zipcode: DataTypes.INTEGER,
+    firm_id: DataTypes.INTEGER,
     status: DataTypes.INTEGER
   }, {});
   office_contact.associate = function(models) {

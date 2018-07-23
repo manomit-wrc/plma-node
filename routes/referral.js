@@ -51,6 +51,14 @@ router.get('/referral', auth, firmAttrAuth, csrfProtection, async(req, res)=> {
 	if (req.query.searchEmail) {
 		whereCondition.email = req.query.searchEmail;
 	}
+	if (req.user.firm_id) {
+		whereCondition.firm_id = req.user.firm_id.toString();
+	} else {
+		whereCondition.firm_id = req.user.firm_id;
+	}
+	if (req.user.role_id != 2) {
+		whereCondition.user_id = req.user.id;
+	}
 	const referral = await Referral.findAll({
 		where: whereCondition
 	});
@@ -102,6 +110,8 @@ router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async(req, res)
 				email: req.body.email,
 				mobile: removePhoneMask(req.body.mobile_no),
 				referred_type: req.body.ref_type,
+				firm_id: req.user.firm_id,
+				user_id: req.user.user_id,
 				target_id:req.body.referred_id_t ? parseInt(req.body.referred_id_t) : 0,
 				client_id:req.body.referred_id_c ? parseInt(req.body.referred_id_c) : 0,
 				remarks: req.body.remarks
@@ -116,6 +126,8 @@ router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async(req, res)
 				email: req.body.email,
 				mobile: removePhoneMask(req.body.mobile_no),
 				referred_type: req.body.ref_type,
+				firm_id: req.user.firm_id,
+				user_id: req.user.user_id,
 				target_id:req.body.referred_id_t ? parseInt(req.body.referred_id_t) : 0,
 				client_id:req.body.referred_id_c ? parseInt(req.body.referred_id_c) : 0,
 				remarks: req.body.remarks
@@ -293,6 +305,8 @@ router.post('/referral/upload-excel', auth, referral_xcel.single('ref_excel_file
 					last_name: excelReferral[i].last_name,
 					email: excelReferral[i].email,
 					mobile: excelReferral[i].mobile,
+					firm_id: req.user.firm_id,
+					user_id: req.user.user_id,
 					remarks: excelReferral[i].remarks
 				});
 			}
@@ -304,6 +318,8 @@ router.post('/referral/upload-excel', auth, referral_xcel.single('ref_excel_file
 					organization_name: excelReferral[i].organization_name,
 					email: excelReferral[i].email,
 					mobile: excelReferral[i].mobile,
+					firm_id: req.user.firm_id,
+					user_id: req.user.user_id,
 					remarks: excelReferral[i].remarks
 				});
 			}
