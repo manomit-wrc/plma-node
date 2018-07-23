@@ -1719,6 +1719,61 @@ table.table-inbox tbody tr.checked {background-color: #ffffcc;}
 	background: #fff;
 }
 
+.bs-calltoaction {
+    position: relative;
+    width: auto;
+    padding: 15px 25px;
+    border: 1px solid black;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.bs-calltoaction > .row {
+    display: table;
+    width: calc(100% + 30px);
+}
+
+.bs-calltoaction > .row > [class^="col-"],
+.bs-calltoaction > .row > [class*=" col-"]{
+    float: none;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.cta-contents {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.cta-desc {
+    padding: 0;
+}
+
+.cta-button {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.bs-calltoaction.bs-calltoaction-info, .bs-calltoaction.bs-calltoaction-info .btn-info {
+    color: #fff;
+    background-color: #5bc0de;
+    border-color: #46b8da;
+}
+
+.bs-calltoaction.bs-calltoaction-info .btn-info:hover, 
+.bs-calltoaction.bs-calltoaction-info .btn-info:focus 
+ {
+    color: #fff;
+    background-color: #269abc;
+    border-color: #1b6d85;
+}
+
+.bs-calltoaction.bs-calltoaction-info .cta-button .btn{
+    border-color: #fff;
+}
+
+
 .table>tbody>tr>td,
 .table>tbody>tr>th,
 .table>tfoot>tr>td,
