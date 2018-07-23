@@ -62,7 +62,8 @@ router.get('/attorneys', auth, csrfProtection, async (req, res) => {
 	var success_message = req.flash('success-message')[0];
 	const attr = await User.findAll({
 		where: {
-			role_id: 3
+			role_id: 3,
+			firm_id: req.user.firm_id
 		}
 	});
 	res.render('attorney/index', {

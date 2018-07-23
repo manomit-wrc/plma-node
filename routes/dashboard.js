@@ -3,6 +3,7 @@ const auth = require('../middlewares/auth');
 const csrf = require('csurf');
 const bCrypt = require('bcrypt-nodejs');
 const User = require('../models').user;
+const Firm = require('../models').firm;
 const Country = require('../models').country;
 const City = require('../models').city;
 const State = require('../models').state;
@@ -158,6 +159,13 @@ router.post('/firm-profiles/get-zipcode', auth, (req, res) =>{
 });
 
 /*==================================Bratin Meheta 19-07-2018 (login as other role)========================================*/
+
+router.post('/get-firm-name', auth, async (req, res)=> {
+    const get_firm = await Firm.findAll();
+    res.send({
+        firms: get_firm
+    });
+});
 
 router.get('/change-role', auth, async (req, res)=>{
     var actual_role = req.user.role_id;

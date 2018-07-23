@@ -373,6 +373,7 @@ router.post('/activity/edit-budget', auth, firmAttrAuth, csrfProtection, async (
 	for (var b = 0; b < budget.length; b++) {
 		const editBudget = await ActivityBudget.create({
 			activity_id: req.body.activity_id,
+			activity_goal_id: req.body.activity_goal,
 			level_type: req.body.activity_level_type,
 			budget_id: budget[b].budget_id,
 			hour: budget[b].budget_hour,
@@ -403,7 +404,7 @@ router.post('/activity/update/:id', auth, firmAttrAuth, csrfProtection, async (r
 	const activity_store1 = await Activity.update({
 		firm: req.body.firm,
 		activity_type: req.body.activity_type,
-		activity_goal: req.body.activity_goal,
+		activity_goal_id: req.body.activity_goal,
 		practice_area: req.body.practice_area,
 		potiential_revenue: req.body.potiential_revenue,
 		remarks: req.body.remarks,
