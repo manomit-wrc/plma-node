@@ -46,7 +46,9 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
     if (budgetList[i].parent_id === 0) {
       const parent_name = budgetList[i].name;
       const parent_id = budgetList[i].id;
+
       const child_budget = lodash.filter(budgetList, arr => arr.parent_id === budgetList[i].id);
+
       var child_budget_arr = [];
       ActivityBudget.belongsTo(Activity, {
         foreignKey: 'activity_id'
