@@ -293,7 +293,6 @@ router.post('/admin/delete-industry/:id', auth, siteAuth, csrfProtection, (req, 
 //============================================={{{{{{settings}}}}}}==========================================
 
 
-
 router.get('/settings', auth, csrfProtection, async (req, res) => {
 	let zipcodes;
 	const country = await Country.findAll({});
@@ -320,7 +319,7 @@ router.get('/settings', auth, csrfProtection, async (req, res) => {
 //insert
 router.post('/settings/insert', auth, csrfProtection, (req, res) => {
 
-	console.log(req.body);
+//	console.log(req.body);
 	var companyname = req.body.companyname;
 	var contactperson = req.body.contactperson;
 	var address = req.body.address;

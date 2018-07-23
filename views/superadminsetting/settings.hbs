@@ -102,19 +102,19 @@
 									<div class="col-sm-6">
 										<div class="form-group form-focus select-focus">
 											<label>Phone Number</label>
-											<input class="form-control" type="text" name="phnumber" id="phnumber" value={{data.phone_number}}>
+											<input class="form-control" type="text" name="phnumber" id="phnumber" value={{data.phone_number}} onkeypress="return onlyNumbers();" >
 										</div>
 									</div>
                 <div class="col-sm-6">
 										<div class="form-group form-focus select-focus">
 											<label>Mobile Number</label>
-											<input class="form-control" type="text" name="mbnumber" id="mbnumber" value={{data.mobile_number}}>
+											<input class="form-control" type="text" name="mbnumber" id="mbnumber" value={{data.mobile_number}} onkeypress="return onlyNumbers();" >
 										</div>
                   </div>
 									<div class="col-sm-6">
 										<div class="form-group form-focus select-focus">
 											<label>Fax</label>
-											<input class="form-control"  type="text" name="fax" id="fax" value= {{data.fax}}>
+											<input class="form-control"  type="text" name="fax" id="fax" value= {{data.fax}} onkeypress="return onlyNumbers();" >
 										</div>
 									</div>
 									<div class="col-sm-6">
@@ -150,7 +150,18 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 
 
-          
+        <script language="JavaScript">
+            function onlyNumbers(evt) {
+                var e = event || evt; // for trans-browser compatibility
+                var charCode = e.which || e.keyCode;
+
+                if (charCode > 31 && (charCode < 48 || charCode > 57))
+                    return false;
+
+                return true;
+
+            }
+        </script>
 
 
 
