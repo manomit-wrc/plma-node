@@ -48,7 +48,7 @@
                                     <select id="activity_goal" name="activity_goal" class="select form-control floating" disabled>
                                         <option value="">Select Activity Goal</option>
                                         {{#each activity_goal}}
-                                        <option value="{{this.id}}" {{#if_eq this.id ../editdata.activity_goal}} selected="selected" {{/if_eq}}>{{this.activity_goal}}</option>
+                                        <option value="{{this.id}}" {{#if_eq this.id ../editdata.activity_goal_id}} selected="selected" {{/if_eq}}>{{this.activity_goal}}</option>
                                         {{/each}}
                                     </select>
                                 </div>

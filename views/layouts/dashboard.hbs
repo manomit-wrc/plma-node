@@ -20,7 +20,8 @@
 <body>
   <div class="main-wrapper">
 
-    {{> header}} {{> sidebar}} {{{body}}}
+    {{> header}} {{> sidebar}}
+     {{{body}}}
   </div>
   <div class="sidebar-overlay" data-reff="#sidebar"></div>
   {{#block "script"}}
@@ -100,6 +101,29 @@
       });
     });
   </script> {{/block}}
+  <a href="#" class="scrollup btn btn-primary">
+    <i class="fa fa-long-arrow-up"></i>
+  </a>
+  <script>
+    $(document).ready(function () {
+
+        $(window).scroll(function () {
+          if ($(this).scrollTop() > 100) {
+            $('.scrollup').fadeIn();
+          } else {
+            $('.scrollup').fadeOut();
+          }
+        });
+
+        $('.scrollup').click(function () {
+          $("html, body").animate({
+            scrollTop: 0
+          }, 600);
+          return false;
+        });
+
+      });
+  </script>
 </body>
 
 </html>

@@ -1858,6 +1858,28 @@ i.fa.fa-eye.m-r-5 {
 	margin-right: 0 !important;
 }
 
+.scrollup {
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-ms-border-radius: 3px;
+	-o-border-radius: 3px;
+	bottom: 50px;
+	padding: 6px 15px;
+	display: none;
+	position: fixed;
+	right: 30px;
+	text-align: center;
+	bottom: 8px;
+	outline: none;
+	z-index: 999999;
+	transition: all 300ms ease-in-out 0s;
+	-webkit-transition: all 300ms ease-in-out 0s;
+	-moz-transition: all 300ms ease-in-out 0s;
+	-ms-transition: all 300ms ease-in-out 0s;
+	-o-transition: all 300ms ease-in-out 0s;
+}
+
 /*------------------------------------------------------------------
 [39-a.... Custom Styles]
 */
