@@ -7,14 +7,18 @@
 <div class="page-wrapper">
   <div class="content container-fluid">
     <div class="row">
-      <div class="col-xs-8 text-right m-b-30">
-        <a href="/" class="btn btn-primary rounded">
-          <i class="fa fa-plus"></i>Update Attorney</a>
-      </div>
-      <div class="col-sm-8">
-        <h4 class="page-title">View Attorney Details</h4>
-      </div>
 
+      <!-- <div class="col-sm-8">
+        <h4 class="page-title">View Attorney Details</h4>
+      </div> -->
+      <div class="col-xs-4">
+          <h4 class="page-title">View Attorney Details</h4>
+      </div>
+      <div class="col-xs-8 text-right">
+          <a href="/" class="btn btn-primary pull-right rounded">
+              <i class="fa fa-plus"></i> Update Attorney</a>
+
+      </div>
     </div>
 
     <form name="" id="addattorneyform" action="/attorneys/update/{{edata.0.id}}" method="POST">
