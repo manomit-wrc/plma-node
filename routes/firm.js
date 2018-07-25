@@ -11,6 +11,7 @@ const User = require('../models').user;
 const Firm = require('../models').firm;
 const Office = require('../models').office;
 const Designation = require('../models').designation;
+const Group = require('../models').group;
 const Contact = require('../models').office_contact;
 const Country = require('../models').country;
 const State = require('../models').state;
@@ -54,15 +55,25 @@ router.get('/firms', csrfProtection, auth, siteAuth, async (req, res) => {
     });
 
     const firms = await Firm.findAll({});
+    const designation = await Designation.findAll();
+    const group = await Group.findAll();
 
     res.render('firms/index', {
         layout: 'dashboard',
         csrfToken: req.csrfToken(),
         users,
+        designation,
         firms,
+        group,
         search_email: req.query ? req.query.search_email : '',
         search_firm: req.query ? req.query.search_firm : ''
     });
+});
+router.get('/get-level-2-designation', auth, async(req, res)=> {
+   const designation = await Designation.findAll();
+   res.send({
+       designations: designation
+   });
 });
 
 router.post('/firms/add', auth, siteAuth, csrfProtection, async (req, res) => {
@@ -72,7 +83,15 @@ router.post('/firms/add', auth, siteAuth, csrfProtection, async (req, res) => {
         }
     });
     if(user_data === null) {
-        const firm_data = await Firm.create({ title: req.body.title, address: req.body.address });
+        const firm_data = await Firm.create({ 
+            title: req.body.title, 
+            address: req.body.address,
+            approval_level: req.body.approval_level,
+            level_1 : req.body.level_1 ? req.body.level_1 : 0,
+            level_2 : req.body.level_2 ? req.body.level_2 : 0,
+            level_3 : req.body.level_3 ? req.body.level_3 : 0,
+            level_4 : req.body.level_4 ? req.body.level_4 : 0,
+        });
         if(firm_data) {
             const avatar = gravatar.url(req.body.email, {
                 s: '150',
@@ -84,12 +103,15 @@ router.post('/firms/add', auth, siteAuth, csrfProtection, async (req, res) => {
                 last_name: req.body.last_name,
                 email: req.body.email,
                 password: bCrypt.hashSync(req.body.password),
-                mobile_no: req.body.mobile_no,
+                mobile_no: removePhoneMask(req.body.mobile_no),
                 avatar,
                 address: '',
                 status: 1,
                 createdAt: new Date(),
                 updatedAt: new Date(),
+                is_attorney: req.body.is_attorney ? req.body.is_attorney : 0,
+                group_id: req.body.group,
+                designation_id: req.body.designation,
                 gender: req.body.gender,
                 role_id: 2,
                 firm_id: firm_data.id
