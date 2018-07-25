@@ -20,27 +20,23 @@
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-6">
-
-
-                {{!-- <div class="form-group form-focus select-focus">
-                  <label class="control-label">Firm </label>
-                  <select id="firm" name="firm" class="select form-control floating">
-                    <option value="">Select Firm</option>
-                    {{#each firm}}
-                    <option value="{{this.id}}" {{#if_eq this.id ../editdata.firm}} selected="selected" {{/if_eq}}>{{this.title}}</option>
-                    {{/each}}
-                  </select>
-                </div> --}}
-
                 <div class="form-group form-focus select-focus">
-                    <label class="control-label">Firm
-                        <span class="req-lbl">*</span>
-                    </label>
-                    <input class="form-control floating" type="text" id="firm" name="firm" value="{{this.firm}}" disabled>
+                  <label class="control-label">Firm
+                    <span class="req-lbl">*</span>
+                  </label>
+                  <input class="form-control floating" type="text" id="firm" name="firm" value="{{this.firm}}" disabled>
                 </div>
-
-
               </div>
+
+              <div class="col-md-6">
+                <div class="form-group form-focus select-focus">
+                  <label class="control-label">Origin Attorney
+                    <span class="req-lbl">*</span>
+                  </label>
+                  <input class="form-control floating" type="text" id="firm" name="firm" value="{{this.originAttorney}}" disabled>
+                </div>
+              </div>
+
               <div class="col-md-6">
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">Activity Type </label>
@@ -147,15 +143,72 @@
                 </div>
               </div>
 
-              {{!--
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class="control-label">Refferred By: </label>
-                  <input type="radio" id="referral_type" name="ref_type" value="T" {{#if_eq editdata.target "T"}} checked {{/if_eq}} />Target
-                  <input type="radio" id="organization_type" name="ref_type" value="C" {{#if_eq editdata.target "C"}} checked {{/if_eq}} />Client
-                </div>
-              </div> --}}
 
+
+
+
+
+
+
+
+              <div class="col-md-6">
+                <div class="form-group form-focus">
+                  <label class="control-label">Remarks </label>
+                  <textarea class="form-control floating" id="remarks" name="remarks" rows="5">{{editdata.remarks}}</textarea>
+                </div>
+              </div>
+
+
+              <div class="col-md-6">
+                <div class="form-group form-focus">
+                  <label class="control-label">Total Budget Cost ($) </label>
+                  <input class="form-control floating" type="text" id="total_budget_cost" name="total_budget_cost" value="{{editdata.total_budget_amount}}">
+                  <span>
+                    <a href="#" id="budgetUpdate" data-toggle="modal" data-target="#update_budget">Click to see budget details</a>
+                  </span>
+                </div>
+              </div>
+
+
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-box">
+        <h3 class="card-title">Client/Target Information</h3>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group form-focus select-focus">
+                  <label class="control-label">Activity Details Status
+                    <span class="req-lbl">*</span>
+                  </label>
+                  <select class="select" id="budget_status" name="budget_status">
+                    <option value=""> Select One</option>
+                    <option value="planned">PLANNED </option>
+                    <option value="unplanned">UNPLANNED</option>
+                    <option value="delete_team">DELETED ITEM - TO BE SKIPPED</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group form-focus select-focus">
+                  <label class="control-label">Activity Budget Details Status
+                    <span class="req-lbl">*</span>
+                  </label>
+                  <select class="select" id="budget_details_status" name="budget_details_status">
+                    <option value=""> Select One</option>
+                    <option value="planned">PLANNED BUDGET</option>
+                    <option value="unplanned">UNPLANNED BUDGET</option>
+                    <option value="guestimate">GUESTIMATE</option>
+                  </select>
+                </div>
+              </div>
 
               <div class="form-inline m-b-15 col-md-6">
                 <div class="form-group m-r-5">
@@ -178,8 +231,6 @@
                 </div>
               </div>
 
-
-
               <div class="col-md-6">
                 <div class="form-group form-focus select-focus" id="target_list" {{#if_eq editdata.target "C"}} style="display:none;" {{/if_eq}}>
                   <select id="target_id" name="target_user" class=" form-control floating" multiple="multiple">
@@ -189,6 +240,7 @@
                   </select>
                 </div>
               </div>
+
               <div class="col-md-6" id="client_list" {{#if_eq editdata.target "T"}} style="display:none;" {{/if_eq}}>
                 <div class="form-group form-focus select-focus">
                   <select id="client_id" name="client_user" class=" form-control floating" multiple="multiple">
@@ -199,19 +251,11 @@
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="form-group form-focus">
-                  <label class="control-label">Remarks </label>
-                  <textarea class="form-control floating" id="remarks" name="remarks" rows="5">{{editdata.remarks}}</textarea>
-                </div>
+
               </div>
-              <div class="col-md-6">
-                <div class="form-group form-focus">
-                  <label class="control-label">Total Budget Cost ($) </label>
-                  <input class="form-control floating" type="text" id="total_budget_cost" name="total_budget_cost" value="{{editdata.total_budget_amount}}">
-                  <span>
-                    <a href="#" id="budgetUpdate" data-toggle="modal" data-target="#update_budget">Click to see budget details</a>
-                  </span>
-                </div>
+              <div class="col-md-6 budgetAdd" style="display:none;">
+                <a href="#" class="btn btn-primary btn-lg" id="budgetAdd" data-toggle="modal" data-target="#add_budget" style="margin: 0 auto; display: table;">
+                  <i class="fa fa-plus"></i> Add Budget</a>
               </div>
             </div>
           </div>
