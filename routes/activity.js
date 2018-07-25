@@ -152,6 +152,7 @@ router.post('/insertActivity', auth, async (req, res) => {
 });
 
 router.post('/activity/add-budget', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+	console.log('req :========>>>>>>', req.body);
 	var budget = JSON.parse(req.body.budget);
 	for (var b = 0; b < budget.length; b++) {
 		await ActivityBudget.create({
@@ -172,7 +173,9 @@ router.post('/activity/add-budget', auth, firmAttrAuth, csrfProtection, async (r
 // ========{{  insert data to the database  }}=====================//
 
 router.post('/activity/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
-	var target_user = req.body.target_user;
+	var target_user = [];
+	target_user = req.body.target_user;
+	
 	var client_user = req.body.client_user;
 	const CreationDate = req.body.activity_creation_date ? req.body.activity_creation_date.split("-") : '';
 	const FromDate = req.body.activity_from_date ? req.body.activity_from_date.split("-") : '';
