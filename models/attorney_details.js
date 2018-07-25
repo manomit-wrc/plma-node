@@ -1,10 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var attorney_details = sequelize.define('attorney_details', {
-    group: DataTypes.STRING,
-    section: DataTypes.STRING,
-    designation: DataTypes.STRING,
-    attorney_id: DataTypes.INTEGER,
+    group: DataTypes.INTEGER,
+    section: DataTypes.INTEGER,
+    designation: DataTypes.INTEGER,
+    attorney_id: DataTypes.STRING,
     attorney_code: DataTypes.STRING,
     attorney_type: DataTypes.STRING,
     education: DataTypes.STRING,
@@ -12,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     job_type: DataTypes.STRING,
     bar_practice_date: DataTypes.DATE,
     firm_join_date: DataTypes.DATE,
-    jurisdiction: DataTypes.STRING,
-    industry_type: DataTypes.STRING,
+    jurisdiction: DataTypes.INTEGER,
+    industry_type: DataTypes.INTEGER,
     hourly_cost: DataTypes.STRING,
     benefit_factor: DataTypes.STRING,
     overhead_amount: DataTypes.STRING,
@@ -25,8 +25,9 @@ module.exports = (sequelize, DataTypes) => {
     fax: DataTypes.STRING,
     website_url: DataTypes.STRING,
     social_url: DataTypes.STRING,
-    remarks: DataTypes.STRING,
+    remarks: DataTypes.TEXT,
     user_id: DataTypes.INTEGER
+    // firm_id: DataTypes.INTEGER
 
   }, {});
   attorney_details.associate = function(models) {
