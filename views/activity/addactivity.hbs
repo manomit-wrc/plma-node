@@ -2,8 +2,7 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
-{{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
 <div class="page-wrapper">
     <div class="content container-fluid">
         <div class="row">
@@ -22,43 +21,85 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Firm </label>
-                                    <select id="firm" name="firm" class="select form-control floating">
-                                        <option value="">Select Firm</option>
-                                        {{#each firm}}
-                                        <option value="{{this.id}}">{{this.title}}</option>
+                                    <label class="control-label">Firm
+                                        <span class="req-lbl">*</span>
+                                    </label>
+                                    <input class="form-control floating" type="text" id="firm" name="firm" value="{{this.firm}}" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group form-focus select-focus">
+                                    <label class="control-label">Origin Attorney
+                                        <span class="req-lbl">*</span>
+                                    </label>
+                                    <input class="form-control floating" type="text" id="firm" name="firm" value="{{this.originAttorney}}" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group form-focus select-focus">
+                                    <label class="control-label">Activity Type
+                                        <span class="req-lbl">*</span>
+                                    </label>
+                                    <select class="select floating" id="activity_type" name="activity_type">
+                                        <option value="">Select One</option>
+                                        <option value="individual">INDIVIDUAL LEVEL</option>
+                                        <option value="section">SECTION LEVEL</option>
+                                        <option value="strategic_group">STRATEGIC GROUP LEVEL</option>
+                                        <option value="team">TEAM LEVEL</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 section" style="display:none;">
+                                <div class="form-group form-focus select-focus">
+                                    <label class="control-label">Section
+                                        <span class="req-lbl">*</span>
+                                    </label>
+                                    <select class="select floating" id="section" name="section">
+                                        <option value="">Select Section</option>
+                                        {{#each section}}
+                                        <option value="{{this.section.id}}">{{this.section.name}}</option>
                                         {{/each}}
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+
+                            <div class="col-md-6 strategyGroup" style="display:none;">
                                 <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Activity Type </label>
-                                    <select class="select floating" id="activity_type" name="activity_type">
+                                    <label class="control-label">Strategy Group
+                                        <span class="req-lbl">*</span>
+                                    </label>
+                                    <select class="select floating" id="strategyGroup" name="strategyGroup">
                                         <option value="">Select Activity Type</option>
-                                        <option value="section">SECTION LEAVEL</option>
-                                        <option value="team">TEAM LEAVEL</option>
-                                        <option value="individual">INDIVIDUAL LEAVEL</option>
-                                        <option value="strategic_group">STRATEGIC GROUP LEAVEL</option>
+                                        <option value="individual">NEED TO BE DISCUSS</option>
+
                                     </select>
                                 </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Activity Goal </label>
+                                    <label class="control-label">Activity Goal
+                                        <span class="req-lbl">*</span>
+                                    </label>
                                     <select id="activity_goal" name="activity_goal" class="select form-control floating">
                                         <option value="">Select Activity Goal</option>
                                         {{#each activity_goal}}
                                         <option value="{{this.id}}">{{this.activity_goal}}</option>
                                         {{/each}}
                                     </select>
-                                    <strong>Note: </strong>
-                                    <a href="/activity-goal/add">Add activity goals</a>
+                                    <strong style="background-color:#ff0000; color:#fff">Note! </strong>
+                                    No Activity Goal? Click Here
+                                    <a href="/activity-goal/add">activity goals</a>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Practice Area Type</label>
+                                    <label class="control-label">Practice Area Type
+                                        <span class="req-lbl">*</span>
+                                    </label>
                                     <select id="practice_area" name="practice_area" class="select form-control floating">
                                         <option value="">Select Practice Area</option>
                                         {{#each practice_area}}
@@ -69,13 +110,17 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">Potential Revenue</label>
+                                    <label class="control-label">Potential Revenue
+                                        <span class="req-lbl">*</span>
+                                    </label>
                                     <input class="form-control floating" type="text" id="potiential_revenue" name="potiential_revenue">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">Creation Date</label>
+                                    <label class="control-label">Creation Date
+                                        <span class="req-lbl">*</span>
+                                    </label>
                                     <div class="cal-icon">
                                         <input class="form-control floating datetimepicker" type="text" id="activity_creation_date" name="activity_creation_date">
                                     </div>
@@ -83,7 +128,9 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">From Date</label>
+                                    <label class="control-label">From Date
+                                        <span class="req-lbl">*</span>
+                                    </label>
                                     <div class="cal-icon">
                                         <input class="form-control floating datetimepicker" type="text" id="activity_from_date" name="activity_from_date">
                                     </div>
@@ -91,7 +138,9 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">To Date</label>
+                                    <label class="control-label">To Date
+                                        <span class="req-lbl">*</span>
+                                    </label>
                                     <div class="cal-icon">
                                         <input class="form-control floating datetimepicker" type="text" id="activity_to_date" name="activity_to_date">
                                     </div>
@@ -99,51 +148,87 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">Activity Name</label>
+                                    <label class="control-label">Activity Name
+                                        <span class="req-lbl">*</span>
+                                    </label>
                                     <input class="form-control floating" type="text" id="activity_name" name="activity_name">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">Activity Reason</label>
+                                    <label class="control-label">Activity Reason
+                                        <span class="req-lbl">*</span>
+                                    </label>
                                     <input class="form-control floating" type="text" id="activity_reason" name="activity_reason">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Activity Details Status </label>
-                                    <select class="select" id="budget_status" name="budget_status">
-                                        <option value=""> Select Activity status</option>
-                                        <option value="section_one">SECTION ONE</option>
-                                        <option value="planned">PLANNED </option>
-                                        <option value="unplanned">UNPLANNED</option>
-                                        <option value="delete_team">DELETE ITEM</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Activity Budget Details Status</label>
-                                    <select class="select" id="budget_details_status" name="budget_details_status">
-                                        <option value=""> Select Activity budget details status</option>
-                                        <option value="section_one">SECTION ONE</option>
-                                        <option value="planned">PLANNED BUDGET</option>
-                                        <option value="unplanned">UNPLANNED BUDGET</option>
-                                        <option value="delete_team">GUESTIMATE</option>
-                                    </select>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label">Refferred By: </label>
-                                    <input type="radio" id="referral_type" name="ref_type" value="T" checked />Target
-                                    <input type="radio" id="organization_type" name="ref_type" value="C" />Client
+                                <div class="form-group form-focus">
+                                    <label class="control-label">Remarks </label>
+                                    <textarea class="form-control floating" id="remarks" name="remarks" rows="5"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-box">
+                <h3 class="card-title">Client/Target Information</h3>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group form-focus select-focus">
+                                    <label class="control-label">Activity Details Status
+                                        <span class="req-lbl">*</span>
+                                    </label>
+                                    <select class="select" id="budget_status" name="budget_status">
+                                        <option value=""> Select One</option>
+                                        <option value="planned">PLANNED </option>
+                                        <option value="unplanned">UNPLANNED</option>
+                                        <option value="delete_team">DELETED ITEM - TO BE SKIPPED</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
+                                <div class="form-group form-focus select-focus">
+                                    <label class="control-label">Activity Budget Details Status
+                                        <span class="req-lbl">*</span>
+                                    </label>
+                                    <select class="select" id="budget_details_status" name="budget_details_status">
+                                        <option value=""> Select One</option>
+                                        <option value="planned">PLANNED BUDGET</option>
+                                        <option value="unplanned">UNPLANNED BUDGET</option>
+                                        <option value="guestimate">GUESTIMATE</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-inline m-b-15 col-md-6">
+                                <div class="form-group m-r-5">
+                                    <label class="input-group">
+                                        <span class="input-group-addon">
+                                            <input type="radio" id="referral_type" name="ref_type" value="T" checked />
+                                        </span>
+                                        <div class="form-control form-control-static">Target</div>
+                                        <span class="glyphicon form-control-feedback "></span>
+                                    </label>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="input-group">
+                                        <span class="input-group-addon">
+                                            <input type="radio" id="organization_type" name="ref_type" value="C" />
+                                        </span>
+                                        <div class="form-control form-control-static">Client</div>
+                                        <span class="glyphicon form-control-feedback "></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
                                 <div class="form-group form-focus select-focus" id="target_list">
-                                    <select id="target_id" name="target_user" class=" form-control floating" multiple="multiple">
+                                    <select id="target_id" name="target_user[]" class=" form-control floating onchangeBudget" multiple="multiple">
                                         {{#each target}} {{#if_eq target_type "I"}}
                                         <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
                                         {{/if_eq}} {{#if_eq target_type "O"}}
@@ -153,8 +238,8 @@
                                 </div>
                             </div>
                             <div class="col-md-6" style="display:none;" id="client_list">
-                                <div class="form-group form-focus select-focus"  >
-                                    <select id="client_id" name="client_user" class=" form-control floating" multiple="multiple">
+                                <div class="form-group form-focus select-focus">
+                                    <select id="client_id" name="client_user" class=" form-control floating onchangeBudget" multiple="multiple">
                                         {{#each client}} {{#if_eq client_type "I"}}
                                         <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
                                         {{/if_eq}} {{#if_eq client_type "O"}}
@@ -164,12 +249,9 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group form-focus">
-                                    <label class="control-label">Remarks </label>
-                                    <textarea class="form-control floating" id="remarks" name="remarks" rows="5"></textarea>
-                                </div>
+
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 budgetAdd" style="display:none;">
                                 <a href="#" class="btn btn-primary btn-lg" id="budgetAdd" data-toggle="modal" data-target="#add_budget" style="margin: 0 auto; display: table;">
                                     <i class="fa fa-plus"></i> Add Budget</a>
                             </div>
@@ -202,10 +284,10 @@
                                     <div class="form-group m-r-5">
                                         <label class="input-group">
                                             <span class="input-group-addon">
-                                                <input type="radio" id="evenly_equated" name="activity_level_type" value="Evenly Equated"  />
+                                                <input type="radio" id="evenly_equated" name="activity_level_type" value="Evenly Equated" />
                                             </span>
                                             <div class="form-control form-control-static">
-                                                    Evenly Equated
+                                                Evenly Equated
                                             </div>
                                             <span class="glyphicon form-control-feedback "></span>
                                         </label>
@@ -233,13 +315,13 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <h5>
-                                                         {{this.name}}
+                                                        {{this.name}}
                                                     </h5>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <div class="form-group">
-
-                                                        <input class="form-control budget_hour number_budget" type="text" data-budget-id="{{this.id}}" id="budget_hour" name="budget_hour" placeholder="Hours">
+                                                        <input class="form-control budget_hour number_budget" type="text" data-budget-id="{{this.id}}" id="budget_hour" name="budget_hour"
+                                                            placeholder="Hours">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
@@ -265,8 +347,7 @@
     </div>
 </div>
 
-{{!-- Ends add budget modal --}}
-{{#content "script" mode="append"}}
+{{!-- Ends add budget modal --}} {{#content "script" mode="append"}}
 <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript" src="/assets/js/select2.min.js"></script>
@@ -299,11 +380,10 @@
         buttonWidth: '100%'
     });
 
-        var count = 0;
-    $(document).on('click', '#budgetAdd', function(e){
+    var count = 0;
+    $(document).on('click', '#budgetAdd', function (e) {
         count++
-        if(count === 1)
-        {
+        if (count === 1) {
             var activityName = $('#activity_name').val();
             $.ajax({
                 type: "POST",
@@ -311,28 +391,24 @@
                 data: {
                     activityName: activityName
                 },
-                success:function(response)
-                {
-                    if (response.success == true)
-                    {
+                success: function (response) {
+                    if (response.success == true) {
                         localStorage.setItem('activity_id', response.activityId);
                     }
                 },
-                error:function(xhr)
-                {
+                error: function (xhr) {
 
                 }
             });
         }
     });
 
-    $(document).on('click','#btnActivityBudget', function(e){
+    $(document).on('click', '#btnActivityBudget', function (e) {
         var budgetArray = [];
         var totalAmount = 0;
         var totalHour = 0;
-        $('.budget_hour').each(function(index){
-            if($(this).val() !== "")
-            {
+        $('.budget_hour').each(function (index) {
+            if ($(this).val() !== "") {
                 var budgetId = $(this).data("budget-id");
                 var amount = $(".budget_amount")[index].value;
                 totalAmount += parseInt(amount);
@@ -350,7 +426,7 @@
         $.ajax({
             type: "POST",
             url: "/activity/add-budget",
-            data:{
+            data: {
                 activity_id: localStorage.getItem("activity_id"),
                 activity_goal: $("#activity_goal").val(),
                 activity_level_type: $('input[name=activity_level_type]:checked').val(),
@@ -362,11 +438,11 @@
                 $("#btnActivityBudget").prop('disabled', true);
                 $("#btnActivityBudget").html("Loading...");
             },
-            success:function(response){
+            success: function (response) {
                 if (response.success == true) {
                     $(`<div class="alert alert-success"><strong>Success! </strong>Budget Added Successfully</div>`).insertBefore("#btnActivityBudget");
                     setTimeout(function () {
-                       $("#add_budget").modal('hide');
+                        $("#add_budget").modal('hide');
                     }, 2000);
                     $("#btnActivityBudget").html("Budget Added");
                     $("#btnAdd").prop('disabled', false);
@@ -379,7 +455,7 @@
     // add designation ajax and form validation starts
     $(document).ready(function (e) {
 
-         $(".number_budget").keydown(function (e) {
+        $(".number_budget").keydown(function (e) {
             // Allow: backspace, delete, tab, escape, enter and .
             if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
                 // Allow: Ctrl+A, Command+A
@@ -481,5 +557,45 @@
             }
         });
     });
-</script>
-{{/content}}
+
+    $(document).ready(function () {
+        $("#potiential_revenue").inputmask("numeric", {
+            radixPoint: ".",
+            groupSeparator: ",",
+            digits: 2,
+            autoGroup: true,
+            prefix: '$ ',
+            rightAlign: false
+        });
+
+
+        $("#activity_type").change(function () {
+            if ($(this).val() == 'section') {
+                $('#potiential_revenue').val('0.00');
+                $('#potiential_revenue').prop('disabled', true);
+                $(".section").show();
+                $(".strategyGroup").hide();
+            } else if ($(this).val() == 'strategic_group') {
+                $(".strategyGroup").show();
+                $(".section").hide();
+            } else {
+                $(".section").hide();
+                $(".strategyGroup").hide();
+                $('#potiential_revenue').prop('disabled', false);
+            }
+        })
+
+        $(".onchangeBudget").change(function () {
+            if ($(this).val() != '') {
+                $(".budgetAdd").show();
+            } else {
+                $(".budgetAdd").hide();
+            }
+        })
+
+    });
+
+
+
+
+</script> {{/content}}

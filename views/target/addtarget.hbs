@@ -16,13 +16,7 @@
 		</div>
 		<form id="targetform" method="POST" action="/target/add">
 			<input type="hidden" name="_csrf" value="{{csrfToken}}">
-
-			{{!-- <label>
-				<input type="radio" id="individual_target" name="target_type" value="I" checked /> Individual</label>
-			<label>
-				<input type="radio" id="organization_target" name="target_type" value="O" /> Organization</label> --}}
-
-
+			
 			<div class="form-inline m-b-15">
 				<div class="form-group m-r-5">
 					<label class="input-group">
@@ -52,19 +46,25 @@
 							<div id="org_type" style="display:none;">
 								<div class="col-md-12">
 									<div class="form-group form-focus">
-										<label class="control-label">Organisation Name <span class="req-lbl">*</span></label>
+										<label class="control-label">Organisation Name
+											<span class="req-lbl">*</span>
+										</label>
 										<input type="text" class="form-control floating" id="org_name" name="org_name" />
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group form-focus">
-										<label class="control-label">Organisation ID <span class="req-lbl">*</span></label>
+										<label class="control-label">Organisation ID
+											<span class="req-lbl">*</span>
+										</label>
 										<input type="text" class="form-control floating" id="org_id" name="org_id" />
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group form-focus">
-										<label class="control-label">Organisation Code  <span class="req-lbl">*</span></label>
+										<label class="control-label">Organisation Code
+											<span class="req-lbl">*</span>
+										</label>
 										<input type="text" class="form-control floating" id="org_code" name="org_code" />
 									</div>
 								</div>
@@ -72,31 +72,41 @@
 							<div id="individual_type">
 								<div class="col-md-6">
 									<div class="form-group form-focus">
-										<label class="control-label">First Name <span class="req-lbl">*</span></label>
+										<label class="control-label">First Name
+											<span class="req-lbl">*</span>
+										</label>
 										<input type="text" class="form-control floating" id="first_name" name="first_name" />
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group form-focus">
-										<label class="control-label">Last Name <span class="req-lbl">*</span></label>
+										<label class="control-label">Last Name
+											<span class="req-lbl">*</span>
+										</label>
 										<input type="text" class="form-control floating" id="last_name" name="last_name" />
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group form-focus">
-										<label class="control-label">Target ID  <span class="req-lbl">*</span></label>
+										<label class="control-label">Target ID
+											<span class="req-lbl">*</span>
+										</label>
 										<input type="text" class="form-control floating" id="target_id" name="target_id" />
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group form-focus">
-										<label class="control-label">Target Code <span class="req-lbl">*</span> </label>
+										<label class="control-label">Target Code
+											<span class="req-lbl">*</span>
+										</label>
 										<input type="text" class="form-control floating" id="target_code" name="target_code" />
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group form-focus select-focus">
-										<label class="control-label">Designation <span class="req-lbl">*</span></label>
+										<label class="control-label">Designation
+											<span class="req-lbl">*</span>
+										</label>
 										<select id="designation" name="designation" class="select form-control floating">
 											{{#each designations}}
 											<option value="{{this.id}}">{{this.title}}</option>
@@ -109,7 +119,9 @@
 								</div>
 								<div class="col-md-6">
 									<div class="form-group form-focus">
-										<label class="control-label">Date of Birth <span class="req-lbl">*</span></label>
+										<label class="control-label">Date of Birth
+											<span class="req-lbl">*</span>
+										</label>
 										<div class="cal-icon">
 											<input class="form-control floating datetimepicker" type="text" id="dob" name="dob">
 										</div>
@@ -117,7 +129,9 @@
 								</div>
 								<div class="col-md-6">
 									<div class="form-group form-focus select-focus">
-										<label class="control-label">Gender <span class="req-lbl">*</span></label>
+										<label class="control-label">Gender
+											<span class="req-lbl">*</span>
+										</label>
 										<select class="select form-control floating" id="gender" name="gender">
 											<option value="">Select Gender</option>
 											<option value="M">Male</option>
@@ -128,7 +142,9 @@
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus">
-									<label class="control-label">Email Id  <span class="req-lbl">*</span></label>
+									<label class="control-label">Email Id
+										<span class="req-lbl">*</span>
+									</label>
 									<input type="text" class="form-control floating" id="email" name="email" />
 									<span id="uniqueEmail" style="color: red">
 										<span>
@@ -136,7 +152,9 @@
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus">
-									<label class="control-label">Phone Number <span class="req-lbl">*</span></label>
+									<label class="control-label">Phone Number
+										<span class="req-lbl">*</span>
+									</label>
 									<input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" />
 								</div>
 							</div>
@@ -148,7 +166,9 @@
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus">
-									<label class="control-label">Mobile Number <span class="req-lbl">*</span></label>
+									<label class="control-label">Mobile Number
+										<span class="req-lbl">*</span>
+									</label>
 									<input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" />
 								</div>
 							</div>
@@ -161,7 +181,9 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="form-group form-focus">
-							<label class="control-label">Address Line 1 <span class="req-lbl">*</span></label>
+							<label class="control-label">Address Line 1
+								<span class="req-lbl">*</span>
+							</label>
 							<input type="text" class="form-control floating" id="address1" name="address1" />
 						</div>
 					</div>
@@ -179,7 +201,9 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
-							<label class="control-label">Country <span class="req-lbl">*</span></label>
+							<label class="control-label">Country
+								<span class="req-lbl">*</span>
+							</label>
 							<select id="country" name="country" class="select form-control floating">
 								<option value="">Select Country</option>
 								{{#each country}}
@@ -190,7 +214,9 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
-							<label class="control-label">State <span class="req-lbl">*</span></label>
+							<label class="control-label">State
+								<span class="req-lbl">*</span>
+							</label>
 							<select id="state" name="state" class="select form-control floating">
 								<option value="">Select State</option>
 								{{#each state}}
@@ -201,7 +227,9 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
-							<label class="control-label">City <span class="req-lbl">*</span></label>
+							<label class="control-label">City
+								<span class="req-lbl">*</span>
+							</label>
 							<select id="city" name="city" class="select form-control floating">
 								<option value="">Select City</option>
 
@@ -210,7 +238,9 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
-							<label class="control-label">Zip Code <span class="req-lbl">*</span></label>
+							<label class="control-label">Zip Code
+								<span class="req-lbl">*</span>
+							</label>
 							<select id="zipcode" name="zipcode" class="select form-control floating">
 								<option value="">Select Zipcode</option>
 							</select>
@@ -235,7 +265,9 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
-							<label class="control-label">Attorney  <span class="req-lbl">*</span></label>
+							<label class="control-label">Attorney
+								<span class="req-lbl">*</span>
+							</label>
 							<select id="attorney" name="attorney" class="select form-control floating">
 								<option value="">Select Attorney</option>
 								{{#each attorney}}

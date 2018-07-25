@@ -1880,6 +1880,10 @@ i.fa.fa-eye.m-r-5 {
 	-o-transition: all 300ms ease-in-out 0s;
 }
 
+.dataTables_wrapper {
+	margin-top: 10px;
+}
+
 /*------------------------------------------------------------------
 [39-a.... Custom Styles]
 */

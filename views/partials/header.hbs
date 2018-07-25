@@ -46,7 +46,9 @@
             <li><a href="/change-password"><i class="fa fa-key"></i> Change Password</a></li>
              {{#if_eq user.role_id "2"}}
                {{#if_eq user.actual_role_id "0"}}
+                {{#if_eq user.is_attorney "1"}}
                  <li><a href="/change-role"><i class="fa fa-sign-in"></i> Login as Attorney</a></li>
+                 {{/if_eq}}
               {{/if_eq}}
                {{#if_eq user.actual_role_id "1"}}
                  <li><a href="/change-role-site"><i class="fa fa-sign-in"></i> Login as Attorney</a></li>
