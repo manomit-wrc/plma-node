@@ -316,7 +316,7 @@ router.post('/target/multi-delete/', auth, firmAttrAuth, async (req, res) => {
 	var target_ids = req.body.target_id;
 	var n = req.body.target_id.length;
 	for (i = 0; i < n; i++) {
-		
+
 		await Target.destroy({
 			where: {
 				id: target_ids[i]

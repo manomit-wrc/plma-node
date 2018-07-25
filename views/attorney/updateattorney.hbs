@@ -31,7 +31,7 @@
                             </div>
 
                             <div class="col-md-6">
-                                <div class="form-group form-focus">
+                                <div class="form-group form-focus select-focus">
                                 <label class="control-label">Group</label>
                                     <select id="group" name="group" class="select form-control floating">
                                         <option value="">Select Group</option>
@@ -42,7 +42,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group form-focus">
+                                <div class="form-group form-focus select-focus">
                                 <label class="control-label">Section</label>
                                     <select id="section" name="section" class="select form-control floating">
                                         <option value="">Select Section</option>
@@ -53,7 +53,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group form-focus">
+                                <div class="form-group form-focus select-focus">
                                 <label class="control-label">Designation</label>
                                     <select id="designation" name="designation" class="select form-control floating">
                                         <option value="">Select Designation</option>
@@ -101,6 +101,8 @@
                                 <option value="">Select Gender</option>
                                 <option value="M" {{#if_eq edata.0.gender "M"}} selected {{/if_eq}}>Male</option>
                                 <option value="F" {{#if_eq edata.0.gender "F"}} selected {{/if_eq}}>Female</option>
+                                <option value="0" {{#if_eq edata.0.gender "0"}} selected {{/if_eq}}>Others</option>
+
                             </select>
                         </div>
                     </div>
@@ -184,7 +186,7 @@
                     </div>
 
                     <div class="col-md-6">
-                        <div class="form-group form-focus">
+                        <div class="form-group form-focus select-focus">
                         <label class="control-label">Jurisdiction</label>
                             <select id="jurisdiction" name="jurisdiction" class="select form-control floating">
                                 <option value="">Select Jurisdiction</option>
@@ -195,7 +197,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group form-focus">
+                        <div class="form-group form-focus select-focus">
                         <label class="control-label">Industry Type</label>
                             <select id="industry_type" name="industry_type" class="select form-control floating">
                                 <option value="">Select Industry Type</option>
@@ -264,7 +266,7 @@
                     </div>
 
                     <div class="col-md-6">
-                        <div class="form-group form-focus">
+                        <div class="form-group form-focus select-focus">
                         <label class="control-label">Country</label>
                             <select class="select form-control floating" id="country" name="country">
                                 <option value="">Select Country</option>
@@ -275,7 +277,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group form-focus">
+                        <div class="form-group form-focus select-focus">
                         <label class="control-label">State</label>
                             <select class="select form-control floating" id="state" name="state">
                                 <option value="">select State</option>
@@ -286,7 +288,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group form-focus">
+                        <div class="form-group form-focus select-focus">
                         <label class="control-label">City</label>
                             <select class="select form-control floating" id="city" name="city">
                                 <option value="">Select City</option>
@@ -297,7 +299,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group form-focus">
+                        <div class="form-group form-focus select-focus">
                         <label class="control-label">Zipcode</label>
                             <select class="select form-control floating" id="zipcode" name="zipcode">
                                 <option value="">Select Zipcode</option>
@@ -355,14 +357,14 @@
                     <div class="col-md-12">
                         <div class="form-group form-focus">
                             <label class="control-label">Remarks </label>
-                            <textarea class="form-control floating" id="remarks" name="remarks" rows="5">{{edata.0.attorney_details.0.remarks}}</textarea>
+                            <textarea class="form-control floating" id="remarks" name="remarks" >{{edata.0.attorney_details.0.remarks}}</textarea>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="text-center m-t-20">
-                <button class="btn btn-primary" type="submit" id="btnAdd">Add Attorney</button>
+                <button class="btn btn-primary" type="submit" id="btnAdd">Update Attorney</button>
             </div>
         </form>
     </div>
@@ -484,4 +486,20 @@
         return true;
 
     }
-</script> {{/content}}
+</script>
+<script>
+$("#hourly_cost").focus(function() {
+	$('#hourly_cost').val("$");
+});
+</script>
+<script>
+$("#overhead_amount").focus(function() {
+	$('#overhead_amount').val("$");
+});
+</script>
+<script>
+$("#billing_opp_cost").focus(function() {
+	$('#billing_opp_cost').val("$");
+});
+</script>
+ {{/content}}

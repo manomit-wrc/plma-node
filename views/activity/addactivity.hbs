@@ -428,6 +428,7 @@
             url: "/activity/add-budget",
             data: {
                 activity_id: localStorage.getItem("activity_id"),
+                activity_goal: $("#activity_goal").val(),
                 activity_level_type: $('input[name=activity_level_type]:checked').val(),
                 budget: JSON.stringify(budgetArray)
             },

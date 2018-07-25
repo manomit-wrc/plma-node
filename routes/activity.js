@@ -100,8 +100,10 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 			const parent_name = budgetList[i].name;
 			const child_budget = lodash.filter(budgetList, arr => arr.parent_id === budgetList[i].id);
 			budgetArr.push({
+
 				"parent_name": parent_name,
 				"child_budget": child_budget
+				
 			});
 		}
 	}
@@ -167,7 +169,7 @@ router.post('/activity/add-budget', auth, firmAttrAuth, csrfProtection, async (r
 })
 
 
-// ========{{    insert data to the database  }}=====================//
+// ========{{  insert data to the database  }}=====================//
 
 router.post('/activity/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var target_user = req.body.target_user;
@@ -395,7 +397,7 @@ router.post('/activity/edit-budget', auth, firmAttrAuth, csrfProtection, async (
 	for (var b = 0; b < budget.length; b++) {
 		await ActivityBudget.create({
 			activity_id: req.body.activity_id,
-			activity_goal_id: req.body.activity_goal,
+			activity_goal_id: req.body.activity_goal_id,
 			level_type: req.body.activity_level_type,
 			budget_id: budget[b].budget_id,
 			hour: budget[b].budget_hour,
