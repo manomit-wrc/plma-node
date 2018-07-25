@@ -151,9 +151,9 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 
 			const user_details = Attorney_Details.create({
 
-				group: req.body.group,
-				section: req.body.section,
-				designation: req.body.designation,
+				group: parseInt(req.body.group),
+				section: parseInt(req.body.section),
+				designation: parseInt(req.body.designation),
 				attorney_id: req.body.attorney_id,
 				attorney_code: req.body.attorney_code,
 				attorney_type: req.body.attorney_type,
@@ -162,8 +162,8 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 				job_type: req.body.job_type,
 				bar_practice_date: req.body.bar_practice_date,
 				firm_join_date: req.body.firm_join_date,
-				jurisdiction: req.body.jurisdiction,
-				industry_type: req.body.industry_type,
+				jurisdiction: parseInt(req.body.jurisdiction),
+				industry_type: parseInt(req.body.industry_type),
 				hourly_cost: req.body.hourly_cost,
 				benefit_factor: req.body.benefit_factor,
 				overhead_amount: req.body.overhead_amount,
