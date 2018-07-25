@@ -36,36 +36,62 @@ const Target = require('../models').target;
 const Client = require('../models').client;
 const Budget = require('../models').budget;
 const ActivityBudget = require('../models').activity_budget;
+const sectionToFirm = require('../models').section_to_firms;
 
+function removePhoneMask(removeCharacter) {
+	var removeCharacter = removeCharacter.replace("-", "");
+	removeCharacter = removeCharacter.replace(")", "");
+	removeCharacter = removeCharacter.replace("(", "");
+	removeCharacter = removeCharacter.replace("$", "");
+	removeCharacter = removeCharacter.replace(",", "");
+	removeCharacter = removeCharacter.replace(" ", "");
+	return removeCharacter;
+}
 
 //===================================================START ACTIVITY===============================================================================//
 router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res) => {
-	//	var error_message = req.flash('success-activity-message')[0];
 
 	var activityFilter = {};
 	if (req.query.searchActive) {
 		activityFilter.activity_type = req.query.searchActive;
 	}
+
 	var success_message = req.flash('success-activity-message')[0];
-	const firm = await Firm.findAll();
+
+	const firm = await Firm.findAll({
+		where: {
+			id: req.user.firm_id
+		}
+	});
+
+	sectionToFirm.belongsTo(Section, {
+		foreignKey: 'section_id'
+	});
+
+	const allSection = await sectionToFirm.findAll({
+		where: {
+			firm_id: req.user.firm_id
+		},
+		include: [{
+			model: Section
+		}]
+	});
+
 	const activity_goal = await ActivityGoal.findAll();
 	const practice_area = await PracticeArea.findAll();
 	const target = await Target.findAll({
 		where: {
-			target_type: "I"
+			'target_type': "I",
+			'attorney_id': req.user.id
 		}
 	});
 	const client = await Client.findAll({
 		where: {
-			client_type: "I"
+			'client_type': "I",
+			'attorney_id': req.user.id
 		}
 	});
-	// const data = await Budget.findAll({
-	// 	include: [{
-	// 		model: Budget,
-	// 		as: 'BudgetHead'
-	// 	}]
-	// });
+
 	const budgetList = await Budget.findAll();
 
 	var budgetArr = [];
@@ -83,7 +109,9 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 	res.render('activity/addactivity', {
 		layout: 'dashboard',
 		csrfToken: req.csrfToken(),
-		firm: firm,
+		firm: firm[0].title,
+		section: allSection,
+		originAttorney: req.user.first_name + " " + req.user.last_name,
 		success_message,
 		activity_goal: activity_goal,
 		practice_area: practice_area,
@@ -97,7 +125,9 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 
 router.get('/activitypage', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	Activity.findAll({
-		where: {user_id : req.user.id},
+		where: {
+			user_id: req.user.id
+		},
 	}).then(row => {
 		res.render('activity/activity', {
 			layout: 'dashboard',
@@ -122,7 +152,7 @@ router.post('/insertActivity', auth, async (req, res) => {
 router.post('/activity/add-budget', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var budget = JSON.parse(req.body.budget);
 	for (var b = 0; b < budget.length; b++) {
-		const storeBudget = await ActivityBudget.create({
+		await ActivityBudget.create({
 			activity_id: req.body.activity_id,
 			activity_goal_id: req.body.activity_goal,
 			level_type: req.body.activity_level_type,
@@ -140,23 +170,18 @@ router.post('/activity/add-budget', auth, firmAttrAuth, csrfProtection, async (r
 // ========{{    insert data to the database  }}=====================//
 
 router.post('/activity/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
-	// console.log(JSON.stringify(req.body, undefined, 2));
-
 	var target_user = req.body.target_user;
 	var client_user = req.body.client_user;
-	//console.log(client_user);
 	const CreationDate = req.body.activity_creation_date ? req.body.activity_creation_date.split("-") : '';
 	const FromDate = req.body.activity_from_date ? req.body.activity_from_date.split("-") : '';
 	const ToDate = req.body.activity_to_date ? req.body.activity_to_date.split("-") : '';
 
-
-
-	const activity_store = await Activity.update({
+	await Activity.update({
 		firm: req.body.firm,
 		activity_type: req.body.activity_type,
 		activity_goal_id: req.body.activity_goal,
 		practice_area: req.body.practice_area,
-		potiential_revenue: req.body.potiential_revenue,
+		potiential_revenue: removePhoneMask(req.body.potiential_revenue),
 		remarks: req.body.remarks,
 		activity_creation_date: CreationDate ? CreationDate[2] + "-" + CreationDate[1] + "-" + CreationDate[0] : null,
 		activity_from_date: FromDate ? FromDate[2] + "-" + FromDate[1] + "-" + FromDate[0] : null,
@@ -167,6 +192,7 @@ router.post('/activity/add', auth, firmAttrAuth, csrfProtection, async (req, res
 		budget_details_status: req.body.budget_details_status,
 		target: req.body.ref_type,
 		user_id: req.user.id,
+		firm_id: req.user.firm_id,
 		total_budget_hour: req.body.total_hour,
 		total_budget_amount: req.body.total_amount,
 	}, {
@@ -177,25 +203,23 @@ router.post('/activity/add', auth, firmAttrAuth, csrfProtection, async (req, res
 
 	if (req.body.ref_type == "T") {
 		for (var i = 0; i < target_user.length; i++) {
-			const store_activity_user = await Activity_to_user_type.create({
+			await Activity_to_user_type.create({
 				activity_id: req.body.activity_id,
 				target_client_type: req.body.ref_type,
 				type: target_user[i]
 			});
 		}
 	} else {
-		{
-			for (var j = 0; j < client_user.length; j++) {
-				const store_activity_user = await Activity_to_user_type.create({
-					activity_id: req.body.activity_id,
-					target_client_type: req.body.ref_type,
-					type: client_user[j]
-				});
-			}
+		for (var j = 0; j < client_user.length; j++) {
+			await Activity_to_user_type.create({
+				activity_id: req.body.activity_id,
+				target_client_type: req.body.ref_type,
+				type: client_user[j]
+			});
 		}
 	}
 
-	req.flash('success-activity-message', 'Activity  Created Successfully');
+	req.flash('success-activity-message', 'Activity Created Successfully');
 	res.redirect('/activitypage');
 });
 
@@ -228,7 +252,6 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		}]
 	});
 	var result = JSON.parse(JSON.stringify(editdata[0].jointactivities));
-	//console.log(result);
 	var arr = [];
 	for (var i = 0; i < result.length; i++) {
 		arr.push(parseInt(result[i].type));
@@ -310,7 +333,6 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		}]
 	});
 	var result = JSON.parse(JSON.stringify(editdata[0].jointactivities));
-	//console.log(result);
 	var arr = [];
 	for (var i = 0; i < result.length; i++) {
 		arr.push(parseInt(result[i].type));
@@ -364,14 +386,14 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 
 //update data
 router.post('/activity/edit-budget', auth, firmAttrAuth, csrfProtection, async (req, res) => {
-	const del_budget = await ActivityBudget.destroy({
+	ActivityBudget.destroy({
 		where: {
 			activity_id: req.body.activity_id
 		}
 	});
 	var budget = JSON.parse(req.body.budget);
 	for (var b = 0; b < budget.length; b++) {
-		const editBudget = await ActivityBudget.create({
+		await ActivityBudget.create({
 			activity_id: req.body.activity_id,
 			activity_goal_id: req.body.activity_goal,
 			level_type: req.body.activity_level_type,
@@ -380,7 +402,7 @@ router.post('/activity/edit-budget', auth, firmAttrAuth, csrfProtection, async (
 			amount: budget[b].budget_amount,
 		});
 	}
-	const edit_activity_total = await Activity.update({
+	await Activity.update({
 		total_budget_amount: req.body.total_amount,
 		total_budget_hour: req.body.total_Hour
 	}, {
@@ -401,7 +423,7 @@ router.post('/activity/update/:id', auth, firmAttrAuth, csrfProtection, async (r
 	const FormDate1 = req.body.activity_from_date ? req.body.activity_from_date.split("-") : '';
 	const ToDate1 = req.body.activity_to_date ? req.body.activity_to_date.split("-") : '';
 
-	const activity_store1 = await Activity.update({
+	await Activity.update({
 		firm: req.body.firm,
 		activity_type: req.body.activity_type,
 		activity_goal_id: req.body.activity_goal,
@@ -421,14 +443,14 @@ router.post('/activity/update/:id', auth, firmAttrAuth, csrfProtection, async (r
 			id: req.params['id']
 		}
 	});
-	const del_ref = await Activity_to_user_type.destroy({
+	await Activity_to_user_type.destroy({
 		where: {
 			activity_id: req.params['id']
 		}
 	});
 	if (req.body.ref_type == "T") {
 		for (var i = 0; i < target_user.length; i++) {
-			const store_activity_user = await Activity_to_user_type.create({
+			await Activity_to_user_type.create({
 				activity_id: req.params['id'],
 				target_client_type: req.body.ref_type,
 				type: target_user[i]
@@ -437,7 +459,7 @@ router.post('/activity/update/:id', auth, firmAttrAuth, csrfProtection, async (r
 	} else {
 		{
 			for (var j = 0; j < client_user.length; j++) {
-				const store_activity_user = await Activity_to_user_type.create({
+				await Activity_to_user_type.create({
 					activity_id: req.params['id'],
 					target_client_type: req.body.ref_type,
 					type: client_user[j]
@@ -450,16 +472,13 @@ router.post('/activity/update/:id', auth, firmAttrAuth, csrfProtection, async (r
 });
 
 
-//        {{   delete data  }}
-
-
 router.get('/activity/deletedata/:id', auth, firmAttrAuth, async (req, res) => {
-	const activity_delete = await Activity.destroy({
+	await Activity.destroy({
 		where: {
 			id: req.params['id']
 		}
 	});
-	const jointactivity_delete = await Activity_to_user_type.destroy({
+	await Activity_to_user_type.destroy({
 		where: {
 			activity_id: req.params['id']
 		}
