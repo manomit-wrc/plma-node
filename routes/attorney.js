@@ -128,8 +128,8 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 		const user_details = await User.create({
 			first_name: req.body.first_name,
 			last_name: req.body.last_name,
-			email: req.body.email,
-			password: bCrypt.hashSync(req.body.password),
+			email: req.body.mail,
+			password: bCrypt.hashSync(req.body.pass),
 			dob: req.body.dob,
 			gender: req.body.gender,
 			address: req.body.address,
@@ -172,13 +172,11 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 				address3: req.body.address3,
 				phone_no:  removePhoneMask(req.body.phone_no),
 
-
 				fax: req.body.fax,
 				website_url: req.body.website_url,
 				social_url: req.body.social_url,
 				remarks: req.body.remarks,
 				user_id: attrorney_details_id,
-
 
 				firm_join_date: Firm_Join_Date ? Firm_Join_Date[2] + "-" + Firm_Join_Date[1] + "-" + Firm_Join_Date[0] : null,
 				bar_practice_date: Bar_Practice_date ? Bar_Practice_date[2] + "-" + Bar_Practice_date[1] + "-" + Bar_Practice_date[0] : null,
@@ -365,10 +363,10 @@ router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async(r
 	});
 
 		const attr_update = await Attorney_Details.update({
-			group: req.body.group,
-			section: req.body.section,
-			designation: req.body.designation,
-			attorney_id: parseInt(req.body.attorney_id),
+			group: parseInt(req.body.group),
+			section: parseInt(req.body.section),
+			designation: parseInt(req.body.designation),
+			attorney_id: req.body.attorney_id,
 			attorney_code: req.body.attorney_code,
 			attorney_type: req.body.attorney_type,
 			education: req.body.education,
@@ -376,8 +374,8 @@ router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async(r
 			job_type: req.body.job_type,
 			bar_practice_date: req.body.bar_practice_date,
 			firm_join_date: req.body.firm_join_date,
-			jurisdiction: req.body.jurisdiction,
-			industry_type: req.body.industry_type,
+			jurisdiction: parseInt(req.body.jurisdiction),
+			industry_type: parseInt(req.body.industry_type),
 			hourly_cost: req.body.hourly_cost,
 			benefit_factor: req.body.benefit_factor,
 			overhead_amount: req.body.overhead_amount,
@@ -390,7 +388,6 @@ router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async(r
 			website_url: req.body.website_url,
 			social_url: req.body.social_url,
 			remarks: req.body.remarks,
-			avatar: req.body.fileName,
 			firm_join_date: Firm_Join_Date1 ? Firm_Join_Date1[2] + "-" + Firm_Join_Date1[1] + "-" + Firm_Join_Date1[0] : null,
 			bar_practice_date: Bar_Practice_date1 ? Bar_Practice_date1[2] + "-" + Bar_Practice_date1[1] + "-" + Bar_Practice_date1[0] : null,
 

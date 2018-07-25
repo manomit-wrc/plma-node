@@ -13,7 +13,7 @@
             </div>
             {{/if}}
             <div class="col-sm-8">
-                <h4 class="page-title">Update Attorney</h4>
+                <h4 class="page-title">Add Attorney</h4>
             </div>
         </div>
 
@@ -25,24 +25,36 @@
                     <div class="col-md-12">
                         <div class="row">
 
+
+
+
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
                                     <label class="control-label">Email</label>
-                                    <input type="text" class="form-control floating" id="email" name="email" />
+                                    <input type="text" class="form-control floating" id="mail" name="mail" />
                                     <span id="uniqueEmail" style="color: red; font-weight:bolder"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
                                     <label class="control-label">Password</label>
-                                    <input type="password" class="form-control floating" id="password" name="password" />
+                                    <input type="password" class="form-control floating" id="pass" name="pass" />
                                 </div>
                             </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group form-focus">
+                                    <!-- <label class="control-label">Password</label> -->
+                                    <input type="checkbox" name="approve" id="approve">Approver<br>
+                                </div>
+                            </div>
+
+
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
                                 <label class="control-label">Group</label>
 
-                                    <select id="group" name="group" class="select form-control floating">
+                                    <select id="group" name="group" class="select form-control floating" >
                                         <option value="">Select Group</option>
                                         {{#each group}}
                                         <option value="{{this.id}}">{{this.name}}</option>
@@ -54,7 +66,7 @@
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
                                 <label class="control-label">Section</label>
-                                    <select id="section" name="section" class="select form-control floating">
+                                    <select id="section" name="section" class="select form-control floating" >
                                         <option value="">Select Section</option>
                                         {{#each section}}
                                         <option value="{{this.id}}">{{this.name}}</option>
@@ -65,7 +77,7 @@
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
                                 <label class="control-label">Designation</label>
-                                    <select id="designation" name="designation" class="select form-control floating">
+                                    <select id="designation" name="designation" class="select form-control floating" >
                                         <option value="">Select Designation</option>
                                         {{#each designation}}
                                         <option value="{{this.id}}">{{this.title}}</option>
@@ -73,6 +85,9 @@
                                     </select>
                                 </div>
                             </div>
+
+
+
                         </div>
                     </div>
                 </div>
@@ -104,17 +119,18 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
                         <label class="control-label">Gender</label>
-                            <select class="form-control floating" id="gender" name="gender">
+                            <select class="select form-control floating" id="gender" name="gender">
                                 <option value="">Select Gender</option>
                                 <option value="M">Male</option>
                                 <option value="F">Female</option>
+                                <option value="O">Others</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-focus">
                             <label class="control-label">Attorney ID</label>
-                            <input type="text" class="form-control floating" id="attorney_id" name="attorney_id" onkeypress="return onlyNumbers();" />
+                            <input type="text" class="form-control floating" id="attorney_id" name="attorney_id" />
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -123,10 +139,11 @@
                             <input type="text" class="form-control floating" id="attorney_code" name="attorney_code" />
                         </div>
                     </div>
+
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
                         <label class="control-label">Attorney Type</label>
-                            <select class="form-control floating" id="attorney_type" name="attorney_type">
+                            <select class="select form-control floating" id="attorney_type" name="attorney_type">
                                 <option value="">Select Attorney Type</option>
                                 <option value="AT-INTERIM">INTERIM ATTORNEY</option>
                                 <option value="AT-APPROVED">APPROVED ATTORNEY</option>
@@ -155,7 +172,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
                         <label class="control-label">Job Type</label>
-                            <select class="form-control floating" id="job_type" name="job_type">
+                            <select class="select form-control floating" id="job_type" name="job_type">
                                 <option value="">Select Job Type</option>
                                 <option value="FULLTIME">FULLTIME</option>
                                 <option value="STERMCON">SHORT TERM CONTRACT</option>
@@ -205,30 +222,29 @@
 
                     <div class="col-md-6">
                         <div class="form-group form-focus">
-                            <label class="control-label">Hourly Cost</label>
-                            <input type="text" class="form-control floating" id="hourly_cost" name="hourly_cost" onkeypress="return onlyNumbers();" />
+                            <label class="control-label">HourlyCost in Dollars $</label>
+                            <input type="text" class="form-control floating" id="hourly_cost" name="hourly_cost" />
+
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-focus">
                             <label class="control-label">Benefit Factor %</label>
-                            <input type="text" class="form-control floating" id="benefit_factor" name="benefit_factor" onkeypress="return onlyHourlyCostNumbers();"
-                            />
+                            <input type="text" class="form-control floating" id="benefit_factor" name="benefit_factor" />
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group form-focus">
-                            <label class="control-label">Overhead Amount</label>
-                            <input type="text" class="form-control floating" id="overhead_amount" name="overhead_amount" onkeypress="return onlyNumbers();"
-                            />
+                            <label class="control-label">Overhead Amount in Dollars $</label>
+                            <input type="text" class="form-control floating" id="overhead_amount" name="overhead_amount"  />
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group form-focus">
-                            <label class="control-label">Billing Opp Cost</label>
-                            <input type="text" class="form-control floating" id="billing_opp_cost" name="billing_opp_cost" onkeypress="return onlyBenifitNumbers();"
+                            <label class="control-label">Billing Opp Cost in Dollars $</label>
+                            <input type="text" class="form-control floating" id="billing_opp_cost" name="billing_opp_cost"
                             />
                         </div>
                     </div>
@@ -260,7 +276,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
                         <label class="control-label">Country</label>
-                            <select id="country" name="country" class="select form-control">
+                            <select id="country" name="country" class="select form-control floating">
                                 <option value="">Select Country</option>
                                 {{#each country}}
                                 <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
@@ -271,7 +287,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
                         <label class="control-label">State</label>
-                            <select id="state" name="state" class="select form-control">
+                            <select id="state" name="state" class="select form-control floating">
                                 <option value="">Select State</option>
                                 {{#each state}}
                                 <option value="{{this.id}}">{{this.name}}</option>
@@ -282,7 +298,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
                         <label class="control-label">City</label>
-                            <select id="city" name="city" class="select form-control">
+                            <select id="city" name="city" class="select form-control floating">
                                 <option value="">Select City</option>
 
                             </select>
@@ -291,7 +307,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
                         <label class="control-label">Zipcode</label>
-                            <select id="zipcode" name="zipcode" class="select form-control">
+                            <select id="zipcode" name="zipcode" class="select form-control floating">
                                 <option value="">Select Zipcode</option>
                             </select>
                         </div>
@@ -338,7 +354,7 @@
                     <div class="col-md-12">
                         <div class="form-group form-focus">
                             <label class="control-label">Remarks </label>
-                            <textarea class="form-control floating" id="remarks" name="remarks" rows="5"></textarea>
+                            <textarea class="form-control floating" id="remarks" name="remarks"></textarea>
                         </div>
                     </div>
                 </div>
@@ -348,7 +364,7 @@
                 <button class="btn btn-primary" type="submit" id="btnAdd">Add Attorney</button>
             </div>
         </form>
-    </div>
+  </div>
 </div>
 {{#content "script" mode="append"}}
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
@@ -397,10 +413,10 @@
                 zipcode: {
                     required : true
                 },
-                email: {
+                mail: {
                     required: true
                 },
-                password: {
+                pass: {
                     required: true
                 },
 
@@ -410,10 +426,10 @@
 
             },
             messages: {
-                email: {
+                mail: {
                     required: "email can't be blank"
                 },
-                password: {
+                pass: {
                     required: "password  can't be blank"
                 },
                 group: {
@@ -451,7 +467,7 @@
         });
     });
 </script>
-<script language="JavaScript">
+<!-- <script language="JavaScript">
     function onlyNumbers(evt) {
         var e = event || evt; // for trans-browser compatibility
         var charCode = e.which || e.keyCode;
@@ -462,33 +478,37 @@
         return true;
 
     }
+</script> -->
+
+
+
+<script>
+$(document).ready(function () {
+    $("#hourly_cost").inputmask("numeric", {
+        radixPoint: ".",
+        groupSeparator: ",",
+        digits: 2,
+        autoGroup: true,
+        prefix: '$ ',
+        rightAlign: false
+    });
+    $("#overhead_amount").inputmask("numeric", {
+        radixPoint: ".",
+        groupSeparator: ",",
+        digits: 2,
+        autoGroup: true,
+        prefix: '$ ',
+        rightAlign: false
+    });
+    $("#billing_opp_cost").inputmask("numeric", {
+        radixPoint: ".",
+        groupSeparator: ",",
+        digits: 2,
+        autoGroup: true,
+        prefix: '$ ',
+        rightAlign: false
+    });
+  });
 </script>
 
-
-<script language="JavaScript">
-    function onlyHourlyCostNumbers(evt) {
-        var e = event || evt; // for trans-browser compatibility
-        var charCode = e.which || e.keyCode;
-
-        if (charCode > 31 && (charCode < 48 || charCode > 57))
-            return false;
-
-        return true;
-
-    }
-</script>
-
-
-
-<script language="JavaScript">
-    function onlyBenifitNumbers(evt) {
-        var e = event || evt; // for trans-browser compatibility
-        var charCode = e.which || e.keyCode;
-
-        if (charCode > 31 && (charCode < 48 || charCode > 57))
-            return false;
-
-        return true;
-
-    }
-</script> {{/content}}
+{{/content}}

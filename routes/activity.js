@@ -74,8 +74,10 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 			const parent_name = budgetList[i].name;
 			const child_budget = lodash.filter(budgetList, arr => arr.parent_id === budgetList[i].id);
 			budgetArr.push({
+
 				"parent_name": parent_name,
 				"child_budget": child_budget
+				
 			});
 		}
 	}
@@ -137,7 +139,7 @@ router.post('/activity/add-budget', auth, firmAttrAuth, csrfProtection, async (r
 })
 
 
-// ========{{    insert data to the database  }}=====================//
+// ========{{  insert data to the database  }}=====================//
 
 router.post('/activity/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	// console.log(JSON.stringify(req.body, undefined, 2));
