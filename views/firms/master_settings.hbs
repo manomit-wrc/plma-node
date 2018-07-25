@@ -561,7 +561,7 @@
 								<select class="select" name="designation_id" id="designation_id">
 									<option value="">Select Designation</option>
 									{{#each designation}}
-									<option value="{{this.id}}">{{this.code}}</option>
+									<option value="{{this.id}}">{{this.title}}</option>
 									{{/each}}
 								</select>
 							</div>
@@ -681,7 +681,7 @@
 								</label>
 								<select class="select" name="edit_designation_id" id="edit_designation_id">
 									{{#each designation}}
-									<option value="{{this.id}}">{{this.code}}</option>
+									<option value="{{this.id}}">{{this.title}}</option>
 									{{/each}}
 								</select>
 							</div>

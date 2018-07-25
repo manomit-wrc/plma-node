@@ -111,6 +111,7 @@
                   <div class="form-group form-focus">
                      <label class="control-label">State</label>
                      <select class="select form-control floating" id="state" name="state">
+                        <option value="">Select State</option>
                         {{#each state}}
                         <option value="{{this.id}}" {{#if_eq this.id ../user.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
                         {{/each}}
@@ -171,6 +172,21 @@
                         number: true,
                         maxlength: 10,
                         minlength: 10
+                    },
+                    address: {
+                        required: true
+                    },
+                    country: {
+                        required: true
+                    },
+                    state: {
+                        required: true
+                    },
+                    city: {
+                        required: true
+                    },
+                    zipcode: {
+                        required: true
                     }
                 },
                 messages: {
@@ -185,6 +201,21 @@
                         number: "Must be number",
                         maxlength: "Must have 10 digits",
                         minlength: "Must have 10 digits"
+                    },
+                    address: {
+                        required:  "Address can't be blank"
+                    },
+                    country: {
+                        required:  "country can't be blank"
+                    },
+                    state: {
+                        required: "state can't be blank"
+                    },
+                    city: {
+                        required: "city can't be blank"
+                    },
+                    zipcode: {
+                        required: "zipcode can't be blank"
                     }
                 }
             });

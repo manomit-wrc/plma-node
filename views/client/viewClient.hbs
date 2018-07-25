@@ -16,11 +16,7 @@
 		</div>
 		<form id="clientform" method="POST" action="/client/editClient/{{client.id}}">
 			<input type="hidden" name="_csrf" value="{{csrfToken}}">
-			<input type="hidden" value="{{client.id}}" id="id" disabled="disabled" /> {{!--
-			<input type="radio" id="individual_client" name="client_type" value="I" {{#if_eq client.client_type "I"}} checked {{/if_eq}}
-			 disabled disabled="disabled" />Individual
-			<input type="radio" id="organization_client" name="client_type" value="O" {{#if_eq client.client_type "O"}} checked {{/if_eq}}
-			 disabled disabled="disabled" />Organization --}}
+			<input type="hidden" value="{{client.id}}" id="id" disabled="disabled" /> 
 
 			<div class="form-inline m-b-15">
 				<div class="form-group m-r-5">

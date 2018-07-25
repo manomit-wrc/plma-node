@@ -48,7 +48,7 @@
                   <select id="activity_goal" name="activity_goal" class="select form-control floating">
                     <option value="">Select Activity Goal</option>
                     {{#each activity_goal}}
-                    <option value="{{this.id}}" {{#if_eq this.id ../editdata.activity_goal}} selected="selected" {{/if_eq}}>{{this.activity_goal}}</option>
+                    <option value="{{this.id}}" {{#if_eq this.id ../editdata.activity_goal_id}} selected="selected" {{/if_eq}}>{{this.activity_goal}}</option>
                     {{/each}}
                   </select>
                   <strong>Note: </strong>
@@ -334,6 +334,7 @@
       url: "/activity/edit-budget",
       data: {
         activity_id: activity_id,
+        activity_goal_id: $("#activity_goal").val(),
         activity_level_type: $('input[name=activity_level_type_edit]:checked').val(),
         total_amount: totalAmount,
         total_Hour: totalHour,

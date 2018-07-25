@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
     referred_type: DataTypes.STRING,
     target_id: DataTypes.INTEGER,
     client_id: DataTypes.INTEGER,
+    firm_id: DataTypes.INTEGER,
+    user_id: DataTypes.INTEGER,
     remarks: DataTypes.TEXT,
     status: DataTypes.INTEGER
   }, {});

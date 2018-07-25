@@ -375,7 +375,7 @@ router.post('/activity/edit-budget', auth, firmAttrAuth, csrfProtection, async (
 	for (var b = 0; b < budget.length; b++) {
 		const editBudget = await ActivityBudget.create({
 			activity_id: req.body.activity_id,
-			activity_goal_id: req.body.activity_goal,
+			activity_goal_id: req.body.activity_goal_id,
 			level_type: req.body.activity_level_type,
 			budget_id: budget[b].budget_id,
 			hour: budget[b].budget_hour,

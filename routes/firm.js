@@ -201,6 +201,9 @@ router.get('/firm-details', auth, firmAuth, csrfProtection, async (req, res) => 
     });
     const designation = await Designation.findAll();
     const contact = await Contact.findAll({
+        where: {
+            firm_id: req.user.firm_id
+        },
         include: [{model: Office}, {model: Designation}]
     });
     const country = await Country.findAll();
@@ -257,7 +260,7 @@ router.get('/firm-details', auth, firmAuth, csrfProtection, async (req, res) => 
 
 router.post('/add-office', auth, firmAuth, csrfProtection, (req, res) => {
     Office.create({
-        firm_id: 5,
+        firm_id: req.user.firm_id,
         name: req.body.name,
         address: req.body.address,
         city: req.body.city,
@@ -272,7 +275,7 @@ router.post('/add-office', auth, firmAuth, csrfProtection, (req, res) => {
 
 router.post('/edit-office/:id', auth, firmAuth, csrfProtection, (req, res) => {
     Office.update({
-        firm_id: 5,
+        firm_id: req.user.firm_id,
         name: req.body.edit_office_name,
         address: req.body.edit_office_address,
         city: req.body.edit_office_city,
@@ -300,6 +303,7 @@ router.post('/delete-office/:id', auth, firmAuth, csrfProtection, (req, res) =>{
 router.post('/add-office-contact', auth, firmAuth, csrfProtection, (req, res) => {
     Contact.create({
         office_id: req.body.office_id,
+        firm_id: req.user.firm_id,
         designation_id: req.body.designation_id,
         first_name: req.body.first_name,
         last_name: req.body.last_name,
@@ -318,6 +322,7 @@ router.post('/add-office-contact', auth, firmAuth, csrfProtection, (req, res) =>
 router.post('/edit-office-contact/:id', auth, firmAuth, csrfProtection, (req, res) => {
     Contact.update({
         office_id: req.body.edit_office_id,
+        firm_id: req.user.firm_id,
         designation_id: req.body.edit_designation_id,
         first_name: req.body.edit_contact_first_name,
         last_name: req.body.edit_contact_last_name,
