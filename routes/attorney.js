@@ -23,6 +23,7 @@ const Jurisdiction = require('../models').jurisdiction;
 const multer = require('multer');
 const Activity = require('../models').activity;
 const Activity_to_user_type = require('../models').jointactivity;
+const sectionToFirm = require('../models').section_to_firms;
 var csrfProtection = csrf({
 	cookie: true
 });
@@ -72,12 +73,42 @@ router.get('/attorneys', auth, csrfProtection, async (req, res) => {
 		row: attr
 	});
 });
+router.get("/get-firm-user-designation/:id", auth, async (req, res)=> {
+	const get_desig = await User.findAll({
+		where: {
+			firm_id: req.user.firm_id,
+			designation_id: req.params['id']
+		}
+	});
+	if (get_desig.length == 0){
+		res.json({
+			"success": true
+		});
+	}
+	else
+	{
+		res.json({
+			"success": false
+		});
+	}
+});
 
 router.get('/attorneys/addAttorney', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var err_message = req.flash('success-err-message')[0];
 	const designation = await Designation.findAll();
 	const group = await Group.findAll();
-	const section = await Section.findAll();
+	sectionToFirm.belongsTo(Section, {
+		foreignKey: 'section_id'
+	});
+
+	const allSection = await sectionToFirm.findAll({
+		where: {
+			firm_id: req.user.firm_id
+		},
+		include: [{
+			model: Section
+		}]
+	});
 	const jurisdiction = await Jurisdiction.findAll();
 	const industry_type = await Industry_type.findAll();
 	var country = await Country.findAll();
@@ -93,7 +124,7 @@ router.get('/attorneys/addAttorney', auth, firmAttrAuth, csrfProtection, async (
 		state: state,
 		designation: designation,
 		group: group,
-		section: section,
+		section: allSection,
 		jurisdiction: jurisdiction,
 		industry_type: industry_type,
 		err_message
