@@ -446,6 +446,7 @@ router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async(r
 		last_name: req.body.last_name,
 		gender: req.body.gender,
 		address: req.body.address,
+
 		city: req.body.city,
 		state: req.body.state,
 		country: req.body.country,
