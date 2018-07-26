@@ -137,6 +137,8 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 			status: 1,
 			role_id: 3,
 			firm_id: req.user.firm_id,
+			section_id: parseInt(req.body.section),
+
 			city: req.body.city,
 			state: req.body.state,
 			country: req.body.country,

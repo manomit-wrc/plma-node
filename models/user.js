@@ -21,6 +21,9 @@ module.exports = (sequelize, DataTypes) => {
     is_attorney: DataTypes.INTEGER,
     group_id: DataTypes.INTEGER,
     designation_id: DataTypes.INTEGER,
+    section_id: DataTypes.INTEGER,
+    approver: DataTypes.INTEGER,
+
     date_of_birth: DataTypes.STRING
   }, {});
   user.associate = function(models) {
