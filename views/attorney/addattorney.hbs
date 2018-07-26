@@ -375,9 +375,14 @@
         $(document).ready(function (e) {
             $(document).on('change', "#designation", function(e){
                 var designation_id = $(this).val();
+                var section_id = $("#section").val();
                 $.ajax({
                     type: "GET",
-                    url: "/get-firm-user-designation/"+ designation_id,
+                    url: "/get-firm-user-designation11",
+                    data: {
+                        section_id : section_id,
+                        designation_id: designation_id
+                    },
                     success: function (response) {
                         if(response.success == false)
                         {
