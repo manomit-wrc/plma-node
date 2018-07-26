@@ -73,11 +73,11 @@ router.get('/attorneys', auth, csrfProtection, async (req, res) => {
 		row: attr
 	});
 });
-router.get("/get-firm-user-designation/:id", auth, async (req, res)=> {
+router.post("/get-firm-user-designation", auth, async (req, res)=> {
 	const get_desig = await User.findAll({
 		where: {
 			firm_id: req.user.firm_id,
-			designation_id: req.params['id']
+			designation_id: req.body.designation_id
 		}
 	});
 	if (get_desig.length == 0){
@@ -91,6 +91,60 @@ router.get("/get-firm-user-designation/:id", auth, async (req, res)=> {
 			"success": false
 		});
 	}
+});
+
+router.post("/get-section-user-designation", auth, async (req, res)=>{
+	const sectionDesig = await User.findAll({
+		where: {
+			firm_id: req.user.firm_id,
+			section_id: req.body.section_id,
+			designation_id: req.body.designation_id,
+		}
+	});
+	if (sectionDesig.length == 0) {
+		res.json({
+			"success": true
+		});
+	} else {
+		res.json({
+			"success": false
+		});
+	}
+});
+
+router.get("/get-approval-designation", auth, async (req, res) => {
+	const getLevel = await Firm.findAll({
+		where:
+		{
+			id: req.user.firm_id
+		}
+	});
+	var designationLevel = [];
+	designationLevel.push(getLevel[0].level_1);
+	if (getLevel[0].level_2 !== 0){
+		designationLevel.push(getLevel[0].level_2);
+	}
+	if (getLevel[0].level_3 !== 0){
+		designationLevel.push(getLevel[0].level_3);
+	}
+	if (getLevel[0].level_4 !== 0){
+		designationLevel.push(getLevel[0].level_4);
+	}
+	const designation = await Designation.findAll({
+		where: {
+			id: designationLevel
+		}
+	})
+	res.send({
+		designations: designation
+	});
+});
+
+router.get("/get-all-designation", auth, async(req, res)=> {
+	const designation = await Designation.findAll();
+	res.send({
+		designations: designation
+	});
 });
 
 router.get('/attorneys/addAttorney', auth, firmAttrAuth, csrfProtection, async (req, res) => {
@@ -137,7 +191,6 @@ router.get('/attorneys/addAttorney', auth, firmAttrAuth, csrfProtection, async (
 
 
 router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
-
 	var attrorney_details_id = '';
 	const Dob = req.body.dob ? req.body.dob.split("-") : '';
 	const Firm_Join_Date = req.body.firm_join_date ? req.body.firm_join_date.split("-") : '';
@@ -149,7 +202,7 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 	});
 	const attorney_data = await User.findOne({
 		where: {
-			email: req.body.email
+			email: req.body.mail
 		}
 	});
 	if (attorney_data != null) {
@@ -168,8 +221,10 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 			status: 1,
 			role_id: 3,
 			firm_id: req.user.firm_id,
+			group_id: parseInt(req.body.group),
 			section_id: parseInt(req.body.section),
-
+			designation_id: parseInt(req.body.designation),
+			approver: req.body.approver ? parseInt(req.body.approver) : 0,
 			city: req.body.city,
 			state: req.body.state,
 			country: req.body.country,
@@ -236,7 +291,18 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 
 	const designation = await Designation.findAll();
 	const group = await Group.findAll();
-	const section = await Section.findAll();
+	sectionToFirm.belongsTo(Section, {
+		foreignKey: 'section_id'
+	});
+
+	const allSection = await sectionToFirm.findAll({
+		where: {
+			firm_id: req.user.firm_id
+		},
+		include: [{
+			model: Section
+		}]
+	});
 	const jurisdiction = await Jurisdiction.findAll();
 	const industry_type = await Industry_type.findAll();
 
@@ -269,7 +335,6 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 			}
 		});
 	}
-	// console.log(edata[0].state);
 	res.render('attorney/updateattorney', {
 		layout: 'dashboard',
 		csrfToken: req.csrfToken(),
@@ -277,7 +342,7 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 		state: state,
 		designation: designation,
 		group: group,
-		section: section,
+		section: allSection,
 		jurisdiction: jurisdiction,
 		industry_type: industry_type,
 		edata: edata,
@@ -384,6 +449,9 @@ router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async(r
 		city: req.body.city,
 		state: req.body.state,
 		country: req.body.country,
+		group_id: parseInt(req.body.group),
+		section_id: parseInt(req.body.section),
+		designation_id: parseInt(req.body.designation),
 		zipcode: req.body.zipcode,
 		mobile_no: removeMobileMask(req.body.mobile_no),
 

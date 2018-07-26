@@ -2,6 +2,7 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-sweetalert/sweet-alert.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css"> {{/content}}
 
 <div class="page-wrapper">
@@ -33,21 +34,26 @@
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
                                 <label class="control-label">Group</label>
-                                    <select id="group" name="group" class="select form-control floating">
+                                    <select id="group" name="group" class="form-control floating">
                                         <option value="">Select Group</option>
                                         {{#each group}}
-                                        <option value="{{this.id}}" {{#if_eq this.id ../edata.0.attorney_details.0.group}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                                        <option value="{{this.id}}" {{#if_eq this.id ../edata.0.group_id}} selected="selected" {{/if_eq}}>{{this.name}}</option>
                                         {{/each}}
                                     </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group form-focus">
+                                    <input type="checkbox" name="approver" id="approver" value="1" {{#if_eq edata.0.approver "1"}} checked {{/if_eq}} disabled> Approver
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
                                 <label class="control-label">Section</label>
-                                    <select id="section" name="section" class="select form-control floating">
+                                    <select id="section" name="section" class="form-control floating">
                                         <option value="">Select Section</option>
                                         {{#each section}}
-                                        <option value="{{this.id}}" {{#if_eq this.id ../edata.0.attorney_details.0.section}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                                        <option value="{{this.section.id}}" {{#if_eq this.section.id ../edata.0.section_id}} selected="selected" {{/if_eq}}>{{this.section.name}}</option>
                                         {{/each}}
                                     </select>
                                 </div>
@@ -55,10 +61,10 @@
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
                                 <label class="control-label">Designation</label>
-                                    <select id="designation" name="designation" class="select form-control floating">
+                                    <select id="designation" name="designation" class="form-control floating">
                                         <option value="">Select Designation</option>
                                         {{#each designation}}
-                                        <option value="{{this.id}}" {{#if_eq this.id ../edata.0.attorney_details.0.designation}} selected="selected" {{/if_eq}}>{{this.title}}</option>
+                                        <option value="{{this.id}}" {{#if_eq this.id ../edata.0.designation_id}} selected="selected" {{/if_eq}}>{{this.title}}</option>
                                         {{/each}}
                                     </select>
                                 </div>
@@ -97,7 +103,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
                         <label class="control-label">Gender</label>
-                            <select class="select form-control floating" id="gender" name="gender">
+                            <select class="form-control floating" id="gender" name="gender">
                                 <option value="">Select Gender</option>
                                 <option value="M" {{#if_eq edata.0.gender "M"}} selected {{/if_eq}}>Male</option>
                                 <option value="F" {{#if_eq edata.0.gender "F"}} selected {{/if_eq}}>Female</option>
@@ -123,7 +129,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
                         <label class="control-label">Attorney Type</label>
-                            <select class="select form-control floating" id="attorney_type" name="attorney_type">
+                            <select class="form-control floating" id="attorney_type" name="attorney_type">
                                 <option value="">Select Attorney Type</option>
                                 <option value="AT-INTERIM" {{#if_eq edata.0.attorney_details.0.attorney_type "AT-INTERIM"}} selected="selected" {{/if_eq}}>INTERIM ATTORNEY</option>
                                 <option value="AT-APPROVED" {{#if_eq edata.0.attorney_details.0.attorney_type "AT-APPROVED"}} selected="selected" {{/if_eq}}>APPROVED ATTORNEY</option>
@@ -158,7 +164,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
                         <label class="control-label">Job Type</label>
-                            <select class="select form-control floating" id="job_type" name="job_type">
+                            <select class="form-control floating" id="job_type" name="job_type">
                                 <option value="">Select Job Type</option>
                                 <option value="FULLTIME" {{#if_eq edata.0.attorney_details.0.job_type "FULLTIME"}} selected="selected" {{/if_eq}}>FULLTIME</option>
                                 <option value="STERMCON" {{#if_eq edata.0.attorney_details.0.job_type "STERMCON"}} selected="selected" {{/if_eq}}>SHORT TERM CONTRACT</option>
@@ -188,7 +194,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
                         <label class="control-label">Jurisdiction</label>
-                            <select id="jurisdiction" name="jurisdiction" class="select form-control floating">
+                            <select id="jurisdiction" name="jurisdiction" class="form-control floating">
                                 <option value="">Select Jurisdiction</option>
                                 {{#each jurisdiction}}
                                 <option value="{{this.id}}" {{#if_eq this.id ../edata.0.attorney_details.0.jurisdiction}} selected="selected" {{/if_eq}}>{{this.name}}</option>
@@ -199,7 +205,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
                         <label class="control-label">Industry Type</label>
-                            <select id="industry_type" name="industry_type" class="select form-control floating">
+                            <select id="industry_type" name="industry_type" class="form-control floating">
                                 <option value="">Select Industry Type</option>
                                 {{#each industry_type}}
                                 <option value="{{this.id}}" {{#if_eq this.id ../edata.0.attorney_details.0.industry_type}} selected="selected" {{/if_eq}}>{{this.industry_name}}</option>
@@ -268,7 +274,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
                         <label class="control-label">Country</label>
-                            <select class="select form-control floating" id="country" name="country">
+                            <select class="form-control floating" id="country" name="country">
                                 <option value="">Select Country</option>
                                 {{#each country}}
                                 <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
@@ -279,7 +285,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
                         <label class="control-label">State</label>
-                            <select class="select form-control floating" id="state" name="state">
+                            <select class="form-control floating" id="state" name="state">
                                 <option value="">select State</option>
                                 {{#each state}}
                                 <option value="{{this.id}}" {{#if_eq this.id ../edata.0.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
@@ -290,7 +296,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
                         <label class="control-label">City</label>
-                            <select class="select form-control floating" id="city" name="city">
+                            <select class="form-control floating" id="city" name="city">
                                 <option value="">Select City</option>
                                 {{#each city}}
                                 <option value="{{this.id}}" {{#if_eq this.id ../edata.0.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
@@ -301,7 +307,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
                         <label class="control-label">Zipcode</label>
-                            <select class="select form-control floating" id="zipcode" name="zipcode">
+                            <select class="form-control floating" id="zipcode" name="zipcode">
                                 <option value="">Select Zipcode</option>
                                 {{#each zipcode}}
                                 <option value="{{this.id}}" {{#if_eq this.id ../edata.0.zipcode}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
@@ -378,13 +384,60 @@
 <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
+    <script type="text/javascript" src="/assets/plugins/bootstrap-sweetalert/sweet-alert.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 
 <script type="text/javascript">
     // add designation ajax and form validation starts
     $(document).ready(function (e) {
+        $(document).on('change', "#designation", function (e) {
+            var designation_id = $(this).val();
+            var section_id = $("#section").val();
+            if (section_id == "" && designation_id == 74) {
+                swal("", "Please select section", "warning");
+                $("#designation").val('').attr("selected", true);
+            }
+            else if (designation_id == 70) {
+                $.ajax({
+                    type: "POST",
+                    url: "/get-firm-user-designation",
+                    data: {
+                        designation_id: designation_id
+                    },
+                    success: function (response) {
+                        if (response.success == false) {
+                            swal("", "A firm cannot have more than one managing partner", "warning");
+                            $("#designation").val('').attr("selected", true);
 
+                        }
+                    },
+                    error: function (xhr) {
+
+                    }
+                });
+            }
+            else if (section_id != "" && designation_id == 74) {
+                $.ajax({
+                    type: "POST",
+                    url: "/get-section-user-designation",
+                    data: {
+                        section_id: section_id,
+                        designation_id: designation_id
+                    },
+                    success: function (response) {
+                        if (response.success == false) {
+                            swal("", "This section already has a section head.", "warning");
+                            $("#designation").val('').attr("selected", true);
+
+                        }
+                    },
+                    error: function (xhr) {
+
+                    }
+                });
+            }
+        });
         $("#addattorneyform").validate({
             rules: {
 
@@ -403,13 +456,7 @@
                 last_name: {
                     required: true
                 },
-                attorney_id: {
-                    required: true
-                },
-                attorney_code: {
-                    required: true
-                },
-                phone_no: {
+                mobile_no: {
                     required: true
                 },
 
@@ -449,14 +496,8 @@
                 last_name: {
                     required: "last_name can't be blank"
                 },
-                attorney_id: {
-                    required: "attorney_id  can't be blank"
-                },
-                attorney_code: {
-                    required: "attorney_code  can't be blank"
-                },
-                phone_no: {
-                    required: "phone_no can't be blank"
+                mobile_no: {
+                    required: "Mobile no can't be blank"
                 },
 
                 address: {
