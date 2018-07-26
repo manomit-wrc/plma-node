@@ -33,7 +33,7 @@
                                     <label class="control-label">Origin Attorney
                                         <span class="req-lbl">*</span>
                                     </label>
-                                    <input class="form-control floating" type="text" id="firm" name="firm" value="{{this.originAttorney}}" disabled>
+                                    <input class="form-control floating" type="text" id="originAttorney" name="originAttorney" value="{{this.originAttorney}}" disabled>
                                 </div>
                             </div>
 
@@ -52,13 +52,17 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-6 none">
+                                <div class="form-group form-focus select-focus"></div>
+                            </div>
+
                             <div class="col-md-6 section" style="display:none;">
                                 <div class="form-group form-focus select-focus">
                                     <label class="control-label">Section
                                         <span class="req-lbl">*</span>
                                     </label>
                                     <select class="select floating" id="section" name="section">
-                                        <option value="">Select Section</option>
+                                        <option value="0">Select Section</option>
                                         {{#each section}}
                                         <option value="{{this.section.id}}">{{this.section.name}}</option>
                                         {{/each}}
@@ -71,9 +75,9 @@
                                     <label class="control-label">Strategy Group
                                         <span class="req-lbl">*</span>
                                     </label>
-                                    <select class="select floating" id="strategyGroup" name="strategyGroup">
-                                        <option value="">Select Activity Type</option>
-                                        <option value="individual">NEED TO BE DISCUSS</option>
+                                    <select class="select floating" id="strategyGroup" name="strategy_group">
+                                        <option value="0">Select Strategy Group</option>
+                                        <option value="1">NEED TO BE DISCUSS</option>
 
                                     </select>
                                 </div>
@@ -182,7 +186,7 @@
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
                                     <label class="control-label">Activity Details Status
-                                        <span class="req-lbl">*</span>
+                                        
                                     </label>
                                     <select class="select" id="budget_status" name="budget_status">
                                         <option value=""> Select One</option>
@@ -195,7 +199,7 @@
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
                                     <label class="control-label">Activity Budget Details Status
-                                        <span class="req-lbl">*</span>
+                                        
                                     </label>
                                     <select class="select" id="budget_details_status" name="budget_details_status">
                                         <option value=""> Select One</option>
@@ -260,7 +264,7 @@
                 </div>
             </div>
             <div class="text-center m-t-20">
-                <button class="btn btn-primary btn-lg" type="submit" id="btnAdd" disabled>Add Activity</button>
+                <button class="btn btn-primary btn-lg" type="submit" id="btnAdd">Add Activity</button>
             </div>
         </form>
     </div>
@@ -488,9 +492,7 @@
                 potiential_revenue: {
                     required: true
                 },
-                remarks: {
-                    required: true
-                },
+                
                 activity_creation_date: {
                     required: true
                 },
@@ -504,12 +506,6 @@
                     required: true
                 },
                 activity_reason: {
-                    required: true
-                },
-                budget_status: {
-                    required: true
-                },
-                budget_details_status: {
                     required: true
                 }
 
@@ -519,40 +515,32 @@
                     required: "firm can't be blank"
                 },
                 activity_type: {
-                    required: "activity type title can't be blank"
+                    required: "activity type can't be blank"
                 },
                 activity_goal: {
-                    required: "activity goal title can't be blank"
+                    required: "activity goal can't be blank"
                 },
                 practice_area: {
-                    required: "practice area title can't be blank"
+                    required: "practice area can't be blank"
                 },
                 potiential_revenue: {
-                    required: "potiential revenue title can't be blank"
+                    required: "potiential revenue can't be blank"
                 },
-                remarks: {
-                    required: "remarks title can't be blank"
-                },
+               
                 activity_creation_date: {
-                    required: "creation date title can't be blank"
+                    required: "creation date can't be blank"
                 },
                 activity_from_date: {
-                    required: "from date title can't be blank"
+                    required: "from date can't be blank"
                 },
                 activity_to_date: {
-                    required: "to date title can't be blank"
+                    required: "to date can't be blank"
                 },
                 activity_name: {
-                    required: "activity name title can't be blank"
+                    required: "activity name can't be blank"
                 },
                 activity_reason: {
-                    required: "activity reason title can't be blank"
-                },
-                budget_status: {
-                    required: "budget status title can't be blank"
-                },
-                budget_details_status: {
-                    required: "budget_details_status title can't be blank"
+                    required: "activity reason can't be blank"
                 }
             }
         });
@@ -570,15 +558,27 @@
 
 
         $("#activity_type").change(function () {
-            if ($(this).val() == 'section') {
+            if ($(this).val() == 'team') {
                 $('#potiential_revenue').val('0.00');
                 $('#potiential_revenue').prop('disabled', true);
+                $(".none").show();
+                $(".section").hide();
+                $(".strategyGroup").hide();
+            }else if ($(this).val() == 'section') {
+                $('#potiential_revenue').val('0.00');
+                $(".none").hide();
                 $(".section").show();
                 $(".strategyGroup").hide();
+                $('#potiential_revenue').prop('disabled', false);
             } else if ($(this).val() == 'strategic_group') {
+                $('#potiential_revenue').val('0.00');
+                $(".none").hide();
                 $(".strategyGroup").show();
                 $(".section").hide();
+                $('#potiential_revenue').prop('disabled', false);
             } else {
+                $('#potiential_revenue').val('0.00');
+                $(".none").show();
                 $(".section").hide();
                 $(".strategyGroup").hide();
                 $('#potiential_revenue').prop('disabled', false);

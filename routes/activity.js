@@ -152,7 +152,6 @@ router.post('/insertActivity', auth, async (req, res) => {
 });
 
 router.post('/activity/add-budget', auth, firmAttrAuth, csrfProtection, async (req, res) => {
-	console.log('req :========>>>>>>', req.body);
 	var budget = JSON.parse(req.body.budget);
 	for (var b = 0; b < budget.length; b++) {
 		await ActivityBudget.create({
@@ -200,6 +199,8 @@ router.post('/activity/add', auth, firmAttrAuth, csrfProtection, async (req, res
 		firm_id: req.user.firm_id,
 		total_budget_hour: req.body.total_hour,
 		total_budget_amount: req.body.total_amount,
+		section_id: req.body.section,
+    	s_group_id: req.body.strategy_group
 	}, {
 		where: {
 			id: req.body.activity_id
@@ -232,7 +233,11 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 	Activity.hasMany(Activity_to_user_type, {
 		foreignKey: 'activity_id'
 	});
-	const firm = await Firm.findAll();
+
+	const firm = await Firm.findAll({
+		firm_id: req.user.firm_id
+	});
+
 	const activity_goal = await ActivityGoal.findAll();
 	const practice_area = await PracticeArea.findAll();
 
@@ -299,7 +304,8 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		target: target,
 		arr,
 		editdata: editdata[0],
-		firm: firm,
+		firm: firm[0].title,
+		originAttorney: req.user.first_name + " " + req.user.last_name,
 		activity_goal: activity_goal,
 		budgetArr,
 		practice_area: practice_area,
@@ -313,7 +319,11 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 	Activity.hasMany(Activity_to_user_type, {
 		foreignKey: 'activity_id'
 	});
-	const firm = await Firm.findAll();
+	const firm = await Firm.findAll({
+		where: {
+			id: req.user.firm_id
+		}
+	});
 	const activity_goal = await ActivityGoal.findAll();
 	const practice_area = await PracticeArea.findAll();
 
@@ -380,7 +390,8 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		target: target,
 		arr,
 		editdata: editdata[0],
-		firm: firm,
+		firm: firm[0].title,
+		originAttorney: req.user.first_name + " " + req.user.last_name,
 		activity_goal: activity_goal,
 		budgetArr,
 		practice_area: practice_area,
