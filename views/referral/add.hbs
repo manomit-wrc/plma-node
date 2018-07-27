@@ -58,7 +58,10 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group form-focus select-focus">
-                  <label class="control-label">Attorney Name</label>
+                  <label class="control-label">Attorney Name
+                    <span class="req-lbl">*</span>
+
+                  </label>
                   <select id="attr_id" name="attr_id" class="select form-control floating">
                     <option value="">Select Attorney</option>
                     {{#each attorney}}
@@ -70,13 +73,19 @@
               <div id="indi_referral">
                 <div class="col-md-6">
                   <div class="form-group form-focus">
-                    <label class="control-label">First Name</label>
+                    <label class="control-label">First Name
+                      <span class="req-lbl">*</span>
+
+                    </label>
                     <input type="text" class="form-control floating" id="first_name" name="first_name" />
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group form-focus">
-                    <label class="control-label">Last Name</label>
+                    <label class="control-label">Last Name
+                      <span class="req-lbl">*</span>
+
+                    </label>
                     <input type="text" class="form-control floating" id="last_name" name="last_name" />
                   </div>
                 </div>
@@ -89,13 +98,19 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group form-focus">
-                  <label class="control-label">Email Id </label>
+                  <label class="control-label">Email Id
+                    <span class="req-lbl">*</span>
+
+                   </label>
                   <input type="text" class="form-control floating" id="email" name="email" />
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group form-focus">
-                  <label class="control-label">Mobile Number</label>
+                  <label class="control-label">Mobile Number
+                    <span class="req-lbl">*</span>
+
+                  </label>
                   <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" />
                 </div>
               </div>
@@ -132,7 +147,10 @@
               </div>
               <div class="col-md-12">
                 <div class="form-group form-focus">
-                  <label class="control-label">Remarks</label>
+                  <label class="control-label">Remarks
+                    <span class="req-lbl">*</span>
+
+                  </label>
                   <textarea name="remarks" id="remarks" class="form-control floating"></textarea>
                 </div>
               </div>

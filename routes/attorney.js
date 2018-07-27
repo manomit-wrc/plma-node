@@ -153,21 +153,35 @@ router.get("/get-all-designation", auth, async(req, res)=> {
 router.get('/attorneys/addAttorney', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var err_message = req.flash('success-err-message')[0];
 	const designation = await Designation.findAll();
-	const group = await Group.findAll();
+	const group = await Group.findAll({order: [
+            ['name', 'ASC'],
+        ]});
 	sectionToFirm.belongsTo(Section, {
 		foreignKey: 'section_id'
 	});
 
 	const allSection = await sectionToFirm.findAll({
+
 		where: {
 			firm_id: req.user.firm_id
 		},
+
 		include: [{
 			model: Section
 		}]
 	});
-	const jurisdiction = await Jurisdiction.findAll();
-	const industry_type = await Industry_type.findAll();
+	const jurisdiction = await Jurisdiction.findAll(
+		{order: [
+	            ['name', 'ASC'],
+	        ]}
+	);
+	const industry_type = await Industry_type.findAll(
+		{
+		order: [
+	            ['industry_name', 'ASC'],
+	        ]
+				}
+	);
 	var country = await Country.findAll();
 	const state = await State.findAll({
 		where: {
@@ -251,8 +265,6 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 				education: req.body.education,
 				bar_registration: req.body.bar_registration,
 				job_type: req.body.job_type,
-				bar_practice_date: req.body.bar_practice_date,
-				firm_join_date: req.body.firm_join_date,
 				jurisdiction: parseInt(req.body.jurisdiction),
 				industry_type: parseInt(req.body.industry_type),
 				hourly_cost: req.body.hourly_cost,
@@ -263,7 +275,7 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 				address3: req.body.address3,
 				phone_no:  removePhoneMask(req.body.phone_no),
 
-				fax: req.body.fax,
+				fax: removePhoneMask(req.body.fax),
 				website_url: req.body.website_url,
 				social_url: req.body.social_url,
 				remarks: req.body.remarks,
@@ -294,7 +306,9 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 	});
 
 	const designation = await Designation.findAll();
-	const group = await Group.findAll();
+	const group = await Group.findAll({order: [
+            ['name', 'ASC'],
+        ]});
 	sectionToFirm.belongsTo(Section, {
 		foreignKey: 'section_id'
 	});
@@ -307,8 +321,17 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 			model: Section
 		}]
 	});
-	const jurisdiction = await Jurisdiction.findAll();
-	const industry_type = await Industry_type.findAll();
+	const jurisdiction = await Jurisdiction.findAll(
+		{order: [
+							['name', 'ASC'],
+					]}
+
+	);
+	const industry_type = await Industry_type.findAll(
+		{order: [
+	            ['industry_name', 'ASC'],
+	        ]}
+	);
 
 	const country = await Country.findAll({});
 	const state = await State.findAll({});
@@ -478,8 +501,6 @@ router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async(r
 			education: req.body.education,
 			bar_registration: req.body.bar_registration,
 			job_type: req.body.job_type,
-			bar_practice_date: req.body.bar_practice_date,
-			firm_join_date: req.body.firm_join_date,
 			jurisdiction: parseInt(req.body.jurisdiction),
 			industry_type: parseInt(req.body.industry_type),
 			hourly_cost: req.body.hourly_cost,
@@ -490,7 +511,7 @@ router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async(r
 			address3: req.body.address3,
 			e_mail: req.body.e_mail,
 			phone_no: removePhoneMask(req.body.phone_no),
-			fax: req.body.fax,
+			fax: removePhoneMask(req.body.fax),
 			website_url: req.body.website_url,
 			social_url: req.body.social_url,
 			remarks: req.body.remarks,

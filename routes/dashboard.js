@@ -1,5 +1,6 @@
 const express = require('express');
 const auth = require('../middlewares/auth');
+const attrAuth = require('../middlewares/attr_auth');
 const csrf = require('csurf');
 const bCrypt = require('bcrypt-nodejs');
 const User = require('../models').user;
@@ -8,6 +9,14 @@ const Country = require('../models').country;
 const City = require('../models').city;
 const State = require('../models').state;
 const Zipcode = require('../models').zipcode;
+const Attorney_Details = require('../models').attorney_details;
+const Industry_type = require('../models').industry_type;
+const Jurisdiction = require('../models').jurisdiction;
+const sectionToFirm = require('../models').section_to_firms;
+const PracticeArea = require('../models').practicearea;
+const Designation = require('../models').designation;
+const Section = require('../models').section;
+const Group = require('../models').group;
 
 var csrfProtection = csrf({ cookie: true });
 
@@ -27,6 +36,14 @@ var storage = multer.diskStorage({
 })
 
 var profile = multer({ storage: storage });
+
+function removePhoneMask(phone_no) {
+    var phone_no = phone_no.replace("-", "");
+    phone_no = phone_no.replace(")", "");
+    phone_no = phone_no.replace("(", "");
+    phone_no = phone_no.replace(" ", "");
+    return phone_no;
+}
 
 router.get('/dashboard', auth,  (req, res) => {
     var auth_msg = req.flash('success-auth-message')[0];
@@ -241,4 +258,135 @@ router.get('/change-role-firm-site-all', auth, async (req, res)=> {
     res.redirect('/dashboard');
 });
 /*==================================Bratin Meheta 19-07-2018 ========================================*/
+
+router.get("/edit-attorney-profile", auth, csrfProtection, attrAuth, async (req, res)=>{
+    var success_message = req.flash('success-message')[0];
+    User.hasMany(Attorney_Details, {
+        foreignKey: 'user_id'
+    });
+
+    const designation = await Designation.findAll();
+    const group = await Group.findAll();
+    sectionToFirm.belongsTo(Section, {
+        foreignKey: 'section_id'
+    });
+
+    const allSection = await sectionToFirm.findAll({
+        where: {
+            firm_id: req.user.firm_id
+        },
+        include: [{
+            model: Section
+        }]
+    });
+    const jurisdiction = await Jurisdiction.findAll();
+    const industry_type = await Industry_type.findAll();
+
+    const country = await Country.findAll({});
+    const state = await State.findAll({});
+    const edata = await User.findAll({
+        where: {
+            id: req.user.id
+        },
+        include: [{
+            model: Attorney_Details
+        }]
+    });
+    var state_id = edata[0].state;
+    var city_id = edata[0].city;
+    var city = [];
+    var zipcode = [];
+    if (state_id != null) {
+        city = await City.findAll({
+            where: {
+                state_id: state_id.toString()
+            }
+        });
+    }
+    if (city_id != null) {
+        const cities = await City.findById(city_id.toString());
+        zipcode = await Zipcode.findAll({
+            where: {
+                city_name: cities.name
+            }
+        });
+    }
+    res.render('edit_attr_profile', {
+        layout: 'dashboard',
+        csrfToken: req.csrfToken(),
+        country: country,
+        state: state,
+        success_message,
+        designation: designation,
+        group: group,
+        section: allSection,
+        jurisdiction: jurisdiction,
+        industry_type: industry_type,
+        edata: edata[0],
+        zipcode,
+        city
+    });
+});
+
+router.post("/edit-attorney-profile", auth, profile.single('avatar'), csrfProtection, auth, async (req, res) => {
+    const formatDate = req.body.dob ? req.body.dob.split("-") : '';
+    const Firm_Join_Date1 = req.body.firm_join_date ? req.body.firm_join_date.split("-") : '';
+    const Bar_Practice_date1 = req.body.bar_practice_date ? req.body.bar_practice_date.split("-") : '';
+    const user_edit = await User.update({
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        zipcode: req.body.zipcode,
+        city: req.body.city,
+        state: req.body.state,
+        country: req.body.country,
+        gender: req.body.gender,
+        address: req.body.address,
+        group_id: parseInt(req.body.group),
+        section_id: parseInt(req.body.section),
+        designation_id: parseInt(req.body.designation),
+        mobile_no: req.body.mobile_no,
+        dob: formatDate ? formatDate[2]+"-"+formatDate[1]+"-"+formatDate[0] : null,
+        avatar: (req.file === undefined) ? req.user.avatar : `/profile/${req.file.filename}`
+    }, {
+        where: {
+            id: req.user.id
+        }
+    });
+
+    const attr_other_details = await Attorney_Details.update({
+        group: parseInt(req.body.group),
+            section: parseInt(req.body.section),
+            designation: parseInt(req.body.designation),
+            attorney_id: req.body.attorney_id,
+            attorney_code: req.body.attorney_code,
+            attorney_type: req.body.attorney_type,
+            education: req.body.education,
+            bar_registration: req.body.bar_registration,
+            job_type: req.body.job_type,
+            jurisdiction: parseInt(req.body.jurisdiction),
+            industry_type: parseInt(req.body.industry_type),
+            hourly_cost: req.body.hourly_cost,
+            benefit_factor: req.body.benefit_factor,
+            overhead_amount: req.body.overhead_amount,
+            billing_opp_cost: req.body.billing_opp_cost,
+            address2: req.body.address2,
+            address3: req.body.address3,
+            e_mail: req.body.e_mail,
+            phone_no: removePhoneMask(req.body.phone_no),
+            fax: removePhoneMask(req.body.fax),
+            website_url: req.body.website_url,
+            social_url: req.body.social_url,
+            remarks: req.body.remarks,
+            firm_join_date: Firm_Join_Date1 ? Firm_Join_Date1[2] + "-" + Firm_Join_Date1[1] + "-" + Firm_Join_Date1[0] : null,
+            bar_practice_date: Bar_Practice_date1 ? Bar_Practice_date1[2] + "-" + Bar_Practice_date1[1] + "-" + Bar_Practice_date1[0] : null,
+
+    },{
+        where: {
+            user_id: req.user.id
+        }
+    });
+    req.flash('success-message', 'Profile updated successfully.');
+    res.redirect('/edit-attorney-profile');
+});
+
 module.exports = router;
