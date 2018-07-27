@@ -265,8 +265,7 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 				education: req.body.education,
 				bar_registration: req.body.bar_registration,
 				job_type: req.body.job_type,
-				bar_practice_date: req.body.bar_practice_date,
-				firm_join_date: req.body.firm_join_date,
+
 				jurisdiction: parseInt(req.body.jurisdiction),
 				industry_type: parseInt(req.body.industry_type),
 				hourly_cost: req.body.hourly_cost,
@@ -503,8 +502,7 @@ router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async(r
 			education: req.body.education,
 			bar_registration: req.body.bar_registration,
 			job_type: req.body.job_type,
-			bar_practice_date: req.body.bar_practice_date,
-			firm_join_date: req.body.firm_join_date,
+		
 			jurisdiction: parseInt(req.body.jurisdiction),
 			industry_type: parseInt(req.body.industry_type),
 			hourly_cost: req.body.hourly_cost,
@@ -513,7 +511,6 @@ router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async(r
 			billing_opp_cost: req.body.billing_opp_cost,
 			address2: req.body.address2,
 			address3: req.body.address3,
-			e_mail: req.body.e_mail,
 			phone_no: removePhoneMask(req.body.phone_no),
 			fax: req.body.fax,
 			website_url: req.body.website_url,
