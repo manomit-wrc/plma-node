@@ -19,7 +19,8 @@ module.exports = (sequelize, DataTypes) => {
     total_budget_amount: DataTypes.STRING,
     user_id: DataTypes.INTEGER,
     section_id: DataTypes.INTEGER,
-    s_group_id: DataTypes.STRING
+    s_group_id: DataTypes.STRING,
+    activity_status: DataTypes.INTEGER
 
   }, {});
   activity.associate = function(models) {
