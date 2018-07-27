@@ -211,7 +211,10 @@
 
                         <div class="col-md-6">
                             <div class="form-group form-focus select-focus">
-                                <label class="control-label">Jurisdiction</label>
+                                <label class="control-label">Jurisdiction
+                                  <span class="req-lbl">*</span>
+
+                                </label>
                                 <select id="jurisdiction" name="jurisdiction" class="form-control floating">
                                     <option value="">Select Jurisdiction</option>
                                     {{#each jurisdiction}}
@@ -222,7 +225,10 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group form-focus select-focus">
-                                <label class="control-label">Industry Type</label>
+                                <label class="control-label">Industry Type
+                                  <span class="req-lbl">*</span>
+
+                                </label>
                                 <select id="industry_type" name="industry_type" class="form-control floating">
                                     <option value="">Select Industry Type</option>
                                     {{#each industry_type}}
@@ -267,7 +273,10 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group form-focus">
-                                <label class="control-label">Address Line 1</label>
+                                <label class="control-label">Address Line 1
+                                  <span class="req-lbl">*</span>
+
+                                </label>
                                 <input type="text" class="form-control floating" id="address" name="address" />
                             </div>
                         </div>
@@ -286,7 +295,10 @@
 
                         <div class="col-md-6">
                             <div class="form-group form-focus select-focus">
-                                <label class="control-label">Country</label>
+                                <label class="control-label">Country
+                                  <span class="req-lbl">*</span>
+
+                                </label>
                                 <select id="country" name="country" class="form-control floating">
                                     <option value="">Select Country</option>
                                     {{#each country}}
@@ -299,6 +311,7 @@
                             <div class="form-group form-focus select-focus">
                                 <label class="control-label">State
                                   <span class="req-lbl">*</span>
+
                                 </label>
                                 <select id="state" name="state" class="form-control floating">
                                     <option value="">Select State</option>
@@ -312,6 +325,7 @@
                             <div class="form-group form-focus select-focus">
                                 <label class="control-label">City
                                   <span class="req-lbl">*</span>
+
                                 </label>
                                 <select id="city" name="city" class="form-control floating">
                                     <option value="">Select City</option>
@@ -323,6 +337,7 @@
                             <div class="form-group form-focus select-focus">
                                 <label class="control-label">Zipcode
                                   <span class="req-lbl">*</span>
+
                                 </label>
                                 <select id="zipcode" name="zipcode" class="form-control floating">
                                     <option value="">Select Zipcode</option>
@@ -481,7 +496,12 @@
             });
             $("#addattorneyform").validate({
                 rules: {
-
+jurisdiction: {
+    required: true
+},
+industry_type: {
+    required: true
+},
                     group: {
                         required: true
                     },
@@ -523,6 +543,14 @@
 
                 },
                 messages: {
+
+                  jurisdiction: {
+                      required: "jurisdiction can't be blank"
+                  },
+                  industry_type: {
+                      required: "industry type can't be blank"
+                  },
+
                     mail: {
                         required: "email can't be blank"
                     },
