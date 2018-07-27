@@ -15,9 +15,6 @@
 
         <form name="" id="addattorneyform" action="/attorneys/update/{{edata.0.id}}" method="POST">
             <input type="hidden" name="_csrf" value="{{csrfToken}}">
-
-
-
             <div class="card-box">
                 <h3 class="card-title">User credentials</h3>
                 <div class="row">
@@ -39,9 +36,9 @@
 
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
-                                <label class="control-label">Group
-                                  <span class="req-lbl">*</span>
-                                </label>
+                                    <label class="control-label">Group
+                                        <span class="req-lbl">*</span>
+                                    </label>
                                     <select id="group" name="group" class="form-control floating">
                                         <option value="">Select Group</option>
                                         {{#each group}}
@@ -53,10 +50,10 @@
 
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
-                                <label class="control-label">Section
-                                  <span class="req-lbl">*</span>
+                                    <label class="control-label">Section
+                                        <span class="req-lbl">*</span>
 
-                                </label>
+                                    </label>
                                     <select id="section" name="section" class="form-control floating">
                                         <option value="">Select Section</option>
                                         {{#each section}}
@@ -67,10 +64,10 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
-                                <label class="control-label">Designation
-                                  <span class="req-lbl">*</span>
+                                    <label class="control-label">Designation
+                                        <span class="req-lbl">*</span>
 
-                                </label>
+                                    </label>
                                     <select id="designation" name="designation" class="form-control floating">
                                         <option value="">Select Designation</option>
                                         {{#each designation}}
@@ -92,7 +89,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus">
                             <label class="control-label">First Name
-                              <span class="req-lbl">*</span>
+                                <span class="req-lbl">*</span>
 
                             </label>
                             <input type="text" class="form-control floating" id="first_name" name="first_name" value="{{edata.0.first_name}}" />
@@ -101,7 +98,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus">
                             <label class="control-label">Last Name
-                              <span class="req-lbl">*</span>
+                                <span class="req-lbl">*</span>
 
                             </label>
                             <input type="text" class="form-control floating" id="last_name" name="last_name" value="{{edata.0.last_name}}" />
@@ -111,14 +108,14 @@
                         <div class="form-group form-focus">
                             <label class="control-label">Birth Date</label>
                             <div class="cal-icon">
-                                <input class="form-control floating datetimepicker" type="text" id="dob" name="dob" value="{{dateFormat edata.dob " DD-MM-YYYY
+                                <input class="form-control floating datetimepicker" type="text" id="dob" name="dob" value="{{dateFormat edata.0.dob " DD-MM-YYYY
                                     "}}">
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
-                        <label class="control-label">Gender</label>
+                            <label class="control-label">Gender</label>
                             <select class="form-control floating" id="gender" name="gender">
                                 <option value="">Select Gender</option>
                                 <option value="M" {{#if_eq edata.0.gender "M"}} selected {{/if_eq}}>Male</option>
@@ -144,7 +141,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
-                        <label class="control-label">Attorney Type</label>
+                            <label class="control-label">Attorney Type</label>
                             <select class="form-control floating" id="attorney_type" name="attorney_type">
                                 <option value="">Select Attorney Type</option>
                                 <option value="AT-INTERIM" {{#if_eq edata.0.attorney_details.0.attorney_type "AT-INTERIM"}} selected="selected" {{/if_eq}}>INTERIM ATTORNEY</option>
@@ -179,7 +176,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
-                        <label class="control-label">Job Type</label>
+                            <label class="control-label">Job Type</label>
                             <select class="form-control floating" id="job_type" name="job_type">
                                 <option value="">Select Job Type</option>
                                 <option value="FULLTIME" {{#if_eq edata.0.attorney_details.0.job_type "FULLTIME"}} selected="selected" {{/if_eq}}>FULLTIME</option>
@@ -192,7 +189,7 @@
                         <div class="form-group form-focus">
                             <label class="control-label">Bar Practice Date</label>
                             <div class="cal-icon">
-                                <input class="form-control floating datetimepicker" type="text" id="bar_practice_date" name="bar_practice_date" value="{{dateFormat edata.bar_practice_date "
+                                <input class="form-control floating datetimepicker" type="text" id="bar_practice_date" name="bar_practice_date" value="{{dateFormat edata.0.attorney_details.0.bar_practice_date "
                                     DD-MM-YYYY "}}">
                             </div>
                         </div>
@@ -201,7 +198,7 @@
                         <div class="form-group form-focus">
                             <label class="control-label">Firm Join Date</label>
                             <div class="cal-icon">
-                                <input class="form-control floating datetimepicker" type="text" id="firm_join_date" name="firm_join_date" value="{{dateFormat edata.firm_join_date "
+                                <input class="form-control floating datetimepicker" type="text" id="firm_join_date" name="firm_join_date" value="{{dateFormat edata.0.attorney_details.0.firm_join_date "
                                     DD-MM-YYYY "}}">
                             </div>
                         </div>
@@ -210,9 +207,9 @@
 
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
-                        <label class="control-label">Jurisdiction
-                          <span class="req-lbl">*</span>
-                          </label>
+                            <label class="control-label">Jurisdiction
+                                <span class="req-lbl">*</span>
+                            </label>
                             <select id="jurisdiction" name="jurisdiction" class="form-control floating">
                                 <option value="">Select Jurisdiction</option>
                                 {{#each jurisdiction}}
@@ -223,9 +220,9 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
-                        <label class="control-label">Industry Type
-                          <span class="req-lbl">*</span>
-                           </label>
+                            <label class="control-label">Industry Type
+                                <span class="req-lbl">*</span>
+                            </label>
                             <select id="industry_type" name="industry_type" class="form-control floating">
                                 <option value="">Select Industry Type</option>
                                 {{#each industry_type}}
@@ -239,7 +236,7 @@
                         <div class="form-group form-focus">
                             <label class="control-label">Hourly Cost</label>
                             <input type="text" class="form-control floating" id="hourly_cost" name="hourly_cost" value="{{edata.0.attorney_details.0.hourly_cost}}"
-                              />
+                            />
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -274,8 +271,8 @@
                     <div class="col-md-12">
                         <div class="form-group form-focus">
                             <label class="control-label">Address Line 1
-                              <span class="req-lbl">*</span>
-                          </label>
+                                <span class="req-lbl">*</span>
+                            </label>
                             <input type="text" class="form-control floating" id="address" name="address" value="{{edata.0.address}}" />
                         </div>
                     </div>
@@ -296,10 +293,10 @@
 
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
-                        <label class="control-label">Country
-                          <span class="req-lbl">*</span>
+                            <label class="control-label">Country
+                                <span class="req-lbl">*</span>
 
-                        </label>
+                            </label>
                             <select class="form-control floating" id="country" name="country">
                                 <option value="">Select Country</option>
                                 {{#each country}}
@@ -310,10 +307,10 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
-                        <label class="control-label">State
-                          <span class="req-lbl">*</span>
+                            <label class="control-label">State
+                                <span class="req-lbl">*</span>
 
-                        </label>
+                            </label>
                             <select class="form-control floating" id="state" name="state">
                                 <option value="">select State</option>
                                 {{#each state}}
@@ -324,10 +321,10 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
-                        <label class="control-label">City
-                          <span class="req-lbl">*</span>
+                            <label class="control-label">City
+                                <span class="req-lbl">*</span>
 
-                        </label>
+                            </label>
                             <select class="form-control floating" id="city" name="city">
                                 <option value="">Select City</option>
                                 {{#each city}}
@@ -338,10 +335,10 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
-                        <label class="control-label">Zipcode
-                          <span class="req-lbl">*</span>
+                            <label class="control-label">Zipcode
+                                <span class="req-lbl">*</span>
 
-                        </label>
+                            </label>
                             <select class="form-control floating" id="zipcode" name="zipcode">
                                 <option value="">Select Zipcode</option>
                                 {{#each zipcode}}
@@ -371,7 +368,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus">
                             <label class="control-label">Fax</label>
-                            <input type="text" class="form-control floating" id="fax" name="fax" value="{{edata.0.attorney_details.0.social_url}}" />
+                            <input type="text" class="form-control floating number_validator" id="fax" name="fax" value="{{edata.0.attorney_details.0.fax}}" />
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -398,7 +395,7 @@
                     <div class="col-md-12">
                         <div class="form-group form-focus">
                             <label class="control-label">Remarks </label>
-                            <textarea class="form-control floating" id="remarks" name="remarks" >{{edata.0.attorney_details.0.remarks}}</textarea>
+                            <textarea class="form-control floating" id="remarks" name="remarks">{{edata.0.attorney_details.0.remarks}}</textarea>
                         </div>
                     </div>
                 </div>
@@ -419,7 +416,7 @@
 <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
-    <script type="text/javascript" src="/assets/plugins/bootstrap-sweetalert/sweet-alert.min.js"></script>
+<script type="text/javascript" src="/assets/plugins/bootstrap-sweetalert/sweet-alert.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 
@@ -475,12 +472,12 @@
         });
         $("#addattorneyform").validate({
             rules: {
-              jurisdiction: {
-                  required: true
-              },
-              industry_type: {
-                  required: true
-              },
+                jurisdiction: {
+                    required: true
+                },
+                industry_type: {
+                    required: true
+                },
                 group: {
                     required: true
                 },
@@ -513,12 +510,12 @@
             messages: {
 
 
-              jurisdiction: {
-                  required: "jurisdiction can't be blank"
-              },
-              industry_type: {
-                  required: "industry type can't be blank"
-              },
+                jurisdiction: {
+                    required: "jurisdiction can't be blank"
+                },
+                industry_type: {
+                    required: "industry type can't be blank"
+                },
 
                 group: {
                     required: "group  can't be blank"
@@ -556,40 +553,39 @@
     });
 </script>
 <script>
-$(document).ready(function () {
-    $("#hourly_cost").inputmask("numeric", {
-        radixPoint: ".",
-        groupSeparator: ",",
-        digits: 2,
-        autoGroup: true,
-        prefix: '$ ',
-        rightAlign: false
-    });
-    $("#overhead_amount").inputmask("numeric", {
-        radixPoint: ".",
-        groupSeparator: ",",
-        digits: 2,
-        autoGroup: true,
-        prefix: '$ ',
-        rightAlign: false
-    });
-    $("#billing_opp_cost").inputmask("numeric", {
-        radixPoint: ".",
-        groupSeparator: ",",
-        digits: 2,
-        autoGroup: true,
-        prefix: '$ ',
-        rightAlign: false
-    });
+    $(document).ready(function () {
+        $("#hourly_cost").inputmask("numeric", {
+            radixPoint: ".",
+            groupSeparator: ",",
+            digits: 2,
+            autoGroup: true,
+            prefix: '$ ',
+            rightAlign: false
+        });
+        $("#overhead_amount").inputmask("numeric", {
+            radixPoint: ".",
+            groupSeparator: ",",
+            digits: 2,
+            autoGroup: true,
+            prefix: '$ ',
+            rightAlign: false
+        });
+        $("#billing_opp_cost").inputmask("numeric", {
+            radixPoint: ".",
+            groupSeparator: ",",
+            digits: 2,
+            autoGroup: true,
+            prefix: '$ ',
+            rightAlign: false
+        });
 
-    $("#benefit_factor").inputmask("numeric", {
-        radixPoint: ".",
-        groupSeparator: ",",
-        digits: 2,
-        autoGroup: true,
-        suffix: '% ',
-        rightAlign: false
+        $("#benefit_factor").inputmask("numeric", {
+            radixPoint: ".",
+            groupSeparator: ",",
+            digits: 2,
+            autoGroup: true,
+            suffix: '% ',
+            rightAlign: false
+        });
     });
-  });
-</script>
- {{/content}}
+</script> {{/content}}
