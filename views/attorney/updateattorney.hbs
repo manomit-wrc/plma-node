@@ -207,9 +207,12 @@
                         </div>
                     </div>
 
+
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
-                        <label class="control-label">Jurisdiction</label>
+                        <label class="control-label">Jurisdiction
+                          <span class="req-lbl">*</span>
+                          </label>
                             <select id="jurisdiction" name="jurisdiction" class="form-control floating">
                                 <option value="">Select Jurisdiction</option>
                                 {{#each jurisdiction}}
@@ -220,7 +223,9 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
-                        <label class="control-label">Industry Type</label>
+                        <label class="control-label">Industry Type
+                          <span class="req-lbl">*</span>
+                           </label>
                             <select id="industry_type" name="industry_type" class="form-control floating">
                                 <option value="">Select Industry Type</option>
                                 {{#each industry_type}}
@@ -470,7 +475,12 @@
         });
         $("#addattorneyform").validate({
             rules: {
-
+              jurisdiction: {
+                  required: true
+              },
+              industry_type: {
+                  required: true
+              },
                 group: {
                     required: true
                 },
@@ -501,6 +511,14 @@
 
             },
             messages: {
+
+
+              jurisdiction: {
+                  required: "jurisdiction can't be blank"
+              },
+              industry_type: {
+                  required: "industry type can't be blank"
+              },
 
                 group: {
                     required: "group  can't be blank"
