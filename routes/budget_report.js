@@ -153,6 +153,7 @@ router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req,
   var activity_data = await Activity.findAll({
     where: {
       activity_goal_id: req.params['id']
+      //activity_status: 2
     },
     include: [{
       model: ActivityBudget

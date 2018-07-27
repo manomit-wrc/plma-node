@@ -1,0 +1,173 @@
+{{#content "style" mode="prepend"}}
+<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-sweetalert/sweet-alert.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="pg-header">
+            <div class="row">
+                {{#if success_message}}
+                <div class="alert alert-danger">
+                    <strong>Error! </strong>{{success_message}}
+                </div>
+                {{/if}}
+                <div class="col-xs-4">
+                    <h4 class="page-title">ACTIVITY APPROVAL DETAILS</h4>
+                </div>
+            </div>
+        </div>
+        <div class="card-box">
+            <form class="m-b-10" name="editActivityBudgetFrm" id="editActivityBudgetFrm">
+                <div class="row">
+                    <div class="col-md-12">
+                        {{#each budgetArr}}
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">{{this.parent_name}}</h3>
+                            </div>
+                            <div class="panel-body">
+                                {{#each this.child_budget}}
+                                <div class="list">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h5>
+                                                {{this.name}}
+                                            </h5>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+
+                                                <input class="form-control edit_budget_hour number_budget" type="text" data-budgets-id="{{this.id}}" id="edit_budget_hour"
+                                                    name="edit_budget_hour" placeholder="Hours" value="{{this.hour}}" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <input class="form-control edit_budget_amount number_budget" type="text" id="edit_budget_amount" name="edit_budget_amount"
+                                                    placeholder="Dollars($)" value="{{this.amount}}" disabled>
+                                            </div>
+                                        </div>
+                                        {{#if_eq this.hour ""}} {{else}}
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <input type="button" class="btn btn-info" data-budget_id="{{this.id}}" data-remarks="{{this.remarks}}" data-activity_id="{{../../activity_id}}" id="remarks_btn" value="Remarks">
+                                            </div>
+                                        </div>
+                                        {{/if_eq}}
+                                    </div>
+                                </div>
+                                {{/each}}
+
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+
+                <div class="m-t-15 text-center">
+                    <button class="btn btn-primary btn-lg" data-activity_id="{{activity_id}}" data-status="2" type="button" id="btnApproveActivityBudget">Approve</button>
+                    <button class="btn btn-primary btn-lg" data-activity_id="{{activity_id}}" data-status="3" type="button" id="btnRejectActivityBudget">Reject</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="update_budget" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <strong>Activity Approval Remark</strong>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="hidden" id="activity_id" />
+                    <input type="hidden" id="budget_id" />
+                    <textarea class="form-control floating" id="approver_remarks" name="approver_remarks" rows="5"></textarea>
+                </div>
+                <div class="form-group text-right">
+                    <input type="button" value="Submit" class="btn btn-info approval_remark_details" />
+                </div>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+
+{{#content "script" mode="append"}}
+<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+<script type="text/javascript" src="/assets/plugins/bootstrap-sweetalert/sweet-alert.min.js"></script>
+<script type="text/javascript" src="/assets/js/select2.min.js"></script>
+<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>ACTIVITY
+
+<script type="text/javascript">
+
+    $(document).on('click', '#remarks_btn', function(e) {
+        $('#activity_id').val($(this).data('activity_id'));
+        $('#budget_id').val($(this).data('budget_id'));
+        $('#approver_remarks').val($(this).data('remarks'));
+        $('#update_budget').modal('show');
+    });
+
+    $(document).on('click', '.approval_remark_details', function(e) {
+        var budget_id = $('#budget_id').val();
+        var activity_id = $('#activity_id').val();
+        var approver_remarks = $('#approver_remarks').val();
+        $.ajax({
+            type: 'POST',
+            url: '/add_activity_budget_remark',
+            data: {
+                budget_id: budget_id,
+                activity_id: activity_id,
+                approver_remarks: approver_remarks
+            },
+            success: function (response) {
+                if (response.success == true) {
+                    $('#update_budget').modal('hide');
+                    swal('', 'Updated Successfully', 'success');
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    });
+
+    $(document).on('click', '#btnApproveActivityBudget, #btnRejectActivityBudget', function(e) {
+        var activity_id = $(this).data('activity_id');
+        var status = $(this).data('status');
+        $.ajax({
+            type: 'POST',
+            url: '/update_activity_approve_reject',
+            data: {
+                activity_id: activity_id,
+                status: status
+            },
+            success: function (response) {
+                if (response.success == true) {
+                    window.location.href = "/activity-approvals";
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    });
+
+</script> {{/content}}

@@ -8,6 +8,8 @@ module.exports = (sequelize, DataTypes) => {
     amount: DataTypes.INTEGER,
     status: DataTypes.INTEGER,
     activity_goal_id: DataTypes.INTEGER,
+    approver_remarks: DataTypes.TEXT
+    
   }, {});
   activity_budget.associate = function(models) {
     // associations can be defined here
