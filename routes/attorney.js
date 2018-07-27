@@ -153,21 +153,35 @@ router.get("/get-all-designation", auth, async(req, res)=> {
 router.get('/attorneys/addAttorney', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var err_message = req.flash('success-err-message')[0];
 	const designation = await Designation.findAll();
-	const group = await Group.findAll();
+	const group = await Group.findAll({order: [
+            ['name', 'ASC'],
+        ]});
 	sectionToFirm.belongsTo(Section, {
 		foreignKey: 'section_id'
 	});
 
 	const allSection = await sectionToFirm.findAll({
+
 		where: {
 			firm_id: req.user.firm_id
 		},
+
 		include: [{
 			model: Section
 		}]
 	});
-	const jurisdiction = await Jurisdiction.findAll();
-	const industry_type = await Industry_type.findAll();
+	const jurisdiction = await Jurisdiction.findAll(
+		{order: [
+	            ['name', 'ASC'],
+	        ]}
+	);
+	const industry_type = await Industry_type.findAll(
+		{
+		order: [
+	            ['industry_name', 'ASC'],
+	        ]
+				}
+	);
 	var country = await Country.findAll();
 	const state = await State.findAll({
 		where: {
@@ -292,7 +306,9 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 	});
 
 	const designation = await Designation.findAll();
-	const group = await Group.findAll();
+	const group = await Group.findAll({order: [
+            ['name', 'ASC'],
+        ]});
 	sectionToFirm.belongsTo(Section, {
 		foreignKey: 'section_id'
 	});
@@ -305,8 +321,17 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 			model: Section
 		}]
 	});
-	const jurisdiction = await Jurisdiction.findAll();
-	const industry_type = await Industry_type.findAll();
+	const jurisdiction = await Jurisdiction.findAll(
+		{order: [
+							['name', 'ASC'],
+					]}
+
+	);
+	const industry_type = await Industry_type.findAll(
+		{order: [
+	            ['industry_name', 'ASC'],
+	        ]}
+	);
 
 	const country = await Country.findAll({});
 	const state = await State.findAll({});
