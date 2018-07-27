@@ -243,7 +243,7 @@
                             </div>
                             <div class="col-md-6" style="display:none;" id="client_list">
                                 <div class="form-group form-focus select-focus">
-                                    <select id="client_id" name="client_user" class=" form-control floating onchangeBudget" multiple="multiple">
+                                    <select id="client_id" name="client_user[]" class=" form-control floating onchangeBudget" multiple="multiple">
                                         {{#each client}} {{#if_eq client_type "I"}}
                                         <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
                                         {{/if_eq}} {{#if_eq client_type "O"}}
@@ -560,7 +560,7 @@
         $("#activity_type").change(function () {
             if ($(this).val() == 'team') {
                 $('#potiential_revenue').val('0.00');
-                $('#potiential_revenue').prop('disabled', true);
+                $('#potiential_revenue').prop('readonly', true);
                 $(".none").show();
                 $(".section").hide();
                 $(".strategyGroup").hide();
@@ -569,19 +569,19 @@
                 $(".none").hide();
                 $(".section").show();
                 $(".strategyGroup").hide();
-                $('#potiential_revenue').prop('disabled', false);
+                $('#potiential_revenue').prop('readonly', false);
             } else if ($(this).val() == 'strategic_group') {
                 $('#potiential_revenue').val('0.00');
                 $(".none").hide();
                 $(".strategyGroup").show();
                 $(".section").hide();
-                $('#potiential_revenue').prop('disabled', false);
+                $('#potiential_revenue').prop('readonly', false);
             } else {
                 $('#potiential_revenue').val('0.00');
                 $(".none").show();
                 $(".section").hide();
                 $(".strategyGroup").hide();
-                $('#potiential_revenue').prop('disabled', false);
+                $('#potiential_revenue').prop('readonly', false);
             }
         })
 
@@ -595,7 +595,6 @@
 
     });
 
-
-
+    
 
 </script> {{/content}}

@@ -39,7 +39,7 @@ const ActivityBudget = require('../models').activity_budget;
 const sectionToFirm = require('../models').section_to_firms;
 
 function removePhoneMask(removeCharacter) {
-	var removeCharacter = removeCharacter.replace("-", "");
+	removeCharacter = removeCharacter.replace("-", "");
 	removeCharacter = removeCharacter.replace(")", "");
 	removeCharacter = removeCharacter.replace("(", "");
 	removeCharacter = removeCharacter.replace("$", "");
@@ -297,25 +297,77 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 			});
 		}
 	}
+
+
+	const all_activity_client = await Activity_to_user_type.findAll({
+		where:{ 'activity_id' : editdata[0].id }
+	});
+
+	var alldata = [];
+	var target_client_list;
+
+	const activity_budget = await ActivityBudget.findOne({
+		where: {
+			activity_id: req.params['id']
+		}
+	});
+
+	for (let i = 0; i < all_activity_client.length; i++) {
+		if (all_activity_client[i].target_client_type == 'C') {
+			target_client_list = await Client.findAll({
+				where: { 'id': all_activity_client[i].type }
+			})
+		} else {
+			target_client_list = await Target.findAll({
+				where: { 'id': all_activity_client[i].type }
+			})
+		}
+		alldata.push({
+			'attorney_name': req.user.first_name + " " + req.user.last_name,
+			'company_name': target_client_list[0].first_name+ " " +target_client_list[0].last_name,
+			'relation' : all_activity_client[i].target_client_type == 'C' ? 'Client' : 'Target',
+			'total_cost': activity_budget.level_type == 'Individual'? editdata[0].total_budget_amount: parseFloat(editdata[0].total_budget_amount/all_activity_client.length),
+			'potential_revenue' : activity_budget.level_type == 'Individual'? editdata[0].potiential_revenue: parseFloat(editdata[0].potiential_revenue/all_activity_client.length)
+		});
+	}
+
+	sectionToFirm.belongsTo(Section, {
+		foreignKey: 'section_id'
+	});
+
+	const allSection = await sectionToFirm.findAll({
+		where: {
+			firm_id: req.user.firm_id
+		},
+		include: [{
+			model: Section
+		}]
+	});
+
+
 	res.render('activity/view_activity', {
 		layout: 'dashboard',
 		csrfToken: req.csrfToken(),
 		client: client,
 		target: target,
 		arr,
+		alltarget_client: alldata,
 		editdata: editdata[0],
 		firm: firm[0].title,
 		originAttorney: req.user.first_name + " " + req.user.last_name,
 		activity_goal: activity_goal,
 		budgetArr,
 		practice_area: practice_area,
-		level_type
+		level_type,
+		section : allSection
 	});
+	
 });
 
 //.....................{{   edit data  }}.......................................//
 
 router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+
 	Activity.hasMany(Activity_to_user_type, {
 		foreignKey: 'activity_id'
 	});
@@ -333,6 +385,7 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 			target_type: "I"
 		}
 	});
+
 	const client = await Client.findAll({
 		where: {
 			client_type: "I"
@@ -383,19 +436,70 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 			});
 		}
 	}
+	
+
+	const all_activity_client = await Activity_to_user_type.findAll({
+		where:{ 'activity_id' : editdata[0].id }
+	});
+
+	var alldata = [];
+	var target_client_list;
+
+	const activity_budget = await ActivityBudget.findOne({
+		where: {
+			activity_id: req.params['id']
+		}
+	});
+
+	for (let i = 0; i < all_activity_client.length; i++) {
+		if (all_activity_client[i].target_client_type == 'C') {
+			target_client_list = await Client.findAll({
+				where: { 'id': all_activity_client[i].type }
+			})
+		} else {
+			target_client_list = await Target.findAll({
+				where: { 'id': all_activity_client[i].type }
+			})
+		}
+		alldata.push({
+			'attorney_name': req.user.first_name + " " + req.user.last_name,
+			'company_name': target_client_list[0].first_name+ " " +target_client_list[0].last_name,
+			'relation' : all_activity_client[i].target_client_type == 'C' ? 'Client' : 'Target',
+			'total_cost': activity_budget.level_type == 'Individual'? editdata[0].total_budget_amount: parseFloat(editdata[0].total_budget_amount/all_activity_client.length),
+			'potential_revenue' : activity_budget.level_type == 'Individual'? editdata[0].potiential_revenue: parseFloat(editdata[0].potiential_revenue/all_activity_client.length)
+		});
+	}
+
+	sectionToFirm.belongsTo(Section, {
+		foreignKey: 'section_id'
+	});
+
+	const allSection = await sectionToFirm.findAll({
+		where: {
+			firm_id: req.user.firm_id
+		},
+		include: [{
+			model: Section
+		}]
+	});
+
+	// console.log('editdata[0]',editdata[0].activity_status);
+	
 	res.render('activity/update', {
 		layout: 'dashboard',
 		csrfToken: req.csrfToken(),
 		client: client,
 		target: target,
 		arr,
+		alltarget_client: alldata,
 		editdata: editdata[0],
 		firm: firm[0].title,
 		originAttorney: req.user.first_name + " " + req.user.last_name,
 		activity_goal: activity_goal,
 		budgetArr,
 		practice_area: practice_area,
-		level_type
+		level_type,
+		section : allSection
 	});
 });
 
@@ -432,6 +536,7 @@ router.post('/activity/edit-budget', auth, firmAttrAuth, csrfProtection, async (
 });
 
 router.post('/activity/update/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+
 	var target_user = req.body.target_user;
 	var client_user = req.body.client_user;
 
@@ -454,6 +559,9 @@ router.post('/activity/update/:id', auth, firmAttrAuth, csrfProtection, async (r
 		budget_status: req.body.budget_status,
 		budget_details_status: req.body.budget_details_status,
 		target: req.body.ref_type,
+		section_id: req.body.section,
+    	s_group_id: req.body.strategy_group,
+    	activity_status: req.body.activity_status,
 	}, {
 		where: {
 			id: req.params['id']
