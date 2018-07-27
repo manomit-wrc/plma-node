@@ -117,15 +117,21 @@
                         Clients
                     </a>
                 </li>
+
                 <li {{#if_eq client_url "referral" }} class="active" {{/if_eq}}>
                     <a href="/referral">
                         <i class="fa fa-user-plus"></i>
                         Referral
                     </a>
                 </li>
+                
+                <li {{#if_eq client_url "activity-approvals" }} class="active" {{/if_eq}}>
+                    <a href="/activity-approvals">
+                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                        Activity Approvals
+                    </a>
+                </li>
                 {{/if_eq}} 
-                
-                
                 
                 {{#if_eq user.role_id "3"}}
                 <li {{#if_eq client_url "activity-goal" }} class="active" {{/if_eq}}>
