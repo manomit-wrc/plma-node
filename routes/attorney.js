@@ -161,14 +161,20 @@ router.get('/attorneys/addAttorney', auth, firmAttrAuth, csrfProtection, async (
 	});
 
 	const allSection = await sectionToFirm.findAll({
+
 		where: {
 			firm_id: req.user.firm_id
 		},
+
 		include: [{
 			model: Section
 		}]
 	});
-	const jurisdiction = await Jurisdiction.findAll();
+	const jurisdiction = await Jurisdiction.findAll(
+		{order: [
+	            ['name', 'ASC'],
+	        ]}
+	);
 	const industry_type = await Industry_type.findAll(
 		{
 		order: [
@@ -317,7 +323,12 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 			model: Section
 		}]
 	});
-	const jurisdiction = await Jurisdiction.findAll();
+	const jurisdiction = await Jurisdiction.findAll(
+		{order: [
+							['name', 'ASC'],
+					]}
+
+	);
 	const industry_type = await Industry_type.findAll(
 		{order: [
 	            ['industry_name', 'ASC'],

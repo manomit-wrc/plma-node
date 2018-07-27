@@ -21,40 +21,52 @@
         </div>
       {{/if}}
       <form id="frmEditActivityGoal" method="POST" action="/activity-goal/edit/{{edit_goals.id}}">
-         <input type="hidden" name="_csrf" value="{{csrfToken}}">   
+         <input type="hidden" name="_csrf" value="{{csrfToken}}">
          <div class="card-box">
             <div class="row">
                <div class="col-md-12">
                      <div class="row">
                         <div class="col-md-12">
                            <div class="form-group form-focus">
-                              <label class="control-label">Activity Goal</label>
+                              <label class="control-label">Activity Goal
+                                <span class="req-lbl">*</span>
+
+                              </label>
                               <textarea name="activity_goal" id="activity_goal" class="form-control floating">{{edit_goals.activity_goal}}</textarea>
                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group form-focus">
-                                <label class="control-label">From Date</label>
+                                <label class="control-label">From Date
+                                  <span class="req-lbl">*</span>
+
+                                </label>
                                 <div class="cal-icon">
                                     <input class="form-control floating datetimepicker"
-                                        type="text" id="from_date" name="from_date" value="{{dateFormat edit_goals.from_date "DD-MM-YYYY"}}" 
+                                        type="text" id="from_date" name="from_date" value="{{dateFormat edit_goals.from_date "DD-MM-YYYY"}}"
                                     >
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group form-focus">
-                                <label class="control-label">To Date</label>
+                                <label class="control-label">To Date
+                                  <span class="req-lbl">*</span>
+
+                                </label>
                                 <div class="cal-icon">
                                     <input class="form-control floating datetimepicker"
-                                        type="text" id="to_date" name="to_date" value="{{dateFormat edit_goals.to_date "DD-MM-YYYY"}}" 
+                                        type="text" id="to_date" name="to_date" value="{{dateFormat edit_goals.to_date "DD-MM-YYYY"}}"
                                     >
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-12">
                            <div class="form-group form-focus">
-                              <label class="control-label">Remarks</label>
+                              <label class="control-label">Remarks
+                                <span class="req-lbl">*</span>
+
+                              </label>
                               <textarea name="remarks" id="remarks" class="form-control floating">{{edit_goals.remarks}}</textarea>
                            </div>
                         </div>
@@ -67,7 +79,7 @@
          </div>
       </form>
    </div>
-   
+
 </div>
 {{#content "script" mode="append"}}
     <script type="text/javascript" src="/assets/js/moment.min.js"></script>
