@@ -4,298 +4,464 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
 <div class="page-wrapper">
-    <div class="content container-fluid">
-        <div class="row">
-            <div class="col-sm-8">
-                <h4 class="page-title">View Activity</h4>
-            </div>
-        </div>
-        <form>
-            <input type="hidden" name="_csrf" value="{{csrfToken}}">
-            <input type="hidden" name="activity_id" id="activity_id" value="{{editdata.id}}">
-            <input type="hidden" name="total_hour" id="total_hour">
-            <input type="hidden" name="total_amount" id="total_amount">
-            <div class="card-box">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="row">
-
-                            <div class="col-md-6">
-                                <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Firm
-                                        <span class="req-lbl">*</span>
-                                    </label>
-                                    <input class="form-control floating" type="text" id="firm" name="firm" value="{{this.firm}}" disabled>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Origin Attorney
-                                        <span class="req-lbl">*</span>
-                                    </label>
-                                    <input class="form-control floating" type="text" id="firm" name="firm" value="{{this.originAttorney}}" disabled>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Activity Type </label>
-                                    <select class="select floating" id="activity_type" name="activity_type" disabled>
-                                        <option value="">Select Activity Type</option>
-                                        <option value="section" {{#if_eq editdata.activity_type "section"}} selected="selected" {{/if_eq}}>SECTION LEAVEL</option>
-                                        <option value="team" {{#if_eq editdata.activity_type "team"}} selected="selected" {{/if_eq}}>TEAM LEAVEL</option>
-                                        <option value="individual" {{#if_eq editdata.activity_type "individual"}} selected="selected" {{/if_eq}}>INDIVIDUAL LEAVEL</option>
-                                        <option value="strategic_group" {{#if_eq editdata.activity_type "strategic_group"}} selected="selected" {{/if_eq}}>STRATEGIC GROUP LEAVEL</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Activity Goal </label>
-                                    <select id="activity_goal" name="activity_goal" class="select form-control floating" disabled>
-                                        <option value="">Select Activity Goal</option>
-                                        {{#each activity_goal}}
-                                        <option value="{{this.id}}" {{#if_eq this.id ../editdata.activity_goal_id}} selected="selected" {{/if_eq}}>{{this.activity_goal}}</option>
-                                        {{/each}}
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Practice Area Type</label>
-                                    <select id="practice_area" name="practice_area" class="select form-control floating" disabled>
-                                        <option value="">Select Practice Area</option>
-                                        {{#each practice_area}}
-                                        <option value="{{this.id}}" {{#if_eq this.id ../editdata.practice_area}} selected="selected" {{/if_eq}}>{{this.name}}</option>
-                                        {{/each}}
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group form-focus">
-                                    <label class="control-label">Potential Revenue</label>
-                                    <input class="form-control floating" type="text" disabled id="potiential_revenue" name="potiential_revenue" value="{{editdata.potiential_revenue}}">
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <div class="form-group form-focus">
-                                    <label class="control-label">Creation Date</label>
-                                    <div class="cal-icon">
-                                        <input class="form-control floating datetimepicker" disabled type="text" id="activity_creation_date" name="activity_creation_date"
-                                            value="{{dateFormat editdata.activity_creation_date " DD-MM-YYYY "}}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group form-focus">
-                                    <label class="control-label">From Date</label>
-                                    <div class="cal-icon">
-                                        <input class="form-control floating datetimepicker" disabled type="text" id="activity_from_date" name="activity_from_date" value="{{dateFormat editdata.activity_from_date "
-                                            DD-MM-YYYY "}}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group form-focus">
-                                    <label class="control-label">To Date</label>
-                                    <div class="cal-icon">
-                                        <input class="form-control floating datetimepicker" type="text" disabled id="activity_to_date" name="activity_to_date" value="{{dateFormat editdata.activity_to_date "
-                                            DD-MM-YYYY "}}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group form-focus">
-                                    <label class="control-label">Activity Name</label>
-                                    <input class="form-control floating" type="text" id="activity_name" disabled name="activity_name" value="{{editdata.activity_name}}">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group form-focus">
-                                    <label class="control-label">Activity Reason</label>
-                                    <input class="form-control floating" type="text" id="activity_reason" disabled name="activity_reason" value="{{editdata.activity_reason}}">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Activity Details Status </label>
-                                    <select class="select" id="budget_status" name="budget_status" disabled>
-                                        <option value=""> Select Activity status</option>
-                                        <option value="section_one" {{#if_eq editdata.budget_status "section_one"}} selected="selected" {{/if_eq}}>SECTION ONE</option>
-                                        <option value="planned" {{#if_eq editdata.budget_status "planned"}} selected="selected" {{/if_eq}}>PLANNED </option>
-                                        <option value="unplanned" {{#if_eq editdata.budget_status "unplanned"}} selected="selected" {{/if_eq}}>UNPLANNED</option>
-                                        <option value="delete_team" {{#if_eq editdata.budget_status "delete_team"}} selected="selected" {{/if_eq}}>DELETE ITEM</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Activity Budget Details Status</label>
-                                    <select class="select" id="budget_details_status" name="budget_details_status" disabled>
-                                        <option value=""> Select Activity budget details status</option>
-                                        <option value="section_one" {{#if_eq editdata.budget_details_status "section_one"}} selected="selected" {{/if_eq}}>SECTION ONE</option>
-                                        <option value="planned" {{#if_eq editdata.budget_details_status "planned"}} selected="selected" {{/if_eq}}>PLANNED BUDGET</option>
-                                        <option value="unplanned" {{#if_eq editdata.budget_details_status "unplanned"}} selected="selected" {{/if_eq}}>UNPLANNED BUDGET</option>
-                                        <option value="delete_team" {{#if_eq editdata.budget_details_status "delete_team"}} selected="selected" {{/if_eq}}>GUESTIMATE</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                             <div class="form-inline m-b-15 col-md-6">
-                                <div class="form-group m-r-5">
-                                    <label class="input-group">
-                                        <span class="input-group-addon">
-                                            <input type="radio" id="referral_type" name="ref_type" disabled value="T" {{#if_eq editdata.target "T"}} checked {{/if_eq}} />
-                                        </span>
-                                        <div class="form-control form-control-static">Target</div>
-                                        <span class="glyphicon form-control-feedback "></span>
-                                    </label>
-                                </div>
-                                <div class="form-group ">
-                                    <label class="input-group">
-                                        <span class="input-group-addon">
-                                            <input type="radio" id="organization_type" name="ref_type" disabled value="C" {{#if_eq editdata.target "C"}} checked {{/if_eq}} />
-                                        </span>
-                                        <div class="form-control form-control-static">Client</div>
-                                        <span class="glyphicon form-control-feedback "></span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group form-focus select-focus" id="target_list" {{#if_eq editdata.target "C"}} style="display:none;" {{/if_eq}}>
-                                    <select id="target_id" name="target_user" class=" form-control floating" multiple="multiple">
-                                        {{#each target}}
-                                        <option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}} disabled>{{this.first_name}} {{this.last_name}}</option>
-                                        {{/each}}
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6" id="client_list" {{#if_eq editdata.target "T"}} style="display:none;" {{/if_eq}}>
-                                <div class="form-group form-focus select-focus">
-                                    <select id="client_id" name="client_user" class=" form-control floating" multiple="multiple">
-                                        {{#each client}}
-                                        <option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}} disabled>{{this.first_name}} {{this.last_name}}</option>
-                                        {{/each}}
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group form-focus">
-                                    <label class="control-label">Remarks </label>
-                                    <textarea class="form-control floating" id="remarks" name="remarks" rows="5" disabled>{{editdata.remarks}}</textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group form-focus">
-                                    <label class="control-label">Total Budget Cost ($) </label>
-                                    <input class="form-control floating" type="text" id="total_budget_cost" name="total_budget_cost" disabled value="{{editdata.total_budget_amount}}">
-                                    <span>
-                                        <a href="#" id="budgetUpdate" data-toggle="modal" data-target="#update_budget">Click to see budget details</a>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="text-center m-t-20">
-                <a href="/activitypage" class="btn btn-primary btn-lg">Back</a>
-            </div>
-        </form>
+  <div class="content container-fluid">
+    <div class="row">
+      <div class="col-sm-8">
+        <h4 class="page-title">View Activity</h4>
+      </div>
+      {{!--
+      <div class="text-right">
+        <a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_user">
+          <i class="fa fa-plus"></i> Add Activity</a>
+      </div> --}}
     </div>
+
+
+    <form name="updateActivityForm" id="updateActivityForm" action="/activity/update/{{editdata.id}}" method="POST">
+      <input type="hidden" name="_csrf" value="{{csrfToken}}">
+      <input type="hidden" name="activity_id" id="activity_id" value="{{editdata.id}}">
+      <input type="hidden" name="total_hour" id="total_hour">
+      <input type="hidden" name="total_amount" id="total_amount">
+      <div class="card-box">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+
+
+              <div class="col-md-6">
+                <div class="form-group form-focus select-focus">
+                  <label class="control-label">Firm
+                    <span class="req-lbl">*</span>
+                  </label>
+                  <input class="form-control floating" type="text" id="firm" name="firm" value="{{this.firm}}" disabled>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group form-focus select-focus">
+                  <label class="control-label">Origin Attorney
+                    <span class="req-lbl">*</span>
+                  </label>
+                  <input class="form-control floating" type="text" id="firm" name="firm" value="{{this.originAttorney}}" disabled>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group form-focus">
+                  <label class="control-label">Activity Name</label>
+                  <input class="form-control floating" type="text" id="activity_name" name="activity_name" value="{{editdata.activity_name}}"
+                    disabled>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group form-focus">
+                  <label class="control-label">Activity Reason</label>
+                  <input class="form-control floating" type="text" id="activity_reason" name="activity_reason" value="{{editdata.activity_reason}}"
+                    disabled>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group form-focus select-focus">
+                  <label class="control-label">Activity Type </label>
+                  <select class="select floating" id="activity_type" name="activity_type" disabled>
+                    <option value="">Select Activity Type</option>
+                    <option value="individual" {{#if_eq editdata.activity_type "individual"}} selected="selected" {{/if_eq}}>INDIVIDUAL LEVEL</option>
+                    <option value="section" {{#if_eq editdata.activity_type "section"}} selected="selected" {{/if_eq}}>SECTION LEVEL</option>
+                    <option value="strategic_group" {{#if_eq editdata.activity_type "strategic_group"}} selected="selected" {{/if_eq}}>STRATEGIC GROUP LEVEL</option>
+                    <option value="team" {{#if_eq editdata.activity_type "team"}} selected="selected" {{/if_eq}}>TEAM LEVEL</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-6 none">
+                <div class="form-group form-focus select-focus"></div>
+              </div>
+
+              <div class="col-md-6 section" style="display:none;">
+                <div class="form-group form-focus select-focus">
+                  <label class="control-label">Section
+                    <span class="req-lbl">*</span>
+                  </label>
+                  <select class="select floating" id="section" name="section" disabled>
+                    {{!--
+                    <option value="0">Select Section</option> --}} {{#each section}}
+                    <option value="{{this.section.id}}" {{#if_eq this.id ../editdata.section_id}} selected="selected" {{/if_eq}}>{{this.section.name}}</option>
+                    {{/each}}
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-6 strategyGroup" style="display:none;">
+                <div class="form-group form-focus select-focus">
+                  <label class="control-label">Strategy Group
+                    <span class="req-lbl">*</span>
+                  </label>
+                  <select class="select floating" id="strategyGroup" name="strategy_group" disabled>
+                    <option value="0">Select Strategy Group</option>
+                    <option value="1" {{#if_eq editdata.s_group_id 1}} selected="selected" {{/if_eq}}>NEED TO BE DISCUSS</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group form-focus select-focus">
+                  <label class="control-label">Activity Goal </label>
+                  <select id="activity_goal" name="activity_goal" class="select form-control floating" disabled>
+                    <option value="">Select Activity Goal</option>
+                    {{#each activity_goal}}
+                    <option value="{{this.id}}" {{#if_eq this.id ../editdata.activity_goal_id}} selected="selected" {{/if_eq}}>{{this.activity_goal}}</option>
+                    {{/each}}
+                  </select>
+                  {{!--
+                  <strong style="background-color:#ff0000; color:#fff">Note! </strong> No Activity Goal? Click Here
+                  <a href="/activity-goal/add">Add activity goals</a> --}}
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group form-focus select-focus">
+                  <label class="control-label">Practice Area Type</label>
+                  <select id="practice_area" name="practice_area" class="select form-control floating" disabled>
+                    <option value="">Select Practice Area</option>
+                    {{#each practice_area}}
+                    <option value="{{this.id}}" {{#if_eq this.id ../editdata.practice_area}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                    {{/each}}
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group form-focus">
+                  <label class="control-label">Potential Revenue</label>
+                  <input class="form-control floating" type="text" id="potiential_revenue" name="potiential_revenue" value="{{editdata.potiential_revenue}}"
+                    disabled>
+                </div>
+              </div>
+
+
+
+              <div class="col-md-6">
+                <div class="form-group form-focus">
+                  <label class="control-label">Activity Creation Date</label>
+                  <div class="cal-icon">
+                    <input class="form-control floating datetimepicker" type="text" id="activity_creation_date" name="activity_creation_date"
+                      value="{{dateFormat editdata.activity_creation_date " DD-MM-YYYY "}}" disabled>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group form-focus">
+                  <label class="control-label">From Date</label>
+                  <div class="cal-icon">
+                    <input class="form-control floating datetimepicker" type="text" id="activity_from_date" name="activity_from_date" value="{{dateFormat editdata.activity_from_date "
+                      DD-MM-YYYY "}}" disabled>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group form-focus">
+                  <label class="control-label">To Date</label>
+                  <div class="cal-icon">
+                    <input class="form-control floating datetimepicker" type="text" id="activity_to_date" name="activity_to_date" value="{{dateFormat editdata.activity_to_date "
+                      DD-MM-YYYY "}}" disabled>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group form-focus">
+                  <label class="control-label">Remarks </label>
+                  <textarea class="form-control floating" id="remarks" name="remarks" rows="5" disabled>{{editdata.remarks}}</textarea>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group form-focus select-focus">
+                  <label class="control-label">Activity Status{{editdata.activity_status}}</label>
+                  <select id="activity_status" name="activity_status" class="select form-control floating" disabled>
+                    <option value="0" {{#if_eq editdata.activity_status "0"}} selected="selected" {{/if_eq}}>NEW ACTIVITY - CREATED</option>
+                    <option value="1" {{#if_eq editdata.activity_status "1"}} selected="selected" {{/if_eq}}>PENDING APPROVAL - IN-PROGRESS</option>
+                    <option value="2" {{#if_eq editdata.activity_status "2"}} selected="selected" {{/if_eq}}>APPROVED - PROCEED</option>
+                    <option value="3" {{#if_eq editdata.activity_status "3"}} selected="selected" {{/if_eq}}>NOT APPROVED - DISCARD ACTIVITY</option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-box">
+        <h3 class="card-title">Client/Target Information</h3>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+
+              <div class="form-inline m-b-15 col-md-6">
+                <div class="form-group m-r-5">
+                  <label class="input-group">
+                    <span class="input-group-addon">
+                      <input type="radio" id="referral_type" name="ref_type" value="T" {{#if_eq editdata.target "T"}} checked {{/if_eq}} disabled/>
+                    </span>
+                    <div class="form-control form-control-static">Target</div>
+                    <span class="glyphicon form-control-feedback "></span>
+                  </label>
+                </div>
+                <div class="form-group ">
+                  <label class="input-group">
+                    <span class="input-group-addon">
+                      <input type="radio" id="organization_type" name="ref_type" value="C" {{#if_eq editdata.target "C"}} checked {{/if_eq}} disabled/>
+                    </span>
+                    <div class="form-control form-control-static">Client</div>
+                    <span class="glyphicon form-control-feedback "></span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group form-focus select-focus" id="target_list" {{#if_eq editdata.target "C"}} style="display:none;" {{/if_eq}}>
+                  <select id="target_id" name="target_user[]" class=" form-control floating" multiple="multiple" disabled>
+                    {{#each target}}
+                    <option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.first_name}} {{this.last_name}}</option>
+                    {{/each}}
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-6" id="client_list" {{#if_eq editdata.target "T"}} style="display:none;" {{/if_eq}}>
+                <div class="form-group form-focus select-focus">
+                  <select id="client_id" name="client_user[]" class=" form-control floating" multiple="multiple" disabled>
+                    {{#each client}}
+                    <option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.first_name}} {{this.last_name}}</option>
+                    {{/each}}
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-6"></div>
+
+              <div class="col-md-6 budgetAdd" style="display:none;">
+                <a href="#" class="btn btn-primary btn-lg" id="budgetAdd" data-toggle="modal" data-target="#add_budget" style="margin: 0 auto; display: table;">
+                  <i class="fa fa-plus"></i> Add Budget</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {{!--
+      <div class="text-center m-t-20">
+        <button class="btn btn-primary btn-lg" type="submit" id="btnAdd">Save &amp; Update Activity</button>
+      </div> --}}
+    </form>
+  </div>
+
+
+  <div class="content container-fluid">
+    <div class="card-box">
+      <h3 class="card-title">Client/Target Information</h3>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="table-responsive">
+                  <table class="table table-striped custom-table datatable" id="searchData">
+                    <thead>
+                      <tr>
+                        <th> Attorney Name </th>
+                        <th> Relation </th>
+                        <th> Company Name </th>
+                        <th> Budget Code Cost $</th>
+                        <th> Potential Revenue </th>
+                      </tr>
+                    </thead>
+                    <tbody id="mainTable">
+                      {{#each alltarget_client}}
+                      <tr>
+                        <td>{{this.attorney_name}}</td>
+                        <td> {{this.relation}} </td>
+                        <td>{{ this.company_name }}</td>
+                        <td>
+                          <a href="#" id="budgetUpdate" data-toggle="modal" data-target="#update_budget">$ {{this.total_cost}}</a>
+                        </td>
+                        <td>{{this.potential_revenue}}</td>
+                      </tr>
+                      {{/each}}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 {{!-- Starts add budget modal --}}
 
 <div id="update_budget" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <div class="modal-content modal-lg">
-            <div class="modal-header">
-                <h4 class="modal-title">Marketing Budget Details</h4>
-            </div>
-            <div class="modal-body">
-                <div class="card-box">
-                    <form class="m-b-10" name="editActivityBudgetFrm" id="editActivityBudgetFrm">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-inline m-b-15">
-                                    <div class="form-group m-r-5">
-                                        <label class="input-group">
-                                            <span class="input-group-addon">
-                                                <input type="radio" id="evenly_equated" name="activity_level_type_edit" value="Evenly Equated" {{#if_eq level_type
-                                                    "Evenly Equated"}} checked {{/if_eq}} disabled />
-                                            </span>
-                                            <div class="form-control form-control-static">
-                                                Evenly Equated
-                                            </div>
-                                            <span class="glyphicon form-control-feedback "></span>
-                                        </label>
-                                    </div>
-                                    <div class="form-group ">
-                                        <label class="input-group">
-                                            <span class="input-group-addon">
-                                                <input type="radio" id="individual" name="activity_level_type_edit" value="Individual" {{#if_eq level_type "Individual"}}
-                                                    checked {{/if_eq}}  disabled />
-                                            </span>
-                                            <div class="form-control form-control-static">
-                                                Individual
-                                            </div>
-                                            <span class="glyphicon form-control-feedback "></span>
-                                        </label>
-                                    </div>
-                                </div>
-
-                                {{#each budgetArr}}
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title">{{this.parent_name}}</h3>
-                                    </div>
-                                    <div class="panel-body">
-                                        {{#each this.child_budget}}
-                                        <div class="list">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <h5>
-                                                        {{this.name}}
-                                                    </h5>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group">
-
-                                                        <input class="form-control edit_budget_hour number_budget" type="text" data-budgets-id="{{this.id}}" id="edit_budget_hour"
-                                                            name="edit_budget_hour" placeholder="Hours" value="{{this.hour}}" disabled>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group">
-                                                        <input class="form-control edit_budget_amount number_budget" type="text" id="edit_budget_amount" name="edit_budget_amount"
-                                                            placeholder="Dollars($)" value="{{this.amount}}" disabled>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {{/each}}
-
-                                    </div>
-                                </div>
-                                {{/each}}
-                            </div>
-                        </div>
-                    </form>
+  <div class="modal-dialog">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <div class="modal-content modal-lg">
+      <div class="modal-header">
+        <h4 class="modal-title">Marketing Budget Details</h4>
+      </div>
+      <div class="modal-body">
+        <div class="card-box">
+          <form class="m-b-10" name="editActivityBudgetFrm" id="editActivityBudgetFrm">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-inline m-b-15">
+                  <div class="form-group m-r-5">
+                    <label class="input-group">
+                      <span class="input-group-addon">
+                        <input type="radio" id="evenly_equated" name="activity_level_type_edit" value="Evenly Equated" {{#if_eq level_type
+                          "Evenly Equated"}} checked {{/if_eq}} />
+                      </span>
+                      <div class="form-control form-control-static">
+                        Evenly Equated
+                      </div>
+                      <span class="glyphicon form-control-feedback "></span>
+                    </label>
+                  </div>
+                  <div class="form-group ">
+                    <label class="input-group">
+                      <span class="input-group-addon">
+                        <input type="radio" id="individual" name="activity_level_type_edit" value="Individual" {{#if_eq level_type "Individual"}}
+                          checked {{/if_eq}} />
+                      </span>
+                      <div class="form-control form-control-static">
+                        Individual
+                      </div>
+                      <span class="glyphicon form-control-feedback "></span>
+                    </label>
+                  </div>
                 </div>
+
+                {{#each budgetArr}}
+                <div class="panel panel-primary">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">{{this.parent_name}}</h3>
+                  </div>
+                  <div class="panel-body">
+                    {{#each this.child_budget}}
+                    <div class="list">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <h5>
+                            {{this.name}}
+                          </h5>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">
+
+                            <input class="form-control edit_budget_hour number_budget" type="text" data-budgets-id="{{this.id}}" id="edit_budget_hour"
+                              name="edit_budget_hour" placeholder="Hours" value="{{this.hour}}">
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <input class="form-control edit_budget_amount number_budget" type="text" id="edit_budget_amount" name="edit_budget_amount"
+                              placeholder="Dollars($)" value="{{this.amount}}">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {{/each}}
+
+                  </div>
+                </div>
+                {{/each}}
+              </div>
             </div>
+
+            <div class="m-t-15 text-center">
+              <button class="btn btn-primary btn-lg" type="button" id="btnEditActivityBudget">Update</button>
+
+            </div>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
+</div>
+
+<div id="add_user" class="modal custom-modal fade" role="dialog">
+  <div class="modal-dialog">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <div class="modal-content modal-lg">
+      <div class="modal-header">
+        <h4 class="modal-title">Add Attorney Budget Per Client/Target</h4>
+      </div>
+      <div class="modal-body">
+        <form class="m-b-30" name="addSection" id="addSection" method="POST">
+          <input type="hidden" name="_csrf" value="{{csrfToken}}">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="control-label">Firm:
+                  <span class="text-danger">*</span>
+                </label>
+                <input class="form-control" type="text" id="name" name="name">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="control-label">Relation:
+                  <span class="text-danger">*</span>
+                </label>
+                <textarea class="form-control" id="description" name="description" rows="5"></textarea>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="control-label">Target/Client Name:
+                  <span class="text-danger">*</span>
+                </label>
+                <textarea class="form-control" id="description" name="description" rows="5"></textarea>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="control-label">Contact Name:
+                  <span class="text-danger">*</span>
+                </label>
+                <textarea class="form-control" id="description" name="description" rows="5"></textarea>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="control-label">Potential Revenue:
+                  <span class="text-danger">*</span>
+                </label>
+                <textarea class="form-control" id="description" name="description" rows="5"></textarea>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="control-label">Remarks
+                  <span class="text-danger">*</span>
+                </label>
+                <textarea class="form-control" id="remarks" name="remarks" rows="5"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="m-t-20 text-center">
+            <button class="btn btn-primary" type="button" id="btnAddSection">Create Section</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 
 {{!-- Ends add budget modal --}} {{#content "script" mode="append"}}
@@ -307,17 +473,253 @@
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
-<script>
-    $('#target_id').multiselect({
-            nonSelectedText: 'Select Targets',
-            includeSelectAllOption: true,
-            buttonWidth: '100%'
-        });
+<script type="text/javascript">
 
-        $('#client_id').multiselect({
-            nonSelectedText: 'Select Clients',
-            includeSelectAllOption: true,
-            buttonWidth: '100%'
+  $(document).on('click', '#referral_type', function () {
+    $('#target_list').show();
+    $('#client_list').hide();
+  });
+
+  $(document).on('click', '#organization_type', function () {
+    $('#target_list').hide();
+    $('#client_list').show();
+  });
+
+  $('#target_id').multiselect({
+    nonSelectedText: 'Select Targets',
+    includeSelectAllOption: true,
+    buttonWidth: '100%'
+  });
+
+  $('#client_id').multiselect({
+    nonSelectedText: 'Select Clients',
+    includeSelectAllOption: true,
+    buttonWidth: '100%'
+  });
+
+  $(document).on('click', "#btnEditActivityBudget", function (e) {
+    var EditBudgetArr = [];
+    var totalAmount = 0;
+    var totalHour = 0;
+    $('.edit_budget_hour').each(function (index) {
+      if ($(this).val() !== "") {
+        var budgetId = $(this).data("budgets-id");
+        var amount = $(".edit_budget_amount")[index].value;
+        totalAmount += parseInt(amount);
+        totalHour += parseInt($(this).val());
+        EditBudgetArr.push({
+          budget_id: budgetId,
+          budget_hour: $(this).val(),
+          budget_amount: amount
         });
+      }
+    });
+    var activity_id = $("#activity_id").val();
+    $("#total_hour").val(totalHour);
+    $("#total_amount").val(totalAmount);
+    $.ajax({
+      type: "POST",
+      url: "/activity/edit-budget",
+      data: {
+        activity_id: activity_id,
+        activity_goal_id: $("#activity_goal").val(),
+        activity_level_type: $('input[name=activity_level_type_edit]:checked').val(),
+        total_amount: totalAmount,
+        total_Hour: totalHour,
+        budget: JSON.stringify(EditBudgetArr)
+      },
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+        $("#btnEditActivityBudget").prop('disabled', true);
+        $("#btnEditActivityBudget").html("Loading...");
+      },
+      success: function (response) {
+        if (response.success == true) {
+          $(`<div class="alert alert-success"><strong>Success! </strong>Budget Added Successfully</div>`).insertBefore("#btnEditActivityBudget");
+          setTimeout(function () {
+            $("#update_budget").modal('hide');
+            $("#btnEditActivityBudget").html("Update");
+            $("#btnEditActivityBudget").prop('disabled', false);
+          }, 2000);
+        }
+      }
+    });
+  });
+
+  $("#activity_type").change(function () {
+    if ($(this).val() == 'team') {
+      $('#potiential_revenue').val('0.00');
+      $('#potiential_revenue').prop('readonly', true);
+      $(".none").show();
+      $(".section").hide();
+      $(".strategyGroup").hide();
+    } else if ($(this).val() == 'section') {
+      $('#potiential_revenue').val('0.00');
+      $(".none").hide();
+      $(".section").show();
+      $(".strategyGroup").hide();
+      $('#potiential_revenue').prop('readonly', false);
+    } else if ($(this).val() == 'strategic_group') {
+      $('#potiential_revenue').val('0.00');
+      $(".none").hide();
+      $(".strategyGroup").show();
+      $(".section").hide();
+      $('#potiential_revenue').prop('readonly', false);
+    } else {
+      $('#potiential_revenue').val('0.00');
+      $(".none").show();
+      $(".section").hide();
+      $(".strategyGroup").hide();
+      $('#potiential_revenue').prop('readonly', false);
+    }
+  })
+
+
+  if ($('#activity_type').val() == 'team') {
+    $('#potiential_revenue').val('0.00');
+    $('#potiential_revenue').prop('readonly', true);
+    $(".none").show();
+    $(".section").hide();
+    $(".strategyGroup").hide();
+  } else if ($('#activity_type').val() == 'section') {
+    $('#potiential_revenue').val('0.00');
+    $(".none").hide();
+    $(".section").show();
+    $(".strategyGroup").hide();
+    $('#potiential_revenue').prop('readonly', false);
+  } else if ($('#activity_type').val() == 'strategic_group') {
+    $('#potiential_revenue').val('0.00');
+    $(".none").hide();
+    $(".strategyGroup").show();
+    $(".section").hide();
+    $('#potiential_revenue').prop('readonly', false);
+  } else {
+    $('#potiential_revenue').val('0.00');
+    $(".none").show();
+    $(".section").hide();
+    $(".strategyGroup").hide();
+    $('#potiential_revenue').prop('readonly', false);
+  }
+
+  $("#potiential_revenue").inputmask("numeric", {
+    radixPoint: ".",
+    groupSeparator: ",",
+    digits: 2,
+    autoGroup: true,
+    prefix: '$ ',
+    rightAlign: false
+  });
+
+
+
 </script>
- {{/content}}
+
+
+<script type="text/javascript">
+  // add designation ajax and form validation starts
+  $(document).ready(function (e) {
+
+    $(".number_budget").keydown(function (e) {
+      // Allow: backspace, delete, tab, escape, enter and .
+      if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
+        // Allow: Ctrl+A, Command+A
+        (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+        // Allow: home, end, left, right, down, up
+        (e.keyCode >= 35 && e.keyCode <= 40)) {
+        // let it happen, don't do anything
+        return;
+      }
+      // Ensure that it is a number and stop the keypress
+      if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+        e.preventDefault();
+      }
+    });
+
+    $("#updateActivityForm").validate({
+      rules: {
+        firm: {
+          required: true
+        },
+        activity_type: {
+          required: true
+        },
+        activity_goal: {
+          required: true
+        },
+        practice_area: {
+          required: true
+        },
+        potiential_revenue: {
+          required: true
+        },
+        remarks: {
+          required: true
+        },
+        activity_creation_date: {
+          required: true
+        },
+        activity_from_date: {
+          required: true
+        },
+        activity_to_date: {
+          required: true
+        },
+        activity_name: {
+          required: true
+        },
+        activity_reason: {
+          required: true
+        },
+        budget_status: {
+          required: true
+        },
+        budget_details_status: {
+          required: true
+        }
+
+      },
+      messages: {
+        firm: {
+          required: "firm can't be blank"
+        },
+        activity_type: {
+          required: "activity type title can't be blank"
+        },
+        activity_goal: {
+          required: "activity goal title can't be blank"
+        },
+        practice_area: {
+          required: "practice area title can't be blank"
+        },
+        potiential_revenue: {
+          required: "potiential revenue title can't be blank"
+        },
+        remarks: {
+          required: "remarks title can't be blank"
+        },
+        activity_creation_date: {
+          required: "creation date title can't be blank"
+        },
+        activity_from_date: {
+          required: "from date title can't be blank"
+        },
+        activity_to_date: {
+          required: "to date title can't be blank"
+        },
+        activity_name: {
+          required: "activity name title can't be blank"
+        },
+        activity_reason: {
+          required: "activity reason title can't be blank"
+        },
+        budget_status: {
+          required: "budget status title can't be blank"
+        },
+        budget_details_status: {
+          required: "budget_details_status title can't be blank"
+        }
+      }
+    });
+  });
+</script> {{/content}}

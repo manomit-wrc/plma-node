@@ -1884,6 +1884,11 @@ i.fa.fa-eye.m-r-5 {
 	margin-top: 10px;
 }
 
+.dataTables_wrapper .dataTables_length {
+	float: left;
+	margin-right: 20px;
+}
+
 /*------------------------------------------------------------------
 [39-a.... Custom Styles]
 */
