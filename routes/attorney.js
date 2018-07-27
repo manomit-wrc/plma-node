@@ -60,7 +60,8 @@ function removeMobileMask(mobile_no) {
 
 
 router.get('/attorneys', auth, csrfProtection, async (req, res) => {
-	var success_message = req.flash('success-message')[0];
+	var success_message = req.flash('success-attorney-message')[0];
+	var success_edit_message = req.flash('success-edit-attorney-message')[0];
 	const attr = await User.findAll({
 		where: {
 			role_id: 3,
@@ -69,6 +70,8 @@ router.get('/attorneys', auth, csrfProtection, async (req, res) => {
 	});
 	res.render('attorney/index', {
 		layout: 'dashboard',
+		success_message,
+		success_edit_message,
 		csrfToken: req.csrfToken(),
 		row: attr
 	});
@@ -279,6 +282,7 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 
 			});
 		});
+		req.flash('success-attorney-message', 'Attorney Created Successfully');
 		res.redirect('/attorneys');
 	}
 
@@ -513,8 +517,8 @@ router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async(r
 			}
 		});
 
-
-	res.redirect('/attorneys');
+		req.flash('success-edit-attorney-message', 'Attorney Updated Successfully');
+		res.redirect('/attorneys');
 });
 
 //==========================================================end===================================================//

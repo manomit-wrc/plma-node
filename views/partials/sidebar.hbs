@@ -168,6 +168,13 @@
                     </li>
                 </li>
                 {{/if_eq}}
+                 {{#if_eq user.approver "1"}}
+                <li {{#if_eq client_url "activity_approval" }} class="active" {{/if_eq}}>
+                    <a href="/activity_approval">
+                        <i class="fa fa-check"></i> Activity Approvals</a>
+                </li>
+                {{/if_eq}}
+
             </ul>
         </div>
     </div>
