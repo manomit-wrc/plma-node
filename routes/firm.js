@@ -107,6 +107,7 @@ router.post('/firms/add', auth, siteAuth, csrfProtection, async (req, res) => {
                 avatar,
                 address: '',
                 status: 1,
+                approver: 1,
                 createdAt: new Date(),
                 updatedAt: new Date(),
                 is_attorney: req.body.is_attorney ? req.body.is_attorney : 0,

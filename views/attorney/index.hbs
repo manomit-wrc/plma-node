@@ -7,8 +7,13 @@
   <div class="content container-fluid">
     <div class="row">
       {{#if success_message}}
-      <div class="alert alert-danger">
-        <strong>Error! </strong>{{success_message}}
+      <div class="alert alert-success">
+        <strong>Success! </strong>{{success_message}}
+      </div>
+      {{/if}}
+      {{#if success_edit_message}}
+      <div class="alert alert-success">
+        <strong>Success! </strong>{{success_edit_message}}
       </div>
       {{/if}}
       <div class="col-xs-4">
@@ -72,4 +77,10 @@
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>ACTIVITY {{/content}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+{{!-- <script>
+  $(document).on("click","tr", function(){
+    window.location.href = "/attorneys/viewdata/139";
+  });
+</script> --}}
+ {{/content}}
