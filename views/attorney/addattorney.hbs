@@ -28,25 +28,34 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">Email</label>
+                                    <label class="control-label">Email
+                                      <span class="req-lbl">*</span>
+
+                                    </label>
                                     <input type="text" class="form-control floating" id="mail" name="mail" />
                                     <span id="uniqueEmail" style="color: red; font-weight:bolder"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">Password</label>
+                                    <label class="control-label">Password
+                                      <span class="req-lbl">*</span>
+
+                                    </label>
                                     <input type="password" class="form-control floating" id="pass" name="pass" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
-                                    <input type="checkbox" name="approver" id="approver" value="1"> Approver 
+                                    <input type="checkbox" name="approver" id="approver" value="1"> Approver
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group form-focus select-focus">
-                                        <label class="control-label">Group</label>
+                                        <label class="control-label">Group
+                                          <span class="req-lbl">*</span>
+
+                                        </label>
 
                                         <select id="group" name="group" class="form-control floating">
                                             <option value="">Select Group</option>
@@ -58,7 +67,10 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group form-focus select-focus">
-                                        <label class="control-label">Section</label>
+                                        <label class="control-label">Section
+                                          <span class="req-lbl">*</span>
+
+                                        </label>
                                         <select id="section" name="section" class="form-control floating">
                                             <option value="">Select Section</option>
                                             {{#each section}}
@@ -69,7 +81,10 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group form-focus select-focus">
-                                        <label class="control-label">Designation</label>
+                                        <label class="control-label">Designation
+                                          <span class="req-lbl">*</span>
+
+                                        </label>
                                         <select id="designation" name="designation" class=" form-control floating">
                                             <option value="">Select Designation</option>
                                             {{#each designation}}
@@ -91,13 +106,17 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group form-focus">
-                                <label class="control-label">First Name</label>
+                                <label class="control-label">First Name
+                                  <span class="req-lbl">*</span>
+                               </label>
                                 <input type="text" class="form-control floating" id="first_name" name="first_name" />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group form-focus">
-                                <label class="control-label">Last Name</label>
+                                <label class="control-label">Last Name
+                                  <span class="req-lbl">*</span>
+                               </label>
                                 <input type="text" class="form-control floating" id="last_name" name="last_name" />
                             </div>
                         </div>
@@ -278,7 +297,9 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group form-focus select-focus">
-                                <label class="control-label">State</label>
+                                <label class="control-label">State
+                                  <span class="req-lbl">*</span>
+                                </label>
                                 <select id="state" name="state" class="form-control floating">
                                     <option value="">Select State</option>
                                     {{#each state}}
@@ -289,7 +310,9 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group form-focus select-focus">
-                                <label class="control-label">City</label>
+                                <label class="control-label">City
+                                  <span class="req-lbl">*</span>
+                                </label>
                                 <select id="city" name="city" class="form-control floating">
                                     <option value="">Select City</option>
 
@@ -298,7 +321,9 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group form-focus select-focus">
-                                <label class="control-label">Zipcode</label>
+                                <label class="control-label">Zipcode
+                                  <span class="req-lbl">*</span>
+                                </label>
                                 <select id="zipcode" name="zipcode" class="form-control floating">
                                     <option value="">Select Zipcode</option>
                                 </select>
@@ -437,7 +462,7 @@
 
                         }
                     });
-                }       
+                }
                 else{
                    $("#designation option").not(':first').remove();
                     $.ajax({
