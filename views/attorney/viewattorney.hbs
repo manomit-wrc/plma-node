@@ -100,7 +100,7 @@
             <div class="form-group form-focus">
               <label class="control-label">Birth Date</label>
               <div class="cal-icon">
-                <input class="form-control floating datetimepicker" type="text" id="dob" name="dob" value="{{dateFormat edata.dob " DD-MM-YYYY
+                <input class="form-control floating datetimepicker" type="text" id="dob" name="dob" value="{{dateFormat edata.0.dob " DD-MM-YYYY
                   "}}" readonly>
               </div>
             </div>
@@ -182,7 +182,7 @@
             <div class="form-group form-focus">
               <label class="control-label">Bar Practice Date</label>
               <div class="cal-icon">
-                <input class="form-control floating datetimepicker" type="text" id="bar_practice_date" name="bar_practice_date" value="{{dateFormat edata.bar_practice_date "
+                <input class="form-control floating datetimepicker" type="text" id="bar_practice_date" name="bar_practice_date" value="{{dateFormat edata.0.attorney_details.0.bar_practice_date "
                   DD-MM-YYYY "}}" readonly>
               </div>
             </div>
@@ -191,7 +191,7 @@
             <div class="form-group form-focus">
               <label class="control-label">Firm Join Date</label>
               <div class="cal-icon">
-                <input class="form-control floating datetimepicker" type="text" id="firm_join_date" name="firm_join_date" value="{{dateFormat edata.firm_join_date "
+                <input class="form-control floating datetimepicker" type="text" id="firm_join_date" name="firm_join_date" value="{{dateFormat edata.0.attorney_details.0.firm_join_date "
                   DD-MM-YYYY "}}" readonly>
               </div>
             </div>
@@ -352,13 +352,13 @@
           <div class="col-md-6">
             <div class="form-group form-focus">
               <label class="control-label">Fax</label>
-              <input type="text" class="form-control floating" id="fax" name="fax" value="{{edata.0.attorney_details.0.social_url}}" readonly/>
+              <input type="text" class="form-control floating number_validator" id="fax" name="fax" value="{{edata.0.attorney_details.0.fax}}" readonly/>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group form-focus">
               <label class="control-label">Website URL</label>
-              <input type="text" class="form-control floating url_selector" id="website_url" name="website_url" value="{{edata.0.attorney_details.0.website_url}}"
+              <input type="text" class="form-control floating url_selector" id="website_url" name="website_url" value="{{edata.0.attorney_details.0.social_url}}"
                 readonly/>
             </div>
           </div>
