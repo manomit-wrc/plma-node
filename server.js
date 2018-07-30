@@ -32,6 +32,7 @@ const referral = require('./routes/referral');
 const attorney = require('./routes/attorney');
 const budget_report = require('./routes/budget_report');
 const forgot_password = require('./routes/forgot_password');
+const activity_approvals = require('./routes/activity-approval');
 
 const allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -296,5 +297,7 @@ app.use(referral);
 app.use(attorney);
 app.use(budget_report);
 app.use(forgot_password);
+app.use(activity_approvals);
+
 /********** End **********/
 app.listen(port, () => console.log(`Server listening to port ${port}`));
