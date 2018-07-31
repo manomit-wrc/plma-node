@@ -1,6 +1,7 @@
 {{#content "style" mode="prepend"}}
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-sweetalert/sweet-alert.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
 <div class="page-wrapper">
@@ -28,6 +29,7 @@
           <table class="table table-striped custom-table datatable" id="searchData">
             <thead>
               <tr>
+                <th>SL#</th>
                 <th>Activity Name</th>
                 <th>From Date</th>
                 <th>To Date</th>
@@ -40,13 +42,15 @@
             <tbody id="mainTable">
               {{#each row}}
               <tr>
-
+                <td>{{math @index "+" 1}}</td>
                 <td>{{this.activity_name}}</td>
                 <td>{{dateFormat this.activity_from_date "DD-MM-YYYY"}}</td>
                 <td>{{dateFormat this.activity_to_date "DD-MM-YYYY"}}</td>
                 <td>$ {{this.total_budget_amount}}</td>
                 <td>{{this.remarks}}</td>
                 <td>
+                  <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                  <input type="hidden" name="activity_id" id="activity_id" value="{{this.id}}">
                   {{#if_eq this.activity_status '0'}} NEW ACTIVITY - CREATED {{/if_eq}} {{#if_eq this.activity_status '1'}} PENDING APPROVAL
                   - IN-PROGRESS {{/if_eq}} {{#if_eq this.activity_status '2'}} APPROVED - PROCEED {{/if_eq}} {{#if_eq this.activity_status
                   '3'}} NOT APPROVED - DISCARD ACTIVITY {{/if_eq}}
@@ -54,16 +58,19 @@
 
 
                 <td class="text-right">
+                  {{#if_eq this.activity_status "0"}}
+                  <a href="javascript:void(0);" class="btn btn-info btn-sm approval_request_sent" id="approval_request_sent" title="REQUEST FOR APPROVAL" data-target="{{this.id}}"
+                    class="btn btn-danger btn-sm target-delete">
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                  </a>
+                  {{/if_eq}}
+
                   <a href="/activity/view/{{this.id}}" class="btn btn-success btn-sm">
                     <i class="fa fa-eye m-r-5"></i>
                   </a>
                   <a href="/activity/edit/{{this.id}}" class="btn btn-info btn-sm">
                     <i class="fa fa-pencil m-r-5"></i>
                   </a>
-                  {{!--
-                  <a href="/activity/deletedata/{{this.id}}" class="btn btn-danger btn-sm">
-                    <i class="fa fa-trash-o m-r-5"></i>
-                  </a> --}}
                   <a href="javascript:void(0);" data-toggle="modal" data-target="#{{this.id}}" class="btn btn-danger btn-sm target-delete">
                     <i class="fa fa-trash-o m-r-5"></i>
                   </a>
@@ -83,14 +90,12 @@
                     </div>
                   </div>
                 </div>
+
               </tr>
               {{/each}}
 
             </tbody>
           </table>
-
-
-
         </div>
       </div>
     </div>
@@ -110,5 +115,44 @@
 <script type="text/javascript" src="/assets/js/select2.min.js"></script>
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="/assets/plugins/bootstrap-sweetalert/sweet-alert.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>ACTIVITY {{/content}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>ACTIVITY
+<script type="text/javascript">
+
+  $(document).on('click', '.approval_request_sent', function (e) {
+
+    swal({
+      title: "Are you sure?",
+      text: "You want to send this activity for approval?",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonClass: "btn-danger",
+      confirmButtonText: "Yes",
+      closeOnConfirm: false
+
+    }, function () {
+      
+      var activity_id = $("#activity_id").val();
+
+      $.ajax({
+        type: "GET",
+        url: "/activity/update_approval_request/"+activity_id,
+        success: function (response) {
+          if (response.success == true) {
+            swal({
+              title: "Nice!", 
+              text: "Approval sent successfully", 
+              type: "success"
+            }, function() {
+              window.location.reload();
+            });
+          }
+        }
+      });
+
+    });
+
+  });
+
+</script>{{/content}}

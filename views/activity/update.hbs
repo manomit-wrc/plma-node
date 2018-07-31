@@ -1,7 +1,8 @@
 {{#content "style" mode="prepend"}}
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
+<link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-sweetalert/sweet-alert.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
 <div class="page-wrapper">
   <div class="content container-fluid">
@@ -173,18 +174,6 @@
                 </div>
               </div>
 
-              <div class="col-md-6">
-                <div class="form-group form-focus select-focus">
-                  <label class="control-label">Activity Status</label>
-                  <select id="activity_status" name="activity_status" class="select form-control floating">
-                    <option value="0" {{#if_eq editdata.activity_status "0"}} selected="selected" {{/if_eq}}>NEW ACTIVITY - CREATED</option>
-                    <option value="1" {{#if_eq editdata.activity_status "1"}} selected="selected" {{/if_eq}}>PENDING APPROVAL - IN-PROGRESS</option>
-                    <option value="2" {{#if_eq editdata.activity_status "2"}} selected="selected" {{/if_eq}}>APPROVED - PROCEED</option>
-                    <option value="3" {{#if_eq editdata.activity_status "3"}} selected="selected" {{/if_eq}}>NOT APPROVED - DISCARD ACTIVITY</option>
-                  </select>
-                </div>
-              </div>
-
             </div>
           </div>
         </div>
@@ -353,19 +342,29 @@
                             {{this.name}}
                           </h5>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                           <div class="form-group">
 
                             <input class="form-control edit_budget_hour number_budget" type="text" data-budgets-id="{{this.id}}" id="edit_budget_hour"
                               name="edit_budget_hour" placeholder="Hours" value="{{this.hour}}">
                           </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                           <div class="form-group">
                             <input class="form-control edit_budget_amount number_budget" type="text" id="edit_budget_amount" name="edit_budget_amount"
                               placeholder="Dollars($)" value="{{this.amount}}">
+                            <input type="hidden" name="edit_budget_remarks" id="edit_budget_remarks" class="edit_budget_remarks" value="{{this.remarks}}">
                           </div>
                         </div>
+
+                        {{#if_con this.remarks}}
+                        <div class="col-md-2">
+                          <div class="form-group">
+                            <button type="button" class="btn btn-info" data-toggle="tooltip" title="{{this.remarks}}">Remarks</button>
+                          </div>
+                        </div>
+                        {{/if_con}}
+
                       </div>
                     </div>
                     {{/each}}
@@ -463,6 +462,7 @@
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="/assets/plugins/bootstrap-sweetalert/sweet-alert.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 <script type="text/javascript">
@@ -497,12 +497,14 @@
       if ($(this).val() !== "") {
         var budgetId = $(this).data("budgets-id");
         var amount = $(".edit_budget_amount")[index].value;
+        var reamrk_budget = $('.edit_budget_remarks')[index].value;
         totalAmount += parseInt(amount);
         totalHour += parseInt($(this).val());
         EditBudgetArr.push({
           budget_id: budgetId,
           budget_hour: $(this).val(),
-          budget_amount: amount
+          budget_amount: amount,
+          remarks_budgets: reamrk_budget
         });
       }
     });
@@ -522,14 +524,16 @@
       },
       beforeSend: function (xhr) {
         xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
-
         $("#btnEditActivityBudget").prop('disabled', true);
         $("#btnEditActivityBudget").html("Loading...");
       },
       success: function (response) {
         if (response.success == true) {
-          $(`<div class="alert alert-success"><strong>Success! </strong>Budget Added Successfully</div>`).insertBefore("#btnEditActivityBudget");
+          $(`<div class="alert alert-success" id="budger_update_success"><strong>Success! </strong>Budget Updated Successfully</div>`).insertBefore("#btnEditActivityBudget");
+          // $("#budger_update_success").attr('disabled', true);
+          window.location.reload();
           setTimeout(function () {
+            $('#budger_update_success').hide();
             $("#update_budget").modal('hide');
             $("#btnEditActivityBudget").html("Update");
             $("#btnEditActivityBudget").prop('disabled', false);
@@ -602,8 +606,6 @@
     prefix: '$ ',
     rightAlign: false
   });
-
-
 
 </script>
 

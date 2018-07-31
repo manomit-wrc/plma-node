@@ -9,11 +9,12 @@
       <div class="col-sm-8">
         <h4 class="page-title">View Activity</h4>
       </div>
-      {{!--
-      <div class="text-right">
-        <a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_user">
-          <i class="fa fa-plus"></i> Add Activity</a>
-      </div> --}}
+      <div class="col-sm-4">
+        <div class="text-right">
+          <a href="/activity/edit/{{editdata.id}}" class="btn btn-primary rounded" >
+            <i class="fa fa-edit"></i> Edit Activity</a>
+        </div>
+      </div>
     </div>
 
 
@@ -26,25 +27,6 @@
         <div class="row">
           <div class="col-md-12">
             <div class="row">
-
-
-              {{!-- <div class="col-md-6">
-                <div class="form-group form-focus select-focus">
-                  <label class="control-label">Firm
-                    <span class="req-lbl">*</span>
-                  </label>
-                  <input class="form-control floating" type="text" id="firm" name="firm" value="{{this.firm}}" disabled>
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <div class="form-group form-focus select-focus">
-                  <label class="control-label">Origin Attorney
-                    <span class="req-lbl">*</span>
-                  </label>
-                  <input class="form-control floating" type="text" id="firm" name="firm" value="{{this.originAttorney}}" disabled>
-                </div>
-              </div> --}}
 
               <div class="col-md-6">
                 <div class="form-group form-focus">
@@ -179,18 +161,6 @@
                 </div>
               </div>
 
-              <div class="col-md-6">
-                <div class="form-group form-focus select-focus">
-                  <label class="control-label">Activity Status{{editdata.activity_status}}</label>
-                  <select id="activity_status" name="activity_status" class="select form-control floating" disabled>
-                    <option value="0" {{#if_eq editdata.activity_status "0"}} selected="selected" {{/if_eq}}>NEW ACTIVITY - CREATED</option>
-                    <option value="1" {{#if_eq editdata.activity_status "1"}} selected="selected" {{/if_eq}}>PENDING APPROVAL - IN-PROGRESS</option>
-                    <option value="2" {{#if_eq editdata.activity_status "2"}} selected="selected" {{/if_eq}}>APPROVED - PROCEED</option>
-                    <option value="3" {{#if_eq editdata.activity_status "3"}} selected="selected" {{/if_eq}}>NOT APPROVED - DISCARD ACTIVITY</option>
-                  </select>
-                </div>
-              </div>
-
             </div>
           </div>
         </div>
@@ -253,11 +223,6 @@
           </div>
         </div>
       </div>
-
-      {{!--
-      <div class="text-center m-t-20">
-        <button class="btn btn-primary btn-lg" type="submit" id="btnAdd">Save &amp; Update Activity</button>
-      </div> --}}
     </form>
   </div>
 
@@ -360,19 +325,26 @@
                             {{this.name}}
                           </h5>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                           <div class="form-group">
 
                             <input class="form-control edit_budget_hour number_budget" type="text" data-budgets-id="{{this.id}}" id="edit_budget_hour"
                               name="edit_budget_hour" placeholder="Hours" value="{{this.hour}}">
                           </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                           <div class="form-group">
                             <input class="form-control edit_budget_amount number_budget" type="text" id="edit_budget_amount" name="edit_budget_amount"
                               placeholder="Dollars($)" value="{{this.amount}}">
                           </div>
                         </div>
+                        {{#if_con this.remarks}}
+                        <div class="col-md-2">
+                          <div class="form-group">
+                            <button type="button" class="btn btn-info" data-toggle="tooltip" title="{{this.remarks}}">Remarks</button>
+                          </div>
+                        </div>
+                        {{/if_con}}
                       </div>
                     </div>
                     {{/each}}

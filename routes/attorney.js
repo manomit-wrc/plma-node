@@ -61,7 +61,6 @@ function removeMobileMask(mobile_no) {
 
 router.get('/attorneys', auth, csrfProtection, async (req, res) => {
 	var success_message = req.flash('success-message')[0];
-
 	const attr = await User.findAll({
 		where: {
 			role_id: 3,
@@ -74,7 +73,6 @@ router.get('/attorneys', auth, csrfProtection, async (req, res) => {
 		row: attr
 	});
 });
-
 router.post("/get-firm-user-designation", auth, async (req, res)=> {
 	const get_desig = await User.findAll({
 		where: {
@@ -275,13 +273,21 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 		});
 		res.redirect('/attorneys');
 	}
+
+
 });
+
+//
+//
+//         END INSERT
+//
+//
+//
 
 router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 	User.hasMany(Attorney_Details, {
 		foreignKey: 'user_id'
 	});
-
 
 	const designation = await Designation.findAll();
 	const group = await Group.findAll();
@@ -349,6 +355,12 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 
 
 
+//
+//
+//         END EDIT
+//
+//
+//
 
 //  {{{    view data}}}
 
@@ -413,6 +425,14 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 
 
 
+
+//
+//
+//
+//  {{{     end  view data}}}
+//
+//
+//
 
 
 router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async(req, res) => {

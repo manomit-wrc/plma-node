@@ -38,6 +38,7 @@
                     <table class="table table-striped custom-table datatable">
                         <thead>
                             <tr>
+                                <th>SL#</th>
                                 <th style="width:25%;">Referral Name</th>
                                 <th>Referral Type</th>
                                 <th>Email ID</th>
@@ -48,6 +49,7 @@
                         <tbody>
                             {{#each referral}}
                             <tr>
+                                <td>{{math @index "+" 1}}</td>
                                 <td>
                                     {{#if_eq referral_type "I"}} {{this.first_name}} {{this.last_name}} {{/if_eq}} {{#if_eq referral_type "O"}} {{this.organization_name}}
                                     {{/if_eq}}

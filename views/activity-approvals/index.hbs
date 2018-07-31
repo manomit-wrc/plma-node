@@ -23,6 +23,7 @@
                     <table class="table table-striped custom-table datatable" id="searchData">
                         <thead>
                             <tr>
+                                <th>SL#</th>
                                 <th>Activity Name</th>
                                 <th>Approval Status</th>
                             </tr>
@@ -30,10 +31,10 @@
                         <tbody id="mainTable">
                             {{#each activity_approvals}}
                             <tr>
+                                <td>{{math @index "+" 1}}</td>
                                 <td>{{this.activity_name}}</td>
                                 <td>
-                                    <a href="/approval_details/{{this.id}}" id="budgetUpdate" >View Remarks
-                                        {{!-- <input type="button" value="View Remarks" style="background-color:black"> --}}
+                                    <a href="/approval_details/{{this.id}}" id="budgetUpdate">View Remarks 
                                     </a>
                                 </td>
                             </tr>
