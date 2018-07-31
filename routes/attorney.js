@@ -60,8 +60,10 @@ function removeMobileMask(mobile_no) {
 
 
 router.get('/attorneys', auth, csrfProtection, async (req, res) => {
+
 	var success_message = req.flash('success-attorney-message')[0];
 	var success_edit_message = req.flash('success-edit-attorney-message')[0];
+
 	attar_information = [];
 	User.hasMany(Attorney_Details, {
 		foreignKey: 'user_id'
@@ -76,8 +78,6 @@ router.get('/attorneys', auth, csrfProtection, async (req, res) => {
 			model: Attorney_Details
 		}]
 	});
-
-
 
 	for (var i = 0; i < attr.length; i++) {
 		var name = attr[i].first_name + " " + attr[i].last_name;
@@ -104,8 +104,6 @@ router.get('/attorneys', auth, csrfProtection, async (req, res) => {
 
 	res.render('attorney/index', {
 		layout: 'dashboard',
-		success_message,
-		success_edit_message,
 		csrfToken: req.csrfToken(),
 		row: attar_information
 	});
@@ -186,25 +184,26 @@ router.get("/get-all-designation", auth, async (req, res) => {
 router.get('/attorneys/addAttorney', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var err_message = req.flash('success-err-message')[0];
 	const designation = await Designation.findAll();
+
 	const group = await Group.findAll({
 		order: [
 			['name', 'ASC'],
 		]
 	});
+
 	sectionToFirm.belongsTo(Section, {
 		foreignKey: 'section_id'
 	});
 
 	const allSection = await sectionToFirm.findAll({
-
 		where: {
 			firm_id: req.user.firm_id
 		},
-
 		include: [{
 			model: Section
 		}]
 	});
+
 	const jurisdiction = await Jurisdiction.findAll({
 		order: [
 			['name', 'ASC'],
@@ -215,6 +214,7 @@ router.get('/attorneys/addAttorney', auth, firmAttrAuth, csrfProtection, async (
 			['industry_name', 'ASC'],
 		]
 	});
+
 	var country = await Country.findAll();
 	const state = await State.findAll({
 		where: {
@@ -234,11 +234,6 @@ router.get('/attorneys/addAttorney', auth, firmAttrAuth, csrfProtection, async (
 		err_message
 	});
 });
-
-// insert data to the database
-
-
-
 
 router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var attrorney_details_id = '';
@@ -298,6 +293,8 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 				education: req.body.education,
 				bar_registration: req.body.bar_registration,
 				job_type: req.body.job_type,
+				bar_practice_date: req.body.bar_practice_date,
+				firm_join_date: req.body.firm_join_date,
 				jurisdiction: parseInt(req.body.jurisdiction),
 				industry_type: parseInt(req.body.industry_type),
 				hourly_cost: req.body.hourly_cost,
@@ -308,7 +305,7 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 				address3: req.body.address3,
 				phone_no: removePhoneMask(req.body.phone_no),
 
-				fax: removePhoneMask(req.body.fax),
+				fax: req.body.fax,
 				website_url: req.body.website_url,
 				social_url: req.body.social_url,
 				remarks: req.body.remarks,
@@ -319,19 +316,12 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 
 			});
 		});
-		req.flash('success-attorney-message', 'Attorney Created Successfully');
 		res.redirect('/attorneys');
 	}
 
 
 });
 
-//
-//
-//         END INSERT
-//
-//
-//
 
 router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 	User.hasMany(Attorney_Details, {
@@ -339,11 +329,13 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 	});
 
 	const designation = await Designation.findAll();
+
 	const group = await Group.findAll({
 		order: [
 			['name', 'ASC'],
 		]
 	});
+
 	sectionToFirm.belongsTo(Section, {
 		foreignKey: 'section_id'
 	});
@@ -356,6 +348,7 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 			model: Section
 		}]
 	});
+
 	const jurisdiction = await Jurisdiction.findAll({
 			order: [
 				['name', 'ASC'],
@@ -368,6 +361,7 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 			['industry_name', 'ASC'],
 		]
 	});
+
 
 	const country = await Country.findAll({});
 	const state = await State.findAll({});
@@ -416,18 +410,6 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 
 
 
-
-
-//
-//
-//         END EDIT
-//
-//
-//
-
-//  {{{    view data}}}
-
-
 router.get('/attorneys/viewdata/:id', auth, csrfProtection, async (req, res) => {
 
 	User.hasMany(Attorney_Details, {
@@ -469,7 +451,7 @@ router.get('/attorneys/viewdata/:id', auth, csrfProtection, async (req, res) => 
 			}
 		});
 	}
-	// console.log(edata[0].state);
+
 	res.render('attorney/viewattorney', {
 		layout: 'dashboard',
 		csrfToken: req.csrfToken(),
@@ -485,17 +467,6 @@ router.get('/attorneys/viewdata/:id', auth, csrfProtection, async (req, res) => 
 		city
 	});
 });
-
-
-
-
-//
-//
-//
-//  {{{     end  view data}}}
-//
-//
-//
 
 
 router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
@@ -526,6 +497,7 @@ router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async (
 			id: req.params['id']
 		}
 	});
+
 
 	const attr_update = await Attorney_Details.update({
 		group: parseInt(req.body.group),

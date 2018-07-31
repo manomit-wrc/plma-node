@@ -11,9 +11,10 @@
         <h4 class="page-title">View Attorney Details</h4>
       </div>
       <div class="col-xs-8 text-right">
+
         <a href=/attorneys/edit/{{edata.0.id}} class="btn btn-primary pull-right rounded">
           <i class="fa fa-pencil"></i> Edit</a>
-
+          {{!-- <a href=/attorneys/edit/{{edata.0.id}} class="btn btn-primary pull-right rounded"> Edit Attorney</a> --}}
       </div>
     </div>
 
@@ -85,21 +86,21 @@
           <div class="col-md-6">
             <div class="form-group form-focus">
               <label class="control-label">First Name</label>
-              <input type="text" class="form-control floating" id="first_name" name="first_name" value="{{edata.0.first_name}}" disabled/>
+              <input type="text" class="form-control floating" id="first_name" name="first_name" value="{{edata.0.first_name}}" readonly/>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group form-focus">
               <label class="control-label">Last Name</label>
-              <input type="text" class="form-control floating" id="last_name" name="last_name" value="{{edata.0.last_name}}" disabled/>
+              <input type="text" class="form-control floating" id="last_name" name="last_name" value="{{edata.0.last_name}}" readonly/>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group form-focus">
               <label class="control-label">Birth Date</label>
               <div class="cal-icon">
-                <input class="form-control floating datetimepicker" type="text" id="dob" name="dob" value="{{dateFormat edata.dob " DD-MM-YYYY
-                  "}}" disabled>
+                <input class="form-control floating datetimepicker" type="text" id="dob" name="dob" value="{{dateFormat edata.0.dob " DD-MM-YYYY
+                  "}}" readonly>
               </div>
             </div>
           </div>
@@ -120,14 +121,14 @@
             <div class="form-group form-focus">
               <label class="control-label">Attorney ID</label>
               <input type="text" class="form-control floating" id="attorney_id" name="attorney_id" value="{{edata.0.attorney_details.0.attorney_id}}"
-                disabled onkeypress="return onlyNumbers();" />
+                readonly onkeypress="return onlyNumbers();" />
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group form-focus">
               <label class="control-label">Attorney Code</label>
               <input type="text" class="form-control floating" id="attorney_code" name="attorney_code" value="{{edata.0.attorney_details.0.attorney_code}}"
-                disabled/>
+                readonly/>
             </div>
           </div>
           <div class="col-md-6">
@@ -145,7 +146,7 @@
             <div class="form-group form-focus">
               <label class="control-label">Education</label>
               <input type="text" class="form-control floating" id="education" name="education" value="{{edata.0.attorney_details.0.education}}"
-                disabled/>
+                readonly/>
             </div>
           </div>
         </div>
@@ -162,7 +163,7 @@
             <div class="form-group form-focus">
               <label class="control-label">Bar Registration</label>
               <input type="text" class="form-control floating" id="bar_registration" name="bar_registration" value="{{edata.0.attorney_details.0.bar_registration}}"
-                disabled/>
+                readonly/>
             </div>
           </div>
           <div class="col-md-6">
@@ -180,8 +181,8 @@
             <div class="form-group form-focus">
               <label class="control-label">Practice Date</label>
               <div class="cal-icon">
-                <input class="form-control floating datetimepicker" type="text" id="bar_practice_date" name="bar_practice_date" value="{{dateFormat edata.bar_practice_date "
-                  DD-MM-YYYY "}}" disabled>
+                <input class="form-control floating datetimepicker" type="text" id="bar_practice_date" name="bar_practice_date" value="{{dateFormat edata.0.attorney_details.0.bar_practice_date "
+                  DD-MM-YYYY "}}" readonly>
               </div>
             </div>
           </div>
@@ -189,8 +190,8 @@
             <div class="form-group form-focus">
               <label class="control-label">Firm Join Date</label>
               <div class="cal-icon">
-                <input class="form-control floating datetimepicker" type="text" id="firm_join_date" name="firm_join_date" value="{{dateFormat edata.firm_join_date "
-                  DD-MM-YYYY "}}" disabled>
+                <input class="form-control floating datetimepicker" type="text" id="firm_join_date" name="firm_join_date" value="{{dateFormat edata.0.attorney_details.0.firm_join_date "
+                  DD-MM-YYYY "}}" readonly>
               </div>
             </div>
           </div>
@@ -222,14 +223,14 @@
             <div class="form-group form-focus">
               <label class="control-label">Hourly Cost</label>
               <input type="text" class="form-control floating" id="hourly_cost" name="hourly_cost" value="{{edata.0.attorney_details.0.hourly_cost}}"
-                disabled onkeypress="return onlyNumbers();" />
+                readonly onkeypress="return onlyNumbers();" />
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group form-focus">
               <label class="control-label">Benefit Factor %</label>
               <input type="text" class="form-control floating" id="benefit_factor" name="benefit_factor" value="{{edata.0.attorney_details.0.benefit_factor}}"
-                disabled onkeypress="return onlyNumbers();" />
+                readonly onkeypress="return onlyNumbers();" />
             </div>
           </div>
 
@@ -237,7 +238,7 @@
             <div class="form-group form-focus">
               <label class="control-label">Overhead Amount</label>
               <input type="text" class="form-control floating" id="overhead_amount" name="overhead_amount" value="{{edata.0.attorney_details.0.overhead_amount}}"
-                disabled onkeypress="return onlyNumbers();" />
+                readonly onkeypress="return onlyNumbers();" />
             </div>
           </div>
 
@@ -247,7 +248,7 @@
             <div class="form-group form-focus">
               <label class="control-label">Billing Opp Cost</label>
               <input type="text" class="form-control floating" id="billing_opp_cost" name="billing_opp_cost" value="{{edata.0.attorney_details.0.billing_opp_cost}}"
-                disabled onkeypress="return onlyNumbers();" />
+                readonly onkeypress="return onlyNumbers();" />
             </div>
           </div>
 
@@ -267,21 +268,21 @@
           <div class="col-md-12">
             <div class="form-group form-focus">
               <label class="control-label">Address Line 1</label>
-              <input type="text" class="form-control floating" id="address" name="address" value="{{edata.0.address}}" disabled/>
+              <input type="text" class="form-control floating" id="address" name="address" value="{{edata.0.address}}" readonly/>
             </div>
           </div>
           <div class="col-md-12">
             <div class="form-group form-focus">
               <label class="control-label">Address Line 2</label>
               <input type="text" class="form-control floating" id="address2" name="address2" value="{{edata.0.attorney_details.0.address2}}"
-                disabled/>
+                readonly/>
             </div>
           </div>
           <div class="col-md-12">
             <div class="form-group form-focus">
               <label class="control-label">Address Line 3</label>
               <input type="text" class="form-control floating" id="address3" name="address3" value="{{edata.0.attorney_details.0.address3}}"
-                disabled/>
+                readonly/>
             </div>
           </div>
 
@@ -334,7 +335,7 @@
             <div class="form-group form-focus">
               <label class="control-label">Mobile No</label>
               <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" value="{{edata.0.mobile_no}}"
-                disabled/>
+                readonly/>
             </div>
           </div>
 
@@ -343,28 +344,28 @@
             <div class="form-group form-focus">
               <label class="control-label">Phone No</label>
               <input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" value="{{edata.0.attorney_details.0.phone_no}}"
-                disabled/>
+                readonly/>
             </div>
           </div>
 
           <div class="col-md-6">
             <div class="form-group form-focus">
               <label class="control-label">Fax</label>
-              <input type="text" class="form-control floating" id="fax" name="fax" value="{{edata.0.attorney_details.0.social_url}}" disabled/>
+              <input type="text" class="form-control floating number_validator" id="fax" name="fax" value="{{edata.0.attorney_details.0.fax}}" readonly/>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group form-focus">
               <label class="control-label">Website URL</label>
               <input type="text" class="form-control floating url_selector" id="website_url" name="website_url" value="{{edata.0.attorney_details.0.website_url}}"
-                disabled/>
+                readonly/>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group form-focus">
               <label class="control-label">Social URL</label>
               <input type="text" class="form-control floating url_selector" id="social_url" name="social_url" value="{{edata.0.attorney_details.0.social_url}}"
-                disabled/>
+                readonly/>
             </div>
           </div>
         </div>
