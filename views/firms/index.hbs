@@ -27,7 +27,6 @@
                                 <th>Email</th>
                                 <th>Firm</th>
                                 <th>Created Date</th>
-
                                 <th class="text-right">Action</th>
                             </tr>
                         </thead>
@@ -35,7 +34,7 @@
                             {{#each users}}
                             <tr data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}" data-email="{{this.email}}" data-firm-title="{{this.firm.title}}"
                                 data-firm-address="{{this.firm.address}}" data-mobile-no="{{this.mobile_no}}" data-gender="{{this.gender}}"
-                                data-firm-id="{{this.firm.id}}" data-user-id="{{this.id}}" data-approval-level = "{{this.firm.approval_level}}">
+                                data-firm-id="{{this.firm.id}}" data-user-id="{{this.id}}" data-approval-level="{{this.firm.approval_level}}">
                                 <td>
                                     <a href="javascript:void(0)" class="avatar">{{first_letter this.first_name}}</a>
                                     <h2>
@@ -48,9 +47,11 @@
 
                                 <td class="text-right">
                                     <a href="javascript:void(0)" data-toggle="modal" class="edit btn btn-info btn-sm">
-                                                    <i class="fa fa-pencil m-r-5"></i></a>
+                                        <i class="fa fa-pencil m-r-5"></i>
+                                    </a>
                                     <a href="javascript:void(0)" data-toggle="modal" class="delete btn btn-danger btn-sm">
-                                                    <i class="fa fa-trash-o m-r-5"></i></a>
+                                        <i class="fa fa-trash-o m-r-5"></i>
+                                    </a>
                                 </td>
                             </tr>
                             {{/each}}
@@ -121,7 +122,7 @@
                                             <input name="is_attorney" id="is_attorney" value="1" type="checkbox">
                                         </span>
                                     </div>Yes
-                                
+
                                 </div>
                             </div>
                         </div>
@@ -151,7 +152,7 @@
                                     <div class="form-group m-r-5">
                                         <label class="input-group">
                                             <span class="input-group-addon">
-                                                <input type="radio" id="level_2" name="approval_level" value="2"  />
+                                                <input type="radio" id="level_2" name="approval_level" value="2" />
                                             </span>
                                             <div class="form-control form-control-static">
                                                 2
@@ -162,7 +163,7 @@
                                     <div class="form-group m-r-5">
                                         <label class="input-group">
                                             <span class="input-group-addon">
-                                                <input type="radio" id="level_3" name="approval_level" value="3"  />
+                                                <input type="radio" id="level_3" name="approval_level" value="3" />
                                             </span>
                                             <div class="form-control form-control-static">
                                                 3
@@ -173,7 +174,7 @@
                                     <div class="form-group m-r-5">
                                         <label class="input-group">
                                             <span class="input-group-addon">
-                                                <input type="radio" id="level_4" name="approval_level" value="4"  />
+                                                <input type="radio" id="level_4" name="approval_level" value="4" />
                                             </span>
                                             <div class="form-control form-control-static">
                                                 4
@@ -201,7 +202,7 @@
                                     <span class="text-danger">*</span>
                                     <select class="select" id="level_2_designation" name="level_2_designation">
                                         <option value="">Select Designation</option>
-                                        
+
                                     </select>
                                 </div>
                             </div>
@@ -211,7 +212,7 @@
                                     <span class="text-danger">*</span>
                                     <select class="select" id="level_3_designation" name="level_3_designation">
                                         <option value="">Select Designation</option>
-                                        
+
                                     </select>
                                 </div>
                             </div>
@@ -221,7 +222,7 @@
                                     <span class="text-danger">*</span>
                                     <select class="select" id="level_4_designation" name="level_4_designation">
                                         <option value="">Select Designation</option>
-                                        
+
                                     </select>
                                 </div>
                             </div>
@@ -483,7 +484,7 @@
     $(document).ready(function (e) {
         $(document).on('click', '#level_2', function () {
             $('#level2Designation').show();
-             $('#level3Designation').hide();
+            $('#level3Designation').hide();
             $('#level4Designation').hide();
         });
 
@@ -503,7 +504,7 @@
             $('#level4Designation').hide();
         });
         $(".section_remove option[value='74']").remove();
-        $(document).on('change', '#level_1_designation', function(e){
+        $(document).on('change', '#level_1_designation', function (e) {
             var level_1_desig = $('#level_1_designation').val();
             $.ajax({
                 type: "GET",
@@ -512,14 +513,14 @@
                     for (var i = 0; i < response.designations.length; i++) {
                         $("#level_2_designation").append('<option value="' + response.designations[i].id + '">' + response.designations[i].title + '</option>');
                     }
-                    $("#level_2_designation option[value="+ level_1_desig +"]").remove();
+                    $("#level_2_designation option[value=" + level_1_desig + "]").remove();
                 },
                 error: function (xhr) {
 
                 }
             });
         });
-        $(document).on('change', '#level_2_designation', function(e){
+        $(document).on('change', '#level_2_designation', function (e) {
             var level_1_desig = $('#level_1_designation').val();
             var level_2_desig = $('#level_2_designation').val();
             $.ajax({
@@ -529,15 +530,15 @@
                     for (var i = 0; i < response.designations.length; i++) {
                         $("#level_3_designation").append('<option value="' + response.designations[i].id + '">' + response.designations[i].title + '</option>');
                     }
-                    $("#level_3_designation option[value="+ level_1_desig +"]").remove();
-                    $("#level_3_designation option[value="+ level_2_desig +"]").remove();
+                    $("#level_3_designation option[value=" + level_1_desig + "]").remove();
+                    $("#level_3_designation option[value=" + level_2_desig + "]").remove();
                 },
                 error: function (xhr) {
 
                 }
             });
         });
-        $(document).on('change', '#level_3_designation', function(e){
+        $(document).on('change', '#level_3_designation', function (e) {
             var level_1_desig = $('#level_1_designation').val();
             var level_2_desig = $('#level_2_designation').val();
             var level_3_desig = $('#level_3_designation').val();
@@ -548,9 +549,9 @@
                     for (var i = 0; i < response.designations.length; i++) {
                         $("#level_4_designation").append('<option value="' + response.designations[i].id + '">' + response.designations[i].title + '</option>');
                     }
-                    $("#level_4_designation option[value="+ level_1_desig +"]").remove();
-                    $("#level_4_designation option[value="+ level_2_desig +"]").remove();
-                    $("#level_4_designation option[value="+ level_3_desig +"]").remove();
+                    $("#level_4_designation option[value=" + level_1_desig + "]").remove();
+                    $("#level_4_designation option[value=" + level_2_desig + "]").remove();
+                    $("#level_4_designation option[value=" + level_3_desig + "]").remove();
                 },
                 error: function (xhr) {
 
@@ -566,7 +567,7 @@
         });
 
         $("#frmAddFirm").validate({
-            
+
             rules: {
                 title: {
                     required: true
@@ -657,14 +658,14 @@
                     last_name = $("#last_name").val(),
                     mobile_no = $("#mobile_no").val(),
                     gender = $("#gender").val();
-                    group = $("#group_id").val();
-                    designation = $("#designation_id").val();
-                    is_attorney = $("#is_attorney:checked").val();
-                    approval_level = $("input[name=approval_level]:checked").val();
-                    level_1 = $("#level_1_designation").val();
-                    level_2 = $("#level_2_designation").val();
-                    level_3 = $("#level_3_designation").val();
-                    level_4 = $("#level_4_designation").val();
+                group = $("#group_id").val();
+                designation = $("#designation_id").val();
+                is_attorney = $("#is_attorney:checked").val();
+                approval_level = $("input[name=approval_level]:checked").val();
+                level_1 = $("#level_1_designation").val();
+                level_2 = $("#level_2_designation").val();
+                level_3 = $("#level_3_designation").val();
+                level_4 = $("#level_4_designation").val();
                 $.ajax({
                     type: "POST",
                     url: "/firms/add",
@@ -681,10 +682,10 @@
                         designation: designation,
                         is_attorney: is_attorney,
                         approval_level: approval_level,
-                        level_1 : level_1,
-                        level_2 : level_2,
-                        level_3 : level_3,
-                        level_4 : level_4
+                        level_1: level_1,
+                        level_2: level_2,
+                        level_3: level_3,
+                        level_4: level_4
                     },
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
@@ -845,7 +846,7 @@
         $("#mobile_no_edit").val($(this).closest('tr').data('mobile-no'));
         $('#gender_edit option[value="' + $(this).closest('tr').data('gender') + '"]').attr('selected', true);
         $('#gender_editgender_edit').trigger('change');
-        $("input[name=approval_level_edit][value="+ $(this).closest('tr').data('approval-level') +"]").attr('checked', true);
+        $("input[name=approval_level_edit][value=" + $(this).closest('tr').data('approval-level') + "]").attr('checked', true);
         $("#title_edit").val($(this).closest('tr').data('firm-title'));
         $("#address_edit").val($(this).closest('tr').data('firm-address'));
 

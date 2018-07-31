@@ -38,6 +38,7 @@
                             <tr>
                                 <th>
                                     <input type="checkbox" onClick="checkall(this);" />
+                                    SL#
                                 </th>
                                 <th>Name</th>
                                 <th>Target Type</th>
@@ -51,6 +52,7 @@
                             <tr>
                                 <td>
                                     <input type="checkbox" name="target_id" value="{{this.id}}" />
+                                    {{math @index "+" 1}}
                                 </td>
                                 <td>
                                     <a href="/target/view/{{this.id}}">

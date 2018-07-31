@@ -136,6 +136,7 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
       success = 0;
   }
 
+  
   res.render('activity_budget_report/index', {
     layout: 'dashboard',
     activityArr,

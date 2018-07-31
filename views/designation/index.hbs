@@ -22,6 +22,7 @@
                     <table class="table table-striped custom-table datatable">
                         <thead>
                             <tr>
+                                <th>SL#</th>
                                 <th style="width:30%;">Designation Name</th>
                                 <th>Remarks</th>
                                 <th>Created Date &amp; Time</th>
@@ -31,6 +32,7 @@
                         <tbody>
                             {{#each designation}}
                             <tr>
+                                <td>{{math @index "+" 1}}</td>
                                 <td>{{this.title}}</td>
                                 <td>{{this.remarks}}</td>
                                 <td>{{dateFormat this.createdAt "DD-MM-YYYY, hh:mm a"}}</td>

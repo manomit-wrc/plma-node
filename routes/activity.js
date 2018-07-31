@@ -103,7 +103,7 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 
 				"parent_name": parent_name,
 				"child_budget": child_budget
-				
+
 			});
 		}
 	}
@@ -174,7 +174,7 @@ router.post('/activity/add-budget', auth, firmAttrAuth, csrfProtection, async (r
 router.post('/activity/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var target_user = [];
 	target_user = req.body.target_user;
-	
+
 	var client_user = req.body.client_user;
 	const CreationDate = req.body.activity_creation_date ? req.body.activity_creation_date.split("-") : '';
 	const FromDate = req.body.activity_from_date ? req.body.activity_from_date.split("-") : '';
@@ -200,7 +200,7 @@ router.post('/activity/add', auth, firmAttrAuth, csrfProtection, async (req, res
 		total_budget_hour: req.body.total_hour,
 		total_budget_amount: req.body.total_amount,
 		section_id: req.body.section,
-    	s_group_id: req.body.strategy_group
+		s_group_id: req.body.strategy_group
 	}, {
 		where: {
 			id: req.body.activity_id
@@ -283,12 +283,18 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 				});
 				const hour = activity_budget.length > 0 ? activity_budget[0].hour : '';
 				const amount = activity_budget.length > 0 ? activity_budget[0].amount : '';
+				const approval_remarks = activity_budget.length > 0 ? activity_budget[0].approver_remarks : '';
+
+				console.log('amount========>>>>>>', amount);
+				console.log('approval_remarks:=======>>>', approval_remarks);
+
 				level_type = activity_budget.length > 0 ? activity_budget[0].level_type : level_type;
 				child_budget_arr.push({
 					"id": child_budget[j].id,
 					"name": child_budget[j].name,
 					"hour": hour,
-					"amount": amount
+					"amount": amount,
+					"remarks": approval_remarks
 				});
 			}
 			budgetArr.push({
@@ -300,7 +306,9 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 
 
 	const all_activity_client = await Activity_to_user_type.findAll({
-		where:{ 'activity_id' : editdata[0].id }
+		where: {
+			'activity_id': editdata[0].id
+		}
 	});
 
 	var alldata = [];
@@ -315,19 +323,23 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 	for (let i = 0; i < all_activity_client.length; i++) {
 		if (all_activity_client[i].target_client_type == 'C') {
 			target_client_list = await Client.findAll({
-				where: { 'id': all_activity_client[i].type }
+				where: {
+					'id': all_activity_client[i].type
+				}
 			})
 		} else {
 			target_client_list = await Target.findAll({
-				where: { 'id': all_activity_client[i].type }
+				where: {
+					'id': all_activity_client[i].type
+				}
 			})
 		}
 		alldata.push({
 			'attorney_name': req.user.first_name + " " + req.user.last_name,
-			'company_name': target_client_list[0].first_name+ " " +target_client_list[0].last_name,
-			'relation' : all_activity_client[i].target_client_type == 'C' ? 'Client' : 'Target',
-			'total_cost': activity_budget.level_type == 'Individual'? editdata[0].total_budget_amount: parseFloat(editdata[0].total_budget_amount/all_activity_client.length),
-			'potential_revenue' : activity_budget.level_type == 'Individual'? editdata[0].potiential_revenue: parseFloat(editdata[0].potiential_revenue/all_activity_client.length)
+			'company_name': target_client_list[0].first_name + " " + target_client_list[0].last_name,
+			'relation': all_activity_client[i].target_client_type == 'C' ? 'Client' : 'Target',
+			'total_cost': activity_budget.level_type == 'Individual' ? editdata[0].total_budget_amount : parseFloat(editdata[0].total_budget_amount / all_activity_client.length),
+			'potential_revenue': activity_budget.level_type == 'Individual' ? editdata[0].potiential_revenue : parseFloat(editdata[0].potiential_revenue / all_activity_client.length)
 		});
 	}
 
@@ -359,9 +371,9 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		budgetArr,
 		practice_area: practice_area,
 		level_type,
-		section : allSection
+		section: allSection
 	});
-	
+
 });
 
 //.....................{{   edit data  }}.......................................//
@@ -422,12 +434,15 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 				});
 				const hour = activity_budget.length > 0 ? activity_budget[0].hour : '';
 				const amount = activity_budget.length > 0 ? activity_budget[0].amount : '';
+				const approval_remarks = activity_budget.length > 0 ? activity_budget[0].approver_remarks : '';
+
 				level_type = activity_budget.length > 0 ? activity_budget[0].level_type : level_type;
 				child_budget_arr.push({
 					"id": child_budget[j].id,
 					"name": child_budget[j].name,
 					"hour": hour,
-					"amount": amount
+					"amount": amount,
+					"remarks": approval_remarks
 				});
 			}
 			budgetArr.push({
@@ -436,10 +451,12 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 			});
 		}
 	}
-	
+
 
 	const all_activity_client = await Activity_to_user_type.findAll({
-		where:{ 'activity_id' : editdata[0].id }
+		where: {
+			'activity_id': editdata[0].id
+		}
 	});
 
 	var alldata = [];
@@ -454,19 +471,23 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 	for (let i = 0; i < all_activity_client.length; i++) {
 		if (all_activity_client[i].target_client_type == 'C') {
 			target_client_list = await Client.findAll({
-				where: { 'id': all_activity_client[i].type }
+				where: {
+					'id': all_activity_client[i].type
+				}
 			})
 		} else {
 			target_client_list = await Target.findAll({
-				where: { 'id': all_activity_client[i].type }
+				where: {
+					'id': all_activity_client[i].type
+				}
 			})
 		}
 		alldata.push({
 			'attorney_name': req.user.first_name + " " + req.user.last_name,
-			'company_name': target_client_list[0].first_name+ " " +target_client_list[0].last_name,
-			'relation' : all_activity_client[i].target_client_type == 'C' ? 'Client' : 'Target',
-			'total_cost': activity_budget.level_type == 'Individual'? editdata[0].total_budget_amount: parseFloat(editdata[0].total_budget_amount/all_activity_client.length),
-			'potential_revenue' : activity_budget.level_type == 'Individual'? editdata[0].potiential_revenue: parseFloat(editdata[0].potiential_revenue/all_activity_client.length)
+			'company_name': target_client_list[0].first_name + " " + target_client_list[0].last_name,
+			'relation': all_activity_client[i].target_client_type == 'C' ? 'Client' : 'Target',
+			'total_cost': activity_budget.level_type == 'Individual' ? editdata[0].total_budget_amount : parseFloat(editdata[0].total_budget_amount / all_activity_client.length),
+			'potential_revenue': activity_budget.level_type == 'Individual' ? editdata[0].potiential_revenue : parseFloat(editdata[0].potiential_revenue / all_activity_client.length)
 		});
 	}
 
@@ -484,7 +505,7 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 	});
 
 	// console.log('editdata[0]',editdata[0].activity_status);
-	
+
 	res.render('activity/update', {
 		layout: 'dashboard',
 		csrfToken: req.csrfToken(),
@@ -499,7 +520,7 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		budgetArr,
 		practice_area: practice_area,
 		level_type,
-		section : allSection
+		section: allSection
 	});
 });
 
@@ -520,6 +541,7 @@ router.post('/activity/edit-budget', auth, firmAttrAuth, csrfProtection, async (
 			budget_id: budget[b].budget_id,
 			hour: budget[b].budget_hour,
 			amount: budget[b].budget_amount,
+			approver_remarks: budget[b].remarks_budgets
 		});
 	}
 	await Activity.update({
@@ -534,6 +556,8 @@ router.post('/activity/edit-budget', auth, firmAttrAuth, csrfProtection, async (
 		success: true
 	});
 });
+
+
 
 router.post('/activity/update/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 
@@ -560,8 +584,8 @@ router.post('/activity/update/:id', auth, firmAttrAuth, csrfProtection, async (r
 		budget_details_status: req.body.budget_details_status,
 		target: req.body.ref_type,
 		section_id: req.body.section,
-    	s_group_id: req.body.strategy_group,
-    	activity_status: req.body.activity_status,
+		s_group_id: req.body.strategy_group,
+		activity_status: req.body.activity_status,
 	}, {
 		where: {
 			id: req.params['id']
@@ -594,6 +618,21 @@ router.post('/activity/update/:id', auth, firmAttrAuth, csrfProtection, async (r
 
 	res.redirect('/activitypage');
 });
+
+
+router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {	
+	await Activity.update({
+		activity_status: 1
+	}, {
+		where: {
+			id: req.params['id']
+		}
+	});
+	res.json({
+		success: true
+	});
+});
+
 
 
 router.get('/activity/deletedata/:id', auth, firmAttrAuth, async (req, res) => {

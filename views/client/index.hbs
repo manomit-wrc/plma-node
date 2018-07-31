@@ -35,6 +35,7 @@
 							<tr>
 								<th>
 									<input type="checkbox" onClick="checkall(this);" />
+									SL#
 								</th>
 								<th>Name</th>
 								<th>Client Type</th>
@@ -48,6 +49,7 @@
 							<tr>
 								<td>
 									<input type="checkbox" name="client_check_id" value="{{this.id}}" />
+									{{math @index "+" 1}}
 								</td>
 								<td>
 									{{#if_eq client_type "O"}} {{this.organization_name}} {{/if_eq}} {{#if_eq client_type "I"}} {{this.first_name}} {{this.last_name}}

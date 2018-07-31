@@ -36,7 +36,8 @@
                     <table class="table table-striped custom-table datatable">
                         <thead>
                             <tr>
-                                <th style="width:25%;">Activity Goals</th>
+                                <th >SL#</th>
+                                <th >Activity Goals</th>
                                 <th>Firm Name</th>
                                 <th>Duration</th>
                                 <th style="width:25%;">Remarks</th>
@@ -47,6 +48,7 @@
                         <tbody>
                             {{#each goals}}
                             <tr>
+                                <td>{{math @index "+" 1}}</td>
                                 <td>{{this.activity_goal}}</td>
                                 <td>{{this.firm.title}}</td>
                                 <td>{{dateFormat this.from_date "DD-MM-YYYY"}} To {{dateFormat this.to_date "DD-MM-YYYY"}}</td>

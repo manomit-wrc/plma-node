@@ -10,8 +10,7 @@
       <div class="alert alert-success">
         <strong>Success! </strong>{{success_message}}
       </div>
-      {{/if}}
-      {{#if success_edit_message}}
+      {{/if}} {{#if success_edit_message}}
       <div class="alert alert-success">
         <strong>Success! </strong>{{success_edit_message}}
       </div>
@@ -30,22 +29,28 @@
           <table class="table table-striped custom-table datatable" id="searchData">
             <thead>
               <tr>
-                <th>Email</th>
+                <th>SL#</th>
                 <th>Name</th>
+                <th>Email</th>
                 <th>Mobile</th>
+                <th>Attorney Type</th>
+                <th>Industry Type</th>
                 <th class="text-right">Action</th>
               </tr>
             </thead>
             <tbody id="mainTable">
               {{#each row}}
               <tr>
-                <td>{{this.email}}</td>
+                <td>{{math @index "+" 1}}</td>
                 <td>
-                  <a href="/attorneys/viewdata/{{this.id}}" >
-                    {{this.first_name}} {{this.last_name}}
+                  <a href="/attorneys/viewdata/{{this.id}}">
+                    {{this.name}}
                   </a>
                 </td>
-                <td>{{this.mobile_no}}</td>
+                <td>{{this.email}}</td>
+                <td class="number_validator" >{{this.mobile_no}}</td>
+                <td>{{ this.attr_type}}</td>
+                <td>{{this.industry_name}}</td>
                 <td class="text-right">
                   <a href="/attorneys/viewdata/{{this.id}}" class="btn btn-success btn-sm">
                     <i class="fa fa-eye m-r-5"></i>
@@ -77,10 +82,9 @@
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
-{{!-- <script>
-  $(document).on("click","tr", function(){
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script> {{!--
+<script>
+  $(document).on("click", "tr", function () {
     window.location.href = "/attorneys/viewdata/139";
   });
-</script> --}}
- {{/content}}
+</script> --}} {{/content}}

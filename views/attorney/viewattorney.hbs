@@ -7,15 +7,12 @@
 <div class="page-wrapper">
   <div class="content container-fluid">
     <div class="row">
-
-      <!-- <div class="col-sm-8">
-        <h4 class="page-title">View Attorney Details</h4>
-      </div> -->
       <div class="col-xs-4">
-          <h4 class="page-title">View Attorney Details</h4>
+        <h4 class="page-title">View Attorney Details</h4>
       </div>
       <div class="col-xs-8 text-right">
-          <a href=/attorneys/edit/{{edata.0.id}} class="btn btn-primary pull-right rounded"><i class="fa fa-pencil"></i> Edit</a>
+        <a href=/attorneys/edit/{{edata.0.id}} class="btn btn-primary pull-right rounded">
+          <i class="fa fa-pencil"></i> Edit</a>
 
       </div>
     </div>
@@ -30,7 +27,7 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group form-focus">
-                  <label class="control-label">Email</label>
+                  <label class="control-label">Username</label>
                   <input type="text" class="form-control floating" id="email" name="email" value="{{edata.0.email}}" disabled/>
                   <span id="uniqueEmail" style="color: red; font-weight:bolder"></span>
                 </div>
@@ -39,7 +36,7 @@
 
               <div class="col-md-6">
                 <div class="form-group form-focus select-focus">
-                <label class="control-label">Group</label>
+                  <label class="control-label">Group</label>
                   <select disabled id="group" name="group" class="select form-control">
                     <option value="">Select Group</option>
                     {{#each group}}
@@ -51,7 +48,7 @@
 
               <div class="col-md-6">
                 <div class="form-group form-focus select-focus">
-                <label class="control-label">Section</label>
+                  <label class="control-label">Section</label>
                   <select disabled id="section" name="section" class="select form-control floating">
                     <option value="">Select Section</option>
                     {{#each section}}
@@ -63,7 +60,7 @@
 
               <div class="col-md-6">
                 <div class="form-group form-focus select-focus">
-                <label class="control-label">Designation</label>
+                  <label class="control-label">Designation</label>
                   <select disabled id="designation" name="designation" class="select form-control floating">
                     <option value="">Select Designation</option>
                     {{#each designation}}
@@ -108,7 +105,7 @@
           </div>
           <div class="col-md-6">
             <div class="form-group form-focus select-focus">
-            <label class="control-label">Gender</label>
+              <label class="control-label">Gender</label>
               <select disabled class="form-control floating" id="gender" name="gender">
                 <option value="">Select Gender</option>
                 <option value="M" {{#if_eq edata.0.gender "M"}} selected {{/if_eq}}>Male</option>
@@ -135,7 +132,7 @@
           </div>
           <div class="col-md-6">
             <div class="form-group form-focus select-focus">
-            <label class="control-label">Attorney Type</label>
+              <label class="control-label">Attorney Type</label>
               <select disabled class="form-control floating" id="attorney_type" name="attorney_type">
                 <option value="">Select Attorney Type</option>
                 <option value="AT-INTERIM" {{#if_eq edata.0.attorney_details.0.attorney_type "AT-INTERIM"}} selected="selected" {{/if_eq}}>INTERIM ATTORNEY</option>
@@ -170,7 +167,7 @@
           </div>
           <div class="col-md-6">
             <div class="form-group form-focus select-focus">
-            <label class="control-label">Job Type</label>
+              <label class="control-label">Job Type</label>
               <select disabled class="form-control floating" id="job_type" name="job_type">
                 <option value="">Select Job Type</option>
                 <option value="FULLTIME" {{#if_eq edata.0.attorney_details.0.job_type "FULLTIME"}} selected="selected" {{/if_eq}}>FULLTIME</option>
@@ -181,7 +178,7 @@
           </div>
           <div class="col-md-6">
             <div class="form-group form-focus">
-              <label class="control-label">Bar Practice Date</label>
+              <label class="control-label">Practice Date</label>
               <div class="cal-icon">
                 <input class="form-control floating datetimepicker" type="text" id="bar_practice_date" name="bar_practice_date" value="{{dateFormat edata.bar_practice_date "
                   DD-MM-YYYY "}}" disabled>
@@ -200,7 +197,7 @@
 
           <div class="col-md-6">
             <div class="form-group form-focus select-focus">
-            <label class="control-label">Jurisdiction</label>
+              <label class="control-label">Jurisdiction</label>
               <select disabled id="jurisdiction" name="jurisdiction" class="select form-control floating">
                 <option value="">Select Jurisdiction</option>
                 {{#each jurisdiction}}
@@ -211,7 +208,7 @@
           </div>
           <div class="col-md-6">
             <div class="form-group form-focus select-focus">
-            <label class="control-label">Industry Type</label>
+              <label class="control-label">Industry Type</label>
               <select disabled id="industry_type" name="industry_type" class="select form-control floating">
                 <option value="">Select Industry Type</option>
                 {{#each industry_type}}
@@ -290,7 +287,7 @@
 
           <div class="col-md-6">
             <div class="form-group form-focus select-focus">
-            <label class="control-label">Country</label>
+              <label class="control-label">Country</label>
               <select disabled class="select form-control floating" id="country" name="country">
                 <option value="">Select Country</option>
                 {{#each country}}
@@ -301,7 +298,7 @@
           </div>
           <div class="col-md-6">
             <div class="form-group form-focus select-focus">
-            <label class="control-label">State</label>
+              <label class="control-label">State</label>
               <select disabled class="select form-control floating" id="state" name="state">
                 <option value="">select State</option>
                 {{#each state}}
@@ -312,7 +309,7 @@
           </div>
           <div class="col-md-6">
             <div class="form-group form-focus select-focus">
-            <label class="control-label">City</label>
+              <label class="control-label">City</label>
               <select disabled class="select form-control floating" id="city" name="city">
                 <option value="">Select City</option>
                 {{#each city}}
@@ -323,7 +320,7 @@
           </div>
           <div class="col-md-6">
             <div class="form-group form-focus">
-            <label class="control-label">Zipcode</label>
+              <label class="control-label">Zipcode</label>
               <select disabled class="select form-control floating" id="zipcode" name="zipcode">
                 <option value="">Select Zipcode</option>
                 {{#each zipcode}}

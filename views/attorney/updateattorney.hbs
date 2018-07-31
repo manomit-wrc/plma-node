@@ -22,7 +22,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">Email</label>
+                                    <label class="control-label">Username</label>
                                     <input type="text" class="form-control floating" id="email" name="email" value="{{edata.0.email}}" readonly/>
                                     <span id="uniqueEmail" style="color: red; font-weight:bolder"></span>
                                 </div>
@@ -52,9 +52,8 @@
                                 <div class="form-group form-focus select-focus">
                                     <label class="control-label">Section
                                         <span class="req-lbl">*</span>
-
                                     </label>
-                                    <select id="section" name="section" class="form-control floating">
+                                    <select id="section" name="section" class="form-control floating" readonly>
                                         <option value="">Select Section</option>
                                         {{#each section}}
                                         <option value="{{this.section.id}}" {{#if_eq this.section.id ../edata.0.section_id}} selected="selected" {{/if_eq}}>{{this.section.name}}</option>
@@ -187,7 +186,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-focus">
-                            <label class="control-label">Bar Practice Date</label>
+                            <label class="control-label">Practice Date</label>
                             <div class="cal-icon">
                                 <input class="form-control floating datetimepicker" type="text" id="bar_practice_date" name="bar_practice_date" value="{{dateFormat edata.0.attorney_details.0.bar_practice_date "
                                     DD-MM-YYYY "}}">
@@ -368,7 +367,8 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus">
                             <label class="control-label">Fax</label>
-                            <input type="text" class="form-control floating number_validator" id="fax" name="fax" value="{{edata.0.attorney_details.0.fax}}" />
+                            <input type="text" class="form-control floating number_validator" id="fax" name="fax" value="{{edata.0.attorney_details.0.fax}}"
+                            />
                         </div>
                     </div>
                     <div class="col-md-6">
