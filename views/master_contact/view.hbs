@@ -1,8 +1,7 @@
 {{#content "style" mode="prepend"}}
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
-{{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
 <div class="page-wrapper">
 	<div class="content container-fluid">
 		<div class="row">
@@ -17,7 +16,7 @@
 		</div>
 		<form id="contactform" method="POST" action="/master_contact/edit/{{contact.id}}">
 			<input type="hidden" name="_csrf" value="{{csrfToken}}">
-			<input type="hidden" value="{{contact.id}}" id="id"  />
+			<input type="hidden" value="{{contact.id}}" id="id" />
 			<div class="card-box">
 				<h3 class="card-title">Basic Informations</h3>
 				<div class="row">
@@ -26,13 +25,15 @@
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">First Name</label>
-									<input type="text" class="form-control floating" id="first_name" name="first_name" value="{{contact.first_name}}" disabled="disabled" />
+									<input type="text" class="form-control floating" id="first_name" name="first_name" value="{{contact.first_name}}" disabled="disabled"
+									/>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Last Name</label>
-									<input type="text" class="form-control floating" id="last_name" name="last_name" value="{{contact.last_name}}" disabled="disabled" />
+									<input type="text" class="form-control floating" id="last_name" name="last_name" value="{{contact.last_name}}" disabled="disabled"
+									/>
 								</div>
 							</div>
 							<div class="col-md-6">
@@ -45,57 +46,65 @@
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Phone No.</label>
-									<input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" value="{{contact.phone_no}}" disabled="disabled" />
+									<input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" value="{{contact.phone_no}}"
+									 disabled="disabled" />
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus select-focus">
 									<label class="control-label">Fax</label>
-									<input type="text" class="form-control floating number_validator" id="fax" name="fax" value="{{contact.fax}}" disabled="disabled" />
+									<input type="text" class="form-control floating number_validator" id="fax" name="fax" value="{{contact.fax}}" disabled="disabled"
+									/>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus select-focus">
 									<label class="control-label">Mobile No.</label>
-									<input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" value="{{contact.mobile_no}}" disabled="disabled" />
+									<input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" value="{{contact.mobile_no}}"
+									 disabled="disabled" />
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Master Contact ID </label>
-									<input type="text" class="form-control floating" id="master_contact_id" name="master_contact_id" value="{{contact.master_contact_id}}" disabled="disabled" />
+									<input type="text" class="form-control floating" id="master_contact_id" name="master_contact_id" value="{{contact.master_contact_id}}"
+									 disabled="disabled" />
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Master Contact Code </label>
-									<input type="text" class="form-control floating" id="master_contact_code" name="master_contact_code" value="{{contact.master_contact_code}}" disabled="disabled" />
+									<input type="text" class="form-control floating" id="master_contact_code" name="master_contact_code" value="{{contact.master_contact_code}}"
+									 disabled="disabled" />
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Master Contact Designation </label>
-									<input type="text" class="form-control floating" id="master_contact_desg" name="master_contact_desg" value="{{contact.master_designation}}" disabled="disabled" />
+									<input type="text" class="form-control floating" id="master_contact_desg" name="master_contact_desg" value="{{contact.master_designation}}"
+									 disabled="disabled" />
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Master Contact Company </label>
-									<input type="text" class="form-control floating" id="master_contact_comp" name="master_contact_comp" value="{{contact.company_name}}" disabled="disabled" />
+									<input type="text" class="form-control floating" id="master_contact_comp" name="master_contact_comp" value="{{contact.company_name}}"
+									 disabled="disabled" />
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Date of Birth</label>
 									<div class="cal-icon">
-										<input class="form-control floating datetimepicker" type="text" id="dob" name="dob" value="{{dateFormat contact.date_of_birth "DD-MM-YYYY"}}" disabled="disabled" />
+										<input class="form-control floating datetimepicker" type="text" id="dob" name="dob" value="{{dateFormat contact.date_of_birth "
+										 DD-MM-YYYY "}}" disabled="disabled" />
 									</div>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus select-focus">
 									<label class="control-label">Gender</label>
-									<select class="select form-control floating" id="gender" name="gender" disabled="disabled" >
+									<select class="select form-control floating" id="gender" name="gender" disabled="disabled">
 										<option value="">Select Gender</option>
 										<option value="M" {{#if_eq contact.gender "M"}} selected {{/if_eq}}>Male</option>
 										<option value="F" {{#if_eq contact.gender "F"}} selected {{/if_eq}}>Female</option>
@@ -112,25 +121,28 @@
 					<div class="col-md-12">
 						<div class="form-group form-focus">
 							<label class="control-label">Address Line 1</label>
-							<input type="text" class="form-control floating" id="address1" name="address1" value="{{contact.address1}}" disabled="disabled" />
+							<input type="text" class="form-control floating" id="address1" name="address1" value="{{contact.address1}}" disabled="disabled"
+							/>
 						</div>
 					</div>
 					<div class="col-md-12">
 						<div class="form-group form-focus">
 							<label class="control-label">Address Line 2</label>
-							<input type="text" class="form-control floating" id="address2" name="address2" value="{{contact.address2}}" disabled="disabled" />
+							<input type="text" class="form-control floating" id="address2" name="address2" value="{{contact.address2}}" disabled="disabled"
+							/>
 						</div>
 					</div>
 					<div class="col-md-12">
 						<div class="form-group form-focus">
 							<label class="control-label">Address Line 3</label>
-							<input type="text" class="form-control floating" id="address3" name="address3" value="{{contact.address3}}" disabled="disabled" />
+							<input type="text" class="form-control floating" id="address3" name="address3" value="{{contact.address3}}" disabled="disabled"
+							/>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Country</label>
-							<select id="country" name="country" class="select form-control floating" disabled="disabled" >
+							<select id="country" name="country" class="select form-control floating" disabled="disabled">
 								{{#each country}}
 								<option value="{{this.id}}">{{this.name}}</option>
 								{{/each}}
@@ -140,7 +152,7 @@
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">State</label>
-							<select id="state" name="state" class="select form-control floating" disabled="disabled" >
+							<select id="state" name="state" class="select form-control floating" disabled="disabled">
 								<option value="">Select State</option>
 								{{#each state}}
 								<option value="{{this.id}}" {{#if_eq this.id ../contact.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
@@ -151,29 +163,29 @@
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">City</label>
-							<select id="city" name="city" class="select form-control floating" disabled="disabled" >
+							<select id="city" name="city" class="select form-control floating" disabled="disabled">
 								<option value="">Select City</option>
 								{{#each city}}
 								<option value="{{this.id}}" {{#if_eq this.id ../contact.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
-								{{/each}}    
+								{{/each}}
 							</select>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
 							<label class=" control-label">Zipcode Code</label>
-							<select id="zipcode" name="zipcode" class="select form-control floating" disabled="disabled" >
+							<select id="zipcode" name="zipcode" class="select form-control floating" disabled="disabled">
 								<option value="">Select Zipcode</option>
 								{{#each zipcode}}
 								<option value="{{this.id}}" {{#if_eq this.id ../contact.zip_code}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
-								{{/each}} 
+								{{/each}}
 							</select>
 						</div>
 					</div>
 					<div class="col-md-12">
 						<div class="form-group form-focus">
 							<label class="control-label">Address Remarks</label>
-							<textarea class="form-control floating" id="address_remarks" name="address_remarks" rows="5" disabled="disabled" >{{contact.address_remarks}}</textarea>
+							<textarea class="form-control floating" id="address_remarks" name="address_remarks" rows="5" disabled="disabled">{{contact.address_remarks}}</textarea>
 						</div>
 					</div>
 				</div>
@@ -184,13 +196,15 @@
 					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Website URL </label>
-							<input type="text" class="form-control floating url_selector" id="website_url" name="website_url" value="{{contact.website_url}}" disabled="disabled" />
+							<input type="text" class="form-control floating url_selector" id="website_url" name="website_url" value="{{contact.website_url}}"
+							 disabled="disabled" />
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Social URL </label>
-							<input type="text" class="form-control floating url_selector" id="social_url" name="social_url" value="{{contact.social_url}}" disabled="disabled" />
+							<input type="text" class="form-control floating url_selector" id="social_url" name="social_url" value="{{contact.social_url}}"
+							 disabled="disabled" />
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -202,37 +216,42 @@
 					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Social Security No</label>
-							<input type="text" class="form-control floating number_validator" id="social_sec_no" name="social_sec_no" value="{{contact.social_security_no}}" disabled="disabled" />
+							<input type="text" class="form-control floating number_validator" id="social_sec_no" name="social_sec_no" value="{{contact.social_security_no}}"
+							 disabled="disabled" />
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Twitter URL</label>
-							<input type="text" class="form-control floating url_selector" id="twitter" name="twitter" value="{{contact.twitter}}" disabled="disabled" />
+							<input type="text" class="form-control floating url_selector" id="twitter" name="twitter" value="{{contact.twitter}}" disabled="disabled"
+							/>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Linkedin URL</label>
-							<input type="text" class="form-control floating url_selector" id="linkedin" name="linkedin" value="{{contact.linkedin}}" disabled="disabled" />
+							<input type="text" class="form-control floating url_selector" id="linkedin" name="linkedin" value="{{contact.linkedin}}"
+							 disabled="disabled" />
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Google URL</label>
-							<input type="text" class="form-control floating url_selector" id="google" name="google" value="{{contact.google}}" disabled="disabled" />
+							<input type="text" class="form-control floating url_selector" id="google" name="google" value="{{contact.google}}" disabled="disabled"
+							/>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Youtube URL</label>
-							<input type="text" class="form-control floating url_selector" id="youtube" name="youtube" value="{{contact.youtube}}" disabled="disabled" />
+							<input type="text" class="form-control floating url_selector" id="youtube" name="youtube" value="{{contact.youtube}}" disabled="disabled"
+							/>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Status</label>
-							<select id="status" name="status" class="select form-control floating" disabled="disabled" >
+							<select id="status" name="status" class="select form-control floating" disabled="disabled">
 								<option value="NEW TARGET" {{#if_eq contact.status "NEW TARGET"}} selected="selected" {{/if_eq}}>NEW TARGET</option>
 								<option value="CONVERTED" {{#if_eq contact.status "CONVERTED"}} selected="selected" {{/if_eq}}>CONVERTED TO CLIENT</option>
 								<option value="TS-INTERIM" {{#if_eq contact.status "TS-INTERIM"}} selected="selected" {{/if_eq}}>INTERIM - REVIEW IN-PROGRESS</option>
@@ -242,7 +261,7 @@
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Industry Type</label>
-							<select id="industry_type" name="industry_type" class="select form-control floating" disabled="disabled" >
+							<select id="industry_type" name="industry_type" class="select form-control floating" disabled="disabled">
 								<option value="">Select Industry Type</option>
 								{{#each industry_types}}
 								<option value="{{this.id}}" {{#if_eq this.id ../contact.industry_type}} selected="selected" {{/if_eq}}>{{this.industry_name}}</option>
@@ -253,14 +272,11 @@
 					<div class="col-md-12">
 						<div class="form-group form-focus">
 							<label class="control-label">Remarks </label>
-							<textarea class="form-control floating" id="remarks" name="remarks" rows="5" disabled="disabled" >{{contact.remarks}}</textarea>
+							<textarea class="form-control floating" id="remarks" name="remarks" rows="5" disabled="disabled">{{contact.remarks}}</textarea>
 						</div>
 					</div>
 				</div>
 			</div>
-			{{!-- <div class="text-center m-t-20">
-				<button class="btn btn-primary btn-lg" type="submit">Save &amp; Update Contact</button>
-			</div> --}}
 		</form>
 	</div>
 </div>
@@ -273,7 +289,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 <script type="text/javascript">
-	$(document).ready(function(e) {
+	$(document).ready(function (e) {
 		$("#contactform").validate({
 			rules: {
 				first_name: {
@@ -391,5 +407,4 @@
 			}
 		});
 	});
-</script>
-{{/content}}
+</script> {{/content}}
