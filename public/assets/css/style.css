@@ -5536,6 +5536,24 @@ i.fa.fa-eye.m-r-5 {
 }
 
 
+#update_budget_by_activity  .table {
+    margin-bottom: 0 !important;
+}
+
+#update_budget_by_activity .table>tbody>tr>td, 
+#update_budget_by_activity .table>tbody>tr>th,
+#update_budget_by_activity  .table>tfoot>tr>td, 
+#update_budget_by_activity .table>tfoot>tr>th, 
+#update_budget_by_activity .table>thead>tr>td, 
+#update_budget_by_activity .table>thead>tr>th {
+    padding: 8px;
+	line-height: 1;
+}
+
+#update_budget_by_activity  .table strong {
+    font-size: 12px;
+}
+
 #update_budget_by_activity .tbl-w100p {
 	width: 100%;
 }

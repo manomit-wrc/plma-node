@@ -59,7 +59,7 @@
 
                 <td class="text-right">
                   {{#if_eq this.activity_status "0"}}
-                  <a href="javascript:void(0);" class="btn btn-info btn-sm approval_request_sent" id="approval_request_sent" title="REQUEST FOR APPROVAL" data-target="{{this.id}}"
+                  <a href="javascript:void(0);" class="btn btn-info btn-sm approval_request_sent" id="approval_request_sent" title="REQUEST FOR APPROVAL" data-target-request-id="{{this.id}}"
                     class="btn btn-danger btn-sm target-delete">
                     <i class="fa fa-check" aria-hidden="true"></i>
                   </a>
@@ -68,12 +68,14 @@
                   <a href="/activity/view/{{this.id}}" class="btn btn-success btn-sm">
                     <i class="fa fa-eye m-r-5"></i>
                   </a>
+                  {{#if_eq this.activity_status "0"}}
                   <a href="/activity/edit/{{this.id}}" class="btn btn-info btn-sm">
                     <i class="fa fa-pencil m-r-5"></i>
                   </a>
                   <a href="javascript:void(0);" data-toggle="modal" data-target="#{{this.id}}" class="btn btn-danger btn-sm target-delete">
                     <i class="fa fa-trash-o m-r-5"></i>
                   </a>
+                  {{/if_eq}}
                 </td>
 
                 <div class="modal fade" id="{{this.id}}" role="dialog">
@@ -122,7 +124,9 @@
 
   $(document).on('click', '.approval_request_sent', function (e) {
 
-    swal({
+    var activity_id = $(this).data("target-request-id"); 
+
+     swal({
       title: "Are you sure?",
       text: "You want to send this activity for approval?",
       type: "warning",
@@ -133,8 +137,6 @@
 
     }, function () {
       
-      var activity_id = $("#activity_id").val();
-
       $.ajax({
         type: "GET",
         url: "/activity/update_approval_request/"+activity_id,

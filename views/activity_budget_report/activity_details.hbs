@@ -149,7 +149,8 @@
                                                     <thead class="persist-header">
                                                         <tr>
                                                             <td style="height: 91px; text-align: center; vertical-align: middle; border-top: 1px solid #ddd;">
-                                                                <a href="#" title="{{this.activity_name}}" id="activityBudgetUpdate" data-toggle="modal" data-target="#update_budget_by_activity">
+                                                                <a href="#" title="{{this.activity_name}}" data-activiy-name="{{this.activity_name}}" id="activityBudgetUpdate" data-toggle="modal"
+                                                                    data-target="#update_budget_by_activity">
                                                                     <strong>{{this.activity_name}}</strong>//
                                                                 </a>
                                                             </td>
@@ -252,7 +253,10 @@
                                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                         <div class="modal-content modal-lg">
                                                             <div class="modal-header">
-                                                                <h4 class="modal-title">Marketing Budget Details</h4>
+                                                                <h4 class="modal-title">Marketing Budget Summary</h4>
+                                                                <div style="height:100px; width:100px" class="total-title">
+                                                                    first text
+                                                                </div>
                                                             </div>
 
 
@@ -277,6 +281,9 @@
                                                                                                         </thead>
                                                                                                     </table>
                                                                                                 </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td colspan="2" style="height: 25px; border-bottom: 1px solid #e7ecf1;border-left: 1px solid #e7ecf1;border-right: 1px solid #e7ecf1;">&nbsp;</td>
                                                                                             </tr>
                                                                                             <tr>
                                                                                                 <td width="100%" style="padding: 0;">
@@ -311,77 +318,78 @@
                                                                                         </tbody>
                                                                                     </table>
                                                                                 </div>
-
                                                                                 <div class="col-md-6">
-                                                                                    <table class="table table-bordered">
-                                                                                        <tbody>
-                                                                                            <tr>
-                                                                                                <td style=" padding: 0; border-bottom: none">
-                                                                                                    <table class="table" style="border-right: 1px solid #e7ecf1;">
-                                                                                                        <tbody>
-                                                                                                            <tr>
-                                                                                                                <td style=" padding: 0; width: 130px;">
-                                                                                                                    <table style="margin-bottom: 0;" class="table">
-                                                                                                                        <thead>
-                                                                                                                            <tr>
-                                                                                                                                <th colspan="2" style=" height: 50px; vertical-align: middle;">Partho
-                                                                                                                                    Sen</th>
-                                                                                                                            </tr>
-                                                                                                                        </thead>
-                                                                                                                    </table>
-                                                                                                                </td>
-                                                                                                            </tr>
+                                                                                    <div class="table-responsive">
+                                                                                        <table class="table table-bordered">
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td style=" padding: 0; border-bottom: none">
+                                                                                                        <table class="table" style="border-right: 1px solid #e7ecf1;">
+                                                                                                            <tbody>
+                                                                                                                <tr>
+                                                                                                                    <td style=" padding: 0; width: 130px;">
+                                                                                                                        <table style="margin-bottom: 0;" class="table">
+                                                                                                                            <thead>
+                                                                                                                                <tr>
+                                                                                                                                    <th colspan="2" style=" height: 50px; vertical-align: middle;">Partho
+                                                                                                                                        Sen
+                                                                                                                                    </th>
+                                                                                                                                </tr>
+                                                                                                                            </thead>
+                                                                                                                        </table>
+                                                                                                                    </td>
+                                                                                                                </tr>
 
-                                                                                                            <tr>
-                                                                                                                <td style="padding: 0; height: 25px;  border-top: 1px solid #e7ecf1;  border-bottom: 1px solid #e7ecf1;">
-                                                                                                                    <table style="margin-bottom: 0;" class="table">
-                                                                                                                        <thead>
-                                                                                                                            <tr>
-                                                                                                                                <th style="height: 25px; width: 65px; vertical-align: middle;  border-right: 1px solid #e7ecf1; border-bottom: none">Hours</th>
-                                                                                                                                <th style="height: 25px; width: 65px; vertical-align: middle; border-right: none; border-bottom: none;">US
-                                                                                                                                    $
-                                                                                                                                </th>
-                                                                                                                            </tr>
-                                                                                                                        </thead>
-                                                                                                                    </table>
-                                                                                                                </td>
-                                                                                                            </tr>
-                                                                                                            {{#each this.budget_list}}
-                                                                                                            <tr>
-                                                                                                                <td colspan="2" style="height: 23px; border-bottom: 1px solid #e7ecf1;">&nbsp;</td>
-                                                                                                            </tr>
-                                                                                                            <tr>
-                                                                                                                <td style="padding: 0; border-bottom: none">
-                                                                                                                    <table class="table" style="margin-bottom: 0">
-                                                                                                                        <tbody>
-                                                                                                                            {{#each this.child_budget}}
-                                                                                                                            <tr>
-                                                                                                                                <td colspan="2" style="width: 100%; padding: 0">
-                                                                                                                                    <table style="margin-bottom: 0;" class="table">
-                                                                                                                                        <tbody>
-                                                                                                                                            <tr style="border-bottom: 1px solid #e7ecf1;">
-                                                                                                                                                <td style="height: 25px; width: 65px; vertical-align: middle; border-right: 1px solid #e7ecf1;">
-                                                                                                                                                    {{get_activity_budget_hour ../../this.activity_id this.budget_display}}</td>
-                                                                                                                                                <td style="text-align: center; width: 65px; height: 25px; vertical-align: middle" class="total_cost_original">
-                                                                                                                                                    {{get_activity_budget_amount ../../this.activity_id this.budget_display}}</td>
-                                                                                                                                            </tr>
-                                                                                                                                        </tbody>
-                                                                                                                                    </table>
-                                                                                                                                </td>
-                                                                                                                            </tr>
-                                                                                                                            {{/each}}
-                                                                                                                        </tbody>
-                                                                                                                    </table>
-                                                                                                                </td>
-                                                                                                            </tr>
-                                                                                                            {{/each}}
-                                                                                                        </tbody>
-                                                                                                    </table>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                        </tbody>
-                                                                                    </table>
-
+                                                                                                                <tr>
+                                                                                                                    <td style="padding: 0; height: 25px;  border-top: 1px solid #e7ecf1;  border-bottom: 1px solid #e7ecf1;">
+                                                                                                                        <table style="margin-bottom: 0;" class="table">
+                                                                                                                            <thead>
+                                                                                                                                <tr>
+                                                                                                                                    <th style="height: 25px; width: 65px; vertical-align: middle;  border-right: 1px solid #e7ecf1; border-bottom: none">Hours</th>
+                                                                                                                                    <th style="height: 25px; width: 65px; vertical-align: middle; border-right: none; border-bottom: none;">US
+                                                                                                                                        $
+                                                                                                                                    </th>
+                                                                                                                                </tr>
+                                                                                                                            </thead>
+                                                                                                                        </table>
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                                {{#each this.budget_list}}
+                                                                                                                <tr>
+                                                                                                                    <td colspan="2" style="height: 25px; border-bottom: 1px solid #e7ecf1;">&nbsp;</td>
+                                                                                                                </tr>
+                                                                                                                <tr>
+                                                                                                                    <td style="padding: 0; border-bottom: none">
+                                                                                                                        <table class="table" style="margin-bottom: 0">
+                                                                                                                            <tbody>
+                                                                                                                                {{#each this.child_budget}}
+                                                                                                                                <tr>
+                                                                                                                                    <td colspan="2" style="width: 100%; padding: 0">
+                                                                                                                                        <table style="margin-bottom: 0;" class="table">
+                                                                                                                                            <tbody>
+                                                                                                                                                <tr style="border-bottom: 1px solid #e7ecf1;">
+                                                                                                                                                    <td style="height: 25px; width: 65px; vertical-align: middle; border-right: 1px solid #e7ecf1;">
+                                                                                                                                                        {{get_activity_budget_hour ../../this.activity_id this.budget_display}}</td>
+                                                                                                                                                    <td style="text-align: center; width: 65px; height: 25px; vertical-align: middle" class="total_cost_original">
+                                                                                                                                                        {{get_activity_budget_amount ../../this.activity_id this.budget_display}}</td>
+                                                                                                                                                </tr>
+                                                                                                                                            </tbody>
+                                                                                                                                        </table>
+                                                                                                                                    </td>
+                                                                                                                                </tr>
+                                                                                                                                {{/each}}
+                                                                                                                            </tbody>
+                                                                                                                        </table>
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                                {{/each}}
+                                                                                                            </tbody>
+                                                                                                        </table>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -475,4 +483,28 @@
             $(".sidebar").removeClass("sidebar-hide");
         }
     });
+
+
+    $(document).on('click', "#activityBudgetUpdate", function (e) {
+        var budgetId = $(this).data("activiy-name");
+        alert(budgetId);
+         $('div.total-title').html(budgetId);
+        /*$('.edit_budget_hour').each(function (index) {
+            if ($(this).val() !== "") {
+                var budgetId = $(this).data("budgets-id");
+                var amount = $(".edit_budget_amount")[index].value;
+                var reamrk_budget = $('.edit_budget_remarks')[index].value;
+                totalAmount += parseInt(amount);
+                totalHour += parseInt($(this).val());
+                EditBudgetArr.push({
+                    budget_id: budgetId,
+                    budget_hour: $(this).val(),
+                    budget_amount: amount,
+                    remarks_budgets: reamrk_budget
+                });
+            }
+        });*/
+    });
+
+
 </script> {{/content}}
