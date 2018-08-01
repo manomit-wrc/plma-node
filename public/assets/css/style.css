@@ -5535,6 +5535,27 @@ i.fa.fa-eye.m-r-5 {
 	border: 1px solid #ff851a;
 }
 
+
+#update_budget_by_activity .tbl-w100p {
+	width: 100%;
+}
+
+
+#update_budget_by_activity .tbl-w50p {
+	width: 48%;
+	display: inline-block;
+}
+
+#update_budget_by_activity .tbl-w130px {
+	width: 130px;
+    display: inline-block;
+}
+
+
+#update_budget_by_activity .table>thead>tr>th {
+    border-bottom: 0;
+}
+
 /*------------------------------------------------------------------
 [39-a.... Custom Styles]
 */
