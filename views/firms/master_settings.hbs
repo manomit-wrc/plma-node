@@ -239,6 +239,7 @@
 											<table class="table table-striped custom-table datatable">
 												<thead>
 													<tr>
+														<th>SL#</th>
 														<th>Firm Name</th>
 														<th>Office Name</th>
 														<th>Mobile Number</th>
@@ -250,6 +251,7 @@
 												<tbody>
 													{{#each office}}
 													<tr>
+														<td>{{math @index "+" 1}}</td>
 														<td>{{this.firm.title}}</td>
 														<td>{{this.name}}</td>
 														<td>{{this.mobile}}</td>
