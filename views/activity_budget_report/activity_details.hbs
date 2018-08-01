@@ -152,6 +152,7 @@
                                                                 <a href="#" title="{{this.activity_name}}" data-activiy-name="{{this.activity_name}}" id="activityBudgetUpdate" data-toggle="modal"
                                                                     data-target="#update_budget_by_activity">
                                                                     <strong>{{this.activity_name}}</strong>//
+                                                                    <p>Origin Attorney - {{this.originAttorney}}</p>
                                                                 </a>
                                                             </td>
                                                         </tr>
@@ -254,9 +255,7 @@
                                                         <div class="modal-content modal-lg">
                                                             <div class="modal-header">
                                                                 <h4 class="modal-title">Marketing Budget Summary</h4>
-                                                                <div style="height:100px; width:100px" class="total-title">
-                                                                    first text
-                                                                </div>
+                                                                <p class="total-title">  </p>
                                                             </div>
 
 
@@ -488,7 +487,7 @@
     $(document).on('click', "#activityBudgetUpdate", function (e) {
         var budgetId = $(this).data("activiy-name");
         alert(budgetId);
-         $('div.total-title').html(budgetId);
+         $('p.total-title').html('Activity- '+ budgetId);
         /*$('.edit_budget_hour').each(function (index) {
             if ($(this).val() !== "") {
                 var budgetId = $(this).data("budgets-id");
