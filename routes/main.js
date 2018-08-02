@@ -549,11 +549,13 @@ router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 	}
 
 	var existingTag = clients.tags;
-	var existing_tag = existingTag.split(",");
-	var existingTag = [];
-
-	for (var i = 0; i < existing_tag.length; i++) {
-		existingTag.push(Number(existing_tag[i]));
+	if (existingTag !== null){
+		var existing_tag = existingTag.split(",");
+		var existingTag = [];
+	
+		for (var i = 0; i < existing_tag.length; i++) {
+			+existingTag.push(Number(existing_tag[i]));
+		}
 	}
 
 	res.render('client/viewClient', { 

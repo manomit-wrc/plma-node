@@ -501,6 +501,8 @@ router.post('/target/move-to-client', auth, async (req, res) => {
 				client_id: target_data.target_id,
 				master_id: target_data.target_code,
 				gender: target_data.gender,
+				tag_type: "n",
+				tags: "new",
 				date_of_birth: target_data.date_of_birth,
 				social_security_no: target_data.social_sequrity_no,
 				IM: target_data.im,
