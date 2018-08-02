@@ -484,14 +484,13 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		});
 	}
 
-	console.log('clients',clients.tags)
-
 	var existingTag = clients.tags;
 	var existing_tag = existingTag.split(",");
+	var existingTag = [];
 
-	console.log("done",existing_tag.length)
-
-	
+	for (var i = 0; i < existing_tag.length; i++) {
+		existingTag.push(Number(existing_tag[i]));
+	}
 
 	res.render('client/editclient', { 
 		layout: 'dashboard', 
@@ -506,7 +505,7 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		city: client_city,
 		zipcode: client_zipcode,
 		error_message,
-		existing_tag 
+		existing_tag:existingTag 
 	});
 });
 
@@ -541,7 +540,27 @@ router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		});
 	}
 
-	res.render('client/viewClient', { layout: 'dashboard', csrfToken: req.csrfToken(), tags:tags,designation: designations, industry: industrys, client: clients, country: client_country, attorney: attorney, state: client_state, city: client_city, zipcode: client_zipcode, error_message });
+	var existingTag = clients.tags;
+	var existing_tag = existingTag.split(",");
+	var existingTag = [];
+
+	for (var i = 0; i < existing_tag.length; i++) {
+		existingTag.push(Number(existing_tag[i]));
+	}
+
+	res.render('client/viewClient', { 
+		layout: 'dashboard',
+		csrfToken: req.csrfToken(),
+		tags:tags,designation: designations, 
+		industry: industrys, client: clients, 
+		country: client_country, 
+		attorney: attorney, 
+		state: client_state, 
+		city: client_city, 
+		zipcode: client_zipcode, 
+		error_message,
+		existing_tag:existingTag 
+	});
 });
 
 router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req, res) => {

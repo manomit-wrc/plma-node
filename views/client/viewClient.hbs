@@ -141,7 +141,7 @@
 									<div class="form-group form-focus select-focus">
 										<select id="select-existing-tags" name="existing_tags" class="form-control floating" multiple="multiple" disabled>
 											{{#each tags}}
-											<option value="{{this.id}}">{{this.tags}}</option>
+											<option value="{{this.id}}" {{#inArray ../existing_tag this.id}} selected="selected" {{/inArray}}>{{this.tags}}</option>
 											{{/each}}
 										</select>
 									</div>
