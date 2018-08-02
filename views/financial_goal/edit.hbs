@@ -22,14 +22,17 @@
         </div>
       {{/if}}
       <form id="frmEditFinancialGoal" method="POST" action="/financial-goal/edit/{{finan_goal.id}}">
-         <input type="hidden" name="_csrf" value="{{csrfToken}}">   
+         <input type="hidden" name="_csrf" value="{{csrfToken}}">
          <div class="card-box">
             <div class="row">
                <div class="col-md-12">
                      <div class="row">
                         <div class="col-md-6">
                           <div class="form-group form-focus">
-                             <label class="control-label">Select Attorney</label>
+                             <label class="control-label">Select Attorney
+                               <span class="req-lbl">*</span>
+
+                             </label>
                              <select class="select form-control floating" id="attr_id" name="attr_id">
                                 <option value=""></option>
                                 {{#each attorney}}
@@ -40,7 +43,10 @@
                         </div>
                         <div class="col-md-6">
                           <div class="form-group form-focus">
-                             <label class="control-label">Select Current Year </label>
+                             <label class="control-label">Select Current Year
+                               <span class="req-lbl">*</span>
+
+                             </label>
                              <select class="select form-control floating" id="year" name="year">
                                 <option value=""></option>
                                 {{#each year}}
@@ -51,29 +57,41 @@
                         </div>
                         <div class="col-md-6">
                            <div class="form-group form-focus">
-                              <label class="control-label">Current Year Goal</label>
-                              <input type="text" class="form-control floating" 
-                              id="year_goal" name="year_goal" value="{{finan_goal.year_goal}}" 
+                              <label class="control-label">Current Year Goal
+                                <span class="req-lbl">*</span>
+
+                              </label>
+                              <input type="text" class="form-control floating"
+                              id="year_goal" name="year_goal" value="{{finan_goal.year_goal}}"
                               />
                            </div>
                         </div>
                         <div class="col-md-6">
                            <div class="form-group form-focus">
-                              <label class="control-label">Current Year Goal %</label>
-                              <input type="text" class="form-control floating" 
+                              <label class="control-label">Current Year Goal %
+                                <span class="req-lbl">*</span>
+
+                              </label>
+                              <input type="text" class="form-control floating"
                               id="year_goal_precentage" name="year_goal_precentage" value="{{finan_goal.year_goal_percentage}}"
                               />
                            </div>
                         </div>
                         <div class="col-md-12">
                            <div class="form-group form-focus">
-                              <label class="control-label">Summary Info</label>
+                              <label class="control-label">Summary Info
+                                <span class="req-lbl">*</span>
+
+                              </label>
                               <textarea name="summary_info" id="summary_info" class="form-control floating">{{finan_goal.summary}}</textarea>
                            </div>
                         </div>
                         <div class="col-md-12">
                            <div class="form-group form-focus">
-                              <label class="control-label">Remark/Comments</label>
+                              <label class="control-label">Remark/Comments
+                                <span class="req-lbl">*</span>
+
+                              </label>
                               <textarea name="remarks" id="remarks" class="form-control floating">{{finan_goal.remarks}}</textarea>
                            </div>
                         </div>
@@ -86,7 +104,7 @@
          </div>
       </form>
    </div>
-   
+
 </div>
 {{#content "script" mode="append"}}
     <script type="text/javascript" src="/assets/js/moment.min.js"></script>
@@ -102,7 +120,7 @@
                 groupSeparator: ",",
                 digits: 2,
                 autoGroup: true,
-                prefix: '$ ', 
+                prefix: '$ ',
                 rightAlign: false
             });
             $("#year_goal_precentage").inputmask("numeric", {
@@ -110,7 +128,7 @@
                 groupSeparator: ",",
                 digits: 2,
                 autoGroup: true,
-                suffix: ' %', 
+                suffix: ' %',
                 rightAlign: false
             });
             $("#frmEditFinancialGoal").validate({

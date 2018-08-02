@@ -16,6 +16,12 @@
 			<div class="col-sm-8">
 				<h4 class="page-title">Client Details</h4>
 			</div>
+
+			<div class="right">
+				<a href="/client/edit/{{client.id}}" class="btn btn-primary pull-right rounded">
+					<i class="fa fa-pencil"></i> Edit Client</a>
+			</div>
+
 		</div>
 		<form id="clientform" method="POST" action="/client/editClient/{{client.id}}">
 			<input type="hidden" name="_csrf" value="{{csrfToken}}">
