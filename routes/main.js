@@ -430,7 +430,15 @@ router.get('/client/add', auth, firmAttrAuth, csrfProtection, async (req, res) =
 		where: { role_id: 3, firm_id: req.user.firm_id }
 	});
 
-	res.render('client/addclient', { layout: 'dashboard', csrfToken: req.csrfToken(),tags: tags, country: country, state: state, designations: designation, industry: industry, attorney: attorney, error_message });
+	res.render('client/addclient', { layout: 'dashboard', csrfToken: req.csrfToken(),
+		tags: tags, 
+		country: country, 
+		state: state, 
+		designations: designation, 
+		industry: industry, 
+		attorney: attorney, 
+		error_message 
+	});
 });
 
 
@@ -688,6 +696,15 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 			}
 		}
 	});
+
+	var tag_ids;
+	console.log(req.body.existing_tags);
+	if (req.body.add_tag === 'e') {
+		tag_ids = req.body.existing_tags.toString();
+	} else {
+		tag_ids = req.body.add_new_tags;
+	}
+
 	if (client_edit_data === null) {
 		await client.update({
 			organization_name: req.body.org_name,
@@ -707,8 +724,8 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 			pin_code: req.body.zipcode,
 			designation_id: req.body.designation,
 			attorney_id: req.body.attorney_id,
-			tag_type: req.body.tag_type,
-			tags: req.body.add_new_tags,
+			tag_type: req.body.add_tag,
+			tags: tag_ids,
 			company_name: req.body.company_name,
 			twitter: req.body.twitter,
 			linkdn: req.body.linkdn,
