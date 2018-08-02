@@ -419,6 +419,8 @@ router.get('/client/add', auth, firmAttrAuth, csrfProtection, async (req, res) =
 	var error_message = req.flash('error-client-message')[0];
 
 	const designation = await Designation.findAll();
+	console.log('designation',designation);
+	
 	const industry = await Industry.findAll();
 	const country = await Country.findAll();
 	const state = await State.findAll();
@@ -454,6 +456,8 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 	var error_message = req.flash('error-clientEdit-message')[0];
 	const clients = await client.findById(req.params['id']);
 	const designations = await Designation.findAll();
+	const tags = await Tag.findAll();
+
 	const industrys = await Industry.findAll();
 	const client_country = await Country.findAll();
 	const attorney = await user.findAll({
@@ -480,13 +484,14 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		});
 	}
 
-	res.render('client/editclient', { layout: 'dashboard', csrfToken: req.csrfToken(), designation: designations, industry: industrys, client: clients, country: client_country, attorney: attorney, state: client_state, city: client_city, zipcode: client_zipcode, error_message });
+	res.render('client/editclient', { layout: 'dashboard', csrfToken: req.csrfToken(), tags:tags,designation: designations, industry: industrys, client: clients, country: client_country, attorney: attorney, state: client_state, city: client_city, zipcode: client_zipcode, error_message });
 });
 
 router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var error_message = req.flash('error-clientEdit-message')[0];
 	const clients = await client.findById(req.params['id']);
 	const designations = await Designation.findAll();
+	const tags = await Tag.findAll();
 	const industrys = await Industry.findAll();
 	const client_country = await Country.findAll();
 	const attorney = await user.findAll({
@@ -513,7 +518,7 @@ router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		});
 	}
 
-	res.render('client/viewClient', { layout: 'dashboard', csrfToken: req.csrfToken(), designation: designations, industry: industrys, client: clients, country: client_country, attorney: attorney, state: client_state, city: client_city, zipcode: client_zipcode, error_message });
+	res.render('client/viewClient', { layout: 'dashboard', csrfToken: req.csrfToken(), tags:tags,designation: designations, industry: industrys, client: clients, country: client_country, attorney: attorney, state: client_state, city: client_city, zipcode: client_zipcode, error_message });
 });
 
 router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req, res) => {
