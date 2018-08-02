@@ -449,7 +449,7 @@
 								<label class="control-label">Mobile No
 									<span class="text-danger">*</span>
 								</label>
-								<input class="form-control" type="text" name="edit_office_mobile_no" id="edit_office_mobile_no">
+								<input class="form-control floating number_validator" type="text" name="edit_office_mobile_no" id="edit_office_mobile_no">
 							</div>
 						</div>
 						<div class="col-md-12">
@@ -598,7 +598,7 @@
 								<label class="control-label">Mobile No
 									<span class="text-danger">*</span>
 								</label>
-								<input class="form-control" type="text" name="contact_mobile_no" id="contact_mobile_no">
+								<input class="form-control floating number_validator" type="text" name="contact_mobile_no" id="contact_mobile_no">
 							</div>
 						</div>
 						<div class="col-md-12">
@@ -727,7 +727,7 @@
 								<label class="control-label">Mobile No
 									<span class="text-danger">*</span>
 								</label>
-								<input class="form-control" type="text" name="edit_contact_mobile_no" id="edit_contact_mobile_no">
+								<input class="form-control floating number_validator" type="text" name="edit_contact_mobile_no" id="edit_contact_mobile_no">
 							</div>
 						</div>
 						<div class="col-md-12">
@@ -875,9 +875,8 @@
 					required: true
 				},
 				mobile_no: {
-					required: true,
-					number: true,
-					maxlength: 10
+					required: true
+
 				}
 			},
 			messages: {
@@ -995,9 +994,7 @@
 					required: true
 				},
 				edit_office_mobile_no: {
-					required: true,
-					number: true,
-					maxlength: 10
+					required: true
 				}
 			},
 			messages: {
@@ -1285,9 +1282,7 @@
 					required: true
 				},
 				edit_contact_mobile_no: {
-					required: true,
-					number: true,
-					maxlength: 10
+					required: true
 				}
 			},
 			messages: {
