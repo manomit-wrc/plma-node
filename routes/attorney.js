@@ -326,13 +326,6 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 
 });
 
-//
-//
-//         END INSERT
-//
-//
-//
-
 router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 	User.hasMany(Attorney_Details, {
 		foreignKey: 'user_id'
@@ -415,19 +408,6 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 });
 
 
-
-
-
-//
-//
-//         END EDIT
-//
-//
-//
-
-//  {{{    view data}}}
-
-
 router.get('/attorneys/viewdata/:id', auth, csrfProtection, async (req, res) => {
 
 	User.hasMany(Attorney_Details, {
@@ -469,7 +449,7 @@ router.get('/attorneys/viewdata/:id', auth, csrfProtection, async (req, res) => 
 			}
 		});
 	}
-	// console.log(edata[0].state);
+
 	res.render('attorney/viewattorney', {
 		layout: 'dashboard',
 		csrfToken: req.csrfToken(),
