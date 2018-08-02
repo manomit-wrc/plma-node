@@ -48,17 +48,14 @@
 							{{#each clients}}
 							<tr>
 								<td>
-
-
 									<input type="checkbox" name="client_check_id" value="{{this.id}}" />
 									{{math @index "+" 1}}
-
 								</td>
 								<td>
-									<a href="/client/view/{{this.id}}">
-									{{#if_eq client_type "O"}} {{this.organization_name}} {{/if_eq}} {{#if_eq client_type "I"}} {{this.first_name}} {{this.last_name}}
+									<a href="/client/view/{{this.id}}" >
+										{{#if_eq client_type "O"}} {{this.organization_name}} {{/if_eq}} {{#if_eq client_type "I"}} {{this.first_name}} {{this.last_name}}
 									{{/if_eq}}
-								</a>
+									</a>
 								</td>
 								<td>
 									{{#if_eq client_type "O"}} Organization {{/if_eq}} {{#if_eq client_type "I"}} Individual {{/if_eq}}

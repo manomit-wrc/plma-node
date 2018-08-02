@@ -480,7 +480,7 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		});
 	}
 
-	res.render('client/editClient', { layout: 'dashboard', csrfToken: req.csrfToken(), designation: designations, industry: industrys, client: clients, country: client_country, attorney: attorney, state: client_state, city: client_city, zipcode: client_zipcode, error_message });
+	res.render('client/editclient', { layout: 'dashboard', csrfToken: req.csrfToken(), designation: designations, industry: industrys, client: clients, country: client_country, attorney: attorney, state: client_state, city: client_city, zipcode: client_zipcode, error_message });
 });
 
 router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {

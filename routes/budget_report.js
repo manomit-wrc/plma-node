@@ -123,7 +123,9 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
         }
       });
 
+
       for (var j = 0; j < activity_goals.length; j++) {
+        
         activityArr.push({
           "activity_name": activity_goals[j].activity_goal,
           "activity_goal_id": activity_goals[j].id,
@@ -241,12 +243,13 @@ router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req,
         activity_id: activity_data[a].id
       }
     });
-
+    
     activityArr.push({
       "activity_name": activity_data[a].activity_name,
       "activity_id": activity_data[a].id,
       "budget_list": budgetArr,
-      "activity_grand": activity_grand
+      "activity_grand": activity_grand,
+      'originAttorney':req.user.first_name +' '+req.user.last_name
     });
   }
 

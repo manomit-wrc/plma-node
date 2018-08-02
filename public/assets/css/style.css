@@ -5535,6 +5535,45 @@ i.fa.fa-eye.m-r-5 {
 	border: 1px solid #ff851a;
 }
 
+
+#update_budget_by_activity  .table {
+    margin-bottom: 0 !important;
+}
+
+#update_budget_by_activity .table>tbody>tr>td, 
+#update_budget_by_activity .table>tbody>tr>th,
+#update_budget_by_activity  .table>tfoot>tr>td, 
+#update_budget_by_activity .table>tfoot>tr>th, 
+#update_budget_by_activity .table>thead>tr>td, 
+#update_budget_by_activity .table>thead>tr>th {
+    padding: 8px;
+	line-height: 1;
+}
+
+#update_budget_by_activity  .table strong {
+    font-size: 12px;
+}
+
+#update_budget_by_activity .tbl-w100p {
+	width: 100%;
+}
+
+
+#update_budget_by_activity .tbl-w50p {
+	width: 48%;
+	display: inline-block;
+}
+
+#update_budget_by_activity .tbl-w130px {
+	width: 130px;
+    display: inline-block;
+}
+
+
+#update_budget_by_activity .table>thead>tr>th {
+    border-bottom: 0;
+}
+
 /*------------------------------------------------------------------
 [39-a.... Custom Styles]
 */

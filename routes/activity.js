@@ -285,9 +285,6 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 				const amount = activity_budget.length > 0 ? activity_budget[0].amount : '';
 				const approval_remarks = activity_budget.length > 0 ? activity_budget[0].approver_remarks : '';
 
-				console.log('amount========>>>>>>', amount);
-				console.log('approval_remarks:=======>>>', approval_remarks);
-
 				level_type = activity_budget.length > 0 ? activity_budget[0].level_type : level_type;
 				child_budget_arr.push({
 					"id": child_budget[j].id,
