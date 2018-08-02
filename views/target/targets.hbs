@@ -139,6 +139,18 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="move_to_client_exisiting" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Client olready exist!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="target-delete-2" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -222,10 +234,11 @@
             type: 'POST',
             data: { target_id: target_ids },
             success: function (response) {
-                // console.log(response);
+                
                 if (response.code === '200') {
-                    //$('#success-move').css('display','block');
                     window.location.reload();
+                } else {
+                    $('#move_to_client_exisiting').modal('show');
                 }
             },
             error: function (err) {
@@ -259,11 +272,9 @@
             type: 'POST',
             data: { target_id: target_ids },
             success: function (response) {
-                // console.log(response);
                 if (response.code === '200') {
-                    //$('#success-move').css('display','block');
                     window.location.reload();
-                }
+                } 
             },
             error: function (err) {
                 console.log(err);
