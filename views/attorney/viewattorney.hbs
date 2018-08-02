@@ -11,10 +11,8 @@
         <h4 class="page-title">View Attorney Details</h4>
       </div>
       <div class="col-xs-8 text-right">
-
-        <a href=/attorneys/edit/{{edata.0.id}} class="btn btn-primary pull-right rounded">
-          <i class="fa fa-pencil"></i> Edit</a>
-          {{!-- <a href=/attorneys/edit/{{edata.0.id}} class="btn btn-primary pull-right rounded"> Edit Attorney</a> --}}
+        <a href="/attorneys/edit/{{edata.0.id}}" class="btn btn-primary pull-right rounded">
+          <i class="fa fa-pencil"></i> Edit Attorney</a>
       </div>
     </div>
 
@@ -181,8 +179,7 @@
             <div class="form-group form-focus">
               <label class="control-label">Practice Date</label>
               <div class="cal-icon">
-                <input class="form-control floating datetimepicker" type="text" id="bar_practice_date" name="bar_practice_date" value="{{dateFormat edata.0.attorney_details.0.bar_practice_date "
-                  DD-MM-YYYY "}}" readonly>
+                <input class="form-control floating datetimepicker" type="text" id="bar_practice_date" name="bar_practice_date" value="{{dateFormat edata.0.attorney_details.0.bar_practice_date "DD-MM-YYYY "}}" readonly>
               </div>
             </div>
           </div>
@@ -190,12 +187,10 @@
             <div class="form-group form-focus">
               <label class="control-label">Firm Join Date</label>
               <div class="cal-icon">
-                <input class="form-control floating datetimepicker" type="text" id="firm_join_date" name="firm_join_date" value="{{dateFormat edata.0.attorney_details.0.firm_join_date "
-                  DD-MM-YYYY "}}" readonly>
+                <input class="form-control floating datetimepicker" type="text" id="firm_join_date" name="firm_join_date" value="{{dateFormat edata.0.attorney_details.0.firm_join_date "DD-MM-YYYY "}}" readonly>
               </div>
             </div>
           </div>
-
           <div class="col-md-6">
             <div class="form-group form-focus select-focus">
               <label class="control-label">Jurisdiction</label>
@@ -251,15 +246,8 @@
                 readonly onkeypress="return onlyNumbers();" />
             </div>
           </div>
-
         </div>
       </div>
-
-
-
-
-
-
 
 
       <div class="card-box">

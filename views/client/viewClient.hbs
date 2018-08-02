@@ -1,7 +1,10 @@
 {{#content "style" mode="prepend"}}
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> 
+<link rel="stylesheet" type="text/css" href="/assets/css/jquery.tagsinput.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
+{{/content}}
 <div class="page-wrapper">
 	<div class="content container-fluid">
 		<div class="row">
@@ -13,10 +16,17 @@
 			<div class="col-sm-8">
 				<h4 class="page-title">Client Details</h4>
 			</div>
+
+			<div class="right">
+				<a href="/client/edit/{{client.id}}" class="btn btn-primary pull-right rounded">
+					<i class="fa fa-pencil"></i> Edit Client</a>
+			</div>
+
 		</div>
 		<form id="clientform" method="POST" action="/client/editClient/{{client.id}}">
 			<input type="hidden" name="_csrf" value="{{csrfToken}}">
 			<input type="hidden" value="{{client.id}}" id="id" disabled="disabled" />
+			<input type="hidden" id="activity_type_details" name="activity_type_details" value="{{client.tag_type}}">
 
 			<div class="form-inline m-b-15">
 				<div class="form-group m-r-5">
@@ -114,16 +124,16 @@
 									<div class="form-group m-r-5">
 										<label class="input-group">
 											<span class="input-group-addon">
-												<input type="radio" id="new-add-tag" name="add-tag" value="new" disabled="disabled" checked/>
+												<input type="radio" id="new-add-tag" name="add-tag" value="new" disabled="disabled" {{#if_eq client.tag_type 'n'}} checked {{/if_eq}}/>
 											</span>
-											<div class="form-control form-control-static">New Tags</div>
+											<div class="form-control form-control-static">New Tags  {{client.tag_type}}</div>
 											<span class="glyphicon form-control-feedback "></span>
 										</label>
 									</div>
 									<div class="form-group ">
 										<label class="input-group">
 											<span class="input-group-addon">
-												<input type="radio" id="existing-tag" name="add-tag" value="existing" disabled="disabled" />
+												<input type="radio" id="existing-tag" name="add-tag" value="existing" disabled="disabled"  {{#if_eq client.tag_type 'e'}} checked {{/if_eq}} />
 											</span>
 											<div class="form-control form-control-static">Existing Tags</div>
 											<span class="glyphicon form-control-feedback "></span>
@@ -135,28 +145,24 @@
 							<div class="col-md-6">
 								<div id="add-tag-existing-client" style="display:none;">
 									<div class="form-group form-focus select-focus">
-										<label class="control-label">Select From Existing Tags
-											<span class="req-lbl">*</span>
-										</label>
-										<select id="select-existing-tags" name="existing_tags" class="select form-control floating">
-											{{!-- {{#each designations}} --}}
-											<option value="{{client.tag_type}}">{{client.tag_type}}</option>
-											{{!-- {{/each}} --}}
+										<select id="select-existing-tags" name="existing_tags" class="form-control floating" multiple="multiple" disabled>
+											{{#each tags}}
+											<option value="{{this.id}}" {{#inArray ../existing_tag this.id}} selected="selected" {{/inArray}}>{{this.tags}}</option>
+											{{/each}}
 										</select>
 									</div>
 								</div>
+							
 								<div id="add-tag-client">
 									<div class="form-group form-focus">
 										<label class="control-label">Add New Tags
 											<span class="req-lbl">*</span>
 										</label>
 										<input type="text" class="form-control floating" id="add-new-tags" name="add_new_tags" disabled="disabled" value="{{client.tags}}"
-										/>
+										 />
 									</div>
 								</div>
 							</div>
-
-
 
 							<div class="col-md-6">
 								<div class="form-group form-focus">
@@ -445,10 +451,18 @@
 <script type="text/javascript" src="/assets/js/select2.min.js"></script>
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function (e) {
+
+		$('#select-existing-tags').multiselect({
+			nonSelectedText: 'Select Existing Tags',
+			includeSelectAllOption: true,
+			buttonWidth: '100%'
+		});
+
 		$("#clientform").validate({
 			rules: {
 				edit_client_first_name: {
@@ -535,15 +549,18 @@
 				}
 			}
 		});
-		$(document).on('click', '#new-add-tag', function () {
+
+		var activity_id = $('#activity_type_details').val();
+
+		if (activity_id == 'n') {
 			$('#add-tag-client').show();
 			$('#add-tag-existing-client').hide();
-		});
-
-		$(document).on('click', '#existing-tag', function () {
+		} else {
 			$('#add-tag-existing-client').show();
 			$('#add-tag-client').hide();
-		})
+		}
+
+		
 
 	});
 </script> {{/content}}

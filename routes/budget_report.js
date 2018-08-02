@@ -13,6 +13,7 @@ const Activity = require('../models').activity;
 const ActivityGoal = require('../models').activity_goal;
 const Budget = require('../models').budget;
 const ActivityBudget = require('../models').activity_budget;
+const Jointactivities = require('../models').jointactivity;
 
 var csrfProtection = csrf({
   cookie: true
@@ -243,6 +244,12 @@ router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req,
         activity_id: activity_data[a].id
       }
     });
+
+    const jointActivities = await Jointactivities.findAll({
+      where : { 'type': '84' }
+    });
+
+    console.log('jointActivities',jointActivities);
     
     activityArr.push({
       "activity_name": activity_data[a].activity_name,
@@ -262,5 +269,25 @@ router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req,
     activity_budget_grand
   });
 });
+
+
+/* router.get('/budget-report/activity/:id', auth, csrfProtection, async (req, res) => {
+
+  const jointActivities = await Jointactivities.findAll({
+    where : { 'type': '84' }
+  });
+
+  console.log('jointActivities',jointActivities);
+    
+    
+  res.render('activity_budget_report/activity_details', {
+    layout: 'dashboard',
+    activityArr,
+    budgetArr,
+    activity_goal,
+    activity_budget_grand
+  });
+
+}); */
 
 module.exports = router;
