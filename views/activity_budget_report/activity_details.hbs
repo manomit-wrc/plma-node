@@ -486,23 +486,8 @@
 
     $(document).on('click', "#activityBudgetUpdate", function (e) {
         var budgetId = $(this).data("activiy-name");
-        alert(budgetId);
          $('p.total-title').html('Activity- '+ budgetId);
-        /*$('.edit_budget_hour').each(function (index) {
-            if ($(this).val() !== "") {
-                var budgetId = $(this).data("budgets-id");
-                var amount = $(".edit_budget_amount")[index].value;
-                var reamrk_budget = $('.edit_budget_remarks')[index].value;
-                totalAmount += parseInt(amount);
-                totalHour += parseInt($(this).val());
-                EditBudgetArr.push({
-                    budget_id: budgetId,
-                    budget_hour: $(this).val(),
-                    budget_amount: amount,
-                    remarks_budgets: reamrk_budget
-                });
-            }
-        });*/
+        
     });
 
 

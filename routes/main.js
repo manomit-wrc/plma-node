@@ -419,6 +419,8 @@ router.get('/client/add', auth, firmAttrAuth, csrfProtection, async (req, res) =
 	var error_message = req.flash('error-client-message')[0];
 
 	const designation = await Designation.findAll();
+	console.log('designation',designation);
+	
 	const industry = await Industry.findAll();
 	const country = await Country.findAll();
 	const state = await State.findAll();
@@ -454,6 +456,8 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 	var error_message = req.flash('error-clientEdit-message')[0];
 	const clients = await client.findById(req.params['id']);
 	const designations = await Designation.findAll();
+	const tags = await Tag.findAll();
+
 	const industrys = await Industry.findAll();
 	const client_country = await Country.findAll();
 	const attorney = await user.findAll({
@@ -480,13 +484,36 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		});
 	}
 
-	res.render('client/editclient', { layout: 'dashboard', csrfToken: req.csrfToken(), designation: designations, industry: industrys, client: clients, country: client_country, attorney: attorney, state: client_state, city: client_city, zipcode: client_zipcode, error_message });
+	var existingTag = clients.tags;
+	var existing_tag = existingTag.split(",");
+	var existingTag = [];
+
+	for (var i = 0; i < existing_tag.length; i++) {
+		existingTag.push(Number(existing_tag[i]));
+	}
+
+	res.render('client/editclient', { 
+		layout: 'dashboard', 
+		csrfToken: req.csrfToken(),
+		tags:tags,
+		designation: designations,
+		industry: industrys,
+		client: clients,
+		country: client_country,
+		attorney: attorney,
+		state: client_state,
+		city: client_city,
+		zipcode: client_zipcode,
+		error_message,
+		existing_tag:existingTag 
+	});
 });
 
 router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var error_message = req.flash('error-clientEdit-message')[0];
 	const clients = await client.findById(req.params['id']);
 	const designations = await Designation.findAll();
+	const tags = await Tag.findAll();
 	const industrys = await Industry.findAll();
 	const client_country = await Country.findAll();
 	const attorney = await user.findAll({
@@ -513,7 +540,27 @@ router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		});
 	}
 
-	res.render('client/viewClient', { layout: 'dashboard', csrfToken: req.csrfToken(), designation: designations, industry: industrys, client: clients, country: client_country, attorney: attorney, state: client_state, city: client_city, zipcode: client_zipcode, error_message });
+	var existingTag = clients.tags;
+	var existing_tag = existingTag.split(",");
+	var existingTag = [];
+
+	for (var i = 0; i < existing_tag.length; i++) {
+		existingTag.push(Number(existing_tag[i]));
+	}
+
+	res.render('client/viewClient', { 
+		layout: 'dashboard',
+		csrfToken: req.csrfToken(),
+		tags:tags,designation: designations, 
+		industry: industrys, client: clients, 
+		country: client_country, 
+		attorney: attorney, 
+		state: client_state, 
+		city: client_city, 
+		zipcode: client_zipcode, 
+		error_message,
+		existing_tag:existingTag 
+	});
 });
 
 router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req, res) => {
@@ -628,6 +675,10 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 });
 
 router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+
+
+	console.log(req.body);
+
 	const formatDate = req.body.client_dob ? req.body.client_dob.split("-") : '';
 	const client_edit_data = await client.findOne({
 		where: {
@@ -674,7 +725,10 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 			client_id: req.body.client_id,
 			master_id: req.body.master_id,
 			client_company: req.body.client_company,
-			remarks: req.body.remarks
+			remarks: req.body.remarks,
+			social_url: req.body.social,
+  			website_url: req.body.website,
+
 		}, {
 				where: { id: req.params['id'] }
 			});
