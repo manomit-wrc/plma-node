@@ -150,7 +150,9 @@
                                                         <tr>
                                                             <td style="height: 91px; text-align: center; vertical-align: middle; border-top: 1px solid #ddd;">
                                                                 <p style="color:#337ab7;">
+                                                                    <a href="#" id="activityBudgetUpdate" data-toggle="modal" data-target="#update_budget_by_activity" title="{{this.activity_name}}" data-activiy-name="{{this.activity_name}}">
                                                                     <strong>{{this.activity_name}}</strong>
+                                                                    </a>
                                                                 </p>
                                                                 <p title="{{this.activity_name}}" data-activiy-name="{{this.activity_name}}" >Origin Attorney - {{this.originAttorney}}</p>
                                                             </td>
@@ -492,7 +494,7 @@
 
     $(document).on('click', "#activityBudgetUpdate", function (e) {
         var budgetName = $(this).data("activiy-name");
-        alert(budgetName);
+        // alert(budgetName);
         $('p.total-title').html('Activity- ' + budgetName);
 
     });
