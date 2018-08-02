@@ -245,13 +245,6 @@ router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req,
       }
     });
 
-
-
-    for (let index = 0; index < array.length; index++) {
-      const element = array[index];
-      
-    }
-
     const jointActivities = await Jointactivities.findAll({
       where : { 'type': '84' }
     });
@@ -278,7 +271,7 @@ router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req,
 });
 
 
-router.get('/budget-report/activity/:id', auth, csrfProtection, async (req, res) => {
+/* router.get('/budget-report/activity/:id', auth, csrfProtection, async (req, res) => {
 
   const jointActivities = await Jointactivities.findAll({
     where : { 'type': '84' }
@@ -295,6 +288,6 @@ router.get('/budget-report/activity/:id', auth, csrfProtection, async (req, res)
     activity_budget_grand
   });
 
-});
+}); */
 
 module.exports = router;

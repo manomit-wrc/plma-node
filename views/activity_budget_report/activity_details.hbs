@@ -149,11 +149,8 @@
                                                     <thead class="persist-header">
                                                         <tr>
                                                             <td style="height: 91px; text-align: center; vertical-align: middle; border-top: 1px solid #ddd;">
-                                                                <a href="#" title="{{this.activity_name}}" data-activiy-name="{{this.activity_name}}" id="activityBudgetUpdate" data-toggle="modal"
-                                                                    data-target="#update_budget_by_activity">
-                                                                    <strong>{{this.activity_name}}</strong>//
+                                                                   <p style="color:#337ab7;"><strong>{{this.activity_name}}</strong></p> 
                                                                     <p>Origin Attorney - {{this.originAttorney}}</p>
-                                                                </a>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -191,10 +188,17 @@
                                                                                     <tbody>
                                                                                         <tr>
                                                                                             <td width="50%" style="border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; text-align: center; vertical-align: middle;">
-                                                                                                {{get_activity_budget_hour ../../this.activity_id this.budget_display}}
+                                                                                                <a href="#" title="{{this.activity_name}}" data-activiy-name="{{this.activity_name}}" id="activityBudgetUpdate" data-toggle="modal"
+                                                                                                    data-target="#update_budget_by_activity">
+                                                                                                {{get_activity_budget_hour
+                                                                                                    ../../this.activity_id
+                                                                                                    this.budget_display}}</a>
                                                                                             </td>
                                                                                             <td width="50%" style="border-bottom: 1px solid #ddd; text-align: center; vertical-align: middle;">
-                                                                                                {{get_activity_budget_amount ../../this.activity_id this.budget_display}}
+                                                                                                <a href="#" title="{{this.activity_name}}" data-activiy-name="{{this.activity_name}}" id="activityBudgetUpdate" data-toggle="modal"
+                                                                                                    data-target="#update_budget_by_activity">{{get_activity_budget_amount
+                                                                                                    ../../this.activity_id
+                                                                                                    this.budget_display}}</a>
                                                                                             </td>
                                                                                         </tr>
                                                                                     </tbody>
@@ -255,7 +259,7 @@
                                                         <div class="modal-content modal-lg">
                                                             <div class="modal-header">
                                                                 <h4 class="modal-title">Marketing Budget Summary</h4>
-                                                                <p class="total-title">  </p>
+                                                                <p class="total-title"> </p>
                                                             </div>
 
 
@@ -486,8 +490,8 @@
 
     $(document).on('click', "#activityBudgetUpdate", function (e) {
         var budgetId = $(this).data("activiy-name");
-         $('p.total-title').html('Activity- '+ budgetId);
-        
+        $('p.total-title').html('Activity- ' + budgetId);
+
     });
 
 
