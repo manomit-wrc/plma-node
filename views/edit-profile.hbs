@@ -91,9 +91,8 @@
                <div class="col-md-12">
                   <div class="form-group form-focus">
                      <label class="control-label">Mobile No</label>
-                     <input type="text" class="form-control floating" 
+                     <input type="text" class="form-control floating number_validator" 
                      id="mobile_no" name="mobile_no" value="{{user.mobile_no}}"
-                     maxlength="10" minlength="10"
                      />
                   </div>
                </div>
@@ -168,10 +167,7 @@
                         required: true
                     },
                     mobile_no: {
-                        required: true,
-                        number: true,
-                        maxlength: 10,
-                        minlength: 10
+                        required: true
                     },
                     address: {
                         required: true
@@ -197,10 +193,7 @@
                         required: "Last name can't be blank"
                     },
                     mobile_no: {
-                        required: "Mobile no can't be blank",
-                        number: "Must be number",
-                        maxlength: "Must have 10 digits",
-                        minlength: "Must have 10 digits"
+                        required: "Mobile no can't be blank"
                     },
                     address: {
                         required:  "Address can't be blank"
