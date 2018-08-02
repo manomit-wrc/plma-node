@@ -111,7 +111,7 @@ router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async(req, res)
 				mobile: removePhoneMask(req.body.mobile_no),
 				referred_type: req.body.ref_type,
 				firm_id: req.user.firm_id,
-				user_id: req.user.user_id,
+				user_id: req.user.id,
 				target_id:req.body.referred_id_t ? parseInt(req.body.referred_id_t) : 0,
 				client_id:req.body.referred_id_c ? parseInt(req.body.referred_id_c) : 0,
 				remarks: req.body.remarks
@@ -127,7 +127,7 @@ router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async(req, res)
 				mobile: removePhoneMask(req.body.mobile_no),
 				referred_type: req.body.ref_type,
 				firm_id: req.user.firm_id,
-				user_id: req.user.user_id,
+				user_id: req.user.id,
 				target_id:req.body.referred_id_t ? parseInt(req.body.referred_id_t) : 0,
 				client_id:req.body.referred_id_c ? parseInt(req.body.referred_id_c) : 0,
 				remarks: req.body.remarks
@@ -306,7 +306,7 @@ router.post('/referral/upload-excel', auth, referral_xcel.single('ref_excel_file
 					email: excelReferral[i].email,
 					mobile: excelReferral[i].mobile,
 					firm_id: req.user.firm_id,
-					user_id: req.user.user_id,
+					user_id: req.user.id,
 					remarks: excelReferral[i].remarks
 				});
 			}
@@ -319,7 +319,7 @@ router.post('/referral/upload-excel', auth, referral_xcel.single('ref_excel_file
 					email: excelReferral[i].email,
 					mobile: excelReferral[i].mobile,
 					firm_id: req.user.firm_id,
-					user_id: req.user.user_id,
+					user_id: req.user.id,
 					remarks: excelReferral[i].remarks
 				});
 			}

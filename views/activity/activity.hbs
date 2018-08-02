@@ -41,7 +41,7 @@
             </thead>
             <tbody id="mainTable">
               {{#each row}}
-              <tr>
+              <tr {{#if_eq this.activity_status '2'}} style="background-color:#5cc65c;;" {{/if_eq}} {{#if_eq this.activity_status '3'}} style="background-color:red;" {{/if_eq}}>
                 <td>{{math @index "+" 1}}</td>
                 <td>{{this.activity_name}}</td>
                 <td>{{dateFormat this.activity_from_date "DD-MM-YYYY"}}</td>
