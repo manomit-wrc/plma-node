@@ -60,40 +60,77 @@ function removeMobileMask(mobile_no) {
 
 
 router.get('/attorneys', auth, csrfProtection, async (req, res) => {
-	var success_message = req.flash('success-message')[0];
+	var success_message = req.flash('success-attorney-message')[0];
+	var success_edit_message = req.flash('success-edit-attorney-message')[0];
+	attar_information = [];
+	User.hasMany(Attorney_Details, {
+		foreignKey: 'user_id'
+	});
+
 	const attr = await User.findAll({
 		where: {
 			role_id: 3,
 			firm_id: req.user.firm_id
-		}
+		},
+		include: [{
+			model: Attorney_Details
+		}]
 	});
+
+
+
+	for (var i = 0; i < attr.length; i++) {
+		var name = attr[i].first_name + " " + attr[i].last_name;
+		var email = attr[i].email;
+		var mobile_no = attr[i].mobile_no;
+		var id = attr[i].id;
+		var attr_type = attr[i].attorney_details.length > 0 ? (attr[i].attorney_details[0].attorney_type !== '' ? attr[i].attorney_details[0].attorney_type : 'N/A') : 'N/A';
+
+		var industry_type = await Industry_type.findOne({
+			where: {
+				'id': attr[i].attorney_details[0].industry_type
+			}
+		})
+
+		attar_information.push({
+			name: name,
+			email: email,
+			mobile_no: mobile_no,
+			id: id,
+			attr_type: attr_type,
+			industry_name: industry_type.industry_name !== '' ? industry_type.industry_name : 'N/A'
+		})
+	}
+
 	res.render('attorney/index', {
 		layout: 'dashboard',
+		success_message,
+		success_edit_message,
 		csrfToken: req.csrfToken(),
-		row: attr
+		row: attar_information
 	});
 });
-router.post("/get-firm-user-designation", auth, async (req, res)=> {
+
+
+router.post("/get-firm-user-designation", auth, async (req, res) => {
 	const get_desig = await User.findAll({
 		where: {
 			firm_id: req.user.firm_id,
 			designation_id: req.body.designation_id
 		}
 	});
-	if (get_desig.length == 0){
+	if (get_desig.length == 0) {
 		res.json({
 			"success": true
 		});
-	}
-	else
-	{
+	} else {
 		res.json({
 			"success": false
 		});
 	}
 });
 
-router.post("/get-section-user-designation", auth, async (req, res)=>{
+router.post("/get-section-user-designation", auth, async (req, res) => {
 	const sectionDesig = await User.findAll({
 		where: {
 			firm_id: req.user.firm_id,
@@ -114,20 +151,19 @@ router.post("/get-section-user-designation", auth, async (req, res)=>{
 
 router.get("/get-approval-designation", auth, async (req, res) => {
 	const getLevel = await Firm.findAll({
-		where:
-		{
+		where: {
 			id: req.user.firm_id
 		}
 	});
 	var designationLevel = [];
 	designationLevel.push(getLevel[0].level_1);
-	if (getLevel[0].level_2 !== 0){
+	if (getLevel[0].level_2 !== 0) {
 		designationLevel.push(getLevel[0].level_2);
 	}
-	if (getLevel[0].level_3 !== 0){
+	if (getLevel[0].level_3 !== 0) {
 		designationLevel.push(getLevel[0].level_3);
 	}
-	if (getLevel[0].level_4 !== 0){
+	if (getLevel[0].level_4 !== 0) {
 		designationLevel.push(getLevel[0].level_4);
 	}
 	const designation = await Designation.findAll({
@@ -140,7 +176,7 @@ router.get("/get-approval-designation", auth, async (req, res) => {
 	});
 });
 
-router.get("/get-all-designation", auth, async(req, res)=> {
+router.get("/get-all-designation", auth, async (req, res) => {
 	const designation = await Designation.findAll();
 	res.send({
 		designations: designation
@@ -150,21 +186,35 @@ router.get("/get-all-designation", auth, async(req, res)=> {
 router.get('/attorneys/addAttorney', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var err_message = req.flash('success-err-message')[0];
 	const designation = await Designation.findAll();
-	const group = await Group.findAll();
+	const group = await Group.findAll({
+		order: [
+			['name', 'ASC'],
+		]
+	});
 	sectionToFirm.belongsTo(Section, {
 		foreignKey: 'section_id'
 	});
 
 	const allSection = await sectionToFirm.findAll({
+
 		where: {
 			firm_id: req.user.firm_id
 		},
+
 		include: [{
 			model: Section
 		}]
 	});
-	const jurisdiction = await Jurisdiction.findAll();
-	const industry_type = await Industry_type.findAll();
+	const jurisdiction = await Jurisdiction.findAll({
+		order: [
+			['name', 'ASC'],
+		]
+	});
+	const industry_type = await Industry_type.findAll({
+		order: [
+			['industry_name', 'ASC'],
+		]
+	});
 	var country = await Country.findAll();
 	const state = await State.findAll({
 		where: {
@@ -248,8 +298,6 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 				education: req.body.education,
 				bar_registration: req.body.bar_registration,
 				job_type: req.body.job_type,
-				bar_practice_date: req.body.bar_practice_date,
-				firm_join_date: req.body.firm_join_date,
 				jurisdiction: parseInt(req.body.jurisdiction),
 				industry_type: parseInt(req.body.industry_type),
 				hourly_cost: req.body.hourly_cost,
@@ -258,9 +306,9 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 				billing_opp_cost: req.body.billing_opp_cost,
 				address2: req.body.address2,
 				address3: req.body.address3,
-				phone_no:  removePhoneMask(req.body.phone_no),
+				phone_no: removePhoneMask(req.body.phone_no),
 
-				fax: req.body.fax,
+				fax: removePhoneMask(req.body.fax),
 				website_url: req.body.website_url,
 				social_url: req.body.social_url,
 				remarks: req.body.remarks,
@@ -271,6 +319,7 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 
 			});
 		});
+		req.flash('success-attorney-message', 'Attorney Created Successfully');
 		res.redirect('/attorneys');
 	}
 
@@ -290,7 +339,11 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 	});
 
 	const designation = await Designation.findAll();
-	const group = await Group.findAll();
+	const group = await Group.findAll({
+		order: [
+			['name', 'ASC'],
+		]
+	});
 	sectionToFirm.belongsTo(Section, {
 		foreignKey: 'section_id'
 	});
@@ -303,8 +356,18 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 			model: Section
 		}]
 	});
-	const jurisdiction = await Jurisdiction.findAll();
-	const industry_type = await Industry_type.findAll();
+	const jurisdiction = await Jurisdiction.findAll({
+			order: [
+				['name', 'ASC'],
+			]
+		}
+
+	);
+	const industry_type = await Industry_type.findAll({
+		order: [
+			['industry_name', 'ASC'],
+		]
+	});
 
 	const country = await Country.findAll({});
 	const state = await State.findAll({});
@@ -365,7 +428,7 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 //  {{{    view data}}}
 
 
-	router.get('/attorneys/viewdata/:id', auth, csrfProtection, async (req, res) => {
+router.get('/attorneys/viewdata/:id', auth, csrfProtection, async (req, res) => {
 
 	User.hasMany(Attorney_Details, {
 		foreignKey: 'user_id'
@@ -435,7 +498,7 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 //
 
 
-router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async(req, res) => {
+router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 
 	const Dob1 = req.body.dob ? req.body.dob.split("-") : '';
 	const Firm_Join_Date1 = req.body.firm_join_date ? req.body.firm_join_date.split("-") : '';
@@ -464,42 +527,40 @@ router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async(r
 		}
 	});
 
-		const attr_update = await Attorney_Details.update({
-			group: parseInt(req.body.group),
-			section: parseInt(req.body.section),
-			designation: parseInt(req.body.designation),
-			attorney_id: req.body.attorney_id,
-			attorney_code: req.body.attorney_code,
-			attorney_type: req.body.attorney_type,
-			education: req.body.education,
-			bar_registration: req.body.bar_registration,
-			job_type: req.body.job_type,
-			bar_practice_date: req.body.bar_practice_date,
-			firm_join_date: req.body.firm_join_date,
-			jurisdiction: parseInt(req.body.jurisdiction),
-			industry_type: parseInt(req.body.industry_type),
-			hourly_cost: req.body.hourly_cost,
-			benefit_factor: req.body.benefit_factor,
-			overhead_amount: req.body.overhead_amount,
-			billing_opp_cost: req.body.billing_opp_cost,
-			address2: req.body.address2,
-			address3: req.body.address3,
-			e_mail: req.body.e_mail,
-			phone_no: removePhoneMask(req.body.phone_no),
-			fax: req.body.fax,
-			website_url: req.body.website_url,
-			social_url: req.body.social_url,
-			remarks: req.body.remarks,
-			firm_join_date: Firm_Join_Date1 ? Firm_Join_Date1[2] + "-" + Firm_Join_Date1[1] + "-" + Firm_Join_Date1[0] : null,
-			bar_practice_date: Bar_Practice_date1 ? Bar_Practice_date1[2] + "-" + Bar_Practice_date1[1] + "-" + Bar_Practice_date1[0] : null,
+	const attr_update = await Attorney_Details.update({
+		group: parseInt(req.body.group),
+		section: parseInt(req.body.section),
+		designation: parseInt(req.body.designation),
+		attorney_id: req.body.attorney_id,
+		attorney_code: req.body.attorney_code,
+		attorney_type: req.body.attorney_type,
+		education: req.body.education,
+		bar_registration: req.body.bar_registration,
+		job_type: req.body.job_type,
+		jurisdiction: parseInt(req.body.jurisdiction),
+		industry_type: parseInt(req.body.industry_type),
+		hourly_cost: req.body.hourly_cost,
+		benefit_factor: req.body.benefit_factor,
+		overhead_amount: req.body.overhead_amount,
+		billing_opp_cost: req.body.billing_opp_cost,
+		address2: req.body.address2,
+		address3: req.body.address3,
+		e_mail: req.body.e_mail,
+		phone_no: removePhoneMask(req.body.phone_no),
+		fax: removePhoneMask(req.body.fax),
+		website_url: req.body.website_url,
+		social_url: req.body.social_url,
+		remarks: req.body.remarks,
+		firm_join_date: Firm_Join_Date1 ? Firm_Join_Date1[2] + "-" + Firm_Join_Date1[1] + "-" + Firm_Join_Date1[0] : null,
+		bar_practice_date: Bar_Practice_date1 ? Bar_Practice_date1[2] + "-" + Bar_Practice_date1[1] + "-" + Bar_Practice_date1[0] : null,
 
-		}, {
-			where: {
-				user_id: req.params['id']
-			}
-		});
+	}, {
+		where: {
+			user_id: req.params['id']
+		}
+	});
 
-
+	req.flash('success-edit-attorney-message', 'Attorney Updated Successfully');
 	res.redirect('/attorneys');
 });
 

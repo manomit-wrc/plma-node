@@ -16,7 +16,7 @@
 		</div>
 		<form id="targetform" method="POST" action="/target/add">
 			<input type="hidden" name="_csrf" value="{{csrfToken}}">
-			
+
 			<div class="form-inline m-b-15">
 				<div class="form-group m-r-5">
 					<label class="input-group">
@@ -108,6 +108,7 @@
 											<span class="req-lbl">*</span>
 										</label>
 										<select id="designation" name="designation" class="select form-control floating">
+											<option value="">Select Designations</option>
 											{{#each designations}}
 											<option value="{{this.id}}">{{this.title}}</option>
 											{{/each}}
@@ -326,8 +327,12 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
-							<label class="control-label">Association Status</label>
+							<label class="control-label">Association Status
+								<span class="req-lbl">*</span>
+
+							</label>
 							<select id="association" name="association" class="select form-control">
+								<option value=""> association</option>
 								<option value="NEW TARGET">NEW TARGET</option>
 								<option value="CONVERTED">CONVERTED</option>
 								<option value="TS-INTERIM">TS-INTERIM</option>
@@ -336,8 +341,11 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
-							<label class="control-label">Industry Type</label>
+							<label class="control-label">Industry Type
+								<span class="req-lbl">*</span>
+							</label>
 							<select id="industry_type" name="industry_type" class="select form-control">
+								<option value=""> industry type</option>
 								{{#each industry}}
 								<option value="{{this.id}}">{{this.industry_name}}</option>
 								{{/each}}
@@ -417,6 +425,28 @@
 				zipcode: {
 					required: true
 				},
+				dob: {
+					required: true
+				},
+
+				gender: {
+					required: true
+				},
+				phone_no: {
+					required: true
+				},
+				designation: {
+					required: true
+				},
+				association: {
+					required: true
+				},
+				industry_type: {
+					required: true
+				},
+				company_name: {
+					required: true
+				},
 				attorney: {
 					required: true
 				}
@@ -467,6 +497,27 @@
 				},
 				zipcode: {
 					required: "Choose your zipcode"
+				},
+				dob: {
+					required: "Attorney can't be blank"
+				},
+				gender: {
+					required: "date of birth can't be blank"
+				},
+				phone_no: {
+					required: "phone no can't be blank"
+				},
+				designation: {
+					required: "designation can't be blank"
+				},
+				association: {
+					required: "association can't be blank"
+				},
+				industry_type: {
+					required: "industry type can't be blank"
+				},
+				company_name: {
+					required: "company name type can't be blank"
 				},
 				attorney: {
 					required: "Attorney can't be blank"

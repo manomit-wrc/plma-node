@@ -27,7 +27,10 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Select Attorney</label>
+                                    <label class="control-label">Select Attorney
+                                      <span class="req-lbl">*</span>
+
+                                    </label>
                                     <select class="select form-control floating" id="attr_id" name="attr_id">
                                         <option value="">Select Attorney</option>
                                         {{#each attorney}}
@@ -38,7 +41,10 @@
                             </div>
                             <div class="col-md-6">
                                <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Select Current Year </label>
+                                    <label class="control-label">Select Current Year
+                                      <span class="req-lbl">*</span>
+
+                                     </label>
                                     <select class="select form-control floating" id="year" name="year">
                                         <option value="">Select Current Year</option>
                                         {{#each year}}
@@ -49,25 +55,36 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">Current Year Goal</label>
+                                    <label class="control-label">Current Year Goal
+                                      <span class="req-lbl">*</span>
+                                    </label>
                                     <input type="text" class="form-control floating" id="year_goal" name="year_goal" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">Current Year Goal %</label>
+                                    <label class="control-label">Current Year Goal %
+                                      <span class="req-lbl">*</span>
+
+                                    </label>
                                     <input type="text" class="form-control floating" id="year_goal_precentage" name="year_goal_precentage" />
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">Summary Info</label>
+                                    <label class="control-label">Summary Info
+                                      <span class="req-lbl">*</span>
+
+                                    </label>
                                     <textarea name="summary_info" id="summary_info" class="form-control floating"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">Remark/Comments</label>
+                                    <label class="control-label">Remark/Comments
+                                      <span class="req-lbl">*</span>
+
+                                    </label>
                                     <textarea name="remarks" id="remarks" class="form-control floating"></textarea>
                                 </div>
                             </div>

@@ -2,7 +2,8 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+{{/content}}
 <div class="page-wrapper">
 	<div class="content container-fluid">
 		<div class="row">
@@ -252,7 +253,7 @@
 													<tr>
 														<td>{{this.firm.title}}</td>
 														<td>{{this.name}}</td>
-														<td>{{this.mobile}}</td>
+														<td class="number_validator">{{this.mobile}}</td>
 														<td>{{this.address}}</td>
 														<td>{{dateFormat this.createdAt "DD-MM-YYYY"}}</td>
 														<td class="text-right">
@@ -310,7 +311,7 @@
 														<td>{{this.office.name}}</td>
 														<td>{{this.designation.title}}</td>
 														<td>{{this.email}}</td>
-														<td>{{this.mobile}}</td>
+														<td class="number_validator">{{this.mobile}}</td>
 														<td>{{dateFormat this.createdAt "DD-MM-YYYY"}}</td>
 														<td class="text-right">
 															<a href="#" data-toggle="modal" data-target="#edit_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}"
@@ -541,7 +542,7 @@
 					<input type="hidden" name="_csrf" value="{{csrfToken}}">
 					<div class="row">
 						<div class="col-md-6">
-							<div class="form-group">
+							<div class="form-group form-focus select-focus">
 								<label class="control-label">Office Name
 									<span class="text-danger">*</span>
 								</label>
@@ -554,7 +555,7 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group">
+							<div class="form-group form-focus select-focus">
 								<label class="control-label">Designation
 									<span class="text-danger">*</span>
 								</label>
@@ -617,8 +618,11 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
-								<select class="select form-control floating" id="contact_state" name="contact_state">
+							<div class="form-group form-focus select-focus">
+									<label class="control-label">State
+											<span class="req-lbl">*</span>
+									</label>
+									<select class="select form-control floating" id="contact_state" name="contact_state">
 									<option value="">select State</option>
 									{{#each state}}
 									<option value="{{this.id}}">{{this.name}}</option>
@@ -627,7 +631,10 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
+							<div class="form-group form-focus select-focus">
+								<label class="control-label">City
+										<span class="req-lbl">*</span>
+								</label>
 								<select class="select form-control floating" id="contact_city" name="contact_city">
 									<option value="">Select City</option>
 
@@ -635,7 +642,10 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
+							<div class="form-group form-focus select-focus">
+								<label class="control-label">Zipcode
+										<span class="req-lbl">*</span>
+								</label>
 								<select class="select form-control floating" id="contact_zipcode" name="contact_zipcode">
 									<option value="">Select Zipcode</option>
 
@@ -737,8 +747,12 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
-								<select class=" form-control floating" id="edit_contact_state" name="edit_contact_state">
+							<div class="form-group form-focus select-focus">
+									<label class="control-label">State
+											<span class="req-lbl">*</span>
+
+									</label>
+																	<select class=" form-control floating" id="edit_contact_state" name="edit_contact_state">
 									<option value="">select State</option>
 									{{#each state}}
 									<option value="{{this.id}}">{{this.name}}</option>
@@ -747,8 +761,12 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
-								<select class=" form-control floating" id="edit_contact_city" name="edit_contact_city">
+							<div class="form-group form-focus select-focus">
+									<label class="control-label">City
+											<span class="req-lbl">*</span>
+
+									</label>
+											<select class=" form-control floating" id="edit_contact_city" name="edit_contact_city">
 									<option value="">Select City</option>
 									{{#each city}}
 									<option value="{{this.id}}">{{this.name}}</option>
@@ -757,8 +775,12 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
-								<select class=" form-control floating" id="edit_contact_zipcode" name="edit_contact_zipcode">
+							<div class="form-group form-focus select-focus">
+									<label class="control-label">Zipcode
+											<span class="req-lbl">*</span>
+
+									</label>
+																	<select class=" form-control floating" id="edit_contact_zipcode" name="edit_contact_zipcode">
 									<option value="">Select Zipcode</option>
 									{{#each zipcode}}
 									<option value="{{this.id}}">{{this.zip}}</option>

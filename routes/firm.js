@@ -33,7 +33,6 @@ function removePhoneMask (phone_no){
         phone_no = phone_no.replace("(","");
         phone_no = phone_no.replace(" ","");
         return phone_no;
-
 }
 
 router.get('/firms', csrfProtection, auth, siteAuth, async (req, res) => {
@@ -83,8 +82,8 @@ router.post('/firms/add', auth, siteAuth, csrfProtection, async (req, res) => {
         }
     });
     if(user_data === null) {
-        const firm_data = await Firm.create({ 
-            title: req.body.title, 
+        const firm_data = await Firm.create({
+            title: req.body.title,
             address: req.body.address,
             approval_level: req.body.approval_level,
             level_1 : req.body.level_1 ? req.body.level_1 : 0,
