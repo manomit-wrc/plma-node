@@ -484,7 +484,30 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		});
 	}
 
-	res.render('client/editclient', { layout: 'dashboard', csrfToken: req.csrfToken(), tags:tags,designation: designations, industry: industrys, client: clients, country: client_country, attorney: attorney, state: client_state, city: client_city, zipcode: client_zipcode, error_message });
+	console.log('clients',clients.tags)
+
+	var existingTag = clients.tags;
+	var existing_tag = existingTag.split(",");
+
+	console.log("done",existing_tag.length)
+
+	
+
+	res.render('client/editclient', { 
+		layout: 'dashboard', 
+		csrfToken: req.csrfToken(),
+		tags:tags,
+		designation: designations,
+		industry: industrys,
+		client: clients,
+		country: client_country,
+		attorney: attorney,
+		state: client_state,
+		city: client_city,
+		zipcode: client_zipcode,
+		error_message,
+		existing_tag 
+	});
 });
 
 router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
@@ -633,6 +656,10 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 });
 
 router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+
+
+	console.log(req.body);
+
 	const formatDate = req.body.client_dob ? req.body.client_dob.split("-") : '';
 	const client_edit_data = await client.findOne({
 		where: {
@@ -679,7 +706,10 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 			client_id: req.body.client_id,
 			master_id: req.body.master_id,
 			client_company: req.body.client_company,
-			remarks: req.body.remarks
+			remarks: req.body.remarks,
+			social_url: req.body.social,
+  			website_url: req.body.website,
+
 		}, {
 				where: { id: req.params['id'] }
 			});

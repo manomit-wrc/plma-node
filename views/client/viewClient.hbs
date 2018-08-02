@@ -139,10 +139,7 @@
 							<div class="col-md-6">
 								<div id="add-tag-existing-client" style="display:none;">
 									<div class="form-group form-focus select-focus">
-										<label class="control-label">Select From Existing Tags
-											<span class="req-lbl">*</span>
-										</label>
-										<select id="select-existing-tags" name="existing_tags" class="select form-control floating" multiple="multiple" disabled>
+										<select id="select-existing-tags" name="existing_tags" class="form-control floating" multiple="multiple" disabled>
 											{{#each tags}}
 											<option value="{{this.id}}">{{this.tags}}</option>
 											{{/each}}
@@ -453,6 +450,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function (e) {
+
+		$('#select-existing-tags').multiselect({
+			nonSelectedText: 'Select Existing Tags',
+			includeSelectAllOption: true,
+			buttonWidth: '100%'
+		});
+
 		$("#clientform").validate({
 			rules: {
 				edit_client_first_name: {
