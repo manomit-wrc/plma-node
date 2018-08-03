@@ -149,11 +149,12 @@
                                                     <thead class="persist-header">
                                                         <tr>
                                                             <td style="height: 91px; text-align: center; vertical-align: middle; border-top: 1px solid #ddd;">
-                                                                <a href="#" title="{{this.activity_name}}" data-activiy-name="{{this.activity_name}}" id="activityBudgetUpdate" data-toggle="modal"
-                                                                    data-target="#update_budget_by_activity">
-                                                                    <strong>{{this.activity_name}}</strong>//
-                                                                    <p>Origin Attorney - {{this.originAttorney}}</p>
-                                                                </a>
+                                                                <p style="color:#337ab7;">
+                                                                    <a href="#" id="activityBudgetUpdate" data-toggle="modal" data-target="#update_budget_by_activity" title="{{this.activity_name}}" data-activiy-name="{{this.activity_name}}">
+                                                                    <strong>{{this.activity_name}}</strong>
+                                                                    </a>
+                                                                </p>
+                                                                <p title="{{this.activity_name}}" data-activiy-name="{{this.activity_name}}" >Origin Attorney - {{this.originAttorney}}</p>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -191,10 +192,17 @@
                                                                                     <tbody>
                                                                                         <tr>
                                                                                             <td width="50%" style="border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; text-align: center; vertical-align: middle;">
-                                                                                                {{get_activity_budget_hour ../../this.activity_id this.budget_display}}
+                                                                                                <a href="#" id="activityBudgetUpdate" data-toggle="modal"
+                                                                                                    data-target="#update_budget_by_activity">
+                                                                                                    {{get_activity_budget_hour ../../this.activity_id this.budget_display}}
+                                                                                                </a>
                                                                                             </td>
                                                                                             <td width="50%" style="border-bottom: 1px solid #ddd; text-align: center; vertical-align: middle;">
-                                                                                                {{get_activity_budget_amount ../../this.activity_id this.budget_display}}
+                                                                                                <a href="#" id="activityBudgetUpdate" data-toggle="modal"
+                                                                                                    data-target="#update_budget_by_activity">{{get_activity_budget_amount
+                                                                                                    ../../this.activity_id
+                                                                                                    this.budget_display}}
+                                                                                                </a>
                                                                                             </td>
                                                                                         </tr>
                                                                                     </tbody>
@@ -255,7 +263,7 @@
                                                         <div class="modal-content modal-lg">
                                                             <div class="modal-header">
                                                                 <h4 class="modal-title">Marketing Budget Summary</h4>
-                                                                <p class="total-title">  </p>
+                                                                <p class="total-title"> </p>
                                                             </div>
 
 
@@ -485,10 +493,30 @@
 
 
     $(document).on('click', "#activityBudgetUpdate", function (e) {
-        var budgetId = $(this).data("activiy-name");
-         $('p.total-title').html('Activity- '+ budgetId);
-        
+        var budgetName = $(this).data("activiy-name");
+        // alert(budgetName);
+        $('p.total-title').html('Activity- ' + budgetName);
+
     });
+
+
+        /* $.ajax({
+            type: "GET",
+            url: "/activity/update_approval_request/" + activity_id,
+            success: function (response) {
+                if (response.success == true) {
+                    swal({
+                        title: "Nice!",
+                        text: "Approval sent successfully",
+                        type: "success"
+                    }, function () {
+                        window.location.reload();
+                    });
+                }
+            }
+        }); */
+
+
 
 
 </script> {{/content}}

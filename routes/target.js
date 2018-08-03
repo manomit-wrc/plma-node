@@ -449,63 +449,86 @@ router.post('/target/import', auth, upload.single('file_name'), csrfProtection, 
 router.post('/target/move-to-client', auth, async (req, res) => {
 	var target_ids = req.body.target_id;
 	var n = req.body.target_id.length;
-	for (i = 0; i < n; i++) {
-		//target_ids[i]
-		var target_data = await Target.findOne({
-			where: {
-				id: target_ids[i]
-			}
-		});
-		//console.log(target_data);
-		await Client.create({
-			first_name: target_data.first_name,
-			last_name: target_data.last_name,
-			email: target_data.email,
-			mobile_no: target_data.mobile_no,
-			fax: target_data.fax,
-			address1: target_data.address1,
-			address2: target_data.address2,
-			address3: target_data.address3,
-			country: target_data.country,
-			state: target_data.state,
-			city: target_data.city,
-			pin_code: target_data.postal_code,
-			firm_id: target_data.firm_id,
-			designation_id: target_data.designation_id,
-			type: target_data.type,
-			association_type: target_data.association,
-			industry_type: target_data.industry_type,
-			company_name: target_data.company_name,
-			twitter: target_data.twitter,
-			linkedin: target_data.linkedin,
-			youtube: target_data.youtube,
-			google: target_data.google,
-			client_id: target_data.target_id,
-			master_id: target_data.target_code,
-			gender: target_data.gender,
-			date_of_birth: target_data.date_of_birth,
-			social_security_no: target_data.social_sequrity_no,
-			IM: target_data.im,
-			organization_name: target_data.organization_name,
-			organization_id: target_data.organization_id,
-			organization_code: target_data.organization_code,
-			user_id: target_data.user_id,
-			client_type: target_data.target_type,
-			remarks: target_data.remarks
+	var clientDetails;
+
+	for (let j=0; j< n; j++) {
+		const targetDetails = await Target.findOne({
+			where: { 'id':target_ids[j]  }
 		});
 
-		await Target.update({
-			status: '0'
-		}, {
-			where: {
-				id: target_ids[i]
-			}
-			});
+		clientDetails = await Client.findAll({
+			where: { 'email': targetDetails.email }
+		});
 	}
-	res.json({
-		code: "200",
-		message: 'Success'
-	});
+
+	if (clientDetails.length>0) {
+		res.json({
+			code: "300",
+			message: 'Not Success'
+		});
+
+	} else {
+		for (i = 0; i < n; i++) {
+			var target_data = await Target.findOne({
+				where: {
+					id: target_ids[i]
+				}
+			});
+	
+			await Client.create({
+				first_name: target_data.first_name,
+				last_name: target_data.last_name,
+				email: target_data.email,
+				mobile_no: target_data.mobile_no,
+				fax: target_data.fax,
+				address1: target_data.address1,
+				address2: target_data.address2,
+				address3: target_data.address3,
+				country: target_data.country,
+				state: target_data.state,
+				city: target_data.city,
+				pin_code: target_data.postal_code,
+				firm_id: target_data.firm_id,
+				designation_id: target_data.designation_id,
+				type: target_data.type,
+				association_type: target_data.association,
+				industry_type: target_data.industry_type,
+				company_name: target_data.company_name,
+				twitter: target_data.twitter,
+				linkedin: target_data.linkedin,
+				youtube: target_data.youtube,
+				google: target_data.google,
+				client_id: target_data.target_id,
+				master_id: target_data.target_code,
+				gender: target_data.gender,
+				tag_type: "n",
+				tags: "new",
+				date_of_birth: target_data.date_of_birth,
+				social_security_no: target_data.social_sequrity_no,
+				IM: target_data.im,
+				organization_name: target_data.organization_name,
+				organization_id: target_data.organization_id,
+				organization_code: target_data.organization_code,
+				user_id: target_data.user_id,
+				client_type: target_data.target_type,
+				remarks: target_data.remarks
+			});
+	
+			await Target.update({
+				status: '0'
+			}, {
+				where: {
+					id: target_ids[i]
+				}
+				});
+		}
+		res.json({
+			code: "200",
+			message: 'Success'
+		});
+	}
+	
+	
 });
 
 module.exports = router;

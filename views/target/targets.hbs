@@ -23,10 +23,10 @@
                     <h4 class="page-title">Targets</h4>
                 </div>
                 <div class="col-sm-8 col-xs-9 text-right">
-                    <a href="javascript:void(0)" data-toggle="modal" data-target="#import" class="btn btn-primary rounded pull-right">
-                        <i class="fa fa-cloud-download"></i> Import Target</a>
-                    <a href="/target/add" class="btn btn-primary rounded pull-right m-r-5">
-                        <i class="fa fa-plus"></i> Add Target</a>
+                    <a href="javascript:void(0);" class="btn btn-primary rounded pull-right m-r-5 move-client"> <i class="fa fa-share" aria-hidden="true"></i> Move to Client </a>
+                    <a href="javascript:void(0);" class="btn btn-primary rounded pull-right m-r-5 target-delete"> <i class="fa fa-trash" aria-hidden="true"></i> Delete </a>
+                    <a href="javascript:void(0)" data-toggle="modal" data-target="#import" class="btn btn-primary rounded pull-right"><i class="fa fa-cloud-download"></i> Import Target</a>
+                    <a href="/target/add" class="btn btn-primary rounded pull-right m-r-5"> <i class="fa fa-plus"></i> Add Target</a>
                 </div>
             </div>
         </div>
@@ -139,6 +139,18 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="move_to_client_exisiting" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Client olready exist!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="target-delete-2" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -222,10 +234,11 @@
             type: 'POST',
             data: { target_id: target_ids },
             success: function (response) {
-                // console.log(response);
+                
                 if (response.code === '200') {
-                    //$('#success-move').css('display','block');
                     window.location.reload();
+                } else {
+                    $('#move_to_client_exisiting').modal('show');
                 }
             },
             error: function (err) {
@@ -259,11 +272,9 @@
             type: 'POST',
             data: { target_id: target_ids },
             success: function (response) {
-                // console.log(response);
                 if (response.code === '200') {
-                    //$('#success-move').css('display','block');
                     window.location.reload();
-                }
+                } 
             },
             error: function (err) {
                 console.log(err);

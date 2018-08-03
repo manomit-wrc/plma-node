@@ -109,7 +109,7 @@ router.get('/edit-profile', csrfProtection, auth, async (req, res) => {
         country: req.body.country,
         gender: req.body.gender,
         address: req.body.address,
-        mobile_no: req.body.mobile_no,
+        mobile_no: removePhoneMask(req.body.mobile_no),
         dob: formatDate ? formatDate[2]+"-"+formatDate[1]+"-"+formatDate[0] : null,
         avatar: (req.file === undefined) ? req.user.avatar : `/profile/${req.file.filename}`
     }, {
@@ -344,7 +344,7 @@ router.post("/edit-attorney-profile", auth, profile.single('avatar'), csrfProtec
         group_id: parseInt(req.body.group),
         section_id: parseInt(req.body.section),
         designation_id: parseInt(req.body.designation),
-        mobile_no: req.body.mobile_no,
+        mobile_no: removePhoneMask(req.body.mobile_no),
         dob: formatDate ? formatDate[2]+"-"+formatDate[1]+"-"+formatDate[0] : null,
         avatar: (req.file === undefined) ? req.user.avatar : `/profile/${req.file.filename}`
     }, {
