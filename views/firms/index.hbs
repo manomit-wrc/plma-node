@@ -46,6 +46,10 @@
                                 <td>{{dateFormat this.createdAt "DD-MM-YYYY"}}</td>
 
                                 <td class="text-right">
+                                  <a href="javascript:void(0)" data-toggle="modal" class="view btn btn-success btn-sm"><i class="fa fa-eye m-r-5"></i>                                    </a>
+                                 </a>
+
+
                                     <a href="javascript:void(0)" data-toggle="modal" class="edit btn btn-info btn-sm">
                                         <i class="fa fa-pencil m-r-5"></i>
                                     </a>
@@ -301,6 +305,144 @@
         </div>
     </div>
 </div>
+
+
+<div id="view_user" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">View Firm</h4>
+            </div>
+            <div class="modal-body">
+
+                <form class="m-b-30">
+                    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Firm Name
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input disabled class="form-control floating" type="text" name="title_view" id="title_view">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Address
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <textarea disabled class="form-control floating" id="address_view" name="address_view" rows="5"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Email
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input disabled class="form-control floating" type="email" id="email_view" name="email_view">
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-12">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Approval Process Information</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="control-label">How many level/s for the approval process ?</label>
+                            <span class="text-danger">*</span>
+                            <div class="form-inline m-b-15">
+                                <div class="form-group m-r-5">
+                                    <label class="input-group">
+                                        <span class="input-group-addon">
+                                            <input type="radio" id="level_view_1" name="approval_level_view" value="1" disabled/>
+                                        </span>
+                                        <div class="form-control form-control-static">
+                                            1
+                                        </div>
+                                        <span class="glyphicon form-control-feedback "></span>
+                                    </label>
+                                </div>
+                                <div class="form-group m-r-5">
+                                    <label class="input-group">
+                                        <span class="input-group-addon">
+                                            <input type="radio" id="level_view_2" name="approval_level_view" value="2" disabled/>
+                                        </span>
+                                        <div class="form-control form-control-static">
+                                            2
+                                        </div>
+                                        <span class="glyphicon form-control-feedback "></span>
+                                    </label>
+                                </div>
+                                <div class="form-group m-r-5">
+                                    <label class="input-group">
+                                        <span class="input-group-addon">
+                                            <input type="radio" id="level_view_3" name="approval_level_view" value="3" disabled/>
+                                        </span>
+                                        <div class="form-control form-control-static">
+                                            3
+                                        </div>
+                                        <span class="glyphicon form-control-feedback "></span>
+                                    </label>
+                                </div>
+                                <div class="form-group m-r-5">
+                                    <label class="input-group">
+                                        <span class="input-group-addon">
+                                            <input type="radio" id="level_view_4" name="approval_level_view" value="4" disabled/>
+                                        </span>
+                                        <div class="form-control form-control-static">
+                                            4
+                                        </div>
+                                        <span class="glyphicon form-control-feedback "></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Contact person name</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">First Name</label>
+                                <input disabled class="form-control floating" type="text" id="first_name_view" name="first_name_view">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Last Name</label>
+                                <input disabled class="form-control floating" type="text" id="last_name_view" name="last_name_view">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Mobile No</label>
+                                <input type="text" class="form-control floating number_validator" id="mobile_no_view" name="mobile_no_view" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Gender</label>
+                                <select disabled class="form-control floating" id="gender_view" name="gender_view">
+                                    <option value="">Select Gender</option>
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
+                                    <option value="O">Others</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <div id="edit_user" class="modal custom-modal fade" role="dialog">
     <div class="modal-dialog">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -329,7 +471,7 @@
                                 <textarea class="form-control" id="address_edit" name="address_edit" rows="5"></textarea>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">Email
                                     <span class="text-danger">*</span>
@@ -338,14 +480,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">Password
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input class="form-control" type="password" id="password_edit" name="password_edit">
-                            </div>
-                        </div>
+
                         <div class="col-md-12">
                             <div class="modal-header">
                                 <h4 class="modal-title">Approval Process Information</h4>
@@ -481,6 +616,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 <script type="text/javascript">
+
+
+
+
+
+
+
+
     $(document).ready(function (e) {
         $(document).on('click', '#level_2', function () {
             $('#level2Designation').show();
@@ -799,8 +942,9 @@
                     }
                 });
 
-            }
-        });
+              }
+          });
+
 
         $("#btnDelete").click(function () {
             $.ajax({
@@ -839,13 +983,36 @@
             window.location.href = "/firms";
         });
     });
+
+
+
+// start view
+    $(document).on("click", ".view", function () {
+        $("#first_name_view").val($(this).closest('tr').data('first-name'));
+        $("#last_name_view").val($(this).closest('tr').data('last-name'));
+        $("#email_view").val($(this).closest('tr').data('email'));
+        $("#mobile_no_view").val($(this).closest('tr').data('mobile-no'));
+        $('#gender_view option[value="' + $(this).closest('tr').data('gender') + '"]').attr('selected', true);
+        $('#gender_editgender_view').trigger('change');
+        $("input[name=approval_level_view][value=" + $(this).closest('tr').data('approval-level') + "]").attr('checked', true);
+        $("#title_view").val($(this).closest('tr').data('firm-title'));
+        $("#address_view").val($(this).closest('tr').data('firm-address'));
+
+        localStorage.setItem('firm_id', $(this).closest('tr').data('firm-id'));
+        localStorage.setItem('user_id', $(this).closest('tr').data('user-id'));
+        $("#view_user").modal('show');
+    });
+
+// end
+
+
     $(document).on("click", ".edit", function () {
         $("#first_name_edit").val($(this).closest('tr').data('first-name'));
         $("#last_name_edit").val($(this).closest('tr').data('last-name'));
         $("#email_edit").val($(this).closest('tr').data('email'));
         $("#mobile_no_edit").val($(this).closest('tr').data('mobile-no'));
         $('#gender_edit option[value="' + $(this).closest('tr').data('gender') + '"]').attr('selected', true);
-        $('#gender_editgender_edit').trigger('change');
+        $('#gender_edit').trigger('change');
         $("input[name=approval_level_edit][value=" + $(this).closest('tr').data('approval-level') + "]").attr('checked', true);
         $("#title_edit").val($(this).closest('tr').data('firm-title'));
         $("#address_edit").val($(this).closest('tr').data('firm-address'));
@@ -854,6 +1021,8 @@
         localStorage.setItem('user_id', $(this).closest('tr').data('user-id'));
         $("#edit_user").modal('show');
     });
+
+
 
     $(document).on("click", ".delete", function () {
         localStorage.setItem('firm_id', $(this).closest('tr').data('firm-id'));

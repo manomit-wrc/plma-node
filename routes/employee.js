@@ -179,7 +179,7 @@ router.post('/employees/edit/:id', auth, csrfProtection, async (req, res) => {
             last_name: req.body.last_name,
             email: req.body.email,
             updatedAt: new Date(),
-            address: '',
+            address: req.body.address,
             city: req.body.city,
             state: req.body.state,
             country: req.body.country,
@@ -210,6 +210,59 @@ router.post('/employees/edit/:id', auth, csrfProtection, async (req, res) => {
     }
 });
 
+router.get('/employee/view/:id', csrfProtection, siteAuth, auth, async (req, res) =>  {
+    var error_edit_message = req.flash('error-edit-message')[0];
+    User.hasMany(EmployeeToFirm, {foreignKey: 'user_id'});
+    const users = await User.findAll({
+        where: {id: req.params['id']},
+        include: [{
+            model: EmployeeToFirm
+        }]
+    });
+    const firms = await Firm.findAll({});
+    const country = await Country.findAll({});
+    const state = await State.findAll({});
+    var result = JSON.parse(JSON.stringify(users[0].employee_to_firms));
+    var arr = [];
+    for(var i=0; i<result.length; i++){
+        arr.push(result[i].firm_id);
+    }
+    var state_id = users[0].state;
+    var city_id = users[0].city;
+    var city = [];
+    var zipcode = [];
+    if(state_id != null)
+    {
+         city = await City.findAll({
+            where: {state_id: state_id.toString()}
+        });
+    }
+    if(city_id != null)
+    {
+        const cities = await City.findById(city_id.toString());
+         zipcode = await Zipcode.findAll({
+            where: {
+                city_name: cities.name
+            }
+        });
+    }
+    res.render('employees/view', {
+        layout: 'dashboard',
+        csrfToken: req.csrfToken(),
+        empl: users[0],
+        firms,
+        error_edit_message,
+        arr,
+        country,
+        state,
+        city,
+        zipcode
+    });
+});
+
+
+
+
 router.get('/employee/delete/:id', auth, csrfProtection, async (req, res) => {
     const user_delete = User.destroy({
         where: {
@@ -228,5 +281,3 @@ router.get('/employee/delete/:id', auth, csrfProtection, async (req, res) => {
 module.exports = router;
 
 /*==================================BRATIN MEHETA 14-06-2018=====================================*/
-
-
