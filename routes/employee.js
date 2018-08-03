@@ -228,5 +228,3 @@ router.get('/employee/delete/:id', auth, csrfProtection, async (req, res) => {
 module.exports = router;
 
 /*==================================BRATIN MEHETA 14-06-2018=====================================*/
-
-
