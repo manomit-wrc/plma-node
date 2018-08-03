@@ -845,7 +845,7 @@
         $("#email_edit").val($(this).closest('tr').data('email'));
         $("#mobile_no_edit").val($(this).closest('tr').data('mobile-no'));
         $('#gender_edit option[value="' + $(this).closest('tr').data('gender') + '"]').attr('selected', true);
-        $('#gender_editgender_edit').trigger('change');
+        $('#gender_edit').trigger('change');
         $("input[name=approval_level_edit][value=" + $(this).closest('tr').data('approval-level') + "]").attr('checked', true);
         $("#title_edit").val($(this).closest('tr').data('firm-title'));
         $("#address_edit").val($(this).closest('tr').data('firm-address'));

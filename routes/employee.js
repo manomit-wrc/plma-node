@@ -179,7 +179,7 @@ router.post('/employees/edit/:id', auth, csrfProtection, async (req, res) => {
             last_name: req.body.last_name,
             email: req.body.email,
             updatedAt: new Date(),
-            address: '',
+            address: req.body.address,
             city: req.body.city,
             state: req.body.state,
             country: req.body.country,
