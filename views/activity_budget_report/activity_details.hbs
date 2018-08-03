@@ -150,11 +150,11 @@
                                                         <tr>
                                                             <td style="height: 91px; text-align: center; vertical-align: middle; border-top: 1px solid #ddd;">
                                                                 <p style="color:#337ab7;">
-                                                                    <a href="#" id="activityBudgetUpdate" data-toggle="modal" data-target="#update_budget_by_activity" title="{{this.activity_name}}" data-activiy-name="{{this.activity_name}}">
+                                                                    <a href="#" id="activityBudgetUpdate" data-toggle="modal" data-target="#update_budget_by_activity" title="{{this.activity_name}}" data-activiy-name="{{this.activity_name}}" data-activity-details-id="{{this.activity_id}}">
                                                                     <strong>{{this.activity_name}}</strong>
                                                                     </a>
                                                                 </p>
-                                                                <p title="{{this.activity_name}}" data-activiy-name="{{this.activity_name}}" >Origin Attorney - {{this.originAttorney}}</p>
+                                                                <p title="{{this.activity_name}}" data-activiy-name="{{this.activity_name}}"  >Origin Attorney -{{this.activity_id}}- {{this.originAttorney}}</p>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -327,6 +327,7 @@
                                                                                 </div>
                                                                                 <div class="col-md-6">
                                                                                     <div class="table-responsive">
+                                                                                        {{!-- {{#each activity_details()}} --}}
                                                                                         <table class="table table-bordered">
                                                                                             <tbody>
                                                                                                 <tr>
@@ -338,8 +339,7 @@
                                                                                                                         <table style="margin-bottom: 0;" class="table">
                                                                                                                             <thead>
                                                                                                                                 <tr>
-                                                                                                                                    <th colspan="2" style=" height: 50px; vertical-align: middle;">Partho
-                                                                                                                                        Sen
+                                                                                                                                    <th colspan="2" style=" height: 50px; vertical-align: middle;">{{#noop}}{{'body'}}{{/noop}}////
                                                                                                                                     </th>
                                                                                                                                 </tr>
                                                                                                                             </thead>
@@ -396,6 +396,7 @@
                                                                                                 </tr>
                                                                                             </tbody>
                                                                                         </table>
+                                                                                        {{!-- {{/each}} --}}
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -404,7 +405,6 @@
                                                                 </div>
                                                             </div>
                                                             {{!-- End new budget report show --}}
-
 
                                                             <!---<div class="modal-body">
                                                                 <div class="card-box">
@@ -452,13 +452,9 @@
                                                                     </div>
                                                                 </div>
                                                             </div>-->
-
-
-
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </td>
                                             {{/each}}
                                         </tr>
@@ -491,32 +487,23 @@
         }
     });
 
-
     $(document).on('click', "#activityBudgetUpdate", function (e) {
         var budgetName = $(this).data("activiy-name");
-        // alert(budgetName);
+        var activity_id = $(this).data("activity-details-id");
         $('p.total-title').html('Activity- ' + budgetName);
+        $.ajax({
+			url: '/activity/activity_details_budget/',
+			type: 'POST',
+			data: { activity_id: activity_id },
+			success: function (response) {
+				if (response.code === '200') {
+                  console.log('success------------------------>>>>>>',response);
+				}
+			},error: function (err) {
+				console.log('error================================>>>>>>>',err);
+			}
 
+		})
     });
-
-
-        /* $.ajax({
-            type: "GET",
-            url: "/activity/update_approval_request/" + activity_id,
-            success: function (response) {
-                if (response.success == true) {
-                    swal({
-                        title: "Nice!",
-                        text: "Approval sent successfully",
-                        type: "success"
-                    }, function () {
-                        window.location.reload();
-                    });
-                }
-            }
-        }); */
-
-
-
 
 </script> {{/content}}

@@ -58,6 +58,9 @@ const hbs = exphbs.create({
             else
                 return opts.inverse(this);
         },
+        noop: function(options) {
+            return options.fn(this)
+        },
         if_con: function (a, opts) {
             if (a)
                 return opts.fn(this);
