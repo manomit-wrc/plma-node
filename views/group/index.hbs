@@ -37,6 +37,12 @@
                                 <td>{{this.remarks}}</td>
                                 <td>{{dateFormat this.createdAt "DD-MM-YYYY, hh:mm a"}}</td>
                                 <td class="text-right">
+
+                                  <a href="#" data-toggle="modal" data-target="#view_users" data-group-id="{{this.id}}"
+                                                  data-code="{{this.code}}" data-name="{{this.name}}" data-remarks="{{this.remarks}}"
+                                                  id="view-group" class="btn btn-success btn-sm" >
+                                                  <i class="fa fa-eye m-r-5"></i></a>
+
                                     <a href="#" data-toggle="modal" data-target="#edit_users" data-group-id="{{this.id}}"
                                                     data-code="{{this.code}}" data-name="{{this.name}}" data-remarks="{{this.remarks}}"
                                                     id="edit-group" class="btn btn-info btn-sm">
@@ -111,6 +117,43 @@
         </div>
     </div>
 </div>
+
+<div id="view_user" class="modal custom-modal fade group-modal1" role="dialog">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">View Group</h4>
+            </div>
+            <div class="modal-body">
+                <form class="m-b-30">
+                    <div class="row">
+                        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Group Name
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input disabled class="form-control floating" type="text" id="view_name" name="view_name">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Remarks
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <textarea disabled class="form-control floating" id="view_remarks" name="view_remarks" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div id="edit_user" class="modal custom-modal fade group-modal" role="dialog">
     <div class="modal-dialog">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -235,6 +278,19 @@
         });
     });
 
+
+    $(document).on('click', '#view-group', function (e) {
+        var group_id = $(this).data('group-id');
+        var name = $(this).data('name');
+        var remarks = $(this).data('remarks');
+
+        $("#view_name").val(name);
+        $("#view_remarks").val(remarks);
+
+        localStorage.setItem('group_id', group_id);
+
+        $('.group-modal1').modal("show");
+    });
     /*=========================Starts Edit Group==========================*/
 
     $(document).on('click', '#edit-group', function (e) {
