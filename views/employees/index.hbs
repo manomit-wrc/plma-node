@@ -51,6 +51,12 @@
                                 <td  class="number_validator">{{this.mobile_no}}</td>
                                 <td>{{dateFormat this.createdAt "DD-MM-YYYY"}}</td>
                                 <td class="text-right">
+
+                                  <a href="/employee/view/{{this.id}}" class="btn btn-success btn-sm">
+                                    <i class="fa fa-eye m-r-5"></i>
+                                  </a>
+
+
                                     <a href="/employee/edit/{{this.id}}" class="btn btn-info btn-sm">
                                         <i class="fa fa-pencil m-r-5"></i>
                                     </a>
