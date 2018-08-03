@@ -33,7 +33,9 @@
                             {{#each industry}}
                             <tr>
                                 <td>{{math @index "+" 1}}</td>
-                                <td>{{this.industry_name}}</td>
+                                <td><a href="#" data-toggle="modal" data-target="#view_users" data-industry-id="{{this.id}}"
+                                                  data-code="{{this.code}}" data-name="{{this.industry_name}}" data-remarks="{{this.remarks}}"
+                                                  id="view-industry">{{this.industry_name}}</a></td>
                                 <td>{{this.remarks}}</td>
                                 <td>{{dateFormat this.createdAt "DD-MM-YYYY, hh:mm a"}}</td>
                                 <td class="text-right">
