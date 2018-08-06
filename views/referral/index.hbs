@@ -24,6 +24,8 @@
                     <h4 class="page-title">Referral</h4>
                 </div>
                 <div class="col-xs-8 text-right">
+
+
                     <a href="/referral/add" class="btn btn-primary pull-right rounded">
                         <i class="fa fa-plus"></i> Add Referral</a>
                     <a href="#" class="btn btn-primary rounded mr-10" data-toggle="modal" data-target="#add_user">
@@ -51,15 +53,26 @@
                             <tr>
                                 <td>{{math @index "+" 1}}</td>
                                 <td>
+
+
+                                  <a href="/referral/view/{{this.id}}">
                                     {{#if_eq referral_type "I"}} {{this.first_name}} {{this.last_name}} {{/if_eq}} {{#if_eq referral_type "O"}} {{this.organization_name}}
-                                    {{/if_eq}}
+                                      {{/if_eq}}</a>
                                 </td>
                                 <td>
                                     {{#if_eq referral_type "I"}} Individual {{/if_eq}} {{#if_eq referral_type "O"}} Organization {{/if_eq}}
                                 </td>
-                                <td>{{this.email}}</td>
+                                <td>
+
+                                  {{this.email}}
+
+                                </td>
                                 <td class="number_validator">{{this.mobile}}</td>
                                 <td class="text-right">
+
+                                  <a href="/referral/view/{{this.id}}" class="btn btn-success btn-sm">
+                                    <i class="fa fa-eye m-r-5"></i></a>
+
                                     <a href="/referral/edit/{{this.id}}" class="btn btn-info btn-sm">
                                                     <i class="fa fa-pencil m-r-5"></i></a>
                                     <a href="javascript:void(0);" data-toggle="modal" data-target="#{{this.id}}" class="btn btn-danger btn-sm">

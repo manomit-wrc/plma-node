@@ -62,13 +62,13 @@ router.get('/referral', auth, firmAttrAuth, csrfProtection, async(req, res)=> {
 	const referral = await Referral.findAll({
 		where: whereCondition
 	});
-	res.render('referral/index', { 
-		layout: 'dashboard', 
-		success_message, 
-		referral, 
-		successEdit_message, 
+	res.render('referral/index', {
+		layout: 'dashboard',
+		success_message,
+		referral,
+		successEdit_message,
 		successDel_message,
-		searchName: req.query.searchName ? req.query.searchName : '', 
+		searchName: req.query.searchName ? req.query.searchName : '',
 		searchMail: req.query.searchEmail ? req.query.searchEmail : ''
 	});
 });
@@ -82,7 +82,7 @@ router.get('/referral/add', auth, firmAttrAuth, csrfProtection, async(req, res) 
 	});
 	const client = await Client.findAll();
 	const target = await Target.findAll();
-	res.render('referral/add', { 
+	res.render('referral/add', {
 		layout: 'dashboard',
 		csrfToken: req.csrfToken(),
 		attorney,
@@ -98,7 +98,7 @@ router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async(req, res)
 			email: req.body.email
 		}
 	});
-	if(ref_email === null) 
+	if(ref_email === null)
 	{
 		if(req.body.referral_type == "I")
 		{
@@ -143,6 +143,24 @@ router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async(req, res)
 	}
 });
 
+
+
+router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async(req, res) => {
+	const referral = await Referral.findById(req.params['id']);
+	const attorney = await User.findAll({
+		where: {
+			role_id : 3
+		}
+	});
+	const client = await Client.findAll();
+	const target = await Target.findAll();
+	res.render('referral/view', {layout: 'dashboard', csrfToken: req.csrfToken(), referral, attorney, client, target});
+	
+});
+
+
+
+
 router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, res) => {
 	var err_message = req.flash('error-referral-message')[0];
 	const referral = await Referral.findById(req.params['id']);
@@ -165,7 +183,7 @@ router.post('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async(req,
 			}
 		}
 	});
-	if (edit_data === null) 
+	if (edit_data === null)
 	{
 		const store_ref_I = await Referral.update({
 			referral_type: req.body.referral_type,
@@ -245,8 +263,8 @@ router.post('/referral/upload-excel', auth, referral_xcel.single('ref_excel_file
 	for(var i=0; i<excelReferral.length; i++)
 	{
 		var attr = excelReferral[i].attorney_email;
-		var target = excelReferral[i].target_email; 
-		var client = excelReferral[i].client_email; 
+		var target = excelReferral[i].target_email;
+		var client = excelReferral[i].client_email;
 		var attr_id = [];
 		var target_id = [];
 		var client_id = [];

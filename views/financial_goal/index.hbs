@@ -49,12 +49,22 @@
                             {{#each financialGoal}}
                             <tr>
                                 <td>{{math @index "+" 1}}</td>
-                                <td>{{this.user.first_name}} {{this.user.last_name}}</td>
+                                <td>
+
+                                  <a href="/financial-goal/view/{{this.id}}">
+                                      {{this.user.first_name}} {{this.user.last_name}}
+                                  </a>
+
+                                </td>
                                 <td>{{this.year}}</td>
                                 <td>{{this.year_goal}}</td>
                                 <td>{{this.year_goal_percentage}}</td>
                                 <td>{{this.remarks}}</td>
                                 <td class="text-right">
+                                  <a href="/financial-goal/view/{{this.id}}" class="btn btn-success btn-sm">
+                                    <i class="fa fa-eye m-r-5"></i>
+                                  </a>
+
                                     <a href="/financial-goal/edit/{{this.id}}" class="btn btn-info btn-sm">
                                         <i class="fa fa-pencil m-r-5"></i>
                                     </a>

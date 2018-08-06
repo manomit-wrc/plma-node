@@ -37,6 +37,9 @@
                         <thead>
                             <tr>
                                 <th >SL#</th>
+
+
+
                                 <th >Activity Goals</th>
                                 <th>Firm Name</th>
                                 <th>Duration</th>
@@ -49,12 +52,26 @@
                             {{#each goals}}
                             <tr>
                                 <td>{{math @index "+" 1}}</td>
-                                <td>{{this.activity_goal}}</td>
+                                <td>
+                                  <a href="/activity-goal/view/{{this.id}}">
+                                    {{this.activity_goal}}
+                                  </a>
+                                </td>
+
+
+                                <!-- <td>{{this.activity_goal}}</td> -->
                                 <td>{{this.firm.title}}</td>
                                 <td>{{dateFormat this.from_date "DD-MM-YYYY"}} To {{dateFormat this.to_date "DD-MM-YYYY"}}</td>
                                 <td>{{this.remarks}}</td>
                                 <td>{{dateFormat this.createdAt "DD-MM-YYYY, hh:mm a"}}</td>
                                 <td class="text-right">
+
+                                  <a href="/activity-goal/view/{{this.id}}" class="btn btn-success btn-sm">
+                                      <i class="fa fa-eye m-r-5"></i>
+                                  </a>
+
+
+
                                     <a href="/activity-goal/edit/{{this.id}}" class="btn btn-info btn-sm">
                                         <i class="fa fa-pencil m-r-5"></i>
                                     </a>

@@ -2563,8 +2563,8 @@ label.error {
 
 .filter-row .btn {
 	border-radius: 0;
-	min-height: 50px;
-	padding: 14px 12px;
+	/*min-height: 50px;
+	padding: 14px 12px;*/
 	text-transform: uppercase;
 }
 
@@ -3018,8 +3018,10 @@ label.error {
 }
 
 .notifications .drop-scroll {
-	height: 290px;
-	width: 400px;
+	height: 250px;
+	width: 350px;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 .notifications.msg-noti .drop-scroll {
@@ -3061,6 +3063,17 @@ label.error {
 
 .notifications .media-list .media-left {
 	padding-right: 8px;
+}
+
+.noti-ntfound {
+	height: 100px !important;
+	overflow: hidden;
+	line-height: 90px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 14px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .drop-scroll {
@@ -5619,6 +5632,14 @@ select.gender {
 
 .pg-header .text-right a:last-child {
 	margin-right: 12px;
+}
+
+.pg-header .text-right a:nth-child(2) {
+	margin-left: 5px;
+}
+
+#mainTable td:nth-child(1), .table-striped td:nth-child(1) {
+	width: 2% !important;
 }
 
 /*Ends on css 03-08-2018*/
