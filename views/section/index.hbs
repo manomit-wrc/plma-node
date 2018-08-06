@@ -34,7 +34,7 @@
                             {{#each section}}
                             <tr>
                                 <td>{{math @index "+" 1}}</td>
-                                <td>{{this.name}}</td>
+                                <td><a href="#" data-toggle="modal" data-target="#view_users" data-section-id="{{this.id}}" data-description="{{this.description}}" data-name="{{this.name}}" data-remarks="{{this.remarks}}" id="view-section" >{{this.name}}</a></td>
                                 <td>{{this.description}}</td>
                                 <td>{{this.remarks}}</td>
                                 <td>{{dateFormat this.createdAt "DD-MM-YYYY, hh:mm a"}}</td>
@@ -96,6 +96,10 @@
 <div id="view_user" class="modal custom-modal fade modal1" role="dialog">
     <div class="modal-dialog">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <!-- <a href="#" data-toggle="modal" data-target="#edit_users" id="edit-view-section">
+            <button type="button" class="close edit-icon-btn" ><i class="fa fa-pencil"></button></i></a> -->
+
+        <!-- <button type="button" class=""></button> -->
         <div class="modal-content modal-lg">
             <div class="modal-header">
                 <h4 class="modal-title">View Section</h4>
@@ -271,6 +275,8 @@ $(document).ready(function(e) {
 
 
 
+
+//===================================================*************************************===================================================//
 $(document).on('click', '#view-section', function(e){
     var section_id = $(this).data('section-id');
     var name = $(this).data('name');

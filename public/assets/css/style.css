@@ -189,7 +189,7 @@ table.table td h2 {
 }
 
 table.table td h2 a {
-	color: #757575;
+	color: 	#009ce7;
 }
 
 table.table td h2 a:hover {
@@ -5551,11 +5551,11 @@ i.fa.fa-eye.m-r-5 {
 	margin-bottom: 0 !important;
 }
 
-#update_budget_by_activity .table>tbody>tr>td, 
+#update_budget_by_activity .table>tbody>tr>td,
 #update_budget_by_activity .table>tbody>tr>th,
-#update_budget_by_activity  .table>tfoot>tr>td, 
-#update_budget_by_activity .table>tfoot>tr>th, 
-#update_budget_by_activity .table>thead>tr>td, 
+#update_budget_by_activity  .table>tfoot>tr>td,
+#update_budget_by_activity .table>tfoot>tr>th,
+#update_budget_by_activity .table>thead>tr>td,
 #update_budget_by_activity .table>thead>tr>th {
 	padding: 8px;
 	line-height: 1;
@@ -6146,7 +6146,7 @@ select.gender {
 		font-size: 24px;
 	}
 
-	
+
 }
 
 /*Starts Tab Css 18-06-2018*/
@@ -6304,5 +6304,3 @@ select.gender {
 		left: -62px !important;
 	}
 }
-
-

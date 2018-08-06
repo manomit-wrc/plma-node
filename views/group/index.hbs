@@ -33,7 +33,9 @@
                             {{#each group}}
                             <tr>
                                 <td>{{math @index "+" 1}}</td>
-                                <td>{{this.name}}</td>
+                                <td>  <a href="#" data-toggle="modal" data-target="#view_users" data-group-id="{{this.id}}"
+                                                  data-code="{{this.code}}" data-name="{{this.name}}" data-remarks="{{this.remarks}}"
+                                                  id="view-group" >{{this.name}}</a></td>
                                 <td>{{this.remarks}}</td>
                                 <td>{{dateFormat this.createdAt "DD-MM-YYYY, hh:mm a"}}</td>
                                 <td class="text-right">
