@@ -1,14 +1,8 @@
 const express = require('express');
 const auth = require('../middlewares/auth');
-const firmAttrAuth = require('../middlewares/firm_attr_auth');
 const csrf = require('csurf');
-const bCrypt = require('bcrypt-nodejs');
-const gravatar = require('gravatar');
 const Sequelize = require('sequelize');
-const Op = Sequelize.Op;
 const lodash = require("lodash");
-const User = require('../models').user;
-const Firm = require('../models').firm;
 const Activity = require('../models').activity;
 const ActivityGoal = require('../models').activity_goal;
 const Budget = require('../models').budget;
@@ -130,8 +124,6 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
 
 
     for (var j = 0; j < activity_goals.length; j++) {
-      // console.log('activity_goals details id',activity_goals[j].id);
-
       activityArr.push({
         "activity_name": activity_goals[j].activity_goal,
         "activity_goal_id": activity_goals[j].id,
@@ -157,8 +149,6 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
 
 router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req, res) => {
 
-  console.log("------------------------------------------------------");
-  
   var user_id = req.user.id;
   Activity.hasMany(ActivityBudget, {
     foreignKey: 'activity_id'
@@ -166,7 +156,6 @@ router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req,
   var activity_data = await Activity.findAll({
     where: {
       activity_goal_id: req.params['id']
-      //activity_status: 2
     },
     include: [{
       model: ActivityBudget
@@ -220,11 +209,13 @@ router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req,
           "amount": amount
         });
       }
+
       budgetArr.push({
         "parent_name": parent_name,
         "parent_id": parent_id,
         "child_budget": child_budget_arr
       });
+
     }
   }
   const activity_grand = await ActivityBudget.findAll({
@@ -247,9 +238,10 @@ router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req,
     group: ['activity_goal_id']
   });
 
+  var jointActivities_arr = [];
   var jointActivities;
   for (var a = 0; a < activity_data.length; a++) {
-   await ActivityBudget.findAll({
+    const _activityBudget = await ActivityBudget.findAll({
       where: {
         activity_id: activity_data[a].id
       }
@@ -260,50 +252,43 @@ router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req,
         'activity_id': activity_data[a].id
       }
     });
-    console.log(jointActivities);
+
+    jointActivities_arr.push({
+      'ja': jointActivities
+    });
+
     activityArr.push({
       "activity_name": activity_data[a].activity_name,
       "activity_id": activity_data[a].id,
       "budget_list": budgetArr,
       "activity_grand": activity_grand,
-      'originAttorney': req.user.first_name + ' ' + req.user.last_name
+      'originAttorney': req.user.first_name + ' ' + req.user.last_name,
+      'activity_level': _activityBudget[0].level_type === 'Individual' ? 'I' : 'E'
     });
   }
 
-
-  var marketingBudget = [];
-  var detailsActivity;
-  for (let i = 0; i < jointActivities.length; i++) {
-    
-    
-    if (jointActivities[i].target_client_type == 'T') {
-      detailsActivity = await Target.findAll({
-        where: {
-          'id': jointActivities[i].type
-        }
-      });
-    } else {
-      detailsActivity = await client.findAll({
-        where: {
-          'id': jointActivities[i].type
-        }
+  var activity_target_client = [];
+  for (let i = 0; i < jointActivities_arr.length; i++) {
+    for (let k = 0; k < jointActivities_arr[i].ja.length; k++) {
+      var detailsActivity;
+      if (jointActivities_arr[i].ja[k].target_client_type == 'T') {
+        detailsActivity = await Target.findAll({
+          where: {
+            'id': jointActivities_arr[i].ja[k].type
+          }
+        });
+      } else {
+        detailsActivity = await client.findAll({
+          where: {
+            'id': jointActivities_arr[i].ja[k].type
+          }
+        });
+      }
+      activity_target_client.push({
+        'name': detailsActivity[0].first_name + ' ' + detailsActivity[0].last_name
       });
     }
-    
-    // console.log(detailsActivity);
-    
-
-    marketingBudget.push(detailsActivity);
-  } 
-
-  var activity_target_client = [];
-  for (let j=0; j< marketingBudget.length; j++) {
-    activity_target_client.push({
-      'name':marketingBudget[j][0].first_name +' '+ marketingBudget[j][0].last_name
-    })
   }
-
-  console.log('marketingBudget',activity_target_client.length);
 
   const activity_goal = await ActivityGoal.findById(req.params['id']);
 
@@ -313,38 +298,8 @@ router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req,
     budgetArr,
     activity_goal,
     activity_budget_grand,
-    activity_target_client:activity_target_client
+    activity_target_client: activity_target_client
   });
-});
-
-
-router.post('/activity/activity_details_budget/', auth, firmAttrAuth, async (req, res) => {
-
-  const jointActivities = await Jointactivities.findAll({
-    where: { 'activity_id': req.body.activity_id }
-  });
-
-  var marketingBudget = [];
-  var detailsActivity;
-  for (let i = 0; i < jointActivities.length; i++) {
-    if (jointActivities[i].target_client_type == 'T') {
-      detailsActivity = await Target.findAll({
-        where: { 'id': jointActivities[i].type }
-      });
-    } else {
-      detailsActivity = await client.findAll({
-        where: { 'id': jointActivities[i].type }
-      });
-    }
-    marketingBudget.push(detailsActivity)
-  }
-
-  res.json({
-		code: "200",
-    message: 'Success',
-    marketingBudget:marketingBudget
-	});
-
 });
 
 module.exports = router;

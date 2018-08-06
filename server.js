@@ -150,6 +150,43 @@ const hbs = exphbs.create({
                 return "-";
             }
         },
+        get_activity_budget_hour_indi: function (count,value, obj) {
+            const hour = lodash.filter(obj, arr => arr.activity_id === value)
+            if (hour.length > 0) {
+                const total_hour = lodash.map(hour, arr => parseInt(arr.hour));
+                return (total_hour[0]*count).toFixed(2);
+            } else {
+                return "-";
+            }
+        },
+        get_activity_budget_amount_indi: function (count,value, obj) {
+            const amount = lodash.filter(obj, arr => arr.activity_id === value)
+            if (amount.length > 0) {
+                const total_amount = lodash.map(amount, arr => parseInt(arr.amount));
+                return (total_amount[0]*count).toFixed(2);
+            } else {
+                return "-";
+            }
+        },
+        get_activity_budget_hour_equal: function (count,value,obj) {
+            const hour = lodash.filter(obj, arr => arr.activity_id === value)
+            if (hour.length > 0) {
+                const total_hour = lodash.map(hour, arr => parseInt(arr.hour));
+                return (total_hour[0]/count).toFixed(2);
+            } else {
+                return "-";
+            }
+        },
+        get_activity_budget_amount_equal: function (count,value, obj) {
+            const amount = lodash.filter(obj, arr => arr.activity_id === value)
+            if (amount.length > 0) {
+                const total_amount = lodash.map(amount, arr => parseInt(arr.amount));
+                return (total_amount[0]/count).toFixed(2);
+            } else {
+                return "-";
+            }
+        },
+        
         get_sub_total_hour: function (array, parent_id, activity_id) {
             var sum = 0;
             var total_hour = 0;

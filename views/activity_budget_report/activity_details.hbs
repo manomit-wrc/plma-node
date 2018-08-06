@@ -17,6 +17,7 @@
                     Activity Goal: {{activity_goal.activity_goal}}
                 </span>
             </div>
+            <input type="hidden" id="activity_target_length" value={{activity_target_client.length}}>
         </div>
         <div class="col-md-4">
             <div class="div_left table-responsive">
@@ -74,10 +75,10 @@
                                                     <tbody>
                                                         <tr>
                                                             <td width="50%" style="border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; vertical-align: middle; text-align: center;">
-                                                                {{this.hour}}
+                                                                {{this.hour}}///
                                                             </td>
                                                             <td width="50%" style="border-bottom: 1px solid #ddd; vertical-align: middle; text-align: center;">
-                                                                {{this.amount}}
+                                                                {{this.amount}}//
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -150,11 +151,12 @@
                                                         <tr>
                                                             <td style="height: 91px; text-align: center; vertical-align: middle; border-top: 1px solid #ddd;">
                                                                 <p style="color:#337ab7;">
-                                                                    <a href="#" id="activityBudgetUpdate" data-toggle="modal" data-target="#update_budget_by_activity" title="{{this.activity_name}}" data-activiy-name="{{this.activity_name}}" data-activity-details-id="{{this.activity_id}}">
-                                                                    <strong>{{this.activity_name}}</strong>
+                                                                    <a href="#" id="activityBudgetUpdate" data-toggle="modal" data-target="#update_budget_by_activity" title="{{this.activity_name}}"
+                                                                        data-activiy-name="{{this.activity_name}}" data-activity-details-id="{{this.activity_id}}">
+                                                                        <strong>{{this.activity_name}}</strong>
                                                                     </a>
                                                                 </p>
-                                                                <p title="{{this.activity_name}}" data-activiy-name="{{this.activity_name}}"  >Origin Attorney -{{this.activity_id}}- {{this.originAttorney}}</p>
+                                                                <p title="{{this.activity_name}}" data-activiy-name="{{this.activity_name}}">Origin Attorney -{{this.activity_id}}- {{this.originAttorney}}</p>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -163,6 +165,7 @@
                                                             </td>
                                                         </tr>
                                                     </thead>
+                                                    
                                                     <tbody>
                                                         {{#each this.budget_list}}
                                                         <tr>
@@ -192,16 +195,23 @@
                                                                                     <tbody>
                                                                                         <tr>
                                                                                             <td width="50%" style="border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; text-align: center; vertical-align: middle;">
-                                                                                                <a href="#" id="activityBudgetUpdate" data-toggle="modal"
-                                                                                                    data-target="#update_budget_by_activity">
+                                                                                                <a href="#" id="activityBudgetUpdate" data-toggle="modal" data-target="#update_budget_by_activity">
+                                                                                                    
+                                                                                                    {{#if_eq ../../this.activity_level 'E'}}
                                                                                                     {{get_activity_budget_hour ../../this.activity_id this.budget_display}}
+                                                                                                    {{else}}
+                                                                                                    {{get_activity_budget_hour_indi ../../../activity_target_client.length ../../this.activity_id this.budget_display}}
+                                                                                                    {{/if_eq}}
                                                                                                 </a>
+                                                                                                
                                                                                             </td>
                                                                                             <td width="50%" style="border-bottom: 1px solid #ddd; text-align: center; vertical-align: middle;">
-                                                                                                <a href="#" id="activityBudgetUpdate" data-toggle="modal"
-                                                                                                    data-target="#update_budget_by_activity">{{get_activity_budget_amount
-                                                                                                    ../../this.activity_id
-                                                                                                    this.budget_display}}
+                                                                                                <a href="#" id="activityBudgetUpdate" data-toggle="modal" data-target="#update_budget_by_activity">
+                                                                                                    {{#if_eq ../../this.activity_level 'E'}}
+                                                                                                    {{get_activity_budget_amount ../../this.activity_id this.budget_display}}
+                                                                                                    {{else}}
+                                                                                                    {{get_activity_budget_amount_indi ../../../activity_target_client.length ../../this.activity_id this.budget_display}}
+                                                                                                    {{/if_eq}}
                                                                                                 </a>
                                                                                             </td>
                                                                                         </tr>
@@ -265,8 +275,6 @@
                                                                 <h4 class="modal-title">Marketing Budget Summary</h4>
                                                                 <p class="total-title"> </p>
                                                             </div>
-
-
                                                             {{!-- Start new budget report show --}}
                                                             <div class="modal-body">
                                                                 <div class="card-box">
@@ -326,20 +334,21 @@
                                                                                     </table>
                                                                                 </div>
                                                                                 <div class="col-md-6">
-                                                                                    <div class="table-responsive">
-                                                                                        {{!-- {{#each activity_details()}} --}}
-                                                                                        <table class="table table-bordered">
+                                                                                    <div class="table-responsive tbl-ovyh">
+
+                                                                                        {{#each ../activity_target_client}}
+                                                                                        <table class="table table-bordered tbl-w50p activiTy_legTh">
                                                                                             <tbody>
                                                                                                 <tr>
                                                                                                     <td style=" padding: 0; border-bottom: none">
                                                                                                         <table class="table" style="border-right: 1px solid #e7ecf1;">
                                                                                                             <tbody>
                                                                                                                 <tr>
-                                                                                                                    <td style=" padding: 0; width: 130px;">
+                                                                                                                    <td style=" padding: 0;">
                                                                                                                         <table style="margin-bottom: 0;" class="table">
                                                                                                                             <thead>
                                                                                                                                 <tr>
-                                                                                                                                    <th colspan="2" style=" height: 50px; vertical-align: middle;">{{#noop}}{{'body'}}{{/noop}}////
+                                                                                                                                    <th colspan="2" style=" height: 50px; vertical-align: middle;">{{this.name}}
                                                                                                                                     </th>
                                                                                                                                 </tr>
                                                                                                                             </thead>
@@ -361,7 +370,7 @@
                                                                                                                         </table>
                                                                                                                     </td>
                                                                                                                 </tr>
-                                                                                                                {{#each this.budget_list}}
+                                                                                                                {{#each ../this.budget_list}}
                                                                                                                 <tr>
                                                                                                                     <td colspan="2" style="height: 25px; border-bottom: 1px solid #e7ecf1;">&nbsp;</td>
                                                                                                                 </tr>
@@ -376,9 +385,19 @@
                                                                                                                                             <tbody>
                                                                                                                                                 <tr style="border-bottom: 1px solid #e7ecf1;">
                                                                                                                                                     <td style="height: 25px; width: 65px; vertical-align: middle; border-right: 1px solid #e7ecf1;">
-                                                                                                                                                        {{get_activity_budget_hour ../../this.activity_id this.budget_display}}</td>
+                                                                                                                                                        {{#if_eq ../../../this.activity_level 'E'}}
+                                                                                                                                                        {{get_activity_budget_hour_equal ../../../../activity_target_client.length ../../../this.activity_id this.budget_display}}
+                                                                                                                                                        {{else}}
+                                                                                                                                                        {{get_activity_budget_hour ../../../this.activity_id this.budget_display}}
+                                                                                                                                                        {{/if_eq}}
+                                                                                                                                                    </td>
                                                                                                                                                     <td style="text-align: center; width: 65px; height: 25px; vertical-align: middle" class="total_cost_original">
-                                                                                                                                                        {{get_activity_budget_amount ../../this.activity_id this.budget_display}}</td>
+                                                                                                                                                        {{#if_eq ../../../this.activity_level 'E'}}
+                                                                                                                                                         {{get_activity_budget_amount_equal ../../../../activity_target_client.length ../../../this.activity_id this.budget_display}}</td>
+                                                                                                                                                        {{else}}
+                                                                                                                                                        {{get_activity_budget_amount ../../../this.activity_id this.budget_display}}
+                                                                                                                                                        {{/if_eq}}
+                                                                                                                                                    </td>
                                                                                                                                                 </tr>
                                                                                                                                             </tbody>
                                                                                                                                         </table>
@@ -396,7 +415,7 @@
                                                                                                 </tr>
                                                                                             </tbody>
                                                                                         </table>
-                                                                                        {{!-- {{/each}} --}}
+                                                                                        {{/each}}
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -485,25 +504,35 @@
             $(".page-wrapper").removeClass("page-wrapper-full");
             $(".sidebar").removeClass("sidebar-hide");
         }
+
+        var activityLength = $('#activity_target_length').val();
+        if (2 < activityLength) {
+            $(".activiTy_legTh").removeClass("tbl-w50p");
+            $(".activiTy_legTh").addClass("tbl-w130px");
+        } else {
+            $(".activiTy_lengTh").removeClass("tbl-w130px");
+            $(".activiTy_lengTh").addClass("tbl-w50p");
+        }
     });
 
-    $(document).on('click', "#activityBudgetUpdate", function (e) {
+    /*$(document).on('click', "#activityBudgetUpdate", function (e) {
         var budgetName = $(this).data("activiy-name");
         var activity_id = $(this).data("activity-details-id");
         $('p.total-title').html('Activity- ' + budgetName);
         $.ajax({
-			url: '/activity/activity_details_budget/',
-			type: 'POST',
-			data: { activity_id: activity_id },
-			success: function (response) {
-				if (response.code === '200') {
-                  console.log('success------------------------>>>>>>',response);
-				}
-			},error: function (err) {
-				console.log('error================================>>>>>>>',err);
-			}
+            url: '/activity/activity_details_budget/',
+            type: 'POST',
+            data: { activity_id: activity_id },
+            success: function (response) {
+                if (response.code === '200') {
+                    console.log('success------------------------>>>>>>', response);
+                }
+            }, error: function (err) {
+                console.log('error================================>>>>>>>', err);
+            }
 
-		})
-    });
+        })
+    });*/
+
 
 </script> {{/content}}
