@@ -87,6 +87,14 @@ router.get('/activity-goal/edit/:id', auth, firmAttrAuth, csrfProtection, (req, 
 	});
 });
 
+
+router.get('/activity-goal/view/:id', auth, firmAttrAuth, csrfProtection, (req, res) => {
+	ActivityGoal.findById(req.params['id']).then(result => {
+		res.render('activity_goal/view', { layout: 'dashboard', csrfToken: req.csrfToken(), edit_goals: result})
+	});
+});
+
+
 router.post('/activity-goal/edit/:id', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	const formatFromDate1 = req.body.from_date ? req.body.from_date.split("-") : '';
 	const formatToDate1 = req.body.to_date ? req.body.to_date.split("-") : '';

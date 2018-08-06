@@ -33,7 +33,8 @@
                             {{#each designation}}
                             <tr>
                                 <td>{{math @index "+" 1}}</td>
-                                <td>{{this.title}}</td>
+                                <td>  <a href="#" data-toggle="modal" data-target="#view_users" data-designation-id="{{this.id}}" data-code="{{this.code}}" data-name="{{this.title}}"
+                                      data-remarks="{{this.remarks}}" id="view-designation">{{this.title}}</a></td>
                                 <td>{{this.remarks}}</td>
                                 <td>{{dateFormat this.createdAt "DD-MM-YYYY, hh:mm a"}}</td>
                                 <td class="text-right">

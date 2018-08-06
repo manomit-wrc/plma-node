@@ -25,7 +25,6 @@
                                 <th >SL#</th>
                                 <th >Budget sub head</th>
                                 <th style="width:150px;">Budget main head </th>
-                                <!-- <th>Remarks</th> -->
                                 <th>Created Date &amp; Time</th>
                                 <th class="text-right">Action</th>
                             </tr>
@@ -34,9 +33,9 @@
                             {{#each budget}}
                             <tr>
                                 <td>{{math @index "+" 1}}</td>
-                                <td>{{this.name}}</td>
+                                <td><a href="#" data-toggle="modal" data-target="#view_users" data-budget-id="{{this.id}}" data-parent-id="{{this.parent_id}}"
+                                      data-name="{{this.name}}" data-remarks="{{this.remarks}}" id="view-budget">{{this.name}}</a></td>
                                 <td>{{get_parent_head this.id ../budget}}</td>
-                                <!-- <td>{{this.remarks}}</td> -->
                                 <td>{{dateFormat this.createdAt "DD-MM-YYYY, hh:mm a"}}</td>
                       <td class="text-right">
                       <a href="#" data-toggle="modal" data-target="#view_users" data-budget-id="{{this.id}}" data-parent-id="{{this.parent_id}}"
