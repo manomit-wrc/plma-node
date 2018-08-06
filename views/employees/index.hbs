@@ -31,6 +31,7 @@
                     <table class="table table-striped custom-table datatable">
                         <thead>
                             <tr>
+                                <th>SL#</th>
                                 <th style="width:30%;">Name</th>
                                 <th>Email</th>
                                 <th>Mobile</th>
@@ -41,6 +42,7 @@
                         <tbody>
                             {{#each employee}} {{#if_eq this.role_id "4"}}
                             <tr>
+                                <td>{{math @index "+" 1}}</td>
                                 <td>
                                     <a href="javascript:void(0)" class="avatar">{{first_letter this.first_name}}</a>
                                     <h2 style="color:blue;">
