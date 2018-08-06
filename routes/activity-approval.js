@@ -2,6 +2,7 @@ const express = require('express');
 const auth = require('../middlewares/auth');
 const Activity = require('../models').activity;
 const Budget = require('../models').budget;
+const User = require('../models').user;
 const ActivityBudget = require('../models').activity_budget;
 const lodash = require("lodash");
 
@@ -90,6 +91,26 @@ router.post('/update_activity_approve_reject', auth, async (req, res) => {
     res.send({
         "success": true
     })
+});
+
+router.post("/get-notification", auth, async(req, res)=> {
+    Activity.belongsTo(User, {
+        foreignKey: 'user_id'
+    });
+    const noti = await Activity.findAll({
+        where: {
+            firm_id : req.user.firm_id,
+            activity_status: 1
+        },
+        include: [{
+            model: User
+        }]
+    });
+    res.send({
+        "success": true,
+        "count": noti.length,
+        "approval_noti" : noti
+    });
 });
 
 module.exports = router;

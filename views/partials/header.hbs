@@ -30,6 +30,24 @@
        <h4>Employee</h4>
        {{/if_eq}}
      </li>
+    <li class="dropdown hidden-xs">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="notificationBtn" data-user-id ="{{user.approver}}">
+        <i class="fa fa-bell-o"></i>
+        <span class="badge bg-purple pull-right" id="count_noti"></span>
+      </a>
+      <div class="dropdown-menu notifications" id="notificationDiv">
+        <div class="topnav-dropdown-header">
+          <span>Notifications</span>
+        </div>
+        <div class="drop-scroll" id="notification_div">
+          <ul class="media-list"  id="notiMsg">
+            
+          </ul>
+        </div>
+        <div class="topnav-dropdown-footer">
+        </div>
+      </div>
+    </li>
      <li class="dropdown">
        <a href="profile.html" class="dropdown-toggle user-link" data-toggle="dropdown" title="{{user.first_name}}">
          <span class="user-img"><img class="img-circle" src="{{user.avatar}}" width="40" alt="{{user.first_name}}">
@@ -202,7 +220,70 @@
       $(".export").click(function(){
         $(".dt-buttons").toggle(1000);
       });
-    });
+    
+     $.ajax({
+        type: "POST",
+        url: "/get-notification",
+        success: function (response) {
+          var approver = $("#notificationBtn").data("user-id");
+          if(approver === 1){
+            if(response.count != 0){
+              $("#count_noti").html(response.count);
+            }
+            if(response.approval_noti.length > 0){
+              for (var j = 0; j < response.approval_noti.length; j++) {
+                var todayTime = new Date(response.approval_noti[j].activity_creation_date);
+                month = '' + (todayTime.getMonth() + 1),
+                  day = '' + todayTime.getDate(),
+                  year = todayTime.getFullYear();
 
+                if (month.length < 2) month = '0' + month;
+                if (day.length < 2) day = '0' + day;
+
+                var creation_date = [month, day, year].join('-');
+
+                var d = new Date(response.approval_noti[j].updatedAt),
+                  dformat = [d.getMonth() + 1,
+                  d.getDate(),
+                  d.getFullYear()].join('/') + ' ' +
+                    [d.getHours(),
+                    d.getMinutes(),
+                    d.getSeconds()].join(':');
+
+                $("#notiMsg").append('<li class="media notification-message">'+ '<a href="/approval_details/'+ response.approval_noti[j].id+'">'+
+                  '<div class="media-left">'+
+                  '<span class="avatar">'+
+                      "A" +
+                    '</span>'
+                    +'</div>'+
+                    '<div class="media-body">'+
+                        '<p class="m-0 noti-details">'+
+                          '<span class="noti-title">'+
+                              " Request for approval for "+ '<b>'+ response.approval_noti[j].activity_name+ '</b>' +" from "+ response.approval_noti[j].user.first_name + " " + response.approval_noti[j].user.last_name +" on "+ creation_date  +
+                          '</span>'+ 
+                        '</p>'+
+                        '<p class="m-0">'+ 
+                          '<span class="notification-time">'+
+                            dformat +
+                          '</span>' +
+                        '</p>' +
+                      '</div>'+'</a>'+'</li>');
+              }
+            }
+            else{
+              $("#notification_div").addClass("noti-ntfound");
+              $("#notification_div").text("Notification not found !");
+            }
+          }
+          else {
+            $("#notification_div").addClass("noti-ntfound");
+            $("#notification_div").text("Notification not found !");
+          }
+        },
+        error: function (xhr) {
+
+        }
+      });
+    });
   </script>
   {{/content}}

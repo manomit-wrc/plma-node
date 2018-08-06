@@ -3018,8 +3018,10 @@ label.error {
 }
 
 .notifications .drop-scroll {
-	height: 290px;
-	width: 400px;
+	height: 250px;
+	width: 350px;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 .notifications.msg-noti .drop-scroll {
@@ -3061,6 +3063,17 @@ label.error {
 
 .notifications .media-list .media-left {
 	padding-right: 8px;
+}
+
+.noti-ntfound {
+	height: 200px;
+	overflow: hidden;
+	line-height: 200px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 14px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .drop-scroll {
