@@ -257,30 +257,31 @@
                   '<div class="media-left">'+
                   '<span class="avatar">'+
                       header.charAt(0) +
-                    '</span>'
-                    +'</div>'+
-                    '<div class="media-body">'+
-                        '<p class="m-0 noti-details">'+
-                          '<span class="noti-title">'+
-                              " Request for approval for "+ '<b>'+ response.approval_noti[j].activity_name+ '</b>' +" from "+ response.approval_noti[j].user.first_name + " " + response.approval_noti[j].user.last_name +" on "+ creation_date  +
-                          '</span>'+ 
-                        '</p>'+
-                        '<p class="m-0">'+ 
-                          '<span class="notification-time">'+
-                            dformat +
-                          '</span>' +
-                        '</p>' +
-                      '</div>'+'</a>'+'</li>');
+                  '</span>'
+                  +'</div>'+
+                  '<div class="media-body">'+
+                    '<p class="m-0 noti-details">'+
+                      '<span class="noti-title">'+
+                          " Request for approval for "+ '<b>'+ response.approval_noti[j].activity_name+ '</b>' +" from "+ response.approval_noti[j].user.first_name + " " + response.approval_noti[j].user.last_name +" on "+ creation_date  +
+                      '</span>'+ 
+                    '</p>'+
+                    '<p class="m-0">'+ 
+                      '<span class="notification-time">'+
+                        dformat +
+                      '</span>' +
+                    '</p>' +
+                  '</div>'+'</a>'+'</li>'
+                );
               }
             }
             else{
               $("#notification_div").addClass("noti-ntfound");
-              $("#notification_div").text("Notification not found !");
+              $("#notification_div").html('<i class="fa fa-bell-slash">'+'</i>'+"Notification not found !");
             }
           }
           else {
             $("#notification_div").addClass("noti-ntfound");
-            $("#notification_div").text("Notification not found !");
+            $("#notification_div").html('<i class="fa fa-bell-slash">'+'</i>'+" "+"Notification not found !");
           }
         },
         error: function (xhr) {
