@@ -1,14 +1,22 @@
 {{#content "style" mode="prepend"}}
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+{{/content}}
 
 <div class="page-wrapper">
   <div class="content container-fluid">
     <div class="row">
       <div class="col-sm-8">
-        <h4 class="page-title">Edit Referral</h4>
+        <h4 class="page-title">View Referral</h4>
       </div>
+
+      <div class="right">
+        <a href="/referral/edit/{{referral.id}}" class="btn btn-primary pull-right rounded">
+          <i class="fa fa-pencil"></i> Edit Referral</a>
+      </div>
+
+
     </div>
     {{#if err_message}}
     <div class="alert alert-danger">
@@ -67,7 +75,7 @@
                     <span class="req-lbl">*</span>
 
                   </label>
-                  <select id="attr_id" name="attr_id" class="select form-control floating">
+                  <select id="attr_id" name="attr_id" disabled class="form-control floating">
                     <option value="">Select Attorney</option>
                     {{#each attorney}}
                     <option value="{{this.id}}" {{#if_eq this.id ../referral.attorney_id }} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
@@ -82,7 +90,7 @@
                       <span class="req-lbl">*</span>
 
                     </label>
-                    <input type="text" class="form-control floating" id="first_name" name="first_name" value="{{referral.first_name}}" />
+                    <input type="text" disabled class="form-control floating" id="first_name" name="first_name" value="{{referral.first_name}}" />
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -91,14 +99,14 @@
                       <span class="req-lbl">*</span>
 
                     </label>
-                    <input type="text" class="form-control floating" id="last_name" name="last_name" value="{{referral.last_name}}" />
+                    <input type="text" disabled class="form-control floating" id="last_name" name="last_name" value="{{referral.last_name}}" />
                   </div>
                 </div>
               </div>
               <div class="col-md-12" id="org_referral" {{#if_eq referral.referral_type "I"}} style="display:none;" {{/if_eq}}>
                 <div class="form-group form-focus">
                   <label class="control-label">Organization Name</label>
-                  <input type="text" class="form-control floating" id="org_name" name="org_name" value="{{referral.organization_name}}" />
+                  <input type="text" disabled class="form-control floating" id="org_name" name="org_name" value="{{referral.organization_name}}" />
                 </div>
               </div>
               <div class="col-md-6">
@@ -107,7 +115,7 @@
                     <span class="req-lbl">*</span>
 
                   </label>
-                  <input type="text" class="form-control floating" id="email" name="email" value="{{referral.email}}" />
+                  <input type="text" disabled class="form-control floating" id="email" name="email" value="{{referral.email}}" />
                 </div>
               </div>
               <div class="col-md-6">
@@ -116,7 +124,7 @@
                     <span class="req-lbl">*</span>
 
                   </label>
-                  <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" value="{{referral.mobile}}"
+                  <input type="text" disabled class="form-control floating" id="mobile_no" name="mobile_no" value="{{referral.mobile}}"
                   />
                 </div>
               </div>
@@ -130,7 +138,7 @@
               </div>
               <div class="col-md-6" id="target_list" {{#if_eq referral.referred_type "C"}} style="display:none;" {{/if_eq}}>
                 <div class="form-group form-focus">
-                  <select id="target_id" name="referred_id_t" class="select form-control floating">
+                  <select disabled class="form-control floating" id="target_id" name="referred_id_t" class="select form-control floating">
                     <option value="0" {{#if_eq referral.target_id "0"}} selected {{/if_eq}}>Select Target</option>
                     {{#each target}} {{#if_eq target_type "I"}}
                     <option value="{{this.id}}" {{#if_eq this.id ../referral.target_id}} selected {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
@@ -142,7 +150,7 @@
               </div>
               <div class="col-md-6" id="client_list" {{#if_eq referral.referred_type "T"}} style="display:none;" {{/if_eq}}>
                 <div class="form-group form-focus">
-                  <select id="client_id" name="referred_id_c" class="select form-control floating">
+                  <select disabled class="form-control floating" id="client_id" name="referred_id_c" class="select form-control floating">
                     <option value="0" {{#if_eq referral.client_id "0"}} selected {{/if_eq}}>Select Client</option>
                     {{#each client}} {{#if_eq client_type "I"}}
                     <option value="{{this.id}}" {{#if_eq this.id ../referral.client_id}} selected {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
@@ -158,16 +166,14 @@
                     <span class="req-lbl">*</span>
 
                   </label>
-                  <textarea name="remarks" id="remarks" class="form-control floating">{{referral.remarks}}</textarea>
+                  <textarea name="remarks" id="remarks" disabled class="form-control floating">{{referral.remarks}}</textarea>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="text-center m-t-20">
-        <button class="btn btn-primary btn-lg" type="submit">Save &amp; create</button>
-      </div>
+
     </form>
   </div>
 
@@ -263,4 +269,7 @@
     $('#target_list').hide();
     $('#client_list').show();
   });
-</script> {{/content}}
+</script>
+
+
+ {{/content}}
