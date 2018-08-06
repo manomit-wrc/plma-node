@@ -292,6 +292,7 @@
 											<table class="table table-striped custom-table datatable">
 												<thead>
 													<tr>
+														<th>SL#</th>
 														<th>Staff Name</th>
 														<th>Office Name</th>
 														<th>Designation</th>
@@ -304,6 +305,7 @@
 												<tbody>
 													{{#each contact}}
 													<tr>
+														<td>{{math @index "+" 1}}</td>
 														<td>
 															<a href="javascript:void(0)" class="avatar">{{first_letter this.first_name}}</a>
 															<h2>
