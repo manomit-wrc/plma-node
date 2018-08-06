@@ -53,13 +53,20 @@
                             <tr>
                                 <td>{{math @index "+" 1}}</td>
                                 <td>
+
+
+                                  <a href="/referral/view/{{this.id}}">
                                     {{#if_eq referral_type "I"}} {{this.first_name}} {{this.last_name}} {{/if_eq}} {{#if_eq referral_type "O"}} {{this.organization_name}}
-                                    {{/if_eq}}
+                                      {{/if_eq}}</a>
                                 </td>
                                 <td>
                                     {{#if_eq referral_type "I"}} Individual {{/if_eq}} {{#if_eq referral_type "O"}} Organization {{/if_eq}}
                                 </td>
-                                <td>{{this.email}}</td>
+                                <td>
+
+                                  {{this.email}}
+
+                                </td>
                                 <td class="number_validator">{{this.mobile}}</td>
                                 <td class="text-right">
 

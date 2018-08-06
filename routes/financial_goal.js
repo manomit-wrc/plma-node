@@ -46,13 +46,13 @@ router.get('/financial-goal', auth, firmAuth, csrfProtection, async (req, res)=>
 	}
 	res.render('financial_goal/index', {
 		layout: 'dashboard',
-		success_message, 
-		financialGoal, 
-		success_finan_edit_message, 
-		success_finan_del_message, 
-		attorney, 
+		success_message,
+		financialGoal,
+		success_finan_edit_message,
+		success_finan_del_message,
+		attorney,
 		year,
-		search_attorney: req.query ? req.query.search_attorney : '', 
+		search_attorney: req.query ? req.query.search_attorney : '',
         search_year: req.query ? req.query.search_year : ''
 	});
 });
@@ -81,6 +81,27 @@ router.post("/financial-goal/add", auth, firmAuth, csrfProtection, async(req,res
 	req.flash('success-financialGoal-message', 'Financial Goal Created Successfully');
     res.redirect('/financial-goal')
 });
+
+
+
+
+
+
+router.get("/financial-goal/view/:id", auth, firmAuth, csrfProtection, async (req, res)=> {
+	var year = [];
+	for(var i=2018; i<=2040;i++){
+		year.push(i);
+	}
+	const edit_financial_goal = await FinancialGoal.findById(req.params['id']);
+	const attorney = await User.findAll({
+		where: {role_id: 3}
+	});
+	res.render('financial_goal/view', {layout: 'dashboard', csrfToken: req.csrfToken(), finan_goal: edit_financial_goal, attorney, year});
+});
+
+
+
+
 
 router.get("/financial-goal/edit/:id", auth, firmAuth, csrfProtection, async (req, res)=> {
 	var year = [];
