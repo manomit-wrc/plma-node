@@ -3066,9 +3066,9 @@ label.error {
 }
 
 .noti-ntfound {
-	height: 200px;
+	height: 100px !important;
 	overflow: hidden;
-	line-height: 200px;
+	line-height: 90px;
 	text-align: center;
 	font-weight: bold;
 	font-size: 14px;
