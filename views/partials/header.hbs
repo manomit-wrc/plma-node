@@ -250,10 +250,12 @@
                     d.getMinutes(),
                     d.getSeconds()].join(':');
 
+                var header = response.approval_noti[j].user.first_name;
+
                 $("#notiMsg").append('<li class="media notification-message">'+ '<a href="/approval_details/'+ response.approval_noti[j].id+'">'+
                   '<div class="media-left">'+
                   '<span class="avatar">'+
-                      "A" +
+                      header.charAt(0) +
                     '</span>'
                     +'</div>'+
                     '<div class="media-body">'+
