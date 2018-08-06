@@ -2563,8 +2563,8 @@ label.error {
 
 .filter-row .btn {
 	border-radius: 0;
-	min-height: 50px;
-	padding: 14px 12px;
+	/*min-height: 50px;
+	padding: 14px 12px;*/
 	text-transform: uppercase;
 }
 
@@ -5606,6 +5606,14 @@ select.gender {
 
 .pg-header .text-right a:last-child {
 	margin-right: 12px;
+}
+
+.pg-header .text-right a:nth-child(2) {
+	margin-left: 5px;
+}
+
+#mainTable td:nth-child(1), .table-striped td:nth-child(1) {
+	width: 2% !important;
 }
 
 /*Ends on css 03-08-2018*/
