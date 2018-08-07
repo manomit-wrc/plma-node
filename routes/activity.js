@@ -1,32 +1,10 @@
 const express = require('express');
 const auth = require('../middlewares/auth');
-const siteAuth = require('../middlewares/site_auth');
-const firmAuth = require('../middlewares/firm_auth');
 const firmAttrAuth = require('../middlewares/firm_attr_auth');
 const csrf = require('csurf');
-const bCrypt = require('bcrypt-nodejs');
-const designation = require('../models').designation;
-const Sequelize = require('sequelize');
-const Op = Sequelize.Op;
 const Section = require('../models').section;
-const Group = require('../models').group;
-const budget = require('../models').budget;
-const Zipcode = require('../models').zipcode;
-const City = require('../models').city;
-const State = require('../models').state;
-const Country = require('../models').country;
-const industry_type = require('../models').industry_type;
-const setting = require('../models').setting;
-const Jurisdiction = require('../models').jurisdiction;
-const user = require('../models').user;
 const Activity = require('../models').activity;
 const Activity_to_user_type = require('../models').jointactivity;
-var csrfProtection = csrf({
-	cookie: true
-});
-var csv = require('fast-csv');
-var path = require('path');
-var fs = require('fs');
 const lodash = require("lodash");
 const router = express.Router();
 const Firm = require('../models').firm;
@@ -37,6 +15,10 @@ const Client = require('../models').client;
 const Budget = require('../models').budget;
 const ActivityBudget = require('../models').activity_budget;
 const sectionToFirm = require('../models').section_to_firms;
+
+var csrfProtection = csrf({
+	cookie: true
+});
 
 function removePhoneMask(removeCharacter) {
 	removeCharacter = removeCharacter.replace("-", "");
@@ -153,6 +135,10 @@ router.post('/insertActivity', auth, async (req, res) => {
 
 router.post('/activity/add-budget', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var budget = JSON.parse(req.body.budget);
+
+	console.log('length',budget.length);
+	
+
 	for (var b = 0; b < budget.length; b++) {
 		await ActivityBudget.create({
 			activity_id: req.body.activity_id,
@@ -501,8 +487,6 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		}]
 	});
 
-	// console.log('editdata[0]',editdata[0].activity_status);
-
 	res.render('activity/update', {
 		layout: 'dashboard',
 		csrfToken: req.csrfToken(),
@@ -617,7 +601,7 @@ router.post('/activity/update/:id', auth, firmAttrAuth, csrfProtection, async (r
 });
 
 
-router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {	
+router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	await Activity.update({
 		activity_status: 1
 	}, {
@@ -645,5 +629,6 @@ router.get('/activity/deletedata/:id', auth, firmAttrAuth, async (req, res) => {
 	});
 	res.redirect('/activitypage');
 });
+
 //====================================END ACTIVITY=============================================================================//
 module.exports = router;
