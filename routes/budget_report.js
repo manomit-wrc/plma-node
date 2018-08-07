@@ -148,7 +148,6 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
 });
 
 router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req, res) => {
-  console.log("-------------------------------------------------------");
   
   var user_id = req.user.id;
   Activity.hasMany(ActivityBudget, {
