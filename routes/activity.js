@@ -177,7 +177,8 @@ router.post('/activity/add', auth, firmAttrAuth, csrfProtection, async (req, res
 	if (activityBudgetData[0].level_type === 'Individual') {
 		if (target_user.length > 0) {
 			targetClientLength = target_user.length;
-		} else {
+		}
+		if (client_user.length > 0) {
 			targetClientLength = client_user.length;
 		}
 
