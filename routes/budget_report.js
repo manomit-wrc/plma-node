@@ -148,7 +148,7 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
 });
 
 router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req, res) => {
-  
+
   var user_id = req.user.id;
   Activity.hasMany(ActivityBudget, {
     foreignKey: 'activity_id'
@@ -285,10 +285,13 @@ router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req,
         });
       }
       activity_target_client.push({
-        'name': detailsActivity[0].first_name + ' ' + detailsActivity[0].last_name
+        'name': detailsActivity[0].first_name + ' ' + detailsActivity[0].last_name,
+        'activity_id': jointActivities_arr[i].ja[k].activity_id
       });
     }
   }
+
+  // console.log(activity_target_client);
 
   const activity_goal = await ActivityGoal.findById(req.params['id']);
 
@@ -300,6 +303,105 @@ router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req,
     activity_budget_grand,
     activity_target_client: activity_target_client
   });
+});
+
+
+router.get('/activity/activity_details_budget/:id', auth, csrfProtection, async (req, res) => {
+
+  var budgetArr = [];
+
+  const budgetList = await Budget.findAll();
+
+  for (var i = 0; i < budgetList.length; i++) {
+
+    if (budgetList[i].parent_id === 0) {
+
+      const parent_name = budgetList[i].name;
+      const parent_id = budgetList[i].id;
+
+      const child_budget = lodash.filter(budgetList, arr => arr.parent_id === budgetList[i].id);
+
+      var child_budget_arr = [];
+     
+      ActivityBudget.belongsTo(Activity, {
+        foreignKey: 'activity_id'
+      });
+
+      for (var j = 0; j < child_budget.length; j++) {
+
+        const activity_budget = await ActivityBudget.findAll({
+          whare: {
+            'activity_id': req.params.id
+          }
+        });
+
+        const temp_arr = lodash.filter(activity_budget, arr => arr.budget_id === child_budget[j].id);
+
+        /* const budget_wise_sum = await ActivityBudget.findAll({
+          where: {
+            'budget_id': child_budget[j].id,
+            'activity_goal_id': { in: activity_goal_arr
+            }
+          },
+          attributes: ['budget_id', [Sequelize.fn('sum', Sequelize.col('hour')), 'hour'],
+            [Sequelize.fn('sum', Sequelize.col('amount')), 'amount']
+          ],
+          group: ['budget_id']
+        });  */
+
+        // const hour = budget_wise_sum.length > 0 ? budget_wise_sum[0].hour : "-";
+        // const amount = budget_wise_sum.length > 0 ? budget_wise_sum[0].amount : "-";
+
+        // console.log('child_budget[j].name',child_budget[j].name);
+
+
+        child_budget_arr.push({
+          "id": child_budget[j].id,
+          "name": child_budget[j].name,
+          "budget_display": temp_arr
+        });
+      }
+
+      budgetArr.push({
+        "parent_name": parent_name,
+        "parent_id": parent_id,
+        "child_budget": child_budget_arr
+      });
+    }
+
+  }
+
+  const jointActivities = await Jointactivities.findAll({
+    where: {
+      'activity_id': req.params['id']
+    }
+  });
+
+  var marketingBudget = [];
+  var detailsActivity;
+  for (let i = 0; i < jointActivities.length; i++) {
+    if (jointActivities[i].target_client_type == 'T') {
+      detailsActivity = await Target.findAll({
+        where: {
+          'id': jointActivities[i].type
+        }
+      });
+    } else {
+      detailsActivity = await client.findAll({
+        where: {
+          'id': jointActivities[i].type
+        }
+      });
+    }
+    marketingBudget.push(detailsActivity)
+  }
+
+  res.render('activity_budget_report/activity_budget_details', {
+    layout: 'dashboard',
+    marketingBudget: marketingBudget,
+    budgetArr: budgetArr
+  });
+
 });
 
 module.exports = router;
