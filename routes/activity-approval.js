@@ -107,7 +107,8 @@ router.post("/get-notification", auth, async(req, res)=> {
         },
         include: [{
             model: User
-        }]
+        }],
+        order: [['updatedAt', 'DESC']]
     });
     res.send({
         "success": true,

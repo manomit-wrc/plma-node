@@ -284,8 +284,8 @@
             for (var j = 0; j < response.approval_noti.length; j++) {
               var todayTime = new Date(response.approval_noti[j].activity_creation_date);
               month = '' + (todayTime.getMonth() + 1),
-                day = '' + todayTime.getDate(),
-                year = todayTime.getFullYear();
+              day = '' + todayTime.getDate(),
+              year = todayTime.getFullYear();
 
               if (month.length < 2) month = '0' + month;
               if (day.length < 2) day = '0' + day;
@@ -302,6 +302,32 @@
 
               var header = response.approval_noti[j].user.first_name;
 
+              var startDate = new Date(response.approval_noti[j].updatedAt);
+              var endDate = new Date();
+              var diffDays = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
+              var diff = (endDate.getTime() - startDate.getTime()) / 1000;
+              var hour = diff / (60 * 60);
+              var minute = diff / 60;
+              var hrs = Math.abs(Math.round(hour));
+              var mins = Math.abs(Math.round(minute));
+              var sec = Math.abs(Math.round(diff));
+              var get_time = "";
+              if(sec < 60){
+                get_time = "Just now";
+              }
+              else if(sec >= 60 && mins < 60 && diffDays == 1){
+                get_time = mins + " mins ago";
+              }
+              else if(sec > 60 && mins >= 60 && diffDays == 1){
+                get_time = hrs + " hours ago";
+              }
+              else if(sec > 60 && mins > 60 && diffDays > 1 && diffDays < 7){
+                get_time = diffDays + " days ago"
+              }
+              else if (sec > 60 && mins > 60 && diffDays >= 7) {
+                get_time = dformat;
+              }
+
               $("#notiMsg").append('<li class="media notification-message">' +
                 '<a href="/approval_details/' + response.approval_noti[j].id + '">' +
                   '<div class="media-left">' +
@@ -312,12 +338,12 @@
                   '<div class="media-body">' +
                     '<p class="m-0 noti-details">' +
                       '<span class="noti-title">' +
-                        " Request for approval for " + '<b>' + response.approval_noti[j].activity_name + '</b>' + " from " + response.approval_noti[j].user.first_name + " " + response.approval_noti[j].user.last_name + " on " + creation_date +
+                        " Request for approval for " + '<b>' + response.approval_noti[j].activity_name + '</b>' + " from " + response.approval_noti[j].user.first_name + " " + response.approval_noti[j].user.last_name + " on " + creation_date +"."+
                       '</span>' +
                     '</p>' +
                     '<p class="m-0">' +
                       '<span class="notification-time">' +
-                        dformat +
+                         get_time +
                       '</span>' +
                     '</p>' +
                   '</div>' +
