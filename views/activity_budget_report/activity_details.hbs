@@ -515,24 +515,4 @@
         }
     });
 
-    /*$(document).on('click', "#activityBudgetUpdate", function (e) {
-        var budgetName = $(this).data("activiy-name");
-        var activity_id = $(this).data("activity-details-id");
-        $('p.total-title').html('Activity- ' + budgetName);
-        $.ajax({
-            url: '/activity/activity_details_budget/',
-            type: 'POST',
-            data: { activity_id: activity_id },
-            success: function (response) {
-                if (response.code === '200') {
-                    console.log('success------------------------>>>>>>', response);
-                }
-            }, error: function (err) {
-                console.log('error================================>>>>>>>', err);
-            }
-
-        })
-    });*/
-
-
 </script> {{/content}}
