@@ -318,8 +318,6 @@ router.get('/settings', auth, csrfProtection, async (req, res) => {
 
 //insert
 router.post('/settings/insert', auth, csrfProtection, (req, res) => {
-
-//	console.log(req.body);
 	var companyname = req.body.companyname;
 	var contactperson = req.body.contactperson;
 	var address = req.body.address;
@@ -359,14 +357,13 @@ router.post('/client/findCityByState', auth, firmAttrAuth, csrfProtection, (req,
 		}
 	}
 	).then(city => {
-		// res.send(city);
 		res.json({ city: city });
 	});
 });
 
 router.post('/client/findPinByCity', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	city.findById(req.body.city_id).then(row => {
-		console.log(row.name);
+		// console.log(row.name);
 		Zipcode.findAll({
 			where: {
 				city_name: row.name
@@ -419,8 +416,6 @@ router.get('/client/add', auth, firmAttrAuth, csrfProtection, async (req, res) =
 	var error_message = req.flash('error-client-message')[0];
 
 	const designation = await Designation.findAll();
-	console.log('designation',designation);
-	
 	const industry = await Industry.findAll();
 	const country = await Country.findAll();
 	const state = await State.findAll();
@@ -686,9 +681,6 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 
 router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 
-
-	console.log(req.body);
-
 	const formatDate = req.body.client_dob ? req.body.client_dob.split("-") : '';
 	const client_edit_data = await client.findOne({
 		where: {
@@ -700,7 +692,6 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 	});
 
 	var tag_ids;
-	console.log(req.body.existing_tags);
 	if (req.body.add_tag === 'e') {
 		tag_ids = req.body.existing_tags.toString();
 	} else {
@@ -761,13 +752,11 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 });
 
 router.get('/client/delete/:id', auth, firmAttrAuth, (req, res) => {
-	// console.log(req.params.id);
 	client.destroy({
 		where: {
 			id: req.params.id
 		}
 	}).then(resp => {
-		// req.flash('success_delete_attorney','Attorney deleted successfully');
 		res.redirect('/client');
 	});
 });
@@ -779,21 +768,18 @@ router.post('/client/findCityByState', auth, firmAttrAuth, csrfProtection, (req,
 		}
 	}
 	).then(city => {
-		// res.send(city);
 		res.json({ city: city });
 	});
 });
 router.post('/client/findPinByCity', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	city.findById(req.body.city_id).then(row => {
-		// console.log(row.name);
 		Zipcode.findAll({
 			where: {
 				city_name: row.name
 			}
 		}
 		).then(pin => {
-			console.log(JSON.stringify(pin, undefined, 2));
-			// res.send(city);
+			// console.log(JSON.stringify(pin, undefined, 2));
 			res.json({ pin: pin });
 		});
 

@@ -5584,13 +5584,26 @@ i.fa.fa-eye.m-r-5 {
 
 
 #update_budget_by_activity .tbl-w50p {
-	width: 48%;
-	display: inline-block;
+	-webkit-box-flex: 0;
+	    -ms-flex-positive: 0;
+	        flex-grow: 0;
+	-ms-flex-negative: 0;
+	    flex-shrink: 0;
+	-ms-flex-preferred-size: 48%;
+	    flex-basis: 48%;
+	margin: 0 1%;
 }
 
 #update_budget_by_activity .tbl-w130px {
 	width: 130px;
 	display: inline-block;
+}
+
+.tbl-ovyh {
+	overflow-y: hidden;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
 }
 
 

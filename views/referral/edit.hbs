@@ -20,16 +20,6 @@
     </div>
     {{/if}}
     <form id="frmEditReferral" method="POST" action="/referral/edit/{{referral.id}}">
-      <input type="hidden" name="_csrf" value="{{csrfToken}}">
-
-       {{!--
-      <input type="radio" id="individual_referral" name="referral_type" value="I" {{#if_eq referral.referral_type
-        "I"}} checked {{/if_eq}} disabled />Individual
-      <input type="radio" id="organization_referral" name="referral_type" value="O" {{#if_eq referral.referral_type "O"}} checked
-        {{/if_eq}} disabled/>Organization
-        --}}
-
-
       <div class="form-inline m-b-15">
         <div class="form-group m-r-5">
           <label class="input-group">
@@ -53,10 +43,6 @@
         </div>
       </div>
 
-
-
-
-
       <div class="card-box">
         <div class="row">
           <div class="col-md-12">
@@ -65,7 +51,6 @@
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">Attorney Name
                     <span class="req-lbl">*</span>
-
                   </label>
                   <select id="attr_id" name="attr_id" class="select form-control floating">
                     <option value="">Select Attorney</option>
@@ -89,7 +74,6 @@
                   <div class="form-group form-focus">
                     <label class="control-label">Last Name
                       <span class="req-lbl">*</span>
-
                     </label>
                     <input type="text" class="form-control floating" id="last_name" name="last_name" value="{{referral.last_name}}" />
                   </div>
@@ -105,7 +89,6 @@
                 <div class="form-group form-focus">
                   <label class="control-label">Email Id
                     <span class="req-lbl">*</span>
-
                   </label>
                   <input type="text" class="form-control floating" id="email" name="email" value="{{referral.email}}" />
                 </div>
@@ -120,14 +103,34 @@
                   />
                 </div>
               </div>
+
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="control-label">Refferred By: </label>
-                  <input type="radio" id="referral_type" name="ref_type" value="T" {{#if_eq referral.referred_type "T"}} checked {{/if_eq}}
-                  />Target
-                  <input type="radio" id="organization_type" name="ref_type" value="C" {{#if_eq referral.referred_type "C"}} checked {{/if_eq}}/>Client
+                  <div class="form-inline m-b-15">
+                    <div class="form-group m-r-5">
+                      <label class="input-group">
+                        <span class="input-group-addon">
+                          <input type="radio" id="referral_type" name="ref_type" value="T" {{#if_eq referral.referred_type "T"}} checked {{/if_eq}}
+                          />
+                        </span>
+                        <div class="form-control form-control-static">Target</div>
+                        <span class="glyphicon form-control-feedback "></span>
+                      </label>
+                    </div>
+                    <div class="form-group ">
+                      <label class="input-group">
+                        <span class="input-group-addon">
+                          <input type="radio" id="organization_type" name="ref_type" value="C" {{#if_eq referral.referred_type "C"}} checked {{/if_eq}}/>
+                        </span>
+                        <div class="form-control form-control-static">Client</div>
+                        <span class="glyphicon form-control-feedback "></span>
+                      </label>
+                    </div>
+                  </div>
                 </div>
               </div>
+
               <div class="col-md-6" id="target_list" {{#if_eq referral.referred_type "C"}} style="display:none;" {{/if_eq}}>
                 <div class="form-group form-focus">
                   <select id="target_id" name="referred_id_t" class="select form-control floating">
@@ -156,7 +159,6 @@
                 <div class="form-group form-focus">
                   <label class="control-label">Remarks
                     <span class="req-lbl">*</span>
-
                   </label>
                   <textarea name="remarks" id="remarks" class="form-control floating">{{referral.remarks}}</textarea>
                 </div>
@@ -170,7 +172,6 @@
       </div>
     </form>
   </div>
-
 </div>
 {{#content "script" mode="append"}}
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>

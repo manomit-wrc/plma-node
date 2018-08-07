@@ -41,7 +41,8 @@
             </thead>
             <tbody id="mainTable">
               {{#each row}}
-              <tr {{#if_eq this.activity_status '2'}} style="background-color:#5cc65c;;" {{/if_eq}} {{#if_eq this.activity_status '3'}} style="background-color:red;" {{/if_eq}}>
+              <tr {{#if_eq this.activity_status '2'}} style="background-color:#5cc65c;;" {{/if_eq}} {{#if_eq this.activity_status '3'}}
+                style="background-color:red;" {{/if_eq}}>
                 <td>{{math @index "+" 1}}</td>
                 <td>{{this.activity_name}}</td>
                 <td>{{dateFormat this.activity_from_date "DD-MM-YYYY"}}</td>
@@ -50,17 +51,16 @@
                 <td>{{this.remarks}}</td>
                 <td>
                   <input type="hidden" name="_csrf" value="{{csrfToken}}">
-                  <input type="hidden" name="activity_id" id="activity_id" value="{{this.id}}">
-                  {{#if_eq this.activity_status '0'}} NEW ACTIVITY - CREATED {{/if_eq}} {{#if_eq this.activity_status '1'}} PENDING APPROVAL
-                  - IN-PROGRESS {{/if_eq}} {{#if_eq this.activity_status '2'}} APPROVED - PROCEED {{/if_eq}} {{#if_eq this.activity_status
-                  '3'}} NOT APPROVED - DISCARD ACTIVITY {{/if_eq}}
+                  <input type="hidden" name="activity_id" id="activity_id" value="{{this.id}}"> {{#if_eq this.activity_status '0'}} NEW ACTIVITY - CREATED {{/if_eq}} {{#if_eq this.activity_status '1'}}
+                  PENDING APPROVAL - IN-PROGRESS {{/if_eq}} {{#if_eq this.activity_status '2'}} APPROVED - PROCEED {{/if_eq}}
+                  {{#if_eq this.activity_status '3'}} NOT APPROVED - DISCARD ACTIVITY {{/if_eq}}
                 </td>
 
 
                 <td class="text-right">
                   {{#if_eq this.activity_status "0"}}
-                  <a href="javascript:void(0);" class="btn btn-info btn-sm approval_request_sent" id="approval_request_sent" title="REQUEST FOR APPROVAL" data-target-request-id="{{this.id}}"
-                    class="btn btn-danger btn-sm target-delete">
+                  <a href="javascript:void(0);" class="btn btn-info btn-sm approval_request_sent" id="approval_request_sent" title="REQUEST FOR APPROVAL"
+                    data-target-request-id="{{this.id}}" class="btn btn-danger btn-sm target-delete">
                     <i class="fa fa-check" aria-hidden="true"></i>
                   </a>
                   {{/if_eq}}
@@ -92,17 +92,14 @@
                     </div>
                   </div>
                 </div>
-
               </tr>
               {{/each}}
-
             </tbody>
           </table>
         </div>
       </div>
     </div>
   </div>
-
 </div>
 {{#content "script" mode="append"}}
 <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
@@ -124,9 +121,9 @@
 
   $(document).on('click', '.approval_request_sent', function (e) {
 
-    var activity_id = $(this).data("target-request-id"); 
+    var activity_id = $(this).data("target-request-id");
 
-     swal({
+    swal({
       title: "Are you sure?",
       text: "You want to send this activity for approval?",
       type: "warning",
@@ -136,17 +133,17 @@
       closeOnConfirm: false
 
     }, function () {
-      
+
       $.ajax({
         type: "GET",
-        url: "/activity/update_approval_request/"+activity_id,
+        url: "/activity/update_approval_request/" + activity_id,
         success: function (response) {
           if (response.success == true) {
             swal({
-              title: "Nice!", 
-              text: "Approval sent successfully", 
+              title: "Nice!",
+              text: "Approval sent successfully",
               type: "success"
-            }, function() {
+            }, function () {
               window.location.reload();
             });
           }
