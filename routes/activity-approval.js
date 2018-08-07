@@ -11,7 +11,10 @@ const router = express.Router();
 router.get('/activity-approvals', auth, async (req, res) => {
   
     const activity_approvals = await Activity.findAll({
-       where: { 'activity_status': 1 }
+       where: { 
+           'activity_status': 1,
+           'firm_id': req.user.firm_id
+         }
     });
 
     res.render('activity-approvals/index', {
