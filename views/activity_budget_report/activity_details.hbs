@@ -390,18 +390,10 @@
                                                                                                                                             <tbody>
                                                                                                                                                 <tr style="border-bottom: 1px solid #e7ecf1;">
                                                                                                                                                     <td style="height: 25px; width: 65px; vertical-align: middle; border-right: 1px solid #e7ecf1;">
-                                                                                                                                                        {{#if_eq ../../../this.activity_level 'E'}}
                                                                                                                                                         {{get_activity_budget_hour_equal ../../../../activity_target_client.length ../../../this.activity_id this.budget_display}}
-                                                                                                                                                        {{else}}
-                                                                                                                                                        {{get_activity_budget_hour ../../../this.activity_id this.budget_display}}
-                                                                                                                                                        {{/if_eq}}
                                                                                                                                                     </td>
                                                                                                                                                     <td style="text-align: center; width: 65px; height: 25px; vertical-align: middle" class="total_cost_original">
-                                                                                                                                                        {{#if_eq ../../../this.activity_level 'E'}}
-                                                                                                                                                         {{get_activity_budget_amount_equal ../../../../activity_target_client.length ../../../this.activity_id this.budget_display}}</td>
-                                                                                                                                                        {{else}}
-                                                                                                                                                        {{get_activity_budget_amount ../../../this.activity_id this.budget_display}}
-                                                                                                                                                        {{/if_eq}}
+                                                                                                                                                        {{get_activity_budget_amount_equal ../../../../activity_target_client.length ../../../this.activity_id this.budget_display}}</td>
                                                                                                                                                     </td>
                                                                                                                                                 </tr>
                                                                                                                                             </tbody>
