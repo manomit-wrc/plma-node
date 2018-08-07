@@ -13,11 +13,12 @@
             <div class="col-sm-8">
                 <h4 class="page-title">Target Details</h4>
             </div>
-            <div class="right">
-              <a href="/target/edit/{{client.id}}" class="btn btn-primary pull-right rounded">
-                <i class="fa fa-pencil"></i> Edit Target</a>
+            <div class="col-sm-4">
+                <div class="text-right">
+                    <a href="/target/edit/{{client.id}}" class="btn btn-primary pull-right rounded">
+                    <i class="fa fa-pencil"></i> Edit Target</a>
+                </div>
             </div>
-
         </div>
         <form id="targetform" method="POST" action="/target/edit/{{client.id}}">
             <input type="hidden" name="_csrf" value="{{csrfToken}}">

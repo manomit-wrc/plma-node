@@ -33,8 +33,7 @@
                                     <label class="control-label">Origin Attorney
                                         <span class="req-lbl">*</span>
                                     </label>
-                                    <input class="form-control floating" type="text" id="originAttorney" name="originAttorney" value="{{this.originAttorney}}"
-                                        disabled>
+                                    <input class="form-control floating" type="text" id="originAttorney" name="originAttorney" value="{{this.originAttorney}}" disabled>
                                 </div>
                             </div>
 
@@ -187,7 +186,7 @@
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
                                     <label class="control-label">Activity Details Status
-
+                                        
                                     </label>
                                     <select class="select" id="budget_status" name="budget_status">
                                         <option value=""> Select One</option>
@@ -200,7 +199,7 @@
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
                                     <label class="control-label">Activity Budget Details Status
-
+                                        
                                     </label>
                                     <select class="select" id="budget_details_status" name="budget_details_status">
                                         <option value=""> Select One</option>
@@ -234,11 +233,14 @@
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus" id="target_list">
                                     <select id="target_id" name="target_user[]" class=" form-control floating onchangeBudget" multiple="multiple">
-                                        {{#each target}} {{#if_eq target_type "I"}}
-                                        <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
-                                        {{/if_eq}} {{#if_eq target_type "O"}}
-                                        <option value="{{this.id}}">{{this.organization_name}}</option>
-                                        {{/if_eq}} {{/each}}
+                                        {{#each target}} 
+                                            {{#if_eq target_type "I"}}
+                                                <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
+                                            {{/if_eq}} 
+                                            {{#if_eq target_type "O"}}
+                                                <option value="{{this.id}}">{{this.organization_name}}</option>
+                                            {{/if_eq}} 
+                                        {{/each}}
                                     </select>
                                 </div>
                             </div>
@@ -493,7 +495,7 @@
                 potiential_revenue: {
                     required: true
                 },
-
+                
                 activity_creation_date: {
                     required: true
                 },
@@ -527,7 +529,7 @@
                 potiential_revenue: {
                     required: "potiential revenue can't be blank"
                 },
-
+               
                 activity_creation_date: {
                     required: "creation date can't be blank"
                 },
@@ -565,7 +567,7 @@
                 $(".none").show();
                 $(".section").hide();
                 $(".strategyGroup").hide();
-            } else if ($(this).val() == 'section') {
+            }else if ($(this).val() == 'section') {
                 $('#potiential_revenue').val('0.00');
                 $(".none").hide();
                 $(".section").show();
@@ -596,6 +598,6 @@
 
     });
 
-
+    
 
 </script> {{/content}}

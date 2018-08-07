@@ -61,12 +61,14 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 
 	const activity_goal = await ActivityGoal.findAll();
 	const practice_area = await PracticeArea.findAll();
+
 	const target = await Target.findAll({
 		where: {
 			'target_type': "I",
 			'attorney_id': req.user.id
 		}
 	});
+
 	const client = await Client.findAll({
 		where: {
 			'client_type': "I",
@@ -136,9 +138,6 @@ router.post('/insertActivity', auth, async (req, res) => {
 router.post('/activity/add-budget', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var budget = JSON.parse(req.body.budget);
 
-	console.log('length',budget.length);
-	
-
 	for (var b = 0; b < budget.length; b++) {
 		await ActivityBudget.create({
 			activity_id: req.body.activity_id,
@@ -158,13 +157,45 @@ router.post('/activity/add-budget', auth, firmAttrAuth, csrfProtection, async (r
 // ========{{  insert data to the database  }}=====================//
 
 router.post('/activity/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+
 	var target_user = [];
+	var client_user = [];
 	target_user = req.body.target_user;
 
-	var client_user = req.body.client_user;
+	client_user = req.body.client_user;
 	const CreationDate = req.body.activity_creation_date ? req.body.activity_creation_date.split("-") : '';
 	const FromDate = req.body.activity_from_date ? req.body.activity_from_date.split("-") : '';
 	const ToDate = req.body.activity_to_date ? req.body.activity_to_date.split("-") : '';
+
+	const activityBudgetData = await ActivityBudget.findAll({
+		where: {
+			'activity_id': req.body.activity_id
+		}
+	})
+
+	var targetClientLength;
+	if (activityBudgetData[0].level_type === 'Individual') {
+		if (target_user.length > 0) {
+			targetClientLength = target_user.length;
+		} else {
+			targetClientLength = client_user.length;
+		}
+
+		for (var b = 0; b < activityBudgetData.length; b++) {
+			var totalHour = targetClientLength * activityBudgetData[b].hour;
+			var totalAmount = targetClientLength * activityBudgetData[b].amount;
+			await ActivityBudget.update({
+				hour: totalHour,
+				amount: totalAmount
+			}, {
+				where: {
+					'activity_id': req.body.activity_id,
+					'budget_id': activityBudgetData[b].budget_id
+				}
+			});
+		}
+	}
+
 
 	await Activity.update({
 		firm: req.body.firm,
@@ -255,6 +286,13 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 	const budgetList = await Budget.findAll({});
 	var budgetArr = [];
 	var level_type = '';
+
+	const all_activity_client = await Activity_to_user_type.findAll({
+		where: {
+			'activity_id': editdata[0].id
+		}
+	});
+
 	for (var i = 0; i < budgetList.length; i++) {
 		if (budgetList[i].parent_id === 0) {
 			const parent_name = budgetList[i].name;
@@ -267,11 +305,12 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 						activity_id: req.params['id']
 					}
 				});
-				const hour = activity_budget.length > 0 ? activity_budget[0].hour : '';
-				const amount = activity_budget.length > 0 ? activity_budget[0].amount : '';
+				level_type = activity_budget.length > 0 ? activity_budget[0].level_type : level_type;
+
+				const hour = activity_budget.length > 0 ? ((level_type === 'Individual') ? activity_budget[0].hour / all_activity_client.length : activity_budget[0].hour) : '';
+				const amount = activity_budget.length > 0 ? ((level_type === 'Individual') ? activity_budget[0].amount / all_activity_client.length : activity_budget[0].amount) : '';
 				const approval_remarks = activity_budget.length > 0 ? activity_budget[0].approver_remarks : '';
 
-				level_type = activity_budget.length > 0 ? activity_budget[0].level_type : level_type;
 				child_budget_arr.push({
 					"id": child_budget[j].id,
 					"name": child_budget[j].name,
@@ -288,11 +327,7 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 	}
 
 
-	const all_activity_client = await Activity_to_user_type.findAll({
-		where: {
-			'activity_id': editdata[0].id
-		}
-	});
+
 
 	var alldata = [];
 	var target_client_list;
@@ -403,6 +438,13 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 	const budgetList = await Budget.findAll();
 	var budgetArr = [];
 	var level_type = '';
+
+	const all_activity_client = await Activity_to_user_type.findAll({
+		where: {
+			'activity_id': editdata[0].id
+		}
+	});
+
 	for (var i = 0; i < budgetList.length; i++) {
 		if (budgetList[i].parent_id === 0) {
 			const parent_name = budgetList[i].name;
@@ -415,11 +457,12 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 						activity_id: req.params['id']
 					}
 				});
-				const hour = activity_budget.length > 0 ? activity_budget[0].hour : '';
-				const amount = activity_budget.length > 0 ? activity_budget[0].amount : '';
-				const approval_remarks = activity_budget.length > 0 ? activity_budget[0].approver_remarks : '';
 
 				level_type = activity_budget.length > 0 ? activity_budget[0].level_type : level_type;
+				const hour = activity_budget.length > 0 ? ((level_type === 'Individual') ? activity_budget[0].hour / all_activity_client.length : activity_budget[0].hour) : '';
+				const amount = activity_budget.length > 0 ? ((level_type === 'Individual') ? activity_budget[0].amount / all_activity_client.length : activity_budget[0].amount) : '';
+				const approval_remarks = activity_budget.length > 0 ? activity_budget[0].approver_remarks : '';
+
 				child_budget_arr.push({
 					"id": child_budget[j].id,
 					"name": child_budget[j].name,
@@ -436,11 +479,7 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 	}
 
 
-	const all_activity_client = await Activity_to_user_type.findAll({
-		where: {
-			'activity_id': editdata[0].id
-		}
-	});
+
 
 	var alldata = [];
 	var target_client_list;
@@ -542,12 +581,45 @@ router.post('/activity/edit-budget', auth, firmAttrAuth, csrfProtection, async (
 
 router.post('/activity/update/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 
-	var target_user = req.body.target_user;
-	var client_user = req.body.client_user;
+	target_user = [];
+	client_user = [];
+
+	target_user = req.body.target_user;
+	client_user = req.body.client_user;
 
 	const CreationDate1 = req.body.activity_creation_date ? req.body.activity_creation_date.split("-") : '';
 	const FormDate1 = req.body.activity_from_date ? req.body.activity_from_date.split("-") : '';
 	const ToDate1 = req.body.activity_to_date ? req.body.activity_to_date.split("-") : '';
+
+	const activityBudgetData = await ActivityBudget.findAll({
+		where: {
+			'activity_id': req.body.activity_id
+		}
+	})
+
+
+	var targetClientLength;
+	if (activityBudgetData[0].level_type === 'Individual') {
+		if (target_user.length > 0) {
+			targetClientLength = target_user.length;
+		} else {
+			targetClientLength = client_user.length;
+		}
+
+		for (var b = 0; b < activityBudgetData.length; b++) {
+			var totalHour = targetClientLength * activityBudgetData[b].hour;
+			var totalAmount = targetClientLength * activityBudgetData[b].amount;
+			await ActivityBudget.update({
+				hour: totalHour,
+				amount: totalAmount
+			}, {
+				where: {
+					'activity_id': req.body.activity_id,
+					'budget_id': activityBudgetData[b].budget_id
+				}
+			});
+		}
+	}
 
 	await Activity.update({
 		firm: req.body.firm,

@@ -379,7 +379,7 @@ router.post('/client/findPinByCity', auth, firmAttrAuth, csrfProtection, (req, r
 
 
 /*==========================================Client route starts==============================================*/
-router.get('/client', auth, firmAttrAuth, csrfProtection, (req, res) => {
+router.get('/client', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var success_message = req.flash('success-message')[0];
 	var success_edit_message = req.flash('success-edit-message')[0];
 	var whereCondition = {};
@@ -397,24 +397,24 @@ router.get('/client', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	if (req.user.role_id != 2) {
 		whereCondition.user_id = req.user.id;
 	}
-	client.findAll({
-		where: whereCondition
-	}).then(clients => {
-		res.render('client/index', {
-			layout: 'dashboard',
-			csrfToken: req.csrfToken(),
-			clients: clients,
-			searchName: req.query.searchName ? req.query.searchName : '',
-			searchMail: req.query.searchEmail ? req.query.searchEmail : '',
-			success_message,
-			success_edit_message
-		});
+
+	const clientDetails = await client.findAll({
+		where: { 'attorney_id': req.user.id }
+	});
+
+	res.render('client/index', {
+		layout: 'dashboard',
+		csrfToken: req.csrfToken(),
+		clients: clientDetails,
+		searchName: req.query.searchName ? req.query.searchName : '',
+		searchMail: req.query.searchEmail ? req.query.searchEmail : '',
+		success_message,
+		success_edit_message
 	});
 });
 
 router.get('/client/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var error_message = req.flash('error-client-message')[0];
-
 	const designation = await Designation.findAll();
 	const industry = await Industry.findAll();
 	const country = await Country.findAll();

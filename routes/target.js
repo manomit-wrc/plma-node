@@ -1,19 +1,12 @@
 const express = require('express');
 const auth = require('../middlewares/auth');
-const siteAuth = require('../middlewares/site_auth');
-const firmAuth = require('../middlewares/firm_auth');
 const firmAttrAuth = require('../middlewares/firm_attr_auth');
 const csrf = require('csurf');
-const bCrypt = require('bcrypt-nodejs');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const multer = require('multer');
 const xlsx = require('node-xlsx');
 const Designation = require('../models').designation;
-const PracticeArea = require('../models').practicearea;
-const Section = require('../models').section;
-const Group = require('../models').group;
-const budget = require('../models').budget;
 const Zipcode = require('../models').zipcode;
 const City = require('../models').city;
 const State = require('../models').state;
@@ -21,11 +14,8 @@ const Country = require('../models').country;
 const industry_type = require('../models').industry_type;
 const Target = require('../models').target;
 const Client = require('../models').client;
-const Jurisdiction = require('../models').jurisdiction;
 const user = require('../models').user;
 var csrfProtection = csrf({ cookie: true });
-var csv = require('fast-csv');
-var path = require('path');
 var fs = require('fs');
 const router = express.Router();
 
@@ -53,17 +43,17 @@ function removePhoneMask(phone_no) {
 	return phone_no;
 }
 
-router.get('/target', auth, firmAttrAuth, csrfProtection, (req, res) => {
+router.get('/target', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var success_message = req.flash('success-message')[0];
 	var success_edit_message = req.flash('success-edit-message')[0];
 	var whereCondition = {};
+
 	if (req.query.searchName) {
 		whereCondition.target_type = req.query.searchName;
 	}
 	if (req.query.searchEmail) {
 		whereCondition.email = req.query.searchEmail;
 	}
-	// console.log('req.user.firm_id.toString()',req.user.firm_id);
 	if (req.user.firm_id) {
 		whereCondition.firm_id = req.user.firm_id.toString();
 	} else {
@@ -72,19 +62,21 @@ router.get('/target', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	if (req.user.role_id != 2) {
 		whereCondition.user_id = req.user.id;
 	}
-	Target.findAll({
-		where: whereCondition
-	}).then(targets => {
-		res.render('target/targets', {
-			layout: 'dashboard',
-			csrfToken: req.csrfToken(),
-			targets: targets,
-			searchName: req.query.searchName ? req.query.searchName : '',
-			searchMail: req.query.searchEmail ? req.query.searchEmail : '',
-			success_message,
-			success_edit_message
-		});
+
+	const targetDetails = await Target.findAll({
+		where: { 'attorney_id': req.user.id }
 	});
+	
+	res.render('target/targets', {
+		layout: 'dashboard',
+		csrfToken: req.csrfToken(),
+		targets: targetDetails,
+		searchName: req.query.searchName ? req.query.searchName : '',
+		searchMail: req.query.searchEmail ? req.query.searchEmail : '',
+		success_message,
+		success_edit_message
+	});
+
 });
 
 router.get('/target/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
