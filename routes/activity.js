@@ -158,11 +158,12 @@ router.post('/activity/add-budget', auth, firmAttrAuth, csrfProtection, async (r
 
 router.post('/activity/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 
-	var target_user = [];
-	var client_user = [];
+	var target_user=[];
+	var client_user=[];
+	
 	target_user = req.body.target_user;
-
 	client_user = req.body.client_user;
+
 	const CreationDate = req.body.activity_creation_date ? req.body.activity_creation_date.split("-") : '';
 	const FromDate = req.body.activity_from_date ? req.body.activity_from_date.split("-") : '';
 	const ToDate = req.body.activity_to_date ? req.body.activity_to_date.split("-") : '';
@@ -175,10 +176,10 @@ router.post('/activity/add', auth, firmAttrAuth, csrfProtection, async (req, res
 
 	var targetClientLength;
 	if (activityBudgetData[0].level_type === 'Individual') {
-		if (target_user.length > 0) {
+		if (target_user !== undefined) {
 			targetClientLength = target_user.length;
 		}
-		if (client_user.length > 0) {
+		if (client_user !== undefined ) {
 			targetClientLength = client_user.length;
 		}
 
