@@ -130,14 +130,45 @@
                   />
                 </div>
               </div>
-              <div class="col-md-6">
+
+
+              {{!-- <div class="col-md-6">
                 <div class="form-group">
                   <label class="control-label">Refferred By: </label>
                   <input type="radio" id="referral_type" name="ref_type" value="T" {{#if_eq referral.referred_type "T"}} checked {{/if_eq}}
                   />Target
                   <input type="radio" id="organization_type" name="ref_type" value="C" {{#if_eq referral.referred_type "C"}} checked {{/if_eq}}/>Client
                 </div>
+              </div> --}}
+
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="control-label">Refferred By: </label>
+                  <div class="form-inline m-b-15">
+                    <div class="form-group m-r-5">
+                      <label class="input-group" >
+                        <span class="input-group-addon">
+                          <input type="radio" id="referral_type" name="ref_type" value="T" {{#if_eq referral.referred_type "T"}} checked {{/if_eq}} disabled/>
+                        </span>
+                        <div class="form-control form-control-static">Target</div>
+                        <span class="glyphicon form-control-feedback "></span>
+                      </label>
+                    </div>
+                    <div class="form-group ">
+                      <label class="input-group">
+                        <span class="input-group-addon">
+                          <input type="radio" id="organization_type" name="ref_type" value="C" {{#if_eq referral.referred_type "C"}} checked {{/if_eq}} disabled/>
+                        </span>
+                        <div class="form-control form-control-static">Client</div>
+                        <span class="glyphicon form-control-feedback "></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
               </div>
+
+
               <div class="col-md-6" id="target_list" {{#if_eq referral.referred_type "C"}} style="display:none;" {{/if_eq}}>
                 <div class="form-group form-focus">
                   <select disabled class="form-control floating" id="target_id" name="referred_id_t" class="select form-control floating">

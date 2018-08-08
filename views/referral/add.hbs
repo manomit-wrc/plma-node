@@ -20,18 +20,12 @@
     </div>
     {{/if}}
     <form id="frmReferral" method="POST" action="/referral/add">
-      <input type="hidden" name="_csrf" value="{{csrfToken}}">
-
-
-      {{!-- <input type="radio" id="individual_referral" name="referral_type" value="I" checked />Individual
-      <input type="radio" id="organization_referral" name="referral_type" value="O" />Organization --}}
-
-
+      <input type="hidden" name="_csrf" value="{{csrfToken}}"> 
       <div class="form-inline m-b-15">
         <div class="form-group m-r-5">
           <label class="input-group">
             <span class="input-group-addon">
-              <input type="radio"  id="individual_referral" name="referral_type" value="I" checked />
+              <input type="radio" id="individual_referral" name="referral_type" value="I" checked />
             </span>
             <div class="form-control form-control-static">Individual</div>
             <span class="glyphicon form-control-feedback "></span>
@@ -47,11 +41,6 @@
           </label>
         </div>
       </div>
-
-
-
-
-
       <div class="card-box">
         <div class="row">
           <div class="col-md-12">
@@ -60,7 +49,6 @@
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">Attorney Name
                     <span class="req-lbl">*</span>
-
                   </label>
                   <select id="attr_id" name="attr_id" class="select form-control floating">
                     <option value="">Select Attorney</option>
@@ -84,7 +72,6 @@
                   <div class="form-group form-focus">
                     <label class="control-label">Last Name
                       <span class="req-lbl">*</span>
-
                     </label>
                     <input type="text" class="form-control floating" id="last_name" name="last_name" />
                   </div>
@@ -100,8 +87,7 @@
                 <div class="form-group form-focus">
                   <label class="control-label">Email Id
                     <span class="req-lbl">*</span>
-
-                   </label>
+                  </label>
                   <input type="text" class="form-control floating" id="email" name="email" />
                 </div>
               </div>
@@ -109,7 +95,6 @@
                 <div class="form-group form-focus">
                   <label class="control-label">Mobile Number
                     <span class="req-lbl">*</span>
-
                   </label>
                   <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" />
                 </div>
@@ -117,8 +102,26 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="control-label">Refferred By: </label>
-                  <input type="radio" id="referral_type" name="ref_type" value="T" checked />Target
-                  <input type="radio" id="organization_type" name="ref_type" value="C" />Client
+                  <div class="form-inline m-b-15">
+                    <div class="form-group m-r-5">
+                      <label class="input-group">
+                        <span class="input-group-addon">
+                          <input type="radio" id="referral_type" name="ref_type" value="T" checked />
+                        </span>
+                        <div class="form-control form-control-static">Target</div>
+                        <span class="glyphicon form-control-feedback "></span>
+                      </label>
+                    </div>
+                    <div class="form-group ">
+                      <label class="input-group">
+                        <span class="input-group-addon">
+                          <input type="radio" id="organization_type" name="ref_type" value="C" />
+                        </span>
+                        <div class="form-control form-control-static">Client</div>
+                        <span class="glyphicon form-control-feedback "></span>
+                      </label>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="col-md-6" id="target_list">
@@ -149,7 +152,6 @@
                 <div class="form-group form-focus">
                   <label class="control-label">Remarks
                     <span class="req-lbl">*</span>
-
                   </label>
                   <textarea name="remarks" id="remarks" class="form-control floating"></textarea>
                 </div>
@@ -244,7 +246,6 @@
     $('#indi_referral').hide();
     $('#org_referral').show();
   });
-
 
   $(document).on('click', '#referral_type', function () {
     $('#target_list').show();
