@@ -8,16 +8,11 @@ const path = require('path');
 const flash = require('connect-flash');
 const lodash = require('lodash');
 const ActivityBudget = require('./models').activity_budget;
-
 const port = process.env.PORT || 5000;
-
 var handlebars = require('handlebars'),
     layouts = require('handlebars-layouts');
-
 handlebars.registerHelper(layouts(handlebars));
-
 const app = express();
-
 const index = require('./routes/index');
 const dashboard = require('./routes/dashboard');
 const firm = require('./routes/firm');
@@ -58,7 +53,7 @@ const hbs = exphbs.create({
             else
                 return opts.inverse(this);
         },
-        noop: function(options) {
+        noop: function (options) {
             return options.fn(this)
         },
         if_con: function (a, opts) {
@@ -67,7 +62,7 @@ const hbs = exphbs.create({
             else
                 return opts.inverse(this);
         },
-        math: function(lvalue, operator, rvalue) {
+        math: function (lvalue, operator, rvalue) {
             lvalue = parseFloat(lvalue);
             rvalue = parseFloat(rvalue);
             return {
@@ -78,9 +73,9 @@ const hbs = exphbs.create({
                 "%": lvalue % rvalue
             }[operator];
         },
-        times: function(n, block) {
+        times: function (n, block) {
             var accum = '';
-            for(var i = 0; i < n; ++i)
+            for (var i = 0; i < n; ++i)
                 accum += block.fn(i);
             return accum;
         },
@@ -150,54 +145,52 @@ const hbs = exphbs.create({
                 return "-";
             }
         },
-        get_activity_budget_hour_indi: function (count,value, obj) {
+        get_activity_budget_hour_indi: function (count, value, obj) {
             const hour = lodash.filter(obj, arr => arr.activity_id === value)
             if (hour.length > 0) {
                 const total_hour = lodash.map(hour, arr => parseInt(arr.hour));
-                return (total_hour[0]*count).toFixed(2);
+                return (total_hour[0] * count).toFixed(2);
             } else {
                 return "-";
             }
         },
-        get_activity_budget_amount_indi: function (count,value, obj) {
+        get_activity_budget_amount_indi: function (count, value, obj) {
             const amount = lodash.filter(obj, arr => arr.activity_id === value)
             if (amount.length > 0) {
                 const total_amount = lodash.map(amount, arr => parseInt(arr.amount));
-                return (total_amount[0]*count).toFixed(2);
+                return (total_amount[0] * count).toFixed(2);
             } else {
                 return "-";
             }
         },
-        get_activity_budget_hour_equal: function (count,value,obj) {
+        get_activity_budget_hour_equal: function (count, value, obj) {
             const hour = lodash.filter(obj, arr => arr.activity_id === value)
             if (hour.length > 0) {
                 const total_hour = lodash.map(hour, arr => parseInt(arr.hour));
-                return (total_hour[0]/count).toFixed(2);
+                return (total_hour[0] / count).toFixed(2);
             } else {
                 return "-";
             }
         },
-        get_activity_budget_amount_equal: function (count,value, obj) {
+        get_activity_budget_amount_equal: function (count, value, obj) {
             const amount = lodash.filter(obj, arr => arr.activity_id === value)
             if (amount.length > 0) {
                 const total_amount = lodash.map(amount, arr => parseInt(arr.amount));
-                return (total_amount[0]/count).toFixed(2);
+                return (total_amount[0] / count).toFixed(2);
             } else {
                 return "-";
             }
         },
-        
+
         get_sub_total_hour: function (array, parent_id, activity_id) {
             var sum = 0;
             var total_hour = 0;
             const parent_details = lodash.filter(array, arr => arr.parent_id === parent_id);
             for (var i = 0; i < parent_details.length; i++) {
-
                 const filter_data = lodash.filter(parent_details[i].budget_display, arr => arr.activity_id === activity_id);
                 const total = lodash.map(filter_data, arr => parseInt(sum) + parseInt(arr.hour));
                 const temp = total.length > 0 ? parseInt(total[0]) : 0;
                 total_hour += parseInt(temp);
-                //console.log(total_hour)
             }
             return total_hour
         },
@@ -206,12 +199,10 @@ const hbs = exphbs.create({
             var total_hour = 0;
             const parent_details = lodash.filter(array, arr => arr.parent_id === parent_id);
             for (var i = 0; i < parent_details.length; i++) {
-
                 const filter_data = lodash.filter(parent_details[i].budget_display, arr => arr.activity_goal_id === goal_id);
                 const total = lodash.map(filter_data, arr => parseInt(sum) + parseInt(arr.hour));
                 const temp = total.length > 0 ? parseInt(total[0]) : 0;
                 total_hour += parseInt(temp);
-                //console.log(total_hour)
             }
             return total_hour
         },
@@ -225,7 +216,6 @@ const hbs = exphbs.create({
                 const total = lodash.map(filter_data, arr => parseInt(sum) + parseInt(arr.amount));
                 const temp = total.length > 0 ? parseInt(total[0]) : 0;
                 total_hour += parseInt(temp);
-                //console.log(total_hour)
             }
             return total_hour
         },
@@ -239,7 +229,6 @@ const hbs = exphbs.create({
                 const total = lodash.map(filter_data, arr => parseInt(sum) + parseInt(arr.amount));
                 const temp = total.length > 0 ? parseInt(total[0]) : 0;
                 total_hour += parseInt(temp);
-                //console.log(total_hour)
             }
             return total_hour
         },
@@ -299,6 +288,20 @@ const hbs = exphbs.create({
             const tot_amounts = lodash.filter(array, arr => arr.activity_goal_id === goal_id);
             if (tot_amounts.length > 0) {
                 return tot_amounts[0].amount;
+            } else {
+                return "-";
+            }
+        },
+        marketing_budget_hour: function (hour,length) {
+            if (hour > 0) {
+                return (hour / length).toFixed(2);
+            } else {
+                return "-";
+            }
+        },
+        marketing_budget_amount: function (amount, length) {
+            if (amount > 0) {
+                return (amount / length).toFixed(2);
             } else {
                 return "-";
             }
