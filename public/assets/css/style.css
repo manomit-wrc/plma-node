@@ -5584,13 +5584,14 @@ i.fa.fa-eye.m-r-5 {
 
 
 #update_budget_by_activity .tbl-w50p {
-	-webkit-box-flex: 0;
+	/*-webkit-box-flex: 0;
 	    -ms-flex-positive: 0;
 	        flex-grow: 0;
 	-ms-flex-negative: 0;
 	    flex-shrink: 0;
 	-ms-flex-preferred-size: 48%;
-	    flex-basis: 48%;
+	flex-basis: 48%;*/
+	width: 145px;
 	margin: 0 1%;
 }
 
@@ -5648,7 +5649,35 @@ select.gender {
 /*Starts on css 08-08-2018*/
 
 .table.table-striped.custom-table.dataTable.datatable tbody td:nth-child(7) {
-  width: 120px;
+	width: 120px;
+}
+
+#update_budget_by_activity .modal-content {
+	border: 0 none;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	-ms-box-shadow: none;
+	-o-box-shadow: none;
+}
+
+#update_budget_by_activity .card-box {
+	border-radius: 0;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	-ms-border-radius: 0;
+	-o-border-radius: 0;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	-ms-box-shadow: none;
+	-o-box-shadow: none;
+	border: 0 none;
+	padding: 0;
+}
+
+#update_budget_by_activity .modal-header {
+	border: 0 none;
 }
 
 /*Ends on css 08-08-2018*/
