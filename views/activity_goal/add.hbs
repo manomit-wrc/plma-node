@@ -1,5 +1,6 @@
 {{#content "style" mode="prepend"}}
     <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
     <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
 {{/content}}
 
@@ -26,14 +27,24 @@
             <div class="row">
                <div class="col-md-12">
                      <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                            <div class="form-group form-focus">
                               <label class="control-label">Activity Goal
                                 <span class="req-lbl">*</span>
-
                               </label>
                               <textarea name="activity_goal" id="activity_goal" class="form-control floating"></textarea>
                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-focus select-focus">
+                                <label class="control-label">Category</label>
+                                <select class="select form-control floating" id="category" name="category">
+                                    <option value="">Select Category</option>
+                                    <option value="content development">Content Development</option>
+                                    <option value="relationship building">Relationship Building</option>
+                                    <option value="contact management">Contact Management</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group form-focus">
@@ -101,6 +112,9 @@
                     activity_goal: {
                         required: true
                     },
+                    category: {
+                        required: true
+                    },
                     from_date: {
                         required: true
                     },
@@ -114,6 +128,9 @@
                 messages: {
                     activity_goal: {
                         required: "Activity goal can't be blank"
+                    },
+                    category: {
+                        required: "Please select category"
                     },
                     from_date: {
                         required: "From date can't be blank"

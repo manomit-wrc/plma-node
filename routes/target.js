@@ -15,6 +15,8 @@ const industry_type = require('../models').industry_type;
 const Target = require('../models').target;
 const Client = require('../models').client;
 const user = require('../models').user;
+const Activity = require('../models').activity;
+const TargetActivity = require('../models').jointactivity;
 var csrfProtection = csrf({ cookie: true });
 var fs = require('fs');
 const router = express.Router();
@@ -518,9 +520,26 @@ router.post('/target/move-to-client', auth, async (req, res) => {
 			code: "200",
 			message: 'Success'
 		});
-	}
-	
-	
+	}	
+});
+
+router.get("/target/view-activity/:id", auth, async(req, res)=> {
+	TargetActivity.belongsTo(Activity, {
+		foreignKey: 'activity_id'
+	});
+	const activity_details = await TargetActivity.findAll({
+		where: {
+			target_client_type: "T",
+			type: req.params['id']
+		},
+		include: [{
+			model: Activity
+		}]
+	});
+	res.render("target/view_activity", {
+		layout: 'dashboard',
+		activity_details
+	})
 });
 
 module.exports = router;
