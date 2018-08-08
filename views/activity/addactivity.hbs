@@ -33,7 +33,8 @@
                                     <label class="control-label">Origin Attorney
                                         <span class="req-lbl">*</span>
                                     </label>
-                                    <input class="form-control floating" type="text" id="originAttorney" name="originAttorney" value="{{this.originAttorney}}" disabled>
+                                    <input class="form-control floating" type="text" id="originAttorney" name="originAttorney" value="{{this.originAttorney}}"
+                                        disabled>
                                 </div>
                             </div>
 
@@ -185,9 +186,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Activity Details Status
-                                        
-                                    </label>
+                                    <label class="control-label">Activity Details Status</label>
                                     <select class="select" id="budget_status" name="budget_status">
                                         <option value=""> Select One</option>
                                         <option value="planned">PLANNED </option>
@@ -198,9 +197,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Activity Budget Details Status
-                                        
-                                    </label>
+                                    <label class="control-label">Activity Budget Details Status</label>
                                     <select class="select" id="budget_details_status" name="budget_details_status">
                                         <option value=""> Select One</option>
                                         <option value="planned">PLANNED BUDGET</option>
@@ -209,6 +206,7 @@
                                     </select>
                                 </div>
                             </div>
+
                             <div class="form-inline m-b-15 col-md-6">
                                 <div class="form-group m-r-5">
                                     <label class="input-group">
@@ -228,19 +226,25 @@
                                         <span class="glyphicon form-control-feedback "></span>
                                     </label>
                                 </div>
+                                <div class="form-group ">
+                                    <label class="input-group">
+                                        <span class="input-group-addon">
+                                            <input type="radio" id="referral_type" name="ref_type" value="R" />
+                                        </span>
+                                        <div class="form-control form-control-static">Referral</div>
+                                        <span class="glyphicon form-control-feedback "></span>
+                                    </label>
+                                </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus" id="target_list">
                                     <select id="target_id" name="target_user[]" class=" form-control floating onchangeBudget" multiple="multiple">
-                                        {{#each target}} 
-                                            {{#if_eq target_type "I"}}
-                                                <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
-                                            {{/if_eq}} 
-                                            {{#if_eq target_type "O"}}
-                                                <option value="{{this.id}}">{{this.organization_name}}</option>
-                                            {{/if_eq}} 
-                                        {{/each}}
+                                        {{#each target}} {{#if_eq target_type "I"}}
+                                        <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
+                                        {{/if_eq}} {{#if_eq target_type "O"}}
+                                        <option value="{{this.id}}">{{this.organization_name}}</option>
+                                        {{/if_eq}} {{/each}}
                                     </select>
                                 </div>
                             </div>
@@ -255,9 +259,18 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-
+                            <div class="col-md-6" style="display:none;" id="referral_list">
+                                <div class="form-group form-focus select-focus">
+                                    <select id="referral_id" name="referral_user[]" class=" form-control floating onchangeBudget" multiple="multiple">
+                                        {{#each referral}}
+                                            <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
                             </div>
+
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6"></div>
                             <div class="col-md-6 budgetAdd" style="display:none;">
                                 <a href="#" class="btn btn-primary btn-lg" id="budgetAdd" data-toggle="modal" data-target="#add_budget" style="margin: 0 auto; display: table;">
                                     <i class="fa fa-plus"></i> Add Budget</a>
@@ -366,13 +379,21 @@
 <script type="text/javascript">
 
     $(document).on('click', '#referral_type', function () {
-        $('#target_list').show();
+        $('#referral_list').hide();
         $('#client_list').hide();
+        $('#target_list').show();
     });
 
     $(document).on('click', '#organization_type', function () {
+        $('#referral_list').hide();
         $('#target_list').hide();
         $('#client_list').show();
+    });
+
+    $(document).on('click', '#referral_type', function () {
+        $('#target_list').hide();
+        $('#client_list').hide();
+        $('#referral_list').show();
     });
 
     $('#target_id').multiselect({
@@ -382,6 +403,12 @@
     });
 
     $('#client_id').multiselect({
+        nonSelectedText: 'Select Clients',
+        includeSelectAllOption: true,
+        buttonWidth: '100%'
+    });
+
+    $('#referral_id').multiselect({
         nonSelectedText: 'Select Clients',
         includeSelectAllOption: true,
         buttonWidth: '100%'
@@ -495,7 +522,7 @@
                 potiential_revenue: {
                     required: true
                 },
-                
+
                 activity_creation_date: {
                     required: true
                 },
@@ -529,7 +556,7 @@
                 potiential_revenue: {
                     required: "potiential revenue can't be blank"
                 },
-               
+
                 activity_creation_date: {
                     required: "creation date can't be blank"
                 },
@@ -567,7 +594,7 @@
                 $(".none").show();
                 $(".section").hide();
                 $(".strategyGroup").hide();
-            }else if ($(this).val() == 'section') {
+            } else if ($(this).val() == 'section') {
                 $('#potiential_revenue').val('0.00');
                 $(".none").hide();
                 $(".section").show();
@@ -598,6 +625,6 @@
 
     });
 
-    
+
 
 </script> {{/content}}

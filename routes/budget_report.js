@@ -10,6 +10,8 @@ const ActivityBudget = require('../models').activity_budget;
 const Jointactivities = require('../models').jointactivity;
 const client = require('../models').client;
 const Target = require('../models').target;
+const Referral = require('../models').referral;
+
 
 var csrfProtection = csrf({
   cookie: true
@@ -279,8 +281,14 @@ router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req,
             'id': jointActivities_arr[i].ja[k].type
           }
         });
-      } else {
+      } else if(jointActivities_arr[i].ja[k].target_client_type == 'C') {
         detailsActivity = await client.findAll({
+          where: {
+            'id': jointActivities_arr[i].ja[k].type
+          }
+        });
+      } else {
+        detailsActivity = await Referral.findAll({
           where: {
             'id': jointActivities_arr[i].ja[k].type
           }
@@ -371,8 +379,12 @@ router.get('/activity/activity_details_budget/:id', auth, csrfProtection, async 
       detailsActivity = await Target.findAll({
         where: { 'id': jointActivities[i].type }
       });
-    } else {
+    } else if (jointActivities[i].target_client_type == 'C') {
       detailsActivity = await client.findAll({
+        where: { 'id': jointActivities[i].type }
+      });
+    } else {
+      detailsActivity = await Referral.findAll({
         where: { 'id': jointActivities[i].type }
       });
     }

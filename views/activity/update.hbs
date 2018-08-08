@@ -18,6 +18,7 @@
       <input type="hidden" name="activity_id" id="activity_id" value="{{editdata.id}}">
       <input type="hidden" name="total_hour" id="total_hour">
       <input type="hidden" name="total_amount" id="total_amount">
+      <input type="hidden" id="activityTypeDetails" value={{editdata.target}}>
       <div class="card-box">
         <div class="row">
           <div class="col-md-12">
@@ -199,6 +200,15 @@
                     <span class="glyphicon form-control-feedback "></span>
                   </label>
                 </div>
+                <div class="form-group ">
+                  <label class="input-group">
+                    <span class="input-group-addon">
+                      <input type="radio" id="referralDetails_type" name="ref_type" value="R" {{#if_eq editdata.target "R"}} checked {{/if_eq}} />
+                    </span>
+                    <div class="form-control form-control-static">Referral</div>
+                    <span class="glyphicon form-control-feedback "></span>
+                  </label>
+                </div>
               </div>
 
               <div class="col-md-6">
@@ -215,6 +225,16 @@
                 <div class="form-group form-focus select-focus">
                   <select id="client_id" name="client_user[]" class=" form-control floating" multiple="multiple">
                     {{#each client}}
+                    <option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.first_name}} {{this.last_name}}</option>
+                    {{/each}}
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-6" id="referral_list" {{#if_eq editdata.target "R"}} style="display:none;" {{/if_eq}}>
+                <div class="form-group form-focus select-focus">
+                  <select id="referral_id" name="referral_user[]" class=" form-control floating" multiple="multiple">
+                    {{#each referral}}
                     <option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.first_name}} {{this.last_name}}</option>
                     {{/each}}
                   </select>
@@ -466,12 +486,35 @@
   $(document).on('click', '#referral_type', function () {
     $('#target_list').show();
     $('#client_list').hide();
+    $('#referral_list').hide();
   });
 
   $(document).on('click', '#organization_type', function () {
     $('#target_list').hide();
+    $('#referral_list').hide();
     $('#client_list').show();
   });
+
+  $(document).on('click', '#referralDetails_type', function () {
+    $('#target_list').hide();
+    $('#referral_list').show();
+    $('#client_list').hide();
+  });
+
+  var typeDetails = $('#activityTypeDetails').val();
+  if (typeDetails=='T') {
+    $('#client_list').hide();
+    $('#referral_list').hide();
+    $('#target_list').show();
+  } else if (typeDetails=='C') {
+    $('#client_list').show();
+    $('#target_list').hide();
+    $('#referral_list').hide();
+  } else {
+    $('#referral_list').show();
+    $('#client_list').hide();
+    $('#target_list').hide();
+  }
 
   $('#target_id').multiselect({
     nonSelectedText: 'Select Targets',
@@ -481,6 +524,12 @@
 
   $('#client_id').multiselect({
     nonSelectedText: 'Select Clients',
+    includeSelectAllOption: true,
+    buttonWidth: '100%'
+  });
+
+  $('#referral_id').multiselect({
+    nonSelectedText: 'Select Referrals',
     includeSelectAllOption: true,
     buttonWidth: '100%'
   });
