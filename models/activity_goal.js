@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     from_date: DataTypes.DATE,
     to_date: DataTypes.DATE,
     remarks: DataTypes.TEXT,
+    category: DataTypes.STRING,
     status: DataTypes.INTEGER
   }, {});
   activity_goal.associate = function(models) {

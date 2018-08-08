@@ -3,7 +3,6 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
 
-
 <div class="page-wrapper act-budgreport">
     <div class="content container-fluid">
         <div class="row">
@@ -11,7 +10,6 @@
                 <h4 class="page-title">Activity Budget Report</h4>
             </div>
             <div class="col-md-4">
-                {{!-- <div class="div_left table-responsive"> --}}
                     <div id="update_budget_by_activity" >
                         <div class="modal-dialog">
                             <div class="modal-content modal-lg">
@@ -58,7 +56,6 @@
                                                                                                         <strong>{{this.parent_name}}</strong>
                                                                                                     </td>
                                                                                                 </tr>
-                                                                                                {{!-- {{this.child_budget.length}} --}}
                                                                                                 {{#each this.child_budget}} 
                                                                                                 <tr>
                                                                                                     <td style=" height: 25px;width: 80%; vertical-align: middle;border-top: 1px solid #e7ecf1; border-right: 1px solid #e7ecf1;"
@@ -80,7 +77,6 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="table-responsive tbl-ovyh">
-
                                                             {{#each marketingBudget}}
                                                             <table class="table table-bordered tbl-w50p activiTy_legTh">
                                                                 <tbody>
@@ -94,29 +90,26 @@
                                                                                                 <thead>
                                                                                                     <tr>
                                                                                                         <th colspan="2" style=" height: 50px; vertical-align: middle;">
-                                                                                                            {{!-- {{this.name}} --}}
+                                                                                                            {{this.name}}
                                                                                                         </th>
                                                                                                     </tr>
                                                                                                 </thead>
                                                                                             </table>
                                                                                         </td>
                                                                                     </tr>
-
                                                                                     <tr>
                                                                                         <td style="padding: 0; height: 25px;  border-top: 1px solid #e7ecf1;  border-bottom: 1px solid #e7ecf1;">
                                                                                             <table style="margin-bottom: 0;" class="table">
                                                                                                 <thead>
                                                                                                     <tr>
                                                                                                         <th style="height: 25px; width: 65px; vertical-align: middle;  border-right: 1px solid #e7ecf1; border-bottom: none">Hours</th>
-                                                                                                        <th style="height: 25px; width: 65px; vertical-align: middle; border-right: none; border-bottom: none;">US
-                                                                                                            $
-                                                                                                        </th>
+                                                                                                        <th style="height: 25px; width: 65px; vertical-align: middle; border-right: none; border-bottom: none;">US $</th>
                                                                                                     </tr>
                                                                                                 </thead>
                                                                                             </table>
                                                                                         </td>
                                                                                     </tr>
-                                                                                    {{!-- {{#each ../this.budget_list}} --}}
+                                                                                    {{#each this.budget_list}}
                                                                                     <tr>
                                                                                         <td colspan="2" style="height: 25px; border-bottom: 1px solid #e7ecf1;">&nbsp;</td>
                                                                                     </tr>
@@ -124,17 +117,25 @@
                                                                                         <td style="padding: 0; border-bottom: none">
                                                                                             <table class="table" style="margin-bottom: 0">
                                                                                                 <tbody>
-                                                                                                    {{!-- {{#each this.child_budget}} --}}
+                                                                                                    {{#each this.child_budget}}
                                                                                                     <tr>
                                                                                                         <td colspan="2" style="width: 100%; padding: 0">
                                                                                                             <table style="margin-bottom: 0;" class="table">
                                                                                                                 <tbody>
                                                                                                                     <tr style="border-bottom: 1px solid #e7ecf1;">
                                                                                                                         <td style="height: 25px; width: 65px; vertical-align: middle; border-right: 1px solid #e7ecf1;">
-                                                                                                                            {{!-- {{get_activity_budget_hour_equal ../../../../activity_target_client.length ../../../this.activity_id this.budget_display}} --}}
+                                                                                                                            {{#if_eq this.level_type 'I'}}
+                                                                                                                            {{marketing_budget_hour this.hour ../../../marketingBudget.length}}
+                                                                                                                            {{else}}
+                                                                                                                            {{this.hour}}
+                                                                                                                            {{/if_eq}}
                                                                                                                         </td>
                                                                                                                         <td style="text-align: center; width: 65px; height: 25px; vertical-align: middle" class="total_cost_original">
-                                                                                                                            {{!-- {{get_activity_budget_amount_equal ../../../../activity_target_client.length ../../../this.activity_id this.budget_display}} --}}
+                                                                                                                            {{#if_eq this.level_type 'I'}}
+                                                                                                                            {{marketing_budget_amount this.amount ../../../marketingBudget.length}}
+                                                                                                                            {{else}}
+                                                                                                                            {{this.amount}}
+                                                                                                                            {{/if_eq}}
                                                                                                                             </td>
                                                                                                                         </td>
                                                                                                                     </tr>
@@ -142,12 +143,12 @@
                                                                                                             </table>
                                                                                                         </td>
                                                                                                     </tr>
-                                                                                                    {{!-- {{/each}} --}}
+                                                                                                    {{/each}}
                                                                                                 </tbody>
                                                                                             </table>
                                                                                         </td>
                                                                                     </tr>
-                                                                                    {{!-- {{/each}} --}}
+                                                                                    {{/each}}
                                                                                 </tbody>
                                                                             </table>
                                                                         </td>
@@ -166,11 +167,10 @@
                             </div>
                         </div>
                     </div>
-                {{!-- </div> --}}
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
 
