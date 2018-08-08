@@ -5645,6 +5645,15 @@ select.gender {
 /*Ends on css 03-08-2018*/
 
 
+/*Starts on css 08-08-2018*/
+
+.table.table-striped.custom-table.dataTable.datatable tbody td:nth-child(7) {
+  width: 120px;
+}
+
+/*Ends on css 08-08-2018*/
+
+
 @media only screen and (min-width: 768px) {
 	.modal-backdrop.custom-backdrop.in {
 		background-color: #fff;
