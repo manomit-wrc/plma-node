@@ -50,6 +50,8 @@ function removePhoneMask(phone_no) {
 	phone_no = phone_no.replace(")", "");
 	phone_no = phone_no.replace("(", "");
 	phone_no = phone_no.replace(" ", "");
+	phone_no = phone_no.replace("$", "");
+	phone_no = phone_no.replace(",", "");
 	return phone_no;
 
 }
@@ -626,7 +628,9 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				client_type: req.body.client_type,
 				IM: req.body.im,
 				social_security_no: removePhoneMask(req.body.social_sec_no),
-				remarks: req.body.remarks
+				remarks: req.body.remarks,
+				current_revenue: removePhoneMask(req.body.current_revenue),
+				estimated_revenue: removePhoneMask(req.body.estimated_revenue)
 			});
 			req.flash('success-message', 'Client Added Successfully');
 			res.redirect('/client')
@@ -667,7 +671,9 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				client_id: req.body.client_id,
 				master_id: req.body.master_id,
 				client_company: req.body.client_company,
-				remarks: req.body.remarks
+				remarks: req.body.remarks,
+				current_revenue: removePhoneMask(req.body.current_revenue),
+				estimated_revenue: removePhoneMask(req.body.estimated_revenue)
 			});
 			req.flash('success-message', 'Client Added Successfully');
 			res.redirect('/client')
@@ -738,6 +744,8 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 			remarks: req.body.remarks,
 			social_url: req.body.social,
   			website_url: req.body.website,
+  			current_revenue: req.body.current_revenue,
+  			estimated_revenue: req.body.estimated_revenue,
 
 		}, {
 				where: { id: req.params['id'] }

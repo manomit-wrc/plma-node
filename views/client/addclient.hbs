@@ -135,6 +135,24 @@
 									</div>
 								</div>
 							</div>
+
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Current revenue
+										<span class="req-lbl">*</span>
+									</label>
+									<input class="form-control floating" type="text" id="current_revenue" name="current_revenue">
+								</div>
+							</div>
+
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Estimated revenue
+										<span class="req-lbl">*</span>
+									</label>
+									<input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue">
+								</div>
+							</div>
 							
 							<div class="col-md-6">
 								<div class="form-group form-focus">
@@ -388,11 +406,31 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function (e) {
+
+		$("#current_revenue").inputmask("numeric", {
+            radixPoint: ".",
+            groupSeparator: ",",
+            digits: 2,
+            autoGroup: true,
+            prefix: '$ ',
+            rightAlign: false
+        });
+
+		$("#estimated_revenue").inputmask("numeric", {
+            radixPoint: ".",
+            groupSeparator: ",",
+            digits: 2,
+            autoGroup: true,
+            prefix: '$ ',
+            rightAlign: false
+        });
+
 		$('#select-existing-tags').multiselect({
 			nonSelectedText: 'Select Existing Tags',
 			includeSelectAllOption: true,
 			buttonWidth: '100%'
 		});
+		
 		$("#clientform").validate({
 			rules: {
 				client_first_name: {

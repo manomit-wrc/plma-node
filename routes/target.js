@@ -42,6 +42,8 @@ function removePhoneMask(phone_no) {
 	phone_no = phone_no.replace(")", "");
 	phone_no = phone_no.replace("(", "");
 	phone_no = phone_no.replace(" ", "");
+	phone_no = phone_no.replace("$", "");
+	phone_no = phone_no.replace(",", "");
 	return phone_no;
 }
 
@@ -68,7 +70,7 @@ router.get('/target', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	const targetDetails = await Target.findAll({
 		where: { 'attorney_id': req.user.id }
 	});
-	
+
 	res.render('target/targets', {
 		layout: 'dashboard',
 		csrfToken: req.csrfToken(),
@@ -96,11 +98,6 @@ router.get('/target/add', auth, firmAttrAuth, csrfProtection, async (req, res) =
 });
 
 router.post('/target/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
-
-	console.log('req.body.estimated_revenue',req.body.estimated_revenue);
-	
-
-
 	const formatDate = req.body.dob ? req.body.dob.split("-") : '';
 	const target_data = await Target.findOne({
 		where: {
@@ -141,7 +138,7 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async (req, res) 
 				firm_id: req.user.firm_id,
 				user_id: req.user.id,
 				target_type: req.body.target_type,
-				estimated_revenue:req.body.estimated_revenue
+				estimated_revenue:removePhoneMask(req.body.estimated_revenue)
 			});
 			req.flash('success-message', 'Target Added Successfully');
 			res.redirect('/target')
@@ -182,7 +179,7 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async (req, res) 
 				firm_id: req.user.firm_id,
 				user_id: req.user.id,
 				target_type: req.body.target_type,
-				estimated_revenue:req.body.estimated_revenue
+				estimated_revenue:removePhoneMask(req.body.estimated_revenue)
 			});
 			req.flash('success-message', 'Target Added Successfully');
 			res.redirect('/target')
@@ -213,7 +210,10 @@ router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 			city_name: cities.name
 		}
 	});
-	res.render('target/targetupdate', { layout: 'dashboard', csrfToken: req.csrfToken(), designation: designation, industry: industrys, client: target, country: country, state: state, city: city, zipcode: zipcode, error_message });
+	const attorney = await user.findAll({
+		where: { role_id: 3, firm_id: req.user.firm_id }
+	});
+	res.render('target/targetupdate', { layout: 'dashboard', csrfToken: req.csrfToken(), attorney:attorney,designation: designation, industry: industrys, client: target, country: country, state: state, city: city, zipcode: zipcode, error_message });
 });
 
 router.get('/target/view/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
@@ -239,6 +239,7 @@ router.get('/target/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 			city_name: cities.name
 		}
 	});
+	
 	res.render('target/targetview', { layout: 'dashboard', csrfToken: req.csrfToken(), designation: designation, industry: industrys, client: target, country: country, state: state, city: city, attorney: attorney, zipcode: zipcode, error_message });
 });
 
@@ -289,7 +290,8 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, 
 			gender: req.body.gender,
 			target_id: req.body.target_id,
 			target_code: req.body.target_code,
-			remarks: req.body.remarks
+			remarks: req.body.remarks,
+			estimated_revenue: removePhoneMask(req.body.estimated_revenue)
 		}, {
 			where: { id: req.params['id'] }
 			});

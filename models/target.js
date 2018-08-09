@@ -41,6 +41,7 @@ module.exports = (sequelize, DataTypes) => {
     target_type: DataTypes.STRING,
     user_id: DataTypes.INTEGER,
     attorney_id: DataTypes.INTEGER,
+    estimated_revenue:DataTypes.STRING
     
   }, {});
   target.associate = function(models) {

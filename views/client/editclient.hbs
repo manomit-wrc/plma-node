@@ -152,7 +152,23 @@
 								</div>
 							</div>
 
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Current revenue
+										<span class="req-lbl">*</span>
+									</label>
+									<input class="form-control floating" type="text" id="current_revenue" name="current_revenue">
+								</div>
+							</div>
 
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Estimated revenue
+										<span class="req-lbl">*</span>
+									</label>
+									<input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue">
+								</div>
+							</div>
 
 							<div class="col-md-6">
 								<div class="form-group form-focus">
@@ -337,7 +353,7 @@
 							</label>
 							<select id="designation" name="attorney_id" class="select form-control floating">
 								{{#each attorney}}
-								<option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
+								<option value="{{this.id}}" {{#if_eq this.id ../user.id}} selected="selected" {{/if_eq}} >{{this.first_name}} {{this.last_name}}</option>
 								{{/each}}
 							</select>
 						</div>
@@ -437,6 +453,24 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function (e) {
+
+		$("#current_revenue").inputmask("numeric", {
+            radixPoint: ".",
+            groupSeparator: ",",
+            digits: 2,
+            autoGroup: true,
+            prefix: '$ ',
+            rightAlign: false
+        });
+
+		$("#estimated_revenue").inputmask("numeric", {
+            radixPoint: ".",
+            groupSeparator: ",",
+            digits: 2,
+            autoGroup: true,
+            prefix: '$ ',
+            rightAlign: false
+        });
 
 		$('#select-existing-tags').multiselect({
 			nonSelectedText: 'Select Existing Tags',
