@@ -539,7 +539,26 @@ router.get("/target/view-activity/:id", auth, async(req, res)=> {
 	res.render("target/view_activity", {
 		layout: 'dashboard',
 		activity_details
-	})
+	});
+});
+
+router.get("/client/view-activity/:id", auth, async(req, res)=> {
+	TargetActivity.belongsTo(Activity, {
+		foreignKey: 'activity_id'
+	});
+	const activity_details = await TargetActivity.findAll({
+		where: {
+			target_client_type: "C",
+			type: req.params['id']
+		},
+		include: [{
+			model: Activity
+		}]
+	});
+	res.render("client/view_client_activity", {
+		layout: 'dashboard',
+		activity_details
+	});
 });
 
 module.exports = router;
