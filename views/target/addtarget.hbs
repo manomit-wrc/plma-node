@@ -116,7 +116,12 @@
 									</div>
 								</div>
 								<div class="col-md-6">
-									<div class="form-group form-focus select-focus"></div>
+									<div class="form-group form-focus">
+                                    <label class="control-label">Estimated revenue
+                                        <span class="req-lbl">*</span>
+                                    </label>
+                                    <input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue">
+                                </div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group form-focus">
@@ -377,6 +382,15 @@
 <script type="text/javascript">
 	$(document).ready(function (e) {
 
+		$("#estimated_revenue").inputmask("numeric", {
+            radixPoint: ".",
+            groupSeparator: ",",
+            digits: 2,
+            autoGroup: true,
+            prefix: '$ ',
+            rightAlign: false
+        });
+
 		$("#targetform").validate({
 			rules: {
 				first_name: {
@@ -448,6 +462,9 @@
 					required: true
 				},
 				attorney: {
+					required: true
+				},
+				estimated_revenue: {
 					required: true
 				}
 			},
@@ -521,6 +538,9 @@
 				},
 				attorney: {
 					required: "Attorney can't be blank"
+				},
+				estimated_revenue: {
+					required: "Estimated can't be blank"
 				}
 			}
 		});
@@ -537,4 +557,5 @@
 		$('#individual_type').hide();
 		$('#org_type').show();
 	});
+	
 </script> {{/content}}

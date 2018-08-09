@@ -96,6 +96,11 @@ router.get('/target/add', auth, firmAttrAuth, csrfProtection, async (req, res) =
 });
 
 router.post('/target/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+
+	console.log('req.body.estimated_revenue',req.body.estimated_revenue);
+	
+
+
 	const formatDate = req.body.dob ? req.body.dob.split("-") : '';
 	const target_data = await Target.findOne({
 		where: {
@@ -135,7 +140,8 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async (req, res) 
 				remarks: req.body.remarks,
 				firm_id: req.user.firm_id,
 				user_id: req.user.id,
-				target_type: req.body.target_type
+				target_type: req.body.target_type,
+				estimated_revenue:req.body.estimated_revenue
 			});
 			req.flash('success-message', 'Target Added Successfully');
 			res.redirect('/target')
@@ -175,7 +181,8 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async (req, res) 
 				industry_type: req.body.industry_type,
 				firm_id: req.user.firm_id,
 				user_id: req.user.id,
-				target_type: req.body.target_type
+				target_type: req.body.target_type,
+				estimated_revenue:req.body.estimated_revenue
 			});
 			req.flash('success-message', 'Target Added Successfully');
 			res.redirect('/target')
