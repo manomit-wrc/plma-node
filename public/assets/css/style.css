@@ -5631,9 +5631,9 @@ select.gender {
 	display: none;
 }
 
-.pg-header .text-right a:last-child {
+/* .pg-header .text-right a:last-child {
 	margin-right: 12px;
-}
+} */
 
 .pg-header .text-right a:nth-child(2) {
 	margin-left: 5px;
