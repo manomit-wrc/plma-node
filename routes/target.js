@@ -510,7 +510,8 @@ router.post('/target/move-to-client', auth, async (req, res) => {
 				organization_code: target_data.organization_code,
 				user_id: target_data.user_id,
 				client_type: target_data.target_type,
-				remarks: target_data.remarks
+				remarks: target_data.remarks,
+				attorney_id:req.user.id
 			});
 	
 			await Target.update({
@@ -519,7 +520,7 @@ router.post('/target/move-to-client', auth, async (req, res) => {
 				where: {
 					id: target_ids[i]
 				}
-				});
+			});
 		}
 		res.json({
 			code: "200",
