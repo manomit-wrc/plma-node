@@ -120,7 +120,7 @@
                                         />
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{!-- <div class="col-md-6">
                                     <div class="form-group form-focus select-focus">
                                         <label class="control-label">Designation
                                             <span class="req-lbl">*</span>
@@ -132,16 +132,16 @@
                                             {{/each}}
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Estimated revenue
 											<span class="req-lbl">*</span>
 										</label>
-										<input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue" value="{{client.estimated_revenue}}" disabled>
+										<input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue" value="$ {{client.estimated_revenue}}" disabled>
 									</div>
 								</div>
-                                <div class="col-md-6">
+                                {{!-- <div class="col-md-6">
                                     <div class="form-group form-focus">
                                         <label class="control-label">Date of Birth
                                             <span class="req-lbl">*</span>
@@ -151,7 +151,7 @@
                                                 DD-MM-YYYY "}}" disabled="disabled" />
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-6">
                                     <div class="form-group form-focus select-focus">
                                         <label class="control-label">Gender
@@ -280,6 +280,24 @@
                 </div>
             </div>
             <div class="card-box">
+                <h3 class="card-title">Attorney Information</h3>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group form-focus select-focus">
+                            <label class="control-label">Attorney
+                                <span class="req-lbl">*</span>
+                            </label>
+                            <select id="attorney" name="attorney" class="select form-control floating" disabled>
+                                <option value="">Select Attorney</option>
+                                {{#each attorney}}
+                                <option value="{{this.id}}" {{#if_eq this.id ../client.attorney_id}} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-box">
                 <h3 class="card-title">Other Information</h3>
                 <div class="row">
                     <div class="col-md-6">
@@ -290,45 +308,32 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group form-focus select-focus">
-                            <label class="control-label">Attorney
-                                <span class="req-lbl">*</span>
-                            </label>
-                            <select id="attorney" name="attorney" class="select form-control floating" disabled="disabled">
-                                <option value="">Select Attorney</option>
-                                {{#each attorney}}
-                                <option value="{{this.id}}" {{#if_eq this.id ../client.attorney_id}} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
-                                {{/each}}
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
                         <div class="form-group form-focus">
                             <label class="control-label">Website URL </label>
                             <input type="text" class="form-control floating url_selector" id="website_url" name="website_url" value="{{client.website_url}}"
                                 disabled="disabled" />
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    {{!-- <div class="col-md-6">
                         <div class="form-group form-focus">
                             <label class="control-label">Social URL </label>
                             <input type="text" class="form-control floating url_selector" id="social_url" name="social_url" value="{{client.social_url}}"
                                 disabled="disabled" />
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="col-md-6">
                         <div class="form-group form-focus">
                             <label class="control-label">IM</label>
                             <input type="text" class="form-control floating" id="im" name="im" value="{{client.im}}" disabled="disabled" />
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    {{!-- <div class="col-md-6">
                         <div class="form-group form-focus">
                             <label class="control-label">Social Security No</label>
                             <input type="text" class="form-control floating number_validator" id="social_sec_no" name="social_sec_no" value="{{client.social_security_no}}"
                                 disabled="disabled" />
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
                             <label class="control-label">Twitter</label>
@@ -340,6 +345,13 @@
                         <div class="form-group form-focus select-focus">
                             <label class="control-label">linkedin</label>
                             <input type="text" class="form-control floating url_selector" id="linkedin" name="linkedin" value="{{client.linkedin}}" disabled="disabled"
+                            />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-focus">
+                            <label class="control-label">Facebook</label>
+                            <input type="text" class="form-control floating url_selector" disabled id="social_url" name="social_url" value="{{client.social_url}}"
                             />
                         </div>
                     </div>

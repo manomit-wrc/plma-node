@@ -105,7 +105,7 @@
 										<input type="text" class="form-control floating" id="target_code" name="target_code" value="{{client.target_code}}" />
 									</div>
 								</div>
-								<div class="col-md-6">
+								{{!-- <div class="col-md-6">
 									<div class="form-group form-focus select-focus">
 										<label class="control-label">Designation
 											<span class="req-lbl">*</span>
@@ -117,7 +117,7 @@
 											{{/each}}
 										</select>
 									</div>
-								</div>
+								</div> --}}
 
 								<div class="col-md-6">
 									<div class="form-group form-focus">
@@ -128,7 +128,7 @@
 									</div>
 								</div>
 
-								<div class="col-md-6">
+								{{!-- <div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Date of Birth
 											<span class="req-lbl">*</span>
@@ -138,7 +138,7 @@
 											 DD-MM-YYYY "}}" />
 										</div>
 									</div>
-								</div>
+								</div> --}}
 								<div class="col-md-6">
 									<div class="form-group form-focus select-focus">
 										<label class="control-label">Gender
@@ -273,17 +273,10 @@
 					</div>
 				</div>
 			</div>
-
 			<div class="card-box">
-				<h3 class="card-title">Other Information</h3>
+				<h3 class="card-title">Attorney Information</h3>
 				<div class="row">
-					<div class="col-md-6">
-						<div class="form-group form-focus select-focus">
-							<label class="control-label">Target Company</label>
-							<input type="text" class="form-control floating" id="company_name" name="company_name" value="{{client.company_name}}" />
-						</div>
-					</div>
-					<div class="col-md-6">
+					<div class="col-md-12">
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Attorney
 								<span class="req-lbl">*</span>
@@ -296,6 +289,18 @@
 							</select>
 						</div>
 					</div>
+				</div>
+			</div>
+
+			<div class="card-box">
+				<h3 class="card-title">Other Information</h3>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group form-focus select-focus">
+							<label class="control-label">Target Company</label>
+							<input type="text" class="form-control floating" id="company_name" name="company_name" value="{{client.company_name}}" />
+						</div>
+					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Website URL </label>
@@ -305,24 +310,17 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus">
-							<label class="control-label">Social URL </label>
-							<input type="text" class="form-control floating url_selector" id="social_url" name="social_url" value="{{client.social_url}}"
-							/>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group form-focus">
 							<label class="control-label">IM</label>
 							<input type="text" class="form-control floating" id="im" name="im" value="{{client.im}}" />
 						</div>
 					</div>
-					<div class="col-md-6">
+					{{!-- <div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Social Security No</label>
 							<input type="text" class="form-control floating number_validator" id="social_sec_no" name="social_sec_no" value="{{client.social_security_no}}"
 							/>
 						</div>
-					</div>
+					</div> --}}
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Twitter</label>
@@ -333,6 +331,13 @@
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">linkedin</label>
 							<input type="text" class="form-control floating url_selector" id="linkedin" name="linkedin" value="{{client.linkedin}}" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Facebook</label>
+							<input type="text" class="form-control floating url_selector" id="social_url" name="social_url" value="{{client.social_url}}"
+							/>
 						</div>
 					</div>
 					<div class="col-md-6">

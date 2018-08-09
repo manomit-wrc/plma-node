@@ -184,7 +184,7 @@
 								</div>
 							</div>
 
-							<div class="col-md-6">
+							{{!-- <div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Birth Date
 										<span class="req-lbl">*</span>
@@ -194,7 +194,7 @@
 										 DD-MM-YYYY "}}" disabled="disabled" />
 									</div>
 								</div>
-							</div>
+							</div> --}}
 							<div class="col-md-6">
 								<div class="form-group form-focus select-focus">
 									<label class="control-label">Gender
@@ -340,13 +340,13 @@
 				<h3 class="card-title">Other Information</h3>
 				<div class="row">
 
-					<div class="col-md-6">
+					{{!-- <div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Social URL</label>
 							<input type="text" class="form-control floating url_selector" id="social" name="social" value="{{client.social_url}}" disabled="disabled"
 							/>
 						</div>
-					</div>
+					</div> --}}
 					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Website</label>
@@ -355,7 +355,7 @@
 						</div>
 					</div>
 
-					<div class="col-md-6">
+					{{!-- <div class="col-md-6">
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Designation</label>
 							<select id="designation" name="designation" class="select form-control" disabled="disabled">
@@ -365,7 +365,7 @@
 								{{/each}}
 							</select>
 						</div>
-					</div>
+					</div> --}}
 
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
@@ -374,7 +374,7 @@
 							</label>
 							<select id="designation" name="attorney_id" class="select form-control floating" disabled="disabled">
 								{{#each attorney}}
-								<option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
+								<option value="{{this.id}}" {{#if_eq this.id ../user.id}} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
 								{{/each}}
 							</select>
 						</div>
@@ -393,13 +393,13 @@
 							/>
 						</div>
 					</div>
-					<div class="col-md-6">
+					{{!-- <div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Social Security No</label>
 							<input type="text" class="form-control floating number_validator" id="social_sec_no" name="social_sec_no" value="{{client.social_security_no}}"
 							 disabled="disabled" />
 						</div>
-					</div>
+					</div> --}}
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Twitter</label>
