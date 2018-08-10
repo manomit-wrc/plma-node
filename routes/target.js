@@ -68,7 +68,7 @@ router.get('/target', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	}
 
 	const targetDetails = await Target.findAll({
-		where: { 'attorney_id': req.user.id }
+		where: { 'target_status':'1','attorney_id': req.user.id }
 	});
 
 	res.render('target/targets', {
@@ -468,6 +468,13 @@ router.post('/target/move-to-client', auth, async (req, res) => {
 
 	} else {
 		for (i = 0; i < n; i++) {
+
+			await Target.update({
+				target_status:'0'
+			},{
+				where: { 'id':target_ids[i] }
+			});
+
 			var target_data = await Target.findOne({
 				where: {
 					id: target_ids[i]
@@ -511,7 +518,8 @@ router.post('/target/move-to-client', auth, async (req, res) => {
 				user_id: target_data.user_id,
 				client_type: target_data.target_type,
 				remarks: target_data.remarks,
-				attorney_id:req.user.id
+				attorney_id:req.user.id,
+				
 			});
 	
 			await Target.update({
