@@ -361,7 +361,8 @@
                         </div>
                         <div class="panel panel-primary">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Total Hours 8876980 and Total Dollars $7688 </h3>
+                                <h3 class="panel-title">Total <span id="hourDetails" ></span> <span id="amountDetails"></span></h3>
+
                             </div>
                         </div>
                         <div class="m-t-15 text-center">
@@ -384,19 +385,28 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 <script type="text/javascript">
-    
-    $('.budget_hour').on("input", function () {
-        var dInput = this.value;
-        dInput+= dInput;
-        console.log('budget_hour', dInput);
+
+    $(document).on('keyup','.budget_hour', function () {
+        var sumHour = 0;
+        $('.budget_hour').each(function (index) {
+                if ($(this).val() !== "") {
+                    sumHour+= Number($(this).val());
+                }
+        });
+        $('#hourDetails').html(sumHour);
     });
 
-    $('.budget_amount').on("input", function () {
-        var dInput = this.value;
-        console.log('budget_amount', dInput);
-        // $('#output').text(dInput);
+    $(document).on('keyup','.budget_amount', function () {
+        var sumAmount = 0;
+        $('.budget_amount').each(function (index) {
+                if ($(this).val() !== "") {
+                    sumAmount+= Number($(this).val());
+                }
+        });
+        $('#amountDetails').html(sumAmount);
     });
 
+   
     $(document).on('click', '#referral_type', function () {
         $('#referral_list').hide();
         $('#client_list').hide();
