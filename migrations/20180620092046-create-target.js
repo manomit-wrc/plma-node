@@ -78,6 +78,9 @@ module.exports = {
       },
       estimated_revenue: {
         type: Sequelize.STRING
+      },
+      target_status: {
+        type: Sequelize.INTEGER
       }
     });
   },

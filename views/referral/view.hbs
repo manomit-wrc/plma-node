@@ -64,29 +64,11 @@
           </label>
         </div>
       </div>
-
-
-
-
-
       <div class="card-box">
+        <h3 class="card-title">Basic Information</h3>
         <div class="row">
           <div class="col-md-12">
             <div class="row">
-              <div class="col-md-12">
-                <div class="form-group form-focus select-focus">
-                  <label class="control-label">Attorney Name
-                    <span class="req-lbl">*</span>
-
-                  </label>
-                  <select id="attr_id" name="attr_id" disabled class="form-control floating">
-                    <option value="">Select Attorney</option>
-                    {{#each attorney}}
-                    <option value="{{this.id}}" {{#if_eq this.id ../referral.attorney_id }} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
-                    {{/each}}
-                  </select>
-                </div>
-              </div>
               <div id="indi_referral" {{#if_eq referral.referral_type "O"}} style="display:none;" {{/if_eq}}>
                 <div class="col-md-6">
                   <div class="form-group form-focus">
@@ -132,18 +114,6 @@
                   />
                 </div>
               </div>
-
-
-              {{!-- <div class="col-md-6">
-                <div class="form-group">
-                  <label class="control-label">Refferred By: </label>
-                  <input type="radio" id="referral_type" name="ref_type" value="T" {{#if_eq referral.referred_type "T"}} checked {{/if_eq}}
-                  />Target
-                  <input type="radio" id="organization_type" name="ref_type" value="C" {{#if_eq referral.referred_type "C"}} checked {{/if_eq}}/>Client
-                </div>
-              </div> --}}
-
-
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="control-label">Refferred By: </label>
@@ -195,20 +165,250 @@
                   </select>
                 </div>
               </div>
-              <div class="col-md-12">
-                <div class="form-group form-focus">
-                  <label class="control-label">Remarks
+              <div class="col-md-6">
+                <div class="form-group form-focus select-focus">
+                  <label class="control-label">Gender
                     <span class="req-lbl">*</span>
-
                   </label>
-                  <textarea name="remarks" id="remarks" disabled class="form-control floating">{{referral.remarks}}</textarea>
+                  <select class="select form-control floating" id="gender" name="gender" disabled>
+                    <option value="">Select Gender</option>
+                    <option value="M" {{#if_eq referral.gender "M"}} selected {{/if_eq}}>Male</option>
+                    <option value="F" {{#if_eq referral.gender "F"}} selected {{/if_eq}}>Female</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group form-focus">
+                  <label class="control-label">Estimated revenue
+                    <span class="req-lbl">*</span>
+                  </label>
+                  <input class="form-control floating" type="text" id="estimated_revenue" disabled name="estimated_revenue" value="{{referral.estimated_revenue}}">
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
+      <div class="card-box">
+        <h3 class="card-title">Contact Information</h3>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group form-focus">
+              <label class="control-label">Address Line 1
+                <span class="req-lbl">*</span>
+              </label>
+              <input type="text" class="form-control floating" id="address1" name="address1" disabled value="{{referral.address1}}" />
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group form-focus">
+              <label class="control-label">Address Line 2</label>
+              <input type="text" class="form-control floating" id="address2" name="address2" disabled value="{{referral.address2}}" />
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group form-focus">
+              <label class="control-label">Address Line 3</label>
+              <input type="text" class="form-control floating" id="address3" name="address3" disabled value="{{referral.address3}}" />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus select-focus">
+              <label class="control-label">Country
+                <span class="req-lbl">*</span>
+              </label>
+              <select id="country" name="country" class="select form-control floating" disabled>
+                <option value="">Select Country</option>
+                {{#each country}}
+                <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus select-focus">
+              <label class="control-label">State
+                <span class="req-lbl">*</span>
+              </label>
+              <select id="state" name="state" class="select form-control floating" disabled>
+                <option value="">Select State</option>
+                {{#each state}}
+                <option value="{{this.id}}" {{#if_eq this.id ../referral.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus select-focus">
+              <label class="control-label">City
+                <span class="req-lbl">*</span>
+              </label>
+              <select id="city" name="city" class="select form-control floating" disabled>
+                <option value="">Select City</option>
+                {{#each city}}
+                <option value="{{this.id}}" {{#if_eq this.id ../referral.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus select-focus">
+              <label class="control-label">Zip Code
+                <span class="req-lbl">*</span>
+              </label>
+              <select id="zipcode" name="zipcode" class="select form-control floating" disabled>
+                <option value="">Select Zipcode</option>
+                {{#each zipcode}}
+                <option value="{{this.id}}" {{#if_eq this.id ../referral.zipcode}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group form-focus">
+              <label class="control-label">Address Remarks </label>
+              <textarea class="form-control floating" id="address_remarks" name="address_remarks" rows="5" disabled>{{referral.address_remarks}}</textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-box">
+        <h3 class="card-title">Attorney Information</h3>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group form-focus select-focus">
+              <label class="control-label">Attorney Name
+                <span class="req-lbl">*</span>
+          
+              </label>
+              <select id="attr_id" name="attr_id" disabled class="form-control floating">
+                <option value="">Select Attorney</option>
+                {{#each attorney}}
+                <option value="{{this.id}}" {{#if_eq this.id ../referral.attorney_id }} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-box">
+        <h3 class="card-title">Other Information</h3>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Referral Company </label>
+              <input type="text" class="form-control floating" id="company_name" name="company_name" disabled value="{{referral.company_name}}"
+              />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Website URL </label>
+              <input type="text" class="form-control floating url_selector" id="website_url" name="website_url" disabled value="{{referral.website_url}}"
+              />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Fax</label>
+              <input type="text" class="form-control floating number_validator" id="fax" name="fax" disabled value="{{referral.fax}}" />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Phone Number
+              </label>
+              <input type="text" class="form-control floating number_validator" id="phone_no" disabled name="phone_no" value="{{referral.phone_no}}"
+              />
+            </div>
+          </div>
+          {{!--
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Social URL </label>
+              <input type="text" class="form-control floating url_selector" id="social_url" name="social_url" />
+            </div>
+          </div> --}}
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">IM</label>
+              <input type="text" class="form-control floating" id="im" name="im" value="{{referral.im}}" disabled/>
+            </div>
+          </div>
+          {{!--
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Social Security No</label>
+              <input type="text" class="form-control floating number_validator" id="social_sec_no" name="social_sec_no" />
+            </div>
+          </div> --}}
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Twitter</label>
+              <input type="text" class="form-control floating url_selector" id="twitter" name="twitter" disabled value="{{referral.twitter}}" />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Linkedin</label>
+              <input type="text" class="form-control floating url_selector" id="linkedin" name="linkedin" disabled value="{{referral.linkedin}}"
+              />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Facebook</label>
+              <input type="text" class="form-control floating url_selector" id="social_url" name="social_url" disabled value="{{referral.social_url}}"
+              />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Google </label>
+              <input type="text" class="form-control floating url_selector" id="google" name="google" disabled value="{{referral.google}}" />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Youtube </label>
+              <input type="text" class="form-control floating url_selector" id="youtube" name="youtube" disabled value="{{referral.youtube}}" />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus select-focus">
+              <label class="control-label">Association Status
+                <span class="req-lbl">*</span>
+      
+              </label>
+              <select id="association" name="association" class="select form-control" disabled>
+                <option value=""> Select Association</option>
+                <option value="NEW TARGET" {{#if_eq referral.association "NEW TARGET"}} selected {{/if_eq}}>NEW TARGET</option>
+                <option value="CONVERTED" {{#if_eq referral.association "CONVERTED"}} selected {{/if_eq}}>CONVERTED</option>
+                <option value="TS-INTERIM" {{#if_eq referral.association "TS-INTERIM"}} selected {{/if_eq}}>TS-INTERIM</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus select-focus">
+              <label class="control-label">Industry Type
+                <span class="req-lbl">*</span>
+              </label>
+              <select id="industry_type" name="industry_type" class="select form-control" disabled>
+                <option value=""> Select Industry Type</option>
+                {{#each industry}}
+                <option value="{{this.id}}" {{#if_eq this.id ../referral.industry_type}} selected="selected" {{/if_eq}}>{{this.industry_name}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group form-focus">
+              <label class="control-label">Remarks </label>
+              <textarea class="form-control floating" id="remarks" name="remarks" rows="5" disabled>{{referral.remarks}}</textarea>
+            </div>
+          </div>
+        </div>
+      </div>
     </form>
   </div>
 

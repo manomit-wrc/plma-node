@@ -2,7 +2,10 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> 
+<link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-sweetalert/sweet-alert.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">{{/content}}
 <div class="page-wrapper">
     <div class="content container-fluid">
         <div class="pg-header">
@@ -89,7 +92,7 @@
                                     <!-- Modal content-->
                                     <div class="modal-content">
                                         <div class="modal-body">
-                                            <p>are you sure you want to delete this target.?</p>
+                                            <p>are you sure you want to delete this target?</p>
                                         </div>
                                         <div class="modal-footer">
                                             <a href="/target/delete/{{this.id}}" class="btn btn-danger">Delete</a>
@@ -145,7 +148,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <p>are you sure you want to delete this targets.?</p>
+                <p>are you sure you want to move this record to target ?</p>
             </div>
             <div class="modal-footer">
                 <a href="javascript:void(0)" class="btn btn-danger move-to-client">ok</a>
@@ -183,7 +186,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <p>are you sure you want to delete this target.?</p>
+                <p>are you sure you want to delete this target?</p>
             </div>
             <div class="modal-footer">
                 <a href="javascript:void(0)" class="btn btn-danger target-delete-done">ok</a>
@@ -229,6 +232,7 @@
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
 <script type="text/javascript" src="/assets/js/select2.min.js"></script>
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
+<script type="text/javascript" src="/assets/plugins/bootstrap-sweetalert/sweet-alert.min.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript">
     function checkall(source) {
@@ -264,7 +268,14 @@
             success: function (response) {
                 
                 if (response.code === '200') {
-                    window.location.reload();
+                    $('#move_to_client_2').modal('hide');
+                    swal({
+                    title: "Nice!",
+                    text: "Target move successfully",
+                    type: "success"
+                    }, function () {
+                        window.location.reload();
+                    });
                 } else {
                     $('#move_to_client_exisiting').modal('show');
                 }

@@ -68,7 +68,7 @@ router.get('/target', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	}
 
 	const targetDetails = await Target.findAll({
-		where: { 'attorney_id': req.user.id }
+		where: { 'target_status':'1','attorney_id': req.user.id }
 	});
 
 	res.render('target/targets', {
@@ -131,7 +131,6 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async (req, res) 
 				youtube: req.body.youtube,
 				google: req.body.google,
 				im: req.body.im,
-				social_security_no: removePhoneMask(req.body.social_sec_no),
 				association: req.body.association,
 				industry_type: req.body.industry_type,
 				remarks: req.body.remarks,
@@ -172,7 +171,6 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async (req, res) 
 				youtube: req.body.youtube,
 				google: req.body.google,
 				im: req.body.im,
-				social_security_no: removePhoneMask(req.body.social_sec_no),
 				remarks: req.body.remarks,
 				association: req.body.association,
 				industry_type: req.body.industry_type,
@@ -285,7 +283,6 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, 
 			industry_type: req.body.industry_type,
 			firm_id: req.user.firm_id,
 			im: req.body.im,
-			social_security_no: removePhoneMask(req.body.social_sec_no),
 			date_of_birth: formatDate ? formatDate[2] + "-" + formatDate[1] + "-" + formatDate[0] : null,
 			gender: req.body.gender,
 			target_id: req.body.target_id,
@@ -402,7 +399,6 @@ router.post('/target/import', auth, upload.single('file_name'), csrfProtection, 
 					pin_code: fetchZip[0].id,
 					IM: excelTarget[i].im,
 					company_name: excelTarget[i].company_name,
-					social_security_no: excelTarget[i].social_security_no,
 					twitter: `http://${excelTarget[i].twitter}`,
 					linkedin: `http://${excelTarget[i].linkedin}`,
 					youtube: `http://${excelTarget[i].youtube}`,
@@ -434,7 +430,7 @@ router.post('/target/import', auth, upload.single('file_name'), csrfProtection, 
 					user_id: req.user.id,
 					IM: excelTarget[i].im,
 					company_name: excelTarget[i].company_name,
-					social_security_no: excelTarget[i].social_security_no,
+					
 					twitter: `http://${excelTarget[i].twitter}`,
 					linkedin: `http://${excelTarget[i].linkedin}`,
 					youtube: `http://${excelTarget[i].youtube}`,
@@ -472,6 +468,13 @@ router.post('/target/move-to-client', auth, async (req, res) => {
 
 	} else {
 		for (i = 0; i < n; i++) {
+
+			await Target.update({
+				target_status:'0'
+			},{
+				where: { 'id':target_ids[i] }
+			});
+
 			var target_data = await Target.findOne({
 				where: {
 					id: target_ids[i]
@@ -507,14 +510,16 @@ router.post('/target/move-to-client', auth, async (req, res) => {
 				tag_type: "n",
 				tags: "new",
 				date_of_birth: target_data.date_of_birth,
-				social_security_no: target_data.social_sequrity_no,
+				
 				IM: target_data.im,
 				organization_name: target_data.organization_name,
 				organization_id: target_data.organization_id,
 				organization_code: target_data.organization_code,
 				user_id: target_data.user_id,
 				client_type: target_data.target_type,
-				remarks: target_data.remarks
+				remarks: target_data.remarks,
+				attorney_id:req.user.id,
+				
 			});
 	
 			await Target.update({
@@ -523,7 +528,7 @@ router.post('/target/move-to-client', auth, async (req, res) => {
 				where: {
 					id: target_ids[i]
 				}
-				});
+			});
 		}
 		res.json({
 			code: "200",
