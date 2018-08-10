@@ -1,7 +1,7 @@
 {{#content "style" mode="prepend"}}
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> 
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/jquery.tagsinput.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
 {{/content}}
@@ -21,6 +21,9 @@
                 <div class="text-right">
 				<a href="/client/edit/{{client.id}}" class="btn btn-primary pull-right rounded">
 					<i class="fa fa-pencil"></i> Edit Client</a>
+
+
+					<a href="/client" class="btn btn-primary pull-right rounded m-r-5">Cancel</a>
 				</div>
 			</div>
 
@@ -154,7 +157,7 @@
 										</select>
 									</div>
 								</div>
-							
+
 								<div id="add-tag-client">
 									<div class="form-group form-focus">
 										<label class="control-label">Add New Tags
@@ -598,7 +601,7 @@
 			$('#add-tag-client').hide();
 		}
 
-		
+
 
 	});
 </script> {{/content}}

@@ -39,9 +39,9 @@
                                 <td>{{dateFormat this.activity.activity_from_date "DD-MM-YYYY"}}</td>
                                 <td>{{dateFormat this.activity.activity_to_date "DD-MM-YYYY"}}</td>
                                 <td>{{this.activity.remarks}}</td>
-                                <td> {{#if_eq this.activity.activity_status '0'}} NEW ACTIVITY - CREATED {{/if_eq}} 
-                                    {{#if_eq this.activity.activity_status '1'}} PENDING APPROVAL - IN-PROGRESS {{/if_eq}} 
-                                    {{#if_eq this.activity.activity_status '2'}} APPROVED - PROCEED {{/if_eq}} 
+                                <td> {{#if_eq this.activity.activity_status '0'}} NEW ACTIVITY - CREATED {{/if_eq}}
+                                    {{#if_eq this.activity.activity_status '1'}} PENDING APPROVAL - IN-PROGRESS {{/if_eq}}
+                                    {{#if_eq this.activity.activity_status '2'}} APPROVED - PROCEED {{/if_eq}}
                                     {{#if_eq this.activity.activity_status '3'}} NOT APPROVED - DISCARD ACTIVITY {{/if_eq}}
                                 </td>
                             </tr>

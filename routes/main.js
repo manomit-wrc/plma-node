@@ -428,13 +428,13 @@ router.get('/client/add', auth, firmAttrAuth, csrfProtection, async (req, res) =
 	});
 
 	res.render('client/addclient', { layout: 'dashboard', csrfToken: req.csrfToken(),
-		tags: tags, 
-		country: country, 
-		state: state, 
-		designations: designation, 
-		industry: industry, 
-		attorney: attorney, 
-		error_message 
+		tags: tags,
+		country: country,
+		state: state,
+		designations: designation,
+		industry: industry,
+		attorney: attorney,
+		error_message
 	});
 });
 
@@ -497,8 +497,8 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		existingTag.push(Number(existing_tag[i]));
 	}
 
-	res.render('client/editclient', { 
-		layout: 'dashboard', 
+	res.render('client/editclient', {
+		layout: 'dashboard',
 		csrfToken: req.csrfToken(),
 		tags:tags,
 		designation: designations,
@@ -510,7 +510,7 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		city: client_city,
 		zipcode: client_zipcode,
 		error_message,
-		existing_tag:existingTag 
+		existing_tag:existingTag
 	});
 });
 
@@ -549,24 +549,24 @@ router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 	if (existingTag !== null){
 		var existing_tag = existingTag.split(",");
 		var existingTag = [];
-	
+
 		for (var i = 0; i < existing_tag.length; i++) {
 			+existingTag.push(Number(existing_tag[i]));
 		}
 	}
 
-	res.render('client/viewClient', { 
+	res.render('client/viewClient', {
 		layout: 'dashboard',
 		csrfToken: req.csrfToken(),
-		tags:tags,designation: designations, 
-		industry: industrys, client: clients, 
-		country: client_country, 
-		attorney: attorney, 
-		state: client_state, 
-		city: client_city, 
-		zipcode: client_zipcode, 
+		tags:tags,designation: designations,
+		industry: industrys, client: clients,
+		country: client_country,
+		attorney: attorney,
+		state: client_state,
+		city: client_city,
+		zipcode: client_zipcode,
 		error_message,
-		existing_tag:existingTag 
+		existing_tag:existingTag
 	});
 });
 
