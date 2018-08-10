@@ -306,6 +306,12 @@ const hbs = exphbs.create({
                 return "-";
             }
         },
+        show_button_add: function (index, opts) {
+             if (index == 0)
+                 return opts.fn(this);
+             else
+                 return opts.inverse(this);
+        },
         dateFormat: require('handlebars-dateformat')
     }
 });

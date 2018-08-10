@@ -14,6 +14,7 @@ const Attorney_Details = require('../models').attorney_details;
 const Industry_type = require('../models').industry_type;
 const Jurisdiction = require('../models').jurisdiction;
 const sectionToFirm = require('../models').section_to_firms;
+const Education = require('../models').education;
 var csrfProtection = csrf({
 	cookie: true
 });
@@ -211,6 +212,19 @@ router.get('/attorneys/addAttorney', auth, firmAttrAuth, csrfProtection, async (
 
 
 router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+	var education = [];
+	var degree = req.body.degree;
+	var university = req.body.university;
+	for (var d = 0; d < degree.length; d++) {
+		if (degree[d] !== ""){
+			var ddd = degree[d];
+			var uuu = university[d];
+			education.push({
+				"degree": ddd,
+				"university": uuu
+			});
+		}
+	}
 	var attrorney_details_id = '';
 	const Dob = req.body.dob ? req.body.dob.split("-") : '';
 	const Firm_Join_Date = req.body.firm_join_date ? req.body.firm_join_date.split("-") : '';
@@ -262,7 +276,6 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 				attorney_id: req.body.attorney_id,
 				attorney_code: req.body.attorney_code,
 				attorney_type: req.body.attorney_type,
-				education: req.body.education,
 				bar_registration: req.body.bar_registration,
 				job_type: req.body.job_type,
 				jurisdiction: parseInt(req.body.jurisdiction),
@@ -283,16 +296,25 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 				bar_practice_date: Bar_Practice_date ? Bar_Practice_date[2] + "-" + Bar_Practice_date[1] + "-" + Bar_Practice_date[0] : null,
 
 			});
+			for (var e = 0; e < education.length; e++) {
+				const edu = await Education.create({
+					user_id: attrorney_details_id,
+					degree: education[e].degree,
+					university: education[e].university,
+				});
+			}
 		});
+
 		req.flash('success-attorney-message', 'Attorney Created Successfully');
 		res.redirect('/attorneys');
 	}
-
-
 });
 
 router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 	User.hasMany(Attorney_Details, {
+		foreignKey: 'user_id'
+	});
+	User.hasMany(Education, {
 		foreignKey: 'user_id'
 	});
 
@@ -335,6 +357,8 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 		},
 		include: [{
 			model: Attorney_Details
+		}, {
+			model: Education
 		}]
 	});
 	var state_id = edata[0].state;
@@ -378,7 +402,9 @@ router.get('/attorneys/viewdata/:id', auth, csrfProtection, async (req, res) => 
 	User.hasMany(Attorney_Details, {
 		foreignKey: 'user_id'
 	});
-
+	User.hasMany(Education, {
+		foreignKey: 'user_id'
+	});
 	const designation = await Designation.findAll();
 	const group = await Group.findAll();
 	const section = await Section.findAll();
@@ -392,6 +418,8 @@ router.get('/attorneys/viewdata/:id', auth, csrfProtection, async (req, res) => 
 		},
 		include: [{
 			model: Attorney_Details
+		}, {
+			model: Education
 		}]
 	});
 	var state_id = edata[0].state;
@@ -432,7 +460,19 @@ router.get('/attorneys/viewdata/:id', auth, csrfProtection, async (req, res) => 
 
 
 router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
-
+	var education = [];
+	var degree = req.body.degree;
+	var university = req.body.university;
+	for (var d = 0; d < degree.length; d++) {
+		if (degree[d] !== "") {
+			var ddd = degree[d];
+			var uuu = university[d];
+			education.push({
+				"degree": ddd,
+				"university": uuu
+			});
+		}
+	}
 	const Dob1 = req.body.dob ? req.body.dob.split("-") : '';
 	const Firm_Join_Date1 = req.body.firm_join_date ? req.body.firm_join_date.split("-") : '';
 	const Bar_Practice_date1 = req.body.bar_practice_date ? req.body.bar_practice_date.split("-") : '';
@@ -490,6 +530,19 @@ router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async (
 			user_id: req.params['id']
 		}
 	});
+
+	const del_edu = await Education.destroy({
+		where: {
+			user_id: req.params['id']
+		}
+	});
+	for (var e = 0; e < education.length; e++) {
+		const edu = await Education.create({
+			user_id: req.params['id'],
+			degree: education[e].degree,
+			university: education[e].university,
+		});
+	}
 
 	req.flash('success-edit-attorney-message', 'Attorney Updated Successfully');
 	res.redirect('/attorneys');
