@@ -78,12 +78,16 @@
                                     <a href="/master_contact/edit/{{this.id}}" class="btn btn-info btn-sm">
                                         <i class="fa fa-pencil m-r-5"></i>
                                     </a>
-                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#{{this.id}}" class="btn btn-danger btn-sm">
+                                    {{!-- <a href="javascript:void(0)" data-toggle="modal" data-target="#{{this.id}}" class="btn btn-danger btn-sm">
+                                        <i class="fa fa-trash-o m-r-5"></i>
+                                    </a> --}}
+
+                                    <a href="javascript:void(0)" data-toggle="modal" data-target="delete_users" data-mastercontact-id="{{this.id}}" id="delete_mastercontact" class="btn btn-danger btn-sm">
                                         <i class="fa fa-trash-o m-r-5"></i>
                                     </a>
                                 </td>
                             </tr>
-                            <div class="modal fade" id="{{this.id}}" role="dialog">
+                            {{!-- <div class="modal fade" id="{{this.id}}" role="dialog">
                                 <div class="modal-dialog">
                                     <!-- Modal content-->
                                     <div class="modal-content">
@@ -96,7 +100,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             {{/each}}
                         </tbody>
                     </table>
@@ -106,7 +110,24 @@
     </div>
 </div>
 
-
+<div id="delete_users" class="modal custom-modal fade del-mastercontact" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content modal-md">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Master Contact</h4>
+            </div>
+            <form>
+                <div class="modal-body card-box">
+                                            <p>are you sure you want to delete this master contact?</p>
+                    <div class="m-t-20" id="delDiv">
+                        <a href="#" class="btn btn-default" data-dismiss="modal" >Close</a>
+                        {{!-- <a href="/activity-goal/delete/{{this.id}}" class="btn btn-danger">Delete</a> --}}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" id="move_to_target_1" role="dialog">
     <div class="modal-dialog">
@@ -289,4 +310,19 @@
         })
     });
 
-</script> {{/content}}
+</script> 
+
+
+<script>
+$(document).on('click','#delete_mastercontact', function(e){
+    var mastercontact_id = $(this).data('mastercontact-id');
+    $("#removeBtnDelete").remove();
+    $("#delete_users").modal('show');
+    $("#delDiv").append('<a href="/master_contact/delete/'+ mastercontact_id +'" class="btn btn-danger" id="removeBtnDelete">'+"Delete"+ '</a>');
+});
+
+
+</script>
+
+
+{{/content}}

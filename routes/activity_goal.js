@@ -123,6 +123,7 @@ router.get('/activity-goal/delete/:id', auth, firmAttrAuth, csrfProtection, (req
 	});
 });
 
+
 /*==================================Bratin Meheta 15-06-2018===================================*/
 
 module.exports = router;
