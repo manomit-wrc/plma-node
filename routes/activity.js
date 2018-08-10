@@ -31,7 +31,7 @@ function removePhoneMask(removeCharacter) {
 	return removeCharacter;
 }
 
-//===================================================START ACTIVITY===============================================================================//
+
 router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 
 	var activityFilter = {};
@@ -60,7 +60,9 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 		}]
 	});
 
-	const activity_goal = await ActivityGoal.findAll();
+	const activity_goal = await ActivityGoal.findAll({
+		where: { 'firm_id': req.user.firm_id }
+	});
 	const practice_area = await PracticeArea.findAll();
 
 	const target = await Target.findAll({
@@ -81,7 +83,7 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 		where: { 'attorney_id': req.user.id }
 	});
 
-	// console.log(req.user.id,referral.length);
+	
 	
 
 	const budgetList = await Budget.findAll();
@@ -275,10 +277,12 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 	});
 
 	const firm = await Firm.findAll({
-		firm_id: req.user.firm_id
+		where:{ id: req.user.firm_id }
 	});
 
-	const activity_goal = await ActivityGoal.findAll();
+	const activity_goal = await ActivityGoal.findAll({
+		where: { 'firm_id': req.user.firm_id }
+	});
 	const practice_area = await PracticeArea.findAll();
 
 
@@ -436,11 +440,11 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		foreignKey: 'activity_id'
 	});
 	const firm = await Firm.findAll({
-		where: {
-			id: req.user.firm_id
-		}
+		where: { id: req.user.firm_id }
 	});
-	const activity_goal = await ActivityGoal.findAll();
+	const activity_goal = await ActivityGoal.findAll({
+		where: { 'firm_id': req.user.firm_id }
+	});
 	const practice_area = await PracticeArea.findAll();
 
 
