@@ -265,16 +265,13 @@ router.get('/employee/view/:id', csrfProtection, siteAuth, auth, async (req, res
 
 router.get('/employee/delete/:id', auth, csrfProtection, async (req, res) => {
     const user_delete = User.destroy({
-        where: {
-            id: req.params['id']
-        }
+        where: { id: req.params['id'] }
     });
 
     const firm_to_user_delete = EmployeeToFirm.destroy({
-        where: {
-            user_id: req.params['id']
-        }
+        where: {  user_id: req.params['id']  }
     });
+    req.flash('success-message', 'Employee delete Successfully');
     res.redirect('/employees');
 });
 

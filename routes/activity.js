@@ -578,6 +578,7 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		}]
 	});
 
+	req.flash('success-message', 'Activity update Successfully');
 	res.render('activity/update', {
 		layout: 'dashboard',
 		csrfToken: req.csrfToken(),

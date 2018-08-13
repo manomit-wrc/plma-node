@@ -59,6 +59,7 @@ function removePhoneMask(phone_no) {
 /*==========================Start Budget//Bratin Meheta 06-07-2018=============================*/
 
 router.get('/budget', csrfProtection, auth, siteAuth, (req, res) => {
+	var success_message = req.flash('success-budget-message')[0];
 	var whereCondition = {};
 	if (req.query.budget_name) {
 		whereCondition.name = req.query.budget_name;
@@ -68,6 +69,7 @@ router.get('/budget', csrfProtection, auth, siteAuth, (req, res) => {
 	}).then(show => {
 		res.render('budget/index', {
 			layout: 'dashboard',
+			success_message,
 			csrfToken: req.csrfToken(),
 			budget: show,
 			budget_code: req.query.budget_code ? req.query.budget_code : '',
@@ -130,6 +132,7 @@ router.post('/admin/delete-budget/:id', auth, siteAuth, csrfProtection, (req, re
 	budget.destroy({
 		where: { id: req.params['id'] }
 	}).then(result => {
+		req.flash('success-budget-message', 'Budget delete Successfully');
 		res.json({ "del_budget": 1 });
 	});
 });
@@ -139,6 +142,7 @@ router.post('/admin/delete-budget/:id', auth, siteAuth, csrfProtection, (req, re
 /*==========================Start designation//Bratin Meheta 06-07-2018=============================*/
 
 router.get('/designation', csrfProtection, auth, siteAuth, (req, res) => {
+	var success_message = req.flash('success-designation-message')[0];
 	var whereCondition = {};
 	if (req.query.designation_name) {
 		whereCondition.title = req.query.designation_name;
@@ -148,6 +152,7 @@ router.get('/designation', csrfProtection, auth, siteAuth, (req, res) => {
 	}).then(show => {
 		res.render('designation/index', {
 			layout: 'dashboard',
+			success_message,
 			csrfToken: req.csrfToken(),
 			designation: show,
 			designation_code: req.query.designation_code ? req.query.designation_code : '',
@@ -208,6 +213,7 @@ router.post('/admin/delete-designation/:id', auth, siteAuth, csrfProtection, (re
 	Designation.destroy({
 		where: { id: req.params['id'] }
 	}).then(result => {
+		req.flash('success-designation-message', 'Designation delete Successfully');
 		res.json({ "del_designation": 1 });
 	});
 });
@@ -217,6 +223,7 @@ router.post('/admin/delete-designation/:id', auth, siteAuth, csrfProtection, (re
 /*==========================Start industry_type//Bratin Meheta 06-07-2018=============================*/
 
 router.get('/industry', csrfProtection, auth, siteAuth, (req, res) => {
+	var success_message = req.flash('success-industry-message')[0];
 	var whereCondition = {};
 	if (req.query.industry_name) {
 		whereCondition.industry_name = req.query.industry_name;
@@ -226,6 +233,7 @@ router.get('/industry', csrfProtection, auth, siteAuth, (req, res) => {
 	}).then(show => {
 		res.render('industry/index', {
 			layout: 'dashboard',
+			success_message,
 			csrfToken: req.csrfToken(),
 			industry: show,
 			industry_code: req.query.industry_code ? req.query.industry_code : '',
@@ -286,6 +294,7 @@ router.post('/admin/delete-industry/:id', auth, siteAuth, csrfProtection, (req, 
 	Industry.destroy({
 		where: { id: req.params['id'] }
 	}).then(result => {
+		req.flash('success-industry-message', 'Industry delete Successfully');
 		res.json({ "del_industry": 1 });
 	});
 });
@@ -766,9 +775,11 @@ router.get('/client/delete/:id', auth, firmAttrAuth, (req, res) => {
 			id: req.params.id
 		}
 	}).then(resp => {
+		req.flash('success-message', 'Client delete Successfully');
 		res.redirect('/client');
 	});
 });
+
 router.post('/client/findCityByState', auth, firmAttrAuth, csrfProtection, (req, res) => {
 
 	City.findAll({
@@ -780,6 +791,7 @@ router.post('/client/findCityByState', auth, firmAttrAuth, csrfProtection, (req,
 		res.json({ city: city });
 	});
 });
+
 router.post('/client/findPinByCity', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	city.findById(req.body.city_id).then(row => {
 		Zipcode.findAll({
@@ -827,6 +839,7 @@ router.get('/import/csv', auth, csrfProtection, (req, res) => {
 /*==========================Start practice area//Bratin Meheta 12-06-2018=============================*/
 
 router.get('/practice-area', csrfProtection, auth, siteAuth, (req, res) => {
+	var success_message = req.flash('success-practiceArea-message')[0];
 	var practiceAreaFilter = {};
 	if (req.query.practice_area_code) {
 		practiceAreaFilter.code = req.query.practice_area_code;
@@ -839,6 +852,7 @@ router.get('/practice-area', csrfProtection, auth, siteAuth, (req, res) => {
 	}).then(show => {
 		res.render('practice_area/index', {
 			layout: 'dashboard',
+			success_message,
 			csrfToken: req.csrfToken(),
 			practice_area: show,
 			practice_area_code: req.query.practice_area_code ? req.query.practice_area_code : '',
@@ -869,6 +883,7 @@ router.post('/practice-area/add', auth, siteAuth, csrfProtection, (req, res) => 
 		}
 	});
 });
+
 router.post('/admin/edit-practice-area/:id', auth, siteAuth, csrfProtection, (req, res) => {
 	PracticeArea.findAll({
 		where: {
@@ -900,6 +915,7 @@ router.post('/admin/delete-practice-area/:id', auth, siteAuth, csrfProtection, (
 	PracticeArea.destroy({
 		where: { id: req.params['id'] }
 	}).then(result => {
+		req.flash('success-practiceArea-message', 'Practice area delete Successfully');
 		res.json({ "c": 1 });
 	});
 });
@@ -909,6 +925,7 @@ router.post('/admin/delete-practice-area/:id', auth, siteAuth, csrfProtection, (
 /*==========================Start Section//Bratin Meheta 13-06-2018=============================*/
 
 router.get('/section', csrfProtection, auth, siteAuth, (req, res) => {
+	var success_message = req.flash('success-section-message')[0];
 	var sectionFilter = {};
 	if (req.query.section_name) {
 		sectionFilter.name = req.query.section_name;
@@ -918,6 +935,7 @@ router.get('/section', csrfProtection, auth, siteAuth, (req, res) => {
 	}).then(show => {
 		res.render('section/index', {
 			layout: 'dashboard',
+			success_message,
 			csrfToken: req.csrfToken(),
 			section: show,
 			section_name: req.query.section_name ? req.query.section_name : ''
@@ -927,8 +945,7 @@ router.get('/section', csrfProtection, auth, siteAuth, (req, res) => {
 
 router.post('/section/add', auth, siteAuth, csrfProtection, (req, res) => {
 	Section.findAndCountAll({
-		where:
-		{
+		where:{
 			name: req.body.name
 		}
 	}).then(result => {
@@ -939,6 +956,7 @@ router.post('/section/add', auth, siteAuth, csrfProtection, (req, res) => {
 				description: req.body.description,
 				remarks: req.body.remarks
 			}).then(store => {
+				// req.flash('success-activityGoal-message', 'Section Created Successfully');
 				res.json({ "add_section": 1 });
 			});
 		}
@@ -947,6 +965,7 @@ router.post('/section/add', auth, siteAuth, csrfProtection, (req, res) => {
 		}
 	});
 });
+
 router.post('/admin/edit-section/:id', auth, siteAuth, csrfProtection, (req, res) => {
 	Section.findAll({
 		where: {
@@ -978,6 +997,7 @@ router.post('/admin/delete-section/:id', auth, siteAuth, csrfProtection, (req, r
 	Section.destroy({
 		where: { id: req.params['id'] }
 	}).then(result => {
+		req.flash('success-section-message', 'Section delete Successfully');
 		res.json({ "del_section": 1 });
 	});
 });
@@ -987,6 +1007,7 @@ router.post('/admin/delete-section/:id', auth, siteAuth, csrfProtection, (req, r
 /*==========================Start Jurisdiction//Bratin Meheta 13-06-2018=============================*/
 
 router.get('/jurisdiction', csrfProtection, auth, siteAuth, (req, res) => {
+	var success_message = req.flash('success-jurisdiction-message')[0];
 	var whereCondition = {};
 	if (req.query.jurisdiction_code) {
 		whereCondition.code = req.query.jurisdiction_code;
@@ -999,6 +1020,7 @@ router.get('/jurisdiction', csrfProtection, auth, siteAuth, (req, res) => {
 	}).then(show => {
 		res.render('jurisdiction/index', {
 			layout: 'dashboard',
+			success_message,
 			csrfToken: req.csrfToken(),
 			jurisdiction: show,
 			jurisdiction_code: req.query.jurisdiction_code ? req.query.jurisdiction_code : '',
@@ -1060,6 +1082,7 @@ router.post('/admin/delete-jurisdiction/:id', auth, siteAuth, csrfProtection, (r
 	Jurisdiction.destroy({
 		where: { id: req.params['id'] }
 	}).then(result => {
+		req.flash('success-jurisdiction-message', 'Jurisdiction delete Successfully');
 		res.json({ "del_jurisdiction": 1 });
 	});
 });
@@ -1069,6 +1092,7 @@ router.post('/admin/delete-jurisdiction/:id', auth, siteAuth, csrfProtection, (r
 /*==========================Start Group//Bratin Meheta 13-06-2018=============================*/
 
 router.get('/group', csrfProtection, auth, siteAuth, (req, res) => {
+	var success_message = req.flash('success-group-message')[0];
 	var whereCondition = {};
 	if (req.query.group_code) {
 		whereCondition.code = req.query.group_code;
@@ -1081,6 +1105,7 @@ router.get('/group', csrfProtection, auth, siteAuth, (req, res) => {
 	}).then(show => {
 		res.render('group/index', {
 			layout: 'dashboard',
+			success_message,
 			csrfToken: req.csrfToken(),
 			group: show,
 			group_code: req.query.group_code ? req.query.group_code : '',
@@ -1142,6 +1167,7 @@ router.post('/admin/delete-group/:id', auth, siteAuth, csrfProtection, (req, res
 	Group.destroy({
 		where: { id: req.params['id'] }
 	}).then(result => {
+		req.flash('success-group-message', 'Group delete Successfully');
 		res.json({ "del_group": 1 });
 	});
 });

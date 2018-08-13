@@ -36,6 +36,7 @@ function removePhoneMask (phone_no){
 }
 
 router.get('/firms', csrfProtection, auth, siteAuth, async (req, res) => {
+    var success_message = req.flash('success-firm-message')[0];
     var whereStatement = {};
     if(req.query.search_email) {
         whereStatement.email = req.query.search_email;
@@ -59,6 +60,7 @@ router.get('/firms', csrfProtection, auth, siteAuth, async (req, res) => {
 
     res.render('firms/index', {
         layout: 'dashboard',
+        success_message,
         csrfToken: req.csrfToken(),
         users,
         designation,
@@ -196,6 +198,7 @@ router.post('/firm/delete', auth, siteAuth, csrfProtection, async (req, res) => 
         }
     });
 
+    req.flash('success-firm-message', 'firm delete Successfully');
     res.json({
         success: true,
         message: 'Firm deleted successfully'
@@ -208,6 +211,7 @@ router.post('/firm/delete', auth, siteAuth, csrfProtection, async (req, res) => 
 /*====================Starts Office Section 18-06-2018================================= */
 
 router.get('/firm-details', auth, firmAuth, csrfProtection, async (req, res) => {
+    var success_message = req.flash('success-firm-details-message')[0];
     Office.belongsTo(Firm, {foreignKey: 'firm_id'});
     Contact.belongsTo(Office, {foreignKey: 'office_id'});
     Contact.belongsTo(Designation, {foreignKey: 'designation_id'});
@@ -277,7 +281,7 @@ router.get('/firm-details', auth, firmAuth, csrfProtection, async (req, res) => 
         PracticeAreaArr.push(firmPracticeArea[k].practice_area_id);
     }
 
-    res.render('firms/master_settings', {layout: 'dashboard', csrfToken: req.csrfToken(), office, designation, contact, country, state, city, zipcode, firm: firm[0], firm_city, firm_zipcode, section, practice_area, jurisdiction, arr, jurisdictionArr, PracticeAreaArr});
+    res.render('firms/master_settings', {layout: 'dashboard',success_message, csrfToken: req.csrfToken(), office, designation, contact, country, state, city, zipcode, firm: firm[0], firm_city, firm_zipcode, section, practice_area, jurisdiction, arr, jurisdictionArr, PracticeAreaArr});
 });
 
 router.post('/add-office', auth, firmAuth, csrfProtection, (req, res) => {
@@ -315,6 +319,7 @@ router.post('/delete-office/:id', auth, firmAuth, csrfProtection, (req, res) =>{
     Office.destroy({
         where: {id: req.params['id']}
     }).then(result =>{
+        req.flash('success-delete-office-message', 'Firm delete Successfully');
         res.json({"delete_office":true});
     });
 });

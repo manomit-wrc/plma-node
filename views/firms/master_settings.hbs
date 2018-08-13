@@ -13,6 +13,11 @@
 		</div>
 		<div class="row filter-row">
 			<div class="row">
+				 {{#if success_message}}
+                    <div class="alert alert-success">
+                        <strong>Success! </strong>{{success_message}}
+                    </div>
+                {{/if}}
 				<div class="col-md-12">
 					<div class="tab firm-box" role="tabpanel">
 						<!-- Nav tabs -->

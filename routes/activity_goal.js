@@ -37,7 +37,7 @@ router.get('/activity-goal', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	} else {
 		whereGoals.firm_id = req.user.firm_id;
 	}
-	//whereGoals.firm_id = req.user.firm_id
+
 	if(req.user.role_id != 2)
 	{
 		whereGoals.user_id = req.user.id
@@ -118,7 +118,7 @@ router.get('/activity-goal/delete/:id', auth, firmAttrAuth, csrfProtection, (req
 			id: req.params['id']
 		}
 	}).then(result => {
-		req.flash('success-delete-goal-message', 'Activity Goal Removed Successfully');
+		req.flash('success-delete-goal-message', 'Activity Goal Delete Successfully');
 		res.redirect('/activity-goal');
 	});
 });
