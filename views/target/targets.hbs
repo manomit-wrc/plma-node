@@ -124,18 +124,7 @@
 
 
 {{!-- modal for move to client start --}}
-<div class="modal fade" id="move_to_client_1" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <p>Please select one</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 <div class="modal fade" id="move_to_client_2" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -150,18 +139,7 @@
     </div>
 </div>
 {{!-- modal for move to client end--}} {{!-- modal for delete start --}}
-<div class="modal fade" id="target-delete-1" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <p>Please select one</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 <div class="modal fade" id="move_to_client_exisiting" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -240,7 +218,7 @@
             target_ids.push(this.value);
         });
         if (target_ids.length == 0) {
-            $('#move_to_client_1').modal('show');
+            swal("Please select one or more target!");
         } else {
             $('#move_to_client_2').modal('show');
         }
@@ -286,7 +264,7 @@
             target_ids.push(this.value);
         });
         if (target_ids.length == 0) {
-            $('#target-delete-1').modal('show');
+            swal("Please select one or more target!");
         } else {
             $('#target-delete-2').modal('show');
         }
