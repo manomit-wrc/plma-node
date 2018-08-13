@@ -211,7 +211,7 @@
                                 <div class="form-group m-r-5">
                                     <label class="input-group">
                                         <span class="input-group-addon">
-                                            <input type="radio" id="referral_type" name="ref_type" value="T" checked />
+                                            <input type="radio" id="target_type" name="ref_type" value="T" checked />
                                         </span>
                                         <div class="form-control form-control-static">Target</div>
                                         <span class="glyphicon form-control-feedback "></span>
@@ -425,7 +425,7 @@
     });
 
 
-    $(document).on('click', '#referral_type', function () {
+    $(document).on('click', '#target_type', function () {
         $('#referral_list').hide();
         $('#client_list').hide();
         $('#target_list').show();
@@ -456,7 +456,7 @@
     });
 
     $('#referral_id').multiselect({
-        nonSelectedText: 'Select Clients',
+        nonSelectedText: 'Select Referral',
         includeSelectAllOption: true,
         buttonWidth: '100%'
     });
