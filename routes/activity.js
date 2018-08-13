@@ -66,6 +66,7 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 	const target = await Target.findAll({
 		where: {
 			'target_type': "I",
+			'target_status':'1',
 			'attorney_id': req.user.id
 		}
 	});
@@ -78,7 +79,7 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 	});
 
 	const referral = await Referral.findAll({
-		where: { 'attorney_id': req.user.id }
+		where: { 'firm_id':req.user.firm_id,'attorney_id': req.user.id }
 	});
 
 	const budgetList = await Budget.findAll();
