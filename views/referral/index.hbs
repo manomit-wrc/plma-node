@@ -55,43 +55,51 @@
                                 <td>
 
 
-                                  <a href="/referral/view/{{this.id}}">
-                                    {{#if_eq referral_type "I"}} {{this.first_name}} {{this.last_name}} {{/if_eq}} {{#if_eq referral_type "O"}} {{this.organization_name}}
-                                      {{/if_eq}}</a>
+                                    <a href="/referral/view/{{this.id}}">
+                                        {{#if_eq referral_type "I"}} {{this.first_name}} {{this.last_name}} {{/if_eq}} {{#if_eq referral_type "O"}} {{this.organization_name}}
+                                        {{/if_eq}}
+                                    </a>
                                 </td>
                                 <td>
                                     {{#if_eq referral_type "I"}} Individual {{/if_eq}} {{#if_eq referral_type "O"}} Organization {{/if_eq}}
                                 </td>
                                 <td>
 
-                                  {{this.email}}
+                                    {{this.email}}
 
                                 </td>
                                 <td class="number_validator">{{this.mobile}}</td>
                                 <td class="text-right">
 
-                                  <a href="/referral/view/{{this.id}}" class="btn btn-success btn-sm">
-                                    <i class="fa fa-eye m-r-5"></i></a>
+                                    <a href="/referral/view/{{this.id}}" class="btn btn-success btn-sm">
+                                        <i class="fa fa-eye m-r-5"></i>
+                                    </a>
 
                                     <a href="/referral/edit/{{this.id}}" class="btn btn-info btn-sm">
-                                                    <i class="fa fa-pencil m-r-5"></i></a>
+                                        <i class="fa fa-pencil m-r-5"></i>
+                                    </a>
 
 
-                                      {{!-- <a href="javascript:void(0);" data-toggle="modal" data-target="#{{this.id}}" class="btn btn-danger btn-sm">
-                                                    <i class="fa fa-trash-o m-r-5"></i></a>     --}}
+                                    {{!--
+                                    <a href="javascript:void(0);" data-toggle="modal" data-target="#{{this.id}}" class="btn btn-danger btn-sm">
+                                        <i class="fa fa-trash-o m-r-5"></i>
+                                    </a> --}}
 
 
 
-                                    <a href="javascript:void(0);" data-toggle="modal"  data-target="delete_users" data-referral-id="{{this.id}}" id="delete_referral" class="btn btn-danger btn-sm">
-                                                    <i class="fa fa-trash-o m-r-5"></i></a>
+                                    <a href="javascript:void(0);" data-toggle="modal" data-target="delete_users" data-referral-id="{{this.id}}" id="delete_referral"
+                                        class="btn btn-danger btn-sm">
+                                        <i class="fa fa-trash-o m-r-5"></i>
+                                    </a>
                                 </td>
                             </tr>
-                             {{!-- <div class="modal fade" id="{{this.id}}" role="dialog">
+                            {{!--
+                            <div class="modal fade" id="{{this.id}}" role="dialog">
                                 <div class="modal-dialog">
                                     <!-- Modal content-->
                                     <div class="modal-content">
                                         <div class="modal-body">
-                                            <p>are you sure you want to delete this referral.?</p>
+                                            <p>are you sure you want to delete this referral?</p>
                                         </div>
                                         <div class="modal-footer">
                                             <a href="/referral/delete/{{this.id}}" class="btn btn-danger">Delete</a>
@@ -99,8 +107,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div> --}}
-                            {{/each}}
+                            </div> --}} {{/each}}
                         </tbody>
                     </table>
                 </div>
@@ -121,10 +128,11 @@
             </div>
             <form>
                 <div class="modal-body card-box">
-                <p>are you sure you want to delete this referral.?</p>
+                    <p>are you sure you want to delete this referral?</p>
                     <div class="m-t-20" id="delDiv">
-                        <a href="#" class="btn btn-default" data-dismiss="modal" >Close</a>
-                        {{!-- <a href="/activity-goal/delete/{{this.id}}" class="btn btn-danger">Delete</a> --}}
+                        <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                        {{!--
+                        <a href="/activity-goal/delete/{{this.id}}" class="btn btn-danger">Delete</a> --}}
                     </div>
                 </div>
             </form>
@@ -230,13 +238,12 @@
     }
 </script>
 <script>
-$(document).on('click','#delete_referral', function(e){
-    var referral_id = $(this).data('referral-id');
-    $("#removeBtnDelete").remove();
-    $("#delete_user").modal('show');
-    $("#delDiv").append('<a href="/referral/delete/'+ referral_id +'" class="btn btn-danger" id="removeBtnDelete">'+"Delete"+ '</a>');
-});
+    $(document).on('click', '#delete_referral', function (e) {
+        var referral_id = $(this).data('referral-id');
+        $("#removeBtnDelete").remove();
+        $("#delete_user").modal('show');
+        $("#delDiv").append('<a href="/referral/delete/' + referral_id + '" class="btn btn-danger" id="removeBtnDelete">' + "Delete" + '</a>');
+    });
 
 
-</script>
- {{/content}}
+</script> {{/content}}

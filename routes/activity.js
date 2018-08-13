@@ -121,7 +121,8 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 router.get('/activitypage', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	Activity.findAll({
 		where: {
-			user_id: req.user.id
+			//user_id: req.user.id
+			firm_id : req.user.firm_id
 		},
 	}).then(row => {
 		res.render('activity/activity', {

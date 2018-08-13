@@ -1,0 +1,13 @@
+'use strict';
+module.exports = (sequelize, DataTypes) => {
+  var education = sequelize.define('education', {
+    user_id: DataTypes.INTEGER,
+    degree: DataTypes.STRING,
+    university: DataTypes.STRING,
+    status: DataTypes.INTEGER
+  }, {});
+  education.associate = function(models) {
+    // associations can be defined here
+  };
+  return education;
+};
