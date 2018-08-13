@@ -90,7 +90,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="modal-header">
-                                    <h4 class="modal-title">General Informations</h4>
+                                    <h4 class="modal-title">General Information</h4>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -326,120 +326,133 @@
 
                 <form class="m-b-30">
                     <input type="hidden" name="_csrf" value="{{csrfToken}}">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="control-label">Firm Name
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input disabled class="form-control floating" type="text" name="title_view" id="title_view">
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="control-label">Address
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <textarea disabled class="form-control floating" id="address_view" name="address_view" rows="5"></textarea>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="control-label">Email
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input disabled class="form-control floating" type="email" id="email_view" name="email_view">
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-12">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Approval Process Information</h4>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <label class="control-label">How many level/s for the approval process ?</label>
-                            <span class="text-danger">*</span>
-                            <div class="form-inline m-b-15">
-                                <div class="form-group m-r-5">
-                                    <label class="input-group">
-                                        <span class="input-group-addon">
-                                            <input type="radio" id="level_view_1" name="approval_level_view" value="1" disabled/>
-                                        </span>
-                                        <div class="form-control form-control-static">
-                                            1
-                                        </div>
-                                        <span class="glyphicon form-control-feedback "></span>
-                                    </label>
+                    <div class="card-box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">General Information</h4>
                                 </div>
-                                <div class="form-group m-r-5">
-                                    <label class="input-group">
-                                        <span class="input-group-addon">
-                                            <input type="radio" id="level_view_2" name="approval_level_view" value="2" disabled/>
-                                        </span>
-                                        <div class="form-control form-control-static">
-                                            2
-                                        </div>
-                                        <span class="glyphicon form-control-feedback "></span>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Firm Name
+                                        <span class="text-danger">*</span>
                                     </label>
+                                    <input disabled class="form-control floating" type="text" name="title_view" id="title_view">
                                 </div>
-                                <div class="form-group m-r-5">
-                                    <label class="input-group">
-                                        <span class="input-group-addon">
-                                            <input type="radio" id="level_view_3" name="approval_level_view" value="3" disabled/>
-                                        </span>
-                                        <div class="form-control form-control-static">
-                                            3
-                                        </div>
-                                        <span class="glyphicon form-control-feedback "></span>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Address
+                                        <span class="text-danger">*</span>
                                     </label>
+                                    <textarea disabled class="form-control floating" id="address_view" name="address_view" rows="5"></textarea>
                                 </div>
-                                <div class="form-group m-r-5">
-                                    <label class="input-group">
-                                        <span class="input-group-addon">
-                                            <input type="radio" id="level_view_4" name="approval_level_view" value="4" disabled/>
-                                        </span>
-                                        <div class="form-control form-control-static">
-                                            4
-                                        </div>
-                                        <span class="glyphicon form-control-feedback "></span>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Email
+                                        <span class="text-danger">*</span>
                                     </label>
+                                    <input disabled class="form-control floating" type="email" id="email_view" name="email_view">
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Contact person name</h4>
+                    </div>
+                    <div class="card-box">
+                       <div class="row">
+                            <div class="col-md-12">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Approval Process Information</h4>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">First Name</label>
-                                <input disabled class="form-control floating" type="text" id="first_name_view" name="first_name_view">
+                            <div class="col-md-12">
+                                <label class="control-label">How many level/s for the approval process ?</label>
+                                <span class="text-danger">*</span>
+                                <div class="form-inline m-b-15">
+                                    <div class="form-group m-r-5">
+                                        <label class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="radio" id="level_view_1" name="approval_level_view" value="1" disabled/>
+                                            </span>
+                                            <div class="form-control form-control-static">
+                                                1
+                                            </div>
+                                            <span class="glyphicon form-control-feedback "></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-group m-r-5">
+                                        <label class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="radio" id="level_view_2" name="approval_level_view" value="2" disabled/>
+                                            </span>
+                                            <div class="form-control form-control-static">
+                                                2
+                                            </div>
+                                            <span class="glyphicon form-control-feedback "></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-group m-r-5">
+                                        <label class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="radio" id="level_view_3" name="approval_level_view" value="3" disabled/>
+                                            </span>
+                                            <div class="form-control form-control-static">
+                                                3
+                                            </div>
+                                            <span class="glyphicon form-control-feedback "></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-group m-r-5">
+                                        <label class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="radio" id="level_view_4" name="approval_level_view" value="4" disabled/>
+                                            </span>
+                                            <div class="form-control form-control-static">
+                                                4
+                                            </div>
+                                            <span class="glyphicon form-control-feedback "></span>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">Last Name</label>
-                                <input disabled class="form-control floating" type="text" id="last_name_view" name="last_name_view">
+                       </div> 
+                    </div>
+                    <div class="card-box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Contact person name</h4>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">Mobile No</label>
-                                <input type="text" class="form-control floating number_validator" id="mobile_no_view" name="mobile_no_view" readonly>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">First Name</label>
+                                    <input disabled class="form-control floating" type="text" id="first_name_view" name="first_name_view">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">Gender</label>
-                                <select disabled class="form-control floating" id="gender_view" name="gender_view">
-                                    <option value="">Select Gender</option>
-                                    <option value="M">Male</option>
-                                    <option value="F">Female</option>
-                                    <option value="O">Others</option>
-                                </select>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Last Name</label>
+                                    <input disabled class="form-control floating" type="text" id="last_name_view" name="last_name_view">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Mobile No</label>
+                                    <input type="text" class="form-control floating number_validator" id="mobile_no_view" name="mobile_no_view" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Gender</label>
+                                    <select disabled class="form-control floating" id="gender_view" name="gender_view">
+                                        <option value="">Select Gender</option>
+                                        <option value="M">Male</option>
+                                        <option value="F">Female</option>
+                                        <option value="O">Others</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -462,125 +475,136 @@
 
                 <form class="m-b-30" name="frmEditFirm" id="frmEditFirm" method="POST">
                     <input type="hidden" name="_csrf" value="{{csrfToken}}">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="control-label">Firm Name
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input class="form-control" type="text" name="title_edit" id="title_edit">
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="control-label">Address
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <textarea class="form-control" id="address_edit" name="address_edit" rows="5"></textarea>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="control-label">Email
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input class="form-control" type="email" id="email_edit" name="email_edit">
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-12">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Approval Process Information</h4>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <label class="control-label">How many level/s for the approval process ?</label>
-                            <span class="text-danger">*</span>
-                            <div class="form-inline m-b-15">
-                                <div class="form-group m-r-5">
-                                    <label class="input-group">
-                                        <span class="input-group-addon">
-                                            <input type="radio" id="level_edit_1" name="approval_level_edit" value="1" disabled/>
-                                        </span>
-                                        <div class="form-control form-control-static">
-                                            1
-                                        </div>
-                                        <span class="glyphicon form-control-feedback "></span>
-                                    </label>
+                    <div class="card-box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">General Information</h4>
                                 </div>
-                                <div class="form-group m-r-5">
-                                    <label class="input-group">
-                                        <span class="input-group-addon">
-                                            <input type="radio" id="level_edit_2" name="approval_level_edit" value="2" disabled/>
-                                        </span>
-                                        <div class="form-control form-control-static">
-                                            2
-                                        </div>
-                                        <span class="glyphicon form-control-feedback "></span>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Firm Name
+                                        <span class="text-danger">*</span>
                                     </label>
+                                    <input class="form-control" type="text" name="title_edit" id="title_edit">
                                 </div>
-                                <div class="form-group m-r-5">
-                                    <label class="input-group">
-                                        <span class="input-group-addon">
-                                            <input type="radio" id="level_edit_3" name="approval_level_edit" value="3" disabled/>
-                                        </span>
-                                        <div class="form-control form-control-static">
-                                            3
-                                        </div>
-                                        <span class="glyphicon form-control-feedback "></span>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Address
+                                        <span class="text-danger">*</span>
                                     </label>
+                                    <textarea class="form-control" id="address_edit" name="address_edit" rows="5"></textarea>
                                 </div>
-                                <div class="form-group m-r-5">
-                                    <label class="input-group">
-                                        <span class="input-group-addon">
-                                            <input type="radio" id="level_edit_4" name="approval_level_edit" value="4" disabled/>
-                                        </span>
-                                        <div class="form-control form-control-static">
-                                            4
-                                        </div>
-                                        <span class="glyphicon form-control-feedback "></span>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Email
+                                        <span class="text-danger">*</span>
                                     </label>
+                                    <input class="form-control" type="email" id="email_edit" name="email_edit">
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Contact person name</h4>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">First Name</label>
-                                <input class="form-control" type="text" id="first_name_edit" name="first_name_edit">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">Last Name</label>
-                                <input class="form-control" type="text" id="last_name_edit" name="last_name_edit">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">Mobile No</label>
-                                <input type="text" class="form-control floating number_validator" id="mobile_no_edit" name="mobile_no_edit">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">Gender</label>
-                                <select class="select" id="gender_edit" name="gender_edit">
-                                    <option value="">Select Gender</option>
-                                    <option value="M">Male</option>
-                                    <option value="F">Female</option>
-                                    <option value="O">Others</option>
-                                </select>
-                            </div>
-                        </div>
-
                     </div>
-
+                    <div class="card-box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Approval Process Information</h4>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="control-label">How many level/s for the approval process ?</label>
+                                <span class="text-danger">*</span>
+                                <div class="form-inline m-b-15">
+                                    <div class="form-group m-r-5">
+                                        <label class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="radio" id="level_edit_1" name="approval_level_edit" value="1" disabled/>
+                                            </span>
+                                            <div class="form-control form-control-static">
+                                                1
+                                            </div>
+                                            <span class="glyphicon form-control-feedback "></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-group m-r-5">
+                                        <label class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="radio" id="level_edit_2" name="approval_level_edit" value="2" disabled/>
+                                            </span>
+                                            <div class="form-control form-control-static">
+                                                2
+                                            </div>
+                                            <span class="glyphicon form-control-feedback "></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-group m-r-5">
+                                        <label class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="radio" id="level_edit_3" name="approval_level_edit" value="3" disabled/>
+                                            </span>
+                                            <div class="form-control form-control-static">
+                                                3
+                                            </div>
+                                            <span class="glyphicon form-control-feedback "></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-group m-r-5">
+                                        <label class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="radio" id="level_edit_4" name="approval_level_edit" value="4" disabled/>
+                                            </span>
+                                            <div class="form-control form-control-static">
+                                                4
+                                            </div>
+                                            <span class="glyphicon form-control-feedback "></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Contact person name</h4>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">First Name</label>
+                                    <input class="form-control" type="text" id="first_name_edit" name="first_name_edit">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Last Name</label>
+                                    <input class="form-control" type="text" id="last_name_edit" name="last_name_edit">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Mobile No</label>
+                                    <input type="text" class="form-control floating number_validator" id="mobile_no_edit" name="mobile_no_edit">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Gender</label>
+                                    <select class="select" id="gender_edit" name="gender_edit">
+                                        <option value="">Select Gender</option>
+                                        <option value="M">Male</option>
+                                        <option value="F">Female</option>
+                                        <option value="O">Others</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="m-t-20 text-center">
                         <button class="btn btn-primary btn-lg" type="button" id="btnEdit">Update Firm</button>
                         <a href="/firms" class="btn btn-primary btn-lg m-l-10">Cancel</a>
