@@ -293,7 +293,7 @@ router.post('/add-office', auth, firmAuth, csrfProtection, (req, res) => {
         state: req.body.state,
         country: req.body.country,
         zipcode: req.body.zipcode,
-        mobile: req.body.mobile_no
+        mobile: removePhoneMask(req.body.mobile_no)
     }).then(store => {
         res.json({"add_office":true});
     });
@@ -308,7 +308,7 @@ router.post('/edit-office/:id', auth, firmAuth, csrfProtection, (req, res) => {
         state: req.body.edit_office_state,
         country: req.body.edit_office_country,
         zipcode: req.body.edit_office_zipcode,
-        mobile: req.body.edit_office_mobile_no
+        mobile: removePhoneMask(req.body.edit_office_mobile_no)
     },{ where: {id: req.params['id']}
     }).then(edit => {
         res.json({"edit_office":true});
@@ -335,7 +335,7 @@ router.post('/add-office-contact', auth, firmAuth, csrfProtection, (req, res) =>
         first_name: req.body.first_name,
         last_name: req.body.last_name,
         email: req.body.email,
-        mobile: req.body.mobile_no,
+        mobile: removePhoneMask(req.body.mobile_no),
         address: req.body.address,
         city: req.body.city,
         state: req.body.state,
@@ -354,7 +354,7 @@ router.post('/edit-office-contact/:id', auth, firmAuth, csrfProtection, (req, re
         first_name: req.body.edit_contact_first_name,
         last_name: req.body.edit_contact_last_name,
         email: req.body.edit_contact_email,
-        mobile: req.body.edit_contact_mobile_no,
+        mobile: removePhoneMask(req.body.edit_contact_mobile_no),
         address: req.body.edit_contact_address,
         city: req.body.edit_contact_city,
         state: req.body.edit_contact_state,
