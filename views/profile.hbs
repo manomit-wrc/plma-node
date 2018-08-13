@@ -5,7 +5,15 @@
             <h4 class="page-title">My Profile</h4>
          </div>
          <div class="col-sm-4 text-right m-b-30">
-            <a href="/edit-profile" class="btn btn-primary rounded"><i class="fa fa-plus"></i> Edit Profile</a>
+            {{#if_eq user.role_id "3"}}
+                {{#if_eq user.actual_role_id "0"}}
+                    <a href="/edit-attorney-profile" class="btn btn-primary rounded"><i class="fa fa-plus"></i> Edit Profile</a>
+                {{else}}
+                    <a href="/edit-profile" class="btn btn-primary rounded"><i class="fa fa-plus"></i> Edit Profile</a>
+                {{/if_eq}}
+            {{else}}
+                <a href="/edit-profile" class="btn btn-primary rounded"><i class="fa fa-plus"></i> Edit Profile</a>
+            {{/if_eq}}
          </div>
       </div>
       <div class="card-box">

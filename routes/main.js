@@ -111,7 +111,7 @@ router.post('/admin/edit-budget/:id', auth, siteAuth, csrfProtection, (req, res)
 		if (budgets.length === 0) {
 			budget.update({
 				name: req.body.edit_name,
-				parent_id: req.body.parent_id,
+				parent_id: req.body.edit_parent_id,
 				remarks: req.body.edit_remarks
 			}, {
 					where: { id: req.params['id'] }

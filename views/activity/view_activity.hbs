@@ -205,6 +205,7 @@
                 </div>
               </div>
 
+            {{!-- {{#if_eq editdata.target "C"}}  --}}
               <div class="col-md-6">
                 <div class="form-group form-focus select-focus" id="target_list" {{#if_eq editdata.target "C"}} style="display:none;" {{/if_eq}}>
                   <select id="target_id" name="target_user[]" class=" form-control floating" multiple="multiple" disabled>
@@ -214,7 +215,9 @@
                   </select>
                 </div>
               </div>
+              {{!-- {{/if_eq}} --}}
 
+              {{!-- {{#if_eq editdata.target "T"}} --}}
               <div class="col-md-6" id="client_list" {{#if_eq editdata.target "T"}} style="display:none;" {{/if_eq}}>
                 <div class="form-group form-focus select-focus">
                   <select id="client_id" name="client_user[]" class=" form-control floating" multiple="multiple" disabled>
@@ -224,7 +227,9 @@
                   </select>
                 </div>
               </div>
+              {{!-- {{/if_eq}} --}}
 
+              {{#if_eq editdata.target "R"}}
               <div class="col-md-6" id="referral_list" {{#if_eq editdata.target "R"}} style="display:none;" {{/if_eq}}>
                 <div class="form-group form-focus select-focus">
                   <select id="referral_id" name="referral_user[]" class=" form-control floating" multiple="multiple" disabled>
@@ -234,6 +239,7 @@
                   </select>
                 </div>
               </div>
+              {{/if_eq}}
 
               <div class="col-md-6"></div>
 
