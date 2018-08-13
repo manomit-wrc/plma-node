@@ -23,45 +23,41 @@
                 <div class="row">
                     <div class="col-md-12">
                         {{#each budgetArr}}
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">{{this.parent_name}}</h3>
-                            </div>
-                            <div class="panel-body">
-                                {{#each this.child_budget}}
-                                <div class="list">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <h5>
-                                                {{this.name}}
-                                            </h5>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-
-                                                <input class="form-control edit_budget_hour number_budget" type="text" data-budgets-id="{{this.id}}" id="edit_budget_hour"
-                                                    name="edit_budget_hour" placeholder="Hours" value="{{this.hour}}" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <input class="form-control edit_budget_amount number_budget" type="text" id="edit_budget_amount" name="edit_budget_amount"
-                                                    placeholder="Dollars($)" value="{{this.amount}}" disabled>
-                                            </div>
-                                        </div>
-                                        {{#if_eq this.hour ""}} {{else}}
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <input type="button" class="btn btn-info" data-budget_id="{{this.id}}" data-remarks="{{this.remarks}}" data-activity_id="{{../../activity_id}}" id="remarks_btn" value="Remarks">
-                                            </div>
-                                        </div>
-                                        {{/if_eq}}
-                                    </div>
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">{{this.parent_name}}</h3>
                                 </div>
-                                {{/each}}
-
+                                <div class="panel-body">
+                                    {{#each this.child_budget}}
+                                        <div class="list">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <h5>
+                                                        {{this.name}}
+                                                    </h5>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <input class="form-control edit_budget_hour number_budget" type="text" data-budgets-id="{{this.id}}" id="edit_budget_hour" name="edit_budget_hour" placeholder="Hours" value="{{#if_eq this.level_type 'I'}} {{marketing_budget_hour this.hour ../../this.tclength}} {{else}} {{this.hour}} {{/if_eq}}" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <input class="form-control edit_budget_amount number_budget" type="text" id="edit_budget_amount" name="edit_budget_amount" placeholder="Dollars($)" value="{{#if_eq this.level_type 'I'}} {{marketing_budget_amount this.amount ../../this.tclength}} {{else}} {{this.amount}} {{/if_eq}}" disabled>
+                                                    </div>
+                                                </div>
+                                                {{#if_eq this.hour ""}} {{else}}
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <input type="button" class="btn btn-info" data-budget_id="{{this.id}}" data-remarks="{{this.remarks}}" data-activity_id="{{../../activity_id}}" id="remarks_btn" value="Remarks">
+                                                    </div>
+                                                </div>
+                                                {{/if_eq}}
+                                            </div>
+                                        </div>
+                                    {{/each}}
+                                </div>
                             </div>
-                        </div>
                         {{/each}}
                     </div>
                 </div>
@@ -70,7 +66,6 @@
                     <button class="btn btn-primary btn-lg" data-activity_id="{{activity_id}}" data-status="2" type="button" id="btnApproveActivityBudget">Approve</button>
                     <button class="btn btn-primary btn-lg" data-activity_id="{{activity_id}}" data-status="3" type="button" id="btnRejectActivityBudget">Reject</button>
                 </div>
-
             </form>
         </div>
     </div>
