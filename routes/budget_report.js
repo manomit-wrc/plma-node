@@ -133,7 +133,6 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
       }
     });
 
-
     for (var j = 0; j < activity_goals.length; j++) {
       activityArr.push({
         "activity_name": activity_goals[j].activity_goal,
@@ -147,7 +146,6 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
   } else {
     success = 0;
   }
-
 
   res.render('activity_budget_report/index', {
     layout: 'dashboard',
@@ -321,7 +319,6 @@ router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req,
 
 });
 
-
 router.get('/activity/activity_details_budget/:id', auth, csrfProtection, async (req, res) => {
 
   var marketingBudget = [];
@@ -336,7 +333,6 @@ router.get('/activity/activity_details_budget/:id', auth, csrfProtection, async 
 
   for (var i = 0; i < budgetList.length; i++) {
     if (budgetList[i].parent_id === 0) {
-
       const parent_name = budgetList[i].name;
       const parent_id = budgetList[i].id;
       const child_budget = lodash.filter(budgetList, arr => arr.parent_id === budgetList[i].id);
@@ -357,11 +353,7 @@ router.get('/activity/activity_details_budget/:id', auth, csrfProtection, async 
      
         const hour = activity_budget.length > 0 ? activity_budget[0].hour : "-";
         const amount = activity_budget.length > 0 ? activity_budget[0].amount : "-";
-
-        // console.log(activity_budget[j].level_type);
-        
-
-        const level = activity_budget.length > 0 ? ((activity_budget[0].level_type==='Individual')? 'I' :'E') : "-";
+        const level = activity_budget.length > 0 ? ((activity_budget[0].level_type === 'Individual') ? 'I' : 'E') : "-";
 
         child_budget_arr.push({
           "id": child_budget[j].id,
@@ -397,7 +389,7 @@ router.get('/activity/activity_details_budget/:id', auth, csrfProtection, async 
     }
 
     marketingBudget.push({
-      'name': detailsActivity[0].first_name +" "+detailsActivity[0].last_name,
+      'name': detailsActivity[0].first_name + " " + detailsActivity[0].last_name,
       'budget_list': budgetArr
     });
   } 

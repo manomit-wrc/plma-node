@@ -31,9 +31,7 @@ function removePhoneMask(removeCharacter) {
 	return removeCharacter;
 }
 
-
 router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res) => {
-
 	var activityFilter = {};
 	if (req.query.searchActive) {
 		activityFilter.activity_type = req.query.searchActive;
@@ -68,6 +66,7 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 	const target = await Target.findAll({
 		where: {
 			'target_type': "I",
+			'target_status':'1',
 			'attorney_id': req.user.id
 		}
 	});
@@ -80,11 +79,8 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 	});
 
 	const referral = await Referral.findAll({
-		where: { 'attorney_id': req.user.id }
+		where: { 'firm_id':req.user.firm_id,'attorney_id': req.user.id }
 	});
-
-	
-	
 
 	const budgetList = await Budget.findAll();
 
@@ -118,8 +114,29 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 
 //fetch
 
-router.get('/activitypage', auth, firmAttrAuth, csrfProtection, (req, res) => {
+router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var success_message = req.flash('success-message')[0];
+	
+	var activity_data = await Activity.findAll({
+		where: { 'firm_id': 0 }
+	});
+	
+	for (var i = 0; i < activity_data.length; i++) {
+		await Activity_to_user_type.destroy({
+			where: {
+				activity_id: activity_data[i].id
+			}
+		});
+		await ActivityBudget.destroy({
+			where: {
+				activity_id: activity_data[i].id
+			}
+		});
+		await Activity.destroy({
+			where: { 'id': activity_data[i].id }
+		});
+	}
+
 	Activity.findAll({
 		where: {
 			firm_id : req.user.firm_id
@@ -164,11 +181,9 @@ router.post('/activity/add-budget', auth, firmAttrAuth, csrfProtection, async (r
 	});
 })
 
-
 // ========{{  insert data to the database  }}=====================//
 
 router.post('/activity/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
-
 	var target_user=[];
 	var client_user=[];
 	var referral_user = [];
@@ -192,7 +207,7 @@ router.post('/activity/add', auth, firmAttrAuth, csrfProtection, async (req, res
 		if (target_user !== undefined) {
 			targetClientLength = target_user.length;
 		}
-		if (client_user !== undefined ) {
+		if (client_user !== undefined) {
 			targetClientLength = client_user.length;
 		}
 		if (referral_user !== undefined) {
@@ -213,7 +228,6 @@ router.post('/activity/add', auth, firmAttrAuth, csrfProtection, async (req, res
 			});
 		}
 	}
-
 
 	await Activity.update({
 		firm: req.body.firm,
@@ -286,7 +300,6 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		where: { 'firm_id': req.user.firm_id }
 	});
 	const practice_area = await PracticeArea.findAll();
-
 
 	const target = await Target.findAll({
 		where: {
@@ -361,9 +374,6 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		}
 	}
 
-
-
-
 	var alldata = [];
 	var target_client_list;
 
@@ -413,7 +423,6 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		}]
 	});
 
-
 	res.render('activity/view_activity', {
 		layout: 'dashboard',
 		csrfToken: req.csrfToken(),
@@ -431,13 +440,11 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		level_type,
 		section: allSection
 	});
-
 });
 
 //.....................{{   edit data  }}.......................................//
 
 router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
-
 	Activity.hasMany(Activity_to_user_type, {
 		foreignKey: 'activity_id'
 	});
@@ -448,7 +455,6 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		where: { 'firm_id': req.user.firm_id }
 	});
 	const practice_area = await PracticeArea.findAll();
-
 
 	const target = await Target.findAll({
 		where: {
@@ -526,9 +532,6 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		}
 	}
 
-
-
-
 	var alldata = [];
 	var target_client_list;
 
@@ -578,6 +581,7 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		}]
 	});
 
+	req.flash('success-message', 'Activity update Successfully');
 	res.render('activity/update', {
 		layout: 'dashboard',
 		csrfToken: req.csrfToken(),
@@ -596,7 +600,6 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		section: allSection
 	});
 });
-
 
 //update data
 router.post('/activity/edit-budget', auth, firmAttrAuth, csrfProtection, async (req, res) => {
@@ -630,10 +633,7 @@ router.post('/activity/edit-budget', auth, firmAttrAuth, csrfProtection, async (
 	});
 });
 
-
-
 router.post('/activity/update/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
-
 	target_user = [];
 	client_user = [];
 	referral_user = [];
@@ -652,15 +652,8 @@ router.post('/activity/update/:id', auth, firmAttrAuth, csrfProtection, async (r
 		}
 	})
 
-
 	var targetClientLength;
 	if (activityBudgetData[0].level_type === 'Individual') {
-		/* if (target_user.length > 0) {
-			targetClientLength = target_user.length;
-		} else {
-			targetClientLength = client_user.length;
-		} */
-
 		if (target_user !== undefined) {
 			targetClientLength = target_user.length;
 		}
@@ -747,7 +740,6 @@ router.post('/activity/update/:id', auth, firmAttrAuth, csrfProtection, async (r
 	res.redirect('/activitypage');
 });
 
-
 router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	await Activity.update({
 		activity_status: 1
@@ -761,8 +753,6 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
 	});
 });
 
-
-
 router.get('/activity/deletedata/:id', auth, firmAttrAuth, async (req, res) => {
 	await Activity.destroy({
 		where: {
@@ -774,7 +764,12 @@ router.get('/activity/deletedata/:id', auth, firmAttrAuth, async (req, res) => {
 			activity_id: req.params['id']
 		}
 	});
-	req.flash('success-message', 'Activity delete Successfully');
+	await ActivityBudget.destroy({
+		where: {
+			activity_id: req.params['id']
+		}
+	});
+	req.flash('success-message', 'Activity deleted Successfully');
 	res.redirect('/activitypage');
 });
 

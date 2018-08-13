@@ -17,6 +17,7 @@ const Client = require('../models').client;
 const user = require('../models').user;
 const Activity = require('../models').activity;
 const TargetActivity = require('../models').jointactivity;
+const Referral = require('../models').referral;
 var csrfProtection = csrf({ cookie: true });
 var fs = require('fs');
 const router = express.Router();
@@ -536,7 +537,7 @@ router.post('/target/move-to-client', auth, async (req, res) => {
 		});
 	}	
 });
-
+// Starts all  asssociated activitsies for target and client
 router.get("/target/view-activity/:id", auth, async(req, res)=> {
 	TargetActivity.belongsTo(Activity, {
 		foreignKey: 'activity_id'
@@ -572,6 +573,34 @@ router.get("/client/view-activity/:id", auth, async(req, res)=> {
 	res.render("client/view_client_activity", {
 		layout: 'dashboard',
 		activity_details
+	});
+});
+
+// start associate referral 
+
+router.get("/target/view-referral/:id", auth, firmAttrAuth, async (req, res)=> {
+	const referral = await Referral.findAll({
+		where: {
+			referred_type : "T",
+			target_id : req.params['id']
+		}
+	});
+	res.render("target/view_referral", {
+		layout: 'dashboard',
+		referral
+	});
+});
+
+router.get("/client/view-referral/:id", auth, firmAttrAuth, async (req, res)=> {
+	const referral = await Referral.findAll({
+		where: {
+			referred_type : "C",
+			client_id : req.params['id']
+		}
+	});
+	res.render("client/view_referral", {
+		layout: 'dashboard',
+		referral
 	});
 });
 

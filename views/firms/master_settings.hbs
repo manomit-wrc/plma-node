@@ -13,6 +13,11 @@
 		</div>
 		<div class="row filter-row">
 			<div class="row">
+				 {{#if success_message}}
+                    <div class="alert alert-success">
+                        <strong>Success! </strong>{{success_message}}
+                    </div>
+                {{/if}}
 				<div class="col-md-12">
 					<div class="tab firm-box" role="tabpanel">
 						<!-- Nav tabs -->
@@ -397,7 +402,7 @@
 								<label class="control-label">Mobile No
 									<span class="text-danger">*</span>
 								</label>
-								<input class="form-control" type="text" name="mobile_no" id="mobile_no">
+								<input class="form-control number_validator" type="text" name="mobile_no" id="mobile_no">
 							</div>
 						</div>
 						<div class="col-md-12">

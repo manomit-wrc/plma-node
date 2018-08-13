@@ -292,7 +292,7 @@ const hbs = exphbs.create({
                 return "-";
             }
         },
-        marketing_budget_hour: function (hour,length) {
+        marketing_budget_hour: function (hour, length) {
             if (hour > 0) {
                 return (hour / length).toFixed(2);
             } else {

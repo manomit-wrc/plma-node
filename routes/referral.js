@@ -16,6 +16,8 @@ const City = require('../models').city;
 const State = require('../models').state;
 const Country = require('../models').country;
 const industry_type = require('../models').industry_type;
+const Activity = require('../models').activity;
+const TargetActivity = require('../models').jointactivity;
 var fs = require('fs');
 const multer  = require('multer');
 var xlsx = require('node-xlsx');
@@ -64,11 +66,13 @@ router.get('/referral', auth, firmAttrAuth, csrfProtection, async(req, res)=> {
 		whereCondition.firm_id = req.user.firm_id;
 	}
 	if (req.user.role_id != 2) {
-		whereCondition.user_id = req.user.id;
+		whereCondition.attorney_id = req.user.id;
 	}
+	
 	const referral = await Referral.findAll({
 		where: whereCondition
 	});
+	
 	res.render('referral/index', {
 		layout: 'dashboard',
 		success_message,
@@ -579,6 +583,27 @@ router.post('/referral/upload-excel', auth, referral_xcel.single('ref_excel_file
 	}
 	req.flash('success-ref-message', 'Referral Imported Successfully');
 	res.redirect('/referral');
+});
+
+// start all associated activities
+
+router.get("/referral/view-activity/:id", auth, async (req, res) => {
+	TargetActivity.belongsTo(Activity, {
+		foreignKey: 'activity_id'
+	});
+	const activity_details = await TargetActivity.findAll({
+		where: {
+			target_client_type: "R",
+			type: req.params['id']
+		},
+		include: [{
+			model: Activity
+		}]
+	});
+	res.render("referral/view_activity", {
+		layout: 'dashboard',
+		activity_details
+	});
 });
 
 
