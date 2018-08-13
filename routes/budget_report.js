@@ -10,6 +10,8 @@ const ActivityBudget = require('../models').activity_budget;
 const Jointactivities = require('../models').jointactivity;
 const client = require('../models').client;
 const Target = require('../models').target;
+const Referral = require('../models').referral;
+
 
 var csrfProtection = csrf({
   cookie: true
@@ -18,21 +20,28 @@ var csrfProtection = csrf({
 const router = express.Router();
 
 router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => {
-  if (req.user.role_id == 2) {
-    var firm_id = req.user.firm_id;
+  // if (req.user.role_id == 2) {
+  //   var firm_id = req.user.firm_id;
+  //   var activity_goals = await ActivityGoal.findAll({
+  //     where: {
+  //       firm_id: firm_id
+  //     }
+  //   });
+  // } else {
+  //   var user_id = req.user.id;
+  //   var activity_goals = await ActivityGoal.findAll({
+  //     where: {
+  //       user_id: user_id
+  //     }
+  //   });
+  // }
+
+  var firm_id = req.user.firm_id;
     var activity_goals = await ActivityGoal.findAll({
       where: {
         firm_id: firm_id
       }
     });
-  } else {
-    var user_id = req.user.id;
-    var activity_goals = await ActivityGoal.findAll({
-      where: {
-        user_id: user_id
-      }
-    });
-  }
 
   var activityArr = [];
   var budgetArr = [];
@@ -279,8 +288,14 @@ router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req,
             'id': jointActivities_arr[i].ja[k].type
           }
         });
-      } else {
+      } else if(jointActivities_arr[i].ja[k].target_client_type == 'C') {
         detailsActivity = await client.findAll({
+          where: {
+            'id': jointActivities_arr[i].ja[k].type
+          }
+        });
+      } else {
+        detailsActivity = await Referral.findAll({
           where: {
             'id': jointActivities_arr[i].ja[k].type
           }
@@ -371,8 +386,12 @@ router.get('/activity/activity_details_budget/:id', auth, csrfProtection, async 
       detailsActivity = await Target.findAll({
         where: { 'id': jointActivities[i].type }
       });
-    } else {
+    } else if (jointActivities[i].target_client_type == 'C') {
       detailsActivity = await client.findAll({
+        where: { 'id': jointActivities[i].type }
+      });
+    } else {
+      detailsActivity = await Referral.findAll({
         where: { 'id': jointActivities[i].type }
       });
     }

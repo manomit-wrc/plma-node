@@ -26,52 +26,37 @@
                                 <th style="width:30%;">Practice Area Name</th>
                                 <th>Remarks</th>
                                 <th>Created Date &amp; Time</th>
-                                <th class="text-right">Action</th>
+                                <th style="width: 10% !important;" class="text-right">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             {{#each practice_area}}
                             <tr>
                                 <td>{{math @index "+" 1}}</td>
-                                <td><a href="#" data-toggle="modal" data-target="#view_users" data-practice-area-id="{{this.id}}"
-                                                  data-code="{{this.code}}" data-name="{{this.name}}" data-remarks="{{this.remarks}}"
-                                                  id="view-practice-area">{{this.name}} </a></td>
+                                <td>
+                                    <a href="#" data-toggle="modal" data-target="#view_users" data-practice-area-id="{{this.id}}" data-code="{{this.code}}" data-name="{{this.name}}"
+                                        data-remarks="{{this.remarks}}" id="view-practice-area">{{this.name}} </a>
+                                </td>
                                 <!-- <td>{{this.name}}</td> -->
                                 <td>{{this.remarks}}</td>
                                 <td>{{dateFormat this.createdAt "DD-MM-YYYY, hh:mm a"}}</td>
                                 <td class="text-right">
 
-                                  <a href="#" data-toggle="modal" data-target="#view_users" data-practice-area-id="{{this.id}}"
-                                                  data-code="{{this.code}}" data-name="{{this.name}}" data-remarks="{{this.remarks}}"
-                                                  id="view-practice-area" class="btn btn-success btn-sm" >
-                                                  <i class="fa fa-eye m-r-5"></i></a>
+                                    <a href="#" data-toggle="modal" data-target="#view_users" data-practice-area-id="{{this.id}}" data-code="{{this.code}}" data-name="{{this.name}}"
+                                        data-remarks="{{this.remarks}}" id="view-practice-area" class="btn btn-success btn-sm">
+                                        <i class="fa fa-eye m-r-5"></i>
+                                    </a>
 
-                                    <a href="#" data-toggle="modal" data-target="#edit_users" data-practice-area-id="{{this.id}}"
-                                                    data-code="{{this.code}}" data-name="{{this.name}}" data-remarks="{{this.remarks}}"
-                                                    id="edit-practice-area" class="btn btn-info btn-sm" >
-                                                    <i class="fa fa-pencil m-r-5"></i></a>
-                                    <a href="#" data-toggle="modal" data-target="#delete_users" data-practice-area-id="{{this.id}}"
-                                                    id="delete-practice-area" class="btn btn-danger btn-sm">
-                                                    <i class="fa fa-trash-o m-r-5"></i></a>
+                                    <a href="#" data-toggle="modal" data-target="#edit_users" data-practice-area-id="{{this.id}}" data-code="{{this.code}}" data-name="{{this.name}}"
+                                        data-remarks="{{this.remarks}}" id="edit-practice-area" class="btn btn-info btn-sm">
+                                        <i class="fa fa-pencil m-r-5"></i>
+                                    </a>
+                                    <a href="#" data-toggle="modal" data-target="#delete_users" data-practice-area-id="{{this.id}}" id="delete-practice-area"
+                                        class="btn btn-danger btn-sm">
+                                        <i class="fa fa-trash-o m-r-5"></i>
+                                    </a>
 
-                                    {{!-- <div class="dropdown">
-                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                            <i class="fa fa-ellipsis-v"></i>
-                                        </a>
-                                        <ul class="dropdown-menu pull-right">
-                                            <li>
-                                                <a href="#" data-toggle="modal" data-target="#edit_users" data-practice-area-id="{{this.id}}"
-                                                    data-code="{{this.code}}" data-name="{{this.name}}" data-remarks="{{this.remarks}}"
-                                                    id="edit-practice-area">
-                                                    <i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                            </li>
-                                            <li>
-                                                <a href="#" data-toggle="modal" data-target="#delete_users" data-practice-area-id="{{this.id}}"
-                                                    id="delete-practice-area">
-                                                    <i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                            </li>
-                                        </ul>
-                                    </div> --}}
+
                                 </td>
                             </tr>
                             {{/each}}
@@ -135,7 +120,7 @@
                                 <label class="control-label">Practice Area Name
                                     <span class="text-danger">*</span>
                                 </label>
-                                <input  disabled class="form-control floating" type="text" id="view_name" name="view_name">
+                                <input disabled class="form-control floating" type="text" id="view_name" name="view_name">
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -143,7 +128,7 @@
                                 <label class="control-label">Remarks
                                     <span class="text-danger">*</span>
                                 </label>
-                                <textarea  disabled class="form-control floating" id="view_remarks" name="view_remarks" rows="5"></textarea>
+                                <textarea disabled class="form-control floating" id="view_remarks" name="view_remarks" rows="5"></textarea>
                             </div>
                         </div>
                     </div>
@@ -400,5 +385,4 @@
     })
 
 /*=========================Ends delete Practice area==========================*/
-</script>
-{{/content}}
+</script> {{/content}}

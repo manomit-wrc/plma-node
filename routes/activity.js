@@ -15,6 +15,7 @@ const Client = require('../models').client;
 const Budget = require('../models').budget;
 const ActivityBudget = require('../models').activity_budget;
 const sectionToFirm = require('../models').section_to_firms;
+const Referral = require('../models').referral;
 
 var csrfProtection = csrf({
 	cookie: true
@@ -30,7 +31,7 @@ function removePhoneMask(removeCharacter) {
 	return removeCharacter;
 }
 
-//===================================================START ACTIVITY===============================================================================//
+
 router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 
 	var activityFilter = {};
@@ -59,7 +60,9 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 		}]
 	});
 
-	const activity_goal = await ActivityGoal.findAll();
+	const activity_goal = await ActivityGoal.findAll({
+		where: { 'firm_id': req.user.firm_id }
+	});
 	const practice_area = await PracticeArea.findAll();
 
 	const target = await Target.findAll({
@@ -76,6 +79,13 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 		}
 	});
 
+	const referral = await Referral.findAll({
+		where: { 'attorney_id': req.user.id }
+	});
+
+	
+	
+
 	const budgetList = await Budget.findAll();
 
 	var budgetArr = [];
@@ -84,10 +94,8 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 			const parent_name = budgetList[i].name;
 			const child_budget = lodash.filter(budgetList, arr => arr.parent_id === budgetList[i].id);
 			budgetArr.push({
-
 				"parent_name": parent_name,
 				"child_budget": child_budget
-
 			});
 		}
 	}
@@ -103,6 +111,7 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 		practice_area: practice_area,
 		client: client,
 		target: target,
+		referral,
 		budgetArr
 	});
 });
@@ -112,7 +121,8 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 router.get('/activitypage', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	Activity.findAll({
 		where: {
-			user_id: req.user.id
+			//user_id: req.user.id
+			firm_id : req.user.firm_id
 		},
 	}).then(row => {
 		res.render('activity/activity', {
@@ -160,9 +170,11 @@ router.post('/activity/add', auth, firmAttrAuth, csrfProtection, async (req, res
 
 	var target_user=[];
 	var client_user=[];
+	var referral_user = [];
 	
 	target_user = req.body.target_user;
 	client_user = req.body.client_user;
+	referral_user = req.body.referral_user; 
 
 	const CreationDate = req.body.activity_creation_date ? req.body.activity_creation_date.split("-") : '';
 	const FromDate = req.body.activity_from_date ? req.body.activity_from_date.split("-") : '';
@@ -181,6 +193,9 @@ router.post('/activity/add', auth, firmAttrAuth, csrfProtection, async (req, res
 		}
 		if (client_user !== undefined) {
 			targetClientLength = client_user.length;
+		}
+		if (referral_user !== undefined) {
+			targetClientLength = referral_user.length;
 		}
 
 		for (var b = 0; b < activityBudgetData.length; b++) {
@@ -234,13 +249,22 @@ router.post('/activity/add', auth, firmAttrAuth, csrfProtection, async (req, res
 				type: target_user[i]
 			});
 		}
-	} else {
+	} else if (req.body.ref_type == 'C') {
 		for (var j = 0; j < client_user.length; j++) {
 			await Activity_to_user_type.create({
 				activity_id: req.body.activity_id,
 				target_client_type: req.body.ref_type,
 				type: client_user[j]
 			});
+		}
+	} else {
+		for (let r=0; r<referral_user.length; r++) {
+			await Activity_to_user_type.create({
+				activity_id: req.body.activity_id,
+				target_client_type: req.body.ref_type,
+				type: referral_user[r]
+			});
+				
 		}
 	}
 
@@ -254,22 +278,30 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 	});
 
 	const firm = await Firm.findAll({
-		firm_id: req.user.firm_id
+		where:{ id: req.user.firm_id }
 	});
 
-	const activity_goal = await ActivityGoal.findAll();
+	const activity_goal = await ActivityGoal.findAll({
+		where: { 'firm_id': req.user.firm_id }
+	});
 	const practice_area = await PracticeArea.findAll();
 
 
 	const target = await Target.findAll({
 		where: {
-			target_type: "I"
+			'target_type': "I",
+			'attorney_id': req.user.id
 		}
 	});
 	const client = await Client.findAll({
 		where: {
-			client_type: "I"
+			'client_type': "I",
+			'attorney_id': req.user.id
 		}
+	});
+
+	const referral = await Referral.findAll({
+		where: { 'attorney_id':req.user.id }
 	});
 
 	const editdata = await Activity.findAll({
@@ -347,12 +379,16 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 					'id': all_activity_client[i].type
 				}
 			})
-		} else {
+		} else if(all_activity_client[i].target_client_type == 'T') {
 			target_client_list = await Target.findAll({
 				where: {
 					'id': all_activity_client[i].type
 				}
 			})
+		} else {
+			target_client_list = await Referral.findAll({
+				where: { 'id': all_activity_client[i].type }
+			});
 		}
 		alldata.push({
 			'attorney_name': req.user.first_name + " " + req.user.last_name,
@@ -382,6 +418,7 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		csrfToken: req.csrfToken(),
 		client: client,
 		target: target,
+		referral,
 		arr,
 		alltarget_client: alldata,
 		editdata: editdata[0],
@@ -404,23 +441,31 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		foreignKey: 'activity_id'
 	});
 	const firm = await Firm.findAll({
-		where: {
-			id: req.user.firm_id
-		}
+		where: { id: req.user.firm_id }
 	});
-	const activity_goal = await ActivityGoal.findAll();
+	const activity_goal = await ActivityGoal.findAll({
+		where: { 'firm_id': req.user.firm_id }
+	});
 	const practice_area = await PracticeArea.findAll();
 
 
 	const target = await Target.findAll({
 		where: {
-			target_type: "I"
+			'target_type': "I",
+			'attorney_id': req.user.id
 		}
 	});
 
 	const client = await Client.findAll({
 		where: {
-			client_type: "I"
+			'client_type': "I",
+			'attorney_id': req.user.id
+		}
+	});
+
+	const referral = await Referral.findAll({
+		where: {
+			'attorney_id': req.user.id
 		}
 	});
 
@@ -499,12 +544,16 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 					'id': all_activity_client[i].type
 				}
 			})
-		} else {
+		} else if (all_activity_client[i].target_client_type == 'T') {
 			target_client_list = await Target.findAll({
 				where: {
 					'id': all_activity_client[i].type
 				}
 			})
+		} else {
+			target_client_list = await Referral.findAll({
+				where: { 'id': all_activity_client[i].type }
+			});
 		}
 		alldata.push({
 			'attorney_name': req.user.first_name + " " + req.user.last_name,
@@ -533,6 +582,7 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		csrfToken: req.csrfToken(),
 		client: client,
 		target: target,
+		referral:referral,
 		arr,
 		alltarget_client: alldata,
 		editdata: editdata[0],
@@ -585,9 +635,11 @@ router.post('/activity/update/:id', auth, firmAttrAuth, csrfProtection, async (r
 
 	target_user = [];
 	client_user = [];
+	referral_user = [];
 
 	target_user = req.body.target_user;
 	client_user = req.body.client_user;
+	referral_user = req.body.referral_user;
 
 	const CreationDate1 = req.body.activity_creation_date ? req.body.activity_creation_date.split("-") : '';
 	const FormDate1 = req.body.activity_from_date ? req.body.activity_from_date.split("-") : '';
@@ -602,10 +654,20 @@ router.post('/activity/update/:id', auth, firmAttrAuth, csrfProtection, async (r
 
 	var targetClientLength;
 	if (activityBudgetData[0].level_type === 'Individual') {
-		if (target_user.length > 0) {
+		/* if (target_user.length > 0) {
 			targetClientLength = target_user.length;
 		} else {
 			targetClientLength = client_user.length;
+		} */
+
+		if (target_user !== undefined) {
+			targetClientLength = target_user.length;
+		}
+		if (client_user !== undefined ) {
+			targetClientLength = client_user.length;
+		}
+		if (referral_user !== undefined) {
+			targetClientLength = referral_user.length;
 		}
 
 		for (var b = 0; b < activityBudgetData.length; b++) {
@@ -659,13 +721,23 @@ router.post('/activity/update/:id', auth, firmAttrAuth, csrfProtection, async (r
 				type: target_user[i]
 			});
 		}
-	} else {
+	} else if (req.body.ref_type == "C") {
 		{
 			for (var j = 0; j < client_user.length; j++) {
 				await Activity_to_user_type.create({
 					activity_id: req.params['id'],
 					target_client_type: req.body.ref_type,
 					type: client_user[j]
+				});
+			}
+		}
+	} else {
+		{
+			for (var k = 0; k < referral_user.length; k++) {
+				await Activity_to_user_type.create({
+					activity_id: req.params['id'],
+					target_referral_type: req.body.ref_type,
+					type: referral_user[k]
 				});
 			}
 		}

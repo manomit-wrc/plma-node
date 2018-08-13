@@ -50,6 +50,8 @@ function removePhoneMask(phone_no) {
 	phone_no = phone_no.replace(")", "");
 	phone_no = phone_no.replace("(", "");
 	phone_no = phone_no.replace(" ", "");
+	phone_no = phone_no.replace("$", "");
+	phone_no = phone_no.replace(",", "");
 	return phone_no;
 
 }
@@ -426,13 +428,13 @@ router.get('/client/add', auth, firmAttrAuth, csrfProtection, async (req, res) =
 	});
 
 	res.render('client/addclient', { layout: 'dashboard', csrfToken: req.csrfToken(),
-		tags: tags, 
-		country: country, 
-		state: state, 
-		designations: designation, 
-		industry: industry, 
-		attorney: attorney, 
-		error_message 
+		tags: tags,
+		country: country,
+		state: state,
+		designations: designation,
+		industry: industry,
+		attorney: attorney,
+		error_message
 	});
 });
 
@@ -495,8 +497,8 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		existingTag.push(Number(existing_tag[i]));
 	}
 
-	res.render('client/editclient', { 
-		layout: 'dashboard', 
+	res.render('client/editclient', {
+		layout: 'dashboard',
 		csrfToken: req.csrfToken(),
 		tags:tags,
 		designation: designations,
@@ -508,7 +510,7 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		city: client_city,
 		zipcode: client_zipcode,
 		error_message,
-		existing_tag:existingTag 
+		existing_tag:existingTag
 	});
 });
 
@@ -547,24 +549,24 @@ router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 	if (existingTag !== null){
 		var existing_tag = existingTag.split(",");
 		var existingTag = [];
-	
+
 		for (var i = 0; i < existing_tag.length; i++) {
 			+existingTag.push(Number(existing_tag[i]));
 		}
 	}
 
-	res.render('client/viewClient', { 
+	res.render('client/viewClient', {
 		layout: 'dashboard',
 		csrfToken: req.csrfToken(),
-		tags:tags,designation: designations, 
-		industry: industrys, client: clients, 
-		country: client_country, 
-		attorney: attorney, 
-		state: client_state, 
-		city: client_city, 
-		zipcode: client_zipcode, 
+		tags:tags,designation: designations,
+		industry: industrys, client: clients,
+		country: client_country,
+		attorney: attorney,
+		state: client_state,
+		city: client_city,
+		zipcode: client_zipcode,
 		error_message,
-		existing_tag:existingTag 
+		existing_tag:existingTag
 	});
 });
 
@@ -625,8 +627,11 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				fax: removePhoneMask(req.body.fax),
 				client_type: req.body.client_type,
 				IM: req.body.im,
-				social_security_no: removePhoneMask(req.body.social_sec_no),
-				remarks: req.body.remarks
+				social_url: req.body.social,
+				website_url: req.body.website,
+				remarks: req.body.remarks,
+				current_revenue: removePhoneMask(req.body.current_revenue),
+				estimated_revenue: removePhoneMask(req.body.estimated_revenue)
 			});
 			req.flash('success-message', 'Client Added Successfully');
 			res.redirect('/client')
@@ -661,13 +666,16 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				fax: removePhoneMask(req.body.fax),
 				client_type: req.body.client_type,
 				IM: req.body.im,
-				social_security_no: removePhoneMask(req.body.social_sec_no),
 				date_of_birth: formatDate ? formatDate[2] + "-" + formatDate[1] + "-" + formatDate[0] : null,
 				gender: req.body.client_gender,
 				client_id: req.body.client_id,
+				social_url: req.body.social,
 				master_id: req.body.master_id,
 				client_company: req.body.client_company,
-				remarks: req.body.remarks
+				website_url: req.body.website,
+				remarks: req.body.remarks,
+				current_revenue: removePhoneMask(req.body.current_revenue),
+				estimated_revenue: removePhoneMask(req.body.estimated_revenue)
 			});
 			req.flash('success-message', 'Client Added Successfully');
 			res.redirect('/client')
@@ -729,7 +737,6 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 			firm_id: req.user.firm_id,
 			fax: removePhoneMask(req.body.fax),
 			IM: req.body.im,
-			social_security_no: removePhoneMask(req.body.social_sec_no),
 			date_of_birth: formatDate ? formatDate[2] + "-" + formatDate[1] + "-" + formatDate[0] : null,
 			gender: req.body.client_gender,
 			client_id: req.body.client_id,
@@ -738,6 +745,8 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 			remarks: req.body.remarks,
 			social_url: req.body.social,
   			website_url: req.body.website,
+  			current_revenue: req.body.current_revenue,
+  			estimated_revenue: req.body.estimated_revenue,
 
 		}, {
 				where: { id: req.params['id'] }
@@ -1215,7 +1224,6 @@ router.post('/client/upload-excel', auth, upload_client_excel.single('client_xls
 					google: `http://${excelClient[i].google}`,
 					client_type: "O",
 					IM: excelClient[i].im,
-					social_security_no: excelClient[i].social_security_no,
 					country: 233,
 					state: fetchState[0].id,
 					city: fetchCity[0].id,
@@ -1242,7 +1250,6 @@ router.post('/client/upload-excel', auth, upload_client_excel.single('client_xls
 					google: `http://${excelClient[i].google}`,
 					client_type: "I",
 					IM: excelClient[i].im,
-					social_security_no: excelClient[i].social_security_no,
 					date_of_birth: formatDate ? formatDate[2] + "-" + formatDate[1] + "-" + formatDate[0] : null,
 					gender: excelClient[i].gender,
 					client_id: excelClient[i].client_id,

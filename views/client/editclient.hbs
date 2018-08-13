@@ -47,7 +47,7 @@
 
 
 			<div class="card-box">
-				<h3 class="card-title">Basic Informations</h3>
+				<h3 class="card-title">Basic Information</h3>
 				<div class="row">
 					<div class="col-md-12">
 
@@ -152,9 +152,25 @@
 								</div>
 							</div>
 
-
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Current revenue
+										<span class="req-lbl">*</span>
+									</label>
+									<input class="form-control floating" type="text" id="current_revenue" name="current_revenue" value="{{client.current_revenue}}">
+								</div>
+							</div>
 
 							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Estimated revenue
+										<span class="req-lbl">*</span>
+									</label>
+									<input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue" value="{{client.estimated_revenue}}">
+								</div>
+							</div>
+
+							{{!-- <div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Birth Date
 										<span class="req-lbl">*</span>
@@ -165,6 +181,7 @@
 									</div>
 								</div>
 							</div>
+
 							<div class="col-md-6">
 								<div class="form-group form-focus select-focus">
 									<label class="control-label">Gender
@@ -177,6 +194,7 @@
 									</select>
 								</div>
 							</div>
+							
 							<div class="col-md-12">
 								<div class="form-group form-focus">
 									<label class="control-label">Client Company </label>
@@ -225,7 +243,7 @@
 				</div>
 			</div>
 			<div class="card-box">
-				<h3 class="card-title">Contact Informations</h3>
+				<h3 class="card-title">Contact Information</h3>
 				<div class="row">
 					<div class="col-md-12">
 						<div class="form-group form-focus">
@@ -301,15 +319,33 @@
 				</div>
 			</div>
 			<div class="card-box">
-				<h3 class="card-title">Other Informations</h3>
+				<h3 class="card-title">Attorney Information</h3>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group form-focus select-focus">
+							<label class="control-label">Attorney
+								<span class="req-lbl">*</span>
+							</label>
+							<select id="designation" name="attorney_id" class="select form-control floating">
+								<option value="">Select Attorney</option>
+								{{#each attorney}}
+								<option value="{{this.id}}" {{#if_eq this.id ../user.id}} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card-box">
+				<h3 class="card-title">Other Information</h3>
 				<div class="row">
 
-					<div class="col-md-6">
+					{{!-- <div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Social URL</label>
 							<input type="text" class="form-control floating url_selector" id="social" name="social" value="{{client.social_url}}" />
 						</div>
-					</div>
+					</div> --}}
 					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Website</label>
@@ -318,7 +354,7 @@
 						</div>
 					</div>
 
-					<div class="col-md-6">
+					{{!-- <div class="col-md-6">
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Designation</label>
 							<select id="designation" name="designation" class="select form-control">
@@ -328,20 +364,9 @@
 								{{/each}}
 							</select>
 						</div>
-					</div>
+					</div> --}}
 
-					<div class="col-md-6">
-						<div class="form-group form-focus select-focus">
-							<label class="control-label">Attorney
-								<span class="req-lbl">*</span>
-							</label>
-							<select id="designation" name="attorney_id" class="select form-control floating">
-								{{#each attorney}}
-								<option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
-								{{/each}}
-							</select>
-						</div>
-					</div>
+					
 
 					<div class="col-md-6">
 						<div class="form-group form-focus">
@@ -355,13 +380,13 @@
 							<input type="text" class="form-control floating" id="company_name" name="company_name" value="{{client.company_name}}" />
 						</div>
 					</div>
-					<div class="col-md-6">
+					{{!-- <div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Social Security No</label>
 							<input type="text" class="form-control floating number_validator" id="social_sec_no" name="social_sec_no" value="{{client.social_security_no}}"
 							/>
 						</div>
-					</div>
+					</div> --}}
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Twitter</label>
@@ -372,6 +397,12 @@
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Linkdn</label>
 							<input type="text" class="form-control floating url_selector" id="linkdn" name="linkdn" value="{{client.linkdn}}" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Facebook</label>
+							<input type="text" class="form-control floating url_selector" id="social" name="social" value="{{client.social_url}}" />
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -390,7 +421,7 @@
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Association Status :</label>
 							<select id="association" name="association" class="select form-control">
-
+								<option value="">Select Association</option>
 								<option value="NEW TARGET" {{#if_eq client.association_type "NEW TARGET"}} selected="selected" {{/if_eq}}>NEW TARGET</option>
 								<option value="CONVERTED" {{#if_eq client.association_type "CONVERTED"}} selected="selected" {{/if_eq}}>CONVERTED</option>
 								<option value="TS-INTERIM" {{#if_eq client.association_type "TS-INTERIM"}} selected="selected" {{/if_eq}}>TS-INTERIM</option>
@@ -403,6 +434,7 @@
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Industry Type :</label>
 							<select id="industry_type" name="industry_type" class="select form-control">
+								<option value="">Select Industry Type</option>
 								{{#each industry}}
 								<option value="{{this.id}}" {{#if_eq this.id ../client.industry_type}} selected="selected" {{/if_eq}}>{{this.industry_name}}</option>
 								{{/each}}
@@ -421,6 +453,7 @@
 
 			<div class="text-center m-t-20">
 				<button class="btn btn-primary btn-lg" type="submit" id="addclient">Save &amp; Update Client</button>
+				<a href="/client" class="btn btn-primary btn-lg m-l-10">Cancel</a>
 			</div>
 		</form>
 	</div>
@@ -436,6 +469,24 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function (e) {
+
+		$("#current_revenue").inputmask("numeric", {
+            radixPoint: ".",
+            groupSeparator: ",",
+            digits: 2,
+            autoGroup: true,
+            prefix: '$ ',
+            rightAlign: false
+        });
+
+		$("#estimated_revenue").inputmask("numeric", {
+            radixPoint: ".",
+            groupSeparator: ",",
+            digits: 2,
+            autoGroup: true,
+            prefix: '$ ',
+            rightAlign: false
+        });
 
 		$('#select-existing-tags').multiselect({
 			nonSelectedText: 'Select Existing Tags',

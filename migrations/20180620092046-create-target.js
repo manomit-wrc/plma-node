@@ -75,6 +75,12 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      estimated_revenue: {
+        type: Sequelize.STRING
+      },
+      target_status: {
+        type: Sequelize.INTEGER
       }
     });
   },

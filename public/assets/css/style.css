@@ -5631,9 +5631,9 @@ select.gender {
 	display: none;
 }
 
-.pg-header .text-right a:last-child {
+/* .pg-header .text-right a:last-child {
 	margin-right: 12px;
-}
+} */
 
 .pg-header .text-right a:nth-child(2) {
 	margin-left: 5px;
@@ -5681,6 +5681,52 @@ select.gender {
 }
 
 /*Ends on css 08-08-2018*/
+/*Starts css on 10-08-2018*/
+
+
+
+#add_budget .modal-footer {
+	padding: 0;
+}
+
+#add_budget .modal-footer .modal-footer-panel {
+	box-shadow: none;
+    border: 0;
+    border-top: 1px solid #dcdcdc;
+    border-radius: 0;
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
+#add_budget .modal-footer .modal-footer-panel .panel-body {
+}
+
+#add_budget .modal-footer .modal-footer-panel .panel-body  .form-control {
+	text-align: left;
+	font-weight: bold;
+}
+
+#add_budget .modal-footer .modal-footer-panel .list {
+	margin-top: 5px;
+}
+
+#add_budget .modal-footer .modal-footer-panel .list h5 {
+    position: relative;
+    top: 8px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#add_budget .modal-footer .modal-footer-panel .list .form-group {
+	margin-bottom: 5px;
+}
+
+#add_budget .slimScrollBar {
+	background: #ff9b44 !important;
+    opacity: 1 !important;
+}
+
+/*Ends css on  10-08-2018*/
 
 
 @media only screen and (min-width: 768px) {

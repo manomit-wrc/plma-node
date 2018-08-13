@@ -322,7 +322,7 @@
                 get_time = hrs + " hours ago";
               }
               else if(sec > 60 && mins > 60 && diffDays > 1 && diffDays < 7){
-                get_time = diffDays + " days ago"
+                get_time = diffDays-1 + " days ago"
               }
               else if (sec > 60 && mins > 60 && diffDays >= 7) {
                 get_time = dformat;
