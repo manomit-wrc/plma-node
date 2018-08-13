@@ -136,7 +136,7 @@ router.get("/financial-goal/delete/:id", auth, firmAuth, csrfProtection, async (
 			id: req.params['id']
 		}
 	});
-	req.flash('success-delete-finan-goal-message', 'Financial Goal Removed Successfully');
+	req.flash('success-delete-finan-goal-message', 'Financial Goal Delete Successfully');
 	res.redirect('/financial-goal');
 });
 
