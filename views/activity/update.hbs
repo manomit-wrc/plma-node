@@ -203,7 +203,8 @@
                 <div class="form-group ">
                   <label class="input-group">
                     <span class="input-group-addon">
-                      <input type="radio" id="referralDetails_type" name="ref_type" value="R" {{#if_eq editdata.target "R"}} checked {{/if_eq}} />
+                      <input type="radio" id="referralDetails_type" name="ref_type" value="R" {{#if_eq editdata.target "R"}} checked {{/if_eq}}
+                      />
                     </span>
                     <div class="form-control form-control-static">Referral</div>
                     <span class="glyphicon form-control-feedback "></span>
@@ -503,11 +504,11 @@
   });
 
   var typeDetails = $('#activityTypeDetails').val();
-  if (typeDetails=='T') {
+  if (typeDetails == 'T') {
     $('#client_list').hide();
     $('#referral_list').hide();
     $('#target_list').show();
-  } else if (typeDetails=='C') {
+  } else if (typeDetails == 'C') {
     $('#client_list').show();
     $('#target_list').hide();
     $('#referral_list').hide();

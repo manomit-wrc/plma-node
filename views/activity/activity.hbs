@@ -9,8 +9,8 @@
     <div class="pg-header">
       <div class="row">
         {{#if success_message}}
-        <div class="alert alert-danger">
-          <strong>Error! </strong>{{success_message}}
+        <div class="alert alert-success">
+          <strong>Success! </strong>{{success_message}}
         </div>
         {{/if}}
         <div class="col-xs-4">
@@ -76,29 +76,8 @@
                     class="btn btn-danger btn-sm target-delete">
                     <i class="fa fa-trash-o m-r-5"></i>
                   </a>
-
-
-                  {{!--
-                  <a href="javascript:void(0);" data-toggle="modal" data-target="#{{this.id}}" class="btn btn-danger btn-sm target-delete">
-                    <i class="fa fa-trash-o m-r-5"></i>
-                  </a> --}} {{/if_eq}}
+                  {{/if_eq}}
                 </td>
-
-                {{!--
-                <div class="modal fade" id="{{this.id}}" role="dialog">
-                  <div class="modal-dialog">
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                      <div class="modal-body">
-                        <p>are you sure you want to delete this activity?</p>
-                      </div>
-                      <div class="modal-footer">
-                        <a href="/activity/deletedata/{{this.id}}" class="btn btn-danger">Delete</a>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                      </div>
-                    </div>
-                  </div>
-                </div> --}}
               </tr>
               {{/each}}
             </tbody>
@@ -123,8 +102,7 @@
           <p>are you sure you want to delete this activity?</p>
           <div class="m-t-20" id="delDiv">
             <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
-            {{!--
-            <a href="/activity-goal/delete/{{this.id}}" class="btn btn-danger">Delete</a> --}}
+           
           </div>
         </div>
       </form>
@@ -187,7 +165,6 @@
 </script>
 
 
-
 <script>
   $(document).on('click', '#delete_activity', function (e) {
     var activity_id = $(this).data('activity-id');
@@ -195,6 +172,5 @@
     $("#delete_users").modal('show');
     $("#delDiv").append('<a href="/activity/deletedata/' + activity_id + '" class="btn btn-danger" id="removeBtnDelete">' + "Delete" + '</a>');
   });
-
 
 </script> {{/content}}

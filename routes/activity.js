@@ -119,16 +119,17 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 //fetch
 
 router.get('/activitypage', auth, firmAttrAuth, csrfProtection, (req, res) => {
+	var success_message = req.flash('success-message')[0];
 	Activity.findAll({
 		where: {
-			//user_id: req.user.id
 			firm_id : req.user.firm_id
 		},
 	}).then(row => {
 		res.render('activity/activity', {
 			layout: 'dashboard',
 			csrfToken: req.csrfToken(),
-			row: row
+			row: row,
+			success_message
 		});
 	});
 });
@@ -773,6 +774,7 @@ router.get('/activity/deletedata/:id', auth, firmAttrAuth, async (req, res) => {
 			activity_id: req.params['id']
 		}
 	});
+	req.flash('success-message', 'Activity delete Successfully');
 	res.redirect('/activitypage');
 });
 
