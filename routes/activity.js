@@ -114,6 +114,8 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 //fetch
 
 router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+	var success_message = req.flash('success-message')[0];
+	
 	var activity_data = await Activity.findAll({
 		where: { 'firm_id': 0 }
 	});
@@ -136,14 +138,14 @@ router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res)
 
 	Activity.findAll({
 		where: {
-			//user_id: req.user.id
 			firm_id : req.user.firm_id
 		},
 	}).then(row => {
 		res.render('activity/activity', {
 			layout: 'dashboard',
 			csrfToken: req.csrfToken(),
-			row: row
+			row: row,
+			success_message
 		});
 	});
 });
@@ -578,6 +580,7 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		}]
 	});
 
+	req.flash('success-message', 'Activity update Successfully');
 	res.render('activity/update', {
 		layout: 'dashboard',
 		csrfToken: req.csrfToken(),
@@ -765,6 +768,7 @@ router.get('/activity/deletedata/:id', auth, firmAttrAuth, async (req, res) => {
 			activity_id: req.params['id']
 		}
 	});
+	req.flash('success-message', 'Activity deleted Successfully');
 	res.redirect('/activitypage');
 });
 

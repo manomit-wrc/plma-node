@@ -478,6 +478,34 @@ router.post('/referral/upload-excel', auth, referral_xcel.single('ref_excel_file
 		  } catch (ex) {
 		   var attrID =null;
 		  }
+		
+		var excel_state = excelReferral[i].state.capitalize();
+		var excel_city = excelReferral[i].city.capitalize();
+		var excel_zip = excelReferral[i].zipcode.capitalize();
+		var fetchState = [];
+		var fetchCity = [];
+		var fetchZip = [];
+		if (excelReferral[i].state !== null) {
+			var fetchState = await State.findAll({
+				where: {
+					name: excel_state
+				}
+			});
+		}
+		if (excelReferral[i].city !== null) {
+			var fetchCity = await City.findAll({
+				where: {
+					name: excel_city
+				}
+			});
+		}
+		if (excelReferral[i].zipcode !== null) {
+			var fetchZip = await Zipcode.findAll({
+				where: {
+					zip: excel_zip
+				}
+			});
+		}
 		const referral_excel_data = await Referral.findOne({
 			where: {
 				email: excelReferral[i].email
@@ -496,6 +524,13 @@ router.post('/referral/upload-excel', auth, referral_xcel.single('ref_excel_file
 					mobile: excelReferral[i].mobile,
 					firm_id: req.user.firm_id,
 					user_id: req.user.id,
+					address1: excelReferral[i].address1,
+					address2: excelReferral[i].address2,
+					address3: excelReferral[i].address3,
+					country: 233,
+					state: fetchState[0].id,
+					city: fetchCity[0].id,
+					zipcode: fetchZip[0].id,
 					remarks: excelReferral[i].remarks
 				});
 			}
@@ -509,6 +544,13 @@ router.post('/referral/upload-excel', auth, referral_xcel.single('ref_excel_file
 					mobile: excelReferral[i].mobile,
 					firm_id: req.user.firm_id,
 					user_id: req.user.id,
+					address1: excelReferral[i].address1,
+					address2: excelReferral[i].address2,
+					address3: excelReferral[i].address3,
+					country: 233,
+					state: fetchState[0].id,
+					city: fetchCity[0].id,
+					zipcode: fetchZip[0].id,
 					remarks: excelReferral[i].remarks
 				});
 			}

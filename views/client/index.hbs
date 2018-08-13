@@ -11,7 +11,8 @@
 				<div class="alert alert-success">
 					<strong>Success! </strong>{{success_message}}
 				</div>
-				{{/if}} {{#if success_edit_message}}
+				{{/if}} 
+				{{#if success_edit_message}}
 				<div class="alert alert-success">
 					<strong>Success! </strong>{{success_edit_message}}
 				</div>
@@ -20,9 +21,12 @@
 					<h4 class="page-title">Clients</h4>
 				</div>
 				<div class="col-sm-8 col-xs-9 text-right ">
-					<a href="javascript:void(0);" class="btn btn-primary rounded client-delete"> <i class="fa fa-trash" aria-hidden="true"></i> Delete </a>
-					<a href="/client/add" class="btn btn-primary rounded pull-right"><i class="fa fa-plus"></i> Add Client</a>
-					<a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_user"><i class="fa fa-cloud-download"></i> Import Client</a>
+					<a href="javascript:void(0);" class="btn btn-primary rounded client-delete">
+						<i class="fa fa-trash" aria-hidden="true"></i> Delete </a>
+					<a href="/client/add" class="btn btn-primary rounded pull-right">
+						<i class="fa fa-plus"></i> Add Client</a>
+					<a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_user">
+						<i class="fa fa-cloud-download"></i> Import Client</a>
 				</div>
 			</div>
 		</div>
@@ -33,8 +37,7 @@
 						<thead>
 							<tr>
 								<th>
-									<input type="checkbox" onClick="checkall(this);" />
-									SL#
+									<input type="checkbox" onClick="checkall(this);" /> SL#
 								</th>
 								<th>Name</th>
 								<th>Client Type</th>
@@ -47,13 +50,12 @@
 							{{#each clients}}
 							<tr>
 								<td>
-									<input type="checkbox" name="client_check_id" value="{{this.id}}" />
-									{{math @index "+" 1}}
+									<input type="checkbox" name="client_check_id" value="{{this.id}}" /> {{math @index "+" 1}}
 								</td>
 								<td>
-									<a href="/client/view/{{this.id}}" >
+									<a href="/client/view/{{this.id}}">
 										{{#if_eq client_type "O"}} {{this.organization_name}} {{/if_eq}} {{#if_eq client_type "I"}} {{this.first_name}} {{this.last_name}}
-									{{/if_eq}}
+										{{/if_eq}}
 									</a>
 								</td>
 								<td>
@@ -71,18 +73,13 @@
 									<a href="/client/edit/{{this.id}}" class="btn btn-info btn-sm">
 										<i class="fa fa-pencil m-r-5"></i>
 									</a>
-									{{!-- <a href="javascript:void(0)" data-toggle="modal" data-target="#{{this.id}}" class="btn btn-danger btn-sm">
-										<i class="fa fa-trash-o m-r-5"></i>
-									</a> --}}
 
-
-									<a href="javascript:void(0)" data-toggle="modal"  data-target="delete_users" data-client-id="{{this.id}}" id="delete_client" class="btn btn-danger btn-sm">
+									<a href="javascript:void(0)" data-toggle="modal" data-target="delete_users" data-client-id="{{this.id}}" id="delete_client"
+									 class="btn btn-danger btn-sm">
 										<i class="fa fa-trash-o m-r-5"></i>
 									</a>
 								</td>
 							</tr>
-							
-
 							{{/each}}
 						</tbody>
 					</table>
@@ -93,22 +90,23 @@
 </div>
 
 <div id="delete_user" class="modal custom-modal fade del-client" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content modal-md">
-            <div class="modal-header">
-                <h4 class="modal-title">Delete Client</h4>
-            </div>
-            <form>
-                <div class="modal-body card-box">
-											<p>are you sure you want to delete this client?</p>
-                    <div class="m-t-20" id="delDiv">
-                        <a href="#" class="btn btn-default" data-dismiss="modal" >Close</a>
-                        {{!-- <a href="/activity-goal/delete/{{this.id}}" class="btn btn-danger">Delete</a> --}}
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+	<div class="modal-dialog">
+		<div class="modal-content modal-md">
+			<div class="modal-header">
+				<h4 class="modal-title">Delete Client</h4>
+			</div>
+			<form>
+				<div class="modal-body card-box">
+					<p>are you sure you want to delete this client?</p>
+					<div class="m-t-20" id="delDiv">
+						<a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+						{{!--
+						<a href="/activity-goal/delete/{{this.id}}" class="btn btn-danger">Delete</a> --}}
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
 
 
@@ -282,17 +280,16 @@
 		});
 	})
 
-</script> 
+</script>
 
 
 <script>
-$(document).on('click','#delete_client', function(e){
-    var client_id = $(this).data('client-id');
-    $("#removeBtnDelete").remove();
-    $("#delete_user").modal('show');
-    $("#delDiv").append('<a href="/client/delete/'+ client_id +'" class="btn btn-danger" id="removeBtnDelete">'+"Delete"+ '</a>');
-});
+	$(document).on('click', '#delete_client', function (e) {
+		var client_id = $(this).data('client-id');
+		$("#removeBtnDelete").remove();
+		$("#delete_user").modal('show');
+		$("#delDiv").append('<a href="/client/delete/' + client_id + '" class="btn btn-danger" id="removeBtnDelete">' + "Delete" + '</a>');
+	});
 
 
-</script>
-{{/content}}
+</script> {{/content}}

@@ -10,14 +10,12 @@
     <div class="content container-fluid">
         <div class="pg-header">
             <div class="row">
-                {{!--
-                <div id="success-move" class="alert alert-success" style="display:none">
-                    <strong>Success! </strong>Target records moved to client successfully.
-                </div> --}} {{#if success_message}}
+                {{#if success_message}}
                 <div class="alert alert-success">
                     <strong>Success! </strong>{{success_message}}
                 </div>
-                {{/if}} {{#if success_edit_message}}
+                {{/if}} 
+                {{#if success_edit_message}}
                 <div class="alert alert-success">
                     <strong>Success! </strong>{{success_edit_message}}
                 </div>

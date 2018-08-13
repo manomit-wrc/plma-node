@@ -7,6 +7,11 @@
     <div class="content container-fluid">
         <div class="pg-header">
             <div class="row">
+                {{#if success_message}}
+                    <div class="alert alert-success">
+                        <strong>Success! </strong>{{success_message}}
+                    </div>
+                {{/if}}
                 <div class="col-xs-4">
                     <h4 class="page-title">Budget</h4>
                 </div>
@@ -302,12 +307,6 @@
             }
         });
     });
-
-
-
-
-
-
     $(document).on('click', '#view-budget', function (e) {
         var budget_id = $(this).data('budget-id');
         var parent_id = $(this).data('parent-id');
