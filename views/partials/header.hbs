@@ -239,18 +239,21 @@
 
 <script>
   $(document).ready(function (e) {
-    $.ajax({
-      type: "POST",
-      url: "/get-firm-name",
-      success: function (response) {
-        for (var i = 0; i < response.firms.length; i++) {
-          $("#firm_id").append('<option value="' + response.firms[i].id + '">' + response.firms[i].title + '</option>');
-        }
-      },
-      error: function (xhr) {
+    if({{user.role_id}} == "1")
+    {
+      $.ajax({
+        type: "POST",
+        url: "/get-firm-name",
+        success: function (response) {
+          for (var i = 0; i < response.firms.length; i++) {
+            $("#firm_id").append('<option value="' + response.firms[i].id + '">' + response.firms[i].title + '</option>');
+          }
+        },
+        error: function (xhr) {
 
-      }
-    });
+        }
+      });
+    }
 
     $("#site_to_firm").validate({
       rules: {

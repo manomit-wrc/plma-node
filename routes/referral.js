@@ -16,6 +16,8 @@ const City = require('../models').city;
 const State = require('../models').state;
 const Country = require('../models').country;
 const industry_type = require('../models').industry_type;
+const Activity = require('../models').activity;
+const TargetActivity = require('../models').jointactivity;
 var fs = require('fs');
 const multer  = require('multer');
 var xlsx = require('node-xlsx');
@@ -579,6 +581,27 @@ router.post('/referral/upload-excel', auth, referral_xcel.single('ref_excel_file
 	}
 	req.flash('success-ref-message', 'Referral Imported Successfully');
 	res.redirect('/referral');
+});
+
+// start all associated activities
+
+router.get("/referral/view-activity/:id", auth, async (req, res) => {
+	TargetActivity.belongsTo(Activity, {
+		foreignKey: 'activity_id'
+	});
+	const activity_details = await TargetActivity.findAll({
+		where: {
+			target_client_type: "R",
+			type: req.params['id']
+		},
+		include: [{
+			model: Activity
+		}]
+	});
+	res.render("referral/view_activity", {
+		layout: 'dashboard',
+		activity_details
+	});
 });
 
 
