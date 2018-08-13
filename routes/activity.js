@@ -459,6 +459,7 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 	const target = await Target.findAll({
 		where: {
 			'target_type': "I",
+			'target_status':'1',
 			'attorney_id': req.user.id
 		}
 	});
