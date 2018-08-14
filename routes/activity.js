@@ -404,7 +404,7 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		alldata.push({
 			'attorney_name': req.user.first_name + " " + req.user.last_name,
 			'company_name': target_client_list[0].first_name + " " + target_client_list[0].last_name,
-			'relation': all_activity_client[i].target_client_type == 'C' ? 'Client' : 'Target',
+			'relation': all_activity_client[i].target_client_type,
 			'total_cost': activity_budget.level_type == 'Individual' ? editdata[0].total_budget_amount : parseFloat(editdata[0].total_budget_amount / all_activity_client.length),
 			'potential_revenue': activity_budget.level_type == 'Individual' ? editdata[0].potiential_revenue : parseFloat(editdata[0].potiential_revenue / all_activity_client.length)
 		});
@@ -563,7 +563,7 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		alldata.push({
 			'attorney_name': req.user.first_name + " " + req.user.last_name,
 			'company_name': target_client_list[0].first_name + " " + target_client_list[0].last_name,
-			'relation': all_activity_client[i].target_client_type == 'C' ? 'Client' : 'Target',
+			'relation': all_activity_client[i].target_client_type,
 			'total_cost': activity_budget.level_type == 'Individual' ? editdata[0].total_budget_amount : parseFloat(editdata[0].total_budget_amount / all_activity_client.length),
 			'potential_revenue': activity_budget.level_type == 'Individual' ? editdata[0].potiential_revenue : parseFloat(editdata[0].potiential_revenue / all_activity_client.length)
 		});
