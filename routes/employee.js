@@ -25,15 +25,14 @@ function removePhoneMask(phone_no) {
     return phone_no;
 }
 
-/*==================================BRATIN MEHETA 14-06-2018=====================================*/
+/*==================================BRATIN MEHETA 14-06-2018 Sayan Sadhu=====================================*/
 
 router.get('/employees', auth, siteAuth, async (req, res) => {
     var employeeFilter = {};
-    if(req.query.employee_name)
-    {
+    if (req.query.employee_name) {
         employeeFilter.first_name = req.query.employee_name;
     }
-    if(req.query.employee_email)
+    if (req.query.employee_email)
     {
         employeeFilter.email = req.query.employee_email;
     }

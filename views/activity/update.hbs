@@ -11,8 +11,6 @@
         <h4 class="page-title">Edit Activity</h4>
       </div>
     </div>
-
-
     <form name="updateActivityForm" id="updateActivityForm" action="/activity/update/{{editdata.id}}" method="POST">
       <input type="hidden" name="_csrf" value="{{csrfToken}}">
       <input type="hidden" name="activity_id" id="activity_id" value="{{editdata.id}}">
@@ -23,8 +21,6 @@
         <div class="row">
           <div class="col-md-12">
             <div class="row">
-
-
               <div class="col-md-6">
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">Firm
@@ -33,7 +29,6 @@
                   <input class="form-control floating" type="text" id="firm" name="firm" value="{{this.firm}}" disabled>
                 </div>
               </div>
-
               <div class="col-md-6">
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">Origin Attorney
@@ -42,21 +37,18 @@
                   <input class="form-control floating" type="text" id="firm" name="firm" value="{{this.originAttorney}}" disabled>
                 </div>
               </div>
-
               <div class="col-md-6">
                 <div class="form-group form-focus">
                   <label class="control-label">Activity Name</label>
                   <input class="form-control floating" type="text" id="activity_name" name="activity_name" value="{{editdata.activity_name}}">
                 </div>
               </div>
-
               <div class="col-md-6">
                 <div class="form-group form-focus">
                   <label class="control-label">Activity Reason</label>
                   <input class="form-control floating" type="text" id="activity_reason" name="activity_reason" value="{{editdata.activity_reason}}">
                 </div>
               </div>
-
               <div class="col-md-6">
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">Activity Type </label>
@@ -69,25 +61,21 @@
                   </select>
                 </div>
               </div>
-
               <div class="col-md-6 none">
                 <div class="form-group form-focus select-focus"></div>
               </div>
-
               <div class="col-md-6 section" style="display:none;">
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">Section
                     <span class="req-lbl">*</span>
                   </label>
                   <select class="select floating" id="section" name="section">
-                    {{!--
-                    <option value="0">Select Section</option> --}} {{#each section}}
+                    {{#each section}}
                     <option value="{{this.section.id}}" {{#if_eq this.id ../editdata.section_id}} selected="selected" {{/if_eq}}>{{this.section.name}}</option>
                     {{/each}}
                   </select>
                 </div>
               </div>
-
               <div class="col-md-6 strategyGroup" style="display:none;">
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">Strategy Group
@@ -99,7 +87,6 @@
                   </select>
                 </div>
               </div>
-
               <div class="col-md-6">
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">Activity Goal </label>
@@ -113,7 +100,6 @@
                   <a href="/activity-goal/add">Add activity goals</a>
                 </div>
               </div>
-
               <div class="col-md-6">
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">Practice Area Type</label>
@@ -125,67 +111,59 @@
                   </select>
                 </div>
               </div>
-
               <div class="col-md-6">
                 <div class="form-group form-focus">
                   <label class="control-label">Potential Revenue</label>
                   <input class="form-control floating" type="text" id="potiential_revenue" name="potiential_revenue" value="{{editdata.potiential_revenue}}">
                 </div>
               </div>
-
               <div class="col-md-6">
                 <div class="form-group form-focus">
                   <label class="control-label">Activity Creation Date</label>
                   <div class="cal-icon">
                     <input class="form-control floating datetimepicker" type="text" id="activity_creation_date" name="activity_creation_date"
-                      value="{{dateFormat editdata.activity_creation_date " DD-MM-YYYY "}}">
+                    value="{{dateFormat editdata.activity_creation_date " DD-MM-YYYY "}}">
                   </div>
                 </div>
               </div>
-
               <div class="col-md-6">
                 <div class="form-group form-focus">
                   <label class="control-label">From Date</label>
                   <div class="cal-icon">
                     <input class="form-control floating datetimepicker" type="text" id="activity_from_date" name="activity_from_date" value="{{dateFormat editdata.activity_from_date "
-                      DD-MM-YYYY "}}">
+                    DD-MM-YYYY "}}">
                   </div>
                 </div>
               </div>
-
               <div class="col-md-6">
                 <div class="form-group form-focus">
                   <label class="control-label">To Date</label>
                   <div class="cal-icon">
                     <input class="form-control floating datetimepicker" type="text" id="activity_to_date" name="activity_to_date" value="{{dateFormat editdata.activity_to_date "
-                      DD-MM-YYYY "}}">
+                    DD-MM-YYYY "}}">
                   </div>
                 </div>
               </div>
-
               <div class="col-md-6">
                 <div class="form-group form-focus">
                   <label class="control-label">Remarks </label>
                   <textarea class="form-control floating" id="remarks" name="remarks" rows="5">{{editdata.remarks}}</textarea>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
       </div>
-
       <div class="card-box">
         <h3 class="card-title">Client/Target Information</h3>
         <div class="row">
           <div class="col-md-12">
             <div class="row">
-
               <div class="form-inline m-b-15 col-md-6">
                 <div class="form-group m-r-5">
                   <label class="input-group">
                     <span class="input-group-addon">
-                      <input type="radio" id="referral_type" name="ref_type" value="T" {{#if_eq editdata.target "T"}} checked {{/if_eq}} />
+                      <input type="radio" id="target_type" name="ref_type" value="T" {{#if_eq editdata.target "T"}} checked {{/if_eq}} />
                     </span>
                     <div class="form-control form-control-static">Target</div>
                     <span class="glyphicon form-control-feedback "></span>
@@ -194,7 +172,7 @@
                 <div class="form-group ">
                   <label class="input-group">
                     <span class="input-group-addon">
-                      <input type="radio" id="organization_type" name="ref_type" value="C" {{#if_eq editdata.target "C"}} checked {{/if_eq}} />
+                      <input type="radio" id="client_type" name="ref_type" value="C" {{#if_eq editdata.target "C"}} checked {{/if_eq}} />
                     </span>
                     <div class="form-control form-control-static">Client</div>
                     <span class="glyphicon form-control-feedback "></span>
@@ -203,7 +181,7 @@
                 <div class="form-group ">
                   <label class="input-group">
                     <span class="input-group-addon">
-                      <input type="radio" id="referralDetails_type" name="ref_type" value="R" {{#if_eq editdata.target "R"}} checked {{/if_eq}}
+                      <input type="radio" id="referral_type" name="ref_type" value="R" {{#if_eq editdata.target "R"}} checked {{/if_eq}}
                       />
                     </span>
                     <div class="form-control form-control-static">Referral</div>
@@ -211,56 +189,46 @@
                   </label>
                 </div>
               </div>
-
-              <div class="col-md-6">
-                <div class="form-group form-focus select-focus" id="target_list" {{#if_eq editdata.target "C"}} style="display:none;" {{/if_eq}}>
-                  <select id="target_id" name="target_user[]" class=" form-control floating" multiple="multiple">
-                    {{#each target}}
-                    <option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.first_name}} {{this.last_name}}</option>
-                    {{/each}}
-                  </select>
-                </div>
+              <!-------------------------------------------------------->
+              <div class="col-md-6" id="target_list" style="display:none">
+                <select id="target-example-dropUp" name="target_user[]" class=" form-control floating" multiple="multiple">
+                  {{#each target}}
+                  <option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.first_name}} {{this.last_name}}</option>
+                  {{/each}}
+                </select>
               </div>
-
-              <div class="col-md-6" id="client_list" {{#if_eq editdata.target "T"}} style="display:none;" {{/if_eq}}>
-                <div class="form-group form-focus select-focus">
-                  <select id="client_id" name="client_user[]" class=" form-control floating" multiple="multiple">
-                    {{#each client}}
-                    <option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.first_name}} {{this.last_name}}</option>
-                    {{/each}}
-                  </select>
-                </div>
+              
+              <div class="col-md-6" id="client_list" style="display:none;">
+                <select id="client-example-dropUp" name="client_user[]" class=" form-control floating" multiple="multiple">
+                  {{#each client}}
+                  <option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.first_name}} {{this.last_name}}</option>
+                  {{/each}}
+                </select>
               </div>
-
-              <div class="col-md-6" id="referral_list" {{#if_eq editdata.target "R"}} style="display:none;" {{/if_eq}}>
-                <div class="form-group form-focus select-focus">
-                  <select id="referral_id" name="referral_user[]" class=" form-control floating" multiple="multiple">
-                    {{#each referral}}
-                    <option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.first_name}} {{this.last_name}}</option>
-                    {{/each}}
-                  </select>
-                </div>
+              
+              <div class="col-md-6" id="referral_list" style="display:none;">
+                <select id="referral-example-dropUp" name="referral_user[]" class=" form-control floating" multiple="multiple">
+                  {{#each referral}}
+                  <option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.first_name}} {{this.last_name}}</option>
+                  {{/each}}
+                </select>
               </div>
-
+              <!--------------------------------------------------------------------->
               <div class="col-md-6"></div>
-
               <div class="col-md-6 budgetAdd" style="display:none;">
                 <a href="#" class="btn btn-primary btn-lg" id="budgetAdd" data-toggle="modal" data-target="#add_budget" style="margin: 0 auto; display: table;">
-                  <i class="fa fa-plus"></i> Add Budget</a>
+                <i class="fa fa-plus"></i> Add Budget</a>
               </div>
             </div>
           </div>
         </div>
       </div>
-
       <div class="text-center m-t-20">
         <button class="btn btn-primary btn-lg" type="submit" id="btnAdd">Save &amp; Update Activity</button>
         <a href="/activitypage" class="btn btn-primary btn-lg m-l-10">Cancel</a>
       </div>
     </form>
   </div>
-
-
   <div class="content container-fluid">
     <div class="card-box">
       <h3 class="card-title">Client/Target Information</h3>
@@ -275,7 +243,7 @@
                       <tr>
                         <th> Attorney Name </th>
                         <th> Relation </th>
-                        <th> Company Name </th>
+                        <th> Name </th>
                         <th> Budget Code Cost $</th>
                         <th> Potential Revenue </th>
                       </tr>
@@ -284,7 +252,7 @@
                       {{#each alltarget_client}}
                       <tr>
                         <td>{{this.attorney_name}}</td>
-                        <td> {{this.relation}} </td>
+                        <td> {{#if_eq this.relation 'C'}} Client {{/if_eq}} {{#if_eq this.relation 'T'}} Target {{/if_eq}} {{#if_eq this.relation 'R'}} Referral {{/if_eq}}</td>
                         <td>{{ this.company_name }}</td>
                         <td>
                           <a href="#" id="budgetUpdate" data-toggle="modal" data-target="#update_budget">$ {{this.total_cost}}</a>
@@ -303,9 +271,7 @@
     </div>
   </div>
 </div>
-
 {{!-- Starts add budget modal --}}
-
 <div id="update_budget" class="modal custom-modal fade" role="dialog">
   <div class="modal-dialog">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -318,13 +284,12 @@
           <form class="m-b-10" name="editActivityBudgetFrm" id="editActivityBudgetFrm">
             <div class="row">
               <div class="col-md-12">
-
                 <div class="form-inline m-b-15">
                   <div class="form-group m-r-5">
                     <label class="input-group">
                       <span class="input-group-addon">
                         <input type="radio" id="evenly_equated" name="activity_level_type_edit" value="Evenly Equated" {{#if_eq level_type
-                          "Evenly Equated"}} checked {{/if_eq}} disabled/>
+                        "Evenly Equated"}} checked {{/if_eq}} disabled/>
                       </span>
                       <div class="form-control form-control-static">
                         Evenly Equated
@@ -336,7 +301,7 @@
                     <label class="input-group">
                       <span class="input-group-addon">
                         <input type="radio" id="individual" name="activity_level_type_edit" value="Individual" {{#if_eq level_type "Individual"}}
-                          checked {{/if_eq}} disabled/>
+                        checked {{/if_eq}} disabled/>
                       </span>
                       <div class="form-control form-control-static">
                         Individual
@@ -345,7 +310,6 @@
                     </label>
                   </div>
                 </div>
-
                 {{#each budgetArr}}
                 <div class="panel panel-primary">
                   <div class="panel-heading">
@@ -357,24 +321,22 @@
                       <div class="row">
                         <div class="col-md-6">
                           <h5>
-                            {{this.name}}
+                          {{this.name}}
                           </h5>
                         </div>
                         <div class="col-md-2">
                           <div class="form-group">
-
                             <input class="form-control edit_budget_hour number_budget" type="text" data-budgets-id="{{this.id}}" id="edit_budget_hour"
-                              name="edit_budget_hour" placeholder="Hours" value="{{this.hour}}">
+                            name="edit_budget_hour" placeholder="Hours" value="{{this.hour}}">
                           </div>
                         </div>
                         <div class="col-md-2">
                           <div class="form-group">
                             <input class="form-control edit_budget_amount number_budget" type="text" id="edit_budget_amount" name="edit_budget_amount"
-                              placeholder="Dollars($)" value="{{this.amount}}">
+                            placeholder="Dollars($)" value="{{this.amount}}">
                             <input type="hidden" name="edit_budget_remarks" id="edit_budget_remarks" class="edit_budget_remarks" value="{{this.remarks}}">
                           </div>
                         </div>
-
                         {{#if_con this.remarks}}
                         <div class="col-md-2">
                           <div class="form-group">
@@ -382,17 +344,14 @@
                           </div>
                         </div>
                         {{/if_con}}
-
                       </div>
                     </div>
                     {{/each}}
-
                   </div>
                 </div>
                 {{/each}}
               </div>
             </div>
-
             <div class="m-t-15 text-center">
               <button class="btn btn-primary btn-lg" type="button" id="btnEditActivityBudget">Update</button>
             </div>
@@ -402,7 +361,6 @@
     </div>
   </div>
 </div>
-
 <div id="add_user" class="modal custom-modal fade" role="dialog">
   <div class="modal-dialog">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -463,7 +421,6 @@
               </div>
             </div>
           </div>
-
           <div class="m-t-20 text-center">
             <button class="btn btn-primary" type="button" id="btnAddSection">Create Section</button>
           </div>
@@ -472,7 +429,6 @@
     </div>
   </div>
 </div>
-
 {{!-- Ends add budget modal --}} {{#content "script" mode="append"}}
 <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
@@ -484,283 +440,287 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 <script type="text/javascript">
-
-  $(document).on('click', '#referral_type', function () {
+$(document).ready(function() {
+    $('#target-example-dropUp').multiselect({
+        enableFiltering: true,
+        includeSelectAllOption: true,
+        maxHeight: 400,
+        dropUp: true
+    });
+    $('#client-example-dropUp').multiselect({
+        enableFiltering: true,
+        includeSelectAllOption: true,
+        maxHeight: 400,
+        dropUp: true
+    });
+    $('#referral-example-dropUp').multiselect({
+        enableFiltering: true,
+        includeSelectAllOption: true,
+        maxHeight: 400,
+        dropUp: true
+    });
+});
+$(document).on('click', '#target_type', function() {
     $('#target_list').show();
     $('#client_list').hide();
     $('#referral_list').hide();
-  });
-
-  $(document).on('click', '#organization_type', function () {
+});
+$(document).on('click', '#client_type', function() {
     $('#target_list').hide();
     $('#referral_list').hide();
     $('#client_list').show();
-  });
-
-  $(document).on('click', '#referralDetails_type', function () {
+});
+$(document).on('click', '#referral_type', function() {
     $('#target_list').hide();
     $('#referral_list').show();
     $('#client_list').hide();
-  });
-
-  var typeDetails = $('#activityTypeDetails').val();
-  if (typeDetails == 'T') {
+});
+var typeDetails = $('#activityTypeDetails').val();
+if (typeDetails == 'T') {
     $('#client_list').hide();
     $('#referral_list').hide();
     $('#target_list').show();
-  } else if (typeDetails == 'C') {
+} else if (typeDetails == 'C') {
     $('#client_list').show();
     $('#target_list').hide();
     $('#referral_list').hide();
-  } else {
+} else {
     $('#referral_list').show();
     $('#client_list').hide();
     $('#target_list').hide();
-  }
-
-  $('#target_id').multiselect({
+}
+$('#target_id').multiselect({
     nonSelectedText: 'Select Targets',
     includeSelectAllOption: true,
     buttonWidth: '100%'
-  });
-
-  $('#client_id').multiselect({
+});
+$('#client_id').multiselect({
     nonSelectedText: 'Select Clients',
     includeSelectAllOption: true,
     buttonWidth: '100%'
-  });
-
-  $('#referral_id').multiselect({
+});
+$('#referral_id').multiselect({
     nonSelectedText: 'Select Referrals',
     includeSelectAllOption: true,
     buttonWidth: '100%'
-  });
-
-  $(document).on('click', "#btnEditActivityBudget", function (e) {
+});
+$(document).on('click', "#btnEditActivityBudget", function(e) {
     var EditBudgetArr = [];
     var totalAmount = 0;
     var totalHour = 0;
-    $('.edit_budget_hour').each(function (index) {
-      if ($(this).val() !== "") {
-        var budgetId = $(this).data("budgets-id");
-        var amount = $(".edit_budget_amount")[index].value;
-        var reamrk_budget = $('.edit_budget_remarks')[index].value;
-        totalAmount += parseInt(amount);
-        totalHour += parseInt($(this).val());
-        EditBudgetArr.push({
-          budget_id: budgetId,
-          budget_hour: $(this).val(),
-          budget_amount: amount,
-          remarks_budgets: reamrk_budget
-        });
-      }
+    $('.edit_budget_hour').each(function(index) {
+        if ($(this).val() !== "") {
+            var budgetId = $(this).data("budgets-id");
+            var amount = $(".edit_budget_amount")[index].value;
+            var reamrk_budget = $('.edit_budget_remarks')[index].value;
+            totalAmount += parseInt(amount);
+            totalHour += parseInt($(this).val());
+            EditBudgetArr.push({
+                budget_id: budgetId,
+                budget_hour: $(this).val(),
+                budget_amount: amount,
+                remarks_budgets: reamrk_budget
+            });
+        }
     });
     var activity_id = $("#activity_id").val();
     $("#total_hour").val(totalHour);
     $("#total_amount").val(totalAmount);
     $.ajax({
-      type: "POST",
-      url: "/activity/edit-budget",
-      data: {
-        activity_id: activity_id,
-        activity_goal_id: $("#activity_goal").val(),
-        activity_level_type: $('input[name=activity_level_type_edit]:checked').val(),
-        total_amount: totalAmount,
-        total_Hour: totalHour,
-        budget: JSON.stringify(EditBudgetArr)
-      },
-      beforeSend: function (xhr) {
-        xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
-        $("#btnEditActivityBudget").prop('disabled', true);
-        $("#btnEditActivityBudget").html("Loading...");
-      },
-      success: function (response) {
-        if (response.success == true) {
-          $(`<div class="alert alert-success" id="budger_update_success"><strong>Success! </strong>Budget Updated Successfully</div>`).insertBefore("#btnEditActivityBudget");
-          // $("#budger_update_success").attr('disabled', true);
-          window.location.reload();
-          setTimeout(function () {
-            $('#budger_update_success').hide();
-            $("#update_budget").modal('hide');
-            $("#btnEditActivityBudget").html("Update");
-            $("#btnEditActivityBudget").prop('disabled', false);
-          }, 2000);
+        type: "POST",
+        url: "/activity/edit-budget",
+        data: {
+            activity_id: activity_id,
+            activity_goal_id: $("#activity_goal").val(),
+            activity_level_type: $('input[name=activity_level_type_edit]:checked').val(),
+            total_amount: totalAmount,
+            total_Hour: totalHour,
+            budget: JSON.stringify(EditBudgetArr)
+        },
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+            $("#btnEditActivityBudget").prop('disabled', true);
+            $("#btnEditActivityBudget").html("Loading...");
+        },
+        success: function(response) {
+            if (response.success == true) {
+                $(`<div class="alert alert-success" id="budger_update_success"><strong>Success! </strong>Budget Updated Successfully</div>`).insertBefore("#btnEditActivityBudget");
+                // $("#budger_update_success").attr('disabled', true);
+                window.location.reload();
+                setTimeout(function() {
+                    $('#budger_update_success').hide();
+                    $("#update_budget").modal('hide');
+                    $("#btnEditActivityBudget").html("Update");
+                    $("#btnEditActivityBudget").prop('disabled', false);
+                }, 2000);
+            }
         }
-      }
     });
-  });
-
-  $("#activity_type").change(function () {
+});
+$("#activity_type").change(function() {
     if ($(this).val() == 'team') {
-      $('#potiential_revenue').val('0.00');
-      $('#potiential_revenue').prop('readonly', true);
-      $(".none").show();
-      $(".section").hide();
-      $(".strategyGroup").hide();
+        $('#potiential_revenue').val('0.00');
+        $('#potiential_revenue').prop('readonly', true);
+        $(".none").show();
+        $(".section").hide();
+        $(".strategyGroup").hide();
     } else if ($(this).val() == 'section') {
-      $('#potiential_revenue').val('0.00');
-      $(".none").hide();
-      $(".section").show();
-      $(".strategyGroup").hide();
-      $('#potiential_revenue').prop('readonly', false);
+        $('#potiential_revenue').val('0.00');
+        $(".none").hide();
+        $(".section").show();
+        $(".strategyGroup").hide();
+        $('#potiential_revenue').prop('readonly', false);
     } else if ($(this).val() == 'strategic_group') {
-      $('#potiential_revenue').val('0.00');
-      $(".none").hide();
-      $(".strategyGroup").show();
-      $(".section").hide();
-      $('#potiential_revenue').prop('readonly', false);
+        $('#potiential_revenue').val('0.00');
+        $(".none").hide();
+        $(".strategyGroup").show();
+        $(".section").hide();
+        $('#potiential_revenue').prop('readonly', false);
     } else {
-      $('#potiential_revenue').val('0.00');
-      $(".none").show();
-      $(".section").hide();
-      $(".strategyGroup").hide();
-      $('#potiential_revenue').prop('readonly', false);
+        $('#potiential_revenue').val('0.00');
+        $(".none").show();
+        $(".section").hide();
+        $(".strategyGroup").hide();
+        $('#potiential_revenue').prop('readonly', false);
     }
-  })
-
-
-  if ($('#activity_type').val() == 'team') {
+})
+if ($('#activity_type').val() == 'team') {
     $('#potiential_revenue').val('0.00');
     $('#potiential_revenue').prop('readonly', true);
     $(".none").show();
     $(".section").hide();
     $(".strategyGroup").hide();
-  } else if ($('#activity_type').val() == 'section') {
+} else if ($('#activity_type').val() == 'section') {
     $('#potiential_revenue').val('0.00');
     $(".none").hide();
     $(".section").show();
     $(".strategyGroup").hide();
     $('#potiential_revenue').prop('readonly', false);
-  } else if ($('#activity_type').val() == 'strategic_group') {
+} else if ($('#activity_type').val() == 'strategic_group') {
     $('#potiential_revenue').val('0.00');
     $(".none").hide();
     $(".strategyGroup").show();
     $(".section").hide();
     $('#potiential_revenue').prop('readonly', false);
-  } else {
+} else {
     $('#potiential_revenue').val('0.00');
     $(".none").show();
     $(".section").hide();
     $(".strategyGroup").hide();
     $('#potiential_revenue').prop('readonly', false);
-  }
-
-  $("#potiential_revenue").inputmask("numeric", {
+}
+$("#potiential_revenue").inputmask("numeric", {
     radixPoint: ".",
     groupSeparator: ",",
     digits: 2,
     autoGroup: true,
     prefix: '$ ',
     rightAlign: false
-  });
-
+});
 </script>
 
-
-<script type="text/javascript">
-  // add designation ajax and form validation starts
-  $(document).ready(function (e) {
-
-    $(".number_budget").keydown(function (e) {
-      // Allow: backspace, delete, tab, escape, enter and .
-      if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
-        // Allow: Ctrl+A, Command+A
-        (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
-        // Allow: home, end, left, right, down, up
-        (e.keyCode >= 35 && e.keyCode <= 40)) {
-        // let it happen, don't do anything
-        return;
-      }
-      // Ensure that it is a number and stop the keypress
-      if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-        e.preventDefault();
-      }
-    });
-
-    $("#updateActivityForm").validate({
-      rules: {
-        firm: {
-          required: true
-        },
-        activity_type: {
-          required: true
-        },
-        activity_goal: {
-          required: true
-        },
-        practice_area: {
-          required: true
-        },
-        potiential_revenue: {
-          required: true
-        },
-        remarks: {
-          required: true
-        },
-        activity_creation_date: {
-          required: true
-        },
-        activity_from_date: {
-          required: true
-        },
-        activity_to_date: {
-          required: true
-        },
-        activity_name: {
-          required: true
-        },
-        activity_reason: {
-          required: true
-        },
-        budget_status: {
-          required: true
-        },
-        budget_details_status: {
-          required: true
-        }
-
-      },
-      messages: {
-        firm: {
-          required: "firm can't be blank"
-        },
-        activity_type: {
-          required: "activity type title can't be blank"
-        },
-        activity_goal: {
-          required: "activity goal title can't be blank"
-        },
-        practice_area: {
-          required: "practice area title can't be blank"
-        },
-        potiential_revenue: {
-          required: "potiential revenue title can't be blank"
-        },
-        remarks: {
-          required: "remarks title can't be blank"
-        },
-        activity_creation_date: {
-          required: "creation date title can't be blank"
-        },
-        activity_from_date: {
-          required: "from date title can't be blank"
-        },
-        activity_to_date: {
-          required: "to date title can't be blank"
-        },
-        activity_name: {
-          required: "activity name title can't be blank"
-        },
-        activity_reason: {
-          required: "activity reason title can't be blank"
-        },
-        budget_status: {
-          required: "budget status title can't be blank"
-        },
-        budget_details_status: {
-          required: "budget_details_status title can't be blank"
-        }
-      }
-    });
-  });
-</script> {{/content}}
+ <script type = "text/javascript" >
+    // add designation ajax and form validation starts
+    $(document).ready(function(e) {
+        $(".number_budget").keydown(function(e) {
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
+                // Allow: Ctrl+A, Command+A
+                (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                // Allow: home, end, left, right, down, up
+                (e.keyCode >= 35 && e.keyCode <= 40)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
+        $("#updateActivityForm").validate({
+            rules: {
+                firm: {
+                    required: true
+                },
+                activity_type: {
+                    required: true
+                },
+                activity_goal: {
+                    required: true
+                },
+                practice_area: {
+                    required: true
+                },
+                potiential_revenue: {
+                    required: true
+                },
+                remarks: {
+                    required: true
+                },
+                activity_creation_date: {
+                    required: true
+                },
+                activity_from_date: {
+                    required: true
+                },
+                activity_to_date: {
+                    required: true
+                },
+                activity_name: {
+                    required: true
+                },
+                activity_reason: {
+                    required: true
+                },
+                budget_status: {
+                    required: true
+                },
+                budget_details_status: {
+                    required: true
+                }
+            },
+            messages: {
+                firm: {
+                    required: "firm can't be blank"
+                },
+                activity_type: {
+                    required: "activity type title can't be blank"
+                },
+                activity_goal: {
+                    required: "activity goal title can't be blank"
+                },
+                practice_area: {
+                    required: "practice area title can't be blank"
+                },
+                potiential_revenue: {
+                    required: "potiential revenue title can't be blank"
+                },
+                remarks: {
+                    required: "remarks title can't be blank"
+                },
+                activity_creation_date: {
+                    required: "creation date title can't be blank"
+                },
+                activity_from_date: {
+                    required: "from date title can't be blank"
+                },
+                activity_to_date: {
+                    required: "to date title can't be blank"
+                },
+                activity_name: {
+                    required: "activity name title can't be blank"
+                },
+                activity_reason: {
+                    required: "activity reason title can't be blank"
+                },
+                budget_status: {
+                    required: "budget status title can't be blank"
+                },
+                budget_details_status: {
+                    required: "budget_details_status title can't be blank"
+                }
+            }
+        });
+    }); 
+  </script>
+{{/content}}
