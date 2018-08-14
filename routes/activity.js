@@ -137,17 +137,26 @@ router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res)
 		});
 	}
 
-	Activity.findAll({
-		where: {
-			firm_id : req.user.firm_id
-		},
-	}).then(row => {
-		res.render('activity/activity', {
-			layout: 'dashboard',
-			csrfToken: req.csrfToken(),
-			row: row,
-			success_message
+	if (req.user.role_id == 2) {
+		var activity = await Activity.findAll({
+			where: {
+				firm_id : req.user.firm_id
+			}
 		});
+	} else {
+		var activity = await Activity.findAll({
+			where: {
+				firm_id : req.user.firm_id,
+				user_id: req.user.id
+			}
+		});
+	}
+	
+	res.render('activity/activity', {
+		layout: 'dashboard',
+		csrfToken: req.csrfToken(),
+		row: activity,
+		success_message
 	});
 });
 

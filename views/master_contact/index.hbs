@@ -19,19 +19,14 @@
                     <strong>Success! </strong>{{success_edit_message}}
                 </div>
                 {{/if}}
-                <div class="col-sm-4 col-xs-3">
+                <div class="col-md-4">
                     <h4 class="page-title">Master Contacts</h4>
                 </div>
-                <div class="col-sm-8 col-xs-9 text-right">
-                    <a href="javascript:void(0);" class="btn btn-primary rounded move-target m-r-5">
-                        <i class="fa fa-share" aria-hidden="true"></i> Move to Target </a>
-                    <a href="/master_contact/add" class="btn btn-primary rounded pull-right">
-                        <i class="fa fa-plus"></i> Add Contact</a>
-                    <a href="javascript:void(0)" data-toggle="modal" data-target="#import" class="btn btn-primary rounded pull-right">
-                        <i class="fa fa-cloud-download"></i> Import Master Contact</a>
-                    <a href="javascript:void(0);" class="btn btn-primary rounded master-contact-delete m-r-5">
-                        <i class="fa fa-trash" aria-hidden="true"></i> Delete </a>
-
+                <div class="col-md-8 text-right">
+                    <a href="/master_contact/add" class="btn btn-primary rounded pull-right"><i class="fa fa-plus"></i> Add Contact </a>
+                    <a href="javascript:void(0)" data-toggle="modal" data-target="#import" class="btn btn-primary rounded pull-right m-r-5"><i class="fa fa-cloud-download"></i> Import Master Contact </a>
+                    <a href="javascript:void(0);" class="btn btn-primary rounded move-target pull-right"><i class="fa fa-share" aria-hidden="true"></i> Move to Target </a>
+                    <a href="javascript:void(0);" class="btn btn-primary rounded master-contact-delete pull-right m-r-5"><i class="fa fa-trash" aria-hidden="true"></i> Delete </a>
                 </div>
             </div>
         </div>
@@ -41,9 +36,7 @@
                     <table class="table table-striped custom-table datatable">
                         <thead>
                             <tr>
-                                <th>
-                                    <input type="checkbox" onClick="checkall(this);" /> SL#
-                                </th>
+                                <th><input type="checkbox" onClick="checkall(this);" /> SL#</th>
                                 <th>Name</th>
                                 <th>Email Id</th>
                                 <th>Contact Code</th>
@@ -56,12 +49,8 @@
                         <tbody>
                             {{#each contacts}}
                             <tr>
-                                <td>
-                                    <input type="checkbox" name="contact_id" value="{{this.id}}" /> {{math @index "+" 1}}
-                                </td>
-                                <td>
-                                    <a href="/master_contact/view/{{this.id}}"> {{this.first_name}} {{this.last_name}} </a>
-                                </td>
+                                <td><input type="checkbox" name="contact_id" value="{{this.id}}" /> {{math @index "+" 1}}</td>
+                                <td><a href="/master_contact/view/{{this.id}}"> {{this.first_name}} {{this.last_name}} </a></td>
                                 <td>{{this.email}}</td>
                                 <td>{{this.master_contact_code}}</td>
                                 <td class="number_validator">{{this.mobile_no}}</td>
@@ -114,17 +103,15 @@
             </div>
             <form>
                 <div class="modal-body card-box">
-                                            <p>are you sure you want to delete this master contact?</p>
+                    <p>are you sure you want to delete this master contact ?</p>
                     <div class="m-t-20" id="delDiv">
-                        <a href="#" class="btn btn-default" data-dismiss="modal" >Close</a>
-                        {{!-- <a href="/activity-goal/delete/{{this.id}}" class="btn btn-danger">Delete</a> --}}
+                        <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
 
 <div class="modal fade" id="move_to_target_2" role="dialog">
     <div class="modal-dialog">
@@ -139,6 +126,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="master-contact-delete-2" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -152,7 +140,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="modal fade" id="import" role="dialog">
     <div class="modal-dialog">
@@ -177,6 +164,7 @@
         </div>
     </div>
 </div>
+
 {{#content "script" mode="append"}}
 <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
@@ -207,19 +195,46 @@
 
         if (contact_ids.length == 0) {
             swal("", "Please select one or more master contact!", "warning");
-
         } else {
-            $('#move_to_target_2').modal('show');
+            //$('#move_to_target_2').modal('show');
+            swal({
+                title: "",
+                text: "are you sure you want to move this record to target ?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Ok",
+                closeOnConfirm: false
+            }, function() {
+                $.ajax({
+                    url: '/master_contact/move-to-target/',
+                    type: 'POST',
+                    data: { contact_id: contact_ids },
+                    success: function (response) {
+                        if (response.code === '200') {
+                            $('#move_to_target_2').modal('hide');
+                            swal({
+                                title: "Nice!",
+                                text: "Master Contact moved successfully",
+                                type: "success"
+                            }, function () {
+                                window.location.reload();
+                            });
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
         }
     });
 
     $('.move-to-target').on('click', function (e) {
-         var contact_ids = [];
+        var contact_ids = [];
         $('input[name="contact_id"]:checked').each(function () {
             contact_ids.push(this.value);
         });
-
-        // alert(contact_ids);
         $.ajax({
             url: '/master_contact/move-to-target/',
             type: 'POST',
@@ -228,9 +243,9 @@
                 if (response.code === '200') {
                     $('#move_to_target_2').modal('hide');
                     swal({
-                    title: "Nice!",
-                    text: "Master contact move successfully",
-                    type: "success"
+                        title: "Nice!",
+                        text: "Master Contact moved successfully",
+                        type: "success"
                     }, function () {
                         window.location.reload();
                     });
@@ -251,51 +266,47 @@
         if (contact_ids.length == 0) {
             swal("","Please select one or more master contact!", "warning");
         } else {
-            $('#master-contact-delete-2').modal('show');
+            //$('#master-contact-delete-2').modal('show');
+            swal({
+                title: "",
+                text: "are you sure you want to delete this record ?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Ok",
+                closeOnConfirm: false
+            }, function() {
+                $.ajax({
+                    url: '/master_contact/multiple-delete/',
+                    type: 'POST',
+                    data: { contact_id: contact_ids },
+                    success: function (response) {
+                        if (response.code === '200') {
+                            $('#master-contact-delete-2').modal('hide');
+                            swal({
+                                title: "Nice!",
+                                text: "Master Contact deleted successfully",
+                                type: "success"
+                            }, function () {
+                                window.location.reload();
+                            });
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                })
+            });
         }
     });
 
-    $('.master-contact-delete-done').on('click', function (e) {
-        var contact_ids = [];
-        $('input[name="contact_id"]:checked').each(function () {
-            contact_ids.push(this.value);
-        });
-        $.ajax({
-            url: '/master_contact/multiple-delete/',
-            type: 'POST',
-            data: { contact_id: contact_ids },
-            success: function (response) {
-                // console.log(response);
-                if (response.code === '200') {
-                    $('#master-contact-delete-2').modal('hide');
-                    swal({
-                    title: "Nice!",
-                    text: "Master contact delete successfully",
-                    type: "success"
-                    }, function () {
-                        window.location.reload();
-                    });
-                }
-            },
-            error: function (err) {
-                console.log(err);
-            }
-        })
+    $(document).on('click','#delete_mastercontact', function(e) {
+        var mastercontact_id = $(this).data('mastercontact-id');
+        $("#removeBtnDelete").remove();
+        $("#delete_users").modal('show');
+        $("#delDiv").append('<a href="/master_contact/delete/'+ mastercontact_id +'" class="btn btn-danger" id="removeBtnDelete">'+"Delete"+'</a>');
     });
 
-</script> 
-
-
-<script>
-$(document).on('click','#delete_mastercontact', function(e){
-    var mastercontact_id = $(this).data('mastercontact-id');
-    $("#removeBtnDelete").remove();
-    $("#delete_users").modal('show');
-    $("#delDiv").append('<a href="/master_contact/delete/'+ mastercontact_id +'" class="btn btn-danger" id="removeBtnDelete">'+"Delete"+ '</a>');
-});
-
-
 </script>
-
 
 {{/content}}
