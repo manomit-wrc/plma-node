@@ -15,6 +15,15 @@ const Zipcode = require('../models').zipcode;
 const EmployeeToFirm = require('../models').employee_to_firm;
 
 var csrfProtection = csrf({ cookie: true });
+function removePhoneMask(phone_no) {
+    var phone_no = phone_no.replace("-", "");
+    phone_no = phone_no.replace(")", "");
+    phone_no = phone_no.replace("(", "");
+    phone_no = phone_no.replace(" ", "");
+    phone_no = phone_no.replace("$", "");
+    phone_no = phone_no.replace(",", "");
+    return phone_no;
+}
 
 /*==================================BRATIN MEHETA 14-06-2018=====================================*/
 
@@ -84,7 +93,7 @@ router.post('/employees/add', auth, siteAuth, csrfProtection, async (req, res) =
             zipcode: req.body.zipcode,
             gender: req.body.gender,
             dob: formatDate ? formatDate[2]+"-"+formatDate[1]+"-"+formatDate[0] : null,
-            mobile_no: req.body.mobile_no,
+            mobile_no: removePhoneMask(req.body.mobile_no),
             status: 1,
             role_id: 4,
             createdAt: new Date(),
@@ -185,7 +194,7 @@ router.post('/employees/edit/:id', auth, csrfProtection, async (req, res) => {
             country: req.body.country,
             gender: req.body.gender,
             dob: formatDate1 ? formatDate1[2] + "-" + formatDate1[1] + "-" + formatDate1[0] : null,
-            mobile_no: req.body.mobile_no
+            mobile_no: removePhoneMask(req.body.mobile_no)
         }, {
             where: {
                 id: req.params['id']
