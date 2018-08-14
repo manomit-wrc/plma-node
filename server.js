@@ -29,7 +29,7 @@ const budget_report = require('./routes/budget_report');
 const forgot_password = require('./routes/forgot_password');
 const activity_approvals = require('./routes/activity-approval');
 
-const allowCrossDomain = function (req, res, next) {
+const allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
@@ -47,22 +47,22 @@ require('./config/passport')(passport);
 const hbs = exphbs.create({
     extname: '.hbs',
     helpers: {
-        if_eq: function (a, b, opts) {
+        if_eq: function(a, b, opts) {
             if (a == b)
                 return opts.fn(this);
             else
                 return opts.inverse(this);
         },
-        noop: function (options) {
+        noop: function(options) {
             return options.fn(this)
         },
-        if_con: function (a, opts) {
+        if_con: function(a, opts) {
             if (a)
                 return opts.fn(this);
             else
                 return opts.inverse(this);
         },
-        math: function (lvalue, operator, rvalue) {
+        math: function(lvalue, operator, rvalue) {
             lvalue = parseFloat(lvalue);
             rvalue = parseFloat(rvalue);
             return {
@@ -73,25 +73,25 @@ const hbs = exphbs.create({
                 "%": lvalue % rvalue
             }[operator];
         },
-        times: function (n, block) {
+        times: function(n, block) {
             var accum = '';
             for (var i = 0; i < n; ++i)
                 accum += block.fn(i);
             return accum;
         },
 
-        first_letter: function (a) {
+        first_letter: function(a) {
             return a.charAt(0);
         },
 
-        inArray: function (array, value, block) {
+        inArray: function(array, value, block) {
             if (array.indexOf(value) !== -1) {
                 return block.fn(this);
             } else {
                 return block.inverse(this);
             }
         },
-        get_parent_head: function (value, array) {
+        get_parent_head: function(value, array) {
             var parent_category = lodash.filter(array, arr => arr.id === value);
             if (parent_category[0].parent_id == "0") {
                 return "N/A";
@@ -100,14 +100,14 @@ const hbs = exphbs.create({
                 return parent_category_name[0].name;
             }
         },
-        if_eq_budget: function (a, b, opts) {
+        if_eq_budget: function(a, b, opts) {
             if (a == b.activity_goal_id) {
                 return opts.fn(this);
             } else {
                 return opts.inverse(this);
             }
         },
-        get_budget_hour: function (value, obj) {
+        get_budget_hour: function(value, obj) {
             var x = 0;
             const hour = lodash.filter(obj, arr => arr.activity_goal_id === value)
             if (hour.length > 0) {
@@ -117,7 +117,7 @@ const hbs = exphbs.create({
                 return "-";
             }
         },
-        get_budget_amount: function (value, obj) {
+        get_budget_amount: function(value, obj) {
             var x = 0;
             const amount = lodash.filter(obj, arr => arr.activity_goal_id === value)
             if (amount.length > 0) {
@@ -127,7 +127,7 @@ const hbs = exphbs.create({
                 return "-";
             }
         },
-        get_activity_budget_hour: function (value, obj) {
+        get_activity_budget_hour: function(value, obj) {
             const hour = lodash.filter(obj, arr => arr.activity_id === value)
             if (hour.length > 0) {
                 const total_hour = lodash.map(hour, arr => parseInt(arr.hour));
@@ -136,7 +136,7 @@ const hbs = exphbs.create({
                 return "-";
             }
         },
-        get_activity_budget_amount: function (value, obj) {
+        get_activity_budget_amount: function(value, obj) {
             const amount = lodash.filter(obj, arr => arr.activity_id === value)
             if (amount.length > 0) {
                 const total_amount = lodash.map(amount, arr => parseInt(arr.amount));
@@ -145,7 +145,7 @@ const hbs = exphbs.create({
                 return "-";
             }
         },
-        get_activity_budget_hour_indi: function (count, value, obj) {
+        get_activity_budget_hour_indi: function(count, value, obj) {
             const hour = lodash.filter(obj, arr => arr.activity_id === value)
             if (hour.length > 0) {
                 const total_hour = lodash.map(hour, arr => parseInt(arr.hour));
@@ -154,7 +154,7 @@ const hbs = exphbs.create({
                 return "-";
             }
         },
-        get_activity_budget_amount_indi: function (count, value, obj) {
+        get_activity_budget_amount_indi: function(count, value, obj) {
             const amount = lodash.filter(obj, arr => arr.activity_id === value)
             if (amount.length > 0) {
                 const total_amount = lodash.map(amount, arr => parseInt(arr.amount));
@@ -163,7 +163,7 @@ const hbs = exphbs.create({
                 return "-";
             }
         },
-        get_activity_budget_hour_equal: function (count, value, obj) {
+        get_activity_budget_hour_equal: function(count, value, obj) {
             const hour = lodash.filter(obj, arr => arr.activity_id === value)
             if (hour.length > 0) {
                 const total_hour = lodash.map(hour, arr => parseInt(arr.hour));
@@ -172,7 +172,7 @@ const hbs = exphbs.create({
                 return "-";
             }
         },
-        get_activity_budget_amount_equal: function (count, value, obj) {
+        get_activity_budget_amount_equal: function(count, value, obj) {
             const amount = lodash.filter(obj, arr => arr.activity_id === value)
             if (amount.length > 0) {
                 const total_amount = lodash.map(amount, arr => parseInt(arr.amount));
@@ -182,7 +182,7 @@ const hbs = exphbs.create({
             }
         },
 
-        get_sub_total_hour: function (array, parent_id, activity_id) {
+        get_sub_total_hour: function(array, parent_id, activity_id) {
             var sum = 0;
             var total_hour = 0;
             const parent_details = lodash.filter(array, arr => arr.parent_id === parent_id);
@@ -194,7 +194,7 @@ const hbs = exphbs.create({
             }
             return total_hour
         },
-        get_sub_total_hour_activity_goal: function (array, parent_id, goal_id) {
+        get_sub_total_hour_activity_goal: function(array, parent_id, goal_id) {
             var sum = 0;
             var total_hour = 0;
             const parent_details = lodash.filter(array, arr => arr.parent_id === parent_id);
@@ -206,7 +206,7 @@ const hbs = exphbs.create({
             }
             return total_hour
         },
-        get_sub_total_amount: function (array, parent_id, activity_id) {
+        get_sub_total_amount: function(array, parent_id, activity_id) {
             var sum = 0;
             var total_hour = 0;
             const parent_details = lodash.filter(array, arr => arr.parent_id === parent_id);
@@ -219,7 +219,7 @@ const hbs = exphbs.create({
             }
             return total_hour
         },
-        get_sub_total_amount_activity_goal: function (array, parent_id, goal_id) {
+        get_sub_total_amount_activity_goal: function(array, parent_id, goal_id) {
             var sum = 0;
             var total_hour = 0;
             const parent_details = lodash.filter(array, arr => arr.parent_id === parent_id);
@@ -232,7 +232,7 @@ const hbs = exphbs.create({
             }
             return total_hour
         },
-        get_hour_by_goal: function (array, parent_id) {
+        get_hour_by_goal: function(array, parent_id) {
             var x = 0;
             var total_budget_hour = 0;
             const hours = lodash.filter(array, arr => arr.parent_id === parent_id);
@@ -246,7 +246,7 @@ const hbs = exphbs.create({
                 return "-";
             }
         },
-        get_amount_by_goal: function (array, parent_id) {
+        get_amount_by_goal: function(array, parent_id) {
             var x = 0;
             var total_budget_amount = 0;
             const amounts = lodash.filter(array, arr => arr.parent_id === parent_id);
@@ -260,7 +260,7 @@ const hbs = exphbs.create({
                 return "-";
             }
         },
-        get_all_total_hour: function (array, activity_id) {
+        get_all_total_hour: function(array, activity_id) {
             const tot_hour = lodash.filter(array, arr => arr.activity_id === activity_id);
             if (tot_hour.length > 0) {
                 return tot_hour[0].hour;
@@ -268,7 +268,7 @@ const hbs = exphbs.create({
                 return "-";
             }
         },
-        get_all_total_amount: function (array, activity_id) {
+        get_all_total_amount: function(array, activity_id) {
             const tot_amount = lodash.filter(array, arr => arr.activity_id === activity_id);
             if (tot_amount.length > 0) {
                 return tot_amount[0].amount;
@@ -276,7 +276,7 @@ const hbs = exphbs.create({
                 return "-";
             }
         },
-        get_all_total_hour_by_goal: function (array, goal_id) {
+        get_all_total_hour_by_goal: function(array, goal_id) {
             const tot_hours = lodash.filter(array, arr => arr.activity_goal_id === goal_id);
             if (tot_hours.length > 0) {
                 return tot_hours[0].hour;
@@ -284,7 +284,7 @@ const hbs = exphbs.create({
                 return "-";
             }
         },
-        get_all_total_amount_by_goal: function (array, goal_id) {
+        get_all_total_amount_by_goal: function(array, goal_id) {
             const tot_amounts = lodash.filter(array, arr => arr.activity_goal_id === goal_id);
             if (tot_amounts.length > 0) {
                 return tot_amounts[0].amount;
@@ -292,25 +292,49 @@ const hbs = exphbs.create({
                 return "-";
             }
         },
-        marketing_budget_hour: function (hour, length) {
+        marketing_budget_hour: function(hour, length) {
             if (hour > 0) {
                 return (hour / length).toFixed(2);
             } else {
                 return "-";
             }
         },
-        marketing_budget_amount: function (amount, length) {
+        marketing_budget_amount: function(amount, length) {
             if (amount > 0) {
                 return (amount / length).toFixed(2);
             } else {
                 return "-";
             }
         },
-        show_button_add: function (index, opts) {
-             if (index == 0)
-                 return opts.fn(this);
-             else
-                 return opts.inverse(this);
+        show_button_add: function(index, opts) {
+            if (index == 0)
+                return opts.fn(this);
+            else
+                return opts.inverse(this);
+        },
+        eq: function (v1, v2) {
+          return v1 == v2;
+        },
+        ne: function(v1, v2) {
+            return v1 !== v2;
+        },
+        lt: function(v1, v2) {
+            return v1 < v2;
+        },
+        gt: function(v1, v2) {
+            return v1 > v2;
+        },
+        lte: function(v1, v2) {
+            return v1 <= v2;
+        },
+        gte: function(v1, v2) {
+            return v1 >= v2;
+        },
+        and: function(v1, v2) {
+            return v1 && v2;
+        },
+        or: function(v1, v2) {
+            return v1 || v2;
         },
         dateFormat: require('handlebars-dateformat')
     }
