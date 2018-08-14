@@ -307,6 +307,9 @@ router.post('/admin/delete-industry/:id', auth, siteAuth, csrfProtection, (req, 
 
 
 router.get('/settings', auth, csrfProtection, async (req, res) => {
+
+	var sucess_setting_message1 = req.flash('setting-message1')[0];
+
 	let zipcodes;
 	const country = await Country.findAll({});
 	const state = await State.findAll({});
@@ -326,7 +329,7 @@ router.get('/settings', auth, csrfProtection, async (req, res) => {
 		});
 	}
 
-	res.render('superadminsetting/settings', { layout: 'dashboard', csrfToken: req.csrfToken(), data: settings, country: country, state: state, cities, zipcodes });
+	res.render('superadminsetting/settings', { layout: 'dashboard', csrfToken: req.csrfToken(), sucess_setting_message1, data: settings, country: country, state: state, cities, zipcodes });
 });
 
 //insert
@@ -348,12 +351,15 @@ router.post('/settings/insert', auth, csrfProtection, (req, res) => {
 
 	if (hidden_field != "") {
 		setting.update({ company_name: companyname, contact_person: contactperson, address: address, country: country, city: city, state: state, postal_code: postalcode, phone_number: phnumber, mobile_number: mbnumber, email: email, fax: fax, website_url: weburl }, { where: { id: hidden_field } }).then(resp => {
-			res.end("success");
+			// res.end("success");
+			req.flash('setting-message1', 'Settings Updated sucessfully.');
+        res.redirect('/dashboard');
 		});
 	} else {
 		setting.create({ company_name: companyname, contact_person: contactperson, address: address, country: country, city: city, state: state, postal_code: postalcode, phone_number: phnumber, mobile_number: mbnumber, email: email, fax: fax, website_url: weburl }).then(resp => {
-			res.end("success");
-
+			// res.end("success");
+			req.flash('setting-message1', 'Settings Updated sucessfully.');
+			res.redirect('/dashboard');
 		});
 	}
 });

@@ -10,7 +10,11 @@
                 <h4 class="page-title">Company Details</h4>
             </div>
         </div>
-
+ {{#if sucess_setting_message1}}
+        <div class="alert alert-success">
+            <strong>Success! </strong>{{sucess_setting_message1}}
+        </div>
+        {{/if}}
         <form name="addname" id="addname">
             <input type="hidden" id="hidden_field" value={{data.id}}>
             <!-- <h3 class="page-title">Company Details</h3> -->
@@ -95,19 +99,19 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Phone Number</label>
-                                    <input class="form-control" type="text" name="phnumber" id="phnumber" value={{data.phone_number}} onkeypress="return onlyNumbers();">
+                                    <input class="form-control floating number_validator" type="text" name="phnumber" id="phnumber" value={{data.phone_number}} >
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Mobile Number</label>
-                                    <input class="form-control" type="text" name="mbnumber" id="mbnumber" value={{data.mobile_number}} onkeypress="return onlyNumbers();">
+                                    <input class="form-control floating number_validator" type="text" name="mbnumber" id="mbnumber" value={{data.mobile_number}} >
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Fax</label>
-                                    <input class="form-control" type="text" name="fax" id="fax" value={{data.fax}} onkeypress="return onlyNumbers();">
+                                    <input class="form-control floating number_validator" type="text" name="fax" id="fax" value={{data.fax}} >
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -118,8 +122,16 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="text-center m-t-20">
-                                    <button type="button" class="btn btn-primary" id="insert" value="Validate" onclick="Validate()">Save &amp; update</button>
+                                    <button type="submit" class="btn btn-primary btn-lg" id="insert">Save &amp; update</button>
+
+                                    <a href="/dashboard" class="btn btn-primary btn-lg m-l-10">Cancel</a>
+
                                 </div>
+
+
+                            
+
+
                             </div>
                         </div>
                     </div>
@@ -141,20 +153,6 @@
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
-
-
-<script language="JavaScript">
-    function onlyNumbers(evt) {
-        var e = event || evt; // for trans-browser compatibility
-        var charCode = e.which || e.keyCode;
-
-        if (charCode > 31 && (charCode < 48 || charCode > 57))
-            return false;
-
-        return true;
-
-    }
-</script>
 
 
 
