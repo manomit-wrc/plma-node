@@ -23,7 +23,9 @@ const target = require('../models').target;
 const Jurisdiction = require('../models').jurisdiction;
 const client = require('../models').client;
 const user = require('../models').user;
-var csrfProtection = csrf({ cookie: true });
+var csrfProtection = csrf({
+	cookie: true
+});
 var csv = require('fast-csv');
 var path = require('path');
 var fs = require('fs');
@@ -43,7 +45,9 @@ var storage = multer.diskStorage({
 		cb(null, fileName);
 	}
 })
-var upload_client_excel = multer({ storage: storage });
+var upload_client_excel = multer({
+	storage: storage
+});
 
 function removePhoneMask(phone_no) {
 	var phone_no = phone_no.replace("-", "");
@@ -80,8 +84,7 @@ router.get('/budget', csrfProtection, auth, siteAuth, (req, res) => {
 
 router.post('/budget/add', auth, siteAuth, csrfProtection, (req, res) => {
 	budget.findAndCountAll({
-		where:
-		{
+		where: {
 			name: req.body.name
 		}
 	}).then(result => {
@@ -92,11 +95,14 @@ router.post('/budget/add', auth, siteAuth, csrfProtection, (req, res) => {
 				parent_id: req.body.parent_id,
 				remarks: req.body.remarks
 			}).then(store => {
-				res.json({ "add_budget": 1 });
+				res.json({
+					"add_budget": 1
+				});
 			});
-		}
-		else {
-			res.json({ "add_budget": 2 });
+		} else {
+			res.json({
+				"add_budget": 2
+			});
 		}
 	});
 });
@@ -116,24 +122,33 @@ router.post('/admin/edit-budget/:id', auth, siteAuth, csrfProtection, (req, res)
 				parent_id: req.body.edit_parent_id,
 				remarks: req.body.edit_remarks
 			}, {
-					where: { id: req.params['id'] }
-				}).then(result => {
-					res.json({ "edit_budget": 1 });
+				where: {
+					id: req.params['id']
+				}
+			}).then(result => {
+				res.json({
+					"edit_budget": 1
 				});
-		}
-		else {
+			});
+		} else {
 
-			res.json({ "edit_budget": 2 });
+			res.json({
+				"edit_budget": 2
+			});
 		}
 	});
 });
 
 router.post('/admin/delete-budget/:id', auth, siteAuth, csrfProtection, (req, res) => {
 	budget.destroy({
-		where: { id: req.params['id'] }
+		where: {
+			id: req.params['id']
+		}
 	}).then(result => {
 		req.flash('success-budget-message', 'Budget delete Successfully');
-		res.json({ "del_budget": 1 });
+		res.json({
+			"del_budget": 1
+		});
 	});
 });
 
@@ -165,8 +180,7 @@ router.get('/designation', csrfProtection, auth, siteAuth, (req, res) => {
 
 router.post('/designation/add', auth, siteAuth, csrfProtection, (req, res) => {
 	Designation.findAndCountAll({
-		where:
-		{
+		where: {
 			title: req.body.name
 		}
 	}).then(result => {
@@ -176,11 +190,14 @@ router.post('/designation/add', auth, siteAuth, csrfProtection, (req, res) => {
 				title: req.body.name,
 				remarks: req.body.remarks
 			}).then(store => {
-				res.json({ "add_designation": 1 });
+				res.json({
+					"add_designation": 1
+				});
 			});
-		}
-		else {
-			res.json({ "add_designation": 2 });
+		} else {
+			res.json({
+				"add_designation": 2
+			});
 		}
 	});
 });
@@ -199,24 +216,33 @@ router.post('/admin/edit-designation/:id', auth, siteAuth, csrfProtection, (req,
 				title: req.body.edit_name,
 				remarks: req.body.edit_remarks
 			}, {
-					where: { id: req.params['id'] }
-				}).then(result => {
-					res.json({ "edit_designation": 1 });
+				where: {
+					id: req.params['id']
+				}
+			}).then(result => {
+				res.json({
+					"edit_designation": 1
 				});
-		}
-		else {
+			});
+		} else {
 
-			res.json({ "edit_designation": 2 });
+			res.json({
+				"edit_designation": 2
+			});
 		}
 	});
 });
 
 router.post('/admin/delete-designation/:id', auth, siteAuth, csrfProtection, (req, res) => {
 	Designation.destroy({
-		where: { id: req.params['id'] }
+		where: {
+			id: req.params['id']
+		}
 	}).then(result => {
 		req.flash('success-designation-message', 'Designation delete Successfully');
-		res.json({ "del_designation": 1 });
+		res.json({
+			"del_designation": 1
+		});
 	});
 });
 
@@ -246,8 +272,7 @@ router.get('/industry', csrfProtection, auth, siteAuth, (req, res) => {
 
 router.post('/industry/add', auth, siteAuth, csrfProtection, (req, res) => {
 	Industry.findAndCountAll({
-		where:
-		{
+		where: {
 			industry_name: req.body.name
 		}
 	}).then(result => {
@@ -257,11 +282,14 @@ router.post('/industry/add', auth, siteAuth, csrfProtection, (req, res) => {
 				industry_name: req.body.name,
 				remarks: req.body.remarks
 			}).then(store => {
-				res.json({ "add_industry": 1 });
+				res.json({
+					"add_industry": 1
+				});
 			});
-		}
-		else {
-			res.json({ "add_industry": 2 });
+		} else {
+			res.json({
+				"add_industry": 2
+			});
 		}
 	});
 });
@@ -280,24 +308,33 @@ router.post('/admin/edit-industry/:id', auth, siteAuth, csrfProtection, (req, re
 				industry_name: req.body.edit_name,
 				remarks: req.body.edit_remarks
 			}, {
-					where: { id: req.params['id'] }
-				}).then(result => {
-					res.json({ "edit_industry": 1 });
+				where: {
+					id: req.params['id']
+				}
+			}).then(result => {
+				res.json({
+					"edit_industry": 1
 				});
-		}
-		else {
+			});
+		} else {
 
-			res.json({ "edit_industry": 2 });
+			res.json({
+				"edit_industry": 2
+			});
 		}
 	});
 });
 
 router.post('/admin/delete-industry/:id', auth, siteAuth, csrfProtection, (req, res) => {
 	Industry.destroy({
-		where: { id: req.params['id'] }
+		where: {
+			id: req.params['id']
+		}
 	}).then(result => {
 		req.flash('success-industry-message', 'Industry delete Successfully');
-		res.json({ "del_industry": 1 });
+		res.json({
+			"del_industry": 1
+		});
 	});
 });
 
@@ -329,7 +366,16 @@ router.get('/settings', auth, csrfProtection, async (req, res) => {
 		});
 	}
 
-	res.render('superadminsetting/settings', { layout: 'dashboard', csrfToken: req.csrfToken(), sucess_setting_message1, data: settings, country: country, state: state, cities, zipcodes });
+	res.render('superadminsetting/settings', {
+		layout: 'dashboard',
+		csrfToken: req.csrfToken(),
+		sucess_setting_message1,
+		data: settings,
+		country: country,
+		state: state,
+		cities,
+		zipcodes
+	});
 });
 
 //insert
@@ -350,13 +396,43 @@ router.post('/settings/insert', auth, csrfProtection, (req, res) => {
 	var hidden_field = req.body.hidden_field;
 
 	if (hidden_field != "") {
-		setting.update({ company_name: companyname, contact_person: contactperson, address: address, country: country, city: city, state: state, postal_code: postalcode, phone_number: phnumber, mobile_number: mbnumber, email: email, fax: fax, website_url: weburl }, { where: { id: hidden_field } }).then(resp => {
+		setting.update({
+			company_name: companyname,
+			contact_person: contactperson,
+			address: address,
+			country: country,
+			city: city,
+			state: state,
+			postal_code: postalcode,
+			phone_number: removePhoneMask(phnumber),
+			mobile_number: removePhoneMask(mbnumber),
+			email: email,
+			fax: removePhoneMask(fax),
+			website_url: weburl
+		}, {
+			where: {
+				id: hidden_field
+			}
+		}).then(resp => {
 			// res.end("success");
 			req.flash('setting-message1', 'Settings Updated sucessfully.');
-        res.redirect('/dashboard');
+			res.redirect('/dashboard');
 		});
 	} else {
-		setting.create({ company_name: companyname, contact_person: contactperson, address: address, country: country, city: city, state: state, postal_code: postalcode, phone_number: phnumber, mobile_number: mbnumber, email: email, fax: fax, website_url: weburl }).then(resp => {
+		setting.create({
+			company_name: companyname,
+			contact_person: contactperson,
+			address: address,
+			country: country,
+			city: city,
+			state: state,
+			postal_code: postalcode,
+			phone_number: removePhoneMask(phnumber),
+			mobile_number: removePhoneMask(mbnumber),
+			email: email,
+			fax: removePhoneMask(fax),
+			website_url: weburl
+		}).then(resp => {
 			// res.end("success");
 			req.flash('setting-message1', 'Settings Updated sucessfully.');
 			res.redirect('/dashboard');
@@ -374,9 +450,10 @@ router.post('/client/findCityByState', auth, firmAttrAuth, csrfProtection, (req,
 		where: {
 			state: req.body.state
 		}
-	}
-	).then(city => {
-		res.json({ city: city });
+	}).then(city => {
+		res.json({
+			city: city
+		});
 	});
 });
 
@@ -387,11 +464,12 @@ router.post('/client/findPinByCity', auth, firmAttrAuth, csrfProtection, (req, r
 			where: {
 				city_name: row.name
 			}
-		}
-		).then(pin => {
+		}).then(pin => {
 			console.log(JSON.stringify(pin, undefined, 2));
 			// res.send(city);
-			res.json({ pin: pin });
+			res.json({
+				pin: pin
+			});
 		});
 	});
 });
@@ -418,7 +496,9 @@ router.get('/client', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	}
 
 	const clientDetails = await client.findAll({
-		where: { 'attorney_id': req.user.id }
+		where: {
+			'attorney_id': req.user.id
+		}
 	});
 
 	res.render('client/index', {
@@ -441,10 +521,15 @@ router.get('/client/add', auth, firmAttrAuth, csrfProtection, async (req, res) =
 	const tags = await Tag.findAll();
 
 	const attorney = await user.findAll({
-		where: { role_id: 3, firm_id: req.user.firm_id }
+		where: {
+			role_id: 3,
+			firm_id: req.user.firm_id
+		}
 	});
 
-	res.render('client/addclient', { layout: 'dashboard', csrfToken: req.csrfToken(),
+	res.render('client/addclient', {
+		layout: 'dashboard',
+		csrfToken: req.csrfToken(),
 		tags: tags,
 		country: country,
 		state: state,
@@ -483,10 +568,15 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 	const industrys = await Industry.findAll();
 	const client_country = await Country.findAll();
 	const attorney = await user.findAll({
-		where: { role_id: 3, firm_id: req.user.firm_id }
+		where: {
+			role_id: 3,
+			firm_id: req.user.firm_id
+		}
 	});
 	const client_state = await State.findAll({
-		where: { country_id: "233" }
+		where: {
+			country_id: "233"
+		}
 	});
 	var client_city = [];
 	var client_zipcode = [];
@@ -517,7 +607,7 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 	res.render('client/editclient', {
 		layout: 'dashboard',
 		csrfToken: req.csrfToken(),
-		tags:tags,
+		tags: tags,
 		designation: designations,
 		industry: industrys,
 		client: clients,
@@ -527,7 +617,7 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		city: client_city,
 		zipcode: client_zipcode,
 		error_message,
-		existing_tag:existingTag
+		existing_tag: existingTag
 	});
 });
 
@@ -539,10 +629,15 @@ router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 	const industrys = await Industry.findAll();
 	const client_country = await Country.findAll();
 	const attorney = await user.findAll({
-		where: { role_id: 3, firm_id: req.user.firm_id }
+		where: {
+			role_id: 3,
+			firm_id: req.user.firm_id
+		}
 	});
 	const client_state = await State.findAll({
-		where: { country_id: "233" }
+		where: {
+			country_id: "233"
+		}
 	});
 	var client_city = [];
 	var client_zipcode = [];
@@ -563,7 +658,7 @@ router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 	}
 
 	var existingTag = clients.tags;
-	if (existingTag !== null){
+	if (existingTag !== null) {
 		var existing_tag = existingTag.split(",");
 		var existingTag = [];
 
@@ -575,15 +670,17 @@ router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 	res.render('client/viewClient', {
 		layout: 'dashboard',
 		csrfToken: req.csrfToken(),
-		tags:tags,designation: designations,
-		industry: industrys, client: clients,
+		tags: tags,
+		designation: designations,
+		industry: industrys,
+		client: clients,
 		country: client_country,
 		attorney: attorney,
 		state: client_state,
 		city: client_city,
 		zipcode: client_zipcode,
 		error_message,
-		existing_tag:existingTag
+		existing_tag: existingTag
 	});
 });
 
@@ -600,7 +697,7 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 	} else {
 		var new_tags = req.body.add_new_tags;
 		var all_tags = new_tags.split(",");
-		for(i = 0; i < all_tags.length; i++) {
+		for (i = 0; i < all_tags.length; i++) {
 			await Tag.create({
 				firm_id: req.user.firm_id,
 				user_id: req.user.id,
@@ -652,8 +749,7 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 			});
 			req.flash('success-message', 'Client Added Successfully');
 			res.redirect('/client')
-		}
-		else {
+		} else {
 			await client.create({
 				first_name: req.body.client_first_name,
 				last_name: req.body.client_last_name,
@@ -697,8 +793,7 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 			req.flash('success-message', 'Client Added Successfully');
 			res.redirect('/client')
 		}
-	}
-	else {
+	} else {
 		req.flash('error-client-message', 'Email already taken.');
 		res.redirect('/client/add');
 	}
@@ -761,17 +856,18 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 			client_company: req.body.client_company,
 			remarks: req.body.remarks,
 			social_url: req.body.social,
-  			website_url: req.body.website,
-  			current_revenue: req.body.current_revenue,
-  			estimated_revenue: req.body.estimated_revenue,
+			website_url: req.body.website,
+			current_revenue: req.body.current_revenue,
+			estimated_revenue: req.body.estimated_revenue,
 
 		}, {
-				where: { id: req.params['id'] }
-			});
+			where: {
+				id: req.params['id']
+			}
+		});
 		req.flash('success-edit-message', 'Client Updated Successfully');
 		res.redirect('/client')
-	}
-	else {
+	} else {
 		req.flash('error-clientEdit-message', 'Email already taken.');
 		res.redirect('/client/edit/' + req.params['id']);
 	}
@@ -794,9 +890,10 @@ router.post('/client/findCityByState', auth, firmAttrAuth, csrfProtection, (req,
 		where: {
 			state_id: req.body.state_id
 		}
-	}
-	).then(city => {
-		res.json({ city: city });
+	}).then(city => {
+		res.json({
+			city: city
+		});
 	});
 });
 
@@ -806,10 +903,11 @@ router.post('/client/findPinByCity', auth, firmAttrAuth, csrfProtection, (req, r
 			where: {
 				city_name: row.name
 			}
-		}
-		).then(pin => {
+		}).then(pin => {
 			// console.log(JSON.stringify(pin, undefined, 2));
-			res.json({ pin: pin });
+			res.json({
+				pin: pin
+			});
 		});
 
 	});
@@ -828,7 +926,12 @@ router.get('/import/csv', auth, csrfProtection, (req, res) => {
 		.fromPath("./public/states (1).csv")
 		.on("data", function (data) {
 			console.log(data[2]);
-			state.create({ id: data[0], code: data[1], name: data[2], country_id: data[3] }).then(result => {
+			state.create({
+				id: data[0],
+				code: data[1],
+				name: data[2],
+				country_id: data[3]
+			}).then(result => {
 				console.log("END");
 			});
 		})
@@ -871,8 +974,7 @@ router.get('/practice-area', csrfProtection, auth, siteAuth, (req, res) => {
 
 router.post('/practice-area/add', auth, siteAuth, csrfProtection, (req, res) => {
 	PracticeArea.findAndCountAll({
-		where:
-		{
+		where: {
 			name: req.body.name
 		}
 	}).then(result => {
@@ -883,11 +985,14 @@ router.post('/practice-area/add', auth, siteAuth, csrfProtection, (req, res) => 
 				name: req.body.name,
 				remarks: req.body.remarks
 			}).then(store => {
-				res.json({ "a": 1 });
+				res.json({
+					"a": 1
+				});
 			});
-		}
-		else {
-			res.json({ "a": 2 });
+		} else {
+			res.json({
+				"a": 2
+			});
 		}
 	});
 });
@@ -907,24 +1012,33 @@ router.post('/admin/edit-practice-area/:id', auth, siteAuth, csrfProtection, (re
 				name: req.body.edit_name,
 				remarks: req.body.edit_remarks
 			}, {
-					where: { id: req.params['id'] }
-				}).then(result => {
-					res.json({ "b": 1 });
+				where: {
+					id: req.params['id']
+				}
+			}).then(result => {
+				res.json({
+					"b": 1
 				});
-		}
-		else {
+			});
+		} else {
 
-			res.json({ "b": 2 });
+			res.json({
+				"b": 2
+			});
 		}
 	});
 });
 
 router.post('/admin/delete-practice-area/:id', auth, siteAuth, csrfProtection, (req, res) => {
 	PracticeArea.destroy({
-		where: { id: req.params['id'] }
+		where: {
+			id: req.params['id']
+		}
 	}).then(result => {
 		req.flash('success-practiceArea-message', 'Practice area delete Successfully');
-		res.json({ "c": 1 });
+		res.json({
+			"c": 1
+		});
 	});
 });
 
@@ -953,7 +1067,7 @@ router.get('/section', csrfProtection, auth, siteAuth, (req, res) => {
 
 router.post('/section/add', auth, siteAuth, csrfProtection, (req, res) => {
 	Section.findAndCountAll({
-		where:{
+		where: {
 			name: req.body.name
 		}
 	}).then(result => {
@@ -965,11 +1079,14 @@ router.post('/section/add', auth, siteAuth, csrfProtection, (req, res) => {
 				remarks: req.body.remarks
 			}).then(store => {
 				// req.flash('success-activityGoal-message', 'Section Created Successfully');
-				res.json({ "add_section": 1 });
+				res.json({
+					"add_section": 1
+				});
 			});
-		}
-		else {
-			res.json({ "add_section": 2 });
+		} else {
+			res.json({
+				"add_section": 2
+			});
 		}
 	});
 });
@@ -989,24 +1106,33 @@ router.post('/admin/edit-section/:id', auth, siteAuth, csrfProtection, (req, res
 				description: req.body.edit_description,
 				remarks: req.body.edit_remarks
 			}, {
-					where: { id: req.params['id'] }
-				}).then(result => {
-					res.json({ "edit_section": 1 });
+				where: {
+					id: req.params['id']
+				}
+			}).then(result => {
+				res.json({
+					"edit_section": 1
 				});
-		}
-		else {
+			});
+		} else {
 
-			res.json({ "edit_section": 2 });
+			res.json({
+				"edit_section": 2
+			});
 		}
 	});
 });
 
 router.post('/admin/delete-section/:id', auth, siteAuth, csrfProtection, (req, res) => {
 	Section.destroy({
-		where: { id: req.params['id'] }
+		where: {
+			id: req.params['id']
+		}
 	}).then(result => {
 		req.flash('success-section-message', 'Section delete Successfully');
-		res.json({ "del_section": 1 });
+		res.json({
+			"del_section": 1
+		});
 	});
 });
 
@@ -1039,8 +1165,7 @@ router.get('/jurisdiction', csrfProtection, auth, siteAuth, (req, res) => {
 
 router.post('/jurisdiction/add', auth, siteAuth, csrfProtection, (req, res) => {
 	Jurisdiction.findAndCountAll({
-		where:
-		{
+		where: {
 			name: req.body.name
 		}
 	}).then(result => {
@@ -1051,11 +1176,14 @@ router.post('/jurisdiction/add', auth, siteAuth, csrfProtection, (req, res) => {
 				name: req.body.name,
 				remarks: req.body.remarks
 			}).then(store => {
-				res.json({ "add_jurisdiction": 1 });
+				res.json({
+					"add_jurisdiction": 1
+				});
 			});
-		}
-		else {
-			res.json({ "add_jurisdiction": 2 });
+		} else {
+			res.json({
+				"add_jurisdiction": 2
+			});
 		}
 	});
 });
@@ -1074,24 +1202,33 @@ router.post('/admin/edit-jurisdiction/:id', auth, siteAuth, csrfProtection, (req
 				name: req.body.edit_name,
 				remarks: req.body.edit_remarks
 			}, {
-					where: { id: req.params['id'] }
-				}).then(result => {
-					res.json({ "edit_jurisdiction": 1 });
+				where: {
+					id: req.params['id']
+				}
+			}).then(result => {
+				res.json({
+					"edit_jurisdiction": 1
 				});
-		}
-		else {
+			});
+		} else {
 
-			res.json({ "edit_jurisdiction": 2 });
+			res.json({
+				"edit_jurisdiction": 2
+			});
 		}
 	});
 });
 
 router.post('/admin/delete-jurisdiction/:id', auth, siteAuth, csrfProtection, (req, res) => {
 	Jurisdiction.destroy({
-		where: { id: req.params['id'] }
+		where: {
+			id: req.params['id']
+		}
 	}).then(result => {
 		req.flash('success-jurisdiction-message', 'Jurisdiction delete Successfully');
-		res.json({ "del_jurisdiction": 1 });
+		res.json({
+			"del_jurisdiction": 1
+		});
 	});
 });
 
@@ -1124,8 +1261,7 @@ router.get('/group', csrfProtection, auth, siteAuth, (req, res) => {
 
 router.post('/group/add', auth, siteAuth, csrfProtection, (req, res) => {
 	Group.findAndCountAll({
-		where:
-		{
+		where: {
 			name: req.body.name
 		}
 	}).then(result => {
@@ -1136,11 +1272,14 @@ router.post('/group/add', auth, siteAuth, csrfProtection, (req, res) => {
 				name: req.body.name,
 				remarks: req.body.remarks
 			}).then(store => {
-				res.json({ "add_group": 1 });
+				res.json({
+					"add_group": 1
+				});
 			});
-		}
-		else {
-			res.json({ "add_group": 2 });
+		} else {
+			res.json({
+				"add_group": 2
+			});
 		}
 	});
 });
@@ -1159,24 +1298,33 @@ router.post('/admin/edit-group/:id', auth, siteAuth, csrfProtection, (req, res) 
 				name: req.body.edit_name,
 				remarks: req.body.edit_remarks
 			}, {
-					where: { id: req.params['id'] }
-				}).then(result => {
-					res.json({ "edit_group": 1 });
+				where: {
+					id: req.params['id']
+				}
+			}).then(result => {
+				res.json({
+					"edit_group": 1
 				});
-		}
-		else {
+			});
+		} else {
 
-			res.json({ "edit_group": 2 });
+			res.json({
+				"edit_group": 2
+			});
 		}
 	});
 });
 
 router.post('/admin/delete-group/:id', auth, siteAuth, csrfProtection, (req, res) => {
 	Group.destroy({
-		where: { id: req.params['id'] }
+		where: {
+			id: req.params['id']
+		}
 	}).then(result => {
 		req.flash('success-group-message', 'Group delete Successfully');
-		res.json({ "del_group": 1 });
+		res.json({
+			"del_group": 1
+		});
 	});
 });
 
@@ -1219,17 +1367,23 @@ router.post('/client/upload-excel', auth, upload_client_excel.single('client_xls
 		var fetchZip = [];
 		if (excelClient[i].state !== null) {
 			var fetchState = await State.findAll({
-				where: { name: excel_state }
+				where: {
+					name: excel_state
+				}
 			});
 		}
 		if (excelClient[i].city !== null) {
 			var fetchCity = await City.findAll({
-				where: { name: excel_city }
+				where: {
+					name: excel_city
+				}
 			});
 		}
 		if (excelClient[i].zipcode !== null) {
 			var fetchZip = await Zipcode.findAll({
-				where: { zip: excel_zip }
+				where: {
+					zip: excel_zip
+				}
 			});
 		}
 		const client_excel_data = await client.findOne({
@@ -1264,8 +1418,7 @@ router.post('/client/upload-excel', auth, upload_client_excel.single('client_xls
 					pin_code: fetchZip[0].id,
 					remarks: excelClient[i].edit_remarks
 				});
-			}
-			else {
+			} else {
 				await client.create({
 					first_name: excelClient[i].first_name,
 					last_name: excelClient[i].last_name,
