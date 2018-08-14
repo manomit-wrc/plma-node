@@ -2,6 +2,8 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-sweetalert/sweet-alert.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
 <div class="page-wrapper">
 	<div class="content container-fluid">
@@ -167,7 +169,8 @@
 		</div>
 	</div>
 </div>
-<div class="modal fade" id="client-delete-2" role="dialog">
+
+{{!-- <div class="modal fade" id="client-delete-2" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-body">
@@ -179,8 +182,10 @@
 			</div>
 		</div>
 	</div>
-</div>
-{{!-- modal for delete end--}} {{#content "script" mode="append"}}
+</div> --}}
+{{!-- modal for delete end--}}
+
+ {{#content "script" mode="append"}}
 <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
@@ -193,6 +198,9 @@
 <script type="text/javascript" src="/assets/js/select2.min.js"></script>
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+
+<script type="text/javascript" src="/assets/plugins/bootstrap-sweetalert/sweet-alert.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 <script type="text/javascript">
@@ -255,13 +263,64 @@
 			client_id.push(this.value);
 		});
 		if (client_id.length == 0) {
-			$('#client-delete-1').modal('show');
+			// $('#client-delete-1').modal('show');
+			swal("", "Please select one or more client!", "warning");
 		} else {
-			$('#client-delete-2').modal('show');
+			// $('#client-delete-2').modal('show');
+
+			swal({
+                title: "",
+                text: "are you sure you want to delete this client?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Ok",
+                closeOnConfirm: false
+            }, function() {
+               $.ajax({
+					url: '/client/multi-delete/',
+					type: 'POST',
+					data: { client_id: client_id },
+					success: function (response) {
+						// console.log(response);
+						if (response.code === '200') {
+							//$('#success-move').css('display','block');
+							swal({
+                                title: "Nice!",
+                                text: "Client delete successfully",
+                                type: "success"
+                            }, function() {
+                                window.location.reload();
+                            });
+						}
+					},
+					error: function (err) {
+						console.log(err);
+					}
+				});
+            });
+
+
+			/*$.ajax({
+			url: '/client/multi-delete/',
+			type: 'POST',
+			data: { client_id: client_id },
+			success: function (response) {
+				// console.log(response);
+				if (response.code === '200') {
+					//$('#success-move').css('display','block');
+					window.location.reload();
+				}
+			},
+			error: function (err) {
+				console.log(err);
+			}
+		});*/
+
 		}
 	})
 
-	$('.client-delete-done').on('click', function (e) {
+	/*$('.client-delete-done').on('click', function (e) {
 		var client_id = [];
 		$('input[name="client_check_id"]:checked').each(function () {
 			client_id.push(this.value);
@@ -281,12 +340,9 @@
 				console.log(err);
 			}
 		});
-	})
-
-</script>
+	})*/
 
 
-<script>
 	$(document).on('click', '#delete_client', function (e) {
 		var client_id = $(this).data('client-id');
 		$("#removeBtnDelete").remove();

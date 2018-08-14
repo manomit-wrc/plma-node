@@ -63,29 +63,13 @@
                                     <a href="/master_contact/edit/{{this.id}}" class="btn btn-info btn-sm">
                                         <i class="fa fa-pencil m-r-5"></i>
                                     </a>
-                                    {{!-- <a href="javascript:void(0)" data-toggle="modal" data-target="#{{this.id}}" class="btn btn-danger btn-sm">
-                                        <i class="fa fa-trash-o m-r-5"></i>
-                                    </a> --}}
-
+                                    
                                     <a href="javascript:void(0)" data-toggle="modal" data-target="delete_users" data-mastercontact-id="{{this.id}}" id="delete_mastercontact" class="btn btn-danger btn-sm">
                                         <i class="fa fa-trash-o m-r-5"></i>
                                     </a>
                                 </td>
                             </tr>
-                            {{!-- <div class="modal fade" id="{{this.id}}" role="dialog">
-                                <div class="modal-dialog">
-                                    <!-- Modal content-->
-                                    <div class="modal-content">
-                                        <div class="modal-body">
-                                            <p>are you sure you want to delete this master contact?</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <a href="/master_contact/delete/{{this.id}}" class="btn btn-danger"> Delete </a>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal"> Close </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
+                            
                             {{/each}}
                         </tbody>
                     </table>
@@ -94,7 +78,6 @@
         </div>
     </div>
 </div>
-
 <div id="delete_users" class="modal custom-modal fade del-mastercontact" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content modal-md">
@@ -112,7 +95,6 @@
         </div>
     </div>
 </div>
-
 <div class="modal fade" id="import" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -159,9 +141,9 @@
         }
     }
 
-    $('.move-target').on('click', function (e) {
+    $('.move-target').on('click', function(e) {
         var contact_ids = [];
-        $('input[name="contact_id"]:checked').each(function () {
+        $('input[name="contact_id"]:checked').each(function() {
             contact_ids.push(this.value);
         });
 
@@ -181,20 +163,22 @@
                 $.ajax({
                     url: '/master_contact/move-to-target/',
                     type: 'POST',
-                    data: { contact_id: contact_ids },
-                    success: function (response) {
+                    data: {
+                        contact_id: contact_ids
+                    },
+                    success: function(response) {
                         if (response.code === '200') {
                             $('#move_to_target_2').modal('hide');
                             swal({
                                 title: "Nice!",
                                 text: "Master Contact moved successfully",
                                 type: "success"
-                            }, function () {
+                            }, function() {
                                 window.location.reload();
                             });
                         }
                     },
-                    error: function (err) {
+                    error: function(err) {
                         console.log(err);
                     }
                 });
@@ -202,14 +186,14 @@
         }
     });
 
-    $('.master-contact-delete').on('click', function (e) {
+    $('.master-contact-delete').on('click', function(e) {
         var contact_ids = [];
-        $('input[name="contact_id"]:checked').each(function () {
+        $('input[name="contact_id"]:checked').each(function() {
             contact_ids.push(this.value);
         });
 
         if (contact_ids.length == 0) {
-            swal("","Please select one or more master contact!", "warning");
+            swal("", "Please select one or more master contact!", "warning");
         } else {
             //$('#master-contact-delete-2').modal('show');
             swal({
@@ -224,20 +208,22 @@
                 $.ajax({
                     url: '/master_contact/multiple-delete/',
                     type: 'POST',
-                    data: { contact_id: contact_ids },
-                    success: function (response) {
+                    data: {
+                        contact_id: contact_ids
+                    },
+                    success: function(response) {
                         if (response.code === '200') {
                             $('#master-contact-delete-2').modal('hide');
                             swal({
                                 title: "Nice!",
                                 text: "Master Contact deleted successfully",
                                 type: "success"
-                            }, function () {
+                            }, function() {
                                 window.location.reload();
                             });
                         }
                     },
-                    error: function (err) {
+                    error: function(err) {
                         console.log(err);
                     }
                 })
@@ -245,11 +231,11 @@
         }
     });
 
-    $(document).on('click','#delete_mastercontact', function(e) {
+    $(document).on('click', '#delete_mastercontact', function(e) {
         var mastercontact_id = $(this).data('mastercontact-id');
         $("#removeBtnDelete").remove();
         $("#delete_users").modal('show');
-        $("#delDiv").append('<a href="/master_contact/delete/'+ mastercontact_id +'" class="btn btn-danger" id="removeBtnDelete">'+"Delete"+'</a>');
+        $("#delDiv").append('<a href="/master_contact/delete/' + mastercontact_id + '" class="btn btn-danger" id="removeBtnDelete">' + "Delete" + '</a>');
     });
 
 </script>

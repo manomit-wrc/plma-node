@@ -1,6 +1,8 @@
 {{#content "style" mode="prepend"}}
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-sweetalert/sweet-alert.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
 <div class="page-wrapper">
@@ -25,7 +27,8 @@
                 </div>
                 <div class="col-xs-8 text-right">
 
-
+                    <a href="javascript:void(0);" class="btn btn-primary rounded referral-delete">
+                        <i class="fa fa-trash" aria-hidden="true"></i> Delete </a>
                     <a href="/referral/add" class="btn btn-primary pull-right rounded">
                         <i class="fa fa-plus"></i> Add Referral</a>
                     <a href="#" class="btn btn-primary rounded mr-10" data-toggle="modal" data-target="#add_user">
@@ -40,7 +43,9 @@
                     <table class="table table-striped custom-table datatable">
                         <thead>
                             <tr>
-                                <th>SL#</th>
+                                <th>
+                                    <input type="checkbox" onClick="checkall(this);" /> SL#
+                                </th>
                                 <th style="width:25%;">Referral Name</th>
                                 <th>Referral Type</th>
                                 <th>Email ID</th>
@@ -51,7 +56,7 @@
                         <tbody>
                             {{#each referral}}
                             <tr>
-                                <td>{{math @index "+" 1}}</td>
+                                <td> <input type="checkbox" name="referral_check_id" value="{{this.id}}" /> {{math @index "+" 1}}</td>
                                 <td>
 
 
@@ -81,35 +86,13 @@
                                         <i class="fa fa-pencil m-r-5"></i>
                                     </a>
 
-
-                                    {{!--
-                                    <a href="javascript:void(0);" data-toggle="modal" data-target="#{{this.id}}" class="btn btn-danger btn-sm">
-                                        <i class="fa fa-trash-o m-r-5"></i>
-                                    </a> --}}
-
-
-
                                     <a href="javascript:void(0);" data-toggle="modal" data-target="delete_users" data-referral-id="{{this.id}}" id="delete_referral"
                                         class="btn btn-danger btn-sm">
                                         <i class="fa fa-trash-o m-r-5"></i>
                                     </a>
                                 </td>
                             </tr>
-                            {{!--
-                            <div class="modal fade" id="{{this.id}}" role="dialog">
-                                <div class="modal-dialog">
-                                    <!-- Modal content-->
-                                    <div class="modal-content">
-                                        <div class="modal-body">
-                                            <p>are you sure you want to delete this referral?</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <a href="/referral/delete/{{this.id}}" class="btn btn-danger">Delete</a>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}} {{/each}}
+                             {{/each}}
                         </tbody>
                     </table>
                 </div>
@@ -191,6 +174,9 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+
+<script type="text/javascript" src="/assets/plugins/bootstrap-sweetalert/sweet-alert.min.js"></script>
+
 <script type="text/javascript" src="/assets/js/select2.min.js"></script>
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
@@ -238,8 +224,58 @@
             return true;
         }
     }
-</script>
-<script>
+
+    function checkall(source) {
+        var checkboxes = document.getElementsByName('referral_check_id');
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+
+
+    $('.referral-delete').on('click', function (e) {
+        var referral_id = [];
+        $('input[name="referral_check_id"]:checked').each(function () {
+            referral_id.push(this.value);
+        });
+        if (referral_id.length == 0) {
+            swal("", "Please select one or more referral!", "warning");
+        } else {
+
+            swal({
+                title: "",
+                text: "are you sure you want to delete this referral?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Ok",
+                closeOnConfirm: false
+            }, function() {
+               $.ajax({
+                    url: '/referral/multi-delete/',
+                    type: 'POST',
+                    data: { referral_id: referral_id },
+                    success: function (response) {
+                        if (response.code === '200') {
+                            swal({
+                                title: "Nice!",
+                                text: "Referral delete successfully",
+                                type: "success"
+                            }, function() {
+                                window.location.reload();
+                            });
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+
+        }
+    })
+
+
     $(document).on('click', '#delete_referral', function (e) {
         var referral_id = $(this).data('referral-id');
         $("#removeBtnDelete").remove();

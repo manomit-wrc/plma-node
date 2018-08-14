@@ -607,4 +607,23 @@ router.get("/referral/view-activity/:id", auth, async (req, res) => {
 });
 
 
+router.post('/referral/multi-delete/', auth, firmAttrAuth, async (req, res) => {
+
+	var referral_ids = req.body.referral_id;
+	var n = req.body.referral_id.length;
+	for (i = 0; i < n; i++) {
+
+		await Referral.destroy({
+			where: {
+				id: referral_ids[i]
+			}
+		});
+	}
+	res.json({
+		code: "200",
+		message: 'Success'
+	});
+});
+
+
 module.exports = router;
