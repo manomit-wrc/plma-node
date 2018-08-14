@@ -11,6 +11,7 @@ const Jointactivities = require('../models').jointactivity;
 const client = require('../models').client;
 const Target = require('../models').target;
 const Referral = require('../models').referral;
+const User = require('../models').user;
 
 
 var csrfProtection = csrf({
@@ -159,16 +160,22 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
 router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req, res) => {
 
   var user_id = req.user.id;
+
   Activity.hasMany(ActivityBudget, {
     foreignKey: 'activity_id'
   });
+
+  Activity.belongsTo(User, {
+    foreignKey: 'user_id'
+  });
+
   var activity_data = await Activity.findAll({
     where: {
       activity_goal_id: req.params['id']
     },
     include: [{
       model: ActivityBudget
-    }]
+    },{ model: User }]
   });
   const budgetList = await Budget.findAll();
 
@@ -271,7 +278,7 @@ router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req,
       "activity_id": activity_data[a].id,
       "budget_list": budgetArr,
       "activity_grand": activity_grand,
-      'originAttorney': req.user.first_name + ' ' + req.user.last_name,
+      'originAttorney': activity_data[a].user.first_name + ' ' + activity_data[a].user.last_name,
       'activity_level': _activityBudget[0].level_type === 'Individual' ? 'I' : 'E'
     });
   }
