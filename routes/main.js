@@ -433,7 +433,6 @@ router.post('/settings/insert', auth, csrfProtection, (req, res) => {
 			fax: removePhoneMask(fax),
 			website_url: weburl
 		}).then(resp => {
-			// res.end("success");
 			req.flash('setting-message1', 'Settings Updated sucessfully.');
 			res.redirect('/dashboard');
 		});
