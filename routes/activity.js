@@ -119,45 +119,50 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async(req, res) 
 
 //fetch
 
-router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async(req, res) => {
-    var success_message = req.flash('success-message')[0];
+router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+	var success_message = req.flash('success-message')[0];
+	
+	var activity_data = await Activity.findAll({
+		where: { 'firm_id': 0 }
+	});
+	
+	for (var i = 0; i < activity_data.length; i++) {
+		await Activity_to_user_type.destroy({
+			where: {
+				activity_id: activity_data[i].id
+			}
+		});
+		await ActivityBudget.destroy({
+			where: {
+				activity_id: activity_data[i].id
+			}
+		});
+		await Activity.destroy({
+			where: { 'id': activity_data[i].id }
+		});
+	}
 
-    var activity_data = await Activity.findAll({
-        where: {
-            'firm_id': 0
-        }
-    });
-
-    for (var i = 0; i < activity_data.length; i++) {
-        await Activity_to_user_type.destroy({
-            where: {
-                activity_id: activity_data[i].id
-            }
-        });
-        await ActivityBudget.destroy({
-            where: {
-                activity_id: activity_data[i].id
-            }
-        });
-        await Activity.destroy({
-            where: {
-                'id': activity_data[i].id
-            }
-        });
-    }
-
-    Activity.findAll({
-        where: {
-            firm_id: req.user.firm_id
-        },
-    }).then(row => {
-        res.render('activity/activity', {
-            layout: 'dashboard',
-            csrfToken: req.csrfToken(),
-            row: row,
-            success_message
-        });
-    });
+	if (req.user.role_id == 2) {
+		var activity = await Activity.findAll({
+			where: {
+				firm_id : req.user.firm_id
+			}
+		});
+	} else {
+		var activity = await Activity.findAll({
+			where: {
+				firm_id : req.user.firm_id,
+				user_id: req.user.id
+			}
+		});
+	}
+	
+	res.render('activity/activity', {
+		layout: 'dashboard',
+		csrfToken: req.csrfToken(),
+		row: activity,
+		success_message
+	});
 });
 
 // Start budget add section
