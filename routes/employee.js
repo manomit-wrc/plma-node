@@ -15,16 +15,24 @@ const Zipcode = require('../models').zipcode;
 const EmployeeToFirm = require('../models').employee_to_firm;
 
 var csrfProtection = csrf({ cookie: true });
+function removePhoneMask(phone_no) {
+    var phone_no = phone_no.replace("-", "");
+    phone_no = phone_no.replace(")", "");
+    phone_no = phone_no.replace("(", "");
+    phone_no = phone_no.replace(" ", "");
+    phone_no = phone_no.replace("$", "");
+    phone_no = phone_no.replace(",", "");
+    return phone_no;
+}
 
-/*==================================BRATIN MEHETA 14-06-2018=====================================*/
+/*==================================BRATIN MEHETA 14-06-2018 Sayan Sadhu=====================================*/
 
 router.get('/employees', auth, siteAuth, async (req, res) => {
     var employeeFilter = {};
-    if(req.query.employee_name)
-    {
+    if (req.query.employee_name) {
         employeeFilter.first_name = req.query.employee_name;
     }
-    if(req.query.employee_email)
+    if (req.query.employee_email)
     {
         employeeFilter.email = req.query.employee_email;
     }
@@ -84,7 +92,7 @@ router.post('/employees/add', auth, siteAuth, csrfProtection, async (req, res) =
             zipcode: req.body.zipcode,
             gender: req.body.gender,
             dob: formatDate ? formatDate[2]+"-"+formatDate[1]+"-"+formatDate[0] : null,
-            mobile_no: req.body.mobile_no,
+            mobile_no: removePhoneMask(req.body.mobile_no),
             status: 1,
             role_id: 4,
             createdAt: new Date(),
@@ -185,7 +193,7 @@ router.post('/employees/edit/:id', auth, csrfProtection, async (req, res) => {
             country: req.body.country,
             gender: req.body.gender,
             dob: formatDate1 ? formatDate1[2] + "-" + formatDate1[1] + "-" + formatDate1[0] : null,
-            mobile_no: req.body.mobile_no
+            mobile_no: removePhoneMask(req.body.mobile_no)
         }, {
             where: {
                 id: req.params['id']
@@ -265,16 +273,13 @@ router.get('/employee/view/:id', csrfProtection, siteAuth, auth, async (req, res
 
 router.get('/employee/delete/:id', auth, csrfProtection, async (req, res) => {
     const user_delete = User.destroy({
-        where: {
-            id: req.params['id']
-        }
+        where: { id: req.params['id'] }
     });
 
     const firm_to_user_delete = EmployeeToFirm.destroy({
-        where: {
-            user_id: req.params['id']
-        }
+        where: {  user_id: req.params['id']  }
     });
+    req.flash('success-message', 'Employee delete Successfully');
     res.redirect('/employees');
 });
 

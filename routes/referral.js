@@ -11,6 +11,13 @@ const Firm = require('../models').firm;
 const Client = require('../models').client;
 const Target = require('../models').target;
 const Referral = require('../models').referral;
+const Zipcode = require('../models').zipcode;
+const City = require('../models').city;
+const State = require('../models').state;
+const Country = require('../models').country;
+const industry_type = require('../models').industry_type;
+const Activity = require('../models').activity;
+const TargetActivity = require('../models').jointactivity;
 var fs = require('fs');
 const multer  = require('multer');
 var xlsx = require('node-xlsx');
@@ -33,10 +40,12 @@ var storage = multer.diskStorage({
 var referral_xcel = multer({ storage: storage });
 
 function removePhoneMask(phone_no) {
-	var phone_no = phone_no.replace("-","");
-	phone_no = phone_no.replace(")","");
-	phone_no = phone_no.replace("(","");
-	phone_no = phone_no.replace(" ","");
+	var phone_no = phone_no.replace("-", "");
+	phone_no = phone_no.replace(")", "");
+	phone_no = phone_no.replace("(", "");
+	phone_no = phone_no.replace(" ", "");
+	phone_no = phone_no.replace("$", "");
+	phone_no = phone_no.replace(",", "");
 	return phone_no;
 }
 
@@ -57,11 +66,13 @@ router.get('/referral', auth, firmAttrAuth, csrfProtection, async(req, res)=> {
 		whereCondition.firm_id = req.user.firm_id;
 	}
 	if (req.user.role_id != 2) {
-		whereCondition.user_id = req.user.id;
+		whereCondition.attorney_id = req.user.id;
 	}
+	
 	const referral = await Referral.findAll({
 		where: whereCondition
 	});
+	
 	res.render('referral/index', {
 		layout: 'dashboard',
 		success_message,
@@ -77,16 +88,35 @@ router.get('/referral/add', auth, firmAttrAuth, csrfProtection, async(req, res) 
 	var err_message = req.flash('error-referral-message')[0];
 	const attorney = await User.findAll({
 		where: {
-			role_id : 3
+			role_id : 3,
+			firm_id: req.user.firm_id
 		}
 	});
-	const client = await Client.findAll();
-	const target = await Target.findAll();
+	var country = await Country.findAll();
+	const state = await State.findAll({
+		where: {
+			country_id: "233"
+		}
+	});
+	var industry = await industry_type.findAll();
+	const client = await Client.findAll({
+		where:{
+			attorney_id: req.user.id
+		}
+	});
+	const target = await Target.findAll({
+		where: {
+			attorney_id: req.user.id
+		}
+	});
 	res.render('referral/add', {
 		layout: 'dashboard',
 		csrfToken: req.csrfToken(),
 		attorney,
 		client,
+		country,
+		state,
+		industry,
 		target,
 		err_message,
 	});
@@ -114,7 +144,29 @@ router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async(req, res)
 				user_id: req.user.id,
 				target_id:req.body.referred_id_t ? parseInt(req.body.referred_id_t) : 0,
 				client_id:req.body.referred_id_c ? parseInt(req.body.referred_id_c) : 0,
-				remarks: req.body.remarks
+				remarks: req.body.remarks,
+				gender: req.body.gender,
+				estimated_revenue: removePhoneMask(req.body.estimated_revenue),
+				address1: req.body.address1,
+				address2: req.body.address2,
+				address3: req.body.address3,
+				city: req.body.city,
+				state: req.body.state,
+				country: req.body.country,
+				zipcode: req.body.zipcode,
+				address_remarks: req.body.address_remarks,
+				company_name: req.body.company_name,
+				website_url: req.body.website_url,
+				fax: removePhoneMask(req.body.fax),
+				phone_no: removePhoneMask(req.body.phone_no),
+				im: req.body.im,
+				twitter: req.body.twitter,
+				linkedin: req.body.linkedin,
+				social_url: req.body.social_url,
+				google: req.body.google,
+				youtube: req.body.youtube,
+				association: req.body.association,
+				industry_type: req.body.industry_type
 			});
 		}
 		else
@@ -130,7 +182,29 @@ router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async(req, res)
 				user_id: req.user.id,
 				target_id:req.body.referred_id_t ? parseInt(req.body.referred_id_t) : 0,
 				client_id:req.body.referred_id_c ? parseInt(req.body.referred_id_c) : 0,
-				remarks: req.body.remarks
+				remarks: req.body.remarks,
+				gender: req.body.gender,
+				estimated_revenue: removePhoneMask(req.body.estimated_revenue),
+				address1: req.body.address1,
+				address2: req.body.address2,
+				address3: req.body.address3,
+				city: req.body.city,
+				state: req.body.state,
+				country: req.body.country,
+				zipcode: req.body.zipcode,
+				address_remarks: req.body.address_remarks,
+				company_name: req.body.company_name,
+				website_url: req.body.website_url,
+				fax: removePhoneMask(req.body.fax),
+				phone_no: removePhoneMask(req.body.phone_no),
+				im: req.body.im,
+				twitter: req.body.twitter,
+				linkedin: req.body.linkedin,
+				social_url: req.body.social_url,
+				google: req.body.google,
+				youtube: req.body.youtube,
+				association: req.body.association,
+				industry_type: req.body.industry_type
 			});
 		}
 		req.flash('success-ref-message', 'Referral Created Successfully');
@@ -149,12 +223,51 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async(req, 
 	const referral = await Referral.findById(req.params['id']);
 	const attorney = await User.findAll({
 		where: {
-			role_id : 3
+			role_id : 3,
+			firm_id: req.user.firm_id
 		}
 	});
-	const client = await Client.findAll();
-	const target = await Target.findAll();
-	res.render('referral/view', {layout: 'dashboard', csrfToken: req.csrfToken(), referral, attorney, client, target});
+	const industry = await industry_type.findAll();
+	const client = await Client.findAll({
+		where: {
+			attorney_id: req.user.id
+		}
+	});
+	const target = await Target.findAll({
+		where: {
+			attorney_id: req.user.id
+		}
+	});
+	const country = await Country.findAll();
+	const state = await State.findAll({
+		where: {
+			country_id: "233"
+		}
+	});
+	const city = await City.findAll({
+		where: {
+			state_id: referral.state.toString()
+		}
+	});
+	const cities = await City.findById(referral.city.toString());
+	const zipcode = await Zipcode.findAll({
+		where: {
+			city_name: cities.name
+		}
+	});
+	res.render('referral/view', {
+		layout: 'dashboard',
+		industry,
+		country,
+		state,
+		city,
+		zipcode,
+		csrfToken: req.csrfToken(),
+		referral,
+		attorney,
+		client,
+		target
+	});
 	
 });
 
@@ -166,12 +279,52 @@ router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, 
 	const referral = await Referral.findById(req.params['id']);
 	const attorney = await User.findAll({
 		where: {
-			role_id : 3
+			role_id : 3,
+			firm_id: req.user.firm_id
 		}
 	});
-	const client = await Client.findAll();
-	const target = await Target.findAll();
-	res.render('referral/edit', {layout: 'dashboard', csrfToken: req.csrfToken(), referral, attorney, client, target, err_message});
+	const industry = await industry_type.findAll();
+	const client = await Client.findAll({
+		where: {
+			attorney_id: req.user.id
+		}
+	});
+	const target = await Target.findAll({
+		where: {
+			attorney_id: req.user.id
+		}
+	});
+	const country = await Country.findAll();
+	const state = await State.findAll({
+		where: {
+			country_id: "233"
+		}
+	});
+	const city = await City.findAll({
+		where: {
+			state_id: referral.state.toString()
+		}
+	});
+	const cities = await City.findById(referral.city.toString());
+	const zipcode = await Zipcode.findAll({
+		where: {
+			city_name: cities.name
+		}
+	});
+	res.render('referral/edit', {
+		layout: 'dashboard',
+		industry,
+		country,
+		state,
+		city,
+		zipcode,
+		csrfToken: req.csrfToken(),
+		referral,
+		attorney,
+		client,
+		target,
+		err_message
+	});
 });
 
 router.post('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, res) => {
@@ -194,6 +347,28 @@ router.post('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async(req,
 			email: req.body.email,
 			mobile: removePhoneMask(req.body.mobile_no),
 			referred_type: req.body.ref_type,
+			gender: req.body.gender,
+			estimated_revenue: removePhoneMask(req.body.estimated_revenue),
+			address1: req.body.address1,
+			address2: req.body.address2,
+			address3: req.body.address3,
+			city: req.body.city,
+			state: req.body.state,
+			country: req.body.country,
+			zipcode: req.body.zipcode,
+			address_remarks: req.body.address_remarks,
+			company_name: req.body.company_name,
+			website_url: req.body.website_url,
+			fax: removePhoneMask(req.body.fax),
+			phone_no: removePhoneMask(req.body.phone_no),
+			im: req.body.im,
+			twitter: req.body.twitter,
+			linkedin: req.body.linkedin,
+			social_url: req.body.social_url,
+			google: req.body.google,
+			youtube: req.body.youtube,
+			association: req.body.association,
+			industry_type: req.body.industry_type,
 	    		//target_id:req.body.referred_id_t ? parseInt(req.body.referred_id_t) : 0,
 	    		//client_id:req.body.referred_id_c ? parseInt(req.body.referred_id_c) : 0,
 	    		remarks: req.body.remarks
@@ -307,6 +482,34 @@ router.post('/referral/upload-excel', auth, referral_xcel.single('ref_excel_file
 		  } catch (ex) {
 		   var attrID =null;
 		  }
+		
+		var excel_state = excelReferral[i].state.capitalize();
+		var excel_city = excelReferral[i].city.capitalize();
+		var excel_zip = excelReferral[i].zipcode.capitalize();
+		var fetchState = [];
+		var fetchCity = [];
+		var fetchZip = [];
+		if (excelReferral[i].state !== null) {
+			var fetchState = await State.findAll({
+				where: {
+					name: excel_state
+				}
+			});
+		}
+		if (excelReferral[i].city !== null) {
+			var fetchCity = await City.findAll({
+				where: {
+					name: excel_city
+				}
+			});
+		}
+		if (excelReferral[i].zipcode !== null) {
+			var fetchZip = await Zipcode.findAll({
+				where: {
+					zip: excel_zip
+				}
+			});
+		}
 		const referral_excel_data = await Referral.findOne({
 			where: {
 				email: excelReferral[i].email
@@ -325,6 +528,13 @@ router.post('/referral/upload-excel', auth, referral_xcel.single('ref_excel_file
 					mobile: excelReferral[i].mobile,
 					firm_id: req.user.firm_id,
 					user_id: req.user.id,
+					address1: excelReferral[i].address1,
+					address2: excelReferral[i].address2,
+					address3: excelReferral[i].address3,
+					country: 233,
+					state: fetchState[0].id,
+					city: fetchCity[0].id,
+					zipcode: fetchZip[0].id,
 					remarks: excelReferral[i].remarks
 				});
 			}
@@ -338,6 +548,13 @@ router.post('/referral/upload-excel', auth, referral_xcel.single('ref_excel_file
 					mobile: excelReferral[i].mobile,
 					firm_id: req.user.firm_id,
 					user_id: req.user.id,
+					address1: excelReferral[i].address1,
+					address2: excelReferral[i].address2,
+					address3: excelReferral[i].address3,
+					country: 233,
+					state: fetchState[0].id,
+					city: fetchCity[0].id,
+					zipcode: fetchZip[0].id,
 					remarks: excelReferral[i].remarks
 				});
 			}
@@ -366,6 +583,27 @@ router.post('/referral/upload-excel', auth, referral_xcel.single('ref_excel_file
 	}
 	req.flash('success-ref-message', 'Referral Imported Successfully');
 	res.redirect('/referral');
+});
+
+// start all associated activities
+
+router.get("/referral/view-activity/:id", auth, async (req, res) => {
+	TargetActivity.belongsTo(Activity, {
+		foreignKey: 'activity_id'
+	});
+	const activity_details = await TargetActivity.findAll({
+		where: {
+			target_client_type: "R",
+			type: req.params['id']
+		},
+		include: [{
+			model: Activity
+		}]
+	});
+	res.render("referral/view_activity", {
+		layout: 'dashboard',
+		activity_details
+	});
 });
 
 

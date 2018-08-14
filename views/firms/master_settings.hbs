@@ -13,6 +13,11 @@
 		</div>
 		<div class="row filter-row">
 			<div class="row">
+				 {{#if success_message}}
+                    <div class="alert alert-success">
+                        <strong>Success! </strong>{{success_message}}
+                    </div>
+                {{/if}}
 				<div class="col-md-12">
 					<div class="tab firm-box" role="tabpanel">
 						<!-- Nav tabs -->
@@ -254,11 +259,22 @@
 													<tr>
 														<td>{{math @index "+" 1}}</td>
 														<td>{{this.firm.title}}</td>
-														<td>{{this.name}}</td>
+														<td> 
+															<a href="#" data-toggle="modal" data-target="#view_offices" data-office-id="{{this.id}}" data-name="{{this.name}}" data-address="{{this.address}}"
+															 data-city="{{this.city}}" data-state="{{this.state}}" data-country="{{this.country}}" data-zipcode="{{this.zipcode}}"
+															 data-mobile="{{this.mobile}}" data-firm-id="{{this.firm_id}}" id="view-office-detail" >{{this.name}}</a>
+															</td>
 														<td class="number_validator">{{this.mobile}}</td>
 														<td>{{this.address}}</td>
 														<td>{{dateFormat this.createdAt "DD-MM-YYYY"}}</td>
 														<td class="text-right">
+                                                       <a href="#" data-toggle="modal" data-target="#view_offices" data-office-id="{{this.id}}" data-name="{{this.name}}" data-address="{{this.address}}"
+															 data-city="{{this.city}}" data-state="{{this.state}}" data-country="{{this.country}}" data-zipcode="{{this.zipcode}}"
+															 data-mobile="{{this.mobile}}" data-firm-id="{{this.firm_id}}" id="view-office-detail" class="btn btn-success btn-sm">
+																<i class="fa fa-eye m-r-5"></i>
+															</a>
+
+
 															<a href="#" data-toggle="modal" data-target="#edit_offices" data-office-id="{{this.id}}" data-name="{{this.name}}" data-address="{{this.address}}"
 															 data-city="{{this.city}}" data-state="{{this.state}}" data-country="{{this.country}}" data-zipcode="{{this.zipcode}}"
 															 data-mobile="{{this.mobile}}" data-firm-id="{{this.firm_id}}" id="edit-office-detail" class="btn btn-info btn-sm">
@@ -292,7 +308,6 @@
 											<table class="table table-striped custom-table datatable">
 												<thead>
 													<tr>
-														<th>SL#</th>
 														<th>Staff Name</th>
 														<th>Office Name</th>
 														<th>Designation</th>
@@ -305,17 +320,16 @@
 												<tbody>
 													{{#each contact}}
 													<tr>
-														<td>{{math @index "+" 1}}</td>
 														<td>
 															<a href="javascript:void(0)" class="avatar">{{first_letter this.first_name}}</a>
 															<h2>
 																<!-- <a href="javascript:void(0)">{{this.first_name}}&nbsp;{{this.last_name}}</a> -->
 
-																<a href="#" data-toggle="modal" data-target="#edit_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}"
+																<a href="#" data-toggle="modal" data-target="#view_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}"
 																 data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}"
 																 data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}"
 																 data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}"
-																 data-contact-zipcode="{{this.zipcode}}" id="edit-office-contact">{{this.first_name}} {{this.last_name}}</a></td>
+																 data-contact-zipcode="{{this.zipcode}}" id="view-office-contact">{{this.first_name}} {{this.last_name}}</a></td>
 															</h2>
 														</td>
 														<td>{{this.office.name}}</td>
@@ -324,6 +338,15 @@
 														<td class="number_validator">{{this.mobile}}</td>
 														<td>{{dateFormat this.createdAt "DD-MM-YYYY"}}</td>
 														<td class="text-right">
+                                                          <a href="#" data-toggle="modal" data-target="#view_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}"
+															 data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}"
+															 data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}"
+															 data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}"
+															 data-contact-zipcode="{{this.zipcode}}" id="view-office-contact" class="btn btn-success btn-sm">
+																<i class="fa fa-eye m-r-5"></i>
+															</a>
+
+
 															<a href="#" data-toggle="modal" data-target="#edit_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}"
 															 data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}"
 															 data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}"
@@ -377,7 +400,7 @@
 								<label class="control-label">Mobile No
 									<span class="text-danger">*</span>
 								</label>
-								<input class="form-control" type="text" name="mobile_no" id="mobile_no">
+								<input class="form-control number_validator" type="text" name="mobile_no" id="mobile_no">
 							</div>
 						</div>
 						<div class="col-md-12">
@@ -428,6 +451,89 @@
 					<div class="m-t-20 text-center">
 						<button class="btn btn-primary" id="btnAddOffice">Create Office</button>
 					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="view_office" class="modal custom-modal fade view-office-modal" role="dialog">
+	<div class="modal-dialog">
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+		<div class="modal-content modal-lg">
+			<div class="modal-header">
+				<h4 class="modal-title">View Office Details</h4>
+			</div>
+			<div class="modal-body">
+				<form class="m-b-30">
+					<input type="hidden" name="_csrf" value="{{csrfToken}}">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Office Name
+									<span class="text-danger">*</span>
+								</label>
+								<input disabled class="form-control floating" type="text" name="view_office_name" id="view_office_name">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Mobile No
+									<span class="text-danger">*</span>
+								</label>
+								<input disabled class="form-control floating" type="text" name="view_office_mobile_no" id="view_office_mobile_no">
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<label class="control-label">Office Address
+									<span class="text-danger">*</span>
+								</label>
+								<textarea disabled class="form-control floating" id="view_office_address" class="form-control"></textarea>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<select disabled class="form-control floating" id="view_office_country" name="view_office_country">
+									<option value="">Select Country</option>
+									{{#each country}}
+									<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<select disabled class="form-control floating" id="view_office_state" name="view_office_state">
+									<option value="">select State</option>
+									{{#each state}}
+									<option value="{{this.id}}">{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<select disabled class="form-control floating" id="view_office_city" name="view_office_city">
+									<option value="">Select City</option>
+									{{#each city}}
+									<option value="{{this.id}}">{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<select disabled class="form-control floating" id="view_office_zipcode" name="view_office_zipcode">
+									<option value="">Select Zipcode</option>
+									{{#each zipcode}}
+									<option value="{{this.id}}">{{this.zip}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+
+					</div>
+					
 				</form>
 			</div>
 		</div>
@@ -666,6 +772,140 @@
 					<div class="m-t-20 text-center">
 						<button class="btn btn-primary" id="btnAddOfficeContact">Create Contact</button>
 					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="view_contact" class="modal custom-modal fade viewContactModal" role="dialog">
+	<div class="modal-dialog">
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+		<div class="modal-content modal-lg">
+			<div class="modal-header">
+				<h4 class="modal-title">View Contact Details</h4>
+			</div>
+			<div class="modal-body">
+				<form class="m-b-30">
+					<input type="hidden" name="_csrf" value="{{csrfToken}}">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Office Name
+									<span class="text-danger">*</span>
+								</label>
+								<select disabled class="form-control floating" name="view_office_id" id="view_office_id">
+									{{#each office}}
+									<option value="{{this.id}}">{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Designation
+									<span class="text-danger">*</span>
+								</label>
+								<select disabled class="form-control floating" name="view_designation_id" id="view_designation_id">
+									{{#each designation}}
+									<option value="{{this.id}}">{{this.title}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">First Name
+									<span class="text-danger">*</span>
+								</label>
+								<input disabled class="form-control floating" type="text" name="view_contact_first_name" id="view_contact_first_name">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Last Name
+									<span class="text-danger">*</span>
+								</label>
+								<input disabled class="form-control floating" type="text" name="view_contact_last_name" id="view_contact_last_name">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Email
+									<span class="text-danger">*</span>
+								</label>
+								<input disabled class="form-control floating" type="email" name="view_contact_email" id="view_contact_email">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Mobile No
+									<span class="text-danger">*</span>
+								</label>
+								<input disabled class="form-control floating" type="text" name="view_contact_mobile_no" id="view_contact_mobile_no">
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<label class="control-label"> Address
+									<span class="text-danger">*</span>
+								</label>
+								<textarea disabled name="view_contact_address" id="view_contact_address" class="form-control"></textarea>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<select disabled class="form-control floating" id="view_contact_country" name="view_contact_country">
+									<option value="">Select Country</option>
+									{{#each country}}
+									<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus select-focus">
+									<label class="control-label">State
+											<span class="req-lbl">*</span>
+
+									</label>
+								<select disabled class="form-control floating" id="view_contact_state" name="view_contact_state">
+									<option value="">select State</option>
+									{{#each state}}
+									<option value="{{this.id}}">{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus select-focus">
+									<label class="control-label">City
+											<span class="req-lbl">*</span>
+
+									</label>
+											<select disabled class="form-control floating" id="view_contact_city" name="view_contact_city">
+									<option value="">Select City</option>
+									{{#each city}}
+									<option value="{{this.id}}">{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus select-focus">
+									<label class="control-label">Zipcode
+											<span class="req-lbl">*</span>
+
+									</label>
+									<select disabled class="form-control floating" id="view_contact_zipcode" name="view_contact_zipcode">
+									<option value="">Select Zipcode</option>
+									{{#each zipcode}}
+									<option value="{{this.id}}">{{this.zip}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+					</div>
+					
 				</form>
 			</div>
 		</div>
@@ -950,6 +1190,31 @@
 	});
 	/*===============================Ends Add Ofiice Section========================================*/
 	/*===============================Stasts Edit Ofiice Section========================================*/
+
+$(document).on('click', '#view-office-detail', function (e) {
+		var office_id = $(this).data('office-id');
+		var office_name = $(this).data('name');
+		var office_address = $(this).data('address');
+		var office_city = $(this).data('city');
+		var office_state = $(this).data('state');
+		var office_country = $(this).data('country');
+		var office_zipcode = $(this).data('zipcode');
+		var office_mobile = $(this).data('mobile');
+		var firm_id = $(this).data('firm-id');
+
+		localStorage.setItem('office_id', office_id);
+
+		$('#view_office_name').val(office_name);
+		$('#view_office_address').val(office_address);
+		$('#view_office_city').val(office_city);
+		$('#view_office_state').val(office_state);
+		$('#view_office_country').val(office_country);
+		$('#view_office_zipcode').val(office_zipcode);
+		$('#view_office_mobile_no').val(office_mobile);
+
+		$('.view-office-modal').modal('show');
+	});
+
 
 	$(document).on('click', '#edit-office-detail', function (e) {
 		var office_id = $(this).data('office-id');
@@ -1249,6 +1514,41 @@
 
 		$('.editContactModal').modal('show');
 	});
+
+$(document).on('click', '#view-office-contact', function (e) {
+		var contact_id = $(this).data('contact-id');
+		var office_id = $(this).data('contact-office-id');
+		var designation_id = $(this).data('designation-id');
+		var first_name = $(this).data('first-name');
+		var last_name = $(this).data('last-name');
+		var email = $(this).data('email');
+		var contact_mobile = $(this).data('contact-mobile');
+		var contact_address = $(this).data('contact-address');
+		var contact_city = $(this).data('contact-city');
+		var contact_state = $(this).data('contact-state');
+		var contact_country = $(this).data('contact-country');
+		var contact_zipcode = $(this).data('contact-zipcode');
+
+
+		$("#view_office_id").val(office_id);
+		$('#view_office_id').trigger('change');
+		$("#view_designation_id").val(designation_id);
+		$('#view_designation_id').trigger('change');
+		$("#view_contact_first_name").val(first_name);
+		$("#view_contact_last_name").val(last_name);
+		$("#view_contact_email").val(email);
+		$("#view_contact_mobile_no").val(contact_mobile);
+		$("#view_contact_address").val(contact_address);
+		$("#view_contact_city").val(contact_city);
+		$("#view_contact_state").val(contact_state);
+		$("#view_contact_country").val(contact_country);
+		$("#view_contact_zipcode").val(contact_zipcode);
+
+		localStorage.setItem('contact_id', contact_id);
+
+		$('.viewContactModal').modal('show');
+	});
+
 
 	$(document).ready(function (e) {
 

@@ -16,7 +16,7 @@
                     <strong>Success! </strong>{{successEdit_message}}
                 </div>
                 {{/if}} {{#if successDel_message}}
-                <div class="alert alert-danger">
+                <div class="alert alert-success">
                     <strong>Success! </strong>{{successDel_message}}
                 </div>
                 {{/if}}
@@ -29,7 +29,7 @@
                     <a href="/referral/add" class="btn btn-primary pull-right rounded">
                         <i class="fa fa-plus"></i> Add Referral</a>
                     <a href="#" class="btn btn-primary rounded mr-10" data-toggle="modal" data-target="#add_user">
-                        <i class="fa fa-cloud-download"></i> Import Excel</a>
+                        <i class="fa fa-cloud-download"></i> Import Referral</a>
 
                 </div>
             </div>
@@ -55,36 +55,53 @@
                                 <td>
 
 
-                                  <a href="/referral/view/{{this.id}}">
-                                    {{#if_eq referral_type "I"}} {{this.first_name}} {{this.last_name}} {{/if_eq}} {{#if_eq referral_type "O"}} {{this.organization_name}}
-                                      {{/if_eq}}</a>
+                                    <a href="/referral/view/{{this.id}}">
+                                        {{#if_eq referral_type "I"}} {{this.first_name}} {{this.last_name}} {{/if_eq}} {{#if_eq referral_type "O"}} {{this.organization_name}}
+                                        {{/if_eq}}
+                                    </a>
                                 </td>
                                 <td>
                                     {{#if_eq referral_type "I"}} Individual {{/if_eq}} {{#if_eq referral_type "O"}} Organization {{/if_eq}}
                                 </td>
                                 <td>
 
-                                  {{this.email}}
+                                    {{this.email}}
 
                                 </td>
                                 <td class="number_validator">{{this.mobile}}</td>
                                 <td class="text-right">
-
-                                  <a href="/referral/view/{{this.id}}" class="btn btn-success btn-sm">
-                                    <i class="fa fa-eye m-r-5"></i></a>
+                                    <a href="/referral/view-activity/{{this.id}}" class="btn btn-info btn-sm" title="See associated activity">
+                                        <i class="fa fa-tasks"></i>
+                                    </a>
+                                    <a href="/referral/view/{{this.id}}" class="btn btn-success btn-sm">
+                                        <i class="fa fa-eye m-r-5"></i>
+                                    </a>
 
                                     <a href="/referral/edit/{{this.id}}" class="btn btn-info btn-sm">
-                                                    <i class="fa fa-pencil m-r-5"></i></a>
+                                        <i class="fa fa-pencil m-r-5"></i>
+                                    </a>
+
+
+                                    {{!--
                                     <a href="javascript:void(0);" data-toggle="modal" data-target="#{{this.id}}" class="btn btn-danger btn-sm">
-                                                    <i class="fa fa-trash-o m-r-5"></i></a>
+                                        <i class="fa fa-trash-o m-r-5"></i>
+                                    </a> --}}
+
+
+
+                                    <a href="javascript:void(0);" data-toggle="modal" data-target="delete_users" data-referral-id="{{this.id}}" id="delete_referral"
+                                        class="btn btn-danger btn-sm">
+                                        <i class="fa fa-trash-o m-r-5"></i>
+                                    </a>
                                 </td>
                             </tr>
-                             <div class="modal fade" id="{{this.id}}" role="dialog">
+                            {{!--
+                            <div class="modal fade" id="{{this.id}}" role="dialog">
                                 <div class="modal-dialog">
                                     <!-- Modal content-->
                                     <div class="modal-content">
                                         <div class="modal-body">
-                                            <p>Are you sure to delete ?</p>
+                                            <p>are you sure you want to delete this referral?</p>
                                         </div>
                                         <div class="modal-footer">
                                             <a href="/referral/delete/{{this.id}}" class="btn btn-danger">Delete</a>
@@ -92,8 +109,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            {{/each}}
+                            </div> --}} {{/each}}
                         </tbody>
                     </table>
                 </div>
@@ -102,6 +118,30 @@
     </div>
 
 </div>
+
+
+
+
+<div id="delete_user" class="modal custom-modal fade del-referral" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content modal-md">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Referral</h4>
+            </div>
+            <form>
+                <div class="modal-body card-box">
+                    <p>are you sure you want to delete this referral?</p>
+                    <div class="m-t-20" id="delDiv">
+                        <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                        {{!--
+                        <a href="/activity-goal/delete/{{this.id}}" class="btn btn-danger">Delete</a> --}}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div id="add_user" class="modal custom-modal fade" role="dialog">
     <div class="modal-dialog">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -198,4 +238,14 @@
             return true;
         }
     }
+</script>
+<script>
+    $(document).on('click', '#delete_referral', function (e) {
+        var referral_id = $(this).data('referral-id');
+        $("#removeBtnDelete").remove();
+        $("#delete_user").modal('show');
+        $("#delDiv").append('<a href="/referral/delete/' + referral_id + '" class="btn btn-danger" id="removeBtnDelete">' + "Delete" + '</a>');
+    });
+
+
 </script> {{/content}}

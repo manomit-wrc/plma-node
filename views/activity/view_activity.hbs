@@ -13,39 +13,36 @@
       <div class="col-sm-4">
         <div class="text-right">
           <a href="/activity/edit/{{editdata.id}}" class="btn btn-primary rounded">
-            <i class="fa fa-edit"></i> Edit Activity</a>
+          <i class="fa fa-edit"></i> Edit Activity</a>
+          <a href="/activitypage" class="btn btn-primary pull-right rounded m-r-5"><i class="fa fa-arrow-left"></i>Back</a>
         </div>
       </div>
       {{/if_eq}}
     </div>
-
-
     <form name="updateActivityForm" id="updateActivityForm" action="/activity/update/{{editdata.id}}" method="POST">
       <input type="hidden" name="_csrf" value="{{csrfToken}}">
       <input type="hidden" name="activity_id" id="activity_id" value="{{editdata.id}}">
       <input type="hidden" name="total_hour" id="total_hour">
       <input type="hidden" name="total_amount" id="total_amount">
+      <input type="hidden" id="activityTypeDetails" value={{editdata.target}} >
       <div class="card-box">
         <div class="row">
           <div class="col-md-12">
             <div class="row">
-
               <div class="col-md-6">
                 <div class="form-group form-focus">
                   <label class="control-label">Activity Name</label>
                   <input class="form-control floating" type="text" id="activity_name" name="activity_name" value="{{editdata.activity_name}}"
-                    disabled>
+                  disabled>
                 </div>
               </div>
-
               <div class="col-md-6">
                 <div class="form-group form-focus">
                   <label class="control-label">Activity Reason</label>
                   <input class="form-control floating" type="text" id="activity_reason" name="activity_reason" value="{{editdata.activity_reason}}"
-                    disabled>
+                  disabled>
                 </div>
               </div>
-
               <div class="col-md-6">
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">Activity Type </label>
@@ -58,11 +55,9 @@
                   </select>
                 </div>
               </div>
-
               <div class="col-md-6 none">
                 <div class="form-group form-focus select-focus"></div>
               </div>
-
               <div class="col-md-6 section" style="display:none;">
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">Section
@@ -75,7 +70,6 @@
                   </select>
                 </div>
               </div>
-
               <div class="col-md-6 strategyGroup" style="display:none;">
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">Strategy Group
@@ -87,7 +81,6 @@
                   </select>
                 </div>
               </div>
-
               <div class="col-md-6">
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">Activity Goal </label>
@@ -99,7 +92,6 @@
                   </select>
                 </div>
               </div>
-
               <div class="col-md-6">
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">Practice Area Type</label>
@@ -111,65 +103,55 @@
                   </select>
                 </div>
               </div>
-
               <div class="col-md-6">
                 <div class="form-group form-focus">
                   <label class="control-label">Potential Revenue</label>
                   <input class="form-control floating" type="text" id="potiential_revenue" name="potiential_revenue" value="{{editdata.potiential_revenue}}"
-                    disabled>
+                  disabled>
                 </div>
               </div>
-
-
-
               <div class="col-md-6">
                 <div class="form-group form-focus">
                   <label class="control-label">Activity Creation Date</label>
                   <div class="cal-icon">
                     <input class="form-control floating datetimepicker" type="text" id="activity_creation_date" name="activity_creation_date"
-                      value="{{dateFormat editdata.activity_creation_date " DD-MM-YYYY "}}" disabled>
+                    value="{{dateFormat editdata.activity_creation_date " DD-MM-YYYY "}}" disabled>
                   </div>
                 </div>
               </div>
-
               <div class="col-md-6">
                 <div class="form-group form-focus">
                   <label class="control-label">From Date</label>
                   <div class="cal-icon">
                     <input class="form-control floating datetimepicker" type="text" id="activity_from_date" name="activity_from_date" value="{{dateFormat editdata.activity_from_date "
-                      DD-MM-YYYY "}}" disabled>
+                    DD-MM-YYYY "}}" disabled>
                   </div>
                 </div>
               </div>
-
               <div class="col-md-6">
                 <div class="form-group form-focus">
                   <label class="control-label">To Date</label>
                   <div class="cal-icon">
                     <input class="form-control floating datetimepicker" type="text" id="activity_to_date" name="activity_to_date" value="{{dateFormat editdata.activity_to_date "
-                      DD-MM-YYYY "}}" disabled>
+                    DD-MM-YYYY "}}" disabled>
                   </div>
                 </div>
               </div>
-
               <div class="col-md-6">
                 <div class="form-group form-focus">
                   <label class="control-label">Remarks </label>
                   <textarea class="form-control floating" id="remarks" name="remarks" rows="5" disabled>{{editdata.remarks}}</textarea>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
       </div>
-
       <div class="card-box">
         <h3 class="card-title">Client/Target Information</h3>
         <div class="row">
           <div class="col-md-12">
             <div class="row">
-
               <div class="form-inline m-b-15 col-md-6">
                 <div class="form-group m-r-5">
                   <label class="input-group">
@@ -189,8 +171,17 @@
                     <span class="glyphicon form-control-feedback "></span>
                   </label>
                 </div>
+                <div class="form-group ">
+                  <label class="input-group">
+                    <span class="input-group-addon">
+                      <input type="radio" id="referralDetails_type" name="ref_type" value="C" {{#if_eq editdata.target "R"}} checked {{/if_eq}} disabled/>
+                    </span>
+                    <div class="form-control form-control-static">Referral</div>
+                    <span class="glyphicon form-control-feedback "></span>
+                  </label>
+                </div>
               </div>
-
+              
               <div class="col-md-6">
                 <div class="form-group form-focus select-focus" id="target_list" {{#if_eq editdata.target "C"}} style="display:none;" {{/if_eq}}>
                   <select id="target_id" name="target_user[]" class=" form-control floating" multiple="multiple" disabled>
@@ -200,7 +191,7 @@
                   </select>
                 </div>
               </div>
-
+              
               <div class="col-md-6" id="client_list" {{#if_eq editdata.target "T"}} style="display:none;" {{/if_eq}}>
                 <div class="form-group form-focus select-focus">
                   <select id="client_id" name="client_user[]" class=" form-control floating" multiple="multiple" disabled>
@@ -210,12 +201,22 @@
                   </select>
                 </div>
               </div>
-
+              
+              {{#if_eq editdata.target "R"}}
+              <div class="col-md-6" id="referral_list" {{#if_eq editdata.target "R"}} style="display:none;" {{/if_eq}}>
+                <div class="form-group form-focus select-focus">
+                  <select id="referral_id" name="referral_user[]" class=" form-control floating" multiple="multiple" disabled>
+                    {{#each referral}}
+                    <option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.first_name}} {{this.last_name}}</option>
+                    {{/each}}
+                  </select>
+                </div>
+              </div>
+              {{/if_eq}}
               <div class="col-md-6"></div>
-
               <div class="col-md-6 budgetAdd" style="display:none;">
                 <a href="#" class="btn btn-primary btn-lg" id="budgetAdd" data-toggle="modal" data-target="#add_budget" style="margin: 0 auto; display: table;">
-                  <i class="fa fa-plus"></i> Add Budget</a>
+                <i class="fa fa-plus"></i> Add Budget</a>
               </div>
             </div>
           </div>
@@ -223,8 +224,6 @@
       </div>
     </form>
   </div>
-
-
   <div class="content container-fluid">
     <div class="card-box">
       <h3 class="card-title">Client/Target Information</h3>
@@ -239,7 +238,7 @@
                       <tr>
                         <th> Attorney Name </th>
                         <th> Relation </th>
-                        <th> Company Name </th>
+                        <th> Name </th>
                         <th> Budget Code Cost $</th>
                         <th> Potential Revenue </th>
                       </tr>
@@ -248,7 +247,7 @@
                       {{#each alltarget_client}}
                       <tr>
                         <td>{{this.attorney_name}}</td>
-                        <td> {{this.relation}} </td>
+                        <td> {{#if_eq this.relation 'C'}} Client {{/if_eq}} {{#if_eq this.relation 'T'}} Target {{/if_eq}} {{#if_eq this.relation 'R'}} Referral {{/if_eq}}</td>
                         <td>{{ this.company_name }}</td>
                         <td>
                           <a href="#" id="budgetUpdate" data-toggle="modal" data-target="#update_budget">$ {{this.total_cost}}</a>
@@ -267,9 +266,7 @@
     </div>
   </div>
 </div>
-
 {{!-- Starts add budget modal --}}
-
 <div id="update_budget" class="modal custom-modal fade" role="dialog">
   <div class="modal-dialog">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -287,7 +284,7 @@
                     <label class="input-group">
                       <span class="input-group-addon">
                         <input type="radio" id="evenly_equated" name="activity_level_type_edit" value="Evenly Equated" {{#if_eq level_type
-                          "Evenly Equated"}} checked {{/if_eq}} disabled/>
+                        "Evenly Equated"}} checked {{/if_eq}} disabled/>
                       </span>
                       <div class="form-control form-control-static">
                         Evenly Equated
@@ -299,7 +296,7 @@
                     <label class="input-group">
                       <span class="input-group-addon">
                         <input type="radio" id="individual" name="activity_level_type_edit" value="Individual" {{#if_eq level_type "Individual"}}
-                          checked {{/if_eq}} disabled/>
+                        checked {{/if_eq}} disabled/>
                       </span>
                       <div class="form-control form-control-static">
                         Individual
@@ -308,7 +305,6 @@
                     </label>
                   </div>
                 </div>
-
                 {{#each budgetArr}}
                 <div class="panel panel-primary">
                   <div class="panel-heading">
@@ -320,20 +316,19 @@
                       <div class="row">
                         <div class="col-md-6">
                           <h5>
-                            {{this.name}}
+                          {{this.name}}
                           </h5>
                         </div>
                         <div class="col-md-2">
                           <div class="form-group">
-
                             <input class="form-control edit_budget_hour number_budget" type="text" data-budgets-id="{{this.id}}" id="edit_budget_hour"
-                              name="edit_budget_hour" placeholder="Hours" value="{{this.hour}}" readonly>
+                            name="edit_budget_hour" placeholder="Hours" value="{{this.hour}}" readonly>
                           </div>
                         </div>
                         <div class="col-md-2">
                           <div class="form-group">
                             <input class="form-control edit_budget_amount number_budget" type="text" id="edit_budget_amount" name="edit_budget_amount"
-                              placeholder="Dollars($)" value="{{this.amount}}" readonly>
+                            placeholder="Dollars($)" value="{{this.amount}}" readonly>
                           </div>
                         </div>
                         {{#if_con this.remarks}}
@@ -346,7 +341,6 @@
                       </div>
                     </div>
                     {{/each}}
-
                   </div>
                 </div>
                 {{/each}}
@@ -358,7 +352,6 @@
     </div>
   </div>
 </div>
-
 <div id="add_user" class="modal custom-modal fade" role="dialog">
   <div class="modal-dialog">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -419,7 +412,6 @@
               </div>
             </div>
           </div>
-
           <div class="m-t-20 text-center">
             <button class="btn btn-primary" type="button" id="btnAddSection">Create Section</button>
           </div>
@@ -429,7 +421,8 @@
   </div>
 </div>
 
-{{!-- Ends add budget modal --}} {{#content "script" mode="append"}}
+{{!-- Ends add budget modal --}} 
+{{#content "script" mode="append"}}
 <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript" src="/assets/js/select2.min.js"></script>
@@ -438,25 +431,43 @@
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript">
 
-  $('#target_id').multiselect({
+$('#target_id').multiselect({
     nonSelectedText: 'Select Targets',
     includeSelectAllOption: true,
     buttonWidth: '100%'
-  });
-
-  $('#client_id').multiselect({
+});
+$('#client_id').multiselect({
     nonSelectedText: 'Select Clients',
     includeSelectAllOption: true,
     buttonWidth: '100%'
-  });
-
-  $("#potiential_revenue").inputmask("numeric", {
+});
+$('#referral_id').multiselect({
+    nonSelectedText: 'Select referral',
+    includeSelectAllOption: true,
+    buttonWidth: '100%'
+});
+$("#potiential_revenue").inputmask("numeric", {
     radixPoint: ".",
     groupSeparator: ",",
     digits: 2,
     autoGroup: true,
     prefix: '$ ',
     rightAlign: false
-  });
+});
+
+  var typeDetails = $('#activityTypeDetails').val();
+  if (typeDetails == 'T') {
+      $('#client_list').hide();
+      $('#target_list').hide();
+      $('#target_list').show();
+  } else if (typeDetails == 'C') {
+      $('#client_list').show();
+      $('#target_list').hide();
+      $('#referral_list').hide();
+  } else {
+      $('#referral_list').show();
+      $('#client_list').hide();
+      $('#target_list').hide();
+  }
 
 </script> {{/content}}

@@ -144,6 +144,100 @@
                 </div>
             </div>
             <div class="card-box">
+                <h3 class="card-title">Education Information</h3>
+                <div class="row" id="educationRow">
+                    
+                    {{#if_eq edata.education ""}}
+                        <div class="col-md-5">
+                            <div class="form-group form-focus">
+                                <label class="control-label">Degree Type</label>
+                                <input type="text" class="form-control floating" id="degree" name="degree[]" />
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group form-focus">
+                                <label class="control-label">University</label>
+                                <input type="text" class="form-control floating" id="university" name="university[]" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-primary btn-lg" type="button" id="addEducationBtn">
+                                <i class="fa fa-plus"></i> Add</button>
+                        </div>
+                        <div class="educationAddDiv hide">
+                            <div class="control-group">
+                                <div class="col-md-5">
+                                    <div class="form-group form-focus">
+                                        <label class="control-label">Degree Type</label>
+                                        <input type="text" class="form-control floating" name="degree[]" />
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group form-focus">
+                                        <label class="control-label">University</label>
+                                        <input type="text" class="form-control floating" name="university[]" />
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="btn btn-primary btn-lg removeEducationBtn" type="button">
+                                        <i class="fa fa-close"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    {{else}}
+                        {{#each edata.education}}
+                        <div class="control-group">
+                            <div class="col-md-5">
+                                <div class="form-group form-focus">
+                                    <label class="control-label">Degree Type</label>
+                                    <input type="text" class="form-control floating" id="degree" name="degree[]" value="{{this.degree}}" />
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group form-focus">
+                                    <label class="control-label">University</label>
+                                    <input type="text" class="form-control floating" id="university" name="university[]" value="{{this.university}}" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                {{#show_button_add @index}}
+                                <button class="btn btn-primary btn-lg" type="button" id="addEducationBtn">
+                                    <i class="fa fa-plus"></i> Add
+                                </button>
+                                {{else}}
+                                <button class="btn btn-primary btn-lg removeEducationBtn" type="button">
+                                    <i class="fa fa-close"></i>
+                                </button>
+                                {{/show_button_add}}
+                            </div>
+                        </div>
+                        {{/each}}
+                    {{/if_eq}}
+                    <div class="educationAddDiv hide">
+                        <div class="control-group">
+                            <div class="col-md-5">
+                                <div class="form-group form-focus">
+                                    <label class="control-label">Degree Type</label>
+                                    <input type="text" class="form-control floating" name="degree[]" />
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group form-focus">
+                                    <label class="control-label">University</label>
+                                    <input type="text" class="form-control floating" name="university[]" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-primary btn-lg removeEducationBtn" type="button">
+                                    <i class="fa fa-close"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-box">
                 <h3 class="card-title">Profile Informations</h3>
                     <div class="row">
                         <div class="col-md-6">
@@ -224,13 +318,6 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group form-focus">
-                                <label class="control-label">Education</label>
-                                <input type="text" class="form-control floating" id="education" name="education" value="{{edata.attorney_details.0.education}}"
-                                />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group form-focus">
                                 <label class="control-label">Bar Registration</label>
                                 <input type="text" class="form-control floating" id="bar_registration" name="bar_registration" value="{{edata.attorney_details.0.bar_registration}}"
                                 />
@@ -278,7 +365,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        {{!-- <div class="col-md-6">
                             <div class="form-group form-focus select-focus">
                                 <label class="control-label">Industry Type
                                     <span class="req-lbl">*</span>
@@ -290,7 +377,7 @@
                                     {{/each}}
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
                         
                         <div class="col-md-6">
                             <div class="form-group form-focus">
@@ -331,7 +418,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group form-focus">
-                                <label class="control-label">Social URL</label>
+                                <label class="control-label">Linkedin</label>
                                 <input type="text" class="form-control floating url_selector" id="social_url" name="social_url" value="{{edata.attorney_details.0.social_url}}"
                                 />
                             </div>
@@ -346,6 +433,7 @@
             </div>
             <div class="text-center m-t-20">
                 <button class="btn btn-primary btn-lg" type="submit">Save &amp; update</button>
+                <a href="/dashboard" class="btn btn-primary btn-lg">Cancel</a>
             </div>
         </form>
     </div>
@@ -359,6 +447,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 
 <script type="text/javascript">
+     $(document).on('click', "#addEducationBtn", function (e) {
+            $("#educationRow").append($(".educationAddDiv").html());
+        });
+        $(document).on('click', ".removeEducationBtn", function (e) {
+            $(this).parents(".control-group").remove();
+        });
     $(document).ready(function () {
         $(document).on('change', "#designation", function (e) {
             var designation_id = $(this).val();

@@ -7,6 +7,11 @@
     <div class="content container-fluid">
         <div class="pg-header">
             <div class="row">
+                {{#if success_message}}
+                    <div class="alert alert-success">
+                        <strong>Success! </strong>{{success_message}}
+                    </div>
+                {{/if}}
                 <div class="col-xs-4">
                     <h4 class="page-title">Designation</h4>
                 </div>
@@ -93,6 +98,7 @@
 
                     <div class="m-t-20 text-center">
                         <button class="btn btn-primary" type="button" id="btnAddDesignation">Create Designation</button>
+                        <a href="/designation" class="btn btn-primary m-l-10">Cancel</a>
                     </div>
                 </form>
             </div>
@@ -165,13 +171,14 @@
                     </div>
                     <div class="m-t-20 text-center">
                         <button class="btn btn-primary" id="btnEditDesignation">Edit Designation</button>
+                        <a href="/designation" class="btn btn-primary m-l-10">Cancel</a>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-<div id="delete_user" class="modal custom-modal fade del-designation" role="dialog">
+<div id="delete_users" class="modal custom-modal fade del-designation" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content modal-md">
             <div class="modal-header">
@@ -179,7 +186,7 @@
             </div>
             <form>
                 <div class="modal-body card-box">
-                    <p>Are you sure want to delete this?</p>
+                    <p>are you sure you want to delete this designation?</p>
                     <div class="m-t-20">
                         <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
                         <button type="submit" class="btn btn-danger delDesignationBtn">Delete</button>

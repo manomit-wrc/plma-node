@@ -292,7 +292,7 @@ const hbs = exphbs.create({
                 return "-";
             }
         },
-        marketing_budget_hour: function (hour,length) {
+        marketing_budget_hour: function (hour, length) {
             if (hour > 0) {
                 return (hour / length).toFixed(2);
             } else {
@@ -305,6 +305,12 @@ const hbs = exphbs.create({
             } else {
                 return "-";
             }
+        },
+        show_button_add: function (index, opts) {
+             if (index == 0)
+                 return opts.fn(this);
+             else
+                 return opts.inverse(this);
         },
         dateFormat: require('handlebars-dateformat')
     }

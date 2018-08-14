@@ -17,6 +17,7 @@ const PracticeArea = require('../models').practicearea;
 const Designation = require('../models').designation;
 const Section = require('../models').section;
 const Group = require('../models').group;
+const Education = require('../models').education;
 
 var csrfProtection = csrf({ cookie: true });
 
@@ -264,7 +265,9 @@ router.get("/edit-attorney-profile", auth, csrfProtection, attrAuth, async (req,
     User.hasMany(Attorney_Details, {
         foreignKey: 'user_id'
     });
-
+    User.hasMany(Education, {
+        foreignKey: 'user_id'
+    });
     const designation = await Designation.findAll();
     const group = await Group.findAll();
     sectionToFirm.belongsTo(Section, {
@@ -290,6 +293,8 @@ router.get("/edit-attorney-profile", auth, csrfProtection, attrAuth, async (req,
         },
         include: [{
             model: Attorney_Details
+        }, {
+            model: Education
         }]
     });
     var state_id = edata[0].state;
@@ -329,6 +334,19 @@ router.get("/edit-attorney-profile", auth, csrfProtection, attrAuth, async (req,
 });
 
 router.post("/edit-attorney-profile", auth, profile.single('avatar'), csrfProtection, auth, async (req, res) => {
+    var education = [];
+    var degree = req.body.degree;
+    var university = req.body.university;
+    for (var d = 0; d < degree.length; d++) {
+        if (degree[d] !== "") {
+            var ddd = degree[d];
+            var uuu = university[d];
+            education.push({
+                "degree": ddd,
+                "university": uuu
+            });
+        }
+    }
     const formatDate = req.body.dob ? req.body.dob.split("-") : '';
     const Firm_Join_Date1 = req.body.firm_join_date ? req.body.firm_join_date.split("-") : '';
     const Bar_Practice_date1 = req.body.bar_practice_date ? req.body.bar_practice_date.split("-") : '';
@@ -355,36 +373,48 @@ router.post("/edit-attorney-profile", auth, profile.single('avatar'), csrfProtec
 
     const attr_other_details = await Attorney_Details.update({
         group: parseInt(req.body.group),
-            section: parseInt(req.body.section),
-            designation: parseInt(req.body.designation),
-            attorney_id: req.body.attorney_id,
-            attorney_code: req.body.attorney_code,
-            attorney_type: req.body.attorney_type,
-            education: req.body.education,
-            bar_registration: req.body.bar_registration,
-            job_type: req.body.job_type,
-            jurisdiction: parseInt(req.body.jurisdiction),
-            industry_type: parseInt(req.body.industry_type),
-            hourly_cost: req.body.hourly_cost,
-            benefit_factor: req.body.benefit_factor,
-            overhead_amount: req.body.overhead_amount,
-            billing_opp_cost: req.body.billing_opp_cost,
-            address2: req.body.address2,
-            address3: req.body.address3,
-            e_mail: req.body.e_mail,
-            phone_no: removePhoneMask(req.body.phone_no),
-            fax: removePhoneMask(req.body.fax),
-            website_url: req.body.website_url,
-            social_url: req.body.social_url,
-            remarks: req.body.remarks,
-            firm_join_date: Firm_Join_Date1 ? Firm_Join_Date1[2] + "-" + Firm_Join_Date1[1] + "-" + Firm_Join_Date1[0] : null,
-            bar_practice_date: Bar_Practice_date1 ? Bar_Practice_date1[2] + "-" + Bar_Practice_date1[1] + "-" + Bar_Practice_date1[0] : null,
+        section: parseInt(req.body.section),
+        designation: parseInt(req.body.designation),
+        attorney_id: req.body.attorney_id,
+        attorney_code: req.body.attorney_code,
+        attorney_type: req.body.attorney_type,
+        education: req.body.education,
+        bar_registration: req.body.bar_registration,
+        job_type: req.body.job_type,
+        jurisdiction: parseInt(req.body.jurisdiction),
+        industry_type: 0,
+        hourly_cost: req.body.hourly_cost,
+        benefit_factor: req.body.benefit_factor,
+        overhead_amount: req.body.overhead_amount,
+        billing_opp_cost: req.body.billing_opp_cost,
+        address2: req.body.address2,
+        address3: req.body.address3,
+        e_mail: req.body.e_mail,
+        phone_no: removePhoneMask(req.body.phone_no),
+        fax: removePhoneMask(req.body.fax),
+        website_url: req.body.website_url,
+        social_url: req.body.social_url,
+        remarks: req.body.remarks,
+        firm_join_date: Firm_Join_Date1 ? Firm_Join_Date1[2] + "-" + Firm_Join_Date1[1] + "-" + Firm_Join_Date1[0] : null,
+        bar_practice_date: Bar_Practice_date1 ? Bar_Practice_date1[2] + "-" + Bar_Practice_date1[1] + "-" + Bar_Practice_date1[0] : null,
 
     },{
         where: {
             user_id: req.user.id
         }
     });
+    const del_edu = await Education.destroy({
+        where: {
+            user_id: req.user.id
+        }
+    });
+    for (var e = 0; e < education.length; e++) {
+        const edu = await Education.create({
+            user_id: req.user.id,
+            degree: education[e].degree,
+            university: education[e].university,
+        });
+    }
     req.flash('success-message', 'Profile updated successfully.');
     res.redirect('/edit-attorney-profile');
 });

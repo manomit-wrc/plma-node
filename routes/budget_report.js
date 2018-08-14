@@ -10,6 +10,8 @@ const ActivityBudget = require('../models').activity_budget;
 const Jointactivities = require('../models').jointactivity;
 const client = require('../models').client;
 const Target = require('../models').target;
+const Referral = require('../models').referral;
+
 
 var csrfProtection = csrf({
   cookie: true
@@ -18,21 +20,28 @@ var csrfProtection = csrf({
 const router = express.Router();
 
 router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => {
-  if (req.user.role_id == 2) {
-    var firm_id = req.user.firm_id;
+  // if (req.user.role_id == 2) {
+  //   var firm_id = req.user.firm_id;
+  //   var activity_goals = await ActivityGoal.findAll({
+  //     where: {
+  //       firm_id: firm_id
+  //     }
+  //   });
+  // } else {
+  //   var user_id = req.user.id;
+  //   var activity_goals = await ActivityGoal.findAll({
+  //     where: {
+  //       user_id: user_id
+  //     }
+  //   });
+  // }
+
+  var firm_id = req.user.firm_id;
     var activity_goals = await ActivityGoal.findAll({
       where: {
         firm_id: firm_id
       }
     });
-  } else {
-    var user_id = req.user.id;
-    var activity_goals = await ActivityGoal.findAll({
-      where: {
-        user_id: user_id
-      }
-    });
-  }
 
   var activityArr = [];
   var budgetArr = [];
@@ -124,7 +133,6 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
       }
     });
 
-
     for (var j = 0; j < activity_goals.length; j++) {
       activityArr.push({
         "activity_name": activity_goals[j].activity_goal,
@@ -138,7 +146,6 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
   } else {
     success = 0;
   }
-
 
   res.render('activity_budget_report/index', {
     layout: 'dashboard',
@@ -279,8 +286,14 @@ router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req,
             'id': jointActivities_arr[i].ja[k].type
           }
         });
-      } else {
+      } else if(jointActivities_arr[i].ja[k].target_client_type == 'C') {
         detailsActivity = await client.findAll({
+          where: {
+            'id': jointActivities_arr[i].ja[k].type
+          }
+        });
+      } else {
+        detailsActivity = await Referral.findAll({
           where: {
             'id': jointActivities_arr[i].ja[k].type
           }
@@ -306,7 +319,6 @@ router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req,
 
 });
 
-
 router.get('/activity/activity_details_budget/:id', auth, csrfProtection, async (req, res) => {
 
   var marketingBudget = [];
@@ -321,7 +333,6 @@ router.get('/activity/activity_details_budget/:id', auth, csrfProtection, async 
 
   for (var i = 0; i < budgetList.length; i++) {
     if (budgetList[i].parent_id === 0) {
-
       const parent_name = budgetList[i].name;
       const parent_id = budgetList[i].id;
       const child_budget = lodash.filter(budgetList, arr => arr.parent_id === budgetList[i].id);
@@ -342,11 +353,7 @@ router.get('/activity/activity_details_budget/:id', auth, csrfProtection, async 
      
         const hour = activity_budget.length > 0 ? activity_budget[0].hour : "-";
         const amount = activity_budget.length > 0 ? activity_budget[0].amount : "-";
-
-        // console.log(activity_budget[j].level_type);
-        
-
-        const level = activity_budget.length > 0 ? ((activity_budget[0].level_type==='Individual')? 'I' :'E') : "-";
+        const level = activity_budget.length > 0 ? ((activity_budget[0].level_type === 'Individual') ? 'I' : 'E') : "-";
 
         child_budget_arr.push({
           "id": child_budget[j].id,
@@ -371,14 +378,18 @@ router.get('/activity/activity_details_budget/:id', auth, csrfProtection, async 
       detailsActivity = await Target.findAll({
         where: { 'id': jointActivities[i].type }
       });
-    } else {
+    } else if (jointActivities[i].target_client_type == 'C') {
       detailsActivity = await client.findAll({
+        where: { 'id': jointActivities[i].type }
+      });
+    } else {
+      detailsActivity = await Referral.findAll({
         where: { 'id': jointActivities[i].type }
       });
     }
 
     marketingBudget.push({
-      'name': detailsActivity[0].first_name +" "+detailsActivity[0].last_name,
+      'name': detailsActivity[0].first_name + " " + detailsActivity[0].last_name,
       'budget_list': budgetArr
     });
   } 

@@ -365,9 +365,10 @@ router.post('/master_contact/import', auth, upload.single('file_name'), csrfProt
 	res.redirect('/master_contact');
 });
 
-router.post('/master_contact/move-to-target', auth, async (req, res) => {
+router.post('/master_contact/move-to-target/', auth, async (req, res) => {
 	var contact_ids = req.body.contact_id;
 	var n = req.body.contact_id.length;
+	
 	for (i = 0; i < n; i++) {
 		var contact_data = await Contact.findOne({
 			where: {
@@ -399,7 +400,10 @@ router.post('/master_contact/move-to-target', auth, async (req, res) => {
 			target_type: 'I',
 			firm_id: contact_data.firm_id,
 			user_id: contact_data.user_id,
-			remarks: contact_data.remarks
+			remarks: contact_data.remarks,
+			firm_id: req.user.firm_id,
+			estimated_revenue:'0',
+			attorney_id: req.user.id
 		});
 
 		await Contact.update({

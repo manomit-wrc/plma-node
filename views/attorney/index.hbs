@@ -2,9 +2,7 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
-
- {{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
 <div class="page-wrapper">
   <div class="content container-fluid">
     <div class="row">
@@ -37,7 +35,8 @@
                 <th>Email</th>
                 <th>Mobile</th>
                 <th>Attorney Type</th>
-                <th>Industry Type</th>
+                {{!--
+                <th>Industry Type</th> --}}
                 <th class="text-right">Action</th>
               </tr>
             </thead>
@@ -51,9 +50,10 @@
                   </a>
                 </td>
                 <td>{{this.email}}</td>
-                <td class="number_validator" >{{this.mobile_no}}</td>
+                <td class="number_validator">{{this.mobile_no}}</td>
                 <td>{{ this.attr_type}}</td>
-                <td>{{this.industry_name}}</td>
+                {{!--
+                <td>{{this.industry_name}}</td> --}}
                 <td class="text-right">
                   <a href="/attorneys/viewdata/{{this.id}}" class="btn btn-success btn-sm">
                     <i class="fa fa-eye m-r-5"></i>
@@ -86,4 +86,4 @@
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>  {{/content}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script> {{/content}}
