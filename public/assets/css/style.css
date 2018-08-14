@@ -5680,6 +5680,10 @@ select.gender {
 	border: 0 none;
 }
 
+.ghanta {
+	display: none;
+}
+
 /*Ends on css 08-08-2018*/
 
 
@@ -6356,6 +6360,29 @@ select.gender {
 	.contact-alphapets {
 		top: 113px;
 	}
+
+	/*.ghanta {
+		position: absolute;
+		right: 60px;
+		top: 20px;
+		z-index: 999999;
+		display: block;
+	}
+
+	.ghanta .fa {
+		color: #000;
+		font-size: 20px;
+	}
+
+	.ghanta .dropdown-menu.notifications {
+		left: -190px;
+		position: absolute;
+		width: 210px;
+	}
+
+	.ghanta .notifications .drop-scroll {
+		width: auto;
+	}*/
 }
 
 @media only screen and (max-width: 460px) {
