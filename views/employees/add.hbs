@@ -65,6 +65,7 @@
                                         <option value="">Select Gender</option>
                                         <option value="M">Male</option>
                                         <option value="F">Female</option>
+                                        <option value="O">Others</option>
                                     </select>
                                 </div>
                             </div>
@@ -79,7 +80,7 @@
                     <div class="col-md-12">
                         <div class="form-group form-focus">
                             <label class="control-label">Mobile No</label>
-                            <input type="text" class="form-control floating" id="mobile_no" name="mobile_no" maxlength="10" minlength="10" />
+                            <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no"/>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -127,7 +128,7 @@
 
                     <div class="col-md-12">
                         <div class="form-group form-focus select-focus">
-                            <label class="control-label">Base Firm Name</label>
+                            <label class="control-label">Firm Name</label>
                             <select class="form-control floating" id="firm_id" name="firm_id">
                                 {{#each firms}}
                                 <option value="{{this.id}}">{{this.title}}</option>

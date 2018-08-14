@@ -13,30 +13,30 @@
 		</div>
 		<div class="row filter-row">
 			<div class="row">
-				 {{#if success_message}}
-                    <div class="alert alert-success">
-                        <strong>Success! </strong>{{success_message}}
-                    </div>
-                {{/if}}
+				{{#if success_message}}
+				<div class="alert alert-success">
+					<strong>Success! </strong>{{success_message}}
+				</div>
+				{{/if}}
 				<div class="col-md-12">
 					<div class="tab firm-box" role="tabpanel">
 						<!-- Nav tabs -->
 						<ul class="nav nav-tabs" role="tablist">
 							<li role="presentation" class="active">
 								<a href="#Section1" aria-controls="home" role="tab" data-toggle="tab">
-									<i class="fa fa-address-card-o"></i>Basic</a>
+								<i class="fa fa-address-card-o"></i>Basic</a>
 							</li>
 							<li role="presentation">
 								<a href="#SectionFirm" aria-controls="profile" role="tab" data-toggle="tab">
-									<i class="fa fa-list"></i>Firm Details</a>
+								<i class="fa fa-list"></i>Firm Details</a>
 							</li>
 							<li role="presentation">
 								<a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">
-									<i class="fa fa-building"></i>Offices</a>
+								<i class="fa fa-building"></i>Offices</a>
 							</li>
 							<li role="presentation">
 								<a href="#Section3" aria-controls="messages" role="tab" data-toggle="tab">
-									<i class="fa fa-address-book-o"></i>Contacts</a>
+								<i class="fa fa-address-book-o"></i>Contacts</a>
 							</li>
 						</ul>
 						<!-- Tab panes -->
@@ -190,7 +190,7 @@
 												<label class="control-label">Section
 													<span class="text-danger">*</span>
 												</label>
-												<div class="form-group form-focus select-focus">
+												<div class="">
 													<select class="form-control floating" id="section" name="section" multiple="multiple">
 														{{#each section}}
 														<option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.name}}</option>
@@ -198,11 +198,12 @@
 													</select>
 												</div>
 											</div>
+
 											<div class="col-md-12">
 												<label class="control-label">Practice Area
 													<span class="text-danger">*</span>
 												</label>
-												<div class="form-group form-focus select-focus">
+												<div class="">
 													<select class="form-control floating" id="practice_area" name="practice_area" multiple="multiple">
 														{{#each practice_area}}
 														<option value="{{this.id}}" {{#inArray ../PracticeAreaArr this.id}} selected="selected" {{/inArray}}>{{this.name}}</option>
@@ -210,11 +211,13 @@
 													</select>
 												</div>
 											</div>
+
 											<div class="col-md-12">
 												<label class="control-label">Jurisdiction
 													<span class="text-danger">*</span>
 												</label>
-												<div class="form-group form-focus select-focus">
+												<div class="">
+												{{!-- <div class="form-group form-focus select-focus"> --}}
 													<select class="form-control floating" id="firm_jurisdiction" name="firm_jurisdiction" multiple="multiple">
 														{{#each jurisdiction}}
 														<option value="{{this.id}}" {{#inArray ../jurisdictionArr this.id}} selected="selected" {{/inArray}}>{{this.name}}</option>
@@ -223,6 +226,7 @@
 												</div>
 											</div>
 										</div>
+
 										<div class="m-t-20 text-center">
 											<button class="btn btn-primary rounded common-rounded-btn" id="btnUpdateFirmDetails">Save &amp; Next</button>
 										</div>
@@ -236,7 +240,7 @@
 									</div>
 									<div class="col-xs-8 text-right m-b-30">
 										<a href="#" class="btn btn-primary rounded common-rounded-btn" data-toggle="modal" data-target="#add_office">
-											<i class="fa fa-plus"></i> Add Office</a>
+										<i class="fa fa-plus"></i> Add Office</a>
 									</div>
 								</div>
 								<div class="row">
@@ -259,25 +263,23 @@
 													<tr>
 														<td>{{math @index "+" 1}}</td>
 														<td>{{this.firm.title}}</td>
-														<td> 
+														<td>
 															<a href="#" data-toggle="modal" data-target="#view_offices" data-office-id="{{this.id}}" data-name="{{this.name}}" data-address="{{this.address}}"
-															 data-city="{{this.city}}" data-state="{{this.state}}" data-country="{{this.country}}" data-zipcode="{{this.zipcode}}"
-															 data-mobile="{{this.mobile}}" data-firm-id="{{this.firm_id}}" id="view-office-detail" >{{this.name}}</a>
-															</td>
+																data-city="{{this.city}}" data-state="{{this.state}}" data-country="{{this.country}}" data-zipcode="{{this.zipcode}}"
+															data-mobile="{{this.mobile}}" data-firm-id="{{this.firm_id}}" id="view-office-detail" >{{this.name}}</a>
+														</td>
 														<td class="number_validator">{{this.mobile}}</td>
 														<td>{{this.address}}</td>
 														<td>{{dateFormat this.createdAt "DD-MM-YYYY"}}</td>
 														<td class="text-right">
-                                                       <a href="#" data-toggle="modal" data-target="#view_offices" data-office-id="{{this.id}}" data-name="{{this.name}}" data-address="{{this.address}}"
-															 data-city="{{this.city}}" data-state="{{this.state}}" data-country="{{this.country}}" data-zipcode="{{this.zipcode}}"
-															 data-mobile="{{this.mobile}}" data-firm-id="{{this.firm_id}}" id="view-office-detail" class="btn btn-success btn-sm">
+															<a href="#" data-toggle="modal" data-target="#view_offices" data-office-id="{{this.id}}" data-name="{{this.name}}" data-address="{{this.address}}"
+																data-city="{{this.city}}" data-state="{{this.state}}" data-country="{{this.country}}" data-zipcode="{{this.zipcode}}"
+																data-mobile="{{this.mobile}}" data-firm-id="{{this.firm_id}}" id="view-office-detail" class="btn btn-success btn-sm">
 																<i class="fa fa-eye m-r-5"></i>
 															</a>
-
-
 															<a href="#" data-toggle="modal" data-target="#edit_offices" data-office-id="{{this.id}}" data-name="{{this.name}}" data-address="{{this.address}}"
-															 data-city="{{this.city}}" data-state="{{this.state}}" data-country="{{this.country}}" data-zipcode="{{this.zipcode}}"
-															 data-mobile="{{this.mobile}}" data-firm-id="{{this.firm_id}}" id="edit-office-detail" class="btn btn-info btn-sm">
+																data-city="{{this.city}}" data-state="{{this.state}}" data-country="{{this.country}}" data-zipcode="{{this.zipcode}}"
+																data-mobile="{{this.mobile}}" data-firm-id="{{this.firm_id}}" id="edit-office-detail" class="btn btn-info btn-sm">
 																<i class="fa fa-pencil m-r-5"></i>
 															</a>
 															<a href="#" data-toggle="modal" data-target="#delete_offices" data-office-id="{{this.id}}" id="delete-office-details" class="btn btn-danger btn-sm">
@@ -292,14 +294,14 @@
 									</div>
 								</div>
 							</div>
-							<div role="tabpanel" class="tab-pane fade" id="Section3">
+							<div role="tabpanel" class="tab-pane fade staff-name" id="Section3">
 								<div class="row">
 									<div class="col-xs-4">
 										<h4 class="page-title">Add Contact</h4>
 									</div>
 									<div class="col-xs-8 text-right m-b-30">
 										<a href="#" class="btn btn-primary rounded common-rounded-btn" data-toggle="modal" data-target="#add_contact">
-											<i class="fa fa-plus"></i> Add Contact</a>
+										<i class="fa fa-plus"></i> Add Contact</a>
 									</div>
 								</div>
 								<div class="row">
@@ -308,7 +310,6 @@
 											<table class="table table-striped custom-table datatable">
 												<thead>
 													<tr>
-														<th>SL#</th>
 														<th>Staff Name</th>
 														<th>Office Name</th>
 														<th>Designation</th>
@@ -321,17 +322,15 @@
 												<tbody>
 													{{#each contact}}
 													<tr>
-														<td>{{math @index "+" 1}}</td>
 														<td>
 															<a href="javascript:void(0)" class="avatar">{{first_letter this.first_name}}</a>
 															<h2>
-																<!-- <a href="javascript:void(0)">{{this.first_name}}&nbsp;{{this.last_name}}</a> -->
-
-																<a href="#" data-toggle="modal" data-target="#view_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}"
-																 data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}"
-																 data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}"
-																 data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}"
-																 data-contact-zipcode="{{this.zipcode}}" id="view-office-contact">{{this.first_name}} {{this.last_name}}</a></td>
+															<!-- <a href="javascript:void(0)">{{this.first_name}}&nbsp;{{this.last_name}}</a> -->
+															<a href="#" data-toggle="modal" data-target="#view_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}"
+																data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}"
+																data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}"
+																data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}"
+															data-contact-zipcode="{{this.zipcode}}" id="view-office-contact">{{this.first_name}} {{this.last_name}}</a></td>
 															</h2>
 														</td>
 														<td>{{this.office.name}}</td>
@@ -340,24 +339,22 @@
 														<td class="number_validator">{{this.mobile}}</td>
 														<td>{{dateFormat this.createdAt "DD-MM-YYYY"}}</td>
 														<td class="text-right">
-                                                          <a href="#" data-toggle="modal" data-target="#view_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}"
-															 data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}"
-															 data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}"
-															 data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}"
-															 data-contact-zipcode="{{this.zipcode}}" id="view-office-contact" class="btn btn-success btn-sm">
+															<a href="#" data-toggle="modal" data-target="#view_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}"
+																data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}"
+																data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}"
+																data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}"
+																data-contact-zipcode="{{this.zipcode}}" id="view-office-contact" class="btn btn-success btn-sm">
 																<i class="fa fa-eye m-r-5"></i>
 															</a>
-
-
 															<a href="#" data-toggle="modal" data-target="#edit_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}"
-															 data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}"
-															 data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}"
-															 data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}"
-															 data-contact-zipcode="{{this.zipcode}}" id="edit-office-contact" class="edit btn btn-info btn-sm">
+																data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}"
+																data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}"
+																data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}"
+																data-contact-zipcode="{{this.zipcode}}" id="edit-office-contact" class="edit btn btn-info btn-sm">
 																<i class="fa fa-pencil m-r-5"></i>
 															</a>
 															<a href="#" data-toggle="modal" data-target="#delete_contacts" data-contact-id="{{this.id}}" id="delete-office-contact-details"
-															 class="edit btn btn-danger btn-sm">
+																class="edit btn btn-danger btn-sm">
 																<i class="fa fa-trash-o m-r-5"></i>
 															</a>
 														</td>
@@ -377,7 +374,6 @@
 	</div>
 </div>
 <!-- ====================Starts Add Office ============================== -->
-
 <div id="add_office" class="modal custom-modal fade" role="dialog">
 	<div class="modal-dialog">
 		<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -437,7 +433,6 @@
 							<div class="form-group form-focus">
 								<select class="select form-control floating" id="city" name="city">
 									<option value="">Select City</option>
-
 								</select>
 							</div>
 						</div>
@@ -445,7 +440,6 @@
 							<div class="form-group form-focus">
 								<select class="select form-control floating" id="zipcode" name="zipcode">
 									<option value="">Select Zipcode</option>
-
 								</select>
 							</div>
 						</div>
@@ -533,7 +527,6 @@
 								</select>
 							</div>
 						</div>
-
 					</div>
 					
 				</form>
@@ -616,7 +609,6 @@
 								</select>
 							</div>
 						</div>
-
 					</div>
 					<div class="m-t-20 text-center">
 						<button class="btn btn-primary btnEditOffice">Save &amp; Update</button>
@@ -635,7 +627,6 @@
 			<form>
 				<div class="modal-body card-box">
 					<p>Are you sure want to delete this?</p>
-
 					<div class="m-t-20">
 						<a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
 						<button type="submit" class="btn btn-danger btnDeleteOffice">Delete</button>
@@ -647,7 +638,6 @@
 </div>
 <!-- ====================Ends Add Office ============================== -->
 <!-- ====================Starts Add contact ============================== -->
-
 <div id="add_contact" class="modal custom-modal fade" role="dialog">
 	<div class="modal-dialog">
 		<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -737,10 +727,10 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-focus select-focus">
-									<label class="control-label">State
-											<span class="req-lbl">*</span>
-									</label>
-									<select class="select form-control floating" id="contact_state" name="contact_state">
+								<label class="control-label">State
+									<span class="req-lbl">*</span>
+								</label>
+								<select class="select form-control floating" id="contact_state" name="contact_state">
 									<option value="">select State</option>
 									{{#each state}}
 									<option value="{{this.id}}">{{this.name}}</option>
@@ -751,22 +741,20 @@
 						<div class="col-md-6">
 							<div class="form-group form-focus select-focus">
 								<label class="control-label">City
-										<span class="req-lbl">*</span>
+									<span class="req-lbl">*</span>
 								</label>
 								<select class="select form-control floating" id="contact_city" name="contact_city">
 									<option value="">Select City</option>
-
 								</select>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-focus select-focus">
 								<label class="control-label">Zipcode
-										<span class="req-lbl">*</span>
+									<span class="req-lbl">*</span>
 								</label>
 								<select class="select form-control floating" id="contact_zipcode" name="contact_zipcode">
 									<option value="">Select Zipcode</option>
-
 								</select>
 							</div>
 						</div>
@@ -866,10 +854,9 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-focus select-focus">
-									<label class="control-label">State
-											<span class="req-lbl">*</span>
-
-									</label>
+								<label class="control-label">State
+									<span class="req-lbl">*</span>
+								</label>
 								<select disabled class="form-control floating" id="view_contact_state" name="view_contact_state">
 									<option value="">select State</option>
 									{{#each state}}
@@ -880,11 +867,10 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-focus select-focus">
-									<label class="control-label">City
-											<span class="req-lbl">*</span>
-
-									</label>
-											<select disabled class="form-control floating" id="view_contact_city" name="view_contact_city">
+								<label class="control-label">City
+									<span class="req-lbl">*</span>
+								</label>
+								<select disabled class="form-control floating" id="view_contact_city" name="view_contact_city">
 									<option value="">Select City</option>
 									{{#each city}}
 									<option value="{{this.id}}">{{this.name}}</option>
@@ -894,11 +880,10 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-focus select-focus">
-									<label class="control-label">Zipcode
-											<span class="req-lbl">*</span>
-
-									</label>
-									<select disabled class="form-control floating" id="view_contact_zipcode" name="view_contact_zipcode">
+								<label class="control-label">Zipcode
+									<span class="req-lbl">*</span>
+								</label>
+								<select disabled class="form-control floating" id="view_contact_zipcode" name="view_contact_zipcode">
 									<option value="">Select Zipcode</option>
 									{{#each zipcode}}
 									<option value="{{this.id}}">{{this.zip}}</option>
@@ -1000,11 +985,10 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-focus select-focus">
-									<label class="control-label">State
-											<span class="req-lbl">*</span>
-
-									</label>
-																	<select class=" form-control floating" id="edit_contact_state" name="edit_contact_state">
+								<label class="control-label">State
+									<span class="req-lbl">*</span>
+								</label>
+								<select class=" form-control floating" id="edit_contact_state" name="edit_contact_state">
 									<option value="">select State</option>
 									{{#each state}}
 									<option value="{{this.id}}">{{this.name}}</option>
@@ -1014,11 +998,10 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-focus select-focus">
-									<label class="control-label">City
-											<span class="req-lbl">*</span>
-
-									</label>
-											<select class=" form-control floating" id="edit_contact_city" name="edit_contact_city">
+								<label class="control-label">City
+									<span class="req-lbl">*</span>
+								</label>
+								<select class=" form-control floating" id="edit_contact_city" name="edit_contact_city">
 									<option value="">Select City</option>
 									{{#each city}}
 									<option value="{{this.id}}">{{this.name}}</option>
@@ -1028,11 +1011,10 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-focus select-focus">
-									<label class="control-label">Zipcode
-											<span class="req-lbl">*</span>
-
-									</label>
-																	<select class=" form-control floating" id="edit_contact_zipcode" name="edit_contact_zipcode">
+								<label class="control-label">Zipcode
+									<span class="req-lbl">*</span>
+								</label>
+								<select class=" form-control floating" id="edit_contact_zipcode" name="edit_contact_zipcode">
 									<option value="">Select Zipcode</option>
 									{{#each zipcode}}
 									<option value="{{this.id}}">{{this.zip}}</option>
@@ -1058,7 +1040,6 @@
 			<form>
 				<div class="modal-body card-box">
 					<p>Are you sure want to delete this?</p>
-
 					<div class="m-t-20">
 						<a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
 						<button type="submit" class="btn btn-danger" id="btnDeleteContact">Delete</button>
@@ -1081,973 +1062,998 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 <script type="text/javascript">
 	/*===============================Starts Add Ofiice Section========================================*/
-	$(document).ready(function (e) {
-		$('#section').multiselect({
-			nonSelectedText: 'Select Section',
-			includeSelectAllOption: true,
-			buttonWidth: '100%'
-		});
+	$(document).ready(function(e) {
+	    $('#section').multiselect({
+	        nonSelectedText: 'Select Section',
+	        enableFiltering: true,
+	        includeSelectAllOption: true,
+	        buttonWidth: '100%',
+	        maxHeight: 400,
+	        dropUp: true
+	    });
 
-		$('#practice_area').multiselect({
-			nonSelectedText: 'Select Practice Area',
-			includeSelectAllOption: true,
-			buttonWidth: '100%'
-		});
+	    $('#practice_area').multiselect({
+	        nonSelectedText: 'Select Practice Area',
+	        enableFiltering: true,
+	        includeSelectAllOption: true,
+	        buttonWidth: '100%',
+	        maxHeight: 400,
+	        dropUp: true
+	    });
 
-		$('#firm_jurisdiction').multiselect({
-			nonSelectedText: 'Select Jurisdiction',
-			includeSelectAllOption: true,
-			buttonWidth: '100%'
-		});
+	    $('#firm_jurisdiction').multiselect({
+	        nonSelectedText: 'Select Jurisdiction',
+	        enableFiltering: true,
+	        includeSelectAllOption: true,
+	        buttonWidth: '100%',
+	        maxHeight: 400,
+	        dropUp: true
+	    });
 
-		$("#btnAddOffice").click(function () {
-			$("#addOffice").submit();
-		});
+	    $("#btnAddOffice").click(function() {
+	        $("#addOffice").submit();
+	    });
 
-		$("#addOffice").validate({
-			rules: {
-				name: {
-					required: true
-				},
-				address: {
-					required: true
-				},
-				city: {
-					required: true
-				},
-				state: {
-					required: true
-				},
-				country: {
-					required: true
-				},
-				zipcode: {
-					required: true
-				},
-				mobile_no: {
-					required: true
+	    $("#addOffice").validate({
+	        rules: {
+	            name: {
+	                required: true
+	            },
+	            address: {
+	                required: true
+	            },
+	            city: {
+	                required: true
+	            },
+	            state: {
+	                required: true
+	            },
+	            country: {
+	                required: true
+	            },
+	            zipcode: {
+	                required: true
+	            },
+	            mobile_no: {
+	                required: true
 
-				}
-			},
-			messages: {
-				name: {
-					required: "Name can't be blank"
-				},
-				address: {
-					required: "Address can't be blank"
-				},
-				city: {
-					required: "City can't be blank"
-				},
-				state: {
-					required: "State can't be blank"
-				},
-				country: {
-					required: "country can't be blank"
-				},
-				zipcode: {
-					required: "Zipcode can't be blank"
-				},
-				mobile_no: {
-					required: "Mobile Number can't be blank"
-				}
-			},
-			submitHandler: function (form) {
-				var name = $("#name").val(),
-					address = $("#address").val(),
-					city = $("#city").val();
-				state = $("#state").val();
-				country = $("#country").val();
-				zipcode = $("#zipcode").val();
-				mobile_no = $("#mobile_no").val();
-				$.ajax({
-					type: "POST",
-					url: "/add-office",
-					data: {
-						name: name,
-						address: address,
-						city: city,
-						state: state,
-						country: country,
-						zipcode: zipcode,
-						mobile_no: mobile_no
-					},
-					beforeSend: function (xhr) {
-						xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+	            }
+	        },
+	        messages: {
+	            name: {
+	                required: "Name can't be blank"
+	            },
+	            address: {
+	                required: "Address can't be blank"
+	            },
+	            city: {
+	                required: "City can't be blank"
+	            },
+	            state: {
+	                required: "State can't be blank"
+	            },
+	            country: {
+	                required: "country can't be blank"
+	            },
+	            zipcode: {
+	                required: "Zipcode can't be blank"
+	            },
+	            mobile_no: {
+	                required: "Mobile Number can't be blank"
+	            }
+	        },
+	        submitHandler: function(form) {
+	            var name = $("#name").val(),
+	                address = $("#address").val(),
+	                city = $("#city").val();
+	            state = $("#state").val();
+	            country = $("#country").val();
+	            zipcode = $("#zipcode").val();
+	            mobile_no = $("#mobile_no").val();
+	            $.ajax({
+	                type: "POST",
+	                url: "/add-office",
+	                data: {
+	                    name: name,
+	                    address: address,
+	                    city: city,
+	                    state: state,
+	                    country: country,
+	                    zipcode: zipcode,
+	                    mobile_no: mobile_no
+	                },
+	                beforeSend: function(xhr) {
+	                    xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
 
-						$("#btnAddOffice").prop('disabled', true);
-						$("#btnAddOffice").html("Loading...");
-					},
-					success: function (response) {
-						if (response.add_office == true) {
-							$(`<div class="alert alert-success"><strong>Success! </strong>Office Added Successfully</div>`).insertBefore("#addOffice");
-							setTimeout(function () {
-								window.location.href = "/firm-details";
-							}, 2000);
-						}
-					}
-				});
-			}
-		});
+	                    $("#btnAddOffice").prop('disabled', true);
+	                    $("#btnAddOffice").html("Loading...");
+	                },
+	                success: function(response) {
+	                    if (response.add_office == true) {
+	                        $(`<div class="alert alert-success"><strong>Success! </strong>Office Added Successfully</div>`).insertBefore("#addOffice");
+	                        setTimeout(function() {
+	                            window.location.href = "/firm-details";
+	                        }, 2000);
+	                    }
+	                }
+	            });
+	        }
+	    });
 	});
 	/*===============================Ends Add Ofiice Section========================================*/
 	/*===============================Stasts Edit Ofiice Section========================================*/
 
-$(document).on('click', '#view-office-detail', function (e) {
-		var office_id = $(this).data('office-id');
-		var office_name = $(this).data('name');
-		var office_address = $(this).data('address');
-		var office_city = $(this).data('city');
-		var office_state = $(this).data('state');
-		var office_country = $(this).data('country');
-		var office_zipcode = $(this).data('zipcode');
-		var office_mobile = $(this).data('mobile');
-		var firm_id = $(this).data('firm-id');
+	$(document).on('click', '#view-office-detail', function(e) {
+	    var office_id = $(this).data('office-id');
+	    var office_name = $(this).data('name');
+	    var office_address = $(this).data('address');
+	    var office_city = $(this).data('city');
+	    var office_state = $(this).data('state');
+	    var office_country = $(this).data('country');
+	    var office_zipcode = $(this).data('zipcode');
+	    var office_mobile = $(this).data('mobile');
+	    var firm_id = $(this).data('firm-id');
 
-		localStorage.setItem('office_id', office_id);
+	    localStorage.setItem('office_id', office_id);
 
-		$('#view_office_name').val(office_name);
-		$('#view_office_address').val(office_address);
-		$('#view_office_city').val(office_city);
-		$('#view_office_state').val(office_state);
-		$('#view_office_country').val(office_country);
-		$('#view_office_zipcode').val(office_zipcode);
-		$('#view_office_mobile_no').val(office_mobile);
+	    $('#view_office_name').val(office_name);
+	    $('#view_office_address').val(office_address);
+	    $('#view_office_city').val(office_city);
+	    $('#view_office_state').val(office_state);
+	    $('#view_office_country').val(office_country);
+	    $('#view_office_zipcode').val(office_zipcode);
+	    $('#view_office_mobile_no').val(office_mobile);
 
-		$('.view-office-modal').modal('show');
+	    $('.view-office-modal').modal('show');
 	});
 
 
-	$(document).on('click', '#edit-office-detail', function (e) {
-		var office_id = $(this).data('office-id');
-		var office_name = $(this).data('name');
-		var office_address = $(this).data('address');
-		var office_city = $(this).data('city');
-		var office_state = $(this).data('state');
-		var office_country = $(this).data('country');
-		var office_zipcode = $(this).data('zipcode');
-		var office_mobile = $(this).data('mobile');
-		var firm_id = $(this).data('firm-id');
+	$(document).on('click', '#edit-office-detail', function(e) {
+	    var office_id = $(this).data('office-id');
+	    var office_name = $(this).data('name');
+	    var office_address = $(this).data('address');
+	    var office_city = $(this).data('city');
+	    var office_state = $(this).data('state');
+	    var office_country = $(this).data('country');
+	    var office_zipcode = $(this).data('zipcode');
+	    var office_mobile = $(this).data('mobile');
+	    var firm_id = $(this).data('firm-id');
 
-		localStorage.setItem('office_id', office_id);
+	    localStorage.setItem('office_id', office_id);
 
-		$('#edit_office_name').val(office_name);
-		$('#edit_office_address').val(office_address);
-		$('#edit_office_city').val(office_city);
-		$('#edit_office_state').val(office_state);
-		$('#edit_office_country').val(office_country);
-		$('#edit_office_zipcode').val(office_zipcode);
-		$('#edit_office_mobile_no').val(office_mobile);
+	    $('#edit_office_name').val(office_name);
+	    $('#edit_office_address').val(office_address);
+	    $('#edit_office_city').val(office_city);
+	    $('#edit_office_state').val(office_state);
+	    $('#edit_office_country').val(office_country);
+	    $('#edit_office_zipcode').val(office_zipcode);
+	    $('#edit_office_mobile_no').val(office_mobile);
 
-		$('.edit-office-modal').modal('show');
+	    $('.edit-office-modal').modal('show');
 	});
 
-	$(document).ready(function (e) {
+	$(document).ready(function(e) {
 
-		$("#btnEditOffice").click(function () {
-			$("#editOffice").submit();
-		});
+	    $("#btnEditOffice").click(function() {
+	        $("#editOffice").submit();
+	    });
 
-		$("#editOffice").validate({
-			rules: {
-				edit_office_name: {
-					required: true
-				},
-				edit_office_address: {
-					required: true
-				},
-				edit_office_city: {
-					required: true
-				},
-				edit_office_state: {
-					required: true
-				},
-				edit_office_country: {
-					required: true
-				},
-				edit_office_zipcode: {
-					required: true
-				},
-				edit_office_mobile_no: {
-					required: true
-				}
-			},
-			messages: {
-				edit_office_name: {
-					required: "Name can't be blank"
-				},
-				edit_office_address: {
-					required: "Address can't be blank"
-				},
-				edit_office_city: {
-					required: "City can't be blank"
-				},
-				edit_office_state: {
-					required: "State can't be blank"
-				},
-				edit_office_country: {
-					required: "country can't be blank"
-				},
-				edit_office_zipcode: {
-					required: "Zipcode can't be blank"
-				},
-				edit_office_mobile_no: {
-					required: "Mobile Number can't be blank"
-				}
-			},
-			submitHandler: function (form) {
-				$.ajax({
-					type: "POST",
-					url: "/edit-office/" + localStorage.getItem("office_id"),
-					data: $("#editOffice").serialize() + "&office_id=" + localStorage.getItem("office_id"),
-					beforeSend: function (xhr) {
-						xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+	    $("#editOffice").validate({
+	        rules: {
+	            edit_office_name: {
+	                required: true
+	            },
+	            edit_office_address: {
+	                required: true
+	            },
+	            edit_office_city: {
+	                required: true
+	            },
+	            edit_office_state: {
+	                required: true
+	            },
+	            edit_office_country: {
+	                required: true
+	            },
+	            edit_office_zipcode: {
+	                required: true
+	            },
+	            edit_office_mobile_no: {
+	                required: true
+	            }
+	        },
+	        messages: {
+	            edit_office_name: {
+	                required: "Name can't be blank"
+	            },
+	            edit_office_address: {
+	                required: "Address can't be blank"
+	            },
+	            edit_office_city: {
+	                required: "City can't be blank"
+	            },
+	            edit_office_state: {
+	                required: "State can't be blank"
+	            },
+	            edit_office_country: {
+	                required: "country can't be blank"
+	            },
+	            edit_office_zipcode: {
+	                required: "Zipcode can't be blank"
+	            },
+	            edit_office_mobile_no: {
+	                required: "Mobile Number can't be blank"
+	            }
+	        },
+	        submitHandler: function(form) {
+	            $.ajax({
+	                type: "POST",
+	                url: "/edit-office/" + localStorage.getItem("office_id"),
+	                data: $("#editOffice").serialize() + "&office_id=" + localStorage.getItem("office_id"),
+	                beforeSend: function(xhr) {
+	                    xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
 
-						$("#btnEditOffice").prop('disabled', true);
-						$("#btnEditOffice").html("Loading...");
-					},
-					success: function (response) {
-						if (response.edit_office == true) {
-							$(`<div class="alert alert-success"><strong>Success! </strong>Office Updated Successfully</div>`).insertBefore("#editOffice");
-							setTimeout(function () {
-								window.location.href = "/firm-details";
-							}, 2000);
-						}
-					}
-				});
-			}
-		});
+	                    $("#btnEditOffice").prop('disabled', true);
+	                    $("#btnEditOffice").html("Loading...");
+	                },
+	                success: function(response) {
+	                    if (response.edit_office == true) {
+	                        $(`<div class="alert alert-success"><strong>Success! </strong>Office Updated Successfully</div>`).insertBefore("#editOffice");
+	                        setTimeout(function() {
+	                            window.location.href = "/firm-details";
+	                        }, 2000);
+	                    }
+	                }
+	            });
+	        }
+	    });
 	});
 
 	/*===============================Ends Edit Ofiice Section========================================*/
 	/*===============================Starts Delete Ofiice Section========================================*/
 
-	$(document).on('click', '#delete-office-details', function (e) {
-		var office_id = $(this).data('office-id');
+	$(document).on('click', '#delete-office-details', function(e) {
+	    var office_id = $(this).data('office-id');
 
-		localStorage.setItem('office_id', office_id);
+	    localStorage.setItem('office_id', office_id);
 
-		$('.delete-office-modal').modal('show');
+	    $('.delete-office-modal').modal('show');
 	});
 
-	$(document).on('click', '.btnDeleteOffice', function (e) {
-		$.ajax({
-			type: "POST",
-			url: "/delete-office/" + localStorage.getItem("office_id"),
-			data: "&office_id=" + localStorage.getItem("office_id"),
-			beforeSend: function (xhr) {
-				xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+	$(document).on('click', '.btnDeleteOffice', function(e) {
+	    $.ajax({
+	        type: "POST",
+	        url: "/delete-office/" + localStorage.getItem("office_id"),
+	        data: "&office_id=" + localStorage.getItem("office_id"),
+	        beforeSend: function(xhr) {
+	            xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
 
-			},
-			success: function (response) {
-				if (response.delete_office == true) {
-					window.location.href = "/firm-details";
-				}
-			},
-			error: function (xhr) {
+	        },
+	        success: function(response) {
+	            if (response.delete_office == true) {
+	                window.location.href = "/firm-details";
+	            }
+	        },
+	        error: function(xhr) {
 
-			}
-		});
-		e.preventDefault();
+	        }
+	    });
+	    e.preventDefault();
 	});
 
 	/*===============================Ends Delete Ofiice Section========================================*/
 
 	/*===============================Starts Office Contact Section=============================*/
 
-	$(document).ready(function (e) {
+	$(document).ready(function(e) {
 
-		$("#btnAddOfficeContact").click(function () {
-			$("#addOfficeContactFrm").submit();
-		});
+	    $("#btnAddOfficeContact").click(function() {
+	        $("#addOfficeContactFrm").submit();
+	    });
 
-		$("#addOfficeContactFrm").validate({
-			rules: {
-				office_id: {
-					required: true
-				},
-				designation_id: {
-					required: true
-				},
-				first_name: {
-					required: true
-				},
-				last_name: {
-					required: true
-				},
-				email: {
-					required: true,
-					email: true
-				},
-				contact_address: {
-					required: true
-				},
-				contact_city: {
-					required: true
-				},
-				contact_state: {
-					required: true
-				},
-				contact_country: {
-					required: true
-				},
-				contact_zipcode: {
-					required: true
-				},
-				contact_mobile_no: {
-					required: true,
-					number: true,
-					maxlength: 10
-				}
-			},
-			messages: {
-				office_id: {
-					required: "Please select a office name"
-				},
-				designation_id: {
-					required: "Please select designation"
-				},
-				first_name: {
-					required: "First name can't be blank"
-				},
-				last_name: {
-					required: "Last name can't be blank"
-				},
-				email: {
-					required: "Email can't be blank",
-					email: "Must be valid email"
-				},
-				contact_address: {
-					required: "Address can't be blank"
-				},
-				contact_city: {
-					required: "City can't be blank"
-				},
-				contact_state: {
-					required: "State can't be blank"
-				},
-				contact_country: {
-					required: "country can't be blank"
-				},
-				contact_zipcode: {
-					required: "Zipcode can't be blank"
-				},
-				contact_mobile_no: {
-					required: "Mobile Number can't be blank"
-				}
-			},
-			submitHandler: function (form) {
-				var first_name = $("#first_name").val(),
-					last_name = $("#last_name").val(),
-					email = $("#email").val(),
-					office_id = $("#office_id").val(),
-					designation_id = $("#designation_id").val(),
-					address = $("#contact_address").val();
-				city = $("#contact_city").val();
-				state = $("#contact_state").val();
-				country = $("#contact_country").val();
-				zipcode = $("#contact_zipcode").val();
-				mobile_no = $("#contact_mobile_no").val();
-				$.ajax({
-					type: "POST",
-					url: "/add-office-contact",
-					data: {
-						office_id: office_id,
-						designation_id: designation_id,
-						first_name: first_name,
-						last_name: last_name,
-						email: email,
-						address: address,
-						city: city,
-						state: state,
-						country: country,
-						zipcode: zipcode,
-						mobile_no: mobile_no
-					},
-					beforeSend: function (xhr) {
-						xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+	    $("#addOfficeContactFrm").validate({
+	        rules: {
+	            office_id: {
+	                required: true
+	            },
+	            designation_id: {
+	                required: true
+	            },
+	            first_name: {
+	                required: true
+	            },
+	            last_name: {
+	                required: true
+	            },
+	            email: {
+	                required: true,
+	                email: true
+	            },
+	            contact_address: {
+	                required: true
+	            },
+	            contact_city: {
+	                required: true
+	            },
+	            contact_state: {
+	                required: true
+	            },
+	            contact_country: {
+	                required: true
+	            },
+	            contact_zipcode: {
+	                required: true
+	            },
+	            contact_mobile_no: {
+	                required: true,
+	                number: true,
+	                maxlength: 10
+	            }
+	        },
+	        messages: {
+	            office_id: {
+	                required: "Please select a office name"
+	            },
+	            designation_id: {
+	                required: "Please select designation"
+	            },
+	            first_name: {
+	                required: "First name can't be blank"
+	            },
+	            last_name: {
+	                required: "Last name can't be blank"
+	            },
+	            email: {
+	                required: "Email can't be blank",
+	                email: "Must be valid email"
+	            },
+	            contact_address: {
+	                required: "Address can't be blank"
+	            },
+	            contact_city: {
+	                required: "City can't be blank"
+	            },
+	            contact_state: {
+	                required: "State can't be blank"
+	            },
+	            contact_country: {
+	                required: "country can't be blank"
+	            },
+	            contact_zipcode: {
+	                required: "Zipcode can't be blank"
+	            },
+	            contact_mobile_no: {
+	                required: "Mobile Number can't be blank"
+	            }
+	        },
+	        submitHandler: function(form) {
+	            var first_name = $("#first_name").val(),
+	                last_name = $("#last_name").val(),
+	                email = $("#email").val(),
+	                office_id = $("#office_id").val(),
+	                designation_id = $("#designation_id").val(),
+	                address = $("#contact_address").val();
+	            city = $("#contact_city").val();
+	            state = $("#contact_state").val();
+	            country = $("#contact_country").val();
+	            zipcode = $("#contact_zipcode").val();
+	            mobile_no = $("#contact_mobile_no").val();
+	            $.ajax({
+	                type: "POST",
+	                url: "/add-office-contact",
+	                data: {
+	                    office_id: office_id,
+	                    designation_id: designation_id,
+	                    first_name: first_name,
+	                    last_name: last_name,
+	                    email: email,
+	                    address: address,
+	                    city: city,
+	                    state: state,
+	                    country: country,
+	                    zipcode: zipcode,
+	                    mobile_no: mobile_no
+	                },
+	                beforeSend: function(xhr) {
+	                    xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
 
-						$("#btnAddOfficeContact").prop('disabled', true);
-						$("#btnAddOfficeContact").html("Loading...");
-					},
-					success: function (response) {
-						if (response.add_office_contact == true) {
-							$(`<div class="alert alert-success"><strong>Success! </strong>Office Contact Added Successfully</div>`).insertBefore("#addOfficeContactFrm");
-							setTimeout(function () {
-								window.location.href = "/firm-details";
-							}, 2000);
-						}
-					}
-				});
-			}
-		});
+	                    $("#btnAddOfficeContact").prop('disabled', true);
+	                    $("#btnAddOfficeContact").html("Loading...");
+	                },
+	                success: function(response) {
+	                    if (response.add_office_contact == true) {
+	                        $(`<div class="alert alert-success"><strong>Success! </strong>Office Contact Added Successfully</div>`).insertBefore("#addOfficeContactFrm");
+	                        setTimeout(function() {
+	                            window.location.href = "/firm-details";
+	                        }, 2000);
+	                    }
+	                }
+	            });
+	        }
+	    });
 	});
 
-	$(document).on('click', '#edit-office-contact', function (e) {
-		var contact_id = $(this).data('contact-id');
-		var office_id = $(this).data('contact-office-id');
-		var designation_id = $(this).data('designation-id');
-		var first_name = $(this).data('first-name');
-		var last_name = $(this).data('last-name');
-		var email = $(this).data('email');
-		var contact_mobile = $(this).data('contact-mobile');
-		var contact_address = $(this).data('contact-address');
-		var contact_city = $(this).data('contact-city');
-		var contact_state = $(this).data('contact-state');
-		var contact_country = $(this).data('contact-country');
-		var contact_zipcode = $(this).data('contact-zipcode');
+	$(document).on('click', '#edit-office-contact', function(e) {
+	    var contact_id = $(this).data('contact-id');
+	    var office_id = $(this).data('contact-office-id');
+	    var designation_id = $(this).data('designation-id');
+	    var first_name = $(this).data('first-name');
+	    var last_name = $(this).data('last-name');
+	    var email = $(this).data('email');
+	    var contact_mobile = $(this).data('contact-mobile');
+	    var contact_address = $(this).data('contact-address');
+	    var contact_city = $(this).data('contact-city');
+	    var contact_state = $(this).data('contact-state');
+	    var contact_country = $(this).data('contact-country');
+	    var contact_zipcode = $(this).data('contact-zipcode');
 
 
-		$("#edit_office_id").val(office_id);
-		$('#edit_office_id').trigger('change');
-		$("#edit_designation_id").val(designation_id);
-		$('#edit_designation_id').trigger('change');
-		$("#edit_contact_first_name").val(first_name);
-		$("#edit_contact_last_name").val(last_name);
-		$("#edit_contact_email").val(email);
-		$("#edit_contact_mobile_no").val(contact_mobile);
-		$("#edit_contact_address").val(contact_address);
-		$("#edit_contact_city").val(contact_city);
-		$("#edit_contact_state").val(contact_state);
-		$("#edit_contact_country").val(contact_country);
-		$("#edit_contact_zipcode").val(contact_zipcode);
+	    $("#edit_office_id").val(office_id);
+	    $('#edit_office_id').trigger('change');
+	    $("#edit_designation_id").val(designation_id);
+	    $('#edit_designation_id').trigger('change');
+	    $("#edit_contact_first_name").val(first_name);
+	    $("#edit_contact_last_name").val(last_name);
+	    $("#edit_contact_email").val(email);
+	    $("#edit_contact_mobile_no").val(contact_mobile);
+	    $("#edit_contact_address").val(contact_address);
+	    $("#edit_contact_city").val(contact_city);
+	    $("#edit_contact_state").val(contact_state);
+	    $("#edit_contact_country").val(contact_country);
+	    $("#edit_contact_zipcode").val(contact_zipcode);
 
-		localStorage.setItem('contact_id', contact_id);
+	    localStorage.setItem('contact_id', contact_id);
 
-		$('.editContactModal').modal('show');
+	    $('.editContactModal').modal('show');
 	});
 
-$(document).on('click', '#view-office-contact', function (e) {
-		var contact_id = $(this).data('contact-id');
-		var office_id = $(this).data('contact-office-id');
-		var designation_id = $(this).data('designation-id');
-		var first_name = $(this).data('first-name');
-		var last_name = $(this).data('last-name');
-		var email = $(this).data('email');
-		var contact_mobile = $(this).data('contact-mobile');
-		var contact_address = $(this).data('contact-address');
-		var contact_city = $(this).data('contact-city');
-		var contact_state = $(this).data('contact-state');
-		var contact_country = $(this).data('contact-country');
-		var contact_zipcode = $(this).data('contact-zipcode');
+	$(document).on('click', '#view-office-contact', function(e) {
+	    var contact_id = $(this).data('contact-id');
+	    var office_id = $(this).data('contact-office-id');
+	    var designation_id = $(this).data('designation-id');
+	    var first_name = $(this).data('first-name');
+	    var last_name = $(this).data('last-name');
+	    var email = $(this).data('email');
+	    var contact_mobile = $(this).data('contact-mobile');
+	    var contact_address = $(this).data('contact-address');
+	    var contact_city = $(this).data('contact-city');
+	    var contact_state = $(this).data('contact-state');
+	    var contact_country = $(this).data('contact-country');
+	    var contact_zipcode = $(this).data('contact-zipcode');
 
 
-		$("#view_office_id").val(office_id);
-		$('#view_office_id').trigger('change');
-		$("#view_designation_id").val(designation_id);
-		$('#view_designation_id').trigger('change');
-		$("#view_contact_first_name").val(first_name);
-		$("#view_contact_last_name").val(last_name);
-		$("#view_contact_email").val(email);
-		$("#view_contact_mobile_no").val(contact_mobile);
-		$("#view_contact_address").val(contact_address);
-		$("#view_contact_city").val(contact_city);
-		$("#view_contact_state").val(contact_state);
-		$("#view_contact_country").val(contact_country);
-		$("#view_contact_zipcode").val(contact_zipcode);
+	    $("#view_office_id").val(office_id);
+	    $('#view_office_id').trigger('change');
+	    $("#view_designation_id").val(designation_id);
+	    $('#view_designation_id').trigger('change');
+	    $("#view_contact_first_name").val(first_name);
+	    $("#view_contact_last_name").val(last_name);
+	    $("#view_contact_email").val(email);
+	    $("#view_contact_mobile_no").val(contact_mobile);
+	    $("#view_contact_address").val(contact_address);
+	    $("#view_contact_city").val(contact_city);
+	    $("#view_contact_state").val(contact_state);
+	    $("#view_contact_country").val(contact_country);
+	    $("#view_contact_zipcode").val(contact_zipcode);
 
-		localStorage.setItem('contact_id', contact_id);
+	    localStorage.setItem('contact_id', contact_id);
 
-		$('.viewContactModal').modal('show');
+	    $('.viewContactModal').modal('show');
 	});
 
 
-	$(document).ready(function (e) {
+	$(document).ready(function(e) {
 
-		$("#btnEditContactOffice").click(function () {
-			$("#EditOfficeContactFrm").submit();
-		});
+	    $("#btnEditContactOffice").click(function() {
+	        $("#EditOfficeContactFrm").submit();
+	    });
 
-		$("#EditOfficeContactFrm").validate({
-			rules: {
-				edit_office_id: {
-					required: true
-				},
-				edit_designation_id: {
-					required: true
-				},
-				edit_contact_first_name: {
-					required: true
-				},
-				edit_contact_last_name: {
-					required: true
-				},
-				edit_contact_email: {
-					required: true,
-					email: true
-				},
-				edit_contact_address: {
-					required: true
-				},
-				edit_contact_city: {
-					required: true
-				},
-				edit_contact_state: {
-					required: true
-				},
-				edit_contact_country: {
-					required: true
-				},
-				edit_contact_zipcode: {
-					required: true
-				},
-				edit_contact_mobile_no: {
-					required: true
-				}
-			},
-			messages: {
-				edit_office_id: {
-					required: "Please select a office name"
-				},
-				edit_designation_id: {
-					required: "Please select designation"
-				},
-				edit_contact_first_name: {
-					required: "First name can't be blank"
-				},
-				edit_contact_last_name: {
-					required: "Last name can't be blank"
-				},
-				edit_contact_email: {
-					required: "Email can't be blank",
-					email: "Must be valid email"
-				},
-				edit_contact_address: {
-					required: "Address can't be blank"
-				},
-				edit_contact_city: {
-					required: "City can't be blank"
-				},
-				edit_contact_state: {
-					required: "State can't be blank"
-				},
-				edit_contact_country: {
-					required: "country can't be blank"
-				},
-				edit_contact_zipcode: {
-					required: "Zipcode can't be blank"
-				},
-				edit_contact_mobile_no: {
-					required: "Mobile Number can't be blank"
-				}
-			},
-			submitHandler: function (form) {
-				$.ajax({
-					type: "POST",
-					url: "/edit-office-contact/" + localStorage.getItem("contact_id"),
-					data: $("#EditOfficeContactFrm").serialize() + "&contact_id=" + localStorage.getItem("contact_id"),
-					beforeSend: function (xhr) {
-						xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+	    $("#EditOfficeContactFrm").validate({
+	        rules: {
+	            edit_office_id: {
+	                required: true
+	            },
+	            edit_designation_id: {
+	                required: true
+	            },
+	            edit_contact_first_name: {
+	                required: true
+	            },
+	            edit_contact_last_name: {
+	                required: true
+	            },
+	            edit_contact_email: {
+	                required: true,
+	                email: true
+	            },
+	            edit_contact_address: {
+	                required: true
+	            },
+	            edit_contact_city: {
+	                required: true
+	            },
+	            edit_contact_state: {
+	                required: true
+	            },
+	            edit_contact_country: {
+	                required: true
+	            },
+	            edit_contact_zipcode: {
+	                required: true
+	            },
+	            edit_contact_mobile_no: {
+	                required: true
+	            }
+	        },
+	        messages: {
+	            edit_office_id: {
+	                required: "Please select a office name"
+	            },
+	            edit_designation_id: {
+	                required: "Please select designation"
+	            },
+	            edit_contact_first_name: {
+	                required: "First name can't be blank"
+	            },
+	            edit_contact_last_name: {
+	                required: "Last name can't be blank"
+	            },
+	            edit_contact_email: {
+	                required: "Email can't be blank",
+	                email: "Must be valid email"
+	            },
+	            edit_contact_address: {
+	                required: "Address can't be blank"
+	            },
+	            edit_contact_city: {
+	                required: "City can't be blank"
+	            },
+	            edit_contact_state: {
+	                required: "State can't be blank"
+	            },
+	            edit_contact_country: {
+	                required: "country can't be blank"
+	            },
+	            edit_contact_zipcode: {
+	                required: "Zipcode can't be blank"
+	            },
+	            edit_contact_mobile_no: {
+	                required: "Mobile Number can't be blank"
+	            }
+	        },
+	        submitHandler: function(form) {
+	            $.ajax({
+	                type: "POST",
+	                url: "/edit-office-contact/" + localStorage.getItem("contact_id"),
+	                data: $("#EditOfficeContactFrm").serialize() + "&contact_id=" + localStorage.getItem("contact_id"),
+	                beforeSend: function(xhr) {
+	                    xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
 
-						$("#btnEditContactOffice").prop('disabled', true);
-						$("#btnEditContactOffice").html("Loading...");
-					},
-					success: function (response) {
-						if (response.edit_office_contact == true) {
-							$(`<div class="alert alert-success"><strong>Success! </strong>Office Contact Updated Successfully</div>`).insertBefore("#EditOfficeContactFrm");
-							setTimeout(function () {
-								window.location.href = "/firm-details";
-							}, 2000);
-						}
-					}
-				});
-			}
-		});
+	                    $("#btnEditContactOffice").prop('disabled', true);
+	                    $("#btnEditContactOffice").html("Loading...");
+	                },
+	                success: function(response) {
+	                    if (response.edit_office_contact == true) {
+	                        $(`<div class="alert alert-success"><strong>Success! </strong>Office Contact Updated Successfully</div>`).insertBefore("#EditOfficeContactFrm");
+	                        setTimeout(function() {
+	                            window.location.href = "/firm-details";
+	                        }, 2000);
+	                    }
+	                }
+	            });
+	        }
+	    });
 	});
 
-	$(document).on('click', '#delete-office-contact-details', function (e) {
-		var contact_id = $(this).data('contact-id');
+	$(document).on('click', '#delete-office-contact-details', function(e) {
+	    var contact_id = $(this).data('contact-id');
 
-		localStorage.setItem('contact_id', contact_id);
+	    localStorage.setItem('contact_id', contact_id);
 
-		$('.deleteContactModal').modal('show');
+	    $('.deleteContactModal').modal('show');
 	});
 
-	$(document).on('click', '#btnDeleteContact', function (e) {
-		$.ajax({
-			type: "POST",
-			url: "/delete-contact/" + localStorage.getItem("contact_id"),
-			data: "&contact_id=" + localStorage.getItem("contact_id"),
-			beforeSend: function (xhr) {
-				xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+	$(document).on('click', '#btnDeleteContact', function(e) {
+	    $.ajax({
+	        type: "POST",
+	        url: "/delete-contact/" + localStorage.getItem("contact_id"),
+	        data: "&contact_id=" + localStorage.getItem("contact_id"),
+	        beforeSend: function(xhr) {
+	            xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
 
-			},
-			success: function (response) {
-				if (response.delete_contact == true) {
-					window.location.href = "/firm-details";
-				}
-			},
-			error: function (xhr) {
+	        },
+	        success: function(response) {
+	            if (response.delete_contact == true) {
+	                window.location.href = "/firm-details";
+	            }
+	        },
+	        error: function(xhr) {
 
-			}
-		});
-		e.preventDefault();
+	        }
+	    });
+	    e.preventDefault();
 	});
 
 	/*===============================Ends Office Contact Section=============================*/
 
-	$(document).ready(function () {
-		/*========================Office state country fetch===========================*/
-		$("#edit_office_state").change(function (e) {
-			var state_id = $(this).val();
-			$("#edit_office_city").find('option').not(':first').remove();
-			if (state_id) {
-				$.ajax({
-					type: "POST",
-					url: "/editoffice-get/get-city",
-					data: { state_id: state_id },
-					success: function (response) {
-						for (var i = 0; i < response.get_city.length; i++) {
-							$("#edit_office_city").append('<option value="' + response.get_city[i].id + '">' + response.get_city[i].name + '</option>');
-						}
-					},
-					error: function (xhr) {
+	$(document).ready(function() {
+	    /*========================Office state country fetch===========================*/
+	    $("#edit_office_state").change(function(e) {
+	        var state_id = $(this).val();
+	        $("#edit_office_city").find('option').not(':first').remove();
+	        if (state_id) {
+	            $.ajax({
+	                type: "POST",
+	                url: "/editoffice-get/get-city",
+	                data: {
+	                    state_id: state_id
+	                },
+	                success: function(response) {
+	                    for (var i = 0; i < response.get_city.length; i++) {
+	                        $("#edit_office_city").append('<option value="' + response.get_city[i].id + '">' + response.get_city[i].name + '</option>');
+	                    }
+	                },
+	                error: function(xhr) {
 
-					}
-				});
-			}
-		});
+	                }
+	            });
+	        }
+	    });
 
-		$("#edit_office_city").change(function (e) {
-			var city_name = $("#edit_office_city option:selected").text();
-			$("#edit_office_zipcode").find('option').not(':first').remove();
-			if (city_name) {
-				$.ajax({
-					type: "POST",
-					url: "/edit-office-get/get-zipcode",
-					data: { city_name: city_name },
-					success: function (response) {
-						for (var i = 0; i < response.zipcode.length; i++) {
-							// console.log(response.zipcode[i]);
-							$("#edit_office_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
-						}
-					},
-					error: function (xhr) {
+	    $("#edit_office_city").change(function(e) {
+	        var city_name = $("#edit_office_city option:selected").text();
+	        $("#edit_office_zipcode").find('option').not(':first').remove();
+	        if (city_name) {
+	            $.ajax({
+	                type: "POST",
+	                url: "/edit-office-get/get-zipcode",
+	                data: {
+	                    city_name: city_name
+	                },
+	                success: function(response) {
+	                    for (var i = 0; i < response.zipcode.length; i++) {
+	                        // console.log(response.zipcode[i]);
+	                        $("#edit_office_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
+	                    }
+	                },
+	                error: function(xhr) {
 
-					}
-				});
-			}
-		});
-		/*========================Ends Office state country fetch===========================*/
+	                }
+	            });
+	        }
+	    });
+	    /*========================Ends Office state country fetch===========================*/
 
-		/*========================Starts edit contact state country fetch===========================*/
-		$("#edit_contact_state").change(function (e) {
-			var state_id = $(this).val();
-			$("#edit_contact_city").find('option').not(':first').remove();
-			if (state_id) {
-				$.ajax({
-					type: "POST",
-					url: "/edit-contact-get/get-city",
-					data: { state_id: state_id },
-					success: function (response) {
-						for (var i = 0; i < response.get_city.length; i++) {
-							$("#edit_contact_city").append('<option value="' + response.get_city[i].id + '">' + response.get_city[i].name + '</option>');
-						}
-					},
-					error: function (xhr) {
+	    /*========================Starts edit contact state country fetch===========================*/
+	    $("#edit_contact_state").change(function(e) {
+	        var state_id = $(this).val();
+	        $("#edit_contact_city").find('option').not(':first').remove();
+	        if (state_id) {
+	            $.ajax({
+	                type: "POST",
+	                url: "/edit-contact-get/get-city",
+	                data: {
+	                    state_id: state_id
+	                },
+	                success: function(response) {
+	                    for (var i = 0; i < response.get_city.length; i++) {
+	                        $("#edit_contact_city").append('<option value="' + response.get_city[i].id + '">' + response.get_city[i].name + '</option>');
+	                    }
+	                },
+	                error: function(xhr) {
 
-					}
-				});
-			}
-		});
+	                }
+	            });
+	        }
+	    });
 
-		$("#edit_contact_city").change(function (e) {
-			var city_name = $("#edit_contact_city option:selected").text();
-			$("#edit_contact_zipcode").find('option').not(':first').remove();
-			if (city_name) {
-				$.ajax({
-					type: "POST",
-					url: "/edit-contact-get/get-zipcode",
-					data: { city_name: city_name },
-					success: function (response) {
-						for (var i = 0; i < response.zipcode.length; i++) {
-							// console.log(response.zipcode[i]);
-							$("#edit_contact_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
-						}
-					},
-					error: function (xhr) {
+	    $("#edit_contact_city").change(function(e) {
+	        var city_name = $("#edit_contact_city option:selected").text();
+	        $("#edit_contact_zipcode").find('option').not(':first').remove();
+	        if (city_name) {
+	            $.ajax({
+	                type: "POST",
+	                url: "/edit-contact-get/get-zipcode",
+	                data: {
+	                    city_name: city_name
+	                },
+	                success: function(response) {
+	                    for (var i = 0; i < response.zipcode.length; i++) {
+	                        // console.log(response.zipcode[i]);
+	                        $("#edit_contact_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
+	                    }
+	                },
+	                error: function(xhr) {
 
-					}
-				});
-			}
-		});
-		/*========================Edit Contact state country fetch===========================*/
+	                }
+	            });
+	        }
+	    });
+	    /*========================Edit Contact state country fetch===========================*/
 	});
 
 
-	$(document).ready(function () {
-		$("#contact_state").change(function (e) {
-			var state_id = $(this).val();
-			$("#contact_city").find('option').not(':first').remove();
-			if (state_id) {
-				$.ajax({
-					type: "POST",
-					url: "/contact/get-city",
-					data: { state_id: state_id },
-					success: function (response) {
-						for (var i = 0; i < response.get_city.length; i++) {
-							$("#contact_city").append('<option value="' + response.get_city[i].id + '">' + response.get_city[i].name + '</option>');
-						}
-					},
-					error: function (xhr) {
+	$(document).ready(function() {
+	    $("#contact_state").change(function(e) {
+	        var state_id = $(this).val();
+	        $("#contact_city").find('option').not(':first').remove();
+	        if (state_id) {
+	            $.ajax({
+	                type: "POST",
+	                url: "/contact/get-city",
+	                data: {
+	                    state_id: state_id
+	                },
+	                success: function(response) {
+	                    for (var i = 0; i < response.get_city.length; i++) {
+	                        $("#contact_city").append('<option value="' + response.get_city[i].id + '">' + response.get_city[i].name + '</option>');
+	                    }
+	                },
+	                error: function(xhr) {
 
-					}
-				});
-			}
-		});
+	                }
+	            });
+	        }
+	    });
 
-		$("#contact_city").change(function (e) {
-			var city_name = $("#contact_city option:selected").text();
-			$("#contact_zipcode").find('option').not(':first').remove();
-			if (city_name) {
-				$.ajax({
-					type: "POST",
-					url: "/contact/get-zipcode",
-					data: { city_name: city_name },
-					success: function (response) {
-						for (var i = 0; i < response.zipcode.length; i++) {
-							// console.log(response.zipcode[i]);
-							$("#contact_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
-						}
-					},
-					error: function (xhr) {
+	    $("#contact_city").change(function(e) {
+	        var city_name = $("#contact_city option:selected").text();
+	        $("#contact_zipcode").find('option').not(':first').remove();
+	        if (city_name) {
+	            $.ajax({
+	                type: "POST",
+	                url: "/contact/get-zipcode",
+	                data: {
+	                    city_name: city_name
+	                },
+	                success: function(response) {
+	                    for (var i = 0; i < response.zipcode.length; i++) {
+	                        // console.log(response.zipcode[i]);
+	                        $("#contact_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
+	                    }
+	                },
+	                error: function(xhr) {
 
-					}
-				});
-			}
-		});
+	                }
+	            });
+	        }
+	    });
 
 
-		/*===========================firm basic section =======================*/
+	    /*===========================firm basic section =======================*/
 
-		$("#firm_state").change(function (e) {
-			var state_id = $(this).val();
-			$("#firm_city").find('option').not(':first').remove();
-			if (state_id) {
-				$.ajax({
-					type: "POST",
-					url: "/firm-basic/get-city",
-					data: { state_id: state_id },
-					success: function (response) {
-						for (var i = 0; i < response.get_city.length; i++) {
-							$("#firm_city").append('<option value="' + response.get_city[i].id + '">' + response.get_city[i].name + '</option>');
-						}
-					},
-					error: function (xhr) {
+	    $("#firm_state").change(function(e) {
+	        var state_id = $(this).val();
+	        $("#firm_city").find('option').not(':first').remove();
+	        if (state_id) {
+	            $.ajax({
+	                type: "POST",
+	                url: "/firm-basic/get-city",
+	                data: {
+	                    state_id: state_id
+	                },
+	                success: function(response) {
+	                    for (var i = 0; i < response.get_city.length; i++) {
+	                        $("#firm_city").append('<option value="' + response.get_city[i].id + '">' + response.get_city[i].name + '</option>');
+	                    }
+	                },
+	                error: function(xhr) {
 
-					}
-				});
-			}
-		});
+	                }
+	            });
+	        }
+	    });
 
-		$("#firm_city").change(function (e) {
-			var city_name = $("#firm_city option:selected").text();
-			$("#firm_zipcode").find('option').not(':first').remove();
-			if (city_name) {
-				$.ajax({
-					type: "POST",
-					url: "/firm-basic/get-zipcode",
-					data: { city_name: city_name },
-					success: function (response) {
-						for (var i = 0; i < response.zipcode.length; i++) {
-							// console.log(response.zipcode[i]);
-							$("#firm_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
-						}
-					},
-					error: function (xhr) {
+	    $("#firm_city").change(function(e) {
+	        var city_name = $("#firm_city option:selected").text();
+	        $("#firm_zipcode").find('option').not(':first').remove();
+	        if (city_name) {
+	            $.ajax({
+	                type: "POST",
+	                url: "/firm-basic/get-zipcode",
+	                data: {
+	                    city_name: city_name
+	                },
+	                success: function(response) {
+	                    for (var i = 0; i < response.zipcode.length; i++) {
+	                        // console.log(response.zipcode[i]);
+	                        $("#firm_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
+	                    }
+	                },
+	                error: function(xhr) {
 
-					}
-				});
-			}
-		});
-		/*===========================firm basic section =======================*/
+	                }
+	            });
+	        }
+	    });
+	    /*===========================firm basic section =======================*/
 	});
 
 	/*==================================Update Firm Section (BASIC) =============================*/
 
-	$(document).ready(function (e) {
+	$(document).ready(function(e) {
 
-		$("#btnUpdateFirm").click(function () {
-			$("#frmUpdateFirm").submit();
-		});
+	    $("#btnUpdateFirm").click(function() {
+	        $("#frmUpdateFirm").submit();
+	    });
 
-		$("#frmUpdateFirm").validate({
-			rules: {
-				address1: {
-					required: true
-				},
-				phone_no: {
-					required: true
-				},
-				firm_city: {
-					required: true
-				},
-				firm_state: {
-					required: true
-				},
-				firm_country: {
-					required: true
-				},
-				firm_zipcode: {
-					required: true
-				}
-			},
-			messages: {
-				address1: {
-					required: "Address can't be blank"
-				},
-				phone_no: {
-					required: "Phone number can't be blank"
-				},
-				firm_city: {
-					required: "City can't be blank"
-				},
-				firm_state: {
-					required: "State can't be blank"
-				},
-				firm_country: {
-					required: "country can't be blank"
-				},
-				firm_zipcode: {
-					required: "Zipcode can't be blank"
-				}
-			},
-			submitHandler: function (form) {
-				var address1 = $("#address1").val(),
-					address2 = $("#address2").val(),
-					address3 = $("#address3").val(),
-					phone_no = $("#phone_no").val(),
-					city = $("#firm_city").val();
-				state = $("#firm_state").val();
-				country = $("#firm_country").val();
-				zipcode = $("#firm_zipcode").val();
-				fax = $("#fax").val();
-				mobile_no = $("#firm_mobile").val();
-				web_url = $("#web_url").val();
-				social_url = $("#social_url").val();
-				$.ajax({
-					type: "POST",
-					url: "/update-own-firm",
-					data: {
-						address1: address1,
-						address2: address2,
-						address3: address3,
-						phone_no: phone_no,
-						city: city,
-						state: state,
-						country: country,
-						zipcode: zipcode,
-						fax: fax,
-						web_url: web_url,
-						social_url: social_url,
-						mobile: mobile_no
-					},
-					beforeSend: function (xhr) {
-						xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+	    $("#frmUpdateFirm").validate({
+	        rules: {
+	            address1: {
+	                required: true
+	            },
+	            phone_no: {
+	                required: true
+	            },
+	            firm_city: {
+	                required: true
+	            },
+	            firm_state: {
+	                required: true
+	            },
+	            firm_country: {
+	                required: true
+	            },
+	            firm_zipcode: {
+	                required: true
+	            }
+	        },
+	        messages: {
+	            address1: {
+	                required: "Address can't be blank"
+	            },
+	            phone_no: {
+	                required: "Phone number can't be blank"
+	            },
+	            firm_city: {
+	                required: "City can't be blank"
+	            },
+	            firm_state: {
+	                required: "State can't be blank"
+	            },
+	            firm_country: {
+	                required: "country can't be blank"
+	            },
+	            firm_zipcode: {
+	                required: "Zipcode can't be blank"
+	            }
+	        },
+	        submitHandler: function(form) {
+	            var address1 = $("#address1").val(),
+	                address2 = $("#address2").val(),
+	                address3 = $("#address3").val(),
+	                phone_no = $("#phone_no").val(),
+	                city = $("#firm_city").val();
+	            state = $("#firm_state").val();
+	            country = $("#firm_country").val();
+	            zipcode = $("#firm_zipcode").val();
+	            fax = $("#fax").val();
+	            mobile_no = $("#firm_mobile").val();
+	            web_url = $("#web_url").val();
+	            social_url = $("#social_url").val();
+	            $.ajax({
+	                type: "POST",
+	                url: "/update-own-firm",
+	                data: {
+	                    address1: address1,
+	                    address2: address2,
+	                    address3: address3,
+	                    phone_no: phone_no,
+	                    city: city,
+	                    state: state,
+	                    country: country,
+	                    zipcode: zipcode,
+	                    fax: fax,
+	                    web_url: web_url,
+	                    social_url: social_url,
+	                    mobile: mobile_no
+	                },
+	                beforeSend: function(xhr) {
+	                    xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
 
-						$("#btnUpdateFirm").prop('disabled', true);
-						$("#btnUpdateFirm").html("Loading...");
-					},
-					success: function (response) {
-						if (response.update_firm == true) {
-							$(`<div class="alert alert-success"><strong>Success! </strong>Firm Updated Successfully</div>`).insertBefore("#frmUpdateFirm");
-							setTimeout(function () {
-								window.location.href = "/firm-details";
-							}, 2000);
-						}
-					}
-				});
-			}
-		});
+	                    $("#btnUpdateFirm").prop('disabled', true);
+	                    $("#btnUpdateFirm").html("Loading...");
+	                },
+	                success: function(response) {
+	                    if (response.update_firm == true) {
+	                        $(`<div class="alert alert-success"><strong>Success! </strong>Firm Updated Successfully</div>`).insertBefore("#frmUpdateFirm");
+	                        setTimeout(function() {
+	                            window.location.href = "/firm-details";
+	                        }, 2000);
+	                    }
+	                }
+	            });
+	        }
+	    });
 	});
 
 	/*==================================Update Firm Section (BASIC) =============================*/
 	/*==================================Update Firm Details (BASIC) =============================*/
 
-	$(document).ready(function (e) {
+	$(document).ready(function(e) {
 
-		$("#btnUpdateFirmDetails").click(function () {
-			$("#frmUpdateFirmDetails").submit();
-		});
+	    $("#btnUpdateFirmDetails").click(function() {
+	        $("#frmUpdateFirmDetails").submit();
+	    });
 
-		$("#frmUpdateFirmDetails").validate({
-			ignore: [],
-			rules: {
-				firm_name: {
-					required: true
-				},
-				firm_code: {
-					required: true
-				},
-				firm_reg: {
-					required: true
-				},
-				section: {
-					required: true
-				},
-				practice_area: {
-					required: true
-				},
-				firm_jurisdiction: {
-					required: true
-				}
-			},
-			messages: {
-				firm_name: {
-					required: "Firm name can't be blank"
-				},
-				firm_code: {
-					required: "Firm code can't be blank"
-				},
-				firm_reg: {
-					required: "Firm registration can't be blank"
-				},
-				section: {
-					required: "Select atleast one section"
-				},
-				practice_area: {
-					required: "Select atleast one practice area"
-				},
-				firm_jurisdiction: {
-					required: "Select atleast one jurisdiction"
-				}
-			},
-			submitHandler: function (form) {
-				var section = $("#section").val(),
-					practice_area = $("#practice_area").val(),
-					jurisdiction = $("#firm_jurisdiction").val(),
-					firm_name = $("#firm_name").val(),
-					firm_code = $("#firm_code").val(),
-					firm_reg = $("#firm_reg").val();
+	    $("#frmUpdateFirmDetails").validate({
+	        ignore: [],
+	        rules: {
+	            firm_name: {
+	                required: true
+	            },
+	            firm_code: {
+	                required: true
+	            },
+	            firm_reg: {
+	                required: true
+	            },
+	            section: {
+	                required: true
+	            },
+	            practice_area: {
+	                required: true
+	            },
+	            firm_jurisdiction: {
+	                required: true
+	            }
+	        },
+	        messages: {
+	            firm_name: {
+	                required: "Firm name can't be blank"
+	            },
+	            firm_code: {
+	                required: "Firm code can't be blank"
+	            },
+	            firm_reg: {
+	                required: "Firm registration can't be blank"
+	            },
+	            section: {
+	                required: "Select atleast one section"
+	            },
+	            practice_area: {
+	                required: "Select atleast one practice area"
+	            },
+	            firm_jurisdiction: {
+	                required: "Select atleast one jurisdiction"
+	            }
+	        },
+	        submitHandler: function(form) {
+	            var section = $("#section").val(),
+	                practice_area = $("#practice_area").val(),
+	                jurisdiction = $("#firm_jurisdiction").val(),
+	                firm_name = $("#firm_name").val(),
+	                firm_code = $("#firm_code").val(),
+	                firm_reg = $("#firm_reg").val();
 
-				$.ajax({
-					type: "POST",
-					url: "/update-own-firmDetails",
-					data: {
-						firm_name: firm_name,
-						firm_code: firm_code,
-						firm_reg: firm_reg,
-						section: section,
-						practice_area: practice_area,
-						jurisdiction: jurisdiction
-					},
-					beforeSend: function (xhr) {
-						xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+	            $.ajax({
+	                type: "POST",
+	                url: "/update-own-firmDetails",
+	                data: {
+	                    firm_name: firm_name,
+	                    firm_code: firm_code,
+	                    firm_reg: firm_reg,
+	                    section: section,
+	                    practice_area: practice_area,
+	                    jurisdiction: jurisdiction
+	                },
+	                beforeSend: function(xhr) {
+	                    xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
 
-						$("#btnUpdateFirmDetails").prop('disabled', true);
-						$("#btnUpdateFirmDetails").html("Loading...");
-					},
-					success: function (response) {
-						if (response.update_firm_details == true) {
-							$(`<div class="alert alert-success"><strong>Success! </strong>Firm Details Updated Successfully</div>`).insertBefore("#frmUpdateFirmDetails");
-							setTimeout(function () {
-								window.location.href = "/firm-details";
-							}, 2000);
-						}
-					}
-				});
-			}
-		});
+	                    $("#btnUpdateFirmDetails").prop('disabled', true);
+	                    $("#btnUpdateFirmDetails").html("Loading...");
+	                },
+	                success: function(response) {
+	                    if (response.update_firm_details == true) {
+	                        $(`<div class="alert alert-success"><strong>Success! </strong>Firm Details Updated Successfully</div>`).insertBefore("#frmUpdateFirmDetails");
+	                        setTimeout(function() {
+	                            window.location.href = "/firm-details";
+	                        }, 2000);
+	                    }
+	                }
+	            });
+	        }
+	    });
 	});
 
 /*==================================Update Firm Details (BASIC) =============================*/
