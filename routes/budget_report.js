@@ -397,7 +397,7 @@ router.get('/activity/activity_details_budget/:id', auth, csrfProtection, async 
     }
 
     marketingBudget.push({
-      'name': detailsActivity[0].first_name + " " + detailsActivity[0].last_name,
+      'name': detailsActivity.length > 0 ? (detailsActivity[0].first_name + " " + detailsActivity[0].last_name) : "",
       'budget_list': budgetArr
     });
   } 
