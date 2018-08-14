@@ -299,8 +299,9 @@ router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req,
           }
         });
       }
+
       activity_target_client.push({
-        'name': detailsActivity[0].first_name + ' ' + detailsActivity[0].last_name,
+        'name':  detailsActivity.length>0? (detailsActivity[0].first_name + ' ' + detailsActivity[0].last_name):'',
         'activity_id': jointActivities_arr[i].ja[k].activity_id
       });
     }
