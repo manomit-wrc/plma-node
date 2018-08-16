@@ -6,6 +6,7 @@ const bCrypt = require('bcrypt-nodejs');
 const gravatar = require('gravatar');
 const Designation = require('../models').designation;
 const Section = require('../models').section;
+const PracticeArea = require('../models').practicearea;
 const Zipcode = require('../models').zipcode;
 const City = require('../models').city;
 const State = require('../models').state;
@@ -14,6 +15,8 @@ const Attorney_Details = require('../models').attorney_details;
 const Industry_type = require('../models').industry_type;
 const Jurisdiction = require('../models').jurisdiction;
 const sectionToFirm = require('../models').section_to_firms;
+const PracticeAreaToFirm = require('../models').practice_area_to_firms;
+const PracticeAreaToAttr = require('../models').practice_area_to_attorney;
 const Education = require('../models').education;
 var csrfProtection = csrf({
 	cookie: true
@@ -170,6 +173,9 @@ router.get('/attorneys/addAttorney', auth, firmAttrAuth, csrfProtection, async (
 	sectionToFirm.belongsTo(Section, {
 		foreignKey: 'section_id'
 	});
+	PracticeAreaToFirm.belongsTo(PracticeArea, {
+		foreignKey: 'practice_area_id'
+	});
 
 	const allSection = await sectionToFirm.findAll({
 		where: {
@@ -178,6 +184,15 @@ router.get('/attorneys/addAttorney', auth, firmAttrAuth, csrfProtection, async (
 
 		include: [{
 			model: Section
+		}]
+	});
+	const allPracticeArea = await PracticeAreaToFirm.findAll({
+		where: {
+			firm_id: req.user.firm_id
+		},
+
+		include: [{
+			model: PracticeArea
 		}]
 	});
 	const jurisdiction = await Jurisdiction.findAll({
@@ -206,25 +221,31 @@ router.get('/attorneys/addAttorney', auth, firmAttrAuth, csrfProtection, async (
 		section: allSection,
 		jurisdiction: jurisdiction,
 		industry_type: industry_type,
-		err_message
+		err_message,
+		allPracticeArea
 	});
 });
 
 
 router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+	var practice_area = req.body.practice_area;
 	var education = [];
 	var degree = req.body.degree;
 	var university = req.body.university;
+	var year = req.body.year;
 	for (var d = 0; d < degree.length; d++) {
 		if (degree[d] !== ""){
 			var ddd = degree[d];
 			var uuu = university[d];
+			var yyy = year[d];
 			education.push({
 				"degree": ddd,
-				"university": uuu
+				"university": uuu,
+				"year": yyy
 			});
 		}
 	}
+
 	var attrorney_details_id = '';
 	const Dob = req.body.dob ? req.body.dob.split("-") : '';
 	const Firm_Join_Date = req.body.firm_join_date ? req.body.firm_join_date.split("-") : '';
@@ -301,6 +322,14 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 					user_id: attrorney_details_id,
 					degree: education[e].degree,
 					university: education[e].university,
+					year: education[e].year
+				});
+			}
+			for (var p = 0; p < practice_area.length; p++) {
+				const practicearea = await PracticeAreaToAttr.create({
+					attorney_id: attrorney_details_id,
+					firm_id: req.user.firm_id,
+					practice_area_id: practice_area[p],
 				});
 			}
 		});
@@ -317,6 +346,9 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 	User.hasMany(Education, {
 		foreignKey: 'user_id'
 	});
+	User.hasMany(PracticeAreaToAttr, {
+		foreignKey: 'attorney_id'
+	});
 
 	const designation = await Designation.findAll();
 	const group = await Group.findAll({
@@ -328,12 +360,26 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 		foreignKey: 'section_id'
 	});
 
+	PracticeAreaToFirm.belongsTo(PracticeArea, {
+		foreignKey: 'practice_area_id'
+	});
+
 	const allSection = await sectionToFirm.findAll({
 		where: {
 			firm_id: req.user.firm_id
 		},
 		include: [{
 			model: Section
+		}]
+	});
+
+	const allPracticeArea = await PracticeAreaToFirm.findAll({
+		where: {
+			firm_id: req.user.firm_id
+		},
+
+		include: [{
+			model: PracticeArea
 		}]
 	});
 	const jurisdiction = await Jurisdiction.findAll({
@@ -359,6 +405,8 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 			model: Attorney_Details
 		}, {
 			model: Education
+		}, {
+			model: PracticeAreaToAttr
 		}]
 	});
 	var state_id = edata[0].state;
@@ -380,6 +428,13 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 			}
 		});
 	}
+	console.log(edata[0].practice_area_to_attorneys);
+	 var result = JSON.parse(JSON.stringify(edata[0].practice_area_to_attorneys));
+	 var arr = [];
+	 for (var i = 0; i < result.length; i++) {
+	 	arr.push(result[i].practice_area_id);
+	 }
+
 	res.render('attorney/updateattorney', {
 		layout: 'dashboard',
 		csrfToken: req.csrfToken(),
@@ -392,7 +447,9 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 		industry_type: industry_type,
 		edata: edata,
 		zipcode,
-		city
+		city,
+		allPracticeArea,
+		arr
 	});
 });
 
@@ -463,13 +520,16 @@ router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async (
 	var education = [];
 	var degree = req.body.degree;
 	var university = req.body.university;
+	var year = req.body.year;
 	for (var d = 0; d < degree.length; d++) {
 		if (degree[d] !== "") {
 			var ddd = degree[d];
 			var uuu = university[d];
+			var yyy = year[d];
 			education.push({
 				"degree": ddd,
-				"university": uuu
+				"university": uuu,
+				"year": yyy
 			});
 		}
 	}
@@ -541,6 +601,7 @@ router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async (
 			user_id: req.params['id'],
 			degree: education[e].degree,
 			university: education[e].university,
+			year: education[e].year
 		});
 	}
 

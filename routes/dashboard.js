@@ -337,13 +337,16 @@ router.post("/edit-attorney-profile", auth, profile.single('avatar'), csrfProtec
     var education = [];
     var degree = req.body.degree;
     var university = req.body.university;
+    var year = req.body.year;
     for (var d = 0; d < degree.length; d++) {
         if (degree[d] !== "") {
             var ddd = degree[d];
             var uuu = university[d];
+            var yyy = year[d];
             education.push({
                 "degree": ddd,
-                "university": uuu
+                "university": uuu,
+                "year": yyy
             });
         }
     }
@@ -413,6 +416,7 @@ router.post("/edit-attorney-profile", auth, profile.single('avatar'), csrfProtec
             user_id: req.user.id,
             degree: education[e].degree,
             university: education[e].university,
+            year: education[e].year,
         });
     }
     req.flash('success-message', 'Profile updated successfully.');

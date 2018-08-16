@@ -326,11 +326,15 @@
 							<label class="control-label">Attorney
 								<span class="req-lbl">*</span>
 							</label>
-							<select id="designation" name="attorney_id" class="select form-control floating">
-								<option value="">Select Attorney</option>
-								{{#each attorney}}
-								<option value="{{this.id}}" {{#if_eq this.id ../user.id}} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
-								{{/each}}
+							<select id="attorney_id" name="attorney_id" class="select form-control floating">
+								{{#if_eq user.role_id "3"}}
+									<option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
+								{{else}}
+									<option value="">Select Attorney</option>
+									{{#each attorney}}
+									<option value="{{this.id}}" {{#if_eq this.id ../client.attorney_id}} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+									{{/each}}
+								{{/if_eq}}
 							</select>
 						</div>
 					</div>
@@ -354,7 +358,7 @@
 						</div>
 					</div>
 
-					 <div class="col-md-6">
+					 {{!-- <div class="col-md-6">
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Designation</label>
 							<select id="designation" name="designation" class="select form-control">
@@ -364,7 +368,7 @@
 								{{/each}}
 							</select>
 						</div>
-					</div>
+					</div> --}}
 
 					
 
@@ -380,13 +384,13 @@
 							<input type="text" class="form-control floating" id="company_name" name="company_name" value="{{client.company_name}}" />
 						</div>
 					</div>
-					 <div class="col-md-6">
+					 {{!-- <div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Social Security No</label>
 							<input type="text" class="form-control floating number_validator" id="social_sec_no" name="social_sec_no" value="{{client.social_security_no}}"
 							/>
 						</div>
-					</div> 
+					</div>  --}}
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Twitter</label>
@@ -469,7 +473,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function (e) {
-
+		$("#attorney_id").trigger('change');
 		$("#current_revenue").inputmask("numeric", {
             radixPoint: ".",
             groupSeparator: ",",
@@ -503,6 +507,9 @@
 					required: true
 				},
 				org_name: {
+					required: true
+				},
+				attorney_id: {
 					required: true
 				},
 				org_id: {

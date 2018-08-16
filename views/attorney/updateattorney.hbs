@@ -162,62 +162,55 @@
                 <h3 class="card-title">Education Information</h3>
                 <div class="row" id="educationRow">
                     {{#if_eq edata.0.education ""}}
-                        <div class="col-md-5">
+                        <div class="col-md-4">
                             <div class="form-group form-focus">
                                 <label class="control-label">Degree Type</label>
                                 <input type="text" class="form-control floating" id="degree" name="degree[]" />
                             </div>
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-4">
                             <div class="form-group form-focus">
                                 <label class="control-label">University</label>
                                 <input type="text" class="form-control floating" id="university" name="university[]" />
                             </div>
                         </div>
-                        <div class="col-md-2">
-                            <button class="btn btn-primary btn-lg" type="button" id="addEducationBtn">
-                                <i class="fa fa-plus"></i> Add</button>
-                        </div>
-                        <div class="educationAddDiv hide">
-                            <div class="control-group">
-                                <div class="col-md-5">
-                                    <div class="form-group form-focus">
-                                        <label class="control-label">Degree Type</label>
-                                        <input type="text" class="form-control floating" name="degree[]" />
-                                    </div>
-                                </div>
-                                <div class="col-md-5">
-                                    <div class="form-group form-focus">
-                                        <label class="control-label">University</label>
-                                        <input type="text" class="form-control floating" name="university[]" />
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <button class="btn btn-primary btn-lg removeEducationBtn" type="button">
-                                        <i class="fa fa-close"></i>
-                                    </button>
-                                </div>
+                        <div class="col-md-3">
+                            <div class="form-group form-focus">
+                                <label class="control-label">Year</label>
+                                <input type="text" class="form-control floating" id="year" name="year[]" onkeypress="return isNumber(event)" maxlength="4"
+                                    title="Only numbers are allowed" />
                             </div>
+                        </div>
+                        <div class="col-md-1">
+                            <button class="btn btn-primary btn-lg" type="button" id="addEducationBtn">
+                                <i class="fa fa-plus"></i></button>
                         </div>
                     {{else}}
                     {{#each edata.0.education}}
                         <div class="control-group">
-                            <div class="col-md-5">
+                            <div class="col-md-4">
                                 <div class="form-group form-focus">
                                     <label class="control-label">Degree Type</label>
                                     <input type="text" class="form-control floating" id="degree" name="degree[]" value="{{this.degree}}"/>
                                 </div>
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-md-4">
                                 <div class="form-group form-focus">
                                     <label class="control-label">University</label>
                                     <input type="text" class="form-control floating" id="university" name="university[]"  value="{{this.university}}"/>
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
+                                <div class="form-group form-focus">
+                                    <label class="control-label">Year</label>
+                                    <input type="text" class="form-control floating" id="year" value="{{this.year}}" name="year[]" onkeypress="return isNumber(event)" maxlength="4"
+                                        title="Only numbers are allowed" />
+                                </div>
+                            </div>
+                            <div class="col-md-1">
                                 {{#show_button_add @index}} 
                                     <button class="btn btn-primary btn-lg" type="button" id="addEducationBtn">
-                                        <i class="fa fa-plus"></i> Add
+                                        <i class="fa fa-plus"></i>
                                     </button> 
                                 {{else}} 
                                     <button class="btn btn-primary btn-lg removeEducationBtn" type="button">
@@ -230,19 +223,26 @@
                         {{/if_eq}}                      
                     <div class="educationAddDiv hide">
                         <div class="control-group">
-                            <div class="col-md-5">
+                            <div class="col-md-4">
                                 <div class="form-group form-focus">
                                     <label class="control-label">Degree Type</label>
                                     <input type="text" class="form-control floating" name="degree[]" />
                                 </div>
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-md-4">
                                 <div class="form-group form-focus">
                                     <label class="control-label">University</label>
                                     <input type="text" class="form-control floating" name="university[]" />
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
+                                <div class="form-group form-focus">
+                                    <label class="control-label">Year</label>
+                                    <input type="text" class="form-control floating" id="year" name="year[]" onkeypress="return isNumber(event)" maxlength="4"
+                                        title="Only numbers are allowed" />
+                                </div>
+                            </div>
+                            <div class="col-md-1">
                                 <button class="btn btn-primary btn-lg removeEducationBtn" type="button">
                                     <i class="fa fa-close"></i>
                                 </button>
@@ -348,6 +348,17 @@
                             <label class="control-label">Billing Opp Cost</label>
                             <input type="text" class="form-control floating" id="billing_opp_cost" name="billing_opp_cost" value="{{edata.0.attorney_details.0.billing_opp_cost}}"
                             />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="">
+                                <select class="form-control floating" id="practice_area" name="practice_area" multiple="multiple">
+                                    {{#each allPracticeArea}}
+                                    <option value="{{this.practicearea.id}}" {{#inArray ../arr this.practicearea.id}} selected="selected" {{/inArray}}>{{this.practicearea.name}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -505,6 +516,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 
 <script type="text/javascript">
+    function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
     // add designation ajax and form validation starts
     $(document).on('click', "#addEducationBtn", function (e) {
             $("#educationRow").append($(".educationAddDiv").html());
@@ -565,9 +584,9 @@
                 jurisdiction: {
                     required: true
                 },
-                //industry_type: {
-                // required: true
-                //},
+                practice_area: {
+                    required: true
+                },
                 group: {
                     required: true
                 },
@@ -605,9 +624,9 @@
                 jurisdiction: {
                     required: "jurisdiction can't be blank"
                 },
-                // industry_type: {
-                // required: "industry type can't be blank"
-                // },
+                practice_area: {
+                    required: "Practice area can't be blank"
+                },
 
                 group: {
                     required: "group  can't be blank"
@@ -645,6 +664,14 @@
     });
 </script>
 <script>
+    $('#practice_area').multiselect({
+            nonSelectedText: 'Select Practice Area',
+            enableFiltering: true,
+            includeSelectAllOption: true,
+            buttonWidth: '100%',
+            maxHeight: 400,
+            dropUp: true
+        });
     $(document).ready(function () {
         $("#hourly_cost").inputmask("numeric", {
             radixPoint: ".",
