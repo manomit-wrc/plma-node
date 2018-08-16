@@ -16,6 +16,21 @@ const Budget = require('../models').budget;
 const ActivityBudget = require('../models').activity_budget;
 const sectionToFirm = require('../models').section_to_firms;
 const Referral = require('../models').referral;
+const multer = require('multer');
+
+// File upload
+var storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, 'public/activity');
+    },
+    filename: function(req, file, cb) {
+        fileExt = file.originalname.split('.')[1];
+        fileName = req.user.id + '-' + Date.now() + '.' + fileExt;
+        cb(null, fileName);
+    }
+});
+
+var upload = multer({ storage: storage });
 
 var csrfProtection = csrf({
     cookie: true
@@ -197,7 +212,10 @@ router.post('/activity/add-budget', auth, firmAttrAuth, csrfProtection, async(re
 
 // ========{{  insert data to the database  }}=====================//
 
-router.post('/activity/add', auth, firmAttrAuth, csrfProtection, async(req, res) => {
+router.post('/activity/add', auth, upload.single('activity_attachment'), firmAttrAuth, csrfProtection, async(req, res) => {
+    
+    console.log(data, 'public/activity/' + fileName);
+
     var target_user = [];
     var client_user = [];
     var referral_user = [];
@@ -263,7 +281,8 @@ router.post('/activity/add', auth, firmAttrAuth, csrfProtection, async(req, res)
         total_budget_hour: req.body.total_hour,
         total_budget_amount: req.body.total_amount,
         section_id: req.body.section,
-        s_group_id: req.body.strategy_group
+        s_group_id: req.body.strategy_group,
+        attachment_field:'public/activity/' + fileName
     }, {
         where: {
             id: req.body.activity_id

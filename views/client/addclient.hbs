@@ -154,14 +154,6 @@
 								</div>
 							</div>
 							
-							{{!-- <div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Birth Date<span class="req-lbl">*</span> </label>
-									<div class="cal-icon">
-										<input class="form-control floating datetimepicker" type="text" id="client_dob" name="client_dob">
-									</div>
-								</div>
-							</div> --}}
 							<div class="col-md-6">
 								<div class="form-group form-focus select-focus">
 									<label class="control-label">Gender <span class="req-lbl">*</span> </label>
@@ -295,32 +287,13 @@
 			<div class="card-box">
 				<h3 class="card-title">Other Information</h3>
 				<div class="row">
-					{{!-- <div class="col-md-6">
-						<div class="form-group form-focus">
-							<label class="control-label">Social URL</label>
-							<input type="text" class="form-control floating url_selector" id="social" name="social"  />
-						</div>
-					</div> --}}
+					
 					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Website</label>
 							<input type="text" class="form-control floating url_selector" id="website" name="website" />
 						</div>
 					</div>
-
-
-					{{!-- <div class="col-md-6">
-						<div class="form-group form-focus select-focus">
-							<label class="control-label">Designation</label>
-							<select id="designation" name="designation" class="select form-control floating">
-								{{#each designations}}
-								<option value="{{this.id}}">{{this.title}}</option>
-								{{/each}}
-							</select>
-						</div>
-					</div> --}}
-
-					
 
 					<div class="col-md-6">
 						<div class="form-group form-focus">
@@ -336,12 +309,7 @@
 							<input type="text" class="form-control floating" id="company_name" name="company_name" />
 						</div>
 					</div>
-					{{!-- <div class="col-md-6">
-						<div class="form-group form-focus">
-							<label class="control-label">Social Security No</label>
-							<input type="text" class="form-control floating number_validator" id="social_sec_no" name="social_sec_no" />
-						</div>
-					</div> --}}
+					
 					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Twitter</label>
@@ -579,7 +547,8 @@
 	$(document).on('click', '#existing-tag', function () {
 		$('#add-tag-existing-client').show();
 		$('#add-tag-client').hide();
-	})
+	});
 
 
-</script> {{/content}}
+</script> 
+{{/content}}

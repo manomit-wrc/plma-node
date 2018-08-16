@@ -10,7 +10,7 @@
                 <h4 class="page-title">Add Activity</h4>
             </div>
         </div>
-        <form name="frmAddFirm" id="frmAddFirm" action="/activity/add" method="POST">
+        <form name="frmAddFirm" id="frmAddFirm" action="/activity/add" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="_csrf" value="{{csrfToken}}">
             <input type="hidden" name="activity_id" id="activity_id">
             <input type="hidden" name="total_hour" id="total_hour">
@@ -113,14 +113,14 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                           {{!--  <div class="col-md-6">
                                 <div class="form-group form-focus">
                                     <label class="control-label">Potential Revenue
                                         <span class="req-lbl">*</span>
                                     </label>
                                     <input class="form-control floating" type="text" id="potiential_revenue" name="potiential_revenue">
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
                                     <label class="control-label">Creation Date
@@ -167,6 +167,13 @@
                                     <input class="form-control floating" type="text" id="activity_reason" name="activity_reason">
                                 </div>
                             </div>
+
+                             <div class="col-md-6">
+                                <div class="form-group form-focus select-focus">
+                                  <label class="control-label">Attachment</label>
+                                  <input class="form-control floating" type="file" id="activity_attachment" name="activity_attachment" multiple>
+                                </div>
+                              </div>
 
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
@@ -238,7 +245,7 @@
                             </div>
 
                             <div class="col-md-6">
-                                <div class="form-group form-focus select-focus" id="target_list">
+                                <div class="" id="target_list">
                                     <select id="target_id" name="target_user[]" class=" form-control floating onchangeBudget" multiple="multiple">
                                         {{#each target}} {{#if_eq target_type "I"}}
                                         <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
@@ -249,7 +256,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6" style="display:none;" id="client_list">
-                                <div class="form-group form-focus select-focus">
+                                <div class="">
                                     <select id="client_id" name="client_user[]" class=" form-control floating onchangeBudget" multiple="multiple">
                                         {{#each client}} {{#if_eq client_type "I"}}
                                         <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
@@ -260,7 +267,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6" style="display:none;" id="referral_list">
-                                <div class="form-group form-focus select-focus">
+                                <div class="">
                                     <select id="referral_id" name="referral_user[]" class=" form-control floating onchangeBudget" multiple="multiple">
                                         {{#each referral}}
                                         <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
@@ -445,20 +452,29 @@
 
     $('#target_id').multiselect({
         nonSelectedText: 'Select Targets',
+        enableFiltering: true,
         includeSelectAllOption: true,
-        buttonWidth: '100%'
+        buttonWidth: '100%',
+        maxHeight: 400,
+        dropUp: true
     });
 
     $('#client_id').multiselect({
         nonSelectedText: 'Select Clients',
+        enableFiltering: true,
         includeSelectAllOption: true,
-        buttonWidth: '100%'
+        buttonWidth: '100%',
+        maxHeight: 400,
+        dropUp: true
     });
 
     $('#referral_id').multiselect({
         nonSelectedText: 'Select Referral',
+        enableFiltering: true,
         includeSelectAllOption: true,
-        buttonWidth: '100%'
+        buttonWidth: '100%',
+        maxHeight: 400,
+        dropUp: true
     });
 
     var count = 0;

@@ -105,19 +105,6 @@
 										<input type="text" class="form-control floating" id="target_code" name="target_code" value="{{client.target_code}}" />
 									</div>
 								</div>
-								{{!-- <div class="col-md-6">
-									<div class="form-group form-focus select-focus">
-										<label class="control-label">Designation
-											<span class="req-lbl">*</span>
-										</label>
-										<select id="designation" name="designation" class="select form-control floating">
-											<option value="">Select Designation</option>
-											{{#each designation}}
-											<option value="{{this.id}}" {{#if_eq this.id ../client.designation_id}} selected="selected" {{/if_eq}}>{{this.title}}</option>
-											{{/each}}
-										</select>
-									</div>
-								</div> --}}
 
 								<div class="col-md-6">
 									<div class="form-group form-focus">
@@ -128,17 +115,6 @@
 									</div>
 								</div>
 
-								{{!-- <div class="col-md-6">
-									<div class="form-group form-focus">
-										<label class="control-label">Date of Birth
-											<span class="req-lbl">*</span>
-										</label>
-										<div class="cal-icon">
-											<input class="form-control floating datetimepicker" type="text" id="dob" name="dob" value="{{dateFormat client.date_of_birth "
-											 DD-MM-YYYY "}}" />
-										</div>
-									</div>
-								</div> --}}
 								<div class="col-md-6">
 									<div class="form-group form-focus select-focus">
 										<label class="control-label">Gender
@@ -314,13 +290,7 @@
 							<input type="text" class="form-control floating" id="im" name="im" value="{{client.im}}" />
 						</div>
 					</div>
-					{{!-- <div class="col-md-6">
-						<div class="form-group form-focus">
-							<label class="control-label">Social Security No</label>
-							<input type="text" class="form-control floating number_validator" id="social_sec_no" name="social_sec_no" value="{{client.social_security_no}}"
-							/>
-						</div>
-					</div> --}}
+					
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Twitter</label>
