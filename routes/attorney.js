@@ -428,7 +428,6 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 			}
 		});
 	}
-	console.log(edata[0].practice_area_to_attorneys);
 	 var result = JSON.parse(JSON.stringify(edata[0].practice_area_to_attorneys));
 	 var arr = [];
 	 for (var i = 0; i < result.length; i++) {
@@ -462,6 +461,9 @@ router.get('/attorneys/viewdata/:id', auth, csrfProtection, async (req, res) => 
 	User.hasMany(Education, {
 		foreignKey: 'user_id'
 	});
+	PracticeAreaToFirm.belongsTo(PracticeArea, {
+		foreignKey: 'practice_area_id'
+	});
 	const designation = await Designation.findAll();
 	const group = await Group.findAll();
 	const section = await Section.findAll();
@@ -477,6 +479,8 @@ router.get('/attorneys/viewdata/:id', auth, csrfProtection, async (req, res) => 
 			model: Attorney_Details
 		}, {
 			model: Education
+		}, {
+			model: PracticeAreaToAttr
 		}]
 	});
 	var state_id = edata[0].state;
@@ -498,7 +502,21 @@ router.get('/attorneys/viewdata/:id', auth, csrfProtection, async (req, res) => 
 			}
 		});
 	}
+	const allPracticeArea = await PracticeAreaToFirm.findAll({
+		where: {
+			firm_id: req.user.firm_id
+		},
 
+		include: [{
+			model: PracticeArea
+		}]
+	});
+
+	var result = JSON.parse(JSON.stringify(edata[0].practice_area_to_attorneys));
+	 var arr = [];
+	 for (var i = 0; i < result.length; i++) {
+	 	arr.push(result[i].practice_area_id);
+	 }
 	res.render('attorney/viewattorney', {
 		layout: 'dashboard',
 		csrfToken: req.csrfToken(),
@@ -511,12 +529,15 @@ router.get('/attorneys/viewdata/:id', auth, csrfProtection, async (req, res) => 
 		industry_type: industry_type,
 		edata: edata,
 		zipcode,
-		city
+		city,
+		allPracticeArea,
+		arr
 	});
 });
 
 
 router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+	var practice_area = req.body.practice_area;
 	var education = [];
 	var degree = req.body.degree;
 	var university = req.body.university;
@@ -602,6 +623,18 @@ router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async (
 			degree: education[e].degree,
 			university: education[e].university,
 			year: education[e].year
+		});
+	}
+	const del_practice = await PracticeAreaToAttr.destroy({
+		where: {
+			attorney_id: req.params['id']
+		}
+	});
+	for (var p = 0; p < practice_area.length; p++) {
+		const practicearea = await PracticeAreaToAttr.create({
+			attorney_id: req.params['id'],
+			firm_id: req.user.firm_id,
+			practice_area_id: practice_area[p],
 		});
 	}
 
