@@ -10,7 +10,7 @@
                 <h4 class="page-title">Add Activity</h4>
             </div>
         </div>
-        <form name="frmAddFirm" id="frmAddFirm" action="/activity/add" method="POST">
+        <form name="frmAddFirm" id="frmAddFirm" action="/activity/add" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="_csrf" value="{{csrfToken}}">
             <input type="hidden" name="activity_id" id="activity_id">
             <input type="hidden" name="total_hour" id="total_hour">
@@ -193,14 +193,14 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                           {{!--  <div class="col-md-6">
                                 <div class="form-group form-focus">
                                     <label class="control-label">Potential Revenue
                                         <span class="req-lbl">*</span>
                                     </label>
                                     <input class="form-control floating" type="text" id="potiential_revenue" name="potiential_revenue">
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
                                     <label class="control-label">Creation Date
@@ -247,6 +247,14 @@
                                     <input class="form-control floating" type="text" id="activity_reason" name="activity_reason">
                                 </div>
                             </div>
+
+                             <div class="col-md-6">
+                                <div class="form-group form-focus select-focus">
+                                  <label class="control-label">Attachment</label>
+                                  <input class="form-control floating" type="file" id="activity_attachment" name="activity_attachment" multiple>
+                                </div>
+                              </div>
+
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
                                     <label class="control-label">Remarks </label>
@@ -464,20 +472,29 @@
 
     $('#target_id').multiselect({
         nonSelectedText: 'Select Targets',
+        enableFiltering: true,
         includeSelectAllOption: true,
-        buttonWidth: '100%'
+        buttonWidth: '100%',
+        maxHeight: 400,
+        dropUp: true
     });
 
     $('#client_id').multiselect({
         nonSelectedText: 'Select Clients',
+        enableFiltering: true,
         includeSelectAllOption: true,
-        buttonWidth: '100%'
+        buttonWidth: '100%',
+        maxHeight: 400,
+        dropUp: true
     });
 
     $('#referral_id').multiselect({
         nonSelectedText: 'Select Referral',
+        enableFiltering: true,
         includeSelectAllOption: true,
-        buttonWidth: '100%'
+        buttonWidth: '100%',
+        maxHeight: 400,
+        dropUp: true
     });
 
     var count = 0;
@@ -698,10 +715,5 @@
         });
 
     });
-
-
-    
-
-
 
 </script> {{/content}}

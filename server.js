@@ -333,8 +333,11 @@ const hbs = exphbs.create({
         and: function(v1, v2) {
             return v1 && v2;
         },
-        or: function(v1, v2) {
+        or: function(v1, v2,v3) {
             return v1 || v2;
+        },
+        or_v1: function(v1, v2,v3) {
+            return v1 || v2 || v3;
         },
         dateFormat: require('handlebars-dateformat')
     }

@@ -81,10 +81,7 @@
                                     <a href="/target/edit/{{this.id}}" class="btn btn-info btn-sm">
                                         <i class="fa fa-pencil m-r-5"></i>
                                     </a>
-                                    {{!--
-                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#{{this.id}}" class="btn btn-danger btn-sm">
-                                        <i class="fa fa-trash-o m-r-5"></i>
-                                    </a> --}}
+                                    
                                     <a href="javascript:void(0)" data-toggle="modal" data-target="delete_users" data-target-id="{{this.id}}" id="delete_target"
                                         class="btn btn-danger btn-sm">
                                         <i class="fa fa-trash-o m-r-5"></i>
@@ -110,8 +107,7 @@
                     <p>are you sure you want to delete this target?</p>
                     <div class="m-t-20" id="delDiv">
                         <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
-                        {{!--
-                        <a href="/activity-goal/delete/{{this.id}}" class="btn btn-danger">Delete</a> --}}
+                        
                     </div>
                 </div>
             </form>
@@ -145,19 +141,7 @@
         </div>
     </div>
 </div>
-{{!-- <div class="modal fade" id="target-delete-2" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <p>are you sure you want to delete this target?</p>
-            </div>
-            <div class="modal-footer">
-                <a href="javascript:void(0)" class="btn btn-danger target-delete-done">ok</a>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div> --}}
+
 {{!-- modal for delete end--}}
 <div class="modal fade" id="import" role="dialog">
     <div class="modal-dialog">
@@ -248,38 +232,6 @@
     });
 
 
-    /*$('.move-to-client').on('click', function (e) {
-        var target_ids = [];
-        $('input[name="target_id"]:checked').each(function () {
-            target_ids.push(this.value);
-        });
-        $.ajax({
-            url: '/target/move-to-client',
-            type: 'POST',
-            data: { target_id: target_ids },
-            success: function (response) {
-
-                if (response.code === '200') {
-                    $('#move_to_client_2').modal('hide');
-                    swal({
-                        title: "Nice!",
-                        text: "Target move successfully",
-                        type: "success"
-                    }, function () {
-                        window.location.reload();
-                    });
-                } else {
-                    $('#move_to_client_exisiting').modal('show');
-                }
-            },
-            error: function (err) {
-                console.log(err);
-            }
-        });
-    });*/
-
-
-
     $('.target-delete').on('click', function (e) {
         var target_ids = [];
         $('input[name="target_id"]:checked').each(function () {
@@ -322,27 +274,6 @@
         }
 
     });
-
-    /*$('.target-delete-done').on('click', function (e) {
-        var target_ids = [];
-        $('input[name="target_id"]:checked').each(function () {
-            target_ids.push(this.value);
-        });
-        $.ajax({
-            url: '/target/multi-delete/',
-            type: 'POST',
-            data: { target_id: target_ids },
-            success: function (response) {
-                if (response.code === '200') {
-                    window.location.reload();
-                }
-            },
-            error: function (err) {
-                console.log(err);
-            }
-        });
-    })*/
-
 
     $(document).on('click', '#delete_target', function (e) {
         var target_id = $(this).data('target-id');
