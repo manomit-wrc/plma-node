@@ -18,6 +18,8 @@ const Designation = require('../models').designation;
 const Section = require('../models').section;
 const Group = require('../models').group;
 const Education = require('../models').education;
+const PracticeAreaToFirm = require('../models').practice_area_to_firms;
+const PracticeAreaToAttr = require('../models').practice_area_to_attorney;
 
 var csrfProtection = csrf({ cookie: true });
 
@@ -268,10 +270,16 @@ router.get("/edit-attorney-profile", auth, csrfProtection, attrAuth, async (req,
     User.hasMany(Education, {
         foreignKey: 'user_id'
     });
+    User.hasMany(PracticeAreaToAttr, {
+        foreignKey: 'attorney_id'
+    });
     const designation = await Designation.findAll();
     const group = await Group.findAll();
     sectionToFirm.belongsTo(Section, {
         foreignKey: 'section_id'
+    });
+    PracticeAreaToFirm.belongsTo(PracticeArea, {
+        foreignKey: 'practice_area_id'
     });
 
     const allSection = await sectionToFirm.findAll({
@@ -282,6 +290,15 @@ router.get("/edit-attorney-profile", auth, csrfProtection, attrAuth, async (req,
             model: Section
         }]
     });
+    const allPracticeArea = await PracticeAreaToFirm.findAll({
+		where: {
+			firm_id: req.user.firm_id
+		},
+
+		include: [{
+			model: PracticeArea
+		}]
+	});
     const jurisdiction = await Jurisdiction.findAll();
     const industry_type = await Industry_type.findAll();
 
@@ -295,7 +312,9 @@ router.get("/edit-attorney-profile", auth, csrfProtection, attrAuth, async (req,
             model: Attorney_Details
         }, {
             model: Education
-        }]
+        },{
+			model: PracticeAreaToAttr
+		}]
     });
     var state_id = edata[0].state;
     var city_id = edata[0].city;
@@ -316,6 +335,11 @@ router.get("/edit-attorney-profile", auth, csrfProtection, attrAuth, async (req,
             }
         });
     }
+    var result = JSON.parse(JSON.stringify(edata[0].practice_area_to_attorneys));
+	 var arr = [];
+	 for (var i = 0; i < result.length; i++) {
+	 	arr.push(result[i].practice_area_id);
+	 }
     res.render('edit_attr_profile', {
         layout: 'dashboard',
         csrfToken: req.csrfToken(),
@@ -329,11 +353,14 @@ router.get("/edit-attorney-profile", auth, csrfProtection, attrAuth, async (req,
         industry_type: industry_type,
         edata: edata[0],
         zipcode,
-        city
+        city,
+        allPracticeArea,
+		arr
     });
 });
 
 router.post("/edit-attorney-profile", auth, profile.single('avatar'), csrfProtection, auth, async (req, res) => {
+    var practice_area = req.body.practice_area;
     var education = [];
     var degree = req.body.degree;
     var university = req.body.university;
@@ -417,6 +444,18 @@ router.post("/edit-attorney-profile", auth, profile.single('avatar'), csrfProtec
             degree: education[e].degree,
             university: education[e].university,
             year: education[e].year,
+        });
+    }
+    const del_practice = await PracticeAreaToAttr.destroy({
+        where: {
+            attorney_id: req.user.id
+        }
+    });
+    for (var p = 0; p < practice_area.length; p++) {
+        const practicearea = await PracticeAreaToAttr.create({
+            attorney_id: req.user.id,
+            firm_id: req.user.firm_id,
+            practice_area_id: practice_area[p],
         });
     }
     req.flash('success-message', 'Profile updated successfully.');
