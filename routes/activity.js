@@ -213,9 +213,6 @@ router.post('/activity/add-budget', auth, firmAttrAuth, csrfProtection, async(re
 // ========{{  insert data to the database  }}=====================//
 
 router.post('/activity/add', auth, upload.single('activity_attachment'), firmAttrAuth, csrfProtection, async(req, res) => {
-    
-    console.log(data, 'public/activity/' + fileName);
-
     var target_user = [];
     var client_user = [];
     var referral_user = [];
@@ -266,7 +263,6 @@ router.post('/activity/add', auth, upload.single('activity_attachment'), firmAtt
         activity_type: req.body.activity_type,
         activity_goal_id: req.body.activity_goal,
         practice_area: req.body.practice_area,
-        potiential_revenue: removePhoneMask(req.body.potiential_revenue),
         remarks: req.body.remarks,
         activity_creation_date: CreationDate ? CreationDate[2] + "-" + CreationDate[1] + "-" + CreationDate[0] : null,
         activity_from_date: FromDate ? FromDate[2] + "-" + FromDate[1] + "-" + FromDate[0] : null,
@@ -282,7 +278,7 @@ router.post('/activity/add', auth, upload.single('activity_attachment'), firmAtt
         total_budget_amount: req.body.total_amount,
         section_id: req.body.section,
         s_group_id: req.body.strategy_group,
-        attachment_field:'public/activity/' + fileName
+        attachment_field:fileName
     }, {
         where: {
             id: req.body.activity_id
@@ -681,7 +677,7 @@ router.post('/activity/edit-budget', auth, firmAttrAuth, csrfProtection, async(r
     });
 });
 
-router.post('/activity/update/:id', auth, firmAttrAuth, csrfProtection, async(req, res) => {
+router.post('/activity/update/:id', auth, upload.single('activity_attachment'), firmAttrAuth, csrfProtection, async(req, res) => {
     target_user = [];
     client_user = [];
     referral_user = [];
@@ -745,6 +741,7 @@ router.post('/activity/update/:id', auth, firmAttrAuth, csrfProtection, async(re
         section_id: req.body.section,
         s_group_id: req.body.strategy_group,
         activity_status: req.body.activity_status,
+        attachment_field:fileName
     }, {
         where: {
             id: req.params['id']
