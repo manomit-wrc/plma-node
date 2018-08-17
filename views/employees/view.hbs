@@ -1,7 +1,8 @@
 {{#content "style" mode="prepend"}}
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+{{/content}}
 
 <div class="page-wrapper">
     <div class="content container-fluid">
@@ -12,9 +13,8 @@
 
             <div class="col-sm-4">
                 <div class="text-right">
-                    <a href="/employee/edit/{{empl.id}}" class="btn btn-primary pull-right rounded">
-                        <i class="fa fa-pencil"></i> Edit Employee</a>
-                        <a href="/employees" class="btn btn-primary pull-right rounded m-r-5"><i class="fa fa-arrow-left"></i>Back</a>
+                    <a href="/employee/edit/{{empl.id}}" class="btn btn-primary pull-right rounded"><i class="fa fa-pencil"></i> Edit Employee</a>
+                    <a href="/employees" class="btn btn-primary pull-right rounded m-r-5"><i class="fa fa-arrow-left"></i> Back</a>
                 </div>
             </div>
         </div>
@@ -52,8 +52,7 @@
                                 <div class="form-group form-focus">
                                     <label class="control-label">Birth Date</label>
                                     <div class="cal-icon">
-                                        <input disabled class="form-control floating"  class="form-control floating datetimepicker" type="text" id="dob" name="dob" value="{{dateFormat empl.dob " DD-MM-YYYY
-                                            "}}">
+                                        <input disabled class="form-control floating"  class="form-control floating datetimepicker" type="text" id="dob" name="dob" value="{{dateFormat empl.dob " DD-MM-YYYY"}}">
                                     </div>
                                 </div>
                             </div>
@@ -63,8 +62,7 @@
                                     <select disabled class="form-control floating"  id="gender" name="gender">
                                         <option value="M" {{#if_eq empl.gender "M"}} selected="selected" {{/if_eq}}>Male</option>
                                         <option value="F" {{#if_eq empl.gender "F"}} selected="selected" {{/if_eq}}>Female</option>
-                                        <option value="O" {{#if_eq empl.gender "O"}} selected="selected" {{/if_eq}}>Others</option>
-
+                                        <option value="O" {{#if_eq empl.gender "O"}} selected="selected" {{/if_eq}}>Other</option>
                                     </select>
                                 </div>
                             </div>
@@ -78,9 +76,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group form-focus">
-                            <label class="control-label">Mobile No</label>
-                            <input disabled class="form-control floating number_validator"  type="text" class="form-control floating" id="mobile_no" name="mobile_no" value="{{empl.mobile_no}}"
-                            />
+                            <label class="control-label">Mobile No.</label>
+                            <input disabled class="form-control floating number_validator" type="text" class="form-control floating" id="mobile_no" name="mobile_no" value="{{empl.mobile_no}}" />
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -90,41 +87,45 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group form-focus">
-                            <select disabled class="form-control floating"  id="country" name="country">
+                        <div class="form-group form-focus select-focus">
+                            <label class="control-label">Country</label>
+                            <select disabled class="form-control floating" id="country" name="country">
                                 <option value="">Select Country</option>
                                 {{#each country}}
-                                <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                                    <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
                                 {{/each}}
                             </select>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group form-focus">
-                            <select disabled class="form-control floating"  id="state" name="state">
-                                <option value="">select State</option>
+                        <div class="form-group form-focus select-focus">
+                            <label class="control-label">State</label>
+                            <select disabled class="form-control floating" id="state" name="state">
+                                <option value="">Select State</option>
                                 {{#each state}}
-                                <option value="{{this.id}}" {{#if_eq this.id ../empl.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                                    <option value="{{this.id}}" {{#if_eq this.id ../empl.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
                                 {{/each}}
                             </select>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group form-focus">
+                        <div class="form-group form-focus select-focus">
+                            <label class="control-label">City</label>
                             <select disabled class="form-control floating" id="city" name="city">
                                 <option value="">Select City</option>
                                 {{#each city}}
-                                <option value="{{this.id}}" {{#if_eq this.id ../empl.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                                    <option value="{{this.id}}" {{#if_eq this.id ../empl.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
                                 {{/each}}
                             </select>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group form-focus">
-                            <select disabled class="form-control floating"  id="zipcode" name="zipcode">
+                        <div class="form-group form-focus select-focus">
+                            <label class="control-label">Zip Code</label>
+                            <select disabled class="form-control floating" id="zipcode" name="zipcode">
                                 <option value="">Select Zipcode</option>
                                 {{#each zipcode}}
-                                <option value="{{this.id}}" {{#if_eq this.id ../empl.zipcode}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
+                                    <option value="{{this.id}}" {{#if_eq this.id ../empl.zipcode}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
                                 {{/each}}
                             </select>
                         </div>
@@ -135,18 +136,15 @@
                             <label class="control-label">Firm Name</label>
                             <select disabled class="form-control floating"  id="firm_id" name="firm_id">
                                 {{#each firms}}
-                                <option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.title}}</option>
+                                    <option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.title}}</option>
                                 {{/each}}
                             </select>
                         </div>
                     </div>
                 </div>
             </div>
-
-
         </form>
     </div>
-
 </div>
 {{#content "script" mode="append"}}
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
@@ -155,6 +153,4 @@
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
-<script type="text/javascript">
-
 {{/content}}
