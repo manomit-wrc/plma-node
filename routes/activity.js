@@ -135,6 +135,19 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async(req, res) 
 //fetch
 
 router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+
+    console.log('-----------------------------------------------------------------------');
+
+    
+
+    const name = 'Will Robinson';
+    console.log(`Hello ${name}! Danger!`);
+    
+    console.clear(); 
+
+
+    console.log('-----------------------------------------------------------------------');
+    
     
     var whereCondition = {};
 
