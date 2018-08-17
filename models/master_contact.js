@@ -9,17 +9,13 @@ module.exports = (sequelize, DataTypes) => {
     fax: DataTypes.STRING,
     master_contact_code: DataTypes.STRING,
     mobile_no: DataTypes.STRING,
-    master_designation: DataTypes.STRING,
     website_url: DataTypes.STRING,
-    date_of_birth: DataTypes.STRING,
-    social_url: DataTypes.STRING,
     gender: DataTypes.STRING,
     address1: DataTypes.STRING,
     address2: DataTypes.STRING,
     address3: DataTypes.STRING,
     status: DataTypes.STRING,
     industry_type: DataTypes.STRING,
-    social_security_no: DataTypes.STRING,
     country: DataTypes.STRING,
     state: DataTypes.STRING,
     city: DataTypes.STRING,
@@ -34,7 +30,11 @@ module.exports = (sequelize, DataTypes) => {
     user_id: DataTypes.INTEGER,
     address_remarks: DataTypes.TEXT,
     remarks: DataTypes.TEXT,
-    contact_status: DataTypes.INTEGER
+    contact_status: DataTypes.INTEGER,
+    attorney_id: DataTypes.INTEGER,
+    facebook: DataTypes.STRING,
+    master_contact_type:DataTypes.STRING,
+    estimated_revenue :DataTypes.INTEGER
   }, {});
   master_contact.associate = function(models) {
     // associations can be defined here

@@ -135,48 +135,99 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async(req, res) 
 //fetch
 
 router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+    
+    var whereCondition = {};
+
+    if (req.query.activity_goal_id) {
+        whereCondition.activity_goal_id = req.query.activity_goal_id;
+    }
+    if (req.query.activity_type) {
+        whereCondition.activity_type = req.query.activity_type;
+    }
+    if (req.query.approval_status) {
+        whereCondition.activity_status = req.query.approval_status;
+    }
+    if (req.query.ref_type && req.query.target_user || req.query.client_user || req.query.referral_user) {
+        var acti_user = '';
+        if (req.query.target_user){
+            acti_user = req.query.target_user
+        }
+        else if (req.query.client_user){
+            acti_user = req.query.client_user
+        }
+        else if (req.query.referral_user){
+            acti_user = req.query.referral_user
+        }
+        const activity_user = await Activity_to_user_type.findAll({
+            where:{
+                'target_client_type': req.query.ref_type,
+                'type': acti_user
+            }
+        });
+        var actiArr = [];
+        for(var i = 0; i< activity_user.length; i++){
+            actiArr.push(activity_user[i].activity_id);
+        }
+        whereCondition.id = actiArr;
+    }
+    if(req.user.role_id == 2) {
+        whereCondition.firm_id = req.user.firm_id;
+    }
+    else
+    {
+        whereCondition.firm_id= req.user.firm_id;
+        whereCondition.user_id= req.user.id;
+    }
 	var success_message = req.flash('success-message')[0];
-	
-	var activity_data = await Activity.findAll({
-		where: { 'firm_id': 0 }
+	const activity_goal = await ActivityGoal.findAll({
+	    where: {
+	        'firm_id': req.user.firm_id
+	    }
 	});
 	
-	for (var i = 0; i < activity_data.length; i++) {
-		await Activity_to_user_type.destroy({
-			where: {
-				activity_id: activity_data[i].id
-			}
-		});
-		await ActivityBudget.destroy({
-			where: {
-				activity_id: activity_data[i].id
-			}
-		});
-		await Activity.destroy({
-			where: { 'id': activity_data[i].id }
-		});
-	}
+    const target = await Target.findAll({
+        where: {
+            'target_type': "I",
+            'target_status': '1',
+            'attorney_id': req.user.id
+        }
+    });
 
-	if (req.user.role_id == 2) {
+    const client = await Client.findAll({
+        where: {
+            'client_type': "I",
+            'attorney_id': req.user.id
+        }
+    });
+
+    const referral = await Referral.findAll({
+        where: {
+            'firm_id': req.user.firm_id,
+            'attorney_id': req.user.id
+        }
+    });
+
 		var activity = await Activity.findAll({
-			where: {
-				firm_id : req.user.firm_id
-			}
-		});
-	} else {
-		var activity = await Activity.findAll({
-			where: {
-				firm_id : req.user.firm_id,
-				user_id: req.user.id
-			}
-		});
-	}
-	
+            where: whereCondition,
+        });
+        
 	res.render('activity/activity', {
 		layout: 'dashboard',
 		csrfToken: req.csrfToken(),
 		row: activity,
-		success_message
+        success_message,
+        activity_goal,
+        target,
+        client,
+        referral,
+        activity_goal_id: req.query.activity_goal_id ? req.query.activity_goal_id : "",
+        activity_type: req.query.activity_type ? req.query.activity_type : "",
+        refer_type: req.query.ref_type ? req.query.ref_type : "",
+        user_target: req.query.target_user ? req.query.target_user : "",
+        user_client: req.query.client_user ? req.query.client_user : "",
+        user_referral: req.query.referral_user ? req.query.referral_user : "",
+        approval_status: req.query.approval_status ? req.query.approval_status : "",
+        count_query: Object.keys(req.query).length
 	});
 });
 
