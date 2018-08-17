@@ -13,11 +13,6 @@
 		</div>
 		<div class="row filter-row">
 			<div class="row">
-				{{#if success_message}}
-				<div class="alert alert-success">
-					<strong>Success! </strong>{{success_message}}
-				</div>
-				{{/if}}
 				<div class="col-md-12">
 					<div class="tab firm-box" role="tabpanel">
 						<!-- Nav tabs -->
@@ -1061,7 +1056,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 <script type="text/javascript">
+
 	/*===============================Starts Add Ofiice Section========================================*/
+	
 	$(document).ready(function(e) {
 	    $('#section').multiselect({
 	        nonSelectedText: 'Select Section',
@@ -1116,7 +1113,6 @@
 	            },
 	            mobile_no: {
 	                required: true
-
 	            }
 	        },
 	        messages: {
@@ -1180,7 +1176,9 @@
 	        }
 	    });
 	});
+
 	/*===============================Ends Add Ofiice Section========================================*/
+
 	/*===============================Stasts Edit Ofiice Section========================================*/
 
 	$(document).on('click', '#view-office-detail', function(e) {
@@ -1193,9 +1191,7 @@
 	    var office_zipcode = $(this).data('zipcode');
 	    var office_mobile = $(this).data('mobile');
 	    var firm_id = $(this).data('firm-id');
-
 	    localStorage.setItem('office_id', office_id);
-
 	    $('#view_office_name').val(office_name);
 	    $('#view_office_address').val(office_address);
 	    $('#view_office_city').val(office_city);
@@ -1203,10 +1199,8 @@
 	    $('#view_office_country').val(office_country);
 	    $('#view_office_zipcode').val(office_zipcode);
 	    $('#view_office_mobile_no').val(office_mobile);
-
 	    $('.view-office-modal').modal('show');
 	});
-
 
 	$(document).on('click', '#edit-office-detail', function(e) {
 	    var office_id = $(this).data('office-id');
@@ -1218,9 +1212,7 @@
 	    var office_zipcode = $(this).data('zipcode');
 	    var office_mobile = $(this).data('mobile');
 	    var firm_id = $(this).data('firm-id');
-
 	    localStorage.setItem('office_id', office_id);
-
 	    $('#edit_office_name').val(office_name);
 	    $('#edit_office_address').val(office_address);
 	    $('#edit_office_city').val(office_city);
@@ -1228,12 +1220,10 @@
 	    $('#edit_office_country').val(office_country);
 	    $('#edit_office_zipcode').val(office_zipcode);
 	    $('#edit_office_mobile_no').val(office_mobile);
-
 	    $('.edit-office-modal').modal('show');
 	});
 
 	$(document).ready(function(e) {
-
 	    $("#btnEditOffice").click(function() {
 	        $("#editOffice").submit();
 	    });
@@ -1310,13 +1300,12 @@
 	});
 
 	/*===============================Ends Edit Ofiice Section========================================*/
+
 	/*===============================Starts Delete Ofiice Section========================================*/
 
 	$(document).on('click', '#delete-office-details', function(e) {
 	    var office_id = $(this).data('office-id');
-
 	    localStorage.setItem('office_id', office_id);
-
 	    $('.delete-office-modal').modal('show');
 	});
 
@@ -1327,7 +1316,6 @@
 	        data: "&office_id=" + localStorage.getItem("office_id"),
 	        beforeSend: function(xhr) {
 	            xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
-
 	        },
 	        success: function(response) {
 	            if (response.delete_office == true) {
@@ -1487,7 +1475,6 @@
 	    var contact_country = $(this).data('contact-country');
 	    var contact_zipcode = $(this).data('contact-zipcode');
 
-
 	    $("#edit_office_id").val(office_id);
 	    $('#edit_office_id').trigger('change');
 	    $("#edit_designation_id").val(designation_id);
@@ -1501,9 +1488,7 @@
 	    $("#edit_contact_state").val(contact_state);
 	    $("#edit_contact_country").val(contact_country);
 	    $("#edit_contact_zipcode").val(contact_zipcode);
-
 	    localStorage.setItem('contact_id', contact_id);
-
 	    $('.editContactModal').modal('show');
 	});
 
@@ -1521,7 +1506,6 @@
 	    var contact_country = $(this).data('contact-country');
 	    var contact_zipcode = $(this).data('contact-zipcode');
 
-
 	    $("#view_office_id").val(office_id);
 	    $('#view_office_id').trigger('change');
 	    $("#view_designation_id").val(designation_id);
@@ -1535,15 +1519,11 @@
 	    $("#view_contact_state").val(contact_state);
 	    $("#view_contact_country").val(contact_country);
 	    $("#view_contact_zipcode").val(contact_zipcode);
-
 	    localStorage.setItem('contact_id', contact_id);
-
 	    $('.viewContactModal').modal('show');
 	});
 
-
 	$(document).ready(function(e) {
-
 	    $("#btnEditContactOffice").click(function() {
 	        $("#EditOfficeContactFrm").submit();
 	    });
@@ -1628,7 +1608,6 @@
 	                data: $("#EditOfficeContactFrm").serialize() + "&contact_id=" + localStorage.getItem("contact_id"),
 	                beforeSend: function(xhr) {
 	                    xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
-
 	                    $("#btnEditContactOffice").prop('disabled', true);
 	                    $("#btnEditContactOffice").html("Loading...");
 	                },
@@ -1647,9 +1626,7 @@
 
 	$(document).on('click', '#delete-office-contact-details', function(e) {
 	    var contact_id = $(this).data('contact-id');
-
 	    localStorage.setItem('contact_id', contact_id);
-
 	    $('.deleteContactModal').modal('show');
 	});
 
@@ -1660,7 +1637,6 @@
 	        data: "&contact_id=" + localStorage.getItem("contact_id"),
 	        beforeSend: function(xhr) {
 	            xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
-
 	        },
 	        success: function(response) {
 	            if (response.delete_contact == true) {
@@ -1676,8 +1652,9 @@
 
 	/*===============================Ends Office Contact Section=============================*/
 
+	/*========================Office state country fetch===========================*/
+
 	$(document).ready(function() {
-	    /*========================Office state country fetch===========================*/
 	    $("#edit_office_state").change(function(e) {
 	        var state_id = $(this).val();
 	        $("#edit_office_city").find('option').not(':first').remove();
@@ -1712,7 +1689,6 @@
 	                },
 	                success: function(response) {
 	                    for (var i = 0; i < response.zipcode.length; i++) {
-	                        // console.log(response.zipcode[i]);
 	                        $("#edit_office_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
 	                    }
 	                },
@@ -1722,9 +1698,11 @@
 	            });
 	        }
 	    });
+
 	    /*========================Ends Office state country fetch===========================*/
 
 	    /*========================Starts edit contact state country fetch===========================*/
+
 	    $("#edit_contact_state").change(function(e) {
 	        var state_id = $(this).val();
 	        $("#edit_contact_city").find('option').not(':first').remove();
@@ -1769,9 +1747,9 @@
 	            });
 	        }
 	    });
-	    /*========================Edit Contact state country fetch===========================*/
 	});
 
+	/*========================Edit Contact state country fetch===========================*/
 
 	$(document).ready(function() {
 	    $("#contact_state").change(function(e) {
@@ -1819,7 +1797,6 @@
 	        }
 	    });
 
-
 	    /*===========================firm basic section =======================*/
 
 	    $("#firm_state").change(function(e) {
@@ -1866,13 +1843,13 @@
 	            });
 	        }
 	    });
-	    /*===========================firm basic section =======================*/
 	});
+
+	/*===========================firm basic section =======================*/
 
 	/*==================================Update Firm Section (BASIC) =============================*/
 
 	$(document).ready(function(e) {
-
 	    $("#btnUpdateFirm").click(function() {
 	        $("#frmUpdateFirm").submit();
 	    });
@@ -1950,7 +1927,6 @@
 	                },
 	                beforeSend: function(xhr) {
 	                    xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
-
 	                    $("#btnUpdateFirm").prop('disabled', true);
 	                    $("#btnUpdateFirm").html("Loading...");
 	                },
@@ -1961,6 +1937,8 @@
 	                            window.location.href = "/firm-details";
 	                        }, 2000);
 	                    }
+						$("#btnUpdateFirm").prop('disabled', false);
+                        $("#btnUpdateFirm").html("Save &amp; Next");
 	                }
 	            });
 	        }
@@ -1968,10 +1946,8 @@
 	});
 
 	/*==================================Update Firm Section (BASIC) =============================*/
-	/*==================================Update Firm Details (BASIC) =============================*/
 
 	$(document).ready(function(e) {
-
 	    $("#btnUpdateFirmDetails").click(function() {
 	        $("#frmUpdateFirmDetails").submit();
 	    });
@@ -2025,7 +2001,6 @@
 	                firm_name = $("#firm_name").val(),
 	                firm_code = $("#firm_code").val(),
 	                firm_reg = $("#firm_reg").val();
-
 	            $.ajax({
 	                type: "POST",
 	                url: "/update-own-firmDetails",
@@ -2039,7 +2014,6 @@
 	                },
 	                beforeSend: function(xhr) {
 	                    xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
-
 	                    $("#btnUpdateFirmDetails").prop('disabled', true);
 	                    $("#btnUpdateFirmDetails").html("Loading...");
 	                },
@@ -2050,6 +2024,8 @@
 	                            window.location.href = "/firm-details";
 	                        }, 2000);
 	                    }
+						$("#btnUpdateFirm").prop('disabled', false);
+                        $("#btnUpdateFirm").html("Save &amp; Next");
 	                }
 	            });
 	        }
@@ -2057,4 +2033,5 @@
 	});
 
 /*==================================Update Firm Details (BASIC) =============================*/
-</script> {{/content}}
+</script>
+{{/content}}
