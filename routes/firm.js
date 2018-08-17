@@ -28,21 +28,20 @@ var csrfProtection = csrf({ cookie: true });
 
 const router = express.Router();
 function removePhoneMask (phone_no){
-        var phone_no = phone_no.replace("-","");
-        phone_no = phone_no.replace(")","");
-        phone_no = phone_no.replace("(","");
-        phone_no = phone_no.replace(" ","");
-        return phone_no;
+    var phone_no = phone_no.replace("-", "");
+    phone_no = phone_no.replace(")", "");
+    phone_no = phone_no.replace("(", "");
+    phone_no = phone_no.replace(" ", "");
+    return phone_no;
 }
 
 router.get('/firms', csrfProtection, auth, siteAuth, async (req, res) => {
     var success_message = req.flash('success-firm-message')[0];
     var whereStatement = {};
-    if(req.query.search_email) {
+    if (req.query.search_email) {
         whereStatement.email = req.query.search_email;
     }
-    if(req.query.search_firm)
-    {
+    if (req.query.search_firm) {
         whereStatement.firm_id = req.query.search_firm;
     }
     whereStatement.role_id = 2;
@@ -70,11 +69,12 @@ router.get('/firms', csrfProtection, auth, siteAuth, async (req, res) => {
         search_firm: req.query ? req.query.search_firm : ''
     });
 });
-router.get('/get-level-2-designation', auth, async(req, res)=> {
-   const designation = await Designation.findAll();
-   res.send({
-       designations: designation
-   });
+
+router.get('/get-level-2-designation', auth, async (req, res) => {
+    const designation = await Designation.findAll();
+    res.send({
+        designations: designation
+    });
 });
 
 router.post('/firms/add', auth, siteAuth, csrfProtection, async (req, res) => {
@@ -83,7 +83,7 @@ router.post('/firms/add', auth, siteAuth, csrfProtection, async (req, res) => {
             email: req.body.email
         }
     });
-    if(user_data === null) {
+    if (user_data === null) {
         const firm_data = await Firm.create({
             title: req.body.title,
             address: req.body.address,
@@ -93,13 +93,13 @@ router.post('/firms/add', auth, siteAuth, csrfProtection, async (req, res) => {
             level_3 : req.body.level_3 ? req.body.level_3 : 0,
             level_4 : req.body.level_4 ? req.body.level_4 : 0,
         });
-        if(firm_data) {
+        if (firm_data) {
             const avatar = gravatar.url(req.body.email, {
                 s: '150',
                 r: 'pg',
                 d: 'mm'
             });
-            const data = await User.create({
+            await User.create({
                 first_name: req.body.first_name,
                 last_name: req.body.last_name,
                 email: req.body.email,
@@ -120,17 +120,15 @@ router.post('/firms/add', auth, siteAuth, csrfProtection, async (req, res) => {
             });
             res.json({
                 success: true,
-                message: 'Firm created successfully'
+                message: 'Firm Created Successfully'
             });
-        }
-        else {
+        } else {
             res.json({
                 success: false,
                 message: 'Something not right. Please try again'
             });
         }
-    }
-    else {
+    } else {
         res.json({
             success: false,
             message: 'Email alreday taken'
@@ -148,8 +146,8 @@ router.post('/firms/edit', auth, siteAuth, csrfProtection, async (req, res) => {
             }
         }
     });
-    if(user_data === null) {
-        const firms = await Firm.update({
+    if (user_data === null) {
+        await Firm.update({
             title: req.body.title,
             address: req.body.address
         }, {
@@ -158,14 +156,16 @@ router.post('/firms/edit', auth, siteAuth, csrfProtection, async (req, res) => {
 			}
         });
 
-        const data = await User.update({
-                first_name: req.body.first_name,
-                last_name: req.body.last_name,
-                email: req.body.email,
-                password: bCrypt.hashSync(req.body.password),
-                mobile_no: req.body.mobile_no,
-                updatedAt: new Date(),
-                gender: req.body.gender
+        await User.update({
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            email: req.body.email,
+            mobile_no: req.body.mobile_no,
+            updatedAt: new Date(),
+            gender: req.body.gender,
+            is_attorney: req.body.is_attorney ? req.body.is_attorney : 0,
+            group_id: req.body.group,
+            designation_id: req.body.designation
         }, {
             where: {
                 id: req.body.user_id
@@ -174,10 +174,9 @@ router.post('/firms/edit', auth, siteAuth, csrfProtection, async (req, res) => {
 
         res.json({
             success: true,
-            message: 'Firm updated successfully'
+            message: 'Firm Updated Successfully'
         });
-    }
-    else {
+    } else {
         res.json({
             success: false,
             message: 'Email alreday taken'
@@ -186,25 +185,24 @@ router.post('/firms/edit', auth, siteAuth, csrfProtection, async (req, res) => {
 });
 
 router.post('/firm/delete', auth, siteAuth, csrfProtection, async (req, res) => {
-    const user_delete = User.destroy({
+    User.destroy({
         where: {
             id: req.body.user_id
         }
     });
 
-    const firm_delete = Firm.destroy({
+    Firm.destroy({
         where: {
             id: req.body.firm_id
         }
     });
 
-    req.flash('success-firm-message', 'firm delete Successfully');
+    req.flash('success-firm-message', 'Firm Deleted Successfully');
     res.json({
         success: true,
-        message: 'Firm deleted successfully'
+        message: 'Firm Deleted Successfully'
     });
 });
-
 
 /*======================Starts Firm Master Settings:::::Bratin Meheta 18-06-2018 & 19-06-2018========================*/
 
@@ -218,8 +216,7 @@ router.get('/firm-details', auth, firmAuth, csrfProtection, async (req, res) => 
     Firm.hasMany(SectionToFirm, {foreignKey: 'firm_id'});
     Firm.hasMany(JurisdictionToFirm, {foreignKey: 'firm_id'});
     Firm.hasMany(PracticeAreaToFirm, {foreignKey: 'firm_id'});
-    const office = await Office.findAll(
-        {
+    const office = await Office.findAll({
             where: {firm_id: req.user.firm_id},
             include: [{
             model: Firm
@@ -244,14 +241,12 @@ router.get('/firm-details', auth, firmAuth, csrfProtection, async (req, res) => 
     var city_id = firm[0].city;
     var firm_city = [];
     var firm_zipcode = [];
-    if(state_id != null)
-    {
-         firm_city = await City.findAll({
+    if (state_id != null) {
+        firm_city = await City.findAll({
             where: {state_id: state_id.toString()}
         });
     }
-    if(city_id != null)
-    {
+    if (city_id != null) {
         const cities = await City.findById(city_id.toString());
          firm_zipcode = await Zipcode.findAll({
             where: {
@@ -265,19 +260,19 @@ router.get('/firm-details', auth, firmAuth, csrfProtection, async (req, res) => 
 
     var result = JSON.parse(JSON.stringify(firm[0].section_to_firms));
     var arr = [];
-    for(var i=0; i<result.length; i++){
+    for (var i = 0; i < result.length; i++) {
         arr.push(result[i].section_id);
     }
 
     var firmJurisdiction = JSON.parse(JSON.stringify(firm[0].jurisdiction_to_firms));
     var jurisdictionArr = [];
-    for(var j=0; j<firmJurisdiction.length; j++){
+    for (var j = 0; j < firmJurisdiction.length; j++) {
         jurisdictionArr.push(firmJurisdiction[j].jurisdiction_id);
     }
 
     var firmPracticeArea = JSON.parse(JSON.stringify(firm[0].practice_area_to_firms));
     var PracticeAreaArr = [];
-    for(var k=0; k<firmPracticeArea.length; k++){
+    for (var k = 0; k < firmPracticeArea.length; k++) {
         PracticeAreaArr.push(firmPracticeArea[k].practice_area_id);
     }
 
@@ -315,14 +310,15 @@ router.post('/edit-office/:id', auth, firmAuth, csrfProtection, (req, res) => {
     });
 });
 
-router.post('/delete-office/:id', auth, firmAuth, csrfProtection, (req, res) =>{
+router.post('/delete-office/:id', auth, firmAuth, csrfProtection, (req, res) => {
     Office.destroy({
         where: {id: req.params['id']}
-    }).then(result =>{
-        req.flash('success-delete-office-message', 'Firm delete Successfully');
-        res.json({"delete_office":true});
+    }).then(result => {
+        req.flash('success-delete-office-message', 'Firm Deleted Successfully');
+        res.json({"delete_office": true});
     });
 });
+
 /*====================Ends Office Section 18-06-2018================================= */
 
 /*====================Starts Office Contact Section 19-06-2018================================= */
@@ -366,11 +362,11 @@ router.post('/edit-office-contact/:id', auth, firmAuth, csrfProtection, (req, re
     });
 });
 
-router.post('/delete-contact/:id', auth, firmAuth, csrfProtection, (req, res) =>{
+router.post('/delete-contact/:id', auth, firmAuth, csrfProtection, (req, res) => {
     Contact.destroy({
         where: {id: req.params['id']}
-    }).then(result =>{
-        res.json({"delete_contact":true});
+    }).then(result => {
+        res.json({"delete_contact": true});
     });
 });
 
@@ -378,70 +374,74 @@ router.post('/delete-contact/:id', auth, firmAuth, csrfProtection, (req, res) =>
 /*======================Ends Firm Master Settings:::::Bratin Meheta 18-06-2018 & 19-06-2018=====================*/
 
 /*======================edit office Get city state==========================*/
-router.post('/editoffice-get/get-city', auth, (req, res) =>{
+router.post('/editoffice-get/get-city', auth, (req, res) => {
     City.findAll({
         where: { state_id : req.body.state_id}
     }).then(result => {
-        res.send({get_city:result});
+        res.send({get_city: result});
     });
 });
-router.post('/edit-office-get/get-zipcode', auth, (req, res) =>{
+
+router.post('/edit-office-get/get-zipcode', auth, (req, res) => {
     Zipcode.findAll({
         where: { city_name : req.body.city_name}
     }).then(result => {
-        res.send({zipcode:result});
+        res.send({zipcode: result});
     });
 });
 /*======================edit office Get city state==========================*/
 
 /*======================ADD Contact Get city state==========================*/
-router.post('/contact/get-city', auth, (req, res) =>{
+router.post('/contact/get-city', auth, (req, res) => {
     City.findAll({
         where: { state_id : req.body.state_id}
     }).then(result => {
-        res.send({get_city:result});
+        res.send({get_city: result});
     });
 });
-router.post('/contact/get-zipcode', auth, (req, res) =>{
+
+router.post('/contact/get-zipcode', auth, (req, res) => {
     Zipcode.findAll({
         where: { city_name : req.body.city_name}
     }).then(result => {
-        res.send({zipcode:result});
+        res.send({zipcode: result});
     });
 });
 /*======================ADD Contact Get city state==========================*/
 
 /*======================Edit Contact Get city state==========================*/
-router.post('/edit-contact-get/get-city', auth, (req, res) =>{
+router.post('/edit-contact-get/get-city', auth, (req, res) => {
     City.findAll({
         where: { state_id : req.body.state_id}
     }).then(result => {
-        res.send({get_city:result});
+        res.send({get_city: result});
     });
 });
-router.post('/edit-contact-get/get-zipcode', auth, (req, res) =>{
+
+router.post('/edit-contact-get/get-zipcode', auth, (req, res) => {
     Zipcode.findAll({
         where: { city_name : req.body.city_name}
     }).then(result => {
-        res.send({zipcode:result});
+        res.send({zipcode: result});
     });
 });
 
 /*======================Edit Contact Get city state==========================*/
 
 /*======================Edit Contact Get city state==========================*/
-router.post('/firm-basic/get-city', auth, (req, res) =>{
+router.post('/firm-basic/get-city', auth, (req, res) => {
     City.findAll({
         where: { state_id : req.body.state_id}
     }).then(result => {
-        res.send({get_city:result});
+        res.send({get_city: result});
     });
 });
-router.post('/firm-basic/get-zipcode', auth, (req, res) =>{
+
+router.post('/firm-basic/get-zipcode', auth, (req, res) => {
     Zipcode.findAll({
-        where: { city_name : req.body.city_name}
+        where: { city_name : req.body.city_name }
     }).then(result => {
-        res.send({zipcode:result});
+        res.send({zipcode: result});
     });
 });
 
@@ -449,7 +449,7 @@ router.post('/firm-basic/get-zipcode', auth, (req, res) =>{
 
 /*==========================Firm Profile Update section=======================*/
 
-router.post('/update-own-firm', auth,  firmAuth, csrfProtection, (req, res) =>{
+router.post('/update-own-firm', auth, firmAuth, csrfProtection, (req, res) => {
     Firm.update({
         address: req.body.address1,
         address1: req.body.address2,
@@ -473,7 +473,7 @@ router.post('/update-own-firm', auth,  firmAuth, csrfProtection, (req, res) =>{
 
 /*==========================Firm Profile Details Update section=======================*/
 
-router.post('/update-own-firmDetails', auth, firmAuth, csrfProtection, async(req, res) =>{
+router.post('/update-own-firmDetails', auth, firmAuth, csrfProtection, async (req, res) => {
     var section = req.body.section;
     var practice_area = req.body.practice_area;
     var jurisdiction = req.body.jurisdiction;
@@ -497,21 +497,21 @@ router.post('/update-own-firmDetails', auth, firmAuth, csrfProtection, async(req
         where: { firm_id : req.user.firm_id}
     });
 
-    for(var i=0; i<section.length; i++){
+    for (var i = 0; i < section.length; i++) {
         const section_to_firm = await SectionToFirm.create({
             firm_id: req.user.firm_id,
             section_id: section[i]
         });
     }
 
-    for(var j=0; j<practice_area.length; j++){
+    for (var j = 0; j < practice_area.length; j++) {
         const practice_area_to_firm = await PracticeAreaToFirm.create({
             firm_id: req.user.firm_id,
             practice_area_id: practice_area[j]
         });
     }
 
-    for(var k=0; k<jurisdiction.length; k++){
+    for (var k = 0; k < jurisdiction.length; k++) {
         const jurisdiction_to_firm = await JurisdictionToFirm.create({
             firm_id: req.user.firm_id,
             jurisdiction_id: jurisdiction[k]
