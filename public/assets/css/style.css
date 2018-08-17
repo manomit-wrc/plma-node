@@ -5617,6 +5617,23 @@ i.fa.fa-eye.m-r-5 {
 	border-bottom: 0;
 }
 
+.advancedFilter {
+	position: absolute;
+	right: 514px;
+	top: 10px;
+	background-image: none;
+	background-color: #ff9b44;
+	border-color: #ff9b44;
+	color: #fff;
+	-webkit-border-radius: 50px;
+	-moz-border-radius: 50px;
+	-ms-border-radius: 50px;
+	-o-border-radius: 50px;
+	border-radius: 50px;
+	font-size: 13px;
+	padding-top: 6px;
+}
+
 /*------------------------------------------------------------------
 [39-a.... Custom Styles]
 */
