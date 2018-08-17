@@ -57,6 +57,12 @@ router.get('/target', auth, firmAttrAuth, csrfProtection, async(req, res) => {
     var success_edit_message = req.flash('success-edit-message')[0];
     var industry = await industry_type.findAll();
     var country = await Country.findAll();
+    const attorney = await user.findAll({
+        where: {
+            role_id: 3,
+            firm_id: req.user.firm_id
+        }
+    });
     const state = await State.findAll({
         where: {
             country_id: "233"
@@ -72,6 +78,9 @@ router.get('/target', auth, firmAttrAuth, csrfProtection, async(req, res) => {
     }
     if (req.query.country) {
         whereCondition.country = req.query.country;
+    }
+    if (req.query.attorney) {
+        whereCondition.attorney_id = req.query.attorney;
     }
     if (req.query.state) {
         var city = await City.findAll({
@@ -114,6 +123,7 @@ router.get('/target', auth, firmAttrAuth, csrfProtection, async(req, res) => {
         industry,
         country,
         state,
+        attorney,
         success_edit_message,
         count_query: Object.keys(req.query).length,
         industry_type: req.query.industry_type ? req.query.industry_type : "",
@@ -122,6 +132,7 @@ router.get('/target', auth, firmAttrAuth, csrfProtection, async(req, res) => {
         state_search: req.query.state ? req.query.state : "",
         city_search: req.query.city ? req.query.city : "",
         zipcode_search: req.query.zipcode ? req.query.zipcode : "",
+        attr_search: req.query.attorney ? req.query.attorney : "",
         city,
         zipcode
     });
