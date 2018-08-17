@@ -11,7 +11,7 @@
         <h4 class="page-title">Edit Activity</h4>
       </div>
     </div>
-    <form name="updateActivityForm" id="updateActivityForm" action="/activity/update/{{editdata.id}}" method="POST">
+    <form name="updateActivityForm" id="updateActivityForm" action="/activity/update/{{editdata.id}}" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="_csrf" value="{{csrfToken}}">
       <input type="hidden" name="activity_id" id="activity_id" value="{{editdata.id}}">
       <input type="hidden" name="total_hour" id="total_hour">
@@ -111,12 +111,7 @@
                   </select>
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="form-group form-focus">
-                  <label class="control-label">Potential Revenue</label>
-                  <input class="form-control floating" type="text" id="potiential_revenue" name="potiential_revenue" value="{{editdata.potiential_revenue}}">
-                </div>
-              </div>
+
               <div class="col-md-6">
                 <div class="form-group form-focus">
                   <label class="control-label">Activity Creation Date</label>
@@ -144,12 +139,31 @@
                   </div>
                 </div>
               </div>
+
+              <div class="col-md-4">
+                <div class="form-group form-focus select-focus">
+                  <input class="form-control floating" type="file" id="activity_attachment" name="activity_attachment" multiple>
+                </div>
+              </div>
+
+              
+               <div class="col-md-2">
+                 <div class="download-btn">
+                   <div class="form-group form-focus">
+                    <a href="/activity/{{editdata.attachment_field}}" download  class="btn btn-primary btn-lg"> 
+                      <i class="fa fa-download" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                 </div>
+              </div>
+
               <div class="col-md-6">
                 <div class="form-group form-focus">
                   <label class="control-label">Remarks </label>
                   <textarea class="form-control floating" id="remarks" name="remarks" rows="5">{{editdata.remarks}}</textarea>
                 </div>
               </div>
+
             </div>
           </div>
         </div>
@@ -245,7 +259,6 @@
                         <th> Relation </th>
                         <th> Name </th>
                         <th> Budget Code Cost $</th>
-                        <th> Potential Revenue </th>
                       </tr>
                     </thead>
                     <tbody id="mainTable">
@@ -257,7 +270,6 @@
                         <td>
                           <a href="#" id="budgetUpdate" data-toggle="modal" data-target="#update_budget">$ {{this.total_cost}}</a>
                         </td>
-                        <td>{{this.potential_revenue}}</td>
                       </tr>
                       {{/each}}
                     </tbody>

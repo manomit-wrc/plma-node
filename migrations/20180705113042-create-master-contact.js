@@ -32,16 +32,7 @@ module.exports = {
       mobile_no: {
         type: Sequelize.STRING
       },
-      master_designation: {
-        type: Sequelize.STRING
-      },
       website_url: {
-        type: Sequelize.STRING
-      },
-      date_of_birth: {
-        type: Sequelize.STRING
-      },
-      social_url: {
         type: Sequelize.STRING
       },
       gender: {
@@ -60,9 +51,6 @@ module.exports = {
         type: Sequelize.STRING
       },
       industry_type: {
-        type: Sequelize.STRING
-      },
-      social_security_no: {
         type: Sequelize.STRING
       },
       country: {
@@ -108,6 +96,18 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      attorney_id: {
+        type: Sequelize.INTEGET
+      },
+      facebook: {
+        type: Sequelize.STRING
+      },
+      master_contact_id: {
+        type: Sequelize.STRING
+      },
+      estimated_revenue: {
+        type: Sequelize.INTEGER
       }
     });
   },

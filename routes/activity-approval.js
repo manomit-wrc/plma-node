@@ -9,7 +9,7 @@ const lodash = require("lodash");
 
 const router = express.Router();
 
-router.get('/activity-approvals', auth, async (req, res) => {
+router.get('/activity-approvals', auth, async(req, res) => {
 
     const activity_approvals = await Activity.findAll({
         where: {
@@ -24,12 +24,14 @@ router.get('/activity-approvals', auth, async (req, res) => {
     });
 });
 
-router.get('/approval_details/:id', auth, async (req, res) => {
+router.get('/approval_details/:id', auth, async(req, res) => {
 
     const budgetList = await Budget.findAll();
 
     const jointActivities = await Jointactivities.findAll({
-        where: { 'activity_id': req.params['id'] }
+        where: {
+            'activity_id': req.params['id']
+        }
     });
 
     var budgetArr = [];
@@ -76,34 +78,34 @@ router.get('/approval_details/:id', auth, async (req, res) => {
 });
 
 
-router.post('/add_activity_budget_remark', auth, async (req, res) => {
+router.post('/add_activity_budget_remark', auth, async(req, res) => {
     await ActivityBudget.update({
         approver_remarks: req.body.approver_remarks
     }, {
-            where: {
-                budget_id: req.body.budget_id,
-                activity_id: req.body.activity_id
-            }
-        });
+        where: {
+            budget_id: req.body.budget_id,
+            activity_id: req.body.activity_id
+        }
+    });
     res.send({
         "success": true
     })
 });
 
-router.post('/update_activity_approve_reject', auth, async (req, res) => {
+router.post('/update_activity_approve_reject', auth, async(req, res) => {
     await Activity.update({
         activity_status: req.body.status
     }, {
-            where: {
-                id: req.body.activity_id
-            }
-        });
+        where: {
+            id: req.body.activity_id
+        }
+    });
     res.send({
         "success": true
     })
 });
 
-router.post("/get-notification", auth, async (req, res) => {
+router.post("/get-notification", auth, async(req, res) => {
     Activity.belongsTo(User, {
         foreignKey: 'user_id'
     });
@@ -115,7 +117,9 @@ router.post("/get-notification", auth, async (req, res) => {
         include: [{
             model: User
         }],
-        order: [['updatedAt', 'DESC']]
+        order: [
+            ['updatedAt', 'DESC']
+        ]
     });
     res.send({
         "success": true,
