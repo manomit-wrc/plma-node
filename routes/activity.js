@@ -135,6 +135,7 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 //fetch
 
 router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+   
     var whereCondition = {};
 
     if (req.query.activity_goal_id) {

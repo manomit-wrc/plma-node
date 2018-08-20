@@ -100,7 +100,6 @@ router.get('/target', auth, firmAttrAuth, csrfProtection, async(req, res) => {
         whereCondition.city = req.query.city;
     }
     if (req.query.zipcode) {
-        
         whereCondition.postal_code = req.query.zipcode;
     }
     whereCondition.firm_id = req.user.firm_id;
