@@ -46,7 +46,7 @@
 						<div id="org_type" style="display: none;">
 							<div class="col-md-12">
 								<div class="form-group form-focus">
-									<label class="control-label">Organisation Name <span class="req-lbl">*</span> </label>
+									<label class="control-label">Organization Name <span class="req-lbl">*</span> </label>
 									<input type="text" class="form-control floating" id="org_name" name="org_name" />
 								</div>
 							</div>
@@ -230,7 +230,7 @@
 						</div>
 					</div>
 					<div class="col-md-6">
-						<div class="form-group form-focus  select-focus">
+						<div class="form-group form-focus select-focus">
 							<label class="control-label">City<span class="req-lbl">*</span></label>
 							<select id="city" name="city" class="form-control floating">
 								<option value="">Select City</option>
@@ -238,7 +238,7 @@
 						</div>
 					</div>
 					<div class="col-md-6">
-						<div class="form-group form-focus  select-focus">
+						<div class="form-group form-focus select-focus">
 							<label class="control-label">Zip Code<span class="req-lbl">*</span></label>
 							<select id="zipcode" name="zipcode" class="form-control floating">
 								<option value="">Select Zipcode</option>
@@ -321,7 +321,7 @@
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Association Status</label>
-							<select id="association" name="association" class="select form-control">
+							<select id="association" name="association" class="form-control floating">
 								<option value="">Select Association</option>
 								<option value="NEW TARGET">NEW TARGET</option>
 								<option value="CONVERTED">CONVERTED</option>
@@ -332,7 +332,7 @@
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Industry Type</label>
-							<select id="industry_type" name="industry_type" class="select form-control">
+							<select id="industry_type" name="industry_type" class="form-control floating">
 								<option value="">Select Industry Type</option>
 								{{#each industry}}
 									<option value="{{this.id}}">{{this.industry_name}}</option>
@@ -460,7 +460,7 @@
 					required: "Last name can't be blank"
 				},
 				org_name: {
-					required: "Organisation name can't be blank"
+					required: "Organization name can't be blank"
 				},
 				/* org_id: {
 					required: "Organisation ID can't be blank"

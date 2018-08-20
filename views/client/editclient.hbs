@@ -312,8 +312,8 @@
 						</div>
 					</div>
 					<div class="col-md-6">
-						<div class="form-group form-focus select-focus">
-							<label class="control-label">Comapnay Name</label>
+						<div class="form-group form-focus">
+							<label class="control-label">Company Name</label>
 							<input type="text" class="form-control floating" id="company_name" name="company_name" value="{{client.company_name}}" />
 						</div>
 					</div>
@@ -325,13 +325,13 @@
 						</div>
 					</div> --}}
 					<div class="col-md-6">
-						<div class="form-group form-focus select-focus">
+						<div class="form-group form-focus">
 							<label class="control-label">Twitter</label>
 							<input type="text" class="form-control floating url_selector" id="twitter" name="twitter" value="{{client.twitter}}" />
 						</div>
 					</div>
 					<div class="col-md-6">
-						<div class="form-group form-focus select-focus">
+						<div class="form-group form-focus">
 							<label class="control-label">Linkedin</label>
 							<input type="text" class="form-control floating url_selector" id="linkdn" name="linkdn" value="{{client.linkdn}}" />
 						</div>
@@ -349,7 +349,7 @@
 						</div>
 					</div>
 					<div class="col-md-6">
-						<div class="form-group form-focus select-focus">
+						<div class="form-group form-focus">
 							<label class="control-label">Google</label>
 							<input type="text" class="form-control floating url_selector" id="google" name="google" value="{{client.google}}" />
 						</div>
@@ -475,13 +475,13 @@
 			},
 			messages: {
 				edit_client_first_name: {
-					required: "First Name can't be blank"
+					required: "First name can't be blank"
 				},
 				edit_client_last_name: {
-					required: "Last name  title can't be blank"
+					required: "Last name can't be blank"
 				},
 				org_name: {
-					required: "Organisation Name can't be blank"
+					required: "Organisation name can't be blank"
 				},
 				/* org_id: {
 					required: "Organisation ID can't be blank"
@@ -490,11 +490,11 @@
 					required: "Organisation code can't be blank"
 				}, */
 				email: {
-					required: "Email id can't be blank",
-					email: "Enter valid email id"
+					required: "Email ID can't be blank",
+					email: "Enter valid email ID"
 				},
 				mobile_no: {
-					required: "Mobile number can't blank"
+					required: "Mobile number can't be blank"
 				},
 				fax: {
 					required: "Fax can't be blank"
@@ -517,7 +517,7 @@
 			}
 		});
 
-		// add designation ajax operation and form validation ends
+		// form validation ends
 
 		var activity_id = $('#activity_type_details').val();
 
@@ -528,7 +528,6 @@
 			$('#add-tag-existing-client').show();
 			$('#add-tag-client').hide();
 		}
-
 
 		// show hide for add tag and existing tag
 		$(document).on('click', '#new-add-tag', function () {
