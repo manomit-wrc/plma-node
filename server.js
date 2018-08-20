@@ -47,6 +47,13 @@ require('./config/passport')(passport);
 const hbs = exphbs.create({
     extname: '.hbs',
     helpers: {
+        couunt: function(count,opts) {
+            if (count>0) {
+                return opts.fn(this);
+            } else {
+                return opts.inverse(this);
+            }
+        },
         if_eq: function(a, b, opts) {
             if (a == b)
                 return opts.fn(this);
