@@ -53,6 +53,20 @@ router.get('/referral', auth, firmAttrAuth, csrfProtection, async(req, res)=> {
 	var success_message = req.flash('success-ref-message')[0];
 	var successEdit_message = req.flash('success-refEdit-message')[0];
 	var successDel_message = req.flash('success_delete_referral')[0];
+	var fetchTarget = {};
+	var fetchClient = {};
+	if (req.user.role_id != 2) {
+		fetchTarget.attorney_id = req.user.id;
+		fetchTarget.firm_id = req.user.firm_id;
+		fetchTarget.target_status = 1;
+		fetchClient.attorney_id = req.user.id;
+		fetchClient.firm_id = req.user.firm_id;
+	} else {
+		fetchTarget.target_status = 1;
+		fetchTarget.firm_id = req.user.firm_id;
+		fetchClient.firm_id = req.user.firm_id;
+	}
+
 	var industry = await industry_type.findAll();
 	var country = await Country.findAll();
 	const attorney = await User.findAll({
@@ -66,18 +80,59 @@ router.get('/referral', auth, firmAttrAuth, csrfProtection, async(req, res)=> {
 			country_id: "233"
 		}
 	});
+	const client = await Client.findAll({
+		where: fetchClient
+	});
+
+	const target = await Target.findAll({
+		where: fetchTarget
+	});
 	var whereCondition = {};
-	if (req.query.searchName) {
-		whereCondition.referral_type = req.query.searchName;
+	if (req.query.referral_type) {
+		whereCondition.referral_type = req.query.referral_type;
 	}
-	if (req.query.searchEmail) {
-		whereCondition.email = req.query.searchEmail;
+	if (req.query.industry_type) {
+		whereCondition.industry_type = req.query.industry_type;
 	}
-	if (req.user.firm_id) {
-		whereCondition.firm_id = req.user.firm_id.toString();
-	} else {
-		whereCondition.firm_id = req.user.firm_id;
+	if (req.query.association) {
+		whereCondition.association = req.query.association;
 	}
+	if (req.query.country) {
+		whereCondition.country = req.query.country;
+	}
+	if (req.query.attorney) {
+		whereCondition.attorney_id = req.query.attorney;
+	}
+	if (req.query.ref_type && req.query.referred_id_t || req.query.referred_id_c) {
+		whereCondition.referred_type = req.query.ref_type;
+		if(req.query.referred_id_t){
+			whereCondition.target_id = req.query.referred_id_t;
+		}
+		if (req.query.referred_id_c){
+			whereCondition.client_id = req.query.referred_id_c;
+		}
+	}
+	if (req.query.state) {
+		var city = await City.findAll({
+			where: {
+				state_id: req.query.state
+			}
+		});
+		whereCondition.state = req.query.state;
+	}
+	if (req.query.city) {
+		const cities = await City.findById(req.query.city);
+		var zipcode = await Zipcode.findAll({
+			where: {
+				city_name: cities.name
+			}
+		});
+		whereCondition.city = req.query.city;
+	}
+	if (req.query.zipcode) {
+		whereCondition.zipcode = req.query.zipcode;
+	}
+	whereCondition.firm_id = req.user.firm_id;
 	if (req.user.role_id != 2) {
 		whereCondition.attorney_id = req.user.id;
 	}
@@ -96,8 +151,24 @@ router.get('/referral', auth, firmAttrAuth, csrfProtection, async(req, res)=> {
 		country,
 		state,
 		attorney,
+		client,
+		target,
 		searchName: req.query.searchName ? req.query.searchName : '',
-		searchMail: req.query.searchEmail ? req.query.searchEmail : ''
+		searchMail: req.query.searchEmail ? req.query.searchEmail : '',
+		count_query: Object.keys(req.query).length,
+		industry_type: req.query.industry_type ? req.query.industry_type : "",
+		association: req.query.association ? req.query.association : "",
+		country_search: req.query.country ? req.query.country : "",
+		state_search: req.query.state ? req.query.state : "",
+		city_search: req.query.city ? req.query.city : "",
+		zipcode_search: req.query.zipcode ? req.query.zipcode : "",
+		attr_search: req.query.attorney ? req.query.attorney : "",
+		referral_type_search: req.query.referral_type ? req.query.referral_type : "",
+		ref_type_search: req.query.ref_type ? req.query.ref_type : "",
+		referred_id_t_search: req.query.referred_id_t ? req.query.referred_id_t : "",
+		referred_id_c_search: req.query.referred_id_c ? req.query.referred_id_c : "",
+		city,
+		zipcode
 	});
 });
 
@@ -107,8 +178,6 @@ router.get('/referral/add', auth, firmAttrAuth, csrfProtection, async(req, res) 
 	var country = await Country.findAll();
 	var fetchTarget = {};
 	var fetchClient = {};
-
-
 	if (req.user.role_id != 2) {
 		fetchTarget.attorney_id = req.user.id;
 		fetchTarget.firm_id = req.user.firm_id;
@@ -116,6 +185,7 @@ router.get('/referral/add', auth, firmAttrAuth, csrfProtection, async(req, res) 
 		fetchClient.attorney_id = req.user.id;
 		fetchClient.firm_id = req.user.firm_id;
     } else {
+		fetchTarget.target_status = 1;
 		fetchTarget.firm_id = req.user.firm_id;
 		fetchClient.firm_id = req.user.firm_id;
 	}

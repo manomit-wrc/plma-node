@@ -18,6 +18,7 @@
 </head>
 
 <body>
+  <div class="loader"></div>
   <div class="main-wrapper">
 
     {{> header}} {{> sidebar}}
@@ -26,6 +27,7 @@
   <div class="sidebar-overlay" data-reff="#sidebar"></div>
   {{#block "script"}}
   <script type="text/javascript" src="/assets/js/jquery-3.2.1.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/assets/js/jquery.slimscroll.js"></script>
   <script type="text/javascript" src="/assets/plugins/morris/morris.min.js"></script>
@@ -124,6 +126,11 @@
         });
 
       });
+  </script>
+  <script type="text/javascript">
+    $(window).load(function () {
+      $(".loader").fadeOut("slow");
+    });
   </script>
 </body>
 
