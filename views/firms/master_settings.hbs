@@ -26,6 +26,10 @@
 								<i class="fa fa-list"></i>Firm Details</a>
 							</li>
 							<li role="presentation">
+								<a href="#SectionApprove" aria-controls="profile" role="tab" data-toggle="tab">
+									<i class="fa fa-check"></i>Approval Process</a>
+							</li>
+							<li role="presentation">
 								<a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">
 								<i class="fa fa-building"></i>Offices</a>
 							</li>
@@ -224,6 +228,102 @@
 
 										<div class="m-t-20 text-center">
 											<button class="btn btn-primary rounded common-rounded-btn" id="btnUpdateFirmDetails">Save &amp; Next</button>
+										</div>
+									</form>
+								</div>
+							</div>
+							<div role="tabpanel" class="tab-pane fade" id="SectionApprove">
+								<div class="row filter-row">
+									<form class="m-b-30" method="POST" name="frmUpdateFirmApproval" id="frmUpdateFirmApproval">
+										<input type="hidden" name="_csrf" value="{{csrfToken}}">
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group text-center">
+													<label class="control-label">How many level/s for the approval process ?
+														<span class="text-danger">*</span>
+													</label>
+													<div class="form-inline m-b-15">
+														<div class="form-group m-r-5">
+															<label class="input-group">
+																<span class="input-group-addon">
+																	<input type="radio" id="level_1" name="approval_level" value="1" checked/>
+																</span>
+																<div class="form-control form-control-static">Approval Level 1</div>
+																<span class="glyphicon form-control-feedback"></span>
+															</label>
+														</div>
+														<div class="form-group m-r-5">
+															<label class="input-group">
+																<span class="input-group-addon">
+																	<input type="radio" id="level_2" name="approval_level" value="2" />
+																</span>
+																<div class="form-control form-control-static">Approval Level 2</div>
+																<span class="glyphicon form-control-feedback"></span>
+															</label>
+														</div>
+														<div class="form-group m-r-5">
+															<label class="input-group">
+																<span class="input-group-addon">
+																	<input type="radio" id="level_3" name="approval_level" value="3" />
+																</span>
+																<div class="form-control form-control-static">Approval Level 3</div>
+																<span class="glyphicon form-control-feedback"></span>
+															</label>
+														</div>
+														<div class="form-group m-r-5">
+															<label class="input-group">
+																<span class="input-group-addon">
+																	<input type="radio" id="level_4" name="approval_level" value="4" />
+																</span>
+																<div class="form-control form-control-static">Approval Level 4</div>
+																<span class="glyphicon form-control-feedback"></span>
+															</label>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Level 1</label>
+													<span class="text-danger">*</span>
+													<select class="form-control floating section_remove" id="level_1_designation" name="level_1_designation">
+														<option value="">Select Designation</option>
+														{{#each designation}}
+														<option value="{{this.id}}">{{this.title}}</option>
+														{{/each}}
+													</select>
+												</div>
+											</div>
+											<div class="col-md-6" id="level2Designation" style="display: none;">
+												<div class="form-group">
+													<label class="control-label">Level 2</label>
+													<span class="text-danger">*</span>
+													<select class="form-control floating" id="level_2_designation" name="level_2_designation">
+														<option value="">Select Designation</option>
+													</select>
+												</div>
+											</div>
+											<div class="col-md-6" id="level3Designation" style="display: none;">
+												<div class="form-group">
+													<label class="control-label">Level 3</label>
+													<span class="text-danger">*</span>
+													<select class="form-control floating" id="level_3_designation" name="level_3_designation">
+														<option value="">Select Designation</option>
+													</select>
+												</div>
+											</div>
+											<div class="col-md-6" id="level4Designation" style="display: none;">
+												<div class="form-group">
+													<label class="control-label">Level 4</label>
+													<span class="text-danger">*</span>
+													<select class="form-control floating" id="level_4_designation" name="level_4_designation">
+														<option value="">Select Designation</option>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="m-t-20 text-center">
+											<button class="btn btn-primary rounded common-rounded-btn" type="button" id="btnUpdateFirmApproval">Save &amp; Next</button>
 										</div>
 									</form>
 								</div>
@@ -2033,5 +2133,94 @@
 	});
 
 /*==================================Update Firm Details (BASIC) =============================*/
+/*==================================Firm Approval Level Process =============================*/
+
+	$(document).ready(function(){
+		$(document).on('click', '#level_2', function () {
+			$('#level2Designation').show();
+			$('#level3Designation').hide();
+			$('#level4Designation').hide();
+		});
+
+		$(document).on('click', '#level_3', function () {
+			$('#level2Designation').show();
+			$('#level3Designation').show();
+			$('#level4Designation').hide();
+		});
+
+		$(document).on('click', '#level_4', function () {
+			$('#level2Designation').show();
+			$('#level3Designation').show();
+			$('#level4Designation').show();
+		});
+
+		$(document).on('click', '#level_1', function () {
+			$('#level2Designation').hide();
+			$('#level3Designation').hide();
+			$('#level4Designation').hide();
+		});
+		$(".section_remove option[value='74']").remove();
+	});
+	$(document).on('change', '#level_1_designation', function (e) {
+			var level_1_desig = $('#level_1_designation').val();
+			$.ajax({
+				type: "GET",
+				url: "/get-level-2-designation",
+				success: function (response) {
+					$('#level_2_designation').children('option:not(:first)').remove();
+					for (var i = 0; i < response.designations.length; i++) {
+						$("#level_2_designation").append('<option value="' + response.designations[i].id + '">' + response.designations[i].title + '</option>');
+					}
+					$("#level_2_designation option[value=" + level_1_desig + "]").remove();
+				},
+				error: function (xhr) {
+
+				}
+			});
+		});
+
+		$(document).on('change', '#level_2_designation', function (e) {
+			var level_1_desig = $('#level_1_designation').val();
+			var level_2_desig = $('#level_2_designation').val();
+			$.ajax({
+				type: "GET",
+				url: "/get-level-2-designation",
+				success: function (response) {
+					$('#level_3_designation').children('option:not(:first)').remove();
+					for (var i = 0; i < response.designations.length; i++) {
+						$("#level_3_designation").append('<option value="' + response.designations[i].id + '">' + response.designations[i].title + '</option>');
+					}
+					$("#level_3_designation option[value=" + level_1_desig + "]").remove();
+					$("#level_3_designation option[value=" + level_2_desig + "]").remove();
+				},
+				error: function (xhr) {
+
+				}
+			});
+		});
+
+		$(document).on('change', '#level_3_designation', function (e) {
+			var level_1_desig = $('#level_1_designation').val();
+			var level_2_desig = $('#level_2_designation').val();
+			var level_3_desig = $('#level_3_designation').val();
+			$.ajax({
+				type: "GET",
+				url: "/get-level-2-designation",
+				success: function (response) {
+					$('#level_4_designation').children('option:not(:first)').remove();
+					for (var i = 0; i < response.designations.length; i++) {
+						$("#level_4_designation").append('<option value="' + response.designations[i].id + '">' + response.designations[i].title + '</option>');
+					}
+					$("#level_4_designation option[value=" + level_1_desig + "]").remove();
+					$("#level_4_designation option[value=" + level_2_desig + "]").remove();
+					$("#level_4_designation option[value=" + level_3_desig + "]").remove();
+				},
+				error: function (xhr) {
+
+				}
+			});
+		});
+
+/*==================================Firm Approval Level Process =============================*/
 </script>
 {{/content}}
