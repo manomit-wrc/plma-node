@@ -87,6 +87,9 @@ router.get('/referral', auth, firmAttrAuth, csrfProtection, async(req, res)=> {
 router.get('/referral/add', auth, firmAttrAuth, csrfProtection, async(req, res) => {
 	var err_message = req.flash('error-referral-message')[0];
 	const attorney = await User.findAll({
+		order: [
+			['first_name', 'ASC'],
+		],
 		where: {
 			role_id : 3,
 			firm_id: req.user.firm_id
@@ -100,11 +103,15 @@ router.get('/referral/add', auth, firmAttrAuth, csrfProtection, async(req, res) 
 	});
 	var industry = await industry_type.findAll();
 	const client = await Client.findAll({
+	
+
 		where:{
 			attorney_id: req.user.id
 		}
 	});
 	const target = await Target.findAll({
+		
+
 		where: {
 			attorney_id: req.user.id
 		}

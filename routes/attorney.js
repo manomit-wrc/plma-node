@@ -165,7 +165,7 @@ router.get('/attorneys/addAttorney', auth, firmAttrAuth, csrfProtection, async (
 	const group = await Group.findAll({
 		order: [
 			['name', 'ASC'],
-		]
+		],
 	});
 	sectionToFirm.belongsTo(Section, {
 		foreignKey: 'section_id'

@@ -102,6 +102,9 @@ router.get('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =>
         }
     });
     const attorney = await user.findAll({
+        order: [
+			['first_name', 'ASC'],
+		],
         where: {
             role_id: 3,
             firm_id: req.user.firm_id
@@ -233,6 +236,9 @@ router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, re
         }
     });
     const attorney = await user.findAll({
+        order: [
+			['first_name', 'ASC'],
+		],
         where: {
             role_id: 3,
             firm_id: req.user.firm_id
