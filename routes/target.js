@@ -69,7 +69,9 @@ router.get('/target', auth, firmAttrAuth, csrfProtection, async(req, res) => {
         }
     });
     var whereCondition = {};
-
+    if (req.query.target_type) {
+        whereCondition.target_type = req.query.target_type;
+    }
     if (req.query.industry_type) {
         whereCondition.industry_type = req.query.industry_type;
     }
@@ -135,6 +137,7 @@ router.get('/target', auth, firmAttrAuth, csrfProtection, async(req, res) => {
         city_search: req.query.city ? req.query.city : "",
         zipcode_search: req.query.zipcode ? req.query.zipcode : "",
         attr_search: req.query.attorney ? req.query.attorney : "",
+        target_type_search: req.query.target_type ? req.query.target_type : "",
         city,
         zipcode
     });
