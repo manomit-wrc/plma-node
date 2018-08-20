@@ -53,6 +53,19 @@ router.get('/referral', auth, firmAttrAuth, csrfProtection, async(req, res)=> {
 	var success_message = req.flash('success-ref-message')[0];
 	var successEdit_message = req.flash('success-refEdit-message')[0];
 	var successDel_message = req.flash('success_delete_referral')[0];
+	var industry = await industry_type.findAll();
+	var country = await Country.findAll();
+	const attorney = await User.findAll({
+		where: {
+			role_id: 3,
+			firm_id: req.user.firm_id
+		}
+	});
+	const state = await State.findAll({
+		where: {
+			country_id: "233"
+		}
+	});
 	var whereCondition = {};
 	if (req.query.searchName) {
 		whereCondition.referral_type = req.query.searchName;
@@ -79,6 +92,10 @@ router.get('/referral', auth, firmAttrAuth, csrfProtection, async(req, res)=> {
 		referral,
 		successEdit_message,
 		successDel_message,
+		industry,
+		country,
+		state,
+		attorney,
 		searchName: req.query.searchName ? req.query.searchName : '',
 		searchMail: req.query.searchEmail ? req.query.searchEmail : ''
 	});

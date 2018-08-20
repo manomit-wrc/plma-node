@@ -35,6 +35,12 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="table-responsive">
+					 {{#if_eq count_query "0"}}{{else}}
+					<a href="/client" class="btn btn-primary rounded advancedFilter" style="right: 595px !important;">
+						<i class="fa fa-eraser"></i> Clear Filter</a>
+					{{/if_eq}}
+					<button class="btn btn-primary rounded advancedFilter" data-toggle="modal" data-target="#add_filter">
+						<i class="fa fa-filter"></i> Filter</button>
 					<table class="table table-striped custom-table datatable">
 						<thead>
 							<tr>
@@ -169,7 +175,140 @@
 		</div>
 	</div>
 </div>
+<div id="add_filter" class="modal custom-modal fade" role="dialog">
+	<div class="modal-dialog">
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+		<div class="modal-content modal-lg">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<i class="fa fa-filter"></i> Filter By</h4>
+			</div>
+			<div class="modal-body">
+				<form class="m-b-30" name="advancedFilterClient" id="advancedFilterClient" method="GET">
+					<div class="row">
+						<div class="col-md-3">
+							<label class="control-label">Client Type
+							</label>
+						</div>
+						<div class="cod-md-9">
+							<div class="form-inline m-b-15">
+								<div class="form-group m-r-5">
+									<label class="input-group">
+										<span class="input-group-addon">
+											<input type="radio" id="individual_client" name="client_type" value="I" {{#if_eq client_type_search "I"}} checked {{/if_eq}}/>
+										</span>
+										<div class="form-control form-control-static">Individual</div>
+										<span class="glyphicon form-control-feedback "></span>
+									</label>
+								</div>
+								<div class="form-group ">
+									<label class="input-group">
+										<span class="input-group-addon">
+											<input type="radio" id="organization_client" name="client_type" value="O" {{#if_eq client_type_search "O"}} checked {{/if_eq}}/>
+										</span>
+										<div class="form-control form-control-static">Organization</div>
+										<span class="glyphicon form-control-feedback "></span>
+									</label>
+								</div>
+							</div>
+						</div>
+						{{#if_eq user.role_id "2"}}
+						<div class="col-md-12">
+							<div class="form-group">
+								<label class="control-label">Attorney Name
+								</label>
+								<select class="select form-control" id="attorney" name="attorney">
+									<option value="">Select Attorney</option>
+									{{#each attorney}}
+									<option value="{{this.id}}" {{#if_eq this.id ../attr_search}} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						{{/if_eq}}
+						<div class="col-md-12">
+							<div class="form-group">
+								<label class="control-label">Industry Type
+								</label>
+								<select class="select form-control" id="industry_type" name="industry_type">
+									<option value="">Select Industry Type</option>
+									{{#each industry}}
+									<option value="{{this.id}}" {{#if_eq this.id ../industry_type}} selected="selected" {{/if_eq}}>{{this.industry_name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<label class="control-label">Association Status
+								</label>
+								<select class="select form-control" id="association" name="association">
+									<option value="">Select Association</option>
+									<option value="NEW TARGET" {{#if_eq association "NEW TARGET"}} selected="selected" {{/if_eq}}>NEW TARGET</option>
+									<option value="CONVERTED" {{#if_eq association "CONVERTED"}} selected="selected" {{/if_eq}}>CONVERTED</option>
+									<option value="TS-INTERIM" {{#if_eq association "TS-INTERIM"}} selected="selected" {{/if_eq}}>TS-INTERIM</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Country
+								</label>
+								<select class="select form-control" id="country" name="country">
+									<option value="">Select Country</option>
+									{{#each country}}
+									<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">State
+								</label>
+								<select class="select form-control" id="state" name="state">
+									<option value="">Select State</option>
+									{{#each state}}
+									<option value="{{this.id}}" {{#if_eq this.id ../state_search}} selected {{/if_eq}}>{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">City
+								</label>
+								<select class="select form-control" id="city" name="city">
+									<option value="">Select City</option>
+									{{#each city}}
+									<option value="{{this.id}}" {{#if_eq this.id ../city_search}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Zipcode
+								</label>
+								<select class="select form-control" id="zipcode" name="zipcode">
+									<option value="">Select Zipcode</option>
+									{{#each zipcode}}
+									<option value="{{this.id}}" {{#if_eq this.id ../zipcode_search}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+					</div>
 
+					<div class="m-t-20 text-center">
+						<button class="btn btn-primary btn-lg" type="submit" id="btnAddGroup">Search</button>
+						<a href="/client" class="btn btn-primary btn-lg m-l-10">Cancel</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 
 
  {{#content "script" mode="append"}}
