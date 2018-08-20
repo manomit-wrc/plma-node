@@ -45,7 +45,6 @@
 				<h3 class="card-title">Basic Information</h3>
 				<div class="row">
 					<div class="col-md-12">
-
 						<div id="org_type" style="display:none;">
 							<div class="col-md-12">
 								<div class="form-group form-focus">
@@ -53,9 +52,6 @@
 									<input type="text" class="form-control floating" id="org_name" name="org_name" />
 								</div>
 							</div>
-
-	
-
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Organisation ID</label>
@@ -304,15 +300,12 @@
 							<input type="text" class="form-control floating" id="im" name="im" />
 						</div>
 					</div>
-
-
 					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Company Name</label>
 							<input type="text" class="form-control floating" id="company_name" name="company_name" />
 						</div>
 					</div>
-					
 					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Twitter</label>
@@ -372,9 +365,7 @@
 						</div>
 					</div>
 				</div>
-
 			</div>
-
 			<div class="text-center m-t-20">
 				<button class="btn btn-primary btn-lg" type="submit">Add Client</button>
 				<a href="/client" class="btn btn-primary btn-lg m-l-10">Cancel</a>
@@ -472,17 +463,20 @@
 				},
 				zipcode: {
 					required: true
+				},
+				industry_type: {
+					required: true
 				}
 			},
 			messages: {
 				client_first_name: {
-					required: "First Name can't be blank"
+					required: "First name can't be blank"
 				},
 				client_last_name: {
-					required: "Last name  title can't be blank"
+					required: "Last name can't be blank"
 				},
 				org_name: {
-					required: "Organisation Name can't be blank"
+					required: "Organisation name can't be blank"
 				},
 				org_id: {
 					required: "Organisation ID can't be blank"
@@ -497,17 +491,17 @@
 					required: "Master ID can't be blank"
 				},
 				email: {
-					required: "Email id can't be blank",
-					email: "Enter valid email id"
+					required: "Email ID can't be blank",
+					email: "Enter valid email ID"
 				},
 				mobile_no: {
-					required: "Mobile number can't blank"
+					required: "Mobile no. can't blank"
 				},
 				phone_no: {
-					required: "Phone number can't blank"
+					required: "Phone no. can't blank"
 				},
 				fax: {
-					required: "Fax  can't be blank"
+					required: "Fax can't be blank"
 				},
 				address1: {
 					required: "Must provide address"
@@ -523,6 +517,9 @@
 				},
 				zipcode: {
 					required: "Choose your zipcode"
+				},
+				industry_type: {
+					required: "Choose your industry type"
 				}
 			}
 		});
