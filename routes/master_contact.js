@@ -59,6 +59,9 @@ router.get('/master_contact', auth, firmAttrAuth, csrfProtection, async (req, re
 	var whereCondition = {};
 
 	//for filter 
+	if (req.query.masterContactType) {
+        whereCondition.master_contact_type = req.query.masterContactType;
+    }
 	if (req.query.industry_type) {
 		whereCondition.industry_type = req.query.industry_type;
 	}
@@ -105,9 +108,6 @@ router.get('/master_contact', auth, firmAttrAuth, csrfProtection, async (req, re
 		where: whereCondition
 	});
 
-	// console.log(Object.keys(req.query).length);
-	
-
 	res.render('master_contact/index', {
 		layout: 'dashboard',
 		csrfToken: req.csrfToken(),
@@ -121,6 +121,7 @@ router.get('/master_contact', auth, firmAttrAuth, csrfProtection, async (req, re
 		success_edit_message,
 		city,
 		zipcode,
+		masterContactTypeSearch: req.query.target_type ? req.query.target_type : "",
 	});
 });
 

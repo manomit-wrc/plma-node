@@ -114,9 +114,6 @@ router.get('/target', auth, firmAttrAuth, csrfProtection, async(req, res) => {
         where: whereCondition
     });
 
-    console.log(Object.keys(req.query).length);
-    
-
     res.render('target/targets', {
         layout: 'dashboard',
         csrfToken: req.csrfToken(),

@@ -137,6 +137,32 @@
             <div class="modal-body">
                 <form class="m-b-30" name="advancedFilterMasterContact" id="advancedFilterMasterContact" method="GET">
                     <div class="row">
+                        <div class="col-md-3">
+                            <label class="control-label">Master Contact Type
+                            </label>
+                        </div>
+                        <div class="cod-md-9">
+                            <div class="form-inline m-b-15">
+                                <div class="form-group m-r-5">
+                                    <label class="input-group">
+                                        <span class="input-group-addon">
+                                            <input type="radio" id="individual_client" name="masterContactType" value="I" {{#if_eq masterContactTypeSearch "I"}} checked {{/if_eq}}/>
+                                        </span>
+                                        <div class="form-control form-control-static">Individual</div>
+                                        <span class="glyphicon form-control-feedback "></span>
+                                    </label>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="input-group">
+                                        <span class="input-group-addon">
+                                            <input type="radio" id="organization_client" name="masterContactType" value="O" {{#if_eq masterContactTypeSearch "O"}} checked {{/if_eq}}/>
+                                        </span>
+                                        <div class="form-control form-control-static">Organization</div>
+                                        <span class="glyphicon form-control-feedback "></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                         {{#if_eq user.role_id "2"}}
                             <div class="col-md-12">
                                 <div class="form-group">
