@@ -33,123 +33,268 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive">
-                    <table class="table table-striped custom-table datatable master_contact">
-                        <thead>
-                            <tr>
-                                <th><input type="checkbox" onClick="checkall(this);" /> SL#</th>
-                                <th>Name</th>
-                                <th>Email Id</th>
-                                <th>Contact Code</th>
-                                <th>Mobile Number</th>
-                                <th>Company Name</th>
-                                <th>Status</th>
-                                <th class="text-right">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{#each contacts}}
-                            <tr>
-                                <td><input type="checkbox" name="contact_id" value="{{this.id}}" /> {{math @index "+" 1}}</td>
-                                <td><a href="/master_contact/view/{{this.id}}"> {{this.first_name}} {{this.last_name}} </a></td>
-                                <td>{{this.email}}</td>
-                                <td>{{this.master_contact_code}}</td>
-                                <td class="number_validator">{{this.mobile_no}}</td>
-                                <td>{{this.company_name}}</td>
-                                <td>{{this.status}}</td>
-                                <td class="text-right">
-                                    <a href="/master_contact/view/{{this.id}}" class="btn btn-success btn-sm">
-                                        <i class="fa fa-eye m-r-5"></i>
-                                    </a>
-                                    <a href="/master_contact/edit/{{this.id}}" class="btn btn-info btn-sm">
-                                        <i class="fa fa-pencil m-r-5"></i>
-                                    </a>
-                                    
-                                    <a href="javascript:void(0)" data-toggle="modal" data-target="delete_users" data-mastercontact-id="{{this.id}}" id="delete_mastercontact" class="btn btn-danger btn-sm">
-                                        <i class="fa fa-trash-o m-r-5"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            
-                            {{/each}}
-                        </tbody>
-                    </table>
+
+                   {{#if count_query}}
+                   <a href="/master_contact" class="btn btn-primary rounded advancedFilter" style="right: 595px !important;">
+                    <i class="fa fa-eraser"></i> Clear Filter</a>
+                    {{/if}}
+
+                    <button class="btn btn-primary rounded advancedFilter" data-toggle="modal" data-target="#advanceSearchForMasterContact">
+                        <i class="fa fa-filter"></i> Filter</button>
+                        <table class="table table-striped custom-table datatable master_contact">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" onClick="checkall(this);" /> SL#</th>
+                                    <th>Name</th>
+                                    <th>Email Id</th>
+                                    <th>Contact Code</th>
+                                    <th>Mobile Number</th>
+                                    <th>Company Name</th>
+                                    <th>Status</th>
+                                    <th class="text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each contacts}}
+                                <tr>
+                                    <td><input type="checkbox" name="contact_id" value="{{this.id}}" /> {{math @index "+" 1}}</td>
+                                    <td><a href="/master_contact/view/{{this.id}}"> {{this.first_name}} {{this.last_name}} </a></td>
+                                    <td>{{this.email}}</td>
+                                    <td>{{this.master_contact_code}}</td>
+                                    <td class="number_validator">{{this.mobile_no}}</td>
+                                    <td>{{this.company_name}}</td>
+                                    <td>{{this.status}}</td>
+                                    <td class="text-right">
+                                        <a href="/master_contact/view/{{this.id}}" class="btn btn-success btn-sm">
+                                            <i class="fa fa-eye m-r-5"></i>
+                                        </a>
+                                        <a href="/master_contact/edit/{{this.id}}" class="btn btn-info btn-sm">
+                                            <i class="fa fa-pencil m-r-5"></i>
+                                        </a>
+
+                                        <a href="javascript:void(0)" data-toggle="modal" data-target="delete_users" data-mastercontact-id="{{this.id}}" id="delete_mastercontact" class="btn btn-danger btn-sm">
+                                            <i class="fa fa-trash-o m-r-5"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div id="delete_users" class="modal custom-modal fade del-mastercontact" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content modal-md">
-            <div class="modal-header">
-                <h4 class="modal-title">Delete Master Contact</h4>
-            </div>
-            <form>
-                <div class="modal-body card-box">
-                    <p>are you sure you want to delete this master contact ?</p>
-                    <div class="m-t-20" id="delDiv">
-                        <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
-                    </div>
+    <div id="delete_users" class="modal custom-modal fade del-mastercontact" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content modal-md">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Master Contact</h4>
                 </div>
-            </form>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="import" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <strong>Import Excel for Contact</strong>
-                <button type="button" class="close" data-dismiss="modal">×</button>
-            </div>
-            <div class="modal-body">
-                <form name="import" method="POST" action="/master_contact/import" enctype="multipart/form-data">
-                    <input type="hidden" name="_csrf" value="{{csrfToken}}">
-                    <div class="form-group">
-                        <input type="file" class="form-control" style="height: auto;" name="file_name" />
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" name="import" value="Import" class="btn btn-info" />
+                <form>
+                    <div class="modal-body card-box">
+                        <p>are you sure you want to delete this master contact ?</p>
+                        <div class="m-t-20" id="delDiv">
+                            <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                        </div>
                     </div>
                 </form>
             </div>
-            <div class="modal-footer"></div>
         </div>
     </div>
-</div>
+    <div class="modal fade" id="import" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <strong>Import Excel for Contact</strong>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <form name="import" method="POST" action="/master_contact/import" enctype="multipart/form-data">
+                        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                        <div class="form-group">
+                            <input type="file" class="form-control" style="height: auto;" name="file_name" />
+                        </div>
 
-{{#content "script" mode="append"}}
-<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
-<script type="text/javascript" src="/assets/js/select2.min.js"></script>
-<script type="text/javascript" src="/assets/js/moment.min.js"></script>
-<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
-<script type="text/javascript" src="/assets/plugins/bootstrap-sweetalert/sweet-alert.min.js"></script>
-<script type="text/javascript">
-    function checkall(source) {
-        var checkboxes = document.getElementsByName('contact_id');
-        for (var i = 0; i < checkboxes.length; i++) {
-            checkboxes[i].checked = source.checked;
-        }
-    }
+                    </form>
+                </div>
+                <div class="modal-footer">
 
-    $('.move-target').on('click', function(e) {
-        var contact_ids = [];
-        $('input[name="contact_id"]:checked').each(function() {
-            contact_ids.push(this.value);
-        });
+                        <input type="submit" name="import" value="Import" class="btn btn-info" />
+                    
+                </div>
+            </div>
+        </div>
+    </div>
 
-        if (contact_ids.length == 0) {
-            swal("", "Please select one or more master contact!", "warning");
-        } else {
+    <div id="advanceSearchForMasterContact" class="modal custom-modal fade" role="dialog">
+        <div class="modal-dialog">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <div class="modal-content modal-lg">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <i class="fa fa-filter"></i> Filter By</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="m-b-30" name="advancedFilterMasterContact" id="advancedFilterMasterContact" method="GET">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label class="control-label">Master Contact Type
+                                    </label>
+                                </div>
+                                <div class="cod-md-9">
+                                    <div class="form-inline m-b-15">
+                                        <div class="form-group m-r-5">
+                                            <label class="input-group">
+                                                <span class="input-group-addon">
+                                                    <input type="radio" id="individual_client" name="masterContactType" value="I" {{#if_eq masterContactTypeSearch "I"}} checked {{/if_eq}}/>
+                                                </span>
+                                                <div class="form-control form-control-static">Individual</div>
+                                                <span class="glyphicon form-control-feedback "></span>
+                                            </label>
+                                        </div>
+                                        <div class="form-group ">
+                                            <label class="input-group">
+                                                <span class="input-group-addon">
+                                                    <input type="radio" id="organization_client" name="masterContactType" value="O" {{#if_eq masterContactTypeSearch "O"}} checked {{/if_eq}}/>
+                                                </span>
+                                                <div class="form-control form-control-static">Organization</div>
+                                                <span class="glyphicon form-control-feedback "></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{#if_eq user.role_id "2"}}
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Attorney Name
+                                        </label>
+                                        <select class="select form-control" id="attorney" name="attorney">
+                                            <option value="">Select Attorney</option>
+                                            {{#each attorney}}
+                                            <option value="{{this.id}}" {{#if_eq this.id ../attr_search}} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                                {{/if_eq}}
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Industry Type
+                                        </label>
+                                        <select class="select form-control" id="industry_type" name="industry_type">
+                                            <option value="">Select Industry Type</option>
+                                            {{#each industryTypes}}
+                                            <option value="{{this.id}}" {{#if_eq this.id ../industry_type}} selected="selected" {{/if_eq}}>{{this.industry_name}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Association Status
+                                        </label>
+                                        <select class="select form-control" id="association" name="association">
+                                            <option value="">Select Association</option>
+                                            <option value="NEW TARGET" {{#if_eq association "NEW TARGET"}} selected="selected" {{/if_eq}}>NEW TARGET</option>
+                                            <option value="CONVERTED" {{#if_eq association "CONVERTED"}} selected="selected" {{/if_eq}}>CONVERTED</option>
+                                            <option value="TS-INTERIM" {{#if_eq association "TS-INTERIM"}} selected="selected" {{/if_eq}}>TS-INTERIM</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Country
+                                        </label>
+                                        <select class="select form-control" id="country" name="country">
+                                            <option value="">Select Country</option>
+                                            {{#each country}}
+                                            <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">State
+                                        </label>
+                                        <select class="select form-control" id="state" name="state">
+                                            <option value="">Select State</option>
+                                            {{#each state}}
+                                            <option value="{{this.id}}" {{#if_eq this.id ../state_search}} selected {{/if_eq}}>{{this.name}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">City
+                                        </label>
+                                        <select class="select form-control" id="city" name="city">
+                                            <option value="">Select City</option>
+                                            {{#each city}}
+                                            <option value="{{this.id}}" {{#if_eq this.id ../city_search}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Zipcode
+                                        </label>
+                                        <select class="select form-control" id="zipcode" name="zipcode">
+                                            <option value="">Select Zipcode</option>
+                                            {{#each zipcode}}
+                                            <option value="{{this.id}}" {{#if_eq this.id ../zipcode_search}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="m-t-20 text-center">
+                                <button class="btn btn-primary btn-lg" type="submit" id="btnAddGroup">Search</button>
+                                <a href="/master_contact" class="btn btn-primary btn-lg m-l-10">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        {{#content "script" mode="append"}}
+        <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+        <script type="text/javascript" src="/assets/js/select2.min.js"></script>
+        <script type="text/javascript" src="/assets/js/moment.min.js"></script>
+        <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+        <script type="text/javascript" src="/assets/plugins/bootstrap-sweetalert/sweet-alert.min.js"></script>
+        <script type="text/javascript">
+            function checkall(source) {
+                var checkboxes = document.getElementsByName('contact_id');
+                for (var i = 0; i < checkboxes.length; i++) {
+                    checkboxes[i].checked = source.checked;
+                }
+            }
+
+            $('.move-target').on('click', function(e) {
+                var contact_ids = [];
+                $('input[name="contact_id"]:checked').each(function() {
+                    contact_ids.push(this.value);
+                });
+
+                if (contact_ids.length == 0) {
+                    swal("", "Please select one or more master contact!", "warning");
+                } else {
             //$('#move_to_target_2').modal('show');
             swal({
                 title: "",
@@ -186,15 +331,15 @@
         }
     });
 
-    $('.master-contact-delete').on('click', function(e) {
-        var contact_ids = [];
-        $('input[name="contact_id"]:checked').each(function() {
-            contact_ids.push(this.value);
-        });
+            $('.master-contact-delete').on('click', function(e) {
+                var contact_ids = [];
+                $('input[name="contact_id"]:checked').each(function() {
+                    contact_ids.push(this.value);
+                });
 
-        if (contact_ids.length == 0) {
-            swal("", "Please select one or more master contact!", "warning");
-        } else {
+                if (contact_ids.length == 0) {
+                    swal("", "Please select one or more master contact!", "warning");
+                } else {
             //$('#master-contact-delete-2').modal('show');
             swal({
                 title: "",
@@ -231,13 +376,13 @@
         }
     });
 
-    $(document).on('click', '#delete_mastercontact', function(e) {
-        var mastercontact_id = $(this).data('mastercontact-id');
-        $("#removeBtnDelete").remove();
-        $("#delete_users").modal('show');
-        $("#delDiv").append('<a href="/master_contact/delete/' + mastercontact_id + '" class="btn btn-danger" id="removeBtnDelete">' + "Delete" + '</a>');
-    });
+            $(document).on('click', '#delete_mastercontact', function(e) {
+                var mastercontact_id = $(this).data('mastercontact-id');
+                $("#removeBtnDelete").remove();
+                $("#delete_users").modal('show');
+                $("#delDiv").append('<a href="/master_contact/delete/' + mastercontact_id + '" class="btn btn-danger" id="removeBtnDelete">' + "Delete" + '</a>');
+            });
 
-</script>
+        </script>
 
-{{/content}}
+        {{/content}}

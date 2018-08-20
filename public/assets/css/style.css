@@ -3096,8 +3096,8 @@ label.error {
 	font-size: 12px;
 	height: 32px;
 	line-height: 32px;
-	padding-left: 12px;
-	padding-right: 12px;
+	/*padding-left: 12px;
+	padding-right: 12px;*/
 }
 
 .topnav-dropdown-footer a {
@@ -5559,9 +5559,16 @@ i.fa.fa-eye.m-r-5 {
 }
 
 .dataTables_wrapper div.dt-buttons button.dt-button:focus,
-.dataTables_wrapper div.dt-buttons button.dt-button:hover {
-	background-color: #ff851a;
+.dataTables_wrapper div.dt-buttons button.dt-button:hover,
+.dataTables_wrapper div.dt-buttons button.dt-button:active {
+	background-color: #ff851a !important;
 	border: 1px solid #ff851a;
+	box-shadow: none !important;
+	-webkit-box-shadow: none !important;
+	-moz-box-shadow: none !important;
+	-ms-box-shadow: none !important;
+	-o-box-shadow: none !important;
+	background-image: none !important;
 }
 
 
@@ -5842,7 +5849,7 @@ select.gender {
 	}
 
 	.master_contact thead th:nth-child(1) {
-		width: 7% !important;
+		width: 8% !important;
 	}
 
 	.target thead th:nth-child(1) {
@@ -5875,8 +5882,28 @@ select.gender {
 		color: #fff !important;
 	}
 
-	.section thead th:nth-child(1), .practice-area thead th:nth-child(1), .jurisdiction thead th:nth-child(1), .group thead th:nth-child(1), .industry thead th:nth-child(1), .designation thead th:nth-child(1), .budget thead th:nth-child(1) {
+	.section thead th:nth-child(1), .practice-area thead th:nth-child(1), .jurisdiction thead th:nth-child(1), .group thead th:nth-child(1), .industry thead th:nth-child(1), .designation thead th:nth-child(1), .budget thead th:nth-child(1), .attorneys thead th:nth-child(1), .activity-goal thead th:nth-child(1), .financial-goal thead th:nth-child(1), .target thead th:nth-child(1), .activity-approvals thead th:nth-child(1) {
 		width: 8% !important;
+	}
+
+	.card-box input[type="checkbox"] {
+
+	}
+
+	.dash-widget .dash-widget-icon {
+		background: #ff881f none repeat scroll 0 0;
+	}
+
+	.dash-widget .dash-widget-icon .fa {
+		color: #fff;
+	}
+
+	.user-menu .dropdown-menu a:hover p.m-0.noti-details {
+		color: #fff !important;
+	}
+
+	.user-menu .dropdown-menu a:hover p.m-0.noti-details .noti-title {
+		color: #fff;
 	}
 
 

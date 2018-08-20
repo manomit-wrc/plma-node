@@ -110,7 +110,7 @@ table.dataTable thead .sorting_desc_disabled:after {
     display: block;
     font-family: 'Glyphicons Halflings';
     opacity: 0.5;
-    top: 10px;
+    top: 12px;
 }
 
 table.dataTable thead .sorting:after {
