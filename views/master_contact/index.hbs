@@ -33,10 +33,12 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive">
-                     {{!-- {{#if_eq count_query "0"}}{{else}} --}}
+
+                     {{#if count_query}}
                     <a href="/master_contact" class="btn btn-primary rounded advancedFilter" style="right: 595px !important;">
                         <i class="fa fa-eraser"></i> Clear Filter</a>
-                    {{!-- {{/if_eq}} --}}
+                    {{/if}}
+                  
                     <button class="btn btn-primary rounded advancedFilter" data-toggle="modal" data-target="#advanceSearchForMasterContact">
                         <i class="fa fa-filter"></i> Filter</button>
                     <table class="table table-striped custom-table datatable">
@@ -133,7 +135,7 @@
                     <i class="fa fa-filter"></i> Filter By</h4>
             </div>
             <div class="modal-body">
-                <form class="m-b-30" name="advancedFilterTarget" id="advancedFilterTarget" method="GET">
+                <form class="m-b-30" name="advancedFilterMasterContact" id="advancedFilterMasterContact" method="GET">
                     <div class="row">
                         {{#if_eq user.role_id "2"}}
                             <div class="col-md-12">
@@ -155,7 +157,7 @@
                                 </label>
                                 <select class="select form-control" id="industry_type" name="industry_type">
                                     <option value="">Select Industry Type</option>
-                                    {{#each industry}}
+                                    {{#each industryTypes}}
                                     <option value="{{this.id}}" {{#if_eq this.id ../industry_type}} selected="selected" {{/if_eq}}>{{this.industry_name}}</option>
                                     {{/each}}
                                 </select>
@@ -225,14 +227,14 @@
 
                     <div class="m-t-20 text-center">
                         <button class="btn btn-primary btn-lg" type="submit" id="btnAddGroup">Search</button>
-                        <button class="btn btn-primary btn-lg m-l-10" data-dismiss="modal" >Cancel</button>
-                        {{!-- <a href="/master_contact" class="btn btn-primary btn-lg m-l-10">Cancel</a> --}}
+                        <a href="/master_contact" class="btn btn-primary btn-lg m-l-10">Cancel</a>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
 
 {{#content "script" mode="append"}}
 <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>

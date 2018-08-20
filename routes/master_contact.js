@@ -45,10 +45,53 @@ function removePhoneMask(phone_no) {
 	return phone_no;
 }
 
-router.get('/master_contact', auth, firmAttrAuth, csrfProtection, (req, res) => {
+router.get('/master_contact', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var success_message = req.flash('success-message')[0];
 	var success_edit_message = req.flash('success-edit-message')[0];
+	const industryTypes = await industry_type.findAll();
+	var country = await Country.findAll();
+	const state = await State.findAll({
+		where: {
+			country_id: "233"
+		}
+	});
+
 	var whereCondition = {};
+
+	//for filter 
+	if (req.query.industry_type) {
+		whereCondition.industry_type = req.query.industry_type;
+	}
+	if (req.query.association) {
+		whereCondition.status = req.query.association;
+	}
+	if (req.query.country) {
+		whereCondition.country = req.query.country;
+	}
+	if (req.query.attorney) {
+		whereCondition.attorney_id = req.query.attorney;
+	}
+	if (req.query.state) {
+		var city = await City.findAll({
+			where: {
+				state_id: req.query.state
+			}
+		});
+		whereCondition.state = req.query.state;
+	}
+	if (req.query.city) {
+		const cities = await City.findById(req.query.city);
+		var zipcode = await Zipcode.findAll({
+			where: {
+				city_name: cities.name
+			}
+		});
+		whereCondition.city = req.query.city;
+	}
+	if (req.query.zipcode) {
+		whereCondition.postal_code = req.query.zipcode;
+	}
+
 	if (req.query.searchEmail) {
 		whereCondition.email = req.query.searchEmail;
 	}
@@ -58,17 +101,26 @@ router.get('/master_contact', auth, firmAttrAuth, csrfProtection, (req, res) => 
 	}
 	whereCondition.contact_status = 1;
 
-	Contact.findAll({
+	const result = await Contact.findAll({
 		where: whereCondition
-	}).then(result => {
-		res.render('master_contact/index', {
-			layout: 'dashboard',
-			csrfToken: req.csrfToken(),
-			contacts: result,
-			searchMail: req.query.searchEmail ? req.query.searchEmail : '',
-			success_message,
-			success_edit_message
-		});
+	});
+
+	// console.log(Object.keys(req.query).length);
+	
+
+	res.render('master_contact/index', {
+		layout: 'dashboard',
+		csrfToken: req.csrfToken(),
+		count_query: Object.keys(req.query).length,
+		industryTypes,
+		country,
+		state,
+		contacts: result,
+		searchMail: req.query.searchEmail ? req.query.searchEmail : '',
+		success_message,
+		success_edit_message,
+		city,
+		zipcode,
 	});
 });
 
