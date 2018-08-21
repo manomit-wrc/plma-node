@@ -60,7 +60,7 @@
                                 <td><input type="checkbox" name="contact_id" value="{{this.id}}" /> {{math @index "+" 1}}</td>
                                 <td><a href="/master_contact/view/{{this.id}}">{{#if organization_name}} {{this.organization_name}} {{else}} {{this.first_name}} {{this.last_name}} {{/if}}  </a></td>
                                 <td>{{this.email}}</td>
-                                <td>{{this.master_contact_code}}</td>
+                                <td> {{#if this.master_contact_code}} {{this.master_contact_code}} {{else}} {{this.organization_code}} {{/if}} </td>
                                 <td class="number_validator">{{this.mobile_no}}</td>
                                 <td>{{this.company_name}}</td>
                                 <td>{{this.status}}</td>
