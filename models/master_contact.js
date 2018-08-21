@@ -34,7 +34,10 @@ module.exports = (sequelize, DataTypes) => {
     attorney_id: DataTypes.INTEGER,
     facebook: DataTypes.STRING,
     master_contact_type:DataTypes.STRING,
-    estimated_revenue :DataTypes.INTEGER
+    estimated_revenue :DataTypes.STRING,
+    organization_name: DataTypes.STRING,
+    organization_code: DataTypes.STRING
+
   }, {});
   master_contact.associate = function(models) {
     // associations can be defined here

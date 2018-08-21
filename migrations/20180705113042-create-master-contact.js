@@ -107,7 +107,13 @@ module.exports = {
         type: Sequelize.STRING
       },
       estimated_revenue: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
+      },
+      organization_name: {
+        type: Sequelize.STRING
+      },
+      organization_code: {
+        type: Sequelize.STRING
       }
     });
   },

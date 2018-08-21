@@ -5808,6 +5808,42 @@ select.gender {
 		width: 10% !important;
 	}
 
+	.card-box.contact-information .masterContactDetailsAdd {
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+
+	.contact-information {
+		position: relative;
+		box-shadow: 0 0 15px rgba(0,0,0,0.14);
+		-webkit-box-shadow: 0 0 15px rgba(0,0,0,0.14);
+		-moz-box-shadow: 0 0 15px rgba(0,0,0,0.14);
+		-ms-box-shadow: 0 0 15px rgba(0,0,0,0.14);
+		-o-box-shadow: 0 0 15px rgba(0,0,0,0.14);
+		margin-bottom: 25px;
+		padding: 10px;
+	}
+
+	.contact-margin {
+		margin-top: 15px;
+	}
+
+	
+
+	.contact-information .masterContactDetailsAdd {
+		position: absolute;
+		right: -13px;
+		top: -16px;
+		border-radius: 50%;
+		-webkit-border-radius: 50%;
+		-moz-border-radius: 50%;
+		-ms-border-radius: 50%;
+		-o-border-radius: 50%;
+		padding: 5px 10px;
+		z-index: 111;
+	}
+
 	/*Ends on css 14-08-2018*/
 
 
