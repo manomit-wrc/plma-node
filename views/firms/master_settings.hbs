@@ -236,6 +236,11 @@
 								<div class="row filter-row">
 									<form class="m-b-30" method="POST" name="frmUpdateFirmApproval" id="frmUpdateFirmApproval">
 										<input type="hidden" name="_csrf" value="{{csrfToken}}">
+										<input type="hidden" name="approval_level_firm" id="approval_level_firm" value="{{firm.approval_level}}">
+										<input type="hidden" name="level_1" id="level_1" value="{{firm.level_1}}">
+										<input type="hidden" name="level_2" id="level_2" value="{{firm.level_2}}">
+										<input type="hidden" name="level_3" id="level_3" value="{{firm.level_3}}">
+										<input type="hidden" name="level_4" id="level_4" value="{{firm.level_4}}">
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group text-center">
@@ -246,7 +251,7 @@
 														<div class="form-group m-r-5">
 															<label class="input-group">
 																<span class="input-group-addon">
-																	<input type="radio" id="level_1" name="approval_level" value="1" checked/>
+																	<input type="radio" id="level_1" name="approval_level" value="1" {{#if_eq firm.approval_level "1"}} checked {{/if_eq}}/>
 																</span>
 																<div class="form-control form-control-static">Approval Level 1</div>
 																<span class="glyphicon form-control-feedback"></span>
@@ -255,7 +260,7 @@
 														<div class="form-group m-r-5">
 															<label class="input-group">
 																<span class="input-group-addon">
-																	<input type="radio" id="level_2" name="approval_level" value="2" />
+																	<input type="radio" id="level_2" name="approval_level" value="2" {{#if_eq firm.approval_level "2"}} checked {{/if_eq}}/>
 																</span>
 																<div class="form-control form-control-static">Approval Level 2</div>
 																<span class="glyphicon form-control-feedback"></span>
@@ -264,7 +269,7 @@
 														<div class="form-group m-r-5">
 															<label class="input-group">
 																<span class="input-group-addon">
-																	<input type="radio" id="level_3" name="approval_level" value="3" />
+																	<input type="radio" id="level_3" name="approval_level" value="3" {{#if_eq firm.approval_level "3"}} checked {{/if_eq}}/>
 																</span>
 																<div class="form-control form-control-static">Approval Level 3</div>
 																<span class="glyphicon form-control-feedback"></span>
@@ -273,7 +278,7 @@
 														<div class="form-group m-r-5">
 															<label class="input-group">
 																<span class="input-group-addon">
-																	<input type="radio" id="level_4" name="approval_level" value="4" />
+																	<input type="radio" id="level_4" name="approval_level" value="4" {{#if_eq firm.approval_level "4"}} checked {{/if_eq}}/>
 																</span>
 																<div class="form-control form-control-static">Approval Level 4</div>
 																<span class="glyphicon form-control-feedback"></span>
@@ -286,38 +291,47 @@
 												<div class="form-group">
 													<label class="control-label">Level 1</label>
 													<span class="text-danger">*</span>
-													<select class="form-control floating section_remove" id="level_1_designation" name="level_1_designation">
+													<select class="form-control floating section_remove remove_level_1" id="level_1_designation" name="level_1_designation">
 														<option value="">Select Designation</option>
 														{{#each designation}}
-														<option value="{{this.id}}">{{this.title}}</option>
+														<option value="{{this.id}}" {{#if_eq this.id ../firm.level_1}} selected {{/if_eq}}>{{this.title}}</option>
 														{{/each}}
 													</select>
 												</div>
 											</div>
-											<div class="col-md-6" id="level2Designation" style="display: none;">
+											<div class="col-md-6" id="level2Designation">
 												<div class="form-group">
 													<label class="control-label">Level 2</label>
 													<span class="text-danger">*</span>
-													<select class="form-control floating" id="level_2_designation" name="level_2_designation">
+													<select class="form-control floating remove_level_2" id="level_2_designation" name="level_2_designation">
 														<option value="">Select Designation</option>
+														 {{#each designation}}
+														<option value="{{this.id}}" {{#if_eq this.id ../firm.level_2}} selected {{/if_eq}}>{{this.title}}</option>
+														{{/each}}
 													</select>
 												</div>
 											</div>
-											<div class="col-md-6" id="level3Designation" style="display: none;">
+											<div class="col-md-6" id="level3Designation">
 												<div class="form-group">
 													<label class="control-label">Level 3</label>
 													<span class="text-danger">*</span>
-													<select class="form-control floating" id="level_3_designation" name="level_3_designation">
+													<select class="form-control floating remove_level_3" id="level_3_designation" name="level_3_designation">
 														<option value="">Select Designation</option>
+														 {{#each designation}}
+														<option value="{{this.id}}" {{#if_eq this.id ../firm.level_3}} selected {{/if_eq}}>{{this.title}}</option>
+														{{/each}}
 													</select>
 												</div>
 											</div>
-											<div class="col-md-6" id="level4Designation" style="display: none;">
+											<div class="col-md-6" id="level4Designation">
 												<div class="form-group">
 													<label class="control-label">Level 4</label>
 													<span class="text-danger">*</span>
-													<select class="form-control floating" id="level_4_designation" name="level_4_designation">
+													<select class="form-control floating remove_level_4" id="level_4_designation" name="level_4_designation">
 														<option value="">Select Designation</option>
+														 {{#each designation}}
+														<option value="{{this.id}}" {{#if_eq this.id ../firm.level_4}} selected {{/if_eq}}>{{this.title}}</option>
+														{{/each}}
 													</select>
 												</div>
 											</div>
@@ -2136,25 +2150,98 @@
 /*==================================Firm Approval Level Process =============================*/
 
 	$(document).ready(function(){
+		$("input[name='approval_level'").change(function () {
+			$.ajax({
+				type: "GET",
+				url: "/get-all-designation",
+				success: function (response) {
+					for (var i = 0; i < response.designations.length; i++) {
+						$("#level_1_designation").append('<option value="' + response.designations[i].id + '">' + response.designations[i].title + '</option>');
+						$("#level_1_designation option[value='74']").remove();
+					}
+				},
+				error: function (xhr) {
+
+				}
+			});
+		});
+		
+		var approvalLevel = $("#approval_level_firm").val();
+		var level_1 = $("#level_1").val();
+		var level_2 = $("#level_2").val();
+		var level_3 = $("#level_3").val();
+		var level_4 = $("#level_4").val();
+		$(".remove_level_1 option[value="+ level_2 +"]").remove();
+		$(".remove_level_1 option[value="+ level_3 +"]").remove();
+		$(".remove_level_1 option[value="+ level_4 +"]").remove();
+		$(".remove_level_2 option[value="+ level_1 +"]").remove();
+		$(".remove_level_2 option[value="+ level_3 +"]").remove();
+		$(".remove_level_2 option[value="+ level_4 +"]").remove();
+		$(".remove_level_3 option[value="+ level_1 +"]").remove();
+		$(".remove_level_3 option[value="+ level_2 +"]").remove();
+		$(".remove_level_3 option[value="+ level_4 +"]").remove();
+		$(".remove_level_4 option[value="+ level_1 +"]").remove();
+		$(".remove_level_4 option[value="+ level_2 +"]").remove();
+		$(".remove_level_4 option[value="+ level_3 +"]").remove();
+		if(approvalLevel == "2")
+		{
+			$('#level2Designation').show();
+			$('#level3Designation').hide();
+			$('#level4Designation').hide();
+		}
+		if(approvalLevel == "3")
+		{
+			$('#level2Designation').show();
+			$('#level3Designation').show();
+			$('#level4Designation').hide();
+		}
+		if(approvalLevel == "4")
+		{
+			$('#level2Designation').show();
+			$('#level3Designation').show();
+			$('#level4Designation').show();
+		}
+		if(approvalLevel == "1")
+		{
+			$('#level2Designation').hide();
+			$('#level3Designation').hide();
+			$('#level4Designation').hide();
+		}
 		$(document).on('click', '#level_2', function () {
+			$('#level_2_designation').children('option:not(:first)').remove();
+			$('#level_3_designation').children('option:not(:first)').remove();
+			$('#level_4_designation').children('option:not(:first)').remove();
+			$('#level_1_designation').children('option:not(:first)').remove();
 			$('#level2Designation').show();
 			$('#level3Designation').hide();
 			$('#level4Designation').hide();
 		});
 
 		$(document).on('click', '#level_3', function () {
+			$('#level_2_designation').children('option:not(:first)').remove();
+			$('#level_3_designation').children('option:not(:first)').remove();
+			$('#level_4_designation').children('option:not(:first)').remove();
+			$('#level_1_designation').children('option:not(:first)').remove();
 			$('#level2Designation').show();
 			$('#level3Designation').show();
 			$('#level4Designation').hide();
 		});
 
 		$(document).on('click', '#level_4', function () {
+			$('#level_2_designation').children('option:not(:first)').remove();
+			$('#level_3_designation').children('option:not(:first)').remove();
+			$('#level_4_designation').children('option:not(:first)').remove();
+			$('#level_1_designation').children('option:not(:first)').remove();
 			$('#level2Designation').show();
 			$('#level3Designation').show();
 			$('#level4Designation').show();
 		});
 
 		$(document).on('click', '#level_1', function () {
+			$('#level_2_designation').children('option:not(:first)').remove();
+			$('#level_3_designation').children('option:not(:first)').remove();
+			$('#level_4_designation').children('option:not(:first)').remove();
+			$('#level_1_designation').children('option:not(:first)').remove();
 			$('#level2Designation').hide();
 			$('#level3Designation').hide();
 			$('#level4Designation').hide();
@@ -2162,64 +2249,136 @@
 		$(".section_remove option[value='74']").remove();
 	});
 	$(document).on('change', '#level_1_designation', function (e) {
-			var level_1_desig = $('#level_1_designation').val();
-			$.ajax({
-				type: "GET",
-				url: "/get-level-2-designation",
-				success: function (response) {
-					$('#level_2_designation').children('option:not(:first)').remove();
-					for (var i = 0; i < response.designations.length; i++) {
-						$("#level_2_designation").append('<option value="' + response.designations[i].id + '">' + response.designations[i].title + '</option>');
-					}
-					$("#level_2_designation option[value=" + level_1_desig + "]").remove();
-				},
-				error: function (xhr) {
-
+		var level_1_desig = $('#level_1_designation').val();
+		$.ajax({
+			type: "GET",
+			url: "/get-level-2-designation",
+			success: function (response) {
+				$('#level_2_designation').children('option:not(:first)').remove();
+				for (var i = 0; i < response.designations.length; i++) {
+					$("#level_2_designation").append('<option value="' + response.designations[i].id + '">' + response.designations[i].title + '</option>');
 				}
-			});
+				$("#level_2_designation option[value=" + level_1_desig + "]").remove();
+			},
+			error: function (xhr) {
+
+			}
+		});
+	});
+
+	$(document).on('change', '#level_2_designation', function (e) {
+		var level_1_desig = $('#level_1_designation').val();
+		var level_2_desig = $('#level_2_designation').val();
+		$.ajax({
+			type: "GET",
+			url: "/get-level-2-designation",
+			success: function (response) {
+				$('#level_3_designation').children('option:not(:first)').remove();
+				for (var i = 0; i < response.designations.length; i++) {
+					$("#level_3_designation").append('<option value="' + response.designations[i].id + '">' + response.designations[i].title + '</option>');
+				}
+				$("#level_3_designation option[value=" + level_1_desig + "]").remove();
+				$("#level_3_designation option[value=" + level_2_desig + "]").remove();
+			},
+			error: function (xhr) {
+
+			}
+		});
+	});
+
+	$(document).on('change', '#level_3_designation', function (e) {
+		var level_1_desig = $('#level_1_designation').val();
+		var level_2_desig = $('#level_2_designation').val();
+		var level_3_desig = $('#level_3_designation').val();
+		$.ajax({
+			type: "GET",
+			url: "/get-level-2-designation",
+			success: function (response) {
+				$('#level_4_designation').children('option:not(:first)').remove();
+				for (var i = 0; i < response.designations.length; i++) {
+					$("#level_4_designation").append('<option value="' + response.designations[i].id + '">' + response.designations[i].title + '</option>');
+				}
+				$("#level_4_designation option[value=" + level_1_desig + "]").remove();
+				$("#level_4_designation option[value=" + level_2_desig + "]").remove();
+				$("#level_4_designation option[value=" + level_3_desig + "]").remove();
+			},
+			error: function (xhr) {
+
+			}
+		});
+	});
+
+	$(document).ready(function(){
+		$("#btnUpdateFirmApproval").click(function () {
+			$("#frmUpdateFirmApproval").submit();
 		});
 
-		$(document).on('change', '#level_2_designation', function (e) {
-			var level_1_desig = $('#level_1_designation').val();
-			var level_2_desig = $('#level_2_designation').val();
-			$.ajax({
-				type: "GET",
-				url: "/get-level-2-designation",
-				success: function (response) {
-					$('#level_3_designation').children('option:not(:first)').remove();
-					for (var i = 0; i < response.designations.length; i++) {
-						$("#level_3_designation").append('<option value="' + response.designations[i].id + '">' + response.designations[i].title + '</option>');
-					}
-					$("#level_3_designation option[value=" + level_1_desig + "]").remove();
-					$("#level_3_designation option[value=" + level_2_desig + "]").remove();
+		$("#frmUpdateFirmApproval").validate({
+			rules: {
+				level_1_designation: {
+					required: true
 				},
-				error: function (xhr) {
-
-				}
-			});
-		});
-
-		$(document).on('change', '#level_3_designation', function (e) {
-			var level_1_desig = $('#level_1_designation').val();
-			var level_2_desig = $('#level_2_designation').val();
-			var level_3_desig = $('#level_3_designation').val();
-			$.ajax({
-				type: "GET",
-				url: "/get-level-2-designation",
-				success: function (response) {
-					$('#level_4_designation').children('option:not(:first)').remove();
-					for (var i = 0; i < response.designations.length; i++) {
-						$("#level_4_designation").append('<option value="' + response.designations[i].id + '">' + response.designations[i].title + '</option>');
-					}
-					$("#level_4_designation option[value=" + level_1_desig + "]").remove();
-					$("#level_4_designation option[value=" + level_2_desig + "]").remove();
-					$("#level_4_designation option[value=" + level_3_desig + "]").remove();
+				level_2_designation: {
+					required: true
 				},
-				error: function (xhr) {
-
+				level_3_designation: {
+					required: true
+				},
+				level_4_designation: {
+					required: true
 				}
-			});
+			},
+			messages: {
+				level_1_designation: {
+					required: "Please select approver designation"
+				},
+				level_2_designation: {
+					required: "Please select approver designation"
+				},
+				level_3_designation: {
+					required: "Please select approver designation"
+				},
+				level_4_designation: {
+					required: "Please select approver designation"
+				}
+			}
+			,
+			submitHandler: function (form) {
+				var level_approval = $('input[name=approval_level]:checked').val();
+				var	approver_level_desig_1 = $("#level_1_designation").val();
+				var	approver_level_desig_2 = $("#level_2_designation").val();
+				var	approver_level_desig_3 = $("#level_3_designation").val();
+				var	approver_level_desig_4 = $("#level_4_designation").val();
+					
+				$.ajax({
+					type: "POST",
+					url: "/update-firm-approval-process",
+					data: {
+						level_approval: level_approval,
+						approver_level_desig_1: approver_level_desig_1 ? approver_level_desig_1 : 0,
+						approver_level_desig_2: approver_level_desig_2 ? approver_level_desig_2 : 0,
+						approver_level_desig_3: approver_level_desig_3 ? approver_level_desig_3 : 0,
+						approver_level_desig_4: approver_level_desig_4 ? approver_level_desig_4 : 0
+					},
+					beforeSend: function (xhr) {
+						xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+						$("#btnUpdateFirmApproval").prop('disabled', true);
+						$("#btnUpdateFirmApproval").html("Loading...");
+					},
+					success: function (response) {
+						if (response.update_firm_approval == true) {
+							$(`<div class="alert alert-success"><strong>Success! </strong>Firm Approval Process Updated Successfully</div>`).insertBefore("#frmUpdateFirmApproval");
+							setTimeout(function () {
+								window.location.href = "/firm-details";
+							}, 2000);
+						}
+						$("#btnUpdateFirmApproval").prop('disabled', false);
+						$("#btnUpdateFirmApproval").html("Save &amp; Next");
+					}
+				});
+			}
 		});
+	});
 
 /*==================================Firm Approval Level Process =============================*/
 </script>

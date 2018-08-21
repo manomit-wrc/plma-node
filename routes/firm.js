@@ -520,6 +520,20 @@ router.post('/update-own-firmDetails', auth, firmAuth, csrfProtection, async (re
     res.json({"update_firm_details": true});
 });
 
+router.post('/update-firm-approval-process', auth, firmAuth, csrfProtection, (req, res) => {
+    Firm.update({
+        approval_level: req.body.level_approval,
+        level_1: req.body.approver_level_desig_1,
+        level_2: req.body.approver_level_desig_2,
+        level_3: req.body.approver_level_desig_3,
+        level_4: req.body.approver_level_desig_4
+    }, {
+        where: { id: req.user.firm_id }
+        }).then(result => {
+            res.json({ "update_firm_approval": true });
+        });
+});
+
 /*==========================Firm Profile Details Update section=======================*/
 
 module.exports = router;
