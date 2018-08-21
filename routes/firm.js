@@ -534,6 +534,26 @@ router.post('/update-firm-approval-process', auth, firmAuth, csrfProtection, (re
         });
 });
 
+router.post("/edit-office-city-get", auth, firmAuth, async(req, res)=> {
+    const city = await City.findAll({
+        where: {
+            state_id: req.body.office_state
+        }
+    });
+    const cities = await City.findById(req.body.office_city);
+    const zipcode = await Zipcode.findAll({
+        where: {
+            city_name: cities.name
+        }
+    });
+   res.json({
+       "get_editOffice_city": true,
+       "city": city,
+       "zipcode" : zipcode
+   });
+
+});
+
 /*==========================Firm Profile Details Update section=======================*/
 
 module.exports = router;
