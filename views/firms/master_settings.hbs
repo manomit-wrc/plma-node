@@ -222,9 +222,9 @@
 															<option value="{{this.id}}" {{#inArray ../jurisdictionArr this.id}} selected="selected" {{/inArray}}>{{this.name}}</option>
 														{{/each}}
 													</select>
-												{{!-- </div> --}}
 												</div>
 											</div>
+										</div>
 
 										<div class="m-t-20 text-center">
 											<button class="btn btn-primary rounded common-rounded-btn" id="btnUpdateFirmDetails">Save &amp; Next</button>
@@ -502,11 +502,17 @@
 							</div>
 						</div>
 						<div class="col-md-6">
+<<<<<<< HEAD
+							<div class="form-group form-focus">
+								<label class="control-label">Country</label>
+								<select class="form-control floating" id="country" name="country">
+=======
 							<div class="form-group">
 								<label class="control-label">Country
 									<span class="text-danger">*</span>
 								</label>
 								<select class="select form-control floating" id="country" name="country">
+>>>>>>> 4b9ef7370bc1eee115cb69b1cfb505c1c6258cc4
 									<option value="">Select Country</option>
 									{{#each country}}
 										<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
