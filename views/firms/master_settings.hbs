@@ -222,9 +222,9 @@
 															<option value="{{this.id}}" {{#inArray ../jurisdictionArr this.id}} selected="selected" {{/inArray}}>{{this.name}}</option>
 														{{/each}}
 													</select>
+												{{!-- </div> --}}
 												</div>
 											</div>
-										</div>
 
 										<div class="m-t-20 text-center">
 											<button class="btn btn-primary rounded common-rounded-btn" id="btnUpdateFirmDetails">Save &amp; Next</button>
@@ -502,9 +502,11 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
-								<label class="control-label">Country</label>
-								<select class="form-control floating" id="country" name="country">
+							<div class="form-group">
+								<label class="control-label">Country
+									<span class="text-danger">*</span>
+								</label>
+								<select class="select form-control floating" id="country" name="country">
 									<option value="">Select Country</option>
 									{{#each country}}
 										<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
@@ -513,10 +515,12 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
-								<label class="control-label">State</label>
-								<select class="form-control floating" id="state" name="state">
-									<option value="">Select State</option>
+							<div class="form-group">
+								<label class="control-label">State
+									<span class="text-danger">*</span>
+								</label>
+								<select class="select form-control floating" id="state" name="state">
+									<option value="">select State</option>
 									{{#each state}}
 										<option value="{{this.id}}">{{this.name}}</option>
 									{{/each}}
@@ -524,17 +528,21 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
-								<label class="control-label">City</label>
-								<select class="form-control floating" id="city" name="city">
+							<div class="form-group">
+								<label class="control-label">City
+									<span class="text-danger">*</span>
+								</label>
+								<select class="select form-control floating" id="city" name="city">
 									<option value="">Select City</option>
 								</select>
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
-								<label class="control-label">Zip Code</label>
-								<select class="form-control floating" id="zipcode" name="zipcode">
+							<div class="form-group">
+								<label class="control-label">Zipcode
+									<span class="text-danger">*</span>
+								</label>
+								<select class="select form-control floating" id="zipcode" name="zipcode">
 									<option value="">Select Zipcode</option>
 								</select>
 							</div>
@@ -584,8 +592,10 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
-								<label class="control-label">Country</label>
+							<div class="form-group">
+								<label class="control-label">Country
+									<span class="text-danger">*</span>
+								</label>
 								<select disabled class="form-control floating" id="view_office_country" name="view_office_country">
 									<option value="">Select Country</option>
 									{{#each country}}
@@ -595,8 +605,10 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
-								<label class="control-label">State</label>
+							<div class="form-group">
+								<label class="control-label">State
+									<span class="text-danger">*</span>
+								</label>
 								<select disabled class="form-control floating" id="view_office_state" name="view_office_state">
 									<option value="">Select State</option>
 									{{#each state}}
@@ -606,24 +618,24 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
-								<label class="control-label">City</label>
+							<div class="form-group">
+								<label class="control-label">City
+									<span class="text-danger">*</span>
+								</label>
 								<select disabled class="form-control floating" id="view_office_city" name="view_office_city">
 									<option value="">Select City</option>
-									{{#each city}}
-										<option value="{{this.id}}">{{this.name}}</option>
-									{{/each}}
+									
 								</select>
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
-								<label class="control-label">Zip Code</label>
+							<div class="form-group">
+								<label class="control-label">Zipcode
+									<span class="text-danger">*</span>
+								</label>
 								<select disabled class="form-control floating" id="view_office_zipcode" name="view_office_zipcode">
 									<option value="">Select Zipcode</option>
-									{{#each zipcode}}
-										<option value="{{this.id}}">{{this.zip}}</option>
-									{{/each}}
+									
 								</select>
 							</div>
 						</div>
@@ -669,9 +681,11 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
-								<label class="control-label">Country</label>
-								<select class="form-control floating" id="edit_office_country" name="edit_office_country">
+							<div class="form-group">
+								<label class="control-label">Country
+									<span class="text-danger">*</span>
+								</label>
+								<select class=" form-control floating" id="edit_office_country" name="edit_office_country">
 									<option value="">Select Country</option>
 									{{#each country}}
 										<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
@@ -680,10 +694,12 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
-								<label class="control-label">State</label>
-								<select class="form-control floating" id="edit_office_state" name="edit_office_state">
-									<option value="">Select State</option>
+							<div class="form-group">
+								<label class="control-label">State
+									<span class="text-danger">*</span>
+								</label>
+								<select class=" form-control floating" id="edit_office_state" name="edit_office_state">
+									<option value="">select State</option>
 									{{#each state}}
 										<option value="{{this.id}}">{{this.name}}</option>
 									{{/each}}
@@ -691,24 +707,24 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
-								<label class="control-label">City</label>
-								<select class="form-control floating" id="edit_office_city" name="edit_office_city">
+							<div class="form-group">
+								<label class="control-label">City
+									<span class="text-danger">*</span>
+								</label>
+								<select class=" form-control floating" id="edit_office_city" name="edit_office_city">
 									<option value="">Select City</option>
-									{{#each city}}
-										<option value="{{this.id}}">{{this.name}}</option>
-									{{/each}}
+									
 								</select>
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
-								<label class="control-label">Zip Code</label>
-								<select class="form-control floating" id="edit_office_zipcode" name="edit_office_zipcode">
+							<div class="form-group">
+								<label class="control-label">Zipcode
+									<span class="text-danger">*</span>
+								</label>
+								<select class=" form-control floating" id="edit_office_zipcode" name="edit_office_zipcode">
 									<option value="">Select Zipcode</option>
-									{{#each zipcode}}
-										<option value="{{this.id}}">{{this.zip}}</option>
-									{{/each}}
+									
 								</select>
 							</div>
 						</div>
@@ -819,8 +835,10 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
-								<label class="control-label">Country</label>
+							<div class="form-group">
+								<label class="control-label">Country
+									<span class="req-lbl">*</span>
+								</label>
 								<select class="form-control floating" id="contact_country" name="contact_country">
 									<option value="">Select Country</option>
 									{{#each country}}
@@ -830,10 +848,12 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus select-focus">
-								<label class="control-label">State</label>
+							<div class="form-group">
+								<label class="control-label">State
+									<span class="req-lbl">*</span>
+								</label>
 								<select class="form-control floating" id="contact_state" name="contact_state">
-									<option value="">Select State</option>
+									<option value="">select State</option>
 									{{#each state}}
 										<option value="{{this.id}}">{{this.name}}</option>
 									{{/each}}
@@ -841,16 +861,20 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus select-focus">
-								<label class="control-label">City</label>
+							<div class="form-group">
+								<label class="control-label">City
+									<span class="req-lbl">*</span>
+								</label>
 								<select class="form-control floating" id="contact_city" name="contact_city">
 									<option value="">Select City</option>
 								</select>
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus select-focus">
-								<label class="control-label">Zip Code</label>
+							<div class="form-group">
+								<label class="control-label">Zipcode
+									<span class="req-lbl">*</span>
+								</label>
 								<select class="form-control floating" id="contact_zipcode" name="contact_zipcode">
 									<option value="">Select Zipcode</option>
 								</select>
@@ -941,8 +965,10 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
-								<label class="control-label">Country</label>
+							<div class="form-group">
+								<label class="control-label">Country
+									<span class="req-lbl">*</span>
+								</label>
 								<select disabled class="form-control floating" id="view_contact_country" name="view_contact_country">
 									<option value="">Select Country</option>
 									{{#each country}}
@@ -952,8 +978,10 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus select-focus">
-								<label class="control-label">State</label>
+							<div class="form-group">
+								<label class="control-label">State
+									<span class="req-lbl">*</span>
+								</label>
 								<select disabled class="form-control floating" id="view_contact_state" name="view_contact_state">
 									<option value="">Select State</option>
 									{{#each state}}
@@ -963,24 +991,24 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus select-focus">
-								<label class="control-label">City</label>
+							<div class="form-group">
+								<label class="control-label">City
+									<span class="req-lbl">*</span>
+								</label>
 								<select disabled class="form-control floating" id="view_contact_city" name="view_contact_city">
 									<option value="">Select City</option>
-									{{#each city}}
-										<option value="{{this.id}}">{{this.name}}</option>
-									{{/each}}
+									
 								</select>
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus select-focus">
-								<label class="control-label">Zip Code</label>
+							<div class="form-group">
+								<label class="control-label">Zipcode
+									<span class="req-lbl">*</span>
+								</label>
 								<select disabled class="form-control floating" id="view_contact_zipcode" name="view_contact_zipcode">
 									<option value="">Select Zipcode</option>
-									{{#each zipcode}}
-										<option value="{{this.id}}">{{this.zip}}</option>
-									{{/each}}
+									
 								</select>
 							</div>
 						</div>
@@ -1066,7 +1094,10 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
+							<div class="form-group">
+								<label class="control-label">Country
+									<span class="req-lbl">*</span>
+								</label>
 								<select class=" form-control floating" id="edit_contact_country" name="edit_contact_country">
 									<option value="">Select Country</option>
 									{{#each country}}
@@ -1076,7 +1107,7 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus select-focus">
+							<div class="form-group">
 								<label class="control-label">State
 									<span class="req-lbl">*</span>
 								</label>
@@ -1089,28 +1120,24 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus select-focus">
+							<div class="form-group">
 								<label class="control-label">City
 									<span class="req-lbl">*</span>
 								</label>
 								<select class=" form-control floating" id="edit_contact_city" name="edit_contact_city">
 									<option value="">Select City</option>
-									{{#each city}}
-									<option value="{{this.id}}">{{this.name}}</option>
-									{{/each}}
+									
 								</select>
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus select-focus">
+							<div class="form-group">
 								<label class="control-label">Zipcode
 									<span class="req-lbl">*</span>
 								</label>
 								<select class=" form-control floating" id="edit_contact_zipcode" name="edit_contact_zipcode">
 									<option value="">Select Zipcode</option>
-									{{#each zipcode}}
-									<option value="{{this.id}}">{{this.zip}}</option>
-									{{/each}}
+									
 								</select>
 							</div>
 						</div>
@@ -1289,12 +1316,35 @@
 	    var office_mobile = $(this).data('mobile');
 	    var firm_id = $(this).data('firm-id');
 	    localStorage.setItem('office_id', office_id);
+
+		$.ajax({
+			type: "POST",
+			url: "/edit-office-city-get",
+			data: {
+				office_state: office_state,
+				office_city: office_city
+			},
+			success: function (response) {
+				$('#view_office_city').children('option:not(:first)').remove();
+				for (var i = 0; i < response.city.length; i++) {
+					$("#view_office_city").append('<option value="' + response.city[i].id + '">' + response.city[i].name + '</option>');
+				}
+				$('#view_office_zipcode').children('option:not(:first)').remove();
+				for (var i = 0; i < response.zipcode.length; i++) {
+					$("#view_office_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
+				}
+				$('#view_office_city').val(office_city);
+				$('#view_office_zipcode').val(office_zipcode);
+			},
+			error: function (xhr) {
+
+			}
+		});
+
 	    $('#view_office_name').val(office_name);
 	    $('#view_office_address').val(office_address);
-	    $('#view_office_city').val(office_city);
 	    $('#view_office_state').val(office_state);
 	    $('#view_office_country').val(office_country);
-	    $('#view_office_zipcode').val(office_zipcode);
 	    $('#view_office_mobile_no').val(office_mobile);
 	    $('.view-office-modal').modal('show');
 	});
@@ -1310,12 +1360,33 @@
 	    var office_mobile = $(this).data('mobile');
 	    var firm_id = $(this).data('firm-id');
 	    localStorage.setItem('office_id', office_id);
+		$.ajax({
+			type: "POST",
+			url: "/edit-office-city-get",
+			data: {
+				office_state: office_state,
+				office_city: office_city
+			},
+			success: function (response) {
+				$('#edit_office_city').children('option:not(:first)').remove();
+				for (var i = 0; i < response.city.length; i++) {
+					$("#edit_office_city").append('<option value="' + response.city[i].id + '">' + response.city[i].name + '</option>');
+				}
+				$('#edit_office_zipcode').children('option:not(:first)').remove();
+				for (var i = 0; i < response.zipcode.length; i++) {
+					$("#edit_office_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
+				}
+				$('#edit_office_city').val(office_city);
+				$('#edit_office_zipcode').val(office_zipcode);
+			},
+			error: function (xhr) {
+
+			}
+		});
 	    $('#edit_office_name').val(office_name);
 	    $('#edit_office_address').val(office_address);
-	    $('#edit_office_city').val(office_city);
 	    $('#edit_office_state').val(office_state);
 	    $('#edit_office_country').val(office_country);
-	    $('#edit_office_zipcode').val(office_zipcode);
 	    $('#edit_office_mobile_no').val(office_mobile);
 	    $('.edit-office-modal').modal('show');
 	});
@@ -1572,6 +1643,31 @@
 	    var contact_country = $(this).data('contact-country');
 	    var contact_zipcode = $(this).data('contact-zipcode');
 
+		$.ajax({
+			type: "POST",
+			url: "/edit-office-city-get",
+			data: {
+				office_state: contact_state,
+				office_city: contact_city
+			},
+			success: function (response) {
+				$('#edit_contact_city').children('option:not(:first)').remove();
+				for (var i = 0; i < response.city.length; i++) {
+					$("#edit_contact_city").append('<option value="' + response.city[i].id + '">' + response.city[i].name + '</option>');
+				}
+				$('#edit_contact_zipcode').children('option:not(:first)').remove();
+				for (var i = 0; i < response.zipcode.length; i++) {
+					$("#edit_contact_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
+				}
+				$('#edit_contact_city').val(contact_city);
+				$('#edit_contact_zipcode').val(contact_zipcode);
+			},
+			error: function (xhr) {
+
+			}
+		});
+
+
 	    $("#edit_office_id").val(office_id);
 	    $('#edit_office_id').trigger('change');
 	    $("#edit_designation_id").val(designation_id);
@@ -1581,10 +1677,8 @@
 	    $("#edit_contact_email").val(email);
 	    $("#edit_contact_mobile_no").val(contact_mobile);
 	    $("#edit_contact_address").val(contact_address);
-	    $("#edit_contact_city").val(contact_city);
 	    $("#edit_contact_state").val(contact_state);
 	    $("#edit_contact_country").val(contact_country);
-	    $("#edit_contact_zipcode").val(contact_zipcode);
 	    localStorage.setItem('contact_id', contact_id);
 	    $('.editContactModal').modal('show');
 	});
@@ -1603,6 +1697,30 @@
 	    var contact_country = $(this).data('contact-country');
 	    var contact_zipcode = $(this).data('contact-zipcode');
 
+		$.ajax({
+			type: "POST",
+			url: "/edit-office-city-get",
+			data: {
+				office_state: contact_state,
+				office_city: contact_city
+			},
+			success: function (response) {
+				$('#view_contact_city').children('option:not(:first)').remove();
+				for (var i = 0; i < response.city.length; i++) {
+					$("#view_contact_city").append('<option value="' + response.city[i].id + '">' + response.city[i].name + '</option>');
+				}
+				$('#view_contact_zipcode').children('option:not(:first)').remove();
+				for (var i = 0; i < response.zipcode.length; i++) {
+					$("#view_contact_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
+				}
+				$('#view_contact_city').val(contact_city);
+				$('#view_contact_zipcode').val(contact_zipcode);
+			},
+			error: function (xhr) {
+
+			}
+		});
+
 	    $("#view_office_id").val(office_id);
 	    $('#view_office_id').trigger('change');
 	    $("#view_designation_id").val(designation_id);
@@ -1612,10 +1730,8 @@
 	    $("#view_contact_email").val(email);
 	    $("#view_contact_mobile_no").val(contact_mobile);
 	    $("#view_contact_address").val(contact_address);
-	    $("#view_contact_city").val(contact_city);
 	    $("#view_contact_state").val(contact_state);
 	    $("#view_contact_country").val(contact_country);
-	    $("#view_contact_zipcode").val(contact_zipcode);
 	    localStorage.setItem('contact_id', contact_id);
 	    $('.viewContactModal').modal('show');
 	});
@@ -2355,8 +2471,8 @@
 								window.location.href = "/firm-details";
 							}, 2000);
 						}
-						$("#btnUpdateFirmApproval").prop('disabled', false);
-						$("#btnUpdateFirmApproval").html("Save &amp; Next");
+						//$("#btnUpdateFirmApproval").prop('disabled', false);
+						//$("#btnUpdateFirmApproval").html("Save &amp; Next");
 					}
 				});
 			}
