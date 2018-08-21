@@ -26,6 +26,10 @@
 								<i class="fa fa-list"></i>Firm Details</a>
 							</li>
 							<li role="presentation">
+								<a href="#SectionApprove" aria-controls="profile" role="tab" data-toggle="tab">
+									<i class="fa fa-check"></i>Approval Process</a>
+							</li>
+							<li role="presentation">
 								<a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">
 								<i class="fa fa-building"></i>Offices</a>
 							</li>
@@ -228,6 +232,116 @@
 									</form>
 								</div>
 							</div>
+							<div role="tabpanel" class="tab-pane fade" id="SectionApprove">
+								<div class="row filter-row">
+									<form class="m-b-30" method="POST" name="frmUpdateFirmApproval" id="frmUpdateFirmApproval">
+										<input type="hidden" name="_csrf" value="{{csrfToken}}">
+										<input type="hidden" name="approval_level_firm" id="approval_level_firm" value="{{firm.approval_level}}">
+										<input type="hidden" name="level_1" id="level_1" value="{{firm.level_1}}">
+										<input type="hidden" name="level_2" id="level_2" value="{{firm.level_2}}">
+										<input type="hidden" name="level_3" id="level_3" value="{{firm.level_3}}">
+										<input type="hidden" name="level_4" id="level_4" value="{{firm.level_4}}">
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group text-center">
+													<label class="control-label">How many level/s for the approval process ?
+														<span class="text-danger">*</span>
+													</label>
+													<div class="form-inline m-b-15">
+														<div class="form-group m-r-5">
+															<label class="input-group">
+																<span class="input-group-addon">
+																	<input type="radio" id="level_1" name="approval_level" value="1" {{#if_eq firm.approval_level "1"}} checked {{/if_eq}}/>
+																</span>
+																<div class="form-control form-control-static">Approval Level 1</div>
+																<span class="glyphicon form-control-feedback"></span>
+															</label>
+														</div>
+														<div class="form-group m-r-5">
+															<label class="input-group">
+																<span class="input-group-addon">
+																	<input type="radio" id="level_2" name="approval_level" value="2" {{#if_eq firm.approval_level "2"}} checked {{/if_eq}}/>
+																</span>
+																<div class="form-control form-control-static">Approval Level 2</div>
+																<span class="glyphicon form-control-feedback"></span>
+															</label>
+														</div>
+														<div class="form-group m-r-5">
+															<label class="input-group">
+																<span class="input-group-addon">
+																	<input type="radio" id="level_3" name="approval_level" value="3" {{#if_eq firm.approval_level "3"}} checked {{/if_eq}}/>
+																</span>
+																<div class="form-control form-control-static">Approval Level 3</div>
+																<span class="glyphicon form-control-feedback"></span>
+															</label>
+														</div>
+														<div class="form-group m-r-5">
+															<label class="input-group">
+																<span class="input-group-addon">
+																	<input type="radio" id="level_4" name="approval_level" value="4" {{#if_eq firm.approval_level "4"}} checked {{/if_eq}}/>
+																</span>
+																<div class="form-control form-control-static">Approval Level 4</div>
+																<span class="glyphicon form-control-feedback"></span>
+															</label>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Level 1</label>
+													<span class="text-danger">*</span>
+													<select class="form-control floating section_remove remove_level_1" id="level_1_designation" name="level_1_designation">
+														<option value="">Select Designation</option>
+														{{#each designation}}
+														<option value="{{this.id}}" {{#if_eq this.id ../firm.level_1}} selected {{/if_eq}}>{{this.title}}</option>
+														{{/each}}
+													</select>
+												</div>
+											</div>
+											<div class="col-md-6" id="level2Designation">
+												<div class="form-group">
+													<label class="control-label">Level 2</label>
+													<span class="text-danger">*</span>
+													<select class="form-control floating remove_level_2" id="level_2_designation" name="level_2_designation">
+														<option value="">Select Designation</option>
+														 {{#each designation}}
+														<option value="{{this.id}}" {{#if_eq this.id ../firm.level_2}} selected {{/if_eq}}>{{this.title}}</option>
+														{{/each}}
+													</select>
+												</div>
+											</div>
+											<div class="col-md-6" id="level3Designation">
+												<div class="form-group">
+													<label class="control-label">Level 3</label>
+													<span class="text-danger">*</span>
+													<select class="form-control floating remove_level_3" id="level_3_designation" name="level_3_designation">
+														<option value="">Select Designation</option>
+														 {{#each designation}}
+														<option value="{{this.id}}" {{#if_eq this.id ../firm.level_3}} selected {{/if_eq}}>{{this.title}}</option>
+														{{/each}}
+													</select>
+												</div>
+											</div>
+											<div class="col-md-6" id="level4Designation">
+												<div class="form-group">
+													<label class="control-label">Level 4</label>
+													<span class="text-danger">*</span>
+													<select class="form-control floating remove_level_4" id="level_4_designation" name="level_4_designation">
+														<option value="">Select Designation</option>
+														 {{#each designation}}
+														<option value="{{this.id}}" {{#if_eq this.id ../firm.level_4}} selected {{/if_eq}}>{{this.title}}</option>
+														{{/each}}
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="m-t-20 text-center">
+											<button class="btn btn-primary rounded common-rounded-btn" type="button" id="btnUpdateFirmApproval">Save &amp; Next</button>
+										</div>
+									</form>
+								</div>
+							</div>
 							<div role="tabpanel" class="tab-pane fade" id="Section2">
 								<div class="row">
 									<div class="col-xs-4">
@@ -405,7 +519,10 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
+							<div class="form-group">
+								<label class="control-label">Country
+									<span class="text-danger">*</span>
+								</label>
 								<select class="select form-control floating" id="country" name="country">
 									<option value="">Select Country</option>
 									{{#each country}}
@@ -415,7 +532,10 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
+							<div class="form-group">
+								<label class="control-label">State
+									<span class="text-danger">*</span>
+								</label>
 								<select class="select form-control floating" id="state" name="state">
 									<option value="">select State</option>
 									{{#each state}}
@@ -425,14 +545,20 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
+							<div class="form-group">
+								<label class="control-label">City
+									<span class="text-danger">*</span>
+								</label>
 								<select class="select form-control floating" id="city" name="city">
 									<option value="">Select City</option>
 								</select>
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
+							<div class="form-group">
+								<label class="control-label">Zipcode
+									<span class="text-danger">*</span>
+								</label>
 								<select class="select form-control floating" id="zipcode" name="zipcode">
 									<option value="">Select Zipcode</option>
 								</select>
@@ -483,7 +609,10 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
+							<div class="form-group">
+								<label class="control-label">Country
+									<span class="text-danger">*</span>
+								</label>
 								<select disabled class="form-control floating" id="view_office_country" name="view_office_country">
 									<option value="">Select Country</option>
 									{{#each country}}
@@ -493,7 +622,10 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
+							<div class="form-group">
+								<label class="control-label">State
+									<span class="text-danger">*</span>
+								</label>
 								<select disabled class="form-control floating" id="view_office_state" name="view_office_state">
 									<option value="">select State</option>
 									{{#each state}}
@@ -503,22 +635,24 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
+							<div class="form-group">
+								<label class="control-label">City
+									<span class="text-danger">*</span>
+								</label>
 								<select disabled class="form-control floating" id="view_office_city" name="view_office_city">
 									<option value="">Select City</option>
-									{{#each city}}
-									<option value="{{this.id}}">{{this.name}}</option>
-									{{/each}}
+									
 								</select>
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
+							<div class="form-group">
+								<label class="control-label">Zipcode
+									<span class="text-danger">*</span>
+								</label>
 								<select disabled class="form-control floating" id="view_office_zipcode" name="view_office_zipcode">
 									<option value="">Select Zipcode</option>
-									{{#each zipcode}}
-									<option value="{{this.id}}">{{this.zip}}</option>
-									{{/each}}
+									
 								</select>
 							</div>
 						</div>
@@ -565,7 +699,10 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
+							<div class="form-group">
+								<label class="control-label">Country
+									<span class="text-danger">*</span>
+								</label>
 								<select class=" form-control floating" id="edit_office_country" name="edit_office_country">
 									<option value="">Select Country</option>
 									{{#each country}}
@@ -575,7 +712,10 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
+							<div class="form-group">
+								<label class="control-label">State
+									<span class="text-danger">*</span>
+								</label>
 								<select class=" form-control floating" id="edit_office_state" name="edit_office_state">
 									<option value="">select State</option>
 									{{#each state}}
@@ -585,22 +725,24 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
+							<div class="form-group">
+								<label class="control-label">City
+									<span class="text-danger">*</span>
+								</label>
 								<select class=" form-control floating" id="edit_office_city" name="edit_office_city">
 									<option value="">Select City</option>
-									{{#each city}}
-									<option value="{{this.id}}">{{this.name}}</option>
-									{{/each}}
+									
 								</select>
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
+							<div class="form-group">
+								<label class="control-label">Zipcode
+									<span class="text-danger">*</span>
+								</label>
 								<select class=" form-control floating" id="edit_office_zipcode" name="edit_office_zipcode">
 									<option value="">Select Zipcode</option>
-									{{#each zipcode}}
-									<option value="{{this.id}}">{{this.zip}}</option>
-									{{/each}}
+									
 								</select>
 							</div>
 						</div>
@@ -711,8 +853,11 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
-								<select class="select form-control floating" id="contact_country" name="contact_country">
+							<div class="form-group">
+								<label class="control-label">Country
+									<span class="req-lbl">*</span>
+								</label>
+								<select class="form-control floating" id="contact_country" name="contact_country">
 									<option value="">Select Country</option>
 									{{#each country}}
 									<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
@@ -721,11 +866,11 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus select-focus">
+							<div class="form-group">
 								<label class="control-label">State
 									<span class="req-lbl">*</span>
 								</label>
-								<select class="select form-control floating" id="contact_state" name="contact_state">
+								<select class="form-control floating" id="contact_state" name="contact_state">
 									<option value="">select State</option>
 									{{#each state}}
 									<option value="{{this.id}}">{{this.name}}</option>
@@ -734,21 +879,21 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus select-focus">
+							<div class="form-group">
 								<label class="control-label">City
 									<span class="req-lbl">*</span>
 								</label>
-								<select class="select form-control floating" id="contact_city" name="contact_city">
+								<select class="form-control floating" id="contact_city" name="contact_city">
 									<option value="">Select City</option>
 								</select>
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus select-focus">
+							<div class="form-group">
 								<label class="control-label">Zipcode
 									<span class="req-lbl">*</span>
 								</label>
-								<select class="select form-control floating" id="contact_zipcode" name="contact_zipcode">
+								<select class="form-control floating" id="contact_zipcode" name="contact_zipcode">
 									<option value="">Select Zipcode</option>
 								</select>
 							</div>
@@ -838,7 +983,10 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
+							<div class="form-group">
+								<label class="control-label">Country
+									<span class="req-lbl">*</span>
+								</label>
 								<select disabled class="form-control floating" id="view_contact_country" name="view_contact_country">
 									<option value="">Select Country</option>
 									{{#each country}}
@@ -848,7 +996,7 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus select-focus">
+							<div class="form-group">
 								<label class="control-label">State
 									<span class="req-lbl">*</span>
 								</label>
@@ -861,28 +1009,24 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus select-focus">
+							<div class="form-group">
 								<label class="control-label">City
 									<span class="req-lbl">*</span>
 								</label>
 								<select disabled class="form-control floating" id="view_contact_city" name="view_contact_city">
 									<option value="">Select City</option>
-									{{#each city}}
-									<option value="{{this.id}}">{{this.name}}</option>
-									{{/each}}
+									
 								</select>
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus select-focus">
+							<div class="form-group">
 								<label class="control-label">Zipcode
 									<span class="req-lbl">*</span>
 								</label>
 								<select disabled class="form-control floating" id="view_contact_zipcode" name="view_contact_zipcode">
 									<option value="">Select Zipcode</option>
-									{{#each zipcode}}
-									<option value="{{this.id}}">{{this.zip}}</option>
-									{{/each}}
+									
 								</select>
 							</div>
 						</div>
@@ -969,7 +1113,10 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus">
+							<div class="form-group">
+								<label class="control-label">Country
+									<span class="req-lbl">*</span>
+								</label>
 								<select class=" form-control floating" id="edit_contact_country" name="edit_contact_country">
 									<option value="">Select Country</option>
 									{{#each country}}
@@ -979,7 +1126,7 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus select-focus">
+							<div class="form-group">
 								<label class="control-label">State
 									<span class="req-lbl">*</span>
 								</label>
@@ -992,28 +1139,24 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus select-focus">
+							<div class="form-group">
 								<label class="control-label">City
 									<span class="req-lbl">*</span>
 								</label>
 								<select class=" form-control floating" id="edit_contact_city" name="edit_contact_city">
 									<option value="">Select City</option>
-									{{#each city}}
-									<option value="{{this.id}}">{{this.name}}</option>
-									{{/each}}
+									
 								</select>
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus select-focus">
+							<div class="form-group">
 								<label class="control-label">Zipcode
 									<span class="req-lbl">*</span>
 								</label>
 								<select class=" form-control floating" id="edit_contact_zipcode" name="edit_contact_zipcode">
 									<option value="">Select Zipcode</option>
-									{{#each zipcode}}
-									<option value="{{this.id}}">{{this.zip}}</option>
-									{{/each}}
+									
 								</select>
 							</div>
 						</div>
@@ -1192,12 +1335,35 @@
 	    var office_mobile = $(this).data('mobile');
 	    var firm_id = $(this).data('firm-id');
 	    localStorage.setItem('office_id', office_id);
+
+		$.ajax({
+			type: "POST",
+			url: "/edit-office-city-get",
+			data: {
+				office_state: office_state,
+				office_city: office_city
+			},
+			success: function (response) {
+				$('#view_office_city').children('option:not(:first)').remove();
+				for (var i = 0; i < response.city.length; i++) {
+					$("#view_office_city").append('<option value="' + response.city[i].id + '">' + response.city[i].name + '</option>');
+				}
+				$('#view_office_zipcode').children('option:not(:first)').remove();
+				for (var i = 0; i < response.zipcode.length; i++) {
+					$("#view_office_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
+				}
+				$('#view_office_city').val(office_city);
+				$('#view_office_zipcode').val(office_zipcode);
+			},
+			error: function (xhr) {
+
+			}
+		});
+
 	    $('#view_office_name').val(office_name);
 	    $('#view_office_address').val(office_address);
-	    $('#view_office_city').val(office_city);
 	    $('#view_office_state').val(office_state);
 	    $('#view_office_country').val(office_country);
-	    $('#view_office_zipcode').val(office_zipcode);
 	    $('#view_office_mobile_no').val(office_mobile);
 	    $('.view-office-modal').modal('show');
 	});
@@ -1213,12 +1379,33 @@
 	    var office_mobile = $(this).data('mobile');
 	    var firm_id = $(this).data('firm-id');
 	    localStorage.setItem('office_id', office_id);
+		$.ajax({
+			type: "POST",
+			url: "/edit-office-city-get",
+			data: {
+				office_state: office_state,
+				office_city: office_city
+			},
+			success: function (response) {
+				$('#edit_office_city').children('option:not(:first)').remove();
+				for (var i = 0; i < response.city.length; i++) {
+					$("#edit_office_city").append('<option value="' + response.city[i].id + '">' + response.city[i].name + '</option>');
+				}
+				$('#edit_office_zipcode').children('option:not(:first)').remove();
+				for (var i = 0; i < response.zipcode.length; i++) {
+					$("#edit_office_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
+				}
+				$('#edit_office_city').val(office_city);
+				$('#edit_office_zipcode').val(office_zipcode);
+			},
+			error: function (xhr) {
+
+			}
+		});
 	    $('#edit_office_name').val(office_name);
 	    $('#edit_office_address').val(office_address);
-	    $('#edit_office_city').val(office_city);
 	    $('#edit_office_state').val(office_state);
 	    $('#edit_office_country').val(office_country);
-	    $('#edit_office_zipcode').val(office_zipcode);
 	    $('#edit_office_mobile_no').val(office_mobile);
 	    $('.edit-office-modal').modal('show');
 	});
@@ -1475,6 +1662,31 @@
 	    var contact_country = $(this).data('contact-country');
 	    var contact_zipcode = $(this).data('contact-zipcode');
 
+		$.ajax({
+			type: "POST",
+			url: "/edit-office-city-get",
+			data: {
+				office_state: contact_state,
+				office_city: contact_city
+			},
+			success: function (response) {
+				$('#edit_contact_city').children('option:not(:first)').remove();
+				for (var i = 0; i < response.city.length; i++) {
+					$("#edit_contact_city").append('<option value="' + response.city[i].id + '">' + response.city[i].name + '</option>');
+				}
+				$('#edit_contact_zipcode').children('option:not(:first)').remove();
+				for (var i = 0; i < response.zipcode.length; i++) {
+					$("#edit_contact_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
+				}
+				$('#edit_contact_city').val(contact_city);
+				$('#edit_contact_zipcode').val(contact_zipcode);
+			},
+			error: function (xhr) {
+
+			}
+		});
+
+
 	    $("#edit_office_id").val(office_id);
 	    $('#edit_office_id').trigger('change');
 	    $("#edit_designation_id").val(designation_id);
@@ -1484,10 +1696,8 @@
 	    $("#edit_contact_email").val(email);
 	    $("#edit_contact_mobile_no").val(contact_mobile);
 	    $("#edit_contact_address").val(contact_address);
-	    $("#edit_contact_city").val(contact_city);
 	    $("#edit_contact_state").val(contact_state);
 	    $("#edit_contact_country").val(contact_country);
-	    $("#edit_contact_zipcode").val(contact_zipcode);
 	    localStorage.setItem('contact_id', contact_id);
 	    $('.editContactModal').modal('show');
 	});
@@ -1506,6 +1716,30 @@
 	    var contact_country = $(this).data('contact-country');
 	    var contact_zipcode = $(this).data('contact-zipcode');
 
+		$.ajax({
+			type: "POST",
+			url: "/edit-office-city-get",
+			data: {
+				office_state: contact_state,
+				office_city: contact_city
+			},
+			success: function (response) {
+				$('#view_contact_city').children('option:not(:first)').remove();
+				for (var i = 0; i < response.city.length; i++) {
+					$("#view_contact_city").append('<option value="' + response.city[i].id + '">' + response.city[i].name + '</option>');
+				}
+				$('#view_contact_zipcode').children('option:not(:first)').remove();
+				for (var i = 0; i < response.zipcode.length; i++) {
+					$("#view_contact_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
+				}
+				$('#view_contact_city').val(contact_city);
+				$('#view_contact_zipcode').val(contact_zipcode);
+			},
+			error: function (xhr) {
+
+			}
+		});
+
 	    $("#view_office_id").val(office_id);
 	    $('#view_office_id').trigger('change');
 	    $("#view_designation_id").val(designation_id);
@@ -1515,10 +1749,8 @@
 	    $("#view_contact_email").val(email);
 	    $("#view_contact_mobile_no").val(contact_mobile);
 	    $("#view_contact_address").val(contact_address);
-	    $("#view_contact_city").val(contact_city);
 	    $("#view_contact_state").val(contact_state);
 	    $("#view_contact_country").val(contact_country);
-	    $("#view_contact_zipcode").val(contact_zipcode);
 	    localStorage.setItem('contact_id', contact_id);
 	    $('.viewContactModal').modal('show');
 	});
@@ -2033,5 +2265,239 @@
 	});
 
 /*==================================Update Firm Details (BASIC) =============================*/
+/*==================================Firm Approval Level Process =============================*/
+
+	$(document).ready(function(){
+		$("input[name='approval_level'").change(function () {
+			$.ajax({
+				type: "GET",
+				url: "/get-all-designation",
+				success: function (response) {
+					for (var i = 0; i < response.designations.length; i++) {
+						$("#level_1_designation").append('<option value="' + response.designations[i].id + '">' + response.designations[i].title + '</option>');
+						$("#level_1_designation option[value='74']").remove();
+					}
+				},
+				error: function (xhr) {
+
+				}
+			});
+		});
+		
+		var approvalLevel = $("#approval_level_firm").val();
+		var level_1 = $("#level_1").val();
+		var level_2 = $("#level_2").val();
+		var level_3 = $("#level_3").val();
+		var level_4 = $("#level_4").val();
+		$(".remove_level_1 option[value="+ level_2 +"]").remove();
+		$(".remove_level_1 option[value="+ level_3 +"]").remove();
+		$(".remove_level_1 option[value="+ level_4 +"]").remove();
+		$(".remove_level_2 option[value="+ level_1 +"]").remove();
+		$(".remove_level_2 option[value="+ level_3 +"]").remove();
+		$(".remove_level_2 option[value="+ level_4 +"]").remove();
+		$(".remove_level_3 option[value="+ level_1 +"]").remove();
+		$(".remove_level_3 option[value="+ level_2 +"]").remove();
+		$(".remove_level_3 option[value="+ level_4 +"]").remove();
+		$(".remove_level_4 option[value="+ level_1 +"]").remove();
+		$(".remove_level_4 option[value="+ level_2 +"]").remove();
+		$(".remove_level_4 option[value="+ level_3 +"]").remove();
+		if(approvalLevel == "2")
+		{
+			$('#level2Designation').show();
+			$('#level3Designation').hide();
+			$('#level4Designation').hide();
+		}
+		if(approvalLevel == "3")
+		{
+			$('#level2Designation').show();
+			$('#level3Designation').show();
+			$('#level4Designation').hide();
+		}
+		if(approvalLevel == "4")
+		{
+			$('#level2Designation').show();
+			$('#level3Designation').show();
+			$('#level4Designation').show();
+		}
+		if(approvalLevel == "1")
+		{
+			$('#level2Designation').hide();
+			$('#level3Designation').hide();
+			$('#level4Designation').hide();
+		}
+		$(document).on('click', '#level_2', function () {
+			$('#level_2_designation').children('option:not(:first)').remove();
+			$('#level_3_designation').children('option:not(:first)').remove();
+			$('#level_4_designation').children('option:not(:first)').remove();
+			$('#level_1_designation').children('option:not(:first)').remove();
+			$('#level2Designation').show();
+			$('#level3Designation').hide();
+			$('#level4Designation').hide();
+		});
+
+		$(document).on('click', '#level_3', function () {
+			$('#level_2_designation').children('option:not(:first)').remove();
+			$('#level_3_designation').children('option:not(:first)').remove();
+			$('#level_4_designation').children('option:not(:first)').remove();
+			$('#level_1_designation').children('option:not(:first)').remove();
+			$('#level2Designation').show();
+			$('#level3Designation').show();
+			$('#level4Designation').hide();
+		});
+
+		$(document).on('click', '#level_4', function () {
+			$('#level_2_designation').children('option:not(:first)').remove();
+			$('#level_3_designation').children('option:not(:first)').remove();
+			$('#level_4_designation').children('option:not(:first)').remove();
+			$('#level_1_designation').children('option:not(:first)').remove();
+			$('#level2Designation').show();
+			$('#level3Designation').show();
+			$('#level4Designation').show();
+		});
+
+		$(document).on('click', '#level_1', function () {
+			$('#level_2_designation').children('option:not(:first)').remove();
+			$('#level_3_designation').children('option:not(:first)').remove();
+			$('#level_4_designation').children('option:not(:first)').remove();
+			$('#level_1_designation').children('option:not(:first)').remove();
+			$('#level2Designation').hide();
+			$('#level3Designation').hide();
+			$('#level4Designation').hide();
+		});
+		$(".section_remove option[value='74']").remove();
+	});
+	$(document).on('change', '#level_1_designation', function (e) {
+		var level_1_desig = $('#level_1_designation').val();
+		$.ajax({
+			type: "GET",
+			url: "/get-level-2-designation",
+			success: function (response) {
+				$('#level_2_designation').children('option:not(:first)').remove();
+				for (var i = 0; i < response.designations.length; i++) {
+					$("#level_2_designation").append('<option value="' + response.designations[i].id + '">' + response.designations[i].title + '</option>');
+				}
+				$("#level_2_designation option[value=" + level_1_desig + "]").remove();
+			},
+			error: function (xhr) {
+
+			}
+		});
+	});
+
+	$(document).on('change', '#level_2_designation', function (e) {
+		var level_1_desig = $('#level_1_designation').val();
+		var level_2_desig = $('#level_2_designation').val();
+		$.ajax({
+			type: "GET",
+			url: "/get-level-2-designation",
+			success: function (response) {
+				$('#level_3_designation').children('option:not(:first)').remove();
+				for (var i = 0; i < response.designations.length; i++) {
+					$("#level_3_designation").append('<option value="' + response.designations[i].id + '">' + response.designations[i].title + '</option>');
+				}
+				$("#level_3_designation option[value=" + level_1_desig + "]").remove();
+				$("#level_3_designation option[value=" + level_2_desig + "]").remove();
+			},
+			error: function (xhr) {
+
+			}
+		});
+	});
+
+	$(document).on('change', '#level_3_designation', function (e) {
+		var level_1_desig = $('#level_1_designation').val();
+		var level_2_desig = $('#level_2_designation').val();
+		var level_3_desig = $('#level_3_designation').val();
+		$.ajax({
+			type: "GET",
+			url: "/get-level-2-designation",
+			success: function (response) {
+				$('#level_4_designation').children('option:not(:first)').remove();
+				for (var i = 0; i < response.designations.length; i++) {
+					$("#level_4_designation").append('<option value="' + response.designations[i].id + '">' + response.designations[i].title + '</option>');
+				}
+				$("#level_4_designation option[value=" + level_1_desig + "]").remove();
+				$("#level_4_designation option[value=" + level_2_desig + "]").remove();
+				$("#level_4_designation option[value=" + level_3_desig + "]").remove();
+			},
+			error: function (xhr) {
+
+			}
+		});
+	});
+
+	$(document).ready(function(){
+		$("#btnUpdateFirmApproval").click(function () {
+			$("#frmUpdateFirmApproval").submit();
+		});
+
+		$("#frmUpdateFirmApproval").validate({
+			rules: {
+				level_1_designation: {
+					required: true
+				},
+				level_2_designation: {
+					required: true
+				},
+				level_3_designation: {
+					required: true
+				},
+				level_4_designation: {
+					required: true
+				}
+			},
+			messages: {
+				level_1_designation: {
+					required: "Please select approver designation"
+				},
+				level_2_designation: {
+					required: "Please select approver designation"
+				},
+				level_3_designation: {
+					required: "Please select approver designation"
+				},
+				level_4_designation: {
+					required: "Please select approver designation"
+				}
+			}
+			,
+			submitHandler: function (form) {
+				var level_approval = $('input[name=approval_level]:checked').val();
+				var	approver_level_desig_1 = $("#level_1_designation").val();
+				var	approver_level_desig_2 = $("#level_2_designation").val();
+				var	approver_level_desig_3 = $("#level_3_designation").val();
+				var	approver_level_desig_4 = $("#level_4_designation").val();
+					
+				$.ajax({
+					type: "POST",
+					url: "/update-firm-approval-process",
+					data: {
+						level_approval: level_approval,
+						approver_level_desig_1: approver_level_desig_1 ? approver_level_desig_1 : 0,
+						approver_level_desig_2: approver_level_desig_2 ? approver_level_desig_2 : 0,
+						approver_level_desig_3: approver_level_desig_3 ? approver_level_desig_3 : 0,
+						approver_level_desig_4: approver_level_desig_4 ? approver_level_desig_4 : 0
+					},
+					beforeSend: function (xhr) {
+						xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+						$("#btnUpdateFirmApproval").prop('disabled', true);
+						$("#btnUpdateFirmApproval").html("Loading...");
+					},
+					success: function (response) {
+						if (response.update_firm_approval == true) {
+							$(`<div class="alert alert-success"><strong>Success! </strong>Firm Approval Process Updated Successfully</div>`).insertBefore("#frmUpdateFirmApproval");
+							setTimeout(function () {
+								window.location.href = "/firm-details";
+							}, 2000);
+						}
+						//$("#btnUpdateFirmApproval").prop('disabled', false);
+						//$("#btnUpdateFirmApproval").html("Save &amp; Next");
+					}
+				});
+			}
+		});
+	});
+
+/*==================================Firm Approval Level Process =============================*/
 </script>
 {{/content}}

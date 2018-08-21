@@ -185,7 +185,7 @@
                             <label class="control-label">Target Type
                             </label>
                         </div>
-                        <div class="cod-md-9">
+                        <div class="col-md-9">
                             <div class="form-inline m-b-15">
                                 <div class="form-group m-r-5">
                                     <label class="input-group">
@@ -230,6 +230,59 @@
                                     {{#each industry}}
                                     <option value="{{this.id}}" {{#if_eq this.id ../industry_type}} selected="selected" {{/if_eq}}>{{this.industry_name}}</option>
                                     {{/each}}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="control-label">Refferred By </label>
+                            <div class="form-inline m-b-15">
+                                <div class="form-group m-r-5">
+                                    <label class="input-group">
+                                        <span class="input-group-addon">
+                                            <input type="radio" id="referral_type" name="ref_type" value="T" {{#if_eq ref_type_search "T"}} checked {{/if_eq}}/>
+                                        </span>
+                                        <div class="form-control form-control-static">Target</div>
+                                        <span class="glyphicon form-control-feedback "></span>
+                                    </label>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="input-group">
+                                        <span class="input-group-addon">
+                                            <input type="radio" id="organization_type" name="ref_type" value="C" {{#if_eq ref_type_search "C"}} checked {{/if_eq}}/>
+                                        </span>
+                                        <div class="form-control form-control-static">Client</div>
+                                        <span class="glyphicon form-control-feedback "></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" id="target_list" {{#if_eq ref_type_search "T"}} style="display:block;" {{else}} style="display:none;" {{/if_eq}}>
+                            <div class="form-group">
+                                <label class="control-label">Target Name
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select id="target_id" name="referred_id_t" class="select form-control">
+                                    <option value="">Select Target</option>
+                                    {{#each target}} {{#if_eq target_type "I"}}
+                                    <option value="{{this.id}}" {{#if_eq this.id ../referred_id_t_search}} selected {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+                                    {{/if_eq}} {{#if_eq target_type "O"}}
+                                    <option value="{{this.id}}" {{#if_eq this.id ../referred_id_t_search}} selected {{/if_eq}}>{{this.organization_name}}</option>
+                                    {{/if_eq}} {{/each}}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6" id="client_list" {{#if_eq ref_type_search "C"}} style="display:block;" {{else}} style="display:none;" {{/if_eq}}>
+                            <div class="form-group">
+                                <label class="control-label">Client Name
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select id="client_id" name="referred_id_c" class="select form-control">
+                                    <option value="">Select Client</option>
+                                    {{#each client}} {{#if_eq client_type "I"}}
+                                    <option value="{{this.id}}" {{#if_eq this.id ../referred_id_c_search}} selected {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+                                    {{/if_eq}} {{#if_eq client_type "O"}}
+                                    <option value="{{this.id}}" {{#if_eq this.id ../referred_id_c_search}} selected {{/if_eq}}>{{this.organization_name}}</option>
+                                    {{/if_eq}} {{/each}}
                                 </select>
                             </div>
                         </div>
@@ -371,7 +424,15 @@
             checkboxes[i].checked = source.checked;
         }
     }
+    $(document).on('click', '#referral_type', function () {
+        $('#target_list').show();
+        $('#client_list').hide();
+    });
 
+    $(document).on('click', '#organization_type', function () {
+        $('#target_list').hide();
+        $('#client_list').show();
+    });
 
     $('.referral-delete').on('click', function (e) {
         var referral_id = [];
@@ -422,6 +483,25 @@
         $("#delete_user").modal('show');
         $("#delDiv").append('<a href="/referral/delete/' + referral_id + '" class="btn btn-danger" id="removeBtnDelete">' + "Delete" + '</a>');
     });
-
+    $(document).ready(function(){
+        $("#advancedFilterReferral").validate({
+            rules: {
+              referred_id_t: {
+                  required: true
+              },  
+              referred_id_c: {
+                  required: true
+              }  
+            },
+            messages: {
+                referred_id_t: {
+                    required: "Please select target name"
+                },
+                referred_id_c: {
+                    required: "Please select client name"
+                }
+            }
+        });
+    });
 
 </script> {{/content}}

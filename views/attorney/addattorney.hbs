@@ -259,20 +259,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6">
-                        <div class="form-group form-focus select-focus">
-                            <label class="control-label">Jurisdiction
-                                <span class="req-lbl">*</span>
-
-                            </label>
-                            <select id="jurisdiction" name="jurisdiction" class="form-control floating">
-                                <option value="">Select Jurisdiction</option>
-                                {{#each jurisdiction}}
-                                <option value="{{this.id}}">{{this.name}}</option>
-                                {{/each}}
-                            </select>
-                        </div>
-                    </div>
+                    
 
                     {{!--
                     <div class="col-md-6">
@@ -315,6 +302,17 @@
                         <div class="form-group form-focus">
                             <label class="control-label">Billing Opp Cost in Dollars $</label>
                             <input type="text" class="form-control floating" id="billing_opp_cost" name="billing_opp_cost" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="">
+                                <select class="form-control floating" id="jurisdiction" name="jurisdiction" multiple="multiple">
+                                    {{#each allJurisdiction}}
+                                    <option value="{{this.jurisdiction.id}}">{{this.jurisdiction.name}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -506,7 +504,7 @@
 
 
             jurisdiction: {
-                required: "jurisdiction can't be blank"
+                required: "Jurisdiction can't be blank"
             },
             practice_area: {
                 required: "Practice area can't be blank"
@@ -547,6 +545,14 @@
     });
     $('#practice_area').multiselect({
         nonSelectedText: 'Select Practice Area',
+        enableFiltering: true,
+        includeSelectAllOption: true,
+        buttonWidth: '100%',
+        maxHeight: 400,
+        dropUp: true
+    });
+    $('#jurisdiction').multiselect({
+        nonSelectedText: 'Select Jurisdiction',
         enableFiltering: true,
         includeSelectAllOption: true,
         buttonWidth: '100%',

@@ -520,6 +520,40 @@ router.post('/update-own-firmDetails', auth, firmAuth, csrfProtection, async (re
     res.json({"update_firm_details": true});
 });
 
+router.post('/update-firm-approval-process', auth, firmAuth, csrfProtection, (req, res) => {
+    Firm.update({
+        approval_level: req.body.level_approval,
+        level_1: req.body.approver_level_desig_1,
+        level_2: req.body.approver_level_desig_2,
+        level_3: req.body.approver_level_desig_3,
+        level_4: req.body.approver_level_desig_4
+    }, {
+        where: { id: req.user.firm_id }
+        }).then(result => {
+            res.json({ "update_firm_approval": true });
+        });
+});
+
+router.post("/edit-office-city-get", auth, firmAuth, async(req, res)=> {
+    const city = await City.findAll({
+        where: {
+            state_id: req.body.office_state
+        }
+    });
+    const cities = await City.findById(req.body.office_city);
+    const zipcode = await Zipcode.findAll({
+        where: {
+            city_name: cities.name
+        }
+    });
+   res.json({
+       "get_editOffice_city": true,
+       "city": city,
+       "zipcode" : zipcode
+   });
+
+});
+
 /*==========================Firm Profile Details Update section=======================*/
 
 module.exports = router;
