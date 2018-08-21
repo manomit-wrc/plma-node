@@ -348,7 +348,7 @@ router.post('/activity/add', auth, upload.single('activity_attachment'), firmAtt
                 type: client_user[j]
             });
         }
-    } else {
+    } else if (req.body.ref_type == 'R') {
         for (var r = 0; r < referral_user.length; r++) {
             await Activity_to_user_type.create({
                 activity_id: req.body.activity_id,
