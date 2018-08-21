@@ -49,6 +49,7 @@ router.get('/attorneys', auth, csrfProtection, async (req, res) => {
 	var success_message = req.flash('success-attorney-message')[0];
 	var success_edit_message = req.flash('success-edit-attorney-message')[0];
 	var attar_information = [];
+	
 	User.hasMany(Attorney_Details, {
 		foreignKey: 'user_id'
 	});
@@ -234,7 +235,7 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 	var university = req.body.university;
 	var year = req.body.year;
 	for (var d = 0; d < degree.length; d++) {
-		if (degree[d] !== ""){
+		if (degree[d] !== "") {
 			var ddd = degree[d];
 			var uuu = university[d];
 			var yyy = year[d];
