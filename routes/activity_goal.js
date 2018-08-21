@@ -4,7 +4,8 @@ const firmAttrAuth = require('../middlewares/firm_attr_auth');
 const csrf = require('csurf');
 const Firm = require('../models').firm;
 const ActivityGoal = require('../models').activity_goal;
-const csrfProtection = csrf({ cookie: true });
+const Activity = require('../models').activity;
+var csrfProtection = csrf({ cookie: true });
 const router = express.Router();
 
 /*==================================Bratin Meheta 15-06-2018===================================*/
@@ -103,6 +104,18 @@ router.get('/activity-goal/delete/:id', auth, firmAttrAuth, csrfProtection, (req
 		req.flash('success-delete-goal-message', 'Activity Goal Deleted Successfully');
 		res.redirect('/activity-goal');
 	});
+});
+
+router.get("/activity-goal/view-activity/:id", auth, firmAttrAuth, async(req, res)=> {
+	const activity = await Activity.findAll({
+		where: {
+			activity_goal_id : req.params['id']
+		}
+	});
+	res.render('activity_goal/activity_list', {
+		layout: 'dashboard',
+		activity
+	})
 });
 
 /*==================================Bratin Meheta 15-06-2018===================================*/

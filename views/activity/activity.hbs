@@ -75,7 +75,7 @@
                 {{/if}} 
 
 
-                <a href="/activity/view/{{this.id}}" class="btn btn-success btn-sm">
+                <a href="/activity/view/{{this.id}}" class="btn btn-success btn-sm" id="setUrlItem">
                   <i class="fa fa-eye m-r-5"></i>
                 </a>
 
@@ -370,6 +370,10 @@
 
 
 <script>
+  $(document).on('click', "#setUrlItem", function () {
+      localStorage.removeItem('url');
+      localStorage.setItem("url", window.location.pathname);
+    });
   $(document).on('click', '#delete_activity', function(e) {
       var activity_id = $(this).data('activity-id');
       $("#removeBtnDelete").remove();
