@@ -57,7 +57,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group form-focus select-focus">
                                         <label class="control-label">Gender</label>
-                                        <select class="select form-control floating" id="gender" name="gender">
+                                        <select class="form-control floating" id="gender" name="gender">
                                             <option value="">Select Gender</option>
                                             <option value="M" {{#if_eq user.gender "M"}} selected="selected" {{/if_eq}}>Male</option>
                                             <option value="F" {{#if_eq user.gender "F"}} selected="selected" {{/if_eq}}>Female</option>
@@ -87,7 +87,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group form-focus">
+                        <div class="form-group form-focus select-focus">
                             <label class="control-label">Country</label>
                             <select class="form-control floating" id="country" name="country">
                                 {{#each country}}
@@ -97,7 +97,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group form-focus">
+                        <div class="form-group form-focus select-focus">
                             <label class="control-label">State</label>
                             <select class="form-control floating" id="state" name="state">
                                 <option value="">Select State</option>
@@ -108,9 +108,9 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group form-focus">
+                        <div class="form-group form-focus select-focus">
                             <label class="control-label">City</label>
-                            <select class="select form-control floating" id="city" name="city">
+                            <select class="form-control floating" id="city" name="city">
                                 <option value="">Select City</option>
                                 {{#each city}}
                                     <option value="{{this.id}}" {{#if_eq this.id ../user.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
@@ -119,9 +119,9 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group form-focus">
+                        <div class="form-group form-focus select-focus">
                             <label class="control-label">Zipcode</label>
-                            <select class="select form-control floating" id="zipcode" name="zipcode">
+                            <select class="form-control floating" id="zipcode" name="zipcode">
                                 <option value="">Select Zipcode</option>
                                 {{#each zipcode}}
                                     <option value="{{this.id}}" {{#if_eq this.id ../user.zipcode}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
@@ -184,22 +184,22 @@
                     required: "Last name can't be blank"
                 },
                 mobile_no: {
-                    required: "Mobile no can't be blank"
+                    required: "Mobile no. can't be blank"
                 },
                 address: {
                     required: "Address can't be blank"
                 },
                 country: {
-                    required: "country can't be blank"
+                    required: "Country can't be blank"
                 },
                 state: {
-                    required: "state can't be blank"
+                    required: "State can't be blank"
                 },
                 city: {
-                    required: "city can't be blank"
+                    required: "City can't be blank"
                 },
                 zipcode: {
-                    required: "zipcode can't be blank"
+                    required: "Zipcode can't be blank"
                 }
             }
         });
