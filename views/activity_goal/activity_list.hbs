@@ -46,7 +46,7 @@
                                     APPROVED - DISCARD ACTIVITY {{/if_eq}}
                                 </td>
                                 <td>
-                                    <a href="/activity/view/{{this.id}}" class="btn btn-success btn-sm">
+                                    <a href="/activity/view/{{this.id}}" class="btn btn-success btn-sm" id="setUrlItem">
                                         <i class="fa fa-eye m-r-5"></i>
                                     </a>
                                 </td>
@@ -72,4 +72,11 @@
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
 <script type="text/javascript" src="/assets/js/select2.min.js"></script>
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
-<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script> {{/content}}
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script>
+    $(document).on('click',"#setUrlItem", function(){
+        localStorage.removeItem('url');
+        localStorage.setItem("url", window.location.pathname);
+    });
+</script>
+{{/content}}

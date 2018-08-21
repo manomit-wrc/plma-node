@@ -9,16 +9,14 @@
       <div class="col-sm-8">
         <h4 class="page-title">View Activity</h4>
       </div>
-      {{#if_eq editdata.activity_status "0"}}
         <div class="right">
+      {{#if_eq editdata.activity_status "0"}}
           <a href="/activity/edit/{{editdata.id}}" class="btn btn-primary pull-right rounded">
             <i class="fa fa-edit"></i> Edit Activity</a>
-
-            <a href="/activitypage" class="btn btn-primary pull-right rounded m-r-5"><i class="fa fa-arrow-left"></i>Back</a>
-
-
-      </div>
       {{/if_eq}}
+        {{!-- <a href="/activitypage" class="btn btn-primary pull-right rounded m-r-5"><i class="fa fa-arrow-left"></i> Back</a> --}}
+        <button class="btn btn-primary pull-right rounded m-r-5" id="backActivityByn"><i class="fa fa-arrow-left"></i> Back</button>
+      </div>
     </div>
 
 
@@ -513,4 +511,8 @@
     $('#target_list').hide();
   }
 
+  $(document).on('click',"#backActivityByn", function(){
+    window.location.href = localStorage.getItem('url');
+    localStorage.removeItem('url');
+  });
 </script> {{/content}}
