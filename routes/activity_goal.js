@@ -10,6 +10,7 @@ const Op = Sequelize.Op;
 const User = require('../models').user;
 const Firm = require('../models').firm;
 const ActivityGoal = require('../models').activity_goal;
+const Activity = require('../models').activity;
 
 var csrfProtection = csrf({ cookie: true });
 
@@ -112,6 +113,18 @@ router.get('/activity-goal/delete/:id', auth, firmAttrAuth, csrfProtection, (req
 		req.flash('success-delete-goal-message', 'Activity Goal Delete Successfully');
 		res.redirect('/activity-goal');
 	});
+});
+
+router.get("/activity-goal/view-activity/:id", auth, firmAttrAuth, async(req, res)=> {
+	const activity = await Activity.findAll({
+		where: {
+			activity_goal_id : req.params['id']
+		}
+	});
+	res.render('activity_goal/activity_list', {
+		layout: 'dashboard',
+		activity
+	})
 });
 
 

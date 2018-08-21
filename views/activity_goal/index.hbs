@@ -39,9 +39,9 @@
                                 <th>Activity Goals</th>
                                 <th>Firm Name</th>
                                 <th>Duration</th>
-                                <th style="width:25%;">Remarks</th>
+                                <th>Remarks</th>
                                 <th>Created Date &amp; time</th>
-                                <th class="text-right">Action</th>
+                                <th class="text-right"  style="width:20%;">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -59,6 +59,12 @@
                                 <td>{{this.remarks}}</td>
                                 <td>{{dateFormat this.createdAt "DD-MM-YYYY, hh:mm a"}}</td>
                                 <td class="text-right">
+                                    <a href="/budget-report/activity-goal/{{this.id}}" class="btn btn-success btn-sm" title="See Budget Report">
+                                        <i class="fa fa-money"></i>
+                                    </a>
+                                    <a href="/activity-goal/view-activity/{{this.id}}" class="btn btn-info btn-sm" title="See associated activity">
+                                        <i class="fa fa-tasks"></i>
+                                    </a>
 
                                     <a href="/activity-goal/view/{{this.id}}" class="btn btn-success btn-sm">
                                         <i class="fa fa-eye m-r-5"></i>
