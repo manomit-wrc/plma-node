@@ -40,10 +40,10 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive">
-                     {{#if_eq count_query "0"}}{{else}}
+                     {{#if count_query}}
                     <a href="/referral" class="btn btn-primary rounded advancedFilter" style="right: 595px !important;">
                         <i class="fa fa-eraser"></i> Clear Filter</a>
-                    {{/if_eq}}
+                    {{/if}}
                     <button class="btn btn-primary rounded advancedFilter" data-toggle="modal" data-target="#add_filter">
                         <i class="fa fa-filter"></i> Filter</button>
                     <table class="table table-striped custom-table datatable">
