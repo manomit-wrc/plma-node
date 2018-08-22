@@ -15,9 +15,6 @@ const Contact = require('../models').master_contact;
 const Target = require('../models').target;
 const user = require('../models').user;
 const ContactInformation = require('../models').contact_information;
-const AttorneyDetails = require('../models').attorney_details;
-
-
 const router = express.Router();
 var csrfProtection = csrf({ cookie: true });
 var fs = require('fs');
@@ -240,7 +237,7 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 				estimated_revenue: removePhoneMask(req.body.estimated_revenue)
 			});
 		} else {
-			const inserData = await Contact.create({
+			const insertData = await Contact.create({
 				organization_name: req.body.org_name,
 				organization_code: req.body.org_code,
 				email: req.body.email,
@@ -285,7 +282,7 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 					phone_no: contactDetails[j].phone_no,
 					fax: contactDetails[j].fax,
 					type: 'M',
-					contact_id: inserData.id
+					contact_id: insertData.id
 				});
 			} 
 		}
@@ -473,7 +470,7 @@ router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, asyn
 		});
 	} else {
 
-		const inserData = await Contact.update({
+		await Contact.update({
 			organization_name: req.body.org_name,
 			organization_code: req.body.org_code,
 			email: req.body.email,
