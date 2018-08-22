@@ -134,7 +134,6 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 });
 
 //fetch
-
 router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res) => {
     var whereCondition = {};
 
@@ -146,6 +145,9 @@ router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res)
     }
     if (req.query.approval_status) {
         whereCondition.activity_status = req.query.approval_status;
+    }
+    if (req.query.ref_type) {
+        whereCondition.target = req.query.ref_type;
     }
     if (req.query.ref_type && req.query.target_user || req.query.client_user || req.query.referral_user) {
         var acti_user = '';
@@ -171,8 +173,8 @@ router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res)
     if (req.user.role_id == 2) {
         whereCondition.firm_id = req.user.firm_id;
     } else {
-        whereCondition.firm_id= req.user.firm_id;
-        whereCondition.user_id= req.user.id;
+        whereCondition.firm_id = req.user.firm_id;
+        whereCondition.user_id = req.user.id;
     }
 	var success_message = req.flash('success-message')[0];
 	const activity_goal = await ActivityGoal.findAll({
@@ -228,7 +230,6 @@ router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res)
 });
 
 // Start budget add section
-
 router.post('/insertActivity', auth, async (req, res) => {
     const addActivityId = await Activity.create({
         activity_name: req.body.activityName
