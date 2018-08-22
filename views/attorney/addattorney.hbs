@@ -464,7 +464,8 @@
     $("#addattorneyform").validate({
         rules: {
             mail:{
-                required: true
+                required: true,
+                email:true
             },
             pass: {
                 required: true
@@ -705,16 +706,23 @@
             rightAlign: false
         });
         $("#mail").keyup(function () {
-            if ($("#mail").val() == '') {
-               $("div").remove(".validation");
-            }
+             $("div").remove(".validation");
+            
         });
     });
 /* ================================ Duplicate email checking ajax call ========================*/
+    function validateEmail(email) {
+        var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        if (filter.test(email)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
     $(document).on('change', "#mail", function(e){
         var email = $(this).val();
         $("div").remove(".validation");
-        $("#btnAdd").prop('disabled', false);
         if(email !== ''){
             $.ajax({
                 type: "POST",
@@ -723,16 +731,19 @@
                     email: email
                 },
                 success: function (response) {
-                    console.log(response.success);
                     if(response.success == true)
                     {
                         $("#mail").parent().append("<div class='validation' style='color:red;margin-bottom: 20px;'><i class='fa fa-close iconDuplicateEmail'></i><b> Email Id already exists</b></div>");
-                        $("#btnAdd").prop('disabled', true);
                     }
                     else
                     {
-                        $("#mail").parent().append("<div class='validation' style='color:green;margin-bottom: 20px;'><i class='fa fa-check iconDuplicateEmail' style='background-color:#c2f7c6 !important;''></i></div>");
-                        $("#btnAdd").prop('disabled', false);
+                        if (validateEmail(email)) {
+                            $("#mail").parent().append("<div class='validation' style='color:green;margin-bottom: 20px;'><i class='fa fa-check iconDuplicateEmail' style='background-color:#c2f7c6 !important;''></i></div>");
+                        }
+                        else {
+                            $("#mail").parent().append("<div class='validation' style='color:red;margin-bottom: 20px;'><i class='fa fa-close iconDuplicateEmail'></i></div>");
+                            
+                        }
                     }
                 },
                 error: function (xhr) {

@@ -22,6 +22,10 @@ const Group = require('../models').group;
 const Education = require('../models').education;
 const PracticeAreaToFirm = require('../models').practice_area_to_firms;
 const PracticeAreaToAttr = require('../models').practice_area_to_attorney;
+const Activity = require('../models').activity;
+const Target = require('../models').target;
+const Client = require('../models').client;
+const Referral = require('../models').referral;
 
 var csrfProtection = csrf({ cookie: true });
 
@@ -50,17 +54,93 @@ function removePhoneMask(phone_no) {
     return phone_no;
 }
 
-router.get('/dashboard', auth,  (req, res) => {
+router.get('/dashboard', auth,  async(req, res) => {
     var auth_msg = req.flash('success-auth-message')[0];
     var changeFirmToAttr = req.flash('change-firm-login')[0];
     var changeAttrToFirm = req.flash('change-attr-login')[0];
     var changeSite = req.flash('change-site-login')[0];
+/* =================== Activity Count starts ================================*/
+    var activityCondition = {};
+    if(req.user.role_id != "1"){
+        activityCondition.firm_id = req.user.firm_id;
+        if(req.user.role_id != "2"){
+            activityCondition.user_id = req.user.id;
+        }
+    }
+    var activity = await Activity.findAll({
+        where: activityCondition,
+        order: [
+            ['createdAt', 'DESC']
+        ]
+    });
+    var activity_count = activity.length;
+/* =================== Activity Count Ends ================================*/
+/* =================== Target Count Ends ================================*/
+
+    var targetCondition = {};
+    targetCondition.target_status = 1;
+    if (req.user.role_id != "1") {
+        targetCondition.firm_id = req.user.firm_id;
+        if (req.user.role_id != "2") {
+            targetCondition.attorney_id = req.user.id;
+        }
+    }
+    var target = await Target.findAll({
+        where: targetCondition,
+        order: [
+            ['createdAt', 'DESC']
+        ]
+    });
+    var target_count = target.length;
+/* =================== Target Count Ends ================================*/
+
+/* =================== Client Count Ends ================================*/
+    var clientCondition = {};
+    if (req.user.role_id != "1") {
+        clientCondition.firm_id = req.user.firm_id;
+        if (req.user.role_id != "2") {
+            clientCondition.attorney_id = req.user.id;
+        }
+    }
+    var client = await Client.findAll({
+        where: clientCondition,
+        order: [
+            ['createdAt', 'DESC']
+        ]
+    });
+    var client_count = client.length;
+/* =================== Client Count Ends ================================*/
+
+/* =================== Referral Count Ends ================================*/
+    var referralCondition = {};
+    if (req.user.role_id != "1") {
+        referralCondition.firm_id = req.user.firm_id;
+        if (req.user.role_id != "2") {
+            referralCondition.attorney_id = req.user.id;
+        }
+    }
+    var referral = await Referral.findAll({
+        where: referralCondition,
+        order: [
+            ['createdAt', 'DESC']
+        ]
+    });
+    var referral_count = referral.length;
+/* =================== Referral Count Ends ================================*/
+    console.log(client);
+    
     res.render('dashboard', {
         layout: 'dashboard',
         auth_msg: auth_msg,
         changeFirmToAttr,
         changeSite,
-        changeAttrToFirm
+        changeAttrToFirm,
+        activity,
+        activity_count,
+        target_count,
+        client,
+        client_count,
+        referral_count
     });
 }).get('/logout', auth, (req, res) => {
     req.logout();

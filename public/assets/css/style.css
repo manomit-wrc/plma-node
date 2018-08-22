@@ -5657,6 +5657,10 @@ i.fa.fa-eye.m-r-5 {
 	top: 10px;
 }
 
+.activity_custom_del:nth-child(n+4) {
+	display: none;
+}
+
 
 /* loader css ends */
 
