@@ -67,7 +67,7 @@
 											</div>
 											<div class="col-md-6">
 												<div class="form-group">
-													<label class="control-label">Phone No
+													<label class="control-label">Phone No.
 														<span class="text-danger">*</span>
 													</label>
 													<input class="form-control number_validator" type="text" name="phone_no" id="phone_no" placeholder="Phone No" value="{{firm.phone_no}}">
@@ -78,10 +78,10 @@
 													<label class="control-label">Country
 														<span class="text-danger">*</span>
 													</label>
-													<select class="form-control" id="firm_country" name="firm_country">
+													<select class="form-control floating" id="firm_country" name="firm_country">
 														<option value="">Select Country</option>
 														{{#each country}}
-														<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+															<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
 														{{/each}}
 													</select>
 												</div>
@@ -91,10 +91,10 @@
 													<label class="control-label">State
 														<span class="text-danger">*</span>
 													</label>
-													<select class="form-control" id="firm_state" name="firm_state">
-														<option value="">select State</option>
+													<select class="form-control floating" id="firm_state" name="firm_state">
+														<option value="">Select State</option>
 														{{#each state}}
-														<option value="{{this.id}}" {{#if_eq this.id ../firm.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+															<option value="{{this.id}}" {{#if_eq this.id ../firm.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
 														{{/each}}
 													</select>
 												</div>
@@ -107,20 +107,20 @@
 													<select class="form-control" id="firm_city" name="firm_city">
 														<option value="">Select City</option>
 														{{#each firm_city}}
-														<option value="{{this.id}}" {{#if_eq this.id ../firm.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+															<option value="{{this.id}}" {{#if_eq this.id ../firm.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
 														{{/each}}
 													</select>
 												</div>
 											</div>
 											<div class="col-md-6">
 												<div class="form-group">
-													<label class="control-label">Zipcode
+													<label class="control-label">Zip Code
 														<span class="text-danger">*</span>
 													</label>
 													<select class="form-control" id="firm_zipcode" name="firm_zipcode">
 														<option value="">Select Zipcode</option>
 														{{#each firm_zipcode}}
-														<option value="{{this.id}}" {{#if_eq this.id ../firm.zipcode}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
+															<option value="{{this.id}}" {{#if_eq this.id ../firm.zipcode}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
 														{{/each}}
 													</select>
 												</div>
@@ -133,7 +133,7 @@
 											</div>
 											<div class="col-md-6">
 												<div class="form-group">
-													<label class="control-label">Mobile</label>
+													<label class="control-label">Mobile No.</label>
 													<input class="form-control number_validator" type="text" name="firm_mobile" id="firm_mobile" placeholder="Mobile" value="{{firm.mobile}}">
 												</div>
 											</div>
@@ -192,7 +192,7 @@
 												<div class="">
 													<select class="form-control floating" id="section" name="section" multiple="multiple">
 														{{#each section}}
-														<option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.name}}</option>
+															<option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.name}}</option>
 														{{/each}}
 													</select>
 												</div>
@@ -205,7 +205,7 @@
 												<div class="">
 													<select class="form-control floating" id="practice_area" name="practice_area" multiple="multiple">
 														{{#each practice_area}}
-														<option value="{{this.id}}" {{#inArray ../PracticeAreaArr this.id}} selected="selected" {{/inArray}}>{{this.name}}</option>
+															<option value="{{this.id}}" {{#inArray ../PracticeAreaArr this.id}} selected="selected" {{/inArray}}>{{this.name}}</option>
 														{{/each}}
 													</select>
 												</div>
@@ -219,7 +219,7 @@
 												{{!-- <div class="form-group form-focus select-focus"> --}}
 													<select class="form-control floating" id="firm_jurisdiction" name="firm_jurisdiction" multiple="multiple">
 														{{#each jurisdiction}}
-														<option value="{{this.id}}" {{#inArray ../jurisdictionArr this.id}} selected="selected" {{/inArray}}>{{this.name}}</option>
+															<option value="{{this.id}}" {{#inArray ../jurisdictionArr this.id}} selected="selected" {{/inArray}}>{{this.name}}</option>
 														{{/each}}
 													</select>
 												</div>
@@ -361,7 +361,7 @@
 														<th>SL#</th>
 														<th>Firm Name</th>
 														<th>Office Name</th>
-														<th>Mobile Number</th>
+														<th>Mobile No.</th>
 														<th>Address</th>
 														<th>Created Date</th>
 														<th class="text-right">Action</th>
@@ -373,22 +373,19 @@
 														<td>{{math @index "+" 1}}</td>
 														<td>{{this.firm.title}}</td>
 														<td>
-															<a href="#" data-toggle="modal" data-target="#view_offices" data-office-id="{{this.id}}" data-name="{{this.name}}" data-address="{{this.address}}"
-																data-city="{{this.city}}" data-state="{{this.state}}" data-country="{{this.country}}" data-zipcode="{{this.zipcode}}"
-															data-mobile="{{this.mobile}}" data-firm-id="{{this.firm_id}}" id="view-office-detail" >{{this.name}}</a>
+															<a href="#" data-toggle="modal" data-target="#view_offices" data-office-id="{{this.id}}" data-name="{{this.name}}" data-address="{{this.address}}" data-city="{{this.city}}" data-state="{{this.state}}" data-country="{{this.country}}" data-zipcode="{{this.zipcode}}"
+															data-mobile="{{this.mobile}}" data-firm-id="{{this.firm_id}}" id="view-office-detail">
+																{{this.name}}+
+															</a>
 														</td>
 														<td class="number_validator">{{this.mobile}}</td>
 														<td>{{this.address}}</td>
 														<td>{{dateFormat this.createdAt "DD-MM-YYYY"}}</td>
 														<td class="text-right">
-															<a href="#" data-toggle="modal" data-target="#view_offices" data-office-id="{{this.id}}" data-name="{{this.name}}" data-address="{{this.address}}"
-																data-city="{{this.city}}" data-state="{{this.state}}" data-country="{{this.country}}" data-zipcode="{{this.zipcode}}"
-																data-mobile="{{this.mobile}}" data-firm-id="{{this.firm_id}}" id="view-office-detail" class="btn btn-success btn-sm">
+															<a href="#" data-toggle="modal" data-target="#view_offices" data-office-id="{{this.id}}" data-name="{{this.name}}" data-address="{{this.address}}" data-city="{{this.city}}" data-state="{{this.state}}" data-country="{{this.country}}" data-zipcode="{{this.zipcode}}" data-mobile="{{this.mobile}}" data-firm-id="{{this.firm_id}}" id="view-office-detail" class="btn btn-success btn-sm">
 																<i class="fa fa-eye m-r-5"></i>
 															</a>
-															<a href="#" data-toggle="modal" data-target="#edit_offices" data-office-id="{{this.id}}" data-name="{{this.name}}" data-address="{{this.address}}"
-																data-city="{{this.city}}" data-state="{{this.state}}" data-country="{{this.country}}" data-zipcode="{{this.zipcode}}"
-																data-mobile="{{this.mobile}}" data-firm-id="{{this.firm_id}}" id="edit-office-detail" class="btn btn-info btn-sm">
+															<a href="#" data-toggle="modal" data-target="#edit_offices" data-office-id="{{this.id}}" data-name="{{this.name}}" data-address="{{this.address}}" data-city="{{this.city}}" data-state="{{this.state}}" data-country="{{this.country}}" data-zipcode="{{this.zipcode}}" data-mobile="{{this.mobile}}" data-firm-id="{{this.firm_id}}" id="edit-office-detail" class="btn btn-info btn-sm">
 																<i class="fa fa-pencil m-r-5"></i>
 															</a>
 															<a href="#" data-toggle="modal" data-target="#delete_offices" data-office-id="{{this.id}}" id="delete-office-details" class="btn btn-danger btn-sm">
@@ -433,14 +430,9 @@
 													<tr>
 														<td>
 															<a href="javascript:void(0)" class="avatar">{{first_letter this.first_name}}</a>
-															<h2>
-															<!-- <a href="javascript:void(0)">{{this.first_name}}&nbsp;{{this.last_name}}</a> -->
-															<a href="#" data-toggle="modal" data-target="#view_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}"
-																data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}"
-																data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}"
-																data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}"
-															data-contact-zipcode="{{this.zipcode}}" id="view-office-contact">{{this.first_name}} {{this.last_name}}</a></td>
-															</h2>
+															<a href="#" data-toggle="modal" data-target="#view_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}" data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}" data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}" data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}" data-contact-zipcode="{{this.zipcode}}" id="view-office-contact">
+																{{this.first_name}} {{this.last_name}}
+															</a>
 														</td>
 														<td>{{this.office.name}}</td>
 														<td>{{this.designation.title}}</td>
@@ -448,22 +440,13 @@
 														<td class="number_validator">{{this.mobile}}</td>
 														<td>{{dateFormat this.createdAt "DD-MM-YYYY"}}</td>
 														<td class="text-right">
-															<a href="#" data-toggle="modal" data-target="#view_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}"
-																data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}"
-																data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}"
-																data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}"
-																data-contact-zipcode="{{this.zipcode}}" id="view-office-contact" class="btn btn-success btn-sm">
+															<a href="#" data-toggle="modal" data-target="#view_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}" data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}" data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}" data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}" data-contact-zipcode="{{this.zipcode}}" id="view-office-contact" class="btn btn-success btn-sm">
 																<i class="fa fa-eye m-r-5"></i>
 															</a>
-															<a href="#" data-toggle="modal" data-target="#edit_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}"
-																data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}"
-																data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}"
-																data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}"
-																data-contact-zipcode="{{this.zipcode}}" id="edit-office-contact" class="edit btn btn-info btn-sm">
+															<a href="#" data-toggle="modal" data-target="#edit_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}" data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}" data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}" data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}" data-contact-zipcode="{{this.zipcode}}" id="edit-office-contact" class="edit btn btn-info btn-sm">
 																<i class="fa fa-pencil m-r-5"></i>
 															</a>
-															<a href="#" data-toggle="modal" data-target="#delete_contacts" data-contact-id="{{this.id}}" id="delete-office-contact-details"
-																class="edit btn btn-danger btn-sm">
+															<a href="#" data-toggle="modal" data-target="#delete_contacts" data-contact-id="{{this.id}}" id="delete-office-contact-details" class="edit btn btn-danger btn-sm">
 																<i class="fa fa-trash-o m-r-5"></i>
 															</a>
 														</td>
@@ -504,7 +487,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label class="control-label">Mobile No
+								<label class="control-label">Mobile No.
 									<span class="text-danger">*</span>
 								</label>
 								<input class="form-control number_validator" type="text" name="mobile_no" id="mobile_no">
@@ -519,14 +502,20 @@
 							</div>
 						</div>
 						<div class="col-md-6">
+<<<<<<< HEAD
+							<div class="form-group form-focus">
+								<label class="control-label">Country</label>
+								<select class="form-control floating" id="country" name="country">
+=======
 							<div class="form-group">
 								<label class="control-label">Country
 									<span class="text-danger">*</span>
 								</label>
 								<select class="select form-control floating" id="country" name="country">
+>>>>>>> 4b9ef7370bc1eee115cb69b1cfb505c1c6258cc4
 									<option value="">Select Country</option>
 									{{#each country}}
-									<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+										<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
 									{{/each}}
 								</select>
 							</div>
@@ -539,7 +528,7 @@
 								<select class="select form-control floating" id="state" name="state">
 									<option value="">select State</option>
 									{{#each state}}
-									<option value="{{this.id}}">{{this.name}}</option>
+										<option value="{{this.id}}">{{this.name}}</option>
 									{{/each}}
 								</select>
 							</div>
@@ -594,7 +583,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label class="control-label">Mobile No
+								<label class="control-label">Mobile No.
 									<span class="text-danger">*</span>
 								</label>
 								<input disabled class="form-control floating" type="text" name="view_office_mobile_no" id="view_office_mobile_no">
@@ -616,7 +605,7 @@
 								<select disabled class="form-control floating" id="view_office_country" name="view_office_country">
 									<option value="">Select Country</option>
 									{{#each country}}
-									<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+										<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
 									{{/each}}
 								</select>
 							</div>
@@ -627,9 +616,9 @@
 									<span class="text-danger">*</span>
 								</label>
 								<select disabled class="form-control floating" id="view_office_state" name="view_office_state">
-									<option value="">select State</option>
+									<option value="">Select State</option>
 									{{#each state}}
-									<option value="{{this.id}}">{{this.name}}</option>
+										<option value="{{this.id}}">{{this.name}}</option>
 									{{/each}}
 								</select>
 							</div>
@@ -657,7 +646,6 @@
 							</div>
 						</div>
 					</div>
-					
 				</form>
 			</div>
 		</div>
@@ -684,7 +672,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label class="control-label">Mobile No
+								<label class="control-label">Mobile No.
 									<span class="text-danger">*</span>
 								</label>
 								<input class="form-control floating number_validator" type="text" name="edit_office_mobile_no" id="edit_office_mobile_no">
@@ -706,7 +694,7 @@
 								<select class=" form-control floating" id="edit_office_country" name="edit_office_country">
 									<option value="">Select Country</option>
 									{{#each country}}
-									<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+										<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
 									{{/each}}
 								</select>
 							</div>
@@ -719,7 +707,7 @@
 								<select class=" form-control floating" id="edit_office_state" name="edit_office_state">
 									<option value="">select State</option>
 									{{#each state}}
-									<option value="{{this.id}}">{{this.name}}</option>
+										<option value="{{this.id}}">{{this.name}}</option>
 									{{/each}}
 								</select>
 							</div>
@@ -763,7 +751,7 @@
 			</div>
 			<form>
 				<div class="modal-body card-box">
-					<p>Are you sure want to delete this?</p>
+					<p>Are you sure want to delete this office?</p>
 					<div class="m-t-20">
 						<a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
 						<button type="submit" class="btn btn-danger btnDeleteOffice">Delete</button>
@@ -794,7 +782,7 @@
 								<select class="select" name="office_id" id="office_id">
 									<option value="">Select Office</option>
 									{{#each office}}
-									<option value="{{this.id}}">{{this.name}}</option>
+										<option value="{{this.id}}">{{this.name}}</option>
 									{{/each}}
 								</select>
 							</div>
@@ -838,7 +826,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label class="control-label">Mobile No
+								<label class="control-label">Mobile No.
 									<span class="text-danger">*</span>
 								</label>
 								<input class="form-control floating number_validator" type="text" name="contact_mobile_no" id="contact_mobile_no">
@@ -846,7 +834,7 @@
 						</div>
 						<div class="col-md-12">
 							<div class="form-group">
-								<label class="control-label"> Address
+								<label class="control-label">Address
 									<span class="text-danger">*</span>
 								</label>
 								<textarea name="contact_address" id="contact_address" class="form-control"></textarea>
@@ -860,7 +848,7 @@
 								<select class="form-control floating" id="contact_country" name="contact_country">
 									<option value="">Select Country</option>
 									{{#each country}}
-									<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+										<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
 									{{/each}}
 								</select>
 							</div>
@@ -873,7 +861,7 @@
 								<select class="form-control floating" id="contact_state" name="contact_state">
 									<option value="">select State</option>
 									{{#each state}}
-									<option value="{{this.id}}">{{this.name}}</option>
+										<option value="{{this.id}}">{{this.name}}</option>
 									{{/each}}
 								</select>
 							</div>
@@ -968,7 +956,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label class="control-label">Mobile No
+								<label class="control-label">Mobile No.
 									<span class="text-danger">*</span>
 								</label>
 								<input disabled class="form-control floating" type="text" name="view_contact_mobile_no" id="view_contact_mobile_no">
@@ -976,7 +964,7 @@
 						</div>
 						<div class="col-md-12">
 							<div class="form-group">
-								<label class="control-label"> Address
+								<label class="control-label">Address
 									<span class="text-danger">*</span>
 								</label>
 								<textarea disabled name="view_contact_address" id="view_contact_address" class="form-control"></textarea>
@@ -990,7 +978,7 @@
 								<select disabled class="form-control floating" id="view_contact_country" name="view_contact_country">
 									<option value="">Select Country</option>
 									{{#each country}}
-									<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+										<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
 									{{/each}}
 								</select>
 							</div>
@@ -1001,9 +989,9 @@
 									<span class="req-lbl">*</span>
 								</label>
 								<select disabled class="form-control floating" id="view_contact_state" name="view_contact_state">
-									<option value="">select State</option>
+									<option value="">Select State</option>
 									{{#each state}}
-									<option value="{{this.id}}">{{this.name}}</option>
+										<option value="{{this.id}}">{{this.name}}</option>
 									{{/each}}
 								</select>
 							</div>
@@ -1031,7 +1019,6 @@
 							</div>
 						</div>
 					</div>
-					
 				</form>
 			</div>
 		</div>
@@ -1201,7 +1188,7 @@
 <script type="text/javascript">
 
 	/*===============================Starts Add Ofiice Section========================================*/
-	
+
 	$(document).ready(function(e) {
 	    $('#section').multiselect({
 	        nonSelectedText: 'Select Section',

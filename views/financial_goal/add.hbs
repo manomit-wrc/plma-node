@@ -1,8 +1,8 @@
 {{#content "style" mode="prepend"}}
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
-
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+{{/content}}
 <div class="page-wrapper">
     <div class="content container-fluid">
         <div class="row">
@@ -27,64 +27,47 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Select Attorney
-                                      <span class="req-lbl">*</span>
-
-                                    </label>
-                                    <select class="select form-control floating" id="attr_id" name="attr_id">
+                                    <label class="control-label">Attorney <span class="req-lbl">*</span> </label>
+                                    <select class="form-control floating" id="attr_id" name="attr_id">
                                         <option value="">Select Attorney</option>
                                         {{#each attorney}}
-                                        <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
+                                            <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
                                         {{/each}}
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                               <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Select Current Year
-                                      <span class="req-lbl">*</span>
-
-                                     </label>
-                                    <select class="select form-control floating" id="year" name="year">
+                                <div class="form-group form-focus select-focus">
+                                    <label class="control-label">Current Year <span class="req-lbl">*</span> </label>
+                                    <select class="form-control floating" id="year" name="year">
                                         <option value="">Select Current Year</option>
                                         {{#each year}}
-                                        <option value="{{this}}">{{this}}</option>
+                                            <option value="{{this}}">{{this}}</option>
                                         {{/each}}
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">Current Year Goal
-                                      <span class="req-lbl">*</span>
-                                    </label>
+                                    <label class="control-label">Current Year Goal <span class="req-lbl">*</span> </label>
                                     <input type="text" class="form-control floating" id="year_goal" name="year_goal" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">Current Year Goal %
-                                      <span class="req-lbl">*</span>
-
-                                    </label>
+                                    <label class="control-label">Current Year Goal % <span class="req-lbl">*</span> </label>
                                     <input type="text" class="form-control floating" id="year_goal_precentage" name="year_goal_precentage" />
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">Summary Info
-                                      <span class="req-lbl">*</span>
-
-                                    </label>
+                                    <label class="control-label">Summary Info</label>
                                     <textarea name="summary_info" id="summary_info" class="form-control floating"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">Remark/Comments
-                                      <span class="req-lbl">*</span>
-
-                                    </label>
+                                    <label class="control-label">Remarks / Comments</label>
                                     <textarea name="remarks" id="remarks" class="form-control floating"></textarea>
                                 </div>
                             </div>
@@ -93,12 +76,11 @@
                 </div>
             </div>
             <div class="text-center m-t-20">
-                <button class="btn btn-primary btn-lg" type="submit">Save &amp; create</button>
+                <button class="btn btn-primary btn-lg" type="submit">Save &amp; Create</button>
                 <a href="/financial-goal" class="btn btn-primary btn-lg m-l-10">Cancel</a>
             </div>
         </form>
     </div>
-
 </div>
 {{#content "script" mode="append"}}
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
@@ -139,17 +121,11 @@
                 },
                 year_goal_precentage: {
                     required: true
-                },
-                summary_info: {
-                    required: true
-                },
-                remarks: {
-                    required: true
                 }
             },
             messages: {
                 attr_id: {
-                    required: "Please select an attorney"
+                    required: "Please select attorney"
                 },
                 year: {
                     required: "Please select current year"
@@ -159,14 +135,9 @@
                 },
                 year_goal_precentage: {
                     required: "Current year goal percentage can't be blank"
-                },
-                summary_info: {
-                    required: "Summary info can't be blank"
-                },
-                remarks: {
-                    required: "Remarsks can't be blank"
                 }
             }
         });
     });
-</script> {{/content}}
+</script>
+{{/content}}
