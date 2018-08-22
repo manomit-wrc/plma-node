@@ -127,8 +127,6 @@ router.get('/dashboard', auth,  async(req, res) => {
     });
     var referral_count = referral.length;
 /* =================== Referral Count Ends ================================*/
-    console.log(client);
-    
     res.render('dashboard', {
         layout: 'dashboard',
         auth_msg: auth_msg,
