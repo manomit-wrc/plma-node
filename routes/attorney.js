@@ -739,24 +739,24 @@ router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async (
 	res.redirect('/attorneys');
 });
 
-// router.post("/get-duplicate-email-block", auth, async(req, res) => {
-// 	const attr_email = await User.findOne({
-// 		where: {
-// 			email: req.body.email
-// 		}
-// 	});
-// 	if (attr_email !== null){
-// 		res.json({
-// 			success: true
-// 		});
-// 	}
-// 	else
-// 	{
-// 		res.json({
-// 			success: false
-// 		});
-// 	}
+router.post("/get-duplicate-email-block", auth, async(req, res) => {
+	const attr_email = await User.findOne({
+		where: {
+			email: req.body.email
+		}
+	});
+	if (attr_email !== null){
+		res.json({
+			success: true
+		});
+	}
+	else
+	{
+		res.json({
+			success: false
+		});
+	}
 
-// });
+});
 
 module.exports = router;

@@ -464,7 +464,8 @@
     $("#addattorneyform").validate({
         rules: {
             mail:{
-                required: true
+                required: true,
+                email:true
             },
             pass: {
                 required: true
@@ -704,34 +705,52 @@
             suffix: '% ',
             rightAlign: false
         });
+        $("#mail").keyup(function () {
+             $("div").remove(".validation");
+            
+        });
     });
 /* ================================ Duplicate email checking ajax call ========================*/
-    /*$(document).on('change', "#mail", function(e){
+    function validateEmail(email) {
+        var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        if (filter.test(email)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    $(document).on('change', "#mail", function(e){
         var email = $(this).val();
-        $.ajax({
-            type: "POST",
-            url: "/get-duplicate-email-block",
-            data: {
-                email: email
-            },
-            success: function (response) {
-                console.log(response.success);
-                $("#mail").removeClass("validation");
-                if(response.success == true)
-                {
-                    $("#mail").parent().append("<div class='validation' style='color:red;margin-bottom: 20px;'><i class='fa fa-close'></i><b>Email Id already exists</b></div>");
-                    $("#btnAdd").prop('disabled', true);
-                }
-                else
-                {
-                    $("#mail").parent().append("<div class='validation' style='color:green;margin-bottom: 20px;'><i class='fa fa-check'></i></div>");
-                    $("#btnAdd").prop('disabled', false);
-                }
-            },
-            error: function (xhr) {
+        $("div").remove(".validation");
+        if(email !== ''){
+            $.ajax({
+                type: "POST",
+                url: "/get-duplicate-email-block",
+                data: {
+                    email: email
+                },
+                success: function (response) {
+                    if(response.success == true)
+                    {
+                        $("#mail").parent().append("<div class='validation' style='color:red;margin-bottom: 20px;'><i class='fa fa-close iconDuplicateEmail'></i><b> Email Id already exists</b></div>");
+                    }
+                    else
+                    {
+                        if (validateEmail(email)) {
+                            $("#mail").parent().append("<div class='validation' style='color:green;margin-bottom: 20px;'><i class='fa fa-check iconDuplicateEmail' style='background-color:#c2f7c6 !important;''></i></div>");
+                        }
+                        else {
+                            $("#mail").parent().append("<div class='validation' style='color:red;margin-bottom: 20px;'><i class='fa fa-close iconDuplicateEmail'></i></div>");
+                            
+                        }
+                    }
+                },
+                error: function (xhr) {
 
-            }
-        });
-    });*/
+                }
+            });
+        }
+    });
 /* ================================ Duplicate email checking ajax call ========================*/
 </script> {{/content}}
