@@ -704,34 +704,42 @@
             suffix: '% ',
             rightAlign: false
         });
-    });
-/* ================================ Duplicate email checking ajax call ========================*/
-    /*$(document).on('change', "#mail", function(e){
-        var email = $(this).val();
-        $.ajax({
-            type: "POST",
-            url: "/get-duplicate-email-block",
-            data: {
-                email: email
-            },
-            success: function (response) {
-                console.log(response.success);
-                $("#mail").removeClass("validation");
-                if(response.success == true)
-                {
-                    $("#mail").parent().append("<div class='validation' style='color:red;margin-bottom: 20px;'><i class='fa fa-close'></i><b>Email Id already exists</b></div>");
-                    $("#btnAdd").prop('disabled', true);
-                }
-                else
-                {
-                    $("#mail").parent().append("<div class='validation' style='color:green;margin-bottom: 20px;'><i class='fa fa-check'></i></div>");
-                    $("#btnAdd").prop('disabled', false);
-                }
-            },
-            error: function (xhr) {
-
+        $("#mail").keyup(function () {
+            if ($("#mail").val() == '') {
+               $("div").remove(".validation");
             }
         });
-    });*/
+    });
+/* ================================ Duplicate email checking ajax call ========================*/
+    $(document).on('change', "#mail", function(e){
+        var email = $(this).val();
+        $("div").remove(".validation");
+        $("#btnAdd").prop('disabled', false);
+        if(email !== ''){
+            $.ajax({
+                type: "POST",
+                url: "/get-duplicate-email-block",
+                data: {
+                    email: email
+                },
+                success: function (response) {
+                    console.log(response.success);
+                    if(response.success == true)
+                    {
+                        $("#mail").parent().append("<div class='validation' style='color:red;margin-bottom: 20px;'><i class='fa fa-close iconDuplicateEmail'></i><b> Email Id already exists</b></div>");
+                        $("#btnAdd").prop('disabled', true);
+                    }
+                    else
+                    {
+                        $("#mail").parent().append("<div class='validation' style='color:green;margin-bottom: 20px;'><i class='fa fa-check iconDuplicateEmail' style='background-color:#c2f7c6 !important;''></i></div>");
+                        $("#btnAdd").prop('disabled', false);
+                    }
+                },
+                error: function (xhr) {
+
+                }
+            });
+        }
+    });
 /* ================================ Duplicate email checking ajax call ========================*/
 </script> {{/content}}
