@@ -122,7 +122,7 @@
                               <td>$ {{this.total_budget_amount}}</td>
                               <td>
                                  {{#if_eq this.activity_status '0'}} <span class="label label-info-border">NEW ACTIVITY - CREATED </span>{{/if_eq}} {{#if_eq this.activity_status '1'}}
-                                <span class="label label-warning-border">PENDING APPROVAL</span> {{/if_eq}} {{#if_eq this.activity_status '2'}} <span class="label label-success-border">APPROVED</span> {{/if_eq}} {{#if_eq
+                                <span class="label label-warning-border">SENT FOR APPROVAL</span> {{/if_eq}} {{#if_eq this.activity_status '2'}} <span class="label label-success-border">APPROVED</span> {{/if_eq}} {{#if_eq
                                 this.activity_status '3'}} <span class="label label-danger-border">NOT APPROVED</span> {{/if_eq}}
                               </td>
                            </tr>
@@ -187,163 +187,162 @@
                </div>
             </div>
          </div>
-         <div class="col-md-6">
-            <div class="panel panel-table">
-               <div class="panel-heading">
-                  <h3 class="panel-title">Clients</h3>
-               </div>
-               <div class="panel-body">
-                  <div class="table-responsive">
-                     <table class="table table-striped custom-table m-b-0">
-                        <thead>
-                           <tr>
-                              <th style="min-width:200px;">Name</th>
-                              <th>Email</th>
-                              <th>Status</th>
-                              <th class="text-right">Action</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           <tr>
-                              <td style="min-width:200px;">
-                                 <a href="#" class="avatar">B</a>
-                                 <h2><a href="client-profile.html">Barry Cuda </a></h2>
-                              </td>
-                              <td>barrycuda@example.com</td>
-                              <td>
-                                 <div class="dropdown action-label">
-                                    <a class="btn btn-white btn-sm rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-dot-circle-o text-success"></i> Active <i class="caret"></i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-success"></i> Active</a></li>
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                              <td class="text-right">
-                                 <div class="dropdown">
-                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                       <li><a href="#" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <a class="avatar">T</a>
-                                 <h2><a href="client-profile.html">Tressa Wexler </a></h2>
-                              </td>
-                              <td>tressawexler@example.com</td>
-                              <td>
-                                 <div class="dropdown action-label">
-                                    <a class="btn btn-white btn-sm rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-dot-circle-o text-danger"></i> Inactive <i class="caret"></i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-success"></i> Active</a></li>
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                              <td class="text-right">
-                                 <div class="dropdown">
-                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                       <li><a href="#" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <a href="client-profile.html" class="avatar">R</a>
-                                 <h2><a href="client-profile.html">Ruby Bartlett </a></h2>
-                              </td>
-                              <td>rubybartlett@example.com</td>
-                              <td>
-                                 <div class="dropdown action-label">
-                                    <a class="btn btn-white btn-sm rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-dot-circle-o text-danger"></i> Inactive <i class="caret"></i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-success"></i> Active</a></li>
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                              <td class="text-right">
-                                 <div class="dropdown">
-                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                       <li><a href="#" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <a href="client-profile.html" class="avatar">M</a>
-                                 <h2><a href="client-profile.html"> Misty Tison </a></h2>
-                              </td>
-                              <td>mistytison@example.com</td>
-                              <td>
-                                 <div class="dropdown action-label">
-                                    <a class="btn btn-white btn-sm rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-dot-circle-o text-success"></i> Active <i class="caret"></i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-success"></i> Active</a></li>
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                              <td class="text-right">
-                                 <div class="dropdown">
-                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                       <li><a href="#" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <a href="client-profile.html" class="avatar">D</a>
-                                 <h2><a href="client-profile.html"> Daniel Deacon <span>CEO</span></a></h2>
-                              </td>
-                              <td>danieldeacon@example.com</td>
-                              <td>
-                                 <div class="dropdown action-label">
-                                    <a class="btn btn-white btn-sm rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-dot-circle-o text-danger"></i> Inactive <i class="caret"></i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-success"></i> Active</a></li>
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                              <td class="text-right">
-                                 <div class="dropdown">
-                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                       <li><a href="#" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                           </tr>
-                        </tbody>
-                     </table>
-                  </div>
-               </div>
-               <div class="panel-footer">
-                  <a href="clients.html" class="text-primary">View all clients</a>
-               </div>
+        <div class="col-md-6">
+          <div class="panel panel-table">
+            <div class="panel-heading">
+              <h3 class="panel-title">Targets</h3>
             </div>
-         </div>
+            <div class="panel-body">
+              <div class="table-responsive">
+                <table class="table table-striped custom-table m-b-0">
+                  <thead>
+                    <tr>
+                      <th style="min-width:200px;">Name</th>
+                      <th>Email</th>
+                      <th>Target Type</th>
+                      <th>Mobile</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#each target}}
+                    <tr class="activity_custom_del">
+                      <td style="min-width:200px;">
+                        {{#if_eq target_type "I"}}
+                        <a href="/target/view/{{this.id}}" class="avatar">{{first_letter this.first_name}}</a>
+                        <h2>
+                          <a href="/target/view/{{this.id}}">{{this.first_name}} {{this.last_name}} </a>
+                        </h2>
+                        {{else}}
+                        <a href="/target/view/{{this.id}}" class="avatar">{{first_letter this.organization_name}}</a>
+                        <h2>
+                          <a href="/target/view/{{this.id}}">{{this.organization_name}}</a>
+                        </h2>
+                        {{/if_eq}}
+                      </td>
+                      <td>{{this.email}}</td>
+                      <td>{{#if_eq target_type "I"}}
+                        <span class="label label-success-border">Individual</span>
+                        {{else}}
+                        <span class="label label-info-border">Organization</span>
+                        {{/if_eq}}
+                      </td>
+                      <td>{{this.mobile_no}}</td>
+                    </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="panel-footer">
+              <a href="/target" class="text-primary">View all targets</a>
+            </div>
+          </div>
+        </div>
       </div> 
+      <div class="row">
+        <div class="col-md-6">
+          <div class="panel panel-table">
+            <div class="panel-heading">
+              <h3 class="panel-title">Referrals</h3>
+            </div>
+            <div class="panel-body">
+              <div class="table-responsive">
+                <table class="table table-striped custom-table m-b-0">
+                  <thead>
+                    <tr>
+                      <th style="min-width:200px;">Name</th>
+                      <th>Email</th>
+                      <th>Referral Type</th>
+                      <th>Mobile</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#each referral}}
+                    <tr class="activity_custom_del">
+                      <td style="min-width:200px;">
+                        {{#if_eq referral_type "I"}}
+                        <a href="/referral/view/{{this.id}}" class="avatar">{{first_letter this.first_name}}</a>
+                        <h2>
+                          <a href="/referral/view/{{this.id}}">{{this.first_name}} {{this.last_name}}</a>
+                        </h2>
+                        {{else}}
+                        <a href="/referral/view/{{this.id}}" class="avatar">{{first_letter this.organization_name}}</a>
+                        <h2>
+                          <a href="/referral/view/{{this.id}}">{{this.organization_name}}</a>
+                        </h2>
+                        {{/if_eq}}
+                      </td>
+                      <td>{{this.email}}</td>
+                      <td>{{#if_eq referral_type "I"}}
+                        <span class="label label-success-border">Individual</span>
+                        {{else}}
+                        <span class="label label-info-border">Organization</span>
+                        {{/if_eq}}
+                      </td>
+                      <td>{{this.mobile}}</td>
+                    </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="panel-footer">
+              <a href="/referral" class="text-primary">View all referrals</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="panel panel-table">
+            <div class="panel-heading">
+              <h3 class="panel-title">Master Contacts</h3>
+            </div>
+            <div class="panel-body">
+              <div class="table-responsive">
+                <table class="table table-striped custom-table m-b-0">
+                  <thead>
+                    <tr>
+                      <th style="min-width:200px;">Name</th>
+                      <th>Email</th>
+                      <th>Client Type</th>
+                      <th>Mobile</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#each master_contact}}
+                    <tr class="activity_custom_del">
+                      <td style="min-width:200px;">
+                        {{#if_eq master_contact_type "I"}}
+                        <a href="/master_contact/view/{{this.id}}" class="avatar">{{first_letter this.first_name}}</a>
+                        <h2>
+                          <a href="/master_contact/view/{{this.id}}">{{this.first_name}} {{this.last_name}} </a>
+                        </h2>
+                        {{else}}
+                        <a href="/master_contact/view/{{this.id}}" class="avatar">{{first_letter this.organization_name}}</a>
+                        <h2>
+                          <a href="/master_contact/view/{{this.id}}">{{this.organization_name}}</a>
+                        </h2>
+                        {{/if_eq}}
+                      </td>
+                      <td>{{this.email}}</td>
+                      <td>{{#if_eq master_contact_type "I"}}
+                        <span class="label label-success-border">Individual</span>
+                        {{else}}
+                        <span class="label label-info-border">Organization</span>
+                        {{/if_eq}}
+                      </td>
+                      <td>{{this.mobile_no}}</td>
+                    </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="panel-footer">
+              <a href="/master_contact" class="text-primary">View all master contacts</a>
+            </div>
+          </div>
+        </div>
+      </div>
       {{/if_eq}}
    </div>
    {{!-- <div class="notification-box">

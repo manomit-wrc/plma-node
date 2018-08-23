@@ -26,6 +26,7 @@ const Activity = require('../models').activity;
 const Target = require('../models').target;
 const Client = require('../models').client;
 const Referral = require('../models').referral;
+const MasterContact = require('../models').master_contact;
 
 var csrfProtection = csrf({ cookie: true });
 
@@ -127,6 +128,25 @@ router.get('/dashboard', auth,  async(req, res) => {
     });
     var referral_count = referral.length;
 /* =================== Referral Count Ends ================================*/
+
+/* =================== Master Contact Count Ends ================================*/
+    var masterContatcCondition = {};
+    if (req.user.role_id != "1") {
+        masterContatcCondition.firm_id = req.user.firm_id;
+        masterContatcCondition.contact_status = 1;
+        if (req.user.role_id != "2") {
+            masterContatcCondition.attorney_id = req.user.id;
+        }
+    }
+    console.log(masterContatcCondition);
+    
+    var master_contact = await MasterContact.findAll({
+        where: masterContatcCondition,
+        order: [
+            ['createdAt', 'DESC']
+        ]
+    });
+/* =================== Master Contact Count Ends ================================*/
     res.render('dashboard', {
         layout: 'dashboard',
         auth_msg: auth_msg,
@@ -135,10 +155,13 @@ router.get('/dashboard', auth,  async(req, res) => {
         changeAttrToFirm,
         activity,
         activity_count,
+        target,
         target_count,
         client,
         client_count,
-        referral_count
+        referral,
+        referral_count,
+        master_contact
     });
 }).get('/logout', auth, (req, res) => {
     req.logout();
