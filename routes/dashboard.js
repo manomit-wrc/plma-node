@@ -27,6 +27,7 @@ const Target = require('../models').target;
 const Client = require('../models').client;
 const Referral = require('../models').referral;
 const MasterContact = require('../models').master_contact;
+const ActivityBudget = require('../models').activity_budget;
 
 var csrfProtection = csrf({ cookie: true });
 
@@ -138,7 +139,6 @@ router.get('/dashboard', auth,  async(req, res) => {
             masterContatcCondition.attorney_id = req.user.id;
         }
     }
-    console.log(masterContatcCondition);
     
     var master_contact = await MasterContact.findAll({
         where: masterContatcCondition,
@@ -147,6 +147,54 @@ router.get('/dashboard', auth,  async(req, res) => {
         ]
     });
 /* =================== Master Contact Count Ends ================================*/
+
+/* =================== Firm Count Starts =============================================== */
+    var firm = await Firm.findAll();
+    var firm_count = firm.length; 
+    
+    User.belongsTo(Firm, {
+        foreignKey: 'firm_id'
+    });
+    const firm_admins = await User.findAll({
+        where: {
+            role_id: "2"
+        },
+        order: [
+            ['createdAt', 'DESC']
+        ],
+        include: [{
+            model: Firm
+        }]
+    });
+/* =================== Firm Count Ends =============================================== */
+
+/* =================== Employee Count Starts =============================================== */
+    var employee = await User.findAll({
+        where: {
+            role_id: "4"
+        }
+    });
+    var employee_count = employee.length;     
+/* =================== Employee Count Ends =============================================== */
+
+/* =================== Attorney Count Starts =============================================== */
+    var attorney = await User.findAll({
+        where: {
+            role_id: "3"
+        }
+    });
+    var attorney_count = attorney.length;     
+/* =================== Attorney Count Ends =============================================== */
+
+/* =================== Total Budgets Count Starts =============================================== */
+    var budgetArr = [];
+    var budget = await ActivityBudget.findAll();
+    for(var b = 0; b< budget.length; b++)
+    {
+        budgetArr.push(budget[b].amount);
+    }
+    var total_budget_amount = budgetArr.reduce((a, b) => a + b, 0);
+/* =================== Total Budgets Count Ends =============================================== */
     res.render('dashboard', {
         layout: 'dashboard',
         auth_msg: auth_msg,
@@ -161,7 +209,16 @@ router.get('/dashboard', auth,  async(req, res) => {
         client_count,
         referral,
         referral_count,
-        master_contact
+        master_contact,
+        master_contact_count: master_contact.length,
+        firm_count,
+        firm_admins,
+        firm,
+        employee_count,
+        employee,
+        attorney_count,
+        attorney,
+        total_budget_amount
     });
 }).get('/logout', auth, (req, res) => {
     req.logout();
