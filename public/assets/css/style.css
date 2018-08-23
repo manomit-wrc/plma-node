@@ -5709,6 +5709,10 @@ i.fa.fa-eye.m-r-5 {
 	display: none;
 }
 
+.site_dashboard_custom_del:nth-child(n+6) {
+	display: none;
+}
+
 
 /* loader css ends */
 
