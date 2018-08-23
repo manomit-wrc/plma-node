@@ -2578,7 +2578,7 @@ label.error {
 	font-weight: 300;
 	top: -20px;
 	font-size: 12px;
-	z-index: 1;
+	z-index: 20;
 }
 
 .action-label .label {
@@ -5617,6 +5617,67 @@ i.fa.fa-eye.m-r-5 {
 	border-bottom: 0;
 }
 
+.advancedFilter {
+	position: absolute;
+	right: 514px;
+	top: 10px;
+	background-image: none;
+	background-color: #ff9b44;
+	border-color: #ff9b44;
+	color: #fff;
+	-webkit-border-radius: 50px;
+	-moz-border-radius: 50px;
+	-ms-border-radius: 50px;
+	-o-border-radius: 50px;
+	border-radius: 50px;
+	font-size: 13px;
+	padding-top: 6px;
+}
+
+/* Starts css on 2018-08-21 */
+
+.select-attorney .btn-group {
+	padding: 0;
+}
+.select-attorney .btn {
+    height: 50px;
+    border-radius: 0;
+}
+.select-attorney .btn:active,
+.select-attorney .btn:focus,
+.select-attorney .btn:hover,
+ {
+  background: #ffffff !important;
+  border-color: #ccc !important;
+}
+
+.select-attorney .btn-default:hover {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.select-attorney .open>.dropdown-toggle.btn-default.focus,
+.select-attorney   .open>.dropdown-toggle.btn-default:focus,
+.select-attorney   .open>.dropdown-toggle.btn-default:hover {
+    background-color: #fff;
+    border-color: #ff9b44;
+}
+
+.select-attorney  .open>.dropdown-toggle.btn-default {
+    background-color: #fff;
+    box-shadow: none !important;
+    border-color: #ccc;
+}
+
+.select-attorney  .btn-default:focus {
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+/* Ends css on 2018-08-21 */
+
+
 /*------------------------------------------------------------------
 [39-a.... Custom Styles]
 */
@@ -5776,6 +5837,23 @@ select.gender {
 	}
 
 	/*Ends on css 14-08-2018*/
+
+
+	/*Starts on css 16-08-2018*/
+
+	.download-btn a {
+		height: 50px;
+		width: 50px;
+		border-radius: 50%;
+		line-height: 50px;
+		padding: 0;
+		box-shadow: 0 1px 5px 0 rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12);
+		text-align: center;
+	}
+
+	/*Ends on css 16-08-2018*/
+
+
 
 
 	@media only screen and (min-width: 768px) {

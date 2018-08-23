@@ -1,10 +1,7 @@
 const express = require('express');
 const auth = require('../middlewares/auth');
-const siteAuth = require('../middlewares/site_auth');
-const firmAuth = require('../middlewares/firm_auth');
 const firmAttrAuth = require('../middlewares/firm_attr_auth');
 const csrf = require('csurf');
-const bCrypt = require('bcrypt-nodejs');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const multer = require('multer');
@@ -17,11 +14,10 @@ const industry_type = require('../models').industry_type;
 const Contact = require('../models').master_contact;
 const Target = require('../models').target;
 const user = require('../models').user;
-var csrfProtection = csrf({ cookie: true });
-var csv = require('fast-csv');
-var path = require('path');
-var fs = require('fs');
+
 const router = express.Router();
+var csrfProtection = csrf({ cookie: true });
+var fs = require('fs');
 
 var fileExt = '';
 var fileName = '';
@@ -44,6 +40,8 @@ function removePhoneMask(phone_no) {
 	phone_no = phone_no.replace(")", "");
 	phone_no = phone_no.replace("(", "");
 	phone_no = phone_no.replace(" ", "");
+	phone_no = phone_no.replace("$", "");
+	phone_no = phone_no.replace(",", "");
 	return phone_no;
 }
 
@@ -54,16 +52,12 @@ router.get('/master_contact', auth, firmAttrAuth, csrfProtection, (req, res) => 
 	if (req.query.searchEmail) {
 		whereCondition.email = req.query.searchEmail;
 	}
-	if (req.user.firm_id) {
-		whereCondition.firm_id = req.user.firm_id.toString();
-	} else {
-		whereCondition.firm_id = req.user.firm_id;
-	}
-
+	whereCondition.firm_id = req.user.firm_id;
 	if (req.user.role_id != 2) {
 		whereCondition.user_id = req.user.id;
 	}
 	whereCondition.contact_status = 1;
+
 	Contact.findAll({
 		where: whereCondition
 	}).then(result => {
@@ -83,18 +77,43 @@ router.get('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (req
 	var industry_types = await industry_type.findAll();
 	var country = await Country.findAll();
 	const state = await State.findAll({
-		where: { country_id: "233" }
+		where: {
+			country_id: "233"
+		}
 	});
-	res.render('master_contact/add', { layout: 'dashboard', csrfToken: req.csrfToken(), industry_types: industry_types, country: country, state: state, error_message });
+
+	const attorney = await user.findAll({
+
+		order: [
+			['first_name', 'ASC'],
+		],
+
+
+
+		where: {
+			role_id: 3,
+			firm_id: req.user.firm_id
+		}
+	});
+
+	res.render('master_contact/add', {
+		layout: 'dashboard',
+		csrfToken: req.csrfToken(),
+		industry_types: industry_types,
+		country: country,
+		state: state,
+		error_message,
+		attorney
+	});
 });
 
 router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
-	const formatDate = req.body.dob ? req.body.dob.split("-") : '';
 	const contact_data = await Contact.findOne({
 		where: {
 			email: req.body.email
 		}
 	});
+
 	if (contact_data === null) {
 		await Contact.create({
 			first_name: req.body.first_name,
@@ -105,9 +124,7 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 			mobile_no: removePhoneMask(req.body.mobile_no),
 			master_contact_id: req.body.master_contact_id,
 			master_contact_code: req.body.master_contact_code,
-			master_designation: req.body.master_contact_desg,
 			company_name: req.body.master_contact_comp,
-			date_of_birth: formatDate ? formatDate[2] + "-" + formatDate[1] + "-" + formatDate[0] : null,
 			gender: req.body.gender,
 			address1: req.body.address1,
 			address2: req.body.address2,
@@ -118,9 +135,7 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 			zip_code: req.body.zipcode,
 			address_remarks: req.body.address_remarks,
 			website_url: req.body.website_url,
-			social_url: req.body.social_url,
 			im: req.body.im,
-			social_security_no: removePhoneMask(req.body.social_sec_no),
 			twitter: req.body.twitter,
 			linkedin: req.body.linkedin,
 			google: req.body.google,
@@ -129,7 +144,11 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 			industry_type: req.body.industry_type,
 			firm_id: req.user.firm_id,
 			user_id: req.user.id,
-			remarks: req.body.remarks
+			remarks: req.body.remarks,
+			attorney_id: req.body.attorney_id,
+			facebook: req.body.facebook_url,
+			master_contact_type: req.body.masterContact_type,
+			estimated_revenue: removePhoneMask(req.body.estimated_revenue)
 		});
 		req.flash('success-message', 'Master Contact Added Successfully');
 		res.redirect('/master_contact');
@@ -158,7 +177,30 @@ router.get('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, async
 			city_name: cities.name
 		}
 	});
-	res.render('master_contact/edit', { layout: 'dashboard', csrfToken: req.csrfToken(), industry_types: industry_types, contact: contact, country: country, state: state, city: city, zipcode: zipcode, error_message });
+
+	const attorney = await user.findAll({
+		order: [
+			['first_name', 'ASC'],
+		],
+
+		where: {
+			'role_id': 3,
+			'firm_id': req.user.firm_id
+		}
+	});
+
+	res.render('master_contact/edit', { 
+		layout: 'dashboard', 
+		csrfToken: req.csrfToken(), 
+		industry_types: industry_types, 
+		contact: contact, 
+		country: country, 
+		state: state, 
+		city: city, 
+		zipcode: zipcode, 
+		error_message, 
+		attorney
+	});
 });
 
 
@@ -181,7 +223,26 @@ router.get('/master_contact/view/:id', auth, firmAttrAuth, csrfProtection, async
 			city_name: cities.name
 		}
 	});
-	res.render('master_contact/view', { layout: 'dashboard', csrfToken: req.csrfToken(), industry_types: industry_types, contact: contact, country: country, state: state, city: city, zipcode: zipcode, error_message });
+
+	const attorney = await user.findAll({
+		where: {
+			'role_id': 3,
+			'firm_id': req.user.firm_id
+		}
+	});
+
+	res.render('master_contact/view', { 
+		layout: 'dashboard', 
+		csrfToken: req.csrfToken(), 
+		industry_types: industry_types, 
+		contact: contact, 
+		country: country, 
+		state: state, 
+		city: city, 
+		zipcode: zipcode, 
+		error_message,
+		attorney 
+	});
 });
 
 
@@ -229,10 +290,14 @@ router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, asyn
 			industry_type: req.body.industry_type,
 			firm_id: req.user.firm_id,
 			user_id: req.user.id,
-			remarks: req.body.remarks
+			remarks: req.body.remarks,
+			attorney_id: req.body.attorney_id,
+			facebook: req.body.facebook_url,
+			master_contact_type: req.body.masterContact_type,
+			estimated_revenue: removePhoneMask(req.body.estimated_revenue)
 		}, {
-				where: { id: req.params['id'] }
-			});
+			where: { id: req.params['id'] }
+		});
 		req.flash('success-message', 'Master Contact Updated Successfully');
 		res.redirect('/master_contact')
 	} else {

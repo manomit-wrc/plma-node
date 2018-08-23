@@ -1,7 +1,13 @@
 {{#content "style" mode="prepend"}}
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+
+
+
+ <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+
+{{/content}}
 
 <div class="page-wrapper">
     <div class="content container-fluid">
@@ -42,20 +48,19 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">Birth Date</label>
+                                    <label class="control-label">Date of Birth</label>
                                     <div class="cal-icon">
-                                        <input class="form-control floating datetimepicker" type="text" id="dob" name="dob" value="{{dateFormat empl.dob " DD-MM-YYYY
-                                            "}}">
+                                        <input class="form-control floating datetimepicker" type="text" id="dob" name="dob" value="{{dateFormat empl.dob " DD-MM-YYYY"}}">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group form-focus select-focus">
+                                <div class="form-group form-focus select-focus select-attorney">
                                     <label class="control-label">Gender</label>
-                                    <select class="select form-control floating" id="gender" name="gender">
+                                    <select class="form-control floating selectpicker" id="gender" name="gender"data-show-subtext="true" data-live-search="true">
                                         <option value="M" {{#if_eq empl.gender "M"}} selected="selected" {{/if_eq}}>Male</option>
                                         <option value="F" {{#if_eq empl.gender "F"}} selected="selected" {{/if_eq}}>Female</option>
-                                        <option value="O" {{#if_eq empl.gender "O"}} selected="selected" {{/if_eq}}>Others</option>
+                                        <option value="O" {{#if_eq empl.gender "O"}} selected="selected" {{/if_eq}}>Other</option>
                                     </select>
                                 </div>
                             </div>
@@ -69,7 +74,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group form-focus">
-                            <label class="control-label">Mobile No</label>
+                            <label class="control-label">Mobile No.</label>
                             <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" value="{{empl.mobile_no}}"
                             />
                         </div>
@@ -81,52 +86,56 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group form-focus">
-                            <select class="select form-control floating" id="country" name="country">
+                        <div class="form-group form-focus select-focus">
+                            <label class="control-label">Country</label>
+                            <select class="form-control floating" id="country" name="country">
                                 <option value="">Select Country</option>
                                 {{#each country}}
-                                <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                                    <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
                                 {{/each}}
                             </select>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group form-focus">
-                            <select class="select form-control floating" id="state" name="state">
-                                <option value="">select State</option>
+                        <div class="form-group form-focus select-focus">
+                            <label class="control-label">State</label>
+                            <select class="form-control floating" id="state" name="state">
+                                <option value="">Select State</option>
                                 {{#each state}}
-                                <option value="{{this.id}}" {{#if_eq this.id ../empl.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                                    <option value="{{this.id}}" {{#if_eq this.id ../empl.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
                                 {{/each}}
                             </select>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group form-focus">
-                            <select class="select form-control floating" id="city" name="city">
+                        <div class="form-group form-focus select-focus">
+                            <label class="control-label">City</label>
+                            <select class="form-control floating" id="city" name="city">
                                 <option value="">Select City</option>
                                 {{#each city}}
-                                <option value="{{this.id}}" {{#if_eq this.id ../empl.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                                    <option value="{{this.id}}" {{#if_eq this.id ../empl.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
                                 {{/each}}
                             </select>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group form-focus">
-                            <select class="select form-control floating" id="zipcode" name="zipcode">
+                        <div class="form-group form-focus select-focus">
+                            <label class="control-label">Zip Code</label>
+                            <select class="form-control floating" id="zipcode" name="zipcode">
                                 <option value="">Select Zipcode</option>
                                 {{#each zipcode}}
-                                <option value="{{this.id}}" {{#if_eq this.id ../empl.zipcode}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
+                                    <option value="{{this.id}}" {{#if_eq this.id ../empl.zipcode}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
                                 {{/each}}
                             </select>
                         </div>
                     </div>
 
                     <div class="col-md-12">
-                        <div class="form-group form-focus select-focus">
+                        <div class="form-group form-focus select-focus select-attorney">
                             <label class="control-label">Firm Name</label>
-                            <select class="form-control floating" id="firm_id" name="firm_id">
+                            <select class="form-control floating selectpicker" id="firm_id" name="firm_id"data-show-subtext="true" data-live-search="true">
                                 {{#each firms}}
-                                <option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.title}}</option>
+                                    <option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.title}}</option>
                                 {{/each}}
                             </select>
                         </div>
@@ -149,6 +158,12 @@
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+
+
+
 <script type="text/javascript">
     $(document).ready(function () {
         $('#firm_id').multiselect({
@@ -196,4 +211,5 @@
             }
         });
     });
-</script> {{/content}}
+</script>
+{{/content}}

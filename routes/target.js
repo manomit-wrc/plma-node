@@ -55,28 +55,61 @@ function removePhoneMask(phone_no) {
 router.get('/target', auth, firmAttrAuth, csrfProtection, async(req, res) => {
     var success_message = req.flash('success-message')[0];
     var success_edit_message = req.flash('success-edit-message')[0];
+    var industry = await industry_type.findAll();
+    var country = await Country.findAll();
+    const attorney = await user.findAll({
+        where: {
+            role_id: 3,
+            firm_id: req.user.firm_id
+        }
+    });
+    const state = await State.findAll({
+        where: {
+            country_id: "233"
+        }
+    });
     var whereCondition = {};
 
-    if (req.query.searchName) {
-        whereCondition.target_type = req.query.searchName;
+    if (req.query.industry_type) {
+        whereCondition.industry_type = req.query.industry_type;
     }
-    if (req.query.searchEmail) {
-        whereCondition.email = req.query.searchEmail;
+    if (req.query.association) {
+        whereCondition.association = req.query.association;
     }
-    if (req.user.firm_id) {
-        whereCondition.firm_id = req.user.firm_id.toString();
-    } else {
-        whereCondition.firm_id = req.user.firm_id;
+    if (req.query.country) {
+        whereCondition.country = req.query.country;
     }
+    if (req.query.attorney) {
+        whereCondition.attorney_id = req.query.attorney;
+    }
+    if (req.query.state) {
+        var city = await City.findAll({
+            where: {
+                state_id: req.query.state
+            }
+        });
+        whereCondition.state = req.query.state;
+    }
+    if (req.query.city) {
+        const cities = await City.findById(req.query.city);
+        var zipcode = await Zipcode.findAll({
+            where: {
+                city_name: cities.name
+            }
+        });
+        whereCondition.city = req.query.city;
+    }
+    if (req.query.zipcode) {
+        whereCondition.postal_code = req.query.zipcode;
+    }
+    whereCondition.firm_id = req.user.firm_id;
+    whereCondition.target_status = 1;
     if (req.user.role_id != 2) {
-        whereCondition.user_id = req.user.id;
+        whereCondition.attorney_id = req.user.id;
     }
 
     const targetDetails = await Target.findAll({
-        where: {
-            'target_status': '1',
-            'attorney_id': req.user.id
-        }
+        where: whereCondition
     });
 
     res.render('target/targets', {
@@ -86,7 +119,21 @@ router.get('/target', auth, firmAttrAuth, csrfProtection, async(req, res) => {
         searchName: req.query.searchName ? req.query.searchName : '',
         searchMail: req.query.searchEmail ? req.query.searchEmail : '',
         success_message,
-        success_edit_message
+        industry,
+        country,
+        state,
+        attorney,
+        success_edit_message,
+        count_query: Object.keys(req.query).length,
+        industry_type: req.query.industry_type ? req.query.industry_type : "",
+        association: req.query.association ? req.query.association : "",
+        country_search: req.query.country ? req.query.country : "",
+        state_search: req.query.state ? req.query.state : "",
+        city_search: req.query.city ? req.query.city : "",
+        zipcode_search: req.query.zipcode ? req.query.zipcode : "",
+        attr_search: req.query.attorney ? req.query.attorney : "",
+        city,
+        zipcode
     });
 
 });

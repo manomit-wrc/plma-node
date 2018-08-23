@@ -1,7 +1,11 @@
 {{#content "style" mode="prepend"}}
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+
+ {{/content}}
 
 <div class="page-wrapper">
   <div class="content container-fluid">
@@ -113,8 +117,8 @@
                 </div>
               </div>
               <div class="col-md-6" id="target_list">
-                <div class="form-group form-focus">
-                  <select id="target_id" name="referred_id_t" class="select form-control floating">
+                <div class="form-group form-focus select-attorney">
+                  <select id="target_id" name="referred_id_t" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
                     <option value="">Select Target</option>
                     {{#each target}} {{#if_eq target_type "I"}}
                     <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
@@ -125,8 +129,8 @@
                 </div>
               </div>
               <div class="col-md-6" id="client_list" style="display:none;">
-                <div class="form-group form-focus">
-                  <select id="client_id" name="referred_id_c" class="select form-control floating">
+                <div class="form-group form-focus select-attorney">
+                  <select id="client_id" name="referred_id_c" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
                     <option value="">Select Client</option>
                     {{#each client}} {{#if_eq client_type "I"}}
                     <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
@@ -137,11 +141,11 @@
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="form-group form-focus select-focus">
+                <div class="form-group form-focus select-focus select-attorney">
                   <label class="control-label">Gender
                     <span class="req-lbl">*</span>
                   </label>
-                  <select class="select form-control floating" id="gender" name="gender">
+                  <select class="form-control floating selectpicker" id="gender" name="gender"  data-show-subtext="true" data-live-search="true">
                     <option value="">Select Gender</option>
                     <option value="M">Male</option>
                     <option value="F">Female</option>
@@ -244,11 +248,11 @@
         <h3 class="card-title">Attorney Information</h3>
         <div class="row">
           <div class="col-md-12">
-            <div class="form-group form-focus select-focus">
+            <div class="form-group form-focus select-focus select-attorney">
               <label class="control-label">Attorney Name
                 <span class="req-lbl">*</span>
               </label>
-              <select id="attr_id" name="attr_id" class="select form-control floating" {{#if_eq user.role_id "3"}} readonly {{/if_eq}}>
+              <select id="attr_id" name="attr_id" class="form-control floating selectpicker" {{#if_eq user.role_id "3"}} readonly {{/if_eq}} data-show-subtext="true" data-live-search="true">
                 {{#if_eq user.role_id "2"}}
                   <option value="">Select Attorney</option>
                   {{#each attorney}}
@@ -342,12 +346,12 @@
             </div>
           </div>
           <div class="col-md-6">
-            <div class="form-group form-focus select-focus">
+            <div class="form-group form-focus select-focus select-attorney">
               <label class="control-label">Association Status
                 <span class="req-lbl">*</span>
       
               </label>
-              <select id="association" name="association" class="select form-control">
+              <select id="association" name="association" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
                 <option value=""> Select Association</option>
                 <option value="CONVERTED">CONVERTED</option>
                 <option value="NEW TARGET">NEW TARGET</option>
@@ -356,11 +360,11 @@
             </div>
           </div>
           <div class="col-md-6">
-            <div class="form-group form-focus select-focus">
+            <div class="form-group form-focus select-focus select-attorney">
               <label class="control-label">Industry Type
                 <span class="req-lbl">*</span>
               </label>
-              <select id="industry_type" name="industry_type" class="select form-control">
+              <select id="industry_type" name="industry_type" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
                 <option value=""> Select Industry Type</option>
                 {{#each industry}}
                 <option value="{{this.id}}">{{this.industry_name}}</option>
@@ -390,6 +394,10 @@
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+
+
 <script type="text/javascript">
   $(document).ready(function () {
     $("#estimated_revenue").inputmask("numeric", {

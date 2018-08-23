@@ -86,36 +86,53 @@ router.get('/referral', auth, firmAttrAuth, csrfProtection, async(req, res)=> {
 
 router.get('/referral/add', auth, firmAttrAuth, csrfProtection, async(req, res) => {
 	var err_message = req.flash('error-referral-message')[0];
+	var industry = await industry_type.findAll();
+	var country = await Country.findAll();
+	var fetchTarget = {};
+	var fetchClient = {};
+
+
+	if (req.user.role_id != 2) {
+		fetchTarget.attorney_id = req.user.id;
+		fetchTarget.firm_id = req.user.firm_id;
+		fetchTarget.target_status =  1;
+		fetchClient.attorney_id = req.user.id;
+		fetchClient.firm_id = req.user.firm_id;
+    } else {
+		fetchTarget.firm_id = req.user.firm_id;
+		fetchClient.firm_id = req.user.firm_id;
+	}
+
 	const attorney = await User.findAll({
-		order: [
-			['first_name', 'ASC'],
-		],
 		where: {
 			role_id : 3,
 			firm_id: req.user.firm_id
 		}
 	});
-	var country = await Country.findAll();
+
 	const state = await State.findAll({
 		where: {
 			country_id: "233"
 		}
 	});
-	var industry = await industry_type.findAll();
+
 	const client = await Client.findAll({
-	
+		order: [
+			['first_name', 'ASC'],
+		],
 
-		where:{
-			attorney_id: req.user.id
-		}
+		where:fetchClient
 	});
+
 	const target = await Target.findAll({
-		
 
-		where: {
-			attorney_id: req.user.id
-		}
+		order: [
+			['first_name', 'ASC'],
+		],
+
+		where: fetchTarget
 	});
+
 	res.render('referral/add', {
 		layout: 'dashboard',
 		csrfToken: req.csrfToken(),
@@ -139,7 +156,7 @@ router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async(req, res)
 	{
 		if(req.body.referral_type == "I")
 		{
-			const store_ref_I = await Referral.create({
+			await Referral.create({
 				referral_type: req.body.referral_type,
 				attorney_id: parseInt(req.body.attr_id),
 				first_name: req.body.first_name,
@@ -178,7 +195,7 @@ router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async(req, res)
 		}
 		else
 		{
-			const store_ref_O = await Referral.create({
+			await Referral.create({
 				referral_type: req.body.referral_type,
 				attorney_id: parseInt(req.body.attr_id),
 				organization_name: req.body.org_name,
@@ -275,49 +292,72 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async(req, 
 		client,
 		target
 	});
-	
 });
-
-
-
 
 router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, res) => {
 	var err_message = req.flash('error-referral-message')[0];
 	const referral = await Referral.findById(req.params['id']);
+	const country = await Country.findAll();
+	const industry = await industry_type.findAll();
+	const cities = await City.findById(referral.city.toString());
+
+	var fetchTarget = {};
+	var fetchClient = {};
+
+
+	if (req.user.role_id != 2) {
+		fetchTarget.attorney_id = req.user.id;
+		fetchTarget.firm_id = req.user.firm_id;
+		fetchTarget.target_status =  1;
+		fetchClient.attorney_id = req.user.id;
+		fetchClient.firm_id = req.user.firm_id;
+    } else {
+		fetchTarget.firm_id = req.user.firm_id;
+		fetchClient.firm_id = req.user.firm_id;
+	}
+
 	const attorney = await User.findAll({
 		where: {
 			role_id : 3,
 			firm_id: req.user.firm_id
 		}
 	});
-	const industry = await industry_type.findAll();
 	const client = await Client.findAll({
-		where: {
-			attorney_id: req.user.id
-		}
+		order: [
+			['first_name', 'ASC'],
+		],
+
+
+		where: fetchClient
 	});
 	const target = await Target.findAll({
-		where: {
-			attorney_id: req.user.id
-		}
+
+		order: [
+			['first_name', 'ASC'],
+		],
+
+		where: fetchTarget
 	});
-	const country = await Country.findAll();
+
+
 	const state = await State.findAll({
 		where: {
 			country_id: "233"
 		}
 	});
+
 	const city = await City.findAll({
 		where: {
 			state_id: referral.state.toString()
 		}
 	});
-	const cities = await City.findById(referral.city.toString());
+
 	const zipcode = await Zipcode.findAll({
 		where: {
 			city_name: cities.name
 		}
 	});
+
 	res.render('referral/edit', {
 		layout: 'dashboard',
 		industry,
@@ -343,9 +383,9 @@ router.post('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async(req,
 			}
 		}
 	});
-	if (edit_data === null)
-	{
-		const store_ref_I = await Referral.update({
+
+	if (edit_data === null) {
+		await Referral.update({
 			referral_type: req.body.referral_type,
 			attorney_id: parseInt(req.body.attr_id),
 			first_name: req.body.first_name,
@@ -376,14 +416,13 @@ router.post('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async(req,
 			youtube: req.body.youtube,
 			association: req.body.association,
 			industry_type: req.body.industry_type,
-	    		//target_id:req.body.referred_id_t ? parseInt(req.body.referred_id_t) : 0,
-	    		//client_id:req.body.referred_id_c ? parseInt(req.body.referred_id_c) : 0,
-	    		remarks: req.body.remarks
-	    	},{ where: { id: req.params['id']}
+	    	remarks: req.body.remarks
+	    	},{
+				 where: { id: req.params['id'] }
 	    });
 		if(req.body.ref_type == "T")
 		{
-			const referred_edit = await Referral.update({
+			await Referral.update({
 				target_id:req.body.referred_id_t ? parseInt(req.body.referred_id_t) : 0,
 				client_id: 0
 			},{where: {id: req.params['id']}
@@ -391,7 +430,7 @@ router.post('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async(req,
 		}
 		else
 		{
-			const referred_edit = await Referral.update({
+			await Referral.update({
 				target_id:0,
 				client_id: req.body.referred_id_c ? parseInt(req.body.referred_id_c) : 0
 			},{where: {id: req.params['id']}
@@ -569,7 +608,7 @@ router.post('/referral/upload-excel', auth, referral_xcel.single('ref_excel_file
 			{
 				if(excelReferral[i].referred_type == "target")
 				{
-					const store_ref = await Referral.update({
+					await Referral.update({
 						referred_type: "T",
 						target_id: targetID,
 						client_id: 0
@@ -578,7 +617,7 @@ router.post('/referral/upload-excel', auth, referral_xcel.single('ref_excel_file
 				}
 				else if(excelReferral[i].referred_type == "client")
 				{
-					const store_ref = await Referral.update({
+					await Referral.update({
 						referred_type: "C",
 						client_id: clientID,
 						target_id: 0
@@ -615,11 +654,10 @@ router.get("/referral/view-activity/:id", auth, async (req, res) => {
 
 
 router.post('/referral/multi-delete/', auth, firmAttrAuth, async (req, res) => {
-
 	var referral_ids = req.body.referral_id;
 	var n = req.body.referral_id.length;
-	for (i = 0; i < n; i++) {
 
+	for (i = 0; i < n; i++) {
 		await Referral.destroy({
 			where: {
 				id: referral_ids[i]

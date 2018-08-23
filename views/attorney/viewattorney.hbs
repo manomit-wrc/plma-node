@@ -162,19 +162,24 @@
         <div class="row" id="educationRow">
           {{#each edata.0.education}}
           <div class="control-group">
-            <div class="col-md-6">
+            <div class="col-md-4">
               <div class="form-group form-focus">
                 <label class="control-label">Degree Type</label>
                 <input type="text" class="form-control floating" id="degree" name="degree[]" value="{{this.degree}}" disabled/>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
               <div class="form-group form-focus">
                 <label class="control-label">University</label>
                 <input type="text" class="form-control floating" id="university" name="university[]" value="{{this.university}}" disabled/>
               </div>
             </div>
-            
+            <div class="col-md-4">
+              <div class="form-group form-focus">
+                <label class="control-label">Year</label>
+                <input type="text" class="form-control floating" id="year" name="year[]" value="{{this.year}}" disabled/>
+              </div>
+            </div>
           </div>
           {{/each}}
         </div>
@@ -274,6 +279,17 @@
               <label class="control-label">Billing Opp Cost</label>
               <input type="text" disabled class="form-control floating" id="billing_opp_cost" name="billing_opp_cost" value="{{edata.0.attorney_details.0.billing_opp_cost}}"
                 readonly onkeypress="return onlyNumbers();" />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <div class="">
+                <select class="form-control floating" id="practice_area" name="practice_area" multiple="multiple">
+                  {{#each allPracticeArea}}
+                  <option value="{{this.practicearea.id}}" {{#inArray ../arr this.practicearea.id}} selected="selected" {{/inArray}} disabled>{{this.practicearea.name}}</option>
+                  {{/each}}
+                </select>
+              </div>
             </div>
           </div>
         </div>
@@ -404,4 +420,14 @@
 
 <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
-<script type="text/javascript" src="/assets/js/moment.min.js"></script> {{/content}}
+<script type="text/javascript" src="/assets/js/moment.min.js"></script> 
+<script>
+  $('#practice_area').multiselect({
+      nonSelectedText: 'Select Practice Area',
+      enableFiltering: true,
+      includeSelectAllOption: true,
+      buttonWidth: '100%',
+      maxHeight: 400,
+      dropUp: true
+    });
+</script>{{/content}}

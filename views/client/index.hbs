@@ -170,22 +170,7 @@
 	</div>
 </div>
 
-{{!-- <div class="modal fade" id="client-delete-2" role="dialog">
 
-<div class="modal fade" id="client-delete-2" role="dialog">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-body">
-				<p>are you sure you want to delete this clients?</p>
-			</div>
-			<div class="modal-footer">
-				<a href="javascript:void(0)" class="btn btn-danger client-delete-done">ok</a>
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
-</div> --}}
-{{!-- modal for delete end--}}
 
  {{#content "script" mode="append"}}
 <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
@@ -266,10 +251,8 @@
 			client_id.push(this.value);
 		});
 		if (client_id.length == 0) {
-			// $('#client-delete-1').modal('show');
 			swal("", "Please select one or more client!", "warning");
 		} else {
-			// $('#client-delete-2').modal('show');
 
 			swal({
                 title: "",
@@ -285,9 +268,7 @@
 					type: 'POST',
 					data: { client_id: client_id },
 					success: function (response) {
-						// console.log(response);
 						if (response.code === '200') {
-							//$('#success-move').css('display','block');
 							swal({
                                 title: "Nice!",
                                 text: "Client delete successfully",
@@ -303,48 +284,8 @@
 				});
             });
 
-
-			/*$.ajax({
-			url: '/client/multi-delete/',
-			type: 'POST',
-			data: { client_id: client_id },
-			success: function (response) {
-				// console.log(response);
-				if (response.code === '200') {
-					//$('#success-move').css('display','block');
-					window.location.reload();
-				}
-			},
-			error: function (err) {
-				console.log(err);
-			}
-		});*/
-
 		}
 	})
-
-	/*$('.client-delete-done').on('click', function (e) {
-		var client_id = [];
-		$('input[name="client_check_id"]:checked').each(function () {
-			client_id.push(this.value);
-		});
-		$.ajax({
-			url: '/client/multi-delete/',
-			type: 'POST',
-			data: { client_id: client_id },
-			success: function (response) {
-				// console.log(response);
-				if (response.code === '200') {
-					//$('#success-move').css('display','block');
-					window.location.reload();
-				}
-			},
-			error: function (err) {
-				console.log(err);
-			}
-		});
-	})*/
-
 
 	$(document).on('click', '#delete_client', function (e) {
 		var client_id = $(this).data('client-id');

@@ -20,7 +20,8 @@ module.exports = (sequelize, DataTypes) => {
     user_id: DataTypes.INTEGER,
     section_id: DataTypes.INTEGER,
     s_group_id: DataTypes.STRING,
-    activity_status: DataTypes.INTEGER
+    activity_status: DataTypes.INTEGER,
+    attachment_field: DataTypes.STRING
 
   }, {});
   activity.associate = function(models) {

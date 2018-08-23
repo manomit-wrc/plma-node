@@ -134,7 +134,7 @@
                         Activity Goals
                     </a>
                 </li>
-                <li {{#if_eq client_url "activitypage" }} class="active" {{/if_eq}}>
+                <li {{#if (or_v1 (eq client_url "activitypage")(eq client_url "activityseen")(eq client_url "activity")) }} class="active" {{/if}}>
                     <a href="/activitypage">
                         <i class="fa fa-tasks"></i>
                         Activity
