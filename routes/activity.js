@@ -950,6 +950,11 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
                 'firm_id': req.user.firm_id
             }
         });
+        // if (userInformation_4_l4) {
+        //     requestApproval.create({
+                
+        //     })
+        // }
 
         userInformation_4_l3 = await User.findOne({
             where: {
