@@ -17,21 +17,25 @@ const ActivityBudget = require('../models').activity_budget;
 const sectionToFirm = require('../models').section_to_firms;
 const Referral = require('../models').referral;
 const multer = require('multer');
+const User = require('../models').user;
+const requestApproval = require('../models').request_approval;
 var fileName = '';
 
 // File upload
 var storage = multer.diskStorage({
-    destination: function(req, file, cb) {
+    destination: function (req, file, cb) {
         cb(null, 'public/activity');
     },
-    filename: function(req, file, cb) {
+    filename: function (req, file, cb) {
         fileExt = file.originalname.split('.')[1];
         fileName = req.user.id + '-' + Date.now() + '.' + fileExt;
         cb(null, fileName);
     }
 });
 
-var upload = multer({ storage: storage });
+var upload = multer({
+    storage: storage
+});
 
 var csrfProtection = csrf({
     cookie: true
@@ -171,16 +175,16 @@ router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res)
     if (req.user.role_id == 2) {
         whereCondition.firm_id = req.user.firm_id;
     } else {
-        whereCondition.firm_id= req.user.firm_id;
-        whereCondition.user_id= req.user.id;
+        whereCondition.firm_id = req.user.firm_id;
+        whereCondition.user_id = req.user.id;
     }
-	var success_message = req.flash('success-message')[0];
-	const activity_goal = await ActivityGoal.findAll({
-	    where: {
-	        'firm_id': req.user.firm_id
-	    }
-	});
-	
+    var success_message = req.flash('success-message')[0];
+    const activity_goal = await ActivityGoal.findAll({
+        where: {
+            'firm_id': req.user.firm_id
+        }
+    });
+
     const target = await Target.findAll({
         where: {
             'target_type': "I",
@@ -206,11 +210,11 @@ router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res)
     var activity = await Activity.findAll({
         where: whereCondition,
     });
-        
-	res.render('activity/activity', {
-		layout: 'dashboard',
-		csrfToken: req.csrfToken(),
-		row: activity,
+
+    res.render('activity/activity', {
+        layout: 'dashboard',
+        csrfToken: req.csrfToken(),
+        row: activity,
         success_message,
         activity_goal,
         target,
@@ -224,7 +228,7 @@ router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res)
         user_referral: req.query.referral_user ? req.query.referral_user : "",
         approval_status: req.query.approval_status ? req.query.approval_status : "",
         count_query: Object.keys(req.query).length
-	});
+    });
 });
 
 // Start budget add section
@@ -239,7 +243,7 @@ router.post('/insertActivity', auth, async (req, res) => {
     });
 });
 
-router.post('/activity/add-budget', auth, firmAttrAuth, csrfProtection, async(req, res) => {
+router.post('/activity/add-budget', auth, firmAttrAuth, csrfProtection, async (req, res) => {
     var budget = JSON.parse(req.body.budget);
 
     for (var b = 0; b < budget.length; b++) {
@@ -692,7 +696,7 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 });
 
 //update data
-router.post('/activity/edit-budget', auth, firmAttrAuth, csrfProtection, async(req, res) => {
+router.post('/activity/edit-budget', auth, firmAttrAuth, csrfProtection, async (req, res) => {
     ActivityBudget.destroy({
         where: {
             activity_id: req.body.activity_id
@@ -828,13 +832,217 @@ router.post('/activity/update/:id', auth, upload.single('activity_attachment'), 
 });
 
 router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
-    await Activity.update({
+    var userInformation_4_l4;
+    var userInformation_4_l3;
+    var userInformation_4_l2;
+    var userInformation_4_l1;
+    var userInformation_2_l2;
+    var userInformation_2_l1;
+
+    const firmDetails = await Firm.findOne({
+        where: {
+            'id': req.user.firm_id
+        }
+    });
+
+
+    if (firmDetails['approval_level'] === 2) {
+
+        userInformation_2_l2 = await User.findOne({
+            where: {
+                'designation_id': firmDetails['level_2'],
+                'section_id': 0,
+                'firm_id': req.user.firm_id
+            }
+        });
+
+        if (userInformation_2_l2 === null) {
+            userInformation_2_l2 = await User.findOne({
+                where: {
+                    'designation_id': firmDetails['level_2'],
+                    'section_id': req.user['section_id'],
+                    'firm_id': req.user.firm_id
+                }
+            });
+        }
+
+        userInformation_2_l1 = await User.findOne({
+            where: {
+                'designation_id': firmDetails['level_1'],
+                'section_id': 0,
+                'firm_id': req.user.firm_id
+            }
+        });
+
+        if (userInformation_2_l1 === null) {
+            userInformation_2_l1 = await User.findOne({
+                where: {
+                    'designation_id': firmDetails['level_1'],
+                    'section_id': req.user['section_id'],
+                    'firm_id': req.user.firm_id
+                }
+            });
+        }
+
+    } else if (firmDetails['approval_level'] === 3) {
+
+        var userInformation_3_l3 = await User.findOne({
+            where: {
+                'designation_id': firmDetails['level_3'],
+                'section_id': 0,
+                'firm_id': req.user.firm_id
+            }
+        });
+
+        if (userInformation_3_l3 === null) {
+            var userInformation_3_l3 = await User.findOne({
+                where: {
+                    'designation_id': firmDetails['level_3'],
+                    'section_id': req.user['section_id'],
+                    'firm_id': req.user.firm_id
+                }
+            });
+        }
+
+
+        var userInformation_3_l2 = await User.findOne({
+            where: {
+                'designation_id': firmDetails['level_2'],
+                'section_id': 0,
+                'firm_id': req.user.firm_id
+            }
+        });
+
+        if (userInformation_3_l2 === null) {
+            var userInformation_3_l2 = await User.findOne({
+                where: {
+                    'designation_id': firmDetails['level_2'],
+                    'section_id': req.user['section_id'],
+                    'firm_id': req.user.firm_id
+                }
+            });
+        }
+
+        var userInformation_3_l1 = await User.findOne({
+            where: {
+                'designation_id': firmDetails['level_1'],
+                'section_id': 0,
+                'firm_id': req.user.firm_id
+            }
+        });
+
+        if (userInformation_3_l1 === null) {
+            var userInformation_3_l1 = await User.findOne({
+                where: {
+                    'designation_id': firmDetails['level_1'],
+                    'section_id': req.user['section_id'],
+                    'firm_id': req.user.firm_id
+                }
+            });
+        }
+
+    } else if (firmDetails['approval_level'] === 4) {
+
+        userInformation_4_l4 = await User.findOne({
+            where: {
+                'designation_id': firmDetails['level_4'],
+                'section_id': 0,
+                'firm_id': req.user.firm_id
+            }
+        });
+        // if (userInformation_4_l4) {
+        //     requestApproval.create({
+                
+        //     })
+        // }
+
+        userInformation_4_l3 = await User.findOne({
+            where: {
+                'designation_id': firmDetails['level_3'],
+                'section_id': 0,
+                'firm_id': req.user.firm_id
+            }
+        });
+
+        userInformation_4_l2 = await User.findOne({
+            where: {
+                'designation_id': firmDetails['level_2'],
+                'section_id': 0,
+                'firm_id': req.user.firm_id
+            }
+        });
+
+        userInformation_4_l1 = await User.findOne({
+            where: {
+                'designation_id': firmDetails['level_1'],
+                'section_id': 0,
+                'firm_id': req.user.firm_id
+            }
+        });
+
+        if (userInformation_4_l4 === null) {
+            var userInformation_4_l4 = await User.findOne({
+                where: {
+                    'designation_id': firmDetails['level_4'],
+                    'section_id': req.user['section_id'],
+                    'firm_id': req.user.firm_id
+                }
+            });
+
+        }
+        if (userInformation_4_l3 === null) {
+            var userInformation_4_l3 = await User.findOne({
+                where: {
+                    'designation_id': firmDetails['level_3'],
+                    'section_id': req.user['section_id'],
+                    'firm_id': req.user.firm_id
+                }
+            });
+        }
+        if (userInformation_4_l2 === null) {
+            userInformation_4_l2 = await User.findOne({
+                where: {
+                    'designation_id': firmDetails['level_2'],
+                    'section_id': req.user['section_id'],
+                    'firm_id': req.user.firm_id
+                }
+            });
+        }
+        if (userInformation_4_l1 === null) {
+            userInformation_4_l1 = await User.findOne({
+                where: {
+                    'designation_id': firmDetails['level_1'],
+                    'section_id': req.user['section_id'],
+                    'firm_id': req.user.firm_id
+                }
+            });
+        }
+
+
+
+    }
+
+    console.log('------------------------------');
+    console.log('------------------------->1', userInformation_4_l4.id);
+    console.log('------------------------->2', userInformation_4_l3);
+    console.log('------------------------->3', userInformation_4_l2.id);
+    console.log('------------------------->4', userInformation_4_l1);
+    console.log('------------------------------');
+
+
+
+    // console.log(userInformation_4_l4[0]['id'],userInformation_4_l3[0]['id'],userInformation_4_l2[0]['id'],userInformation_4_l1[0]['id']);
+
+
+
+    /* await Activity.update({
         activity_status: 1
     }, {
         where: {
             id: req.params['id']
         }
-    });
+    }); */
+
     res.json({
         success: true
     });
