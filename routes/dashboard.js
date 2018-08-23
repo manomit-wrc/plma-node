@@ -12,6 +12,8 @@ const Zipcode = require('../models').zipcode;
 const Attorney_Details = require('../models').attorney_details;
 const Industry_type = require('../models').industry_type;
 const Jurisdiction = require('../models').jurisdiction;
+const JurisdictionToFirm = require('../models').jurisdiction_to_firms;
+const JurisdictionToAttr = require('../models').jurisdiction_to_attorney;
 const sectionToFirm = require('../models').section_to_firms;
 const PracticeArea = require('../models').practicearea;
 const Designation = require('../models').designation;
@@ -20,6 +22,11 @@ const Group = require('../models').group;
 const Education = require('../models').education;
 const PracticeAreaToFirm = require('../models').practice_area_to_firms;
 const PracticeAreaToAttr = require('../models').practice_area_to_attorney;
+const Activity = require('../models').activity;
+const Target = require('../models').target;
+const Client = require('../models').client;
+const Referral = require('../models').referral;
+const MasterContact = require('../models').master_contact;
 
 var csrfProtection = csrf({ cookie: true });
 
@@ -48,17 +55,113 @@ function removePhoneMask(phone_no) {
     return phone_no;
 }
 
-router.get('/dashboard', auth,  (req, res) => {
+router.get('/dashboard', auth,  async(req, res) => {
     var auth_msg = req.flash('success-auth-message')[0];
     var changeFirmToAttr = req.flash('change-firm-login')[0];
     var changeAttrToFirm = req.flash('change-attr-login')[0];
     var changeSite = req.flash('change-site-login')[0];
+/* =================== Activity Count starts ================================*/
+    var activityCondition = {};
+    if(req.user.role_id != "1"){
+        activityCondition.firm_id = req.user.firm_id;
+        if(req.user.role_id != "2"){
+            activityCondition.user_id = req.user.id;
+        }
+    }
+    var activity = await Activity.findAll({
+        where: activityCondition,
+        order: [
+            ['createdAt', 'DESC']
+        ]
+    });
+    var activity_count = activity.length;
+/* =================== Activity Count Ends ================================*/
+/* =================== Target Count Ends ================================*/
+
+    var targetCondition = {};
+    targetCondition.target_status = 1;
+    if (req.user.role_id != "1") {
+        targetCondition.firm_id = req.user.firm_id;
+        if (req.user.role_id != "2") {
+            targetCondition.attorney_id = req.user.id;
+        }
+    }
+    var target = await Target.findAll({
+        where: targetCondition,
+        order: [
+            ['createdAt', 'DESC']
+        ]
+    });
+    var target_count = target.length;
+/* =================== Target Count Ends ================================*/
+
+/* =================== Client Count Ends ================================*/
+    var clientCondition = {};
+    if (req.user.role_id != "1") {
+        clientCondition.firm_id = req.user.firm_id;
+        if (req.user.role_id != "2") {
+            clientCondition.attorney_id = req.user.id;
+        }
+    }
+    var client = await Client.findAll({
+        where: clientCondition,
+        order: [
+            ['createdAt', 'DESC']
+        ]
+    });
+    var client_count = client.length;
+/* =================== Client Count Ends ================================*/
+
+/* =================== Referral Count Ends ================================*/
+    var referralCondition = {};
+    if (req.user.role_id != "1") {
+        referralCondition.firm_id = req.user.firm_id;
+        if (req.user.role_id != "2") {
+            referralCondition.attorney_id = req.user.id;
+        }
+    }
+    var referral = await Referral.findAll({
+        where: referralCondition,
+        order: [
+            ['createdAt', 'DESC']
+        ]
+    });
+    var referral_count = referral.length;
+/* =================== Referral Count Ends ================================*/
+
+/* =================== Master Contact Count Ends ================================*/
+    var masterContatcCondition = {};
+    if (req.user.role_id != "1") {
+        masterContatcCondition.firm_id = req.user.firm_id;
+        masterContatcCondition.contact_status = 1;
+        if (req.user.role_id != "2") {
+            masterContatcCondition.attorney_id = req.user.id;
+        }
+    }
+    console.log(masterContatcCondition);
+    
+    var master_contact = await MasterContact.findAll({
+        where: masterContatcCondition,
+        order: [
+            ['createdAt', 'DESC']
+        ]
+    });
+/* =================== Master Contact Count Ends ================================*/
     res.render('dashboard', {
         layout: 'dashboard',
         auth_msg: auth_msg,
         changeFirmToAttr,
         changeSite,
-        changeAttrToFirm
+        changeAttrToFirm,
+        activity,
+        activity_count,
+        target,
+        target_count,
+        client,
+        client_count,
+        referral,
+        referral_count,
+        master_contact
     });
 }).get('/logout', auth, (req, res) => {
     req.logout();
@@ -273,6 +376,9 @@ router.get("/edit-attorney-profile", auth, csrfProtection, attrAuth, async (req,
     User.hasMany(PracticeAreaToAttr, {
         foreignKey: 'attorney_id'
     });
+    User.hasMany(JurisdictionToAttr, {
+        foreignKey: 'attorney_id'
+    });
     const designation = await Designation.findAll();
     const group = await Group.findAll();
     sectionToFirm.belongsTo(Section, {
@@ -280,6 +386,9 @@ router.get("/edit-attorney-profile", auth, csrfProtection, attrAuth, async (req,
     });
     PracticeAreaToFirm.belongsTo(PracticeArea, {
         foreignKey: 'practice_area_id'
+    });
+    JurisdictionToFirm.belongsTo(Jurisdiction, {
+        foreignKey: 'jurisdiction_id'
     });
 
     const allSection = await sectionToFirm.findAll({
@@ -298,8 +407,16 @@ router.get("/edit-attorney-profile", auth, csrfProtection, attrAuth, async (req,
 		include: [{
 			model: PracticeArea
 		}]
-	});
-    const jurisdiction = await Jurisdiction.findAll();
+    });
+    const allJurisdiction = await JurisdictionToFirm.findAll({
+        where: {
+            firm_id: req.user.firm_id
+        },
+
+        include: [{
+            model: Jurisdiction
+        }]
+    });
     const industry_type = await Industry_type.findAll();
 
     const country = await Country.findAll({});
@@ -314,6 +431,8 @@ router.get("/edit-attorney-profile", auth, csrfProtection, attrAuth, async (req,
             model: Education
         },{
 			model: PracticeAreaToAttr
+		}, {
+		    model: JurisdictionToAttr
 		}]
     });
     var state_id = edata[0].state;
@@ -339,7 +458,12 @@ router.get("/edit-attorney-profile", auth, csrfProtection, attrAuth, async (req,
 	 var arr = [];
 	 for (var i = 0; i < result.length; i++) {
 	 	arr.push(result[i].practice_area_id);
-	 }
+     }
+     var result_jurisdiction = JSON.parse(JSON.stringify(edata[0].jurisdiction_to_attorneys));
+     var jurisdiction_arr = [];
+     for (var i = 0; i < result_jurisdiction.length; i++) {
+         jurisdiction_arr.push(result_jurisdiction[i].jurisdiction_id);
+     }
     res.render('edit_attr_profile', {
         layout: 'dashboard',
         csrfToken: req.csrfToken(),
@@ -349,18 +473,20 @@ router.get("/edit-attorney-profile", auth, csrfProtection, attrAuth, async (req,
         designation: designation,
         group: group,
         section: allSection,
-        jurisdiction: jurisdiction,
         industry_type: industry_type,
         edata: edata[0],
         zipcode,
         city,
         allPracticeArea,
-		arr
+        allJurisdiction,
+        arr,
+        jurisdiction_arr
     });
 });
 
 router.post("/edit-attorney-profile", auth, profile.single('avatar'), csrfProtection, auth, async (req, res) => {
     var practice_area = req.body.practice_area;
+    var jurisdiction = req.body.jurisdiction;
     var education = [];
     var degree = req.body.degree;
     var university = req.body.university;
@@ -411,7 +537,7 @@ router.post("/edit-attorney-profile", auth, profile.single('avatar'), csrfProtec
         education: req.body.education,
         bar_registration: req.body.bar_registration,
         job_type: req.body.job_type,
-        jurisdiction: parseInt(req.body.jurisdiction),
+        jurisdiction: 0,
         industry_type: 0,
         hourly_cost: req.body.hourly_cost,
         benefit_factor: req.body.benefit_factor,
@@ -456,6 +582,13 @@ router.post("/edit-attorney-profile", auth, profile.single('avatar'), csrfProtec
             attorney_id: req.user.id,
             firm_id: req.user.firm_id,
             practice_area_id: practice_area[p],
+        });
+    }
+    for (var p = 0; p < jurisdiction.length; p++) {
+        const jurisdictionattr = await JurisdictionToAttr.create({
+            attorney_id: req.user.id,
+            firm_id: req.user.firm_id,
+            jurisdiction_id: jurisdiction[p],
         });
     }
     req.flash('success-message', 'Profile updated successfully.');

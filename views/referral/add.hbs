@@ -167,7 +167,7 @@
         </div>
       </div>
       <div class="card-box">
-        <h3 class="card-title">Contact Information</h3>
+        <h3 class="card-title">Address</h3>
         <div class="row">
           <div class="col-md-12">
             <div class="form-group form-focus">
@@ -244,6 +244,7 @@
           </div>
         </div>
       </div>
+
       <div class="card-box">
         <h3 class="card-title">Attorney Information</h3>
         <div class="row">
@@ -266,6 +267,167 @@
           </div>
         </div>
       </div>
+
+
+      <div class="card-box" id="m_s_target" style="display:none;">
+				<h3 class="card-title">Contact Information</h3>
+				<div class="contact-information targetPlus" id="contactInformationPlus">
+					<button class="btn btn-primary btn-lg masterContactDetailsAdd" id="targetPlus" type="button" title="Remove">
+						<i class="fa fa-plus"></i>
+					</button>
+					<div class="contact-margin">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">First Name
+										<span class="req-lbl">*</span>
+
+									</label>
+									<input type="text" class="form-control floating" id="clientDetailsFirstName" name="clientDetailsFirstName[]" />
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Last Name</label>
+									<input type="text" class="form-control floating" id="clientDetailsSecondName" name="clientDetailsSecondName[]" />
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus select-focus">
+									<label class="control-label">Gender
+										<span class="req-lbl">*</span>
+
+									</label>
+									<select class="select form-control floating" id="clientDetailsGender" name="clientDetailsGender[]">
+										<option value="">Select Gender</option>
+										<option value="M">Male</option>
+										<option value="F">Female</option>
+										<option value="O">Others</option>
+
+									</select>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Email Id
+										<span class="req-lbl">*</span>
+
+									</label>
+									<input type="text" class="form-control floating" id="clientDetailsEmail" name="clientDetailsEmail[]" />
+									<span id="uniqueEmail" style="color: red"></span>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Phone No.
+										<span class="req-lbl">*</span>
+
+									</label>
+									<input type="text" class="form-control floating number_validator" id="clientDetailsPhone_no" name="clientDetailsPhone_no[]"
+									 maxlength="50" />
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Fax</label>
+									<input type="text" class="form-control floating number_validator" id="clientDetailsFax" name="clientDetailsFax[]" maxlength="50"
+									/>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Mobile No.
+										<span class="req-lbl">*</span>
+									</label>
+									<input type="text" class="form-control floating number_validator" id="clientDetailsMobile_no" name="clientDetailsMobile_no[]"
+									 maxlength="50" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="targetContactClose" style="display:none;">
+					<div class="targetDetailsRemove">
+						<div class="contact-information" id="contactInformatinClose">
+							<button class="btn btn-primary btn-lg masterContactDetailsAdd targetClose" type="button" title="Remove">
+								<i class="fa fa-close"></i>
+							</button>
+							<div class="contact-margin ">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group form-focus">
+											<label class="control-label">First Name
+												<span class="req-lbl">*</span>
+
+											</label>
+											<input type="text" class="form-control floating"  name="clientDetailsFirstName[]" />
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group form-focus">
+											<label class="control-label">Last Name</label>
+											<input type="text" class="form-control floating"  name="clientDetailsSecondName[]" />
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group form-focus select-focus">
+											<label class="control-label">Gender
+												<span class="req-lbl">*</span>
+
+											</label>
+											<select class="form-control floating"  name="clientDetailsGender[]">
+												<option value="">Select Gender</option>
+												<option value="M">Male</option>
+												<option value="F">Female</option>
+												<option value="O">Others</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group form-focus">
+											<label class="control-label">Email Id
+												<span class="req-lbl">*</span>
+
+											</label>
+											<input type="text" class="form-control floating"  name="clientDetailsEmail[]" />
+											<span id="uniqueEmail" style="color: red"></span>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group form-focus">
+											<label class="control-label">Phone No.
+												<span class="req-lbl">*</span>
+
+											</label>
+											<input type="text" class="form-control floating number_validator"  name="clientDetailsPhone_no[]"
+											 maxlength="50" />
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group form-focus">
+											<label class="control-label">Fax</label>
+											<input type="text" class="form-control floating number_validator"  name="clientDetailsFax[]" maxlength="50"
+											/>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group form-focus">
+											<label class="control-label">Mobile No.
+												<span class="req-lbl">*</span>
+											</label>
+											<input type="text" class="form-control floating number_validator"  name="clientDetailsMobile_no[]"
+											maxlength="50" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
       <div class="card-box">
         <h3 class="card-title">Other Information</h3>
         <div class="row">
@@ -533,11 +695,13 @@
   $(document).on('click', '#individual_referral', function () {
     $('#indi_referral').show();
     $('#org_referral').hide();
+    $('#m_s_target').hide();
   });
 
   $(document).on('click', '#organization_referral', function () {
     $('#indi_referral').hide();
     $('#org_referral').show();
+    $('#m_s_target').show();
   });
 
   $(document).on('click', '#referral_type', function () {
@@ -549,4 +713,14 @@
     $('#target_list').hide();
     $('#client_list').show();
   });
+
+  //contact information 
+	$(document).on('click', '#targetPlus', function () {
+		$('.targetPlus').append($('.targetContactClose').html());
+	});
+
+	$(document).on('click', '.targetClose', function (e) {
+		$(this).parents(".targetDetailsRemove").remove();
+	});
+
 </script> {{/content}}

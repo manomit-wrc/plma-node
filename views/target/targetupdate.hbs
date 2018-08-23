@@ -22,6 +22,7 @@
 		<form id="targetform" method="POST" action="/target/edit/{{client.id}}">
 			<input type="hidden" name="_csrf" value="{{csrfToken}}">
 			<input type="hidden" value="{{client.id}}" id="id" />
+			<input type="hidden" value="{{client.target_type}}" id="_contactInformation"/>
 
 			<div class="form-inline m-b-15">
 				<div class="form-group m-r-5">
@@ -94,14 +95,7 @@
 										<input type="text" class="form-control floating" id="last_name" name="last_name" value="{{client.last_name}}" />
 									</div>
 								</div>
-								<div class="col-md-6">
-									<div class="form-group form-focus">
-										<label class="control-label">Target ID
-											<span class="req-lbl">*</span>
-										</label>
-										<input type="text" class="form-control floating" id="target_id" name="target_id" value="{{client.target_id}}" />
-									</div>
-								</div>
+								
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Target Code
@@ -175,7 +169,7 @@
 			</div>
 
 			<div class="card-box">
-				<h3 class="card-title">Contact Information</h3>
+				<h3 class="card-title">Address</h3>
 				<div class="row">
 					<div class="col-md-12">
 						<div class="form-group form-focus">
@@ -273,6 +267,176 @@
 								<option value="{{this.id}}" {{#if_eq this.id ../client.attorney_id}} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
 								{{/each}} {{/if_eq}}
 							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="card-box" id="m_s_contactInformation" style="display:none;">
+				<h3 class="card-title">Contact Information</h3>
+				<div id="_contactPlus">
+					{{#each contactDetails}}
+					<div class="contact-information contactDetailsRemove">
+			
+						{{#if_eq @index "0"}}
+						<button class="btn btn-primary btn-lg masterContactDetailsAdd" id="_contactDetailsPlus" type="button" title="Remove">
+							<i class="fa fa-plus"></i>
+						</button>
+						{{else}}
+						<button class="btn btn-primary btn-lg masterContactDetailsAdd contact-Information-Close" type="button" title="Remove">
+							<i class="fa fa-close"></i>
+						</button>
+						{{/if_eq}}
+			
+						<div class="contact-margin">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">First Name
+											<span class="req-lbl">*</span>
+			
+										</label>
+										<input type="text" class="form-control floating" id="contactDetailsFirstName" name="contactDetailsFirstName[]" value="{{this.first_name}}"
+										/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Last Name</label>
+										<input type="text" class="form-control floating" id="contactDetailsSecondName" name="contactDetailsSecondName[]" value="{{this.last_name}}"
+										/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus select-focus">
+										<label class="control-label">Gender
+											<span class="req-lbl">*</span>
+			
+										</label>
+										<select class="select form-control floating" id="contactDetailsGender" name="contactDetailsGender[]">
+											<option value="">Select Gender</option>
+											<option value="M" {{#if_eq this.gender "M"}} selected {{/if_eq}}>Male</option>
+											<option value="F" {{#if_eq this.gender "F"}} selected {{/if_eq}}>Female</option>
+											<option value="O" {{#if_eq this.gender "O"}} selected {{/if_eq}}>Others</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Email Id
+											<span class="req-lbl">*</span>
+			
+										</label>
+										<input type="text" class="form-control floating" id="contactDetailsEmail" name="contactDetailsEmail[]" value="{{this.email}}"
+										/>
+										<span id="uniqueEmail" style="color: red"></span>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Phone No.
+											<span class="req-lbl">*</span>
+			
+										</label>
+										<input type="text" class="form-control floating number_validator" id="contactDetailsPhone_no" name="contactDetailsPhone_no[]"
+										 maxlength="50" value={{this.phone_no}} />
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Fax</label>
+										<input type="text" class="form-control floating number_validator" id="contactDetailsFax" name="contactDetailsFax[]" maxlength="50"
+										 value="{{this.fax}}" />
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Mobile No.
+											<span class="req-lbl">*</span>
+										</label>
+										<input type="text" class="form-control floating number_validator" id="contactDetailsMobile_no" name="contactDetailsMobile_no[]"
+										 maxlength="50" value="{{this.mobile_no}}" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					{{/each}}
+				</div>
+				<div class="contactInformationClose" style="display:none;">
+					<div class="contactDetailsRemove">
+						<div class="contact-information" id="contactInformatinClose">
+							<button class="btn btn-primary btn-lg masterContactDetailsAdd contact-Information-Close" type="button" title="Remove">
+								<i class="fa fa-close"></i>
+							</button>
+							<div class="contact-margin ">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group form-focus">
+											<label class="control-label">First Name
+												<span class="req-lbl">*</span>
+			
+											</label>
+											<input type="text" class="form-control floating" name="contactDetailsFirstName[]" />
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group form-focus">
+											<label class="control-label">Last Name</label>
+											<input type="text" class="form-control floating" name="contactDetailsSecondName[]" />
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group form-focus select-focus">
+											<label class="control-label">Gender
+												<span class="req-lbl">*</span>
+			
+											</label>
+											<select class="form-control floating" name="contactDetailsGender[]">
+												<option value="">Select Gender</option>
+												<option value="M">Male</option>
+												<option value="F">Female</option>
+												<option value="O">Others</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group form-focus">
+											<label class="control-label">Email Id
+												<span class="req-lbl">*</span>
+			
+											</label>
+											<input type="text" class="form-control floating" name="contactDetailsEmail[]" />
+											<span id="uniqueEmail" style="color: red"></span>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group form-focus">
+											<label class="control-label">Phone No.
+												<span class="req-lbl">*</span>
+			
+											</label>
+											<input type="text" class="form-control floating number_validator" name="contactDetailsPhone_no[]" maxlength="50" />
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group form-focus">
+											<label class="control-label">Fax</label>
+											<input type="text" class="form-control floating number_validator" name="contactDetailsFax[]" maxlength="50" />
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group form-focus">
+											<label class="control-label">Mobile No.
+												<span class="req-lbl">*</span>
+											</label>
+											<input type="text" class="form-control floating number_validator" id="contactDetailsMobile_no" name="contactDetailsMobile_no[]"
+											 maxlength="50" />
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -483,6 +647,22 @@
 		});
 
 		// add designation ajax operation and form validation ends
+
+		let _msType = $('#_contactInformation').val();
+		if (_msType==='O') {
+			$('#m_s_contactInformation').show();
+		} else {
+			$('#m_s_contactInformation').hide();
+		}
+
+		//contact information 
+		$(document).on('click', '#_contactDetailsPlus', function () {
+			$('#_contactPlus').append($('.contactInformationClose').html());
+		});
+
+		$(document).on('click', '.contact-Information-Close', function (e) {
+			$(this).parents(".contactDetailsRemove").remove();
+		});
 
 	});
 </script> {{/content}}

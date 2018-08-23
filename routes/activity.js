@@ -17,20 +17,25 @@ const ActivityBudget = require('../models').activity_budget;
 const sectionToFirm = require('../models').section_to_firms;
 const Referral = require('../models').referral;
 const multer = require('multer');
+const User = require('../models').user;
+const requestApproval = require('../models').request_approval;
+var fileName = '';
 
 // File upload
 var storage = multer.diskStorage({
-    destination: function(req, file, cb) {
+    destination: function (req, file, cb) {
         cb(null, 'public/activity');
     },
-    filename: function(req, file, cb) {
+    filename: function (req, file, cb) {
         fileExt = file.originalname.split('.')[1];
         fileName = req.user.id + '-' + Date.now() + '.' + fileExt;
         cb(null, fileName);
     }
 });
 
-var upload = multer({ storage: storage });
+var upload = multer({
+    storage: storage
+});
 
 var csrfProtection = csrf({
     cookie: true
@@ -46,7 +51,7 @@ function removePhoneMask(removeCharacter) {
     return removeCharacter;
 }
 
-router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async(req, res) => {
+router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res) => {
     var activityFilter = {};
     if (req.query.searchActive) {
         activityFilter.activity_type = req.query.searchActive;
@@ -135,7 +140,6 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async(req, res) 
 //fetch
 
 router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res) => {
-   
     var whereCondition = {};
 
     if (req.query.activity_goal_id) {
@@ -149,42 +153,38 @@ router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res)
     }
     if (req.query.ref_type && req.query.target_user || req.query.client_user || req.query.referral_user) {
         var acti_user = '';
-        if (req.query.target_user){
+        if (req.query.target_user) {
             acti_user = req.query.target_user
-        }
-        else if (req.query.client_user){
+        } else if (req.query.client_user) {
             acti_user = req.query.client_user
-        }
-        else if (req.query.referral_user){
+        } else if (req.query.referral_user) {
             acti_user = req.query.referral_user
         }
         const activity_user = await Activity_to_user_type.findAll({
-            where:{
+            where: {
                 'target_client_type': req.query.ref_type,
                 'type': acti_user
             }
         });
         var actiArr = [];
-        for(var i = 0; i< activity_user.length; i++){
+        for (var i = 0; i < activity_user.length; i++) {
             actiArr.push(activity_user[i].activity_id);
         }
         whereCondition.id = actiArr;
     }
-    if(req.user.role_id == 2) {
+    if (req.user.role_id == 2) {
         whereCondition.firm_id = req.user.firm_id;
+    } else {
+        whereCondition.firm_id = req.user.firm_id;
+        whereCondition.user_id = req.user.id;
     }
-    else
-    {
-        whereCondition.firm_id= req.user.firm_id;
-        whereCondition.user_id= req.user.id;
-    }
-	var success_message = req.flash('success-message')[0];
-	const activity_goal = await ActivityGoal.findAll({
-	    where: {
-	        'firm_id': req.user.firm_id
-	    }
-	});
-	
+    var success_message = req.flash('success-message')[0];
+    const activity_goal = await ActivityGoal.findAll({
+        where: {
+            'firm_id': req.user.firm_id
+        }
+    });
+
     const target = await Target.findAll({
         where: {
             'target_type': "I",
@@ -207,14 +207,14 @@ router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res)
         }
     });
 
-		var activity = await Activity.findAll({
-            where: whereCondition,
-        });
-        
-	res.render('activity/activity', {
-		layout: 'dashboard',
-		csrfToken: req.csrfToken(),
-		row: activity,
+    var activity = await Activity.findAll({
+        where: whereCondition,
+    });
+
+    res.render('activity/activity', {
+        layout: 'dashboard',
+        csrfToken: req.csrfToken(),
+        row: activity,
         success_message,
         activity_goal,
         target,
@@ -228,12 +228,12 @@ router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res)
         user_referral: req.query.referral_user ? req.query.referral_user : "",
         approval_status: req.query.approval_status ? req.query.approval_status : "",
         count_query: Object.keys(req.query).length
-	});
+    });
 });
 
 // Start budget add section
 
-router.post('/insertActivity', auth, async(req, res) => {
+router.post('/insertActivity', auth, async (req, res) => {
     const addActivityId = await Activity.create({
         activity_name: req.body.activityName
     });
@@ -243,7 +243,7 @@ router.post('/insertActivity', auth, async(req, res) => {
     });
 });
 
-router.post('/activity/add-budget', auth, firmAttrAuth, csrfProtection, async(req, res) => {
+router.post('/activity/add-budget', auth, firmAttrAuth, csrfProtection, async (req, res) => {
     var budget = JSON.parse(req.body.budget);
 
     for (var b = 0; b < budget.length; b++) {
@@ -263,7 +263,7 @@ router.post('/activity/add-budget', auth, firmAttrAuth, csrfProtection, async(re
 
 // ========{{  insert data to the database  }}=====================//
 
-router.post('/activity/add', auth, upload.single('activity_attachment'), firmAttrAuth, csrfProtection, async(req, res) => {
+router.post('/activity/add', auth, upload.single('activity_attachment'), firmAttrAuth, csrfProtection, async (req, res) => {
     var target_user = [];
     var client_user = [];
     var referral_user = [];
@@ -282,7 +282,7 @@ router.post('/activity/add', auth, upload.single('activity_attachment'), firmAtt
         }
     })
 
-    var targetClientLength;
+    var targetClientLength = 1;
     if (activityBudgetData[0].level_type === 'Individual') {
         if (target_user !== undefined) {
             targetClientLength = target_user.length;
@@ -329,7 +329,7 @@ router.post('/activity/add', auth, upload.single('activity_attachment'), firmAtt
         total_budget_amount: req.body.total_amount,
         section_id: req.body.section,
         s_group_id: req.body.strategy_group,
-        attachment_field:fileName
+        attachment_field: fileName
     }, {
         where: {
             id: req.body.activity_id
@@ -352,14 +352,13 @@ router.post('/activity/add', auth, upload.single('activity_attachment'), firmAtt
                 type: client_user[j]
             });
         }
-    } else {
-        for (let r = 0; r < referral_user.length; r++) {
+    } else if (req.body.ref_type == 'R') {
+        for (var r = 0; r < referral_user.length; r++) {
             await Activity_to_user_type.create({
                 activity_id: req.body.activity_id,
                 target_client_type: req.body.ref_type,
                 type: referral_user[r]
             });
-
         }
     }
 
@@ -367,7 +366,7 @@ router.post('/activity/add', auth, upload.single('activity_attachment'), firmAtt
     res.redirect('/activitypage');
 });
 
-router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async(req, res) => {
+router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
     Activity.hasMany(Activity_to_user_type, {
         foreignKey: 'activity_id'
     });
@@ -491,7 +490,7 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async(req, 
         }
         alldata.push({
             'attorney_name': req.user.first_name + " " + req.user.last_name,
-            'company_name': target_client_list.length>0 ? (target_client_list[0].first_name + " " + target_client_list[0].last_name) : "",
+            'company_name': target_client_list.length > 0 ? (target_client_list[0].first_name + " " + target_client_list[0].last_name) : "",
             'relation': all_activity_client[i].target_client_type,
             'total_cost': activity_budget.level_type == 'Individual' ? editdata[0].total_budget_amount : parseFloat(editdata[0].total_budget_amount / all_activity_client.length),
             'potential_revenue': activity_budget.level_type == 'Individual' ? editdata[0].potiential_revenue : parseFloat(editdata[0].potiential_revenue / all_activity_client.length)
@@ -532,7 +531,7 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async(req, 
 
 //.....................{{   edit data  }}.......................................//
 
-router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, res) => {
+router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
     Activity.hasMany(Activity_to_user_type, {
         foreignKey: 'activity_id'
     });
@@ -697,7 +696,7 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, 
 });
 
 //update data
-router.post('/activity/edit-budget', auth, firmAttrAuth, csrfProtection, async(req, res) => {
+router.post('/activity/edit-budget', auth, firmAttrAuth, csrfProtection, async (req, res) => {
     ActivityBudget.destroy({
         where: {
             activity_id: req.body.activity_id
@@ -728,7 +727,7 @@ router.post('/activity/edit-budget', auth, firmAttrAuth, csrfProtection, async(r
     });
 });
 
-router.post('/activity/update/:id', auth, upload.single('activity_attachment'), firmAttrAuth, csrfProtection, async(req, res) => {
+router.post('/activity/update/:id', auth, upload.single('activity_attachment'), firmAttrAuth, csrfProtection, async (req, res) => {
     target_user = [];
     client_user = [];
     referral_user = [];
@@ -792,7 +791,7 @@ router.post('/activity/update/:id', auth, upload.single('activity_attachment'), 
         section_id: req.body.section,
         s_group_id: req.body.strategy_group,
         activity_status: req.body.activity_status,
-        attachment_field:fileName
+        attachment_field: fileName
     }, {
         where: {
             id: req.params['id']
@@ -812,44 +811,244 @@ router.post('/activity/update/:id', auth, upload.single('activity_attachment'), 
             });
         }
     } else if (req.body.ref_type == "C") {
-        {
-            for (var j = 0; j < client_user.length; j++) {
-                await Activity_to_user_type.create({
-                    activity_id: req.params['id'],
-                    target_client_type: req.body.ref_type,
-                    type: client_user[j]
-                });
-            }
+        for (var j = 0; j < client_user.length; j++) {
+            await Activity_to_user_type.create({
+                activity_id: req.params['id'],
+                target_client_type: req.body.ref_type,
+                type: client_user[j]
+            });
         }
     } else {
-        {
-            for (var k = 0; k < referral_user.length; k++) {
-                await Activity_to_user_type.create({
-                    activity_id: req.params['id'],
-                    target_referral_type: req.body.ref_type,
-                    type: referral_user[k]
-                });
-            }
+        for (var k = 0; k < referral_user.length; k++) {
+            await Activity_to_user_type.create({
+                activity_id: req.params['id'],
+                target_referral_type: req.body.ref_type,
+                type: referral_user[k]
+            });
         }
     }
 
     res.redirect('/activitypage');
 });
 
-router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProtection, async(req, res) => {
-    await Activity.update({
+router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+    var userInformation_4_l4;
+    var userInformation_4_l3;
+    var userInformation_4_l2;
+    var userInformation_4_l1;
+    var userInformation_2_l2;
+    var userInformation_2_l1;
+
+    const firmDetails = await Firm.findOne({
+        where: {
+            'id': req.user.firm_id
+        }
+    });
+
+
+    if (firmDetails['approval_level'] === 2) {
+
+        userInformation_2_l2 = await User.findOne({
+            where: {
+                'designation_id': firmDetails['level_2'],
+                'section_id': 0,
+                'firm_id': req.user.firm_id
+            }
+        });
+
+        if (userInformation_2_l2 === null) {
+            userInformation_2_l2 = await User.findOne({
+                where: {
+                    'designation_id': firmDetails['level_2'],
+                    'section_id': req.user['section_id'],
+                    'firm_id': req.user.firm_id
+                }
+            });
+        }
+
+        userInformation_2_l1 = await User.findOne({
+            where: {
+                'designation_id': firmDetails['level_1'],
+                'section_id': 0,
+                'firm_id': req.user.firm_id
+            }
+        });
+
+        if (userInformation_2_l1 === null) {
+            userInformation_2_l1 = await User.findOne({
+                where: {
+                    'designation_id': firmDetails['level_1'],
+                    'section_id': req.user['section_id'],
+                    'firm_id': req.user.firm_id
+                }
+            });
+        }
+
+    } else if (firmDetails['approval_level'] === 3) {
+
+        var userInformation_3_l3 = await User.findOne({
+            where: {
+                'designation_id': firmDetails['level_3'],
+                'section_id': 0,
+                'firm_id': req.user.firm_id
+            }
+        });
+
+        if (userInformation_3_l3 === null) {
+            var userInformation_3_l3 = await User.findOne({
+                where: {
+                    'designation_id': firmDetails['level_3'],
+                    'section_id': req.user['section_id'],
+                    'firm_id': req.user.firm_id
+                }
+            });
+        }
+
+
+        var userInformation_3_l2 = await User.findOne({
+            where: {
+                'designation_id': firmDetails['level_2'],
+                'section_id': 0,
+                'firm_id': req.user.firm_id
+            }
+        });
+
+        if (userInformation_3_l2 === null) {
+            var userInformation_3_l2 = await User.findOne({
+                where: {
+                    'designation_id': firmDetails['level_2'],
+                    'section_id': req.user['section_id'],
+                    'firm_id': req.user.firm_id
+                }
+            });
+        }
+
+        var userInformation_3_l1 = await User.findOne({
+            where: {
+                'designation_id': firmDetails['level_1'],
+                'section_id': 0,
+                'firm_id': req.user.firm_id
+            }
+        });
+
+        if (userInformation_3_l1 === null) {
+            var userInformation_3_l1 = await User.findOne({
+                where: {
+                    'designation_id': firmDetails['level_1'],
+                    'section_id': req.user['section_id'],
+                    'firm_id': req.user.firm_id
+                }
+            });
+        }
+
+    } else if (firmDetails['approval_level'] === 4) {
+
+        userInformation_4_l4 = await User.findOne({
+            where: {
+                'designation_id': firmDetails['level_4'],
+                'section_id': 0,
+                'firm_id': req.user.firm_id
+            }
+        });
+        // if (userInformation_4_l4) {
+        //     requestApproval.create({
+                
+        //     })
+        // }
+
+        userInformation_4_l3 = await User.findOne({
+            where: {
+                'designation_id': firmDetails['level_3'],
+                'section_id': 0,
+                'firm_id': req.user.firm_id
+            }
+        });
+
+        userInformation_4_l2 = await User.findOne({
+            where: {
+                'designation_id': firmDetails['level_2'],
+                'section_id': 0,
+                'firm_id': req.user.firm_id
+            }
+        });
+
+        userInformation_4_l1 = await User.findOne({
+            where: {
+                'designation_id': firmDetails['level_1'],
+                'section_id': 0,
+                'firm_id': req.user.firm_id
+            }
+        });
+
+        if (userInformation_4_l4 === null) {
+            var userInformation_4_l4 = await User.findOne({
+                where: {
+                    'designation_id': firmDetails['level_4'],
+                    'section_id': req.user['section_id'],
+                    'firm_id': req.user.firm_id
+                }
+            });
+
+        }
+        if (userInformation_4_l3 === null) {
+            var userInformation_4_l3 = await User.findOne({
+                where: {
+                    'designation_id': firmDetails['level_3'],
+                    'section_id': req.user['section_id'],
+                    'firm_id': req.user.firm_id
+                }
+            });
+        }
+        if (userInformation_4_l2 === null) {
+            userInformation_4_l2 = await User.findOne({
+                where: {
+                    'designation_id': firmDetails['level_2'],
+                    'section_id': req.user['section_id'],
+                    'firm_id': req.user.firm_id
+                }
+            });
+        }
+        if (userInformation_4_l1 === null) {
+            userInformation_4_l1 = await User.findOne({
+                where: {
+                    'designation_id': firmDetails['level_1'],
+                    'section_id': req.user['section_id'],
+                    'firm_id': req.user.firm_id
+                }
+            });
+        }
+
+
+
+    }
+
+    console.log('------------------------------');
+    console.log('------------------------->1', userInformation_4_l4.id);
+    console.log('------------------------->2', userInformation_4_l3);
+    console.log('------------------------->3', userInformation_4_l2.id);
+    console.log('------------------------->4', userInformation_4_l1);
+    console.log('------------------------------');
+
+
+
+    // console.log(userInformation_4_l4[0]['id'],userInformation_4_l3[0]['id'],userInformation_4_l2[0]['id'],userInformation_4_l1[0]['id']);
+
+
+
+    /* await Activity.update({
         activity_status: 1
     }, {
         where: {
             id: req.params['id']
         }
-    });
+    }); */
+
     res.json({
         success: true
     });
 });
 
-router.get('/activity/deletedata/:id', auth, firmAttrAuth, async(req, res) => {
+router.get('/activity/deletedata/:id', auth, firmAttrAuth, async (req, res) => {
     await Activity.destroy({
         where: {
             id: req.params['id']
@@ -870,4 +1069,5 @@ router.get('/activity/deletedata/:id', auth, firmAttrAuth, async(req, res) => {
 });
 
 //====================================END ACTIVITY=============================================================================//
+
 module.exports = router;

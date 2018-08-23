@@ -25,35 +25,35 @@
             <div class="dash-widget clearfix card-box">
                <span class="dash-widget-icon"><i class="fa fa-cubes" aria-hidden="true"></i></span>
                <div class="dash-widget-info">
-                  <h3>112</h3>
-                  <span>Projects</span>
+                  <h3>{{activity_count}}</h3>
+                  <span>Activities</span>
                </div>
             </div>
          </div>
          <div class="col-md-6 col-sm-6 col-lg-3">
             <div class="dash-widget clearfix card-box">
-               <span class="dash-widget-icon"><i class="fa fa-usd" aria-hidden="true"></i></span>
+               <span class="dash-widget-icon"><i class="fa fa-users" aria-hidden="true"></i></span>
                <div class="dash-widget-info">
-                  <h3>$44</h3>
+                  <h3>{{target_count}}</h3>
+                  <span>Targets</span>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-6 col-sm-6 col-lg-3">
+            <div class="dash-widget clearfix card-box">
+               <span class="dash-widget-icon"><i class="fa fa-users"></i></span>
+               <div class="dash-widget-info">
+                  <h3>{{client_count}}</h3>
                   <span>Clients</span>
                </div>
             </div>
          </div>
          <div class="col-md-6 col-sm-6 col-lg-3">
             <div class="dash-widget clearfix card-box">
-               <span class="dash-widget-icon"><i class="fa fa-diamond"></i></span>
+               <span class="dash-widget-icon"><i class="fa fa-users" aria-hidden="true"></i></span>
                <div class="dash-widget-info">
-                  <h3>37</h3>
-                  <span>Tasks</span>
-               </div>
-            </div>
-         </div>
-         <div class="col-md-6 col-sm-6 col-lg-3">
-            <div class="dash-widget clearfix card-box">
-               <span class="dash-widget-icon"><i class="fa fa-user" aria-hidden="true"></i></span>
-               <div class="dash-widget-info">
-                  <h3>218</h3>
-                  <span>Employees</span>
+                  <h3>{{referral_count}}</h3>
+                  <span>Referrals</span>
                </div>
             </div>
          </div>
@@ -71,7 +71,7 @@
                      <div id="line-chart"></div>
                   </div>
                </div>
-               <div  class="col-md-4 col-sm-12 text-center">
+               {{!-- <div  class="col-md-4 col-sm-12 text-center">
                   <div class="card-box">
                      <div id="bar-chart" ></div>
                   </div>
@@ -85,122 +85,54 @@
                   <div class="card-box">
                      <div id="pie-chart" ></div>
                   </div>
-               </div>
+               </div> --}}
             </div>
          </div>
       </div>
+      {{#if_eq user.role_id "1"}}{{else}}
       <div class="row">
-         <div class="col-md-6">
+         <div class="col-md-12">
             <div class="panel panel-table">
                <div class="panel-heading">
-                  <h3 class="panel-title">Invoices</h3>
+                  <h3 class="panel-title">Activities</h3>
                </div>
                <div class="panel-body">
                   <div class="table-responsive">
-                     <table class="table table-striped custom-table m-b-0">
+                     <table class="table table-striped custom-table m-b-0 ">
                         <thead>
                            <tr>
-                              <th>Invoice ID</th>
-                              <th>Client</th>
-                              <th>Due Date</th>
-                              <th>Total</th>
+                              <th style="width:10%">Creation Date</th>
+                              <th>Activity Name</th>
+                              <th>From Date</th>
+                              <th>To Date</th>
+                              <th>Total Hours</th>
+                              <th>Total Amount</th>
                               <th>Status</th>
                            </tr>
                         </thead>
                         <tbody>
-                           <tr>
-                              <td><a href="invoice-view.html">#INV-0001</a></td>
+                          {{#each activity}}
+                           <tr class="activity_custom_del">
+                              <td>{{dateFormat this.activity_creation_date "DD-MM-YYYY"}}</td>
                               <td>
-                                 <h2><a href="#">Hazel Nutt</a></h2>
-                              </td>
-                              <td>8 Aug 2017</td>
-                              <td>$380</td>
+                                <a href="/activity/view/{{this.id}}">{{this.activity_name}}</a></td>
+                              <td>{{dateFormat this.activity_from_date "DD-MM-YYYY"}}</td>
+                              <td>{{dateFormat this.activity_to_date "DD-MM-YYYY"}}</td>
+                              <td>{{this.total_budget_hour}}</td>
+                              <td>$ {{this.total_budget_amount}}</td>
                               <td>
-                                 <span class="label label-warning-border">Partially Paid</span>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td><a href="invoice-view.html">#INV-0002</a></td>
-                              <td>
-                                 <h2><a href="#">Paige Turner</a></h2>
-                              </td>
-                              <td>17 Sep 2017</td>
-                              <td>$500</td>
-                              <td>
-                                 <span class="label label-success-border">Paid</span>
+                                 {{#if_eq this.activity_status '0'}} <span class="label label-info-border">NEW ACTIVITY - CREATED </span>{{/if_eq}} {{#if_eq this.activity_status '1'}}
+                                <span class="label label-warning-border">SENT FOR APPROVAL</span> {{/if_eq}} {{#if_eq this.activity_status '2'}} <span class="label label-success-border">APPROVED</span> {{/if_eq}} {{#if_eq
+                                this.activity_status '3'}} <span class="label label-danger-border">NOT APPROVED</span> {{/if_eq}}
                               </td>
                            </tr>
-                           <tr>
-                              <td><a href="invoice-view.html">#INV-0003</a></td>
-                              <td>
-                                 <h2><a href="#">Ben Dover</a></h2>
-                              </td>
-                              <td>30 Nov 2017</td>
-                              <td>$60</td>
-                              <td>
-                                 <span class="label label-danger-border">Unpaid</span>
-                              </td>
-                           </tr>
+                           {{/each}}
                         </tbody>
                      </table>
                   </div>
                </div>
                <div class="panel-footer">
-                  <a href="invoices.html" class="text-primary">View all invoices</a>
-               </div>
-            </div>
-         </div>
-         <div class="col-md-6">
-            <div class="panel panel-table">
-               <div class="panel-heading">
-                  <h3 class="panel-title">Payments</h3>
-               </div>
-               <div class="panel-body">
-                  <div class="table-responsive">
-                     <table class="table table-striped custom-table m-b-0">
-                        <thead>
-                           <tr>
-                              <th>Invoice ID</th>
-                              <th>Client</th>
-                              <th>Payment Type</th>
-                              <th>Paid Date</th>
-                              <th>Paid Amount</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           <tr>
-                              <td><a href="invoice-view.html">#INV-0004</a></td>
-                              <td>
-                                 <h2><a href="#">Barry Cuda</a></h2>
-                              </td>
-                              <td>Paypal</td>
-                              <td>11 Jun 2017</td>
-                              <td>$380</td>
-                           </tr>
-                           <tr>
-                              <td><a href="invoice-view.html">#INV-0005</a></td>
-                              <td>
-                                 <h2><a href="#">Tressa Wexler</a></h2>
-                              </td>
-                              <td>Paypal</td>
-                              <td>21 Jul 2017</td>
-                              <td>$500</td>
-                           </tr>
-                           <tr>
-                              <td><a href="invoice-view.html">#INV-0006</a></td>
-                              <td>
-                                 <h2><a href="#">Ruby Bartlett</a></h2>
-                              </td>
-                              <td>Paypal</td>
-                              <td>28 Aug 2017</td>
-                              <td>$60</td>
-                           </tr>
-                        </tbody>
-                     </table>
-                  </div>
-               </div>
-               <div class="panel-footer">
-                  <a href="payments.html" class="text-primary">View all payments</a>
+                  <a href="/activitypage" class="text-primary">View all activities</a>
                </div>
             </div>
          </div>
@@ -218,294 +150,202 @@
                            <tr>
                               <th style="min-width:200px;">Name</th>
                               <th>Email</th>
-                              <th>Status</th>
-                              <th class="text-right">Action</th>
+                              <th>Client Type</th>
+                              <th>Mobile</th>
                            </tr>
                         </thead>
                         <tbody>
-                           <tr>
+                          {{#each client}}
+                           <tr class="activity_custom_del">
                               <td style="min-width:200px;">
-                                 <a href="#" class="avatar">B</a>
-                                 <h2><a href="client-profile.html">Barry Cuda <span>CEO</span></a></h2>
+                                {{#if_eq client_type "I"}}
+                                  <a href="/client/view/{{this.id}}" class="avatar">{{first_letter this.first_name}}</a>
+                                 <h2><a href="/client/view/{{this.id}}">{{this.first_name}} {{this.last_name}} </a></h2>
+                                 {{else}}
+                                  <a href="/client/view/{{this.id}}" class="avatar">{{first_letter this.organization_name}}</a>
+                                  <h2>
+                                    <a href="/client/view/{{this.id}}">{{this.organization_name}}</a>
+                                  </h2>
+                                 {{/if_eq}}
                               </td>
-                              <td>barrycuda@example.com</td>
-                              <td>
-                                 <div class="dropdown action-label">
-                                    <a class="btn btn-white btn-sm rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-dot-circle-o text-success"></i> Active <i class="caret"></i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-success"></i> Active</a></li>
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a></li>
-                                    </ul>
-                                 </div>
+                              <td>{{this.email}}</td>
+                              <td>{{#if_eq client_type "I"}}
+                                <span class="label label-success-border">Individual</span>
+                                {{else}}
+                                <span class="label label-info-border">Organization</span>
+                                {{/if_eq}}
                               </td>
-                              <td class="text-right">
-                                 <div class="dropdown">
-                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                       <li><a href="#" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
+                              <td>{{this.mobile_no}}</td>
                            </tr>
-                           <tr>
-                              <td>
-                                 <a class="avatar">T</a>
-                                 <h2><a href="client-profile.html">Tressa Wexler <span>Manager</span></a></h2>
-                              </td>
-                              <td>tressawexler@example.com</td>
-                              <td>
-                                 <div class="dropdown action-label">
-                                    <a class="btn btn-white btn-sm rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-dot-circle-o text-danger"></i> Inactive <i class="caret"></i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-success"></i> Active</a></li>
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                              <td class="text-right">
-                                 <div class="dropdown">
-                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                       <li><a href="#" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <a href="client-profile.html" class="avatar">R</a>
-                                 <h2><a href="client-profile.html">Ruby Bartlett <span>CEO</span></a></h2>
-                              </td>
-                              <td>rubybartlett@example.com</td>
-                              <td>
-                                 <div class="dropdown action-label">
-                                    <a class="btn btn-white btn-sm rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-dot-circle-o text-danger"></i> Inactive <i class="caret"></i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-success"></i> Active</a></li>
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                              <td class="text-right">
-                                 <div class="dropdown">
-                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                       <li><a href="#" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <a href="client-profile.html" class="avatar">M</a>
-                                 <h2><a href="client-profile.html"> Misty Tison <span>CEO</span></a></h2>
-                              </td>
-                              <td>mistytison@example.com</td>
-                              <td>
-                                 <div class="dropdown action-label">
-                                    <a class="btn btn-white btn-sm rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-dot-circle-o text-success"></i> Active <i class="caret"></i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-success"></i> Active</a></li>
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                              <td class="text-right">
-                                 <div class="dropdown">
-                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                       <li><a href="#" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <a href="client-profile.html" class="avatar">D</a>
-                                 <h2><a href="client-profile.html"> Daniel Deacon <span>CEO</span></a></h2>
-                              </td>
-                              <td>danieldeacon@example.com</td>
-                              <td>
-                                 <div class="dropdown action-label">
-                                    <a class="btn btn-white btn-sm rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-dot-circle-o text-danger"></i> Inactive <i class="caret"></i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-success"></i> Active</a></li>
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                              <td class="text-right">
-                                 <div class="dropdown">
-                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                       <li><a href="#" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                           </tr>
+                           {{/each}}
                         </tbody>
                      </table>
                   </div>
                </div>
                <div class="panel-footer">
-                  <a href="clients.html" class="text-primary">View all clients</a>
+                  <a href="/client" class="text-primary">View all clients</a>
                </div>
             </div>
          </div>
-         <div class="col-md-6">
-            <div class="panel panel-table">
-               <div class="panel-heading">
-                  <h3 class="panel-title">Recent Projects</h3>
-               </div>
-               <div class="panel-body">
-                  <div class="table-responsive">
-                     <table class="table table-striped custom-table m-b-0">
-                        <thead>
-                           <tr>
-                              <th class="col-md-3">Project Name </th>
-                              <th class="col-md-3">Progress</th>
-                              <th class="text-right col-md-1">Action</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           <tr>
-                              <td>
-                                 <h2><a href="project-view.html">Food and Drinks</a></h2>
-                                 <small class="block text-ellipsis">
-                                 <span class="text-xs">1</span> <span class="text-muted">open tasks, </span>
-                                 <span class="text-xs">9</span> <span class="text-muted">tasks completed</span>
-                                 </small>
-                              </td>
-                              <td>
-                                 <div class="progress progress-xs progress-striped">
-                                    <div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip" title="65%" style="width: 65%"></div>
-                                 </div>
-                              </td>
-                              <td class="text-right">
-                                 <div class="dropdown">
-                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                       <li><a href="#" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <h2><a href="project-view.html">School Guru</a></h2>
-                                 <small class="block text-ellipsis">
-                                 <span class="text-xs">2</span> <span class="text-muted">open tasks, </span>
-                                 <span class="text-xs">5</span> <span class="text-muted">tasks completed</span>
-                                 </small>
-                              </td>
-                              <td>
-                                 <div class="progress progress-xs progress-striped">
-                                    <div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip" title="15%" style="width: 15%"></div>
-                                 </div>
-                              </td>
-                              <td class="text-right">
-                                 <div class="dropdown">
-                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                       <li><a href="#" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <h2><a href="project-view.html">Penabook</a></h2>
-                                 <small class="block text-ellipsis">
-                                 <span class="text-xs">3</span> <span class="text-muted">open tasks, </span>
-                                 <span class="text-xs">3</span> <span class="text-muted">tasks completed</span>
-                                 </small>
-                              </td>
-                              <td>
-                                 <div class="progress progress-xs progress-striped">
-                                    <div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip" title="49%" style="width: 49%"></div>
-                                 </div>
-                              </td>
-                              <td class="text-right">
-                                 <div class="dropdown">
-                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                       <li><a href="#" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <h2><a href="project-view.html">Harvey Clinic</a></h2>
-                                 <small class="block text-ellipsis">
-                                 <span class="text-xs">12</span> <span class="text-muted">open tasks, </span>
-                                 <span class="text-xs">4</span> <span class="text-muted">tasks completed</span>
-                                 </small>
-                              </td>
-                              <td>
-                                 <div class="progress progress-xs progress-striped">
-                                    <div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip" title="88%" style="width: 88%"></div>
-                                 </div>
-                              </td>
-                              <td class="text-right">
-                                 <div class="dropdown">
-                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                       <li><a href="#" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <h2><a href="project-view.html">The Gigs</a></h2>
-                                 <small class="block text-ellipsis">
-                                 <span class="text-xs">7</span> <span class="text-muted">open tasks, </span>
-                                 <span class="text-xs">14</span> <span class="text-muted">tasks completed</span>
-                                 </small>
-                              </td>
-                              <td>
-                                 <div class="progress progress-xs progress-striped">
-                                    <div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip" title="100%" style="width: 100%"></div>
-                                 </div>
-                              </td>
-                              <td class="text-right">
-                                 <div class="dropdown">
-                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                       <li><a href="#" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                           </tr>
-                        </tbody>
-                     </table>
-                  </div>
-               </div>
-               <div class="panel-footer">
-                  <a href="projects.html" class="text-primary">View all projects</a>
-               </div>
+        <div class="col-md-6">
+          <div class="panel panel-table">
+            <div class="panel-heading">
+              <h3 class="panel-title">Targets</h3>
             </div>
-         </div>
+            <div class="panel-body">
+              <div class="table-responsive">
+                <table class="table table-striped custom-table m-b-0">
+                  <thead>
+                    <tr>
+                      <th style="min-width:200px;">Name</th>
+                      <th>Email</th>
+                      <th>Target Type</th>
+                      <th>Mobile</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#each target}}
+                    <tr class="activity_custom_del">
+                      <td style="min-width:200px;">
+                        {{#if_eq target_type "I"}}
+                        <a href="/target/view/{{this.id}}" class="avatar">{{first_letter this.first_name}}</a>
+                        <h2>
+                          <a href="/target/view/{{this.id}}">{{this.first_name}} {{this.last_name}} </a>
+                        </h2>
+                        {{else}}
+                        <a href="/target/view/{{this.id}}" class="avatar">{{first_letter this.organization_name}}</a>
+                        <h2>
+                          <a href="/target/view/{{this.id}}">{{this.organization_name}}</a>
+                        </h2>
+                        {{/if_eq}}
+                      </td>
+                      <td>{{this.email}}</td>
+                      <td>{{#if_eq target_type "I"}}
+                        <span class="label label-success-border">Individual</span>
+                        {{else}}
+                        <span class="label label-info-border">Organization</span>
+                        {{/if_eq}}
+                      </td>
+                      <td>{{this.mobile_no}}</td>
+                    </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="panel-footer">
+              <a href="/target" class="text-primary">View all targets</a>
+            </div>
+          </div>
+        </div>
+      </div> 
+      <div class="row">
+        <div class="col-md-6">
+          <div class="panel panel-table">
+            <div class="panel-heading">
+              <h3 class="panel-title">Referrals</h3>
+            </div>
+            <div class="panel-body">
+              <div class="table-responsive">
+                <table class="table table-striped custom-table m-b-0">
+                  <thead>
+                    <tr>
+                      <th style="min-width:200px;">Name</th>
+                      <th>Email</th>
+                      <th>Referral Type</th>
+                      <th>Mobile</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#each referral}}
+                    <tr class="activity_custom_del">
+                      <td style="min-width:200px;">
+                        {{#if_eq referral_type "I"}}
+                        <a href="/referral/view/{{this.id}}" class="avatar">{{first_letter this.first_name}}</a>
+                        <h2>
+                          <a href="/referral/view/{{this.id}}">{{this.first_name}} {{this.last_name}}</a>
+                        </h2>
+                        {{else}}
+                        <a href="/referral/view/{{this.id}}" class="avatar">{{first_letter this.organization_name}}</a>
+                        <h2>
+                          <a href="/referral/view/{{this.id}}">{{this.organization_name}}</a>
+                        </h2>
+                        {{/if_eq}}
+                      </td>
+                      <td>{{this.email}}</td>
+                      <td>{{#if_eq referral_type "I"}}
+                        <span class="label label-success-border">Individual</span>
+                        {{else}}
+                        <span class="label label-info-border">Organization</span>
+                        {{/if_eq}}
+                      </td>
+                      <td>{{this.mobile}}</td>
+                    </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="panel-footer">
+              <a href="/referral" class="text-primary">View all referrals</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="panel panel-table">
+            <div class="panel-heading">
+              <h3 class="panel-title">Master Contacts</h3>
+            </div>
+            <div class="panel-body">
+              <div class="table-responsive">
+                <table class="table table-striped custom-table m-b-0">
+                  <thead>
+                    <tr>
+                      <th style="min-width:200px;">Name</th>
+                      <th>Email</th>
+                      <th>Client Type</th>
+                      <th>Mobile</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#each master_contact}}
+                    <tr class="activity_custom_del">
+                      <td style="min-width:200px;">
+                        {{#if_eq master_contact_type "I"}}
+                        <a href="/master_contact/view/{{this.id}}" class="avatar">{{first_letter this.first_name}}</a>
+                        <h2>
+                          <a href="/master_contact/view/{{this.id}}">{{this.first_name}} {{this.last_name}} </a>
+                        </h2>
+                        {{else}}
+                        <a href="/master_contact/view/{{this.id}}" class="avatar">{{first_letter this.organization_name}}</a>
+                        <h2>
+                          <a href="/master_contact/view/{{this.id}}">{{this.organization_name}}</a>
+                        </h2>
+                        {{/if_eq}}
+                      </td>
+                      <td>{{this.email}}</td>
+                      <td>{{#if_eq master_contact_type "I"}}
+                        <span class="label label-success-border">Individual</span>
+                        {{else}}
+                        <span class="label label-info-border">Organization</span>
+                        {{/if_eq}}
+                      </td>
+                      <td>{{this.mobile_no}}</td>
+                    </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="panel-footer">
+              <a href="/master_contact" class="text-primary">View all master contacts</a>
+            </div>
+          </div>
+        </div>
       </div>
-      
+      {{/if_eq}}
    </div>
-   <div class="notification-box">
+   {{!-- <div class="notification-box">
       <div class="msg-sidebar notifications msg-noti">
          <div class="topnav-dropdown-header">
             <span>Messages</span>
@@ -713,7 +553,7 @@
             <a href="chat.html">See all messages</a>
          </div>
       </div>
-   </div>
+   </div> --}}
 </div>
 {{#content "script" mode="append"}}
         <script>

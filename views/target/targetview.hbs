@@ -25,6 +25,7 @@
         <form id="targetform" method="POST" action="/target/edit/{{client.id}}">
             <input type="hidden" name="_csrf" value="{{csrfToken}}">
             <input type="hidden" value="{{client.id}}" id="id" />
+            <input type="hidden" value="{{client.target_type}}" id="_targetContact"/>
 
             <div class="form-inline m-b-15">
                 <div class="form-group m-r-5">
@@ -104,15 +105,7 @@
                                         />
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group form-focus">
-                                        <label class="control-label">Target ID
-                                            <span class="req-lbl">*</span>
-                                        </label>
-                                        <input type="text" class="form-control floating" id="target_id" name="target_id" value="{{client.target_id}}" disabled="disabled"
-                                        />
-                                    </div>
-                                </div>
+                               
                                 <div class="col-md-6">
                                     <div class="form-group form-focus">
                                         <label class="control-label">Target Code
@@ -122,19 +115,7 @@
                                         />
                                     </div>
                                 </div>
-                                {{!-- <div class="col-md-6">
-                                    <div class="form-group form-focus select-focus">
-                                        <label class="control-label">Designation
-                                            <span class="req-lbl">*</span>
-                                        </label>
-                                        <select id="designation" name="designation" class="select form-control floating" disabled="disabled">
-                                            <option value="">Select Designation</option>
-                                            {{#each designation}}
-                                            <option value="{{this.id}}" {{#if_eq this.id ../client.designation_id}} selected="selected" {{/if_eq}}>{{this.title}}</option>
-                                            {{/each}}
-                                        </select>
-                                    </div>
-                                </div> --}}
+                                
                                 <div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Estimated revenue
@@ -143,17 +124,7 @@
 										<input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue" value="$ {{client.estimated_revenue}}" disabled>
 									</div>
 								</div>
-                                {{!-- <div class="col-md-6">
-                                    <div class="form-group form-focus">
-                                        <label class="control-label">Date of Birth
-                                            <span class="req-lbl">*</span>
-                                        </label>
-                                        <div class="cal-icon">
-                                            <input class="form-control floating datetimepicker" type="text" id="dob" name="dob" value="{{dateFormat client.date_of_birth "
-                                                DD-MM-YYYY "}}" disabled="disabled" />
-                                        </div>
-                                    </div>
-                                </div> --}}
+                                
                                 <div class="col-md-6">
                                     <div class="form-group form-focus select-focus">
                                         <label class="control-label">Gender
@@ -209,7 +180,7 @@
                 </div>
             </div>
             <div class="card-box">
-                <h3 class="card-title">Contact Information</h3>
+                <h3 class="card-title">Address</h3>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group form-focus">
@@ -301,6 +272,86 @@
                     </div>
                 </div>
             </div>
+
+            <div class="card-box" id="m_s_contactInformation" style="display:none;">
+				<h3 class="card-title">Contact Information</h3>
+				<div id="masterContactPlus" >
+				{{#each contactDetails}}
+					<div class="contact-information contactDetailsRemove" >
+						<div class="contact-margin">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">First Name
+											<span class="req-lbl">*</span>
+
+										</label>
+										<input type="text" class="form-control floating" id="contactDetailsFirstName" name="contactDetailsFirstName[]" value="{{this.first_name}}" disabled/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Last Name</label>
+										<input type="text" class="form-control floating" id="contactDetailsSecondName" name="contactDetailsSecondName[]" value="{{this.last_name}}" disabled/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus select-focus">
+										<label class="control-label">Gender
+											<span class="req-lbl">*</span>
+
+										</label>
+										<select class="select form-control floating" id="contactDetailsGender" name="contactDetailsGender[]" disabled>
+											<option value="">Select Gender</option>
+											<option value="M" {{#if_eq this.gender "M"}} selected {{/if_eq}}>Male</option>
+											<option value="F"{{#if_eq this.gender "F"}} selected {{/if_eq}} >Female</option>
+											<option value="O" {{#if_eq this.gender "O"}} selected {{/if_eq}} >Others</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Email Id
+											<span class="req-lbl">*</span>
+
+										</label>
+										<input type="text" class="form-control floating" id="contactDetailsEmail" name="contactDetailsEmail[]" value="{{this.email}}" disabled/>
+										<span id="uniqueEmail" style="color: red"></span>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Phone No.
+											<span class="req-lbl">*</span>
+
+										</label>
+										<input type="text" class="form-control floating number_validator" id="contactDetailsPhone_no" name="contactDetailsPhone_no[]"
+										maxlength="50" value={{this.phone_no}} disabled/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Fax</label>
+										<input type="text" class="form-control floating number_validator" id="contactDetailsFax" name="contactDetailsFax[]" maxlength="50" value="{{this.fax}}"
+										disabled/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Mobile No.
+											<span class="req-lbl">*</span>
+										</label>
+										<input type="text" class="form-control floating number_validator" id="contactDetailsMobile_no" name="contactDetailsMobile_no[]"
+										maxlength="50" value="{{this.mobile_no}}" disabled/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				{{/each}}
+				</div>
+			</div>
+
             <div class="card-box">
                 <h3 class="card-title">Other Information</h3>
                 <div class="row">
@@ -318,26 +369,13 @@
                                 disabled="disabled" />
                         </div>
                     </div>
-                    {{!-- <div class="col-md-6">
-                        <div class="form-group form-focus">
-                            <label class="control-label">Social URL </label>
-                            <input type="text" class="form-control floating url_selector" id="social_url" name="social_url" value="{{client.social_url}}"
-                                disabled="disabled" />
-                        </div>
-                    </div> --}}
+                    
                     <div class="col-md-6">
                         <div class="form-group form-focus">
                             <label class="control-label">IM</label>
                             <input type="text" class="form-control floating" id="im" name="im" value="{{client.im}}" disabled="disabled" />
                         </div>
                     </div>
-                    {{!-- <div class="col-md-6">
-                        <div class="form-group form-focus">
-                            <label class="control-label">Social Security No</label>
-                            <input type="text" class="form-control floating number_validator" id="social_sec_no" name="social_sec_no" value="{{client.social_security_no}}"
-                                disabled="disabled" />
-                        </div>
-                    </div> --}}
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
                             <label class="control-label">Twitter</label>
@@ -502,6 +540,18 @@
         });
 
         // add designation ajax operation and form validation ends
+
+        //hide show type
+		let _msType = $('#_targetContact').val();
+		if (_msType==='O') {
+			$('#org_type').show();
+			$('#indivisual_type').hide();
+			$('#m_s_contactInformation').show();
+		} else {
+			$('#org_type').hide();
+			$('#indivisual_type').show();
+			$('#m_s_contactInformation').hide();
+		}
 
     });
 </script> {{/content}}

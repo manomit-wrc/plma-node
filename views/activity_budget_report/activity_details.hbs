@@ -12,7 +12,9 @@
 
             <div class="col-xs-8">
                 <div class="text-right">
-                    <a href="/activity-budget-report" class="btn btn-primary rounded"><i class="fa fa-arrow-left"></i> Back</a>
+                    {{!-- <a href="/activity-budget-report" class="btn btn-primary rounded"><i class="fa fa-arrow-left"></i> Back</a> --}}
+                    <button class="btn btn-primary pull-right rounded m-r-5" id="backActivityBtn">
+                        <i class="fa fa-arrow-left"></i> Back</button>
                 </div>
             </div>
 
@@ -282,6 +284,10 @@
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        $(document).on('click', "#backActivityBtn", function () {
+            window.location.href = localStorage.getItem('url');
+            localStorage.removeItem('url');
+        });
         if (window.location.pathname.split("/")[1] === "budget-report") {
             $(".sidebar").addClass("sidebar-hide");
             $(".page-wrapper").addClass("page-wrapper-full");

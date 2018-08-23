@@ -33,6 +33,7 @@
     {{/if}}
     <form id="frmEditReferral" method="POST" action="/referral/edit/{{referral.id}}">
       <input type="hidden" name="_csrf" value="{{csrfToken}}">
+      <input type="hidden" value="{{referral.referral_type}}" id="_contactInformation"/>
 
        {{!--
       <input type="radio" id="individual_referral" name="referral_type" value="I" {{#if_eq referral.referral_type
@@ -190,7 +191,7 @@
         </div>
       </div>
       <div class="card-box">
-        <h3 class="card-title">Contact Information</h3>
+        <h3 class="card-title">Address</h3>
         <div class="row">
           <div class="col-md-12">
             <div class="form-group form-focus">
@@ -291,6 +292,86 @@
           </div>
         </div>
       </div>
+
+      <div class="card-box" id="m_s_contactInformation" style="display:none;">
+				<h3 class="card-title">Contact Information</h3>
+				<div id="masterContactPlus" >
+				{{#each contactDetails}}
+					<div class="contact-information contactDetailsRemove" >
+						<div class="contact-margin">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">First Name
+											<span class="req-lbl">*</span>
+
+										</label>
+										<input type="text" class="form-control floating" id="contactDetailsFirstName" name="contactDetailsFirstName[]" value="{{this.first_name}}" disabled/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Last Name</label>
+										<input type="text" class="form-control floating" id="contactDetailsSecondName" name="contactDetailsSecondName[]" value="{{this.last_name}}" disabled/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus select-focus">
+										<label class="control-label">Gender
+											<span class="req-lbl">*</span>
+
+										</label>
+										<select class="select form-control floating" id="contactDetailsGender" name="contactDetailsGender[]" disabled>
+											<option value="">Select Gender</option>
+											<option value="M" {{#if_eq this.gender "M"}} selected {{/if_eq}}>Male</option>
+											<option value="F"{{#if_eq this.gender "F"}} selected {{/if_eq}} >Female</option>
+											<option value="O" {{#if_eq this.gender "O"}} selected {{/if_eq}} >Others</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Email Id
+											<span class="req-lbl">*</span>
+
+										</label>
+										<input type="text" class="form-control floating" id="contactDetailsEmail" name="contactDetailsEmail[]" value="{{this.email}}" disabled/>
+										<span id="uniqueEmail" style="color: red"></span>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Phone No.
+											<span class="req-lbl">*</span>
+
+										</label>
+										<input type="text" class="form-control floating number_validator" id="contactDetailsPhone_no" name="contactDetailsPhone_no[]"
+										maxlength="50" value={{this.phone_no}} disabled/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Fax</label>
+										<input type="text" class="form-control floating number_validator" id="contactDetailsFax" name="contactDetailsFax[]" maxlength="50" value="{{this.fax}}"
+										disabled/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Mobile No.
+											<span class="req-lbl">*</span>
+										</label>
+										<input type="text" class="form-control floating number_validator" id="contactDetailsMobile_no" name="contactDetailsMobile_no[]"
+										maxlength="50" value="{{this.mobile_no}}" disabled/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				{{/each}}
+				</div>
+			</div>
+
       <div class="card-box">
         <h3 class="card-title">Other Information</h3>
         <div class="row">
@@ -504,6 +585,20 @@
     $('#target_list').hide();
     $('#client_list').show();
   });
+
+  //hide show type
+		let _msType = $('#_contactInformation').val();
+		if (_msType==='O') {
+			$('#org_type').show();
+			$('#indivisual_type').hide();
+			$('#m_s_contactInformation').show();
+		} else {
+			$('#org_type').hide();
+			$('#indivisual_type').show();
+			$('#m_s_contactInformation').hide();
+		}
+
+
 </script>
 
 

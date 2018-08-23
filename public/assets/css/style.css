@@ -2578,7 +2578,7 @@ label.error {
 	font-weight: 300;
 	top: -20px;
 	font-size: 12px;
-	z-index: 20;
+	z-index: 1;
 }
 
 .action-label .label {
@@ -5634,6 +5634,8 @@ i.fa.fa-eye.m-r-5 {
 	padding-top: 6px;
 }
 
+
+
 /* Starts css on 2018-08-21 */
 
 .select-attorney .btn-group {
@@ -5677,6 +5679,38 @@ i.fa.fa-eye.m-r-5 {
 
 /* Ends css on 2018-08-21 */
 
+
+
+
+/* loader css starts */
+
+.loader {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url('images/loading.gif') 50% 50% no-repeat rgb(249, 249, 249);
+	/* opacity: .8; */
+}
+
+.iconDuplicateEmail {
+	border-radius: 50%;
+	background-color: #fdd4d4;
+	padding: 5px;
+	margin-top: 4px;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+}
+
+.activity_custom_del:nth-child(n+4) {
+	display: none;
+}
+
+
+/* loader css ends */
 
 /*------------------------------------------------------------------
 [39-a.... Custom Styles]
@@ -5834,6 +5868,42 @@ select.gender {
 
 	.firms-table .dataTable thead th:nth-child(5) {
 		width: 10% !important;
+	}
+
+	.card-box.contact-information .masterContactDetailsAdd {
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+
+	.contact-information {
+		position: relative;
+		box-shadow: 0 0 15px rgba(0,0,0,0.14);
+		-webkit-box-shadow: 0 0 15px rgba(0,0,0,0.14);
+		-moz-box-shadow: 0 0 15px rgba(0,0,0,0.14);
+		-ms-box-shadow: 0 0 15px rgba(0,0,0,0.14);
+		-o-box-shadow: 0 0 15px rgba(0,0,0,0.14);
+		margin-bottom: 25px;
+		padding: 10px;
+	}
+
+	.contact-margin {
+		margin-top: 15px;
+	}
+
+	
+
+	.contact-information .masterContactDetailsAdd {
+		position: absolute;
+		right: -13px;
+		top: -16px;
+		border-radius: 50%;
+		-webkit-border-radius: 50%;
+		-moz-border-radius: 50%;
+		-ms-border-radius: 50%;
+		-o-border-radius: 50%;
+		padding: 5px 10px;
+		z-index: 111;
 	}
 
 	/*Ends on css 14-08-2018*/

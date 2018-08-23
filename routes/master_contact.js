@@ -14,7 +14,7 @@ const industry_type = require('../models').industry_type;
 const Contact = require('../models').master_contact;
 const Target = require('../models').target;
 const user = require('../models').user;
-
+const ContactInformation = require('../models').contact_information;
 const router = express.Router();
 var csrfProtection = csrf({ cookie: true });
 var fs = require('fs');
@@ -45,30 +45,99 @@ function removePhoneMask(phone_no) {
 	return phone_no;
 }
 
-router.get('/master_contact', auth, firmAttrAuth, csrfProtection, (req, res) => {
+router.get('/master_contact', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var success_message = req.flash('success-message')[0];
 	var success_edit_message = req.flash('success-edit-message')[0];
+	const industryTypes = await industry_type.findAll();
+	var country = await Country.findAll();
+	const state = await State.findAll({
+		where: {
+			country_id: "233"
+		}
+	});
+
 	var whereCondition = {};
+
+	//for filter 
+	if (req.query.masterContactType) {
+        whereCondition.master_contact_type = req.query.masterContactType;
+    }
+	if (req.query.industry_type) {
+		whereCondition.industry_type = req.query.industry_type;
+	}
+	if (req.query.association) {
+		whereCondition.status = req.query.association;
+	}
+	if (req.query.country) {
+		whereCondition.country = req.query.country;
+	}
+	if (req.query.attorney) {
+		whereCondition.attorney_id = req.query.attorney;
+	}
+	if (req.query.state) {
+		var city = await City.findAll({
+			where: {
+				state_id: req.query.state
+			}
+		});
+		whereCondition.state = req.query.state;
+	}
+	if (req.query.city) {
+		const cities = await City.findById(req.query.city);
+		var zipcode = await Zipcode.findAll({
+			where: {
+				city_name: cities.name
+			}
+		});
+		whereCondition.city = req.query.city;
+	}
+	if (req.query.zipcode) {
+		whereCondition.zip_code = req.query.zipcode;
+	}
+
 	if (req.query.searchEmail) {
 		whereCondition.email = req.query.searchEmail;
 	}
 	whereCondition.firm_id = req.user.firm_id;
 	if (req.user.role_id != 2) {
-		whereCondition.user_id = req.user.id;
+		whereCondition.attorney_id = req.user.id;
 	}
 	whereCondition.contact_status = 1;
-
-	Contact.findAll({
+	console.log(whereCondition);
+	
+	const result = await Contact.findAll({
 		where: whereCondition
-	}).then(result => {
-		res.render('master_contact/index', {
-			layout: 'dashboard',
-			csrfToken: req.csrfToken(),
-			contacts: result,
-			searchMail: req.query.searchEmail ? req.query.searchEmail : '',
-			success_message,
-			success_edit_message
-		});
+	});
+
+	const attorney = await user.findAll({
+        where: {
+            role_id: 3,
+            firm_id: req.user.firm_id
+        }
+    });
+
+	res.render('master_contact/index', {
+		layout: 'dashboard',
+		csrfToken: req.csrfToken(),
+		count_query: Object.keys(req.query).length,
+		industryTypes,
+		country,
+		state,
+		contacts: result,
+		searchMail: req.query.searchEmail ? req.query.searchEmail : '',
+		success_message,
+		success_edit_message,
+		city,
+		zipcode,
+		attorney,
+		industry_type: req.query.industry_type ? req.query.industry_type : "",
+        association: req.query.association ? req.query.association : "",
+        country_search: req.query.country ? req.query.country : "",
+        state_search: req.query.state ? req.query.state : "",
+        city_search: req.query.city ? req.query.city : "",
+        zipcode_search: req.query.zipcode ? req.query.zipcode : "",
+		attr_search: req.query.attorney ? req.query.attorney : "",
+		masterContactTypeSearch: req.query.masterContactType ? req.query.masterContactType : "",
 	});
 });
 
@@ -108,6 +177,30 @@ router.get('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (req
 });
 
 router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+	var contactDetails = [];
+	var first_name = req.body.contactDetailsFirstName;
+	var last_name = req.body.contactDetailsSecondName;
+	var gender = req.body.contactDetailsGender;
+	var email = req.body.contactDetailsEmail;
+	var phone_no = req.body.contactDetailsPhone_no;
+	var fax = req.body.contactDetailsFax;
+	var mobile_no = req.body.contactDetailsMobile_no;
+
+	let length = first_name.length;
+	for (let i=0; i< length; i++) {
+		if (first_name[i]!=="") {
+			contactDetails.push({
+				"first_name":first_name[i],
+				"last_name":last_name[i],
+				"gender":gender[i],
+				"email":email[i],
+				"phone_no":removePhoneMask(phone_no[i]),
+				"fax":removePhoneMask(fax[i]),
+				"mobile_no":removePhoneMask(mobile_no[i])
+			});
+		}
+	}
+	
 	const contact_data = await Contact.findOne({
 		where: {
 			email: req.body.email
@@ -115,41 +208,93 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 	});
 
 	if (contact_data === null) {
-		await Contact.create({
-			first_name: req.body.first_name,
-			last_name: req.body.last_name,
-			email: req.body.email,
-			phone_no: removePhoneMask(req.body.phone_no),
-			fax: removePhoneMask(req.body.fax),
-			mobile_no: removePhoneMask(req.body.mobile_no),
-			master_contact_id: req.body.master_contact_id,
-			master_contact_code: req.body.master_contact_code,
-			company_name: req.body.master_contact_comp,
-			gender: req.body.gender,
-			address1: req.body.address1,
-			address2: req.body.address2,
-			address3: req.body.address3,
-			country: req.body.country,
-			state: req.body.state,
-			city: req.body.city,
-			zip_code: req.body.zipcode,
-			address_remarks: req.body.address_remarks,
-			website_url: req.body.website_url,
-			im: req.body.im,
-			twitter: req.body.twitter,
-			linkedin: req.body.linkedin,
-			google: req.body.google,
-			youtube: req.body.youtube,
-			status: req.body.status,
-			industry_type: req.body.industry_type,
-			firm_id: req.user.firm_id,
-			user_id: req.user.id,
-			remarks: req.body.remarks,
-			attorney_id: req.body.attorney_id,
-			facebook: req.body.facebook_url,
-			master_contact_type: req.body.masterContact_type,
-			estimated_revenue: removePhoneMask(req.body.estimated_revenue)
-		});
+		if (req.body.masterContact_type === "I") {
+			await Contact.create({
+				first_name: req.body.first_name,
+				last_name: req.body.last_name,
+				email: req.body.email,
+				phone_no: removePhoneMask(req.body.phone_no),
+				fax: removePhoneMask(req.body.fax),
+				mobile_no: removePhoneMask(req.body.mobile_no),
+				master_contact_id: req.body.master_contact_id,
+				master_contact_code: req.body.master_contact_code,
+				company_name: req.body.master_contact_comp,
+				gender: req.body.gender,
+				address1: req.body.address1,
+				address2: req.body.address2,
+				address3: req.body.address3,
+				country: req.body.country,
+				state: req.body.state,
+				city: req.body.city,
+				zip_code: req.body.zipcode,
+				address_remarks: req.body.address_remarks,
+				website_url: req.body.website_url,
+				im: req.body.im,
+				twitter: req.body.twitter,
+				linkedin: req.body.linkedin,
+				google: req.body.google,
+				youtube: req.body.youtube,
+				status: req.body.status,
+				industry_type: req.body.industry_type,
+				firm_id: req.user.firm_id,
+				user_id: req.user.id,
+				remarks: req.body.remarks,
+				attorney_id: req.body.attorney_id,
+				facebook: req.body.facebook_url,
+				master_contact_type: req.body.masterContact_type,
+				estimated_revenue: removePhoneMask(req.body.estimated_revenue)
+			});
+		} else {
+			const insertData = await Contact.create({
+				organization_name: req.body.org_name,
+				organization_code: req.body.org_code,
+				email: req.body.email,
+				phone_no: removePhoneMask(req.body.phone_no),
+				fax: removePhoneMask(req.body.fax),
+				mobile_no: removePhoneMask(req.body.mobile_no),
+				master_contact_id: req.body.master_contact_id,
+				master_contact_code: req.body.master_contact_code,
+				company_name: req.body.master_contact_comp,
+				gender: req.body.gender,
+				address1: req.body.address1,
+				address2: req.body.address2,
+				address3: req.body.address3,
+				country: req.body.country,
+				state: req.body.state,
+				city: req.body.city,
+				zip_code: req.body.zipcode,
+				address_remarks: req.body.address_remarks,
+				website_url: req.body.website_url,
+				im: req.body.im,
+				twitter: req.body.twitter,
+				linkedin: req.body.linkedin,
+				google: req.body.google,
+				youtube: req.body.youtube,
+				status: req.body.status,
+				industry_type: req.body.industry_type,
+				firm_id: req.user.firm_id,
+				user_id: req.user.id,
+				remarks: req.body.remarks,
+				attorney_id: req.body.attorney_id,
+				facebook: req.body.facebook_url,
+				master_contact_type: req.body.masterContact_type,
+			});
+
+			  for (let j=0; j< contactDetails.length; j++) {
+				await ContactInformation.create({
+					first_name: contactDetails[j].first_name,
+					last_name: contactDetails[j].last_name,
+					gender: contactDetails[j].gender,
+					email: contactDetails[j].email,
+					mobile_no: contactDetails[j].mobile_no,
+					phone_no: contactDetails[j].phone_no,
+					fax: contactDetails[j].fax,
+					type: 'M',
+					contact_id: insertData.id
+				});
+			} 
+		}
+		
 		req.flash('success-message', 'Master Contact Added Successfully');
 		res.redirect('/master_contact');
 	} else {
@@ -189,6 +334,12 @@ router.get('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, async
 		}
 	});
 
+	const contactDetails = await ContactInformation.findAll({
+		where: {
+			'contact_id': req.params['id']
+		}
+	});
+	
 	res.render('master_contact/edit', { 
 		layout: 'dashboard', 
 		csrfToken: req.csrfToken(), 
@@ -199,7 +350,8 @@ router.get('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, async
 		city: city, 
 		zipcode: zipcode, 
 		error_message, 
-		attorney
+		attorney,
+		contactDetails
 	});
 });
 
@@ -231,6 +383,12 @@ router.get('/master_contact/view/:id', auth, firmAttrAuth, csrfProtection, async
 		}
 	});
 
+	const contactDetails = await ContactInformation.findAll({
+		where: {
+			'contact_id': req.params['id']
+		}
+	});
+
 	res.render('master_contact/view', { 
 		layout: 'dashboard', 
 		csrfToken: req.csrfToken(), 
@@ -241,7 +399,8 @@ router.get('/master_contact/view/:id', auth, firmAttrAuth, csrfProtection, async
 		city: city, 
 		zipcode: zipcode, 
 		error_message,
-		attorney 
+		attorney,
+		contactDetails 
 	});
 });
 
@@ -256,10 +415,76 @@ router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, asyn
 			}
 		}
 	});
+
+
+	var contactDetails = [];
+	var first_name = req.body.contactDetailsFirstName;
+	var last_name = req.body.contactDetailsSecondName;
+	var gender = req.body.contactDetailsGender;
+	var email = req.body.contactDetailsEmail;
+	var phone_no = req.body.contactDetailsPhone_no;
+	var fax = req.body.contactDetailsFax;
+	var mobile_no = req.body.contactDetailsMobile_no;
+
+	let length = first_name.length;
+	for (let i=0; i< length; i++) {
+		if (first_name[i]!=="") {
+			contactDetails.push({
+				"first_name":first_name[i],
+				"last_name":last_name[i],
+				"gender":gender[i],
+				"email":email[i],
+				"phone_no":removePhoneMask(phone_no[i]),
+				"fax":removePhoneMask(fax[i]),
+				"mobile_no":removePhoneMask(mobile_no[i])
+			});
+		}
+	}
+
 	if (contact_edit_data === null) {
+		if (req.body.masterContact_type === "I") {
 		await Contact.update({
 			first_name: req.body.first_name,
 			last_name: req.body.last_name,
+			email: req.body.email,
+			phone_no: removePhoneMask(req.body.phone_no),
+			fax: removePhoneMask(req.body.fax),
+			mobile_no: removePhoneMask(req.body.mobile_no),
+			master_contact_code: req.body.master_contact_code,
+			master_designation: req.body.master_contact_desg,
+			company_name: req.body.master_contact_comp,
+			date_of_birth: formatDate ? formatDate[2] + "-" + formatDate[1] + "-" + formatDate[0] : null,
+			gender: req.body.gender,
+			address1: req.body.address1,
+			address2: req.body.address2,
+			address3: req.body.address3,
+			country: req.body.country,
+			state: req.body.state,
+			city: req.body.city,
+			zip_code: req.body.zipcode,
+			address_remarks: req.body.address_remarks,
+			website_url: req.body.website_url,
+			im: req.body.im,
+			twitter: req.body.twitter,
+			linkedin: req.body.linkedin,
+			google: req.body.google,
+			youtube: req.body.youtube,
+			status: req.body.status,
+			industry_type: req.body.industry_type,
+			firm_id: req.user.firm_id,
+			user_id: req.user.id,
+			remarks: req.body.remarks,
+			attorney_id: req.body.attorney_id,
+			facebook: req.body.facebook_url,
+			master_contact_type: req.body.masterContact_type,
+		}, {
+			where: { id: req.params['id'] }
+		});
+	} else {
+
+		await Contact.update({
+			organization_name: req.body.org_name,
+			organization_code: req.body.org_code,
 			email: req.body.email,
 			phone_no: removePhoneMask(req.body.phone_no),
 			fax: removePhoneMask(req.body.fax),
@@ -279,9 +504,7 @@ router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, asyn
 			zip_code: req.body.zipcode,
 			address_remarks: req.body.address_remarks,
 			website_url: req.body.website_url,
-			social_url: req.body.social_url,
 			im: req.body.im,
-			social_security_no: removePhoneMask(req.body.social_sec_no),
 			twitter: req.body.twitter,
 			linkedin: req.body.linkedin,
 			google: req.body.google,
@@ -294,10 +517,31 @@ router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, asyn
 			attorney_id: req.body.attorney_id,
 			facebook: req.body.facebook_url,
 			master_contact_type: req.body.masterContact_type,
-			estimated_revenue: removePhoneMask(req.body.estimated_revenue)
 		}, {
 			where: { id: req.params['id'] }
 		});
+
+		await ContactInformation.destroy({
+			where: {
+				contact_id: req.params['id']
+			}
+		});
+
+		for (let j=0; j< contactDetails.length; j++) {
+			await ContactInformation.create({
+				first_name: contactDetails[j].first_name,
+				last_name: contactDetails[j].last_name,
+				gender: contactDetails[j].gender,
+				email: contactDetails[j].email,
+				mobile_no: contactDetails[j].mobile_no,
+				phone_no: contactDetails[j].phone_no,
+				fax: contactDetails[j].fax,
+				type: 'M',
+				contact_id: req.params['id']
+			});
+		} 
+
+	}
 		req.flash('success-message', 'Master Contact Updated Successfully');
 		res.redirect('/master_contact')
 	} else {

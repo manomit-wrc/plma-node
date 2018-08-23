@@ -2,7 +2,8 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+{{/content}}
 <div class="page-wrapper">
     <div class="content container-fluid">
         <div class="row">
@@ -15,9 +16,8 @@
             <input type="hidden" name="activity_id" id="activity_id">
             <input type="hidden" name="total_hour" id="total_hour">
             <input type="hidden" name="total_amount" id="total_amount">
-
             <div class="card-box">
-                <h3 class="card-title">Client/Target Information</h3>
+                <h3 class="card-title">Client / Target Information</h3>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row">
@@ -59,32 +59,25 @@
                                     </label>
                                 </div>
                             </div>
-
                             <div class="col-md-6" id="target_list">
                                 <div class="form-group select-focus">
                                     <select id="target_id" name="target_user[]" class="form-control floating onchangeBudget" multiple="multiple">
-                                        {{#each target}}
-                                            {{#if_eq target_type "I"}}
-                                                <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
-                                            {{/if_eq}}
-                                            {{#if_eq target_type "O"}}
-                                                <option value="{{this.id}}">{{this.organization_name}}</option>
-                                            {{/if_eq}}
-                                        {{/each}}
+                                        {{#each target}} {{#if_eq target_type "I"}}
+                                        <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
+                                        {{/if_eq}} {{#if_eq target_type "O"}}
+                                        <option value="{{this.id}}">{{this.organization_name}}</option>
+                                        {{/if_eq}} {{/each}}
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6" style="display: none;" id="client_list">
                                 <div class="form-group select-focus">
                                     <select id="client_id" name="client_user[]" class="form-control floating onchangeBudget" multiple="multiple">
-                                        {{#each client}}
-                                            {{#if_eq client_type "I"}}
-                                                <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
-                                            {{/if_eq}}
-                                            {{#if_eq client_type "O"}}
-                                                <option value="{{this.id}}">{{this.organization_name}}</option>
-                                            {{/if_eq}}
-                                        {{/each}}
+                                        {{#each client}} {{#if_eq client_type "I"}}
+                                        <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
+                                        {{/if_eq}} {{#if_eq client_type "O"}}
+                                        <option value="{{this.id}}">{{this.organization_name}}</option>
+                                        {{/if_eq}} {{/each}}
                                     </select>
                                 </div>
                             </div>
@@ -92,7 +85,7 @@
                                 <div class="form-group select-focus">
                                     <select id="referral_id" name="referral_user[]" class="form-control floating onchangeBudget" multiple="multiple">
                                         {{#each referral}}
-                                            <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
+                                        <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
                                         {{/each}}
                                     </select>
                                 </div>
@@ -102,33 +95,27 @@
                     </div>
                 </div>
             </div>
-            
             <div class="card-box">
+                <h3 class="card-title">Basic Information</h3>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Firm
-                                        <span class="req-lbl">*</span>
-                                    </label>
+                                    <label class="control-label">Firm</label>
                                     <input class="form-control floating" type="text" id="firm" name="firm" value="{{this.firm}}" disabled>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Origin Attorney
-                                        <span class="req-lbl">*</span>
-                                    </label>
+                                    <label class="control-label">Origin Attorney</label>
                                     <input class="form-control floating" type="text" id="originAttorney" name="originAttorney" value="{{this.originAttorney}}" disabled>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Activity Type
-                                        <span class="req-lbl">*</span>
-                                    </label>
-                                    <select class="select floating" id="activity_type" name="activity_type">
+                                    <label class="control-label">Activity Type <span class="req-lbl">*</span> </label>
+                                    <select class="form-control floating" id="activity_type" name="activity_type">
                                         <option value="">Select One</option>
                                         <option value="individual">INDIVIDUAL LEVEL</option>
                                         <option value="section">SECTION LEVEL</option>
@@ -138,14 +125,12 @@
                                 </div>
                             </div>
                             <div class="col-md-6 none">
-                                <div class="form-group form-focus select-focus"></div>
+                                <div class="form-group form-focus"></div>
                             </div>
-                            <div class="col-md-6 section" style="display:none;">
+                            <div class="col-md-6 section" style="display: none;">
                                 <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Section
-                                        <span class="req-lbl">*</span>
-                                    </label>
-                                    <select class="select floating" id="section" name="section">
+                                    <label class="control-label">Section <span class="req-lbl">*</span> </label>
+                                    <select class="form-control floating" id="section" name="section">
                                         <option value="0">Select Section</option>
                                         {{#each section}}
                                             <option value="{{this.section.id}}">{{this.section.name}}</option>
@@ -153,39 +138,32 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6 strategyGroup" style="display:none;">
+                            <div class="col-md-6 strategyGroup" style="display: none;">
                                 <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Strategy Group
-                                        <span class="req-lbl">*</span>
-                                    </label>
-                                    <select class="select floating" id="strategyGroup" name="strategy_group">
+                                    <label class="control-label">Strategy Group <span class="req-lbl">*</span> </label>
+                                    <select class="form-control floating" id="strategyGroup" name="strategy_group">
                                         <option value="0">Select Strategy Group</option>
-                                        <option value="1">NEED TO BE DISCUSS</option>
+                                        <option value="1">NEED TO DISCUSS</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Activity Goal
-                                        <span class="req-lbl">*</span>
-                                    </label>
-                                    <select id="activity_goal" name="activity_goal" class="select form-control floating">
+                                    <label class="control-label">Activity Goal <span class="req-lbl">*</span> </label>
+                                    <select id="activity_goal" name="activity_goal" class="form-control floating">
                                         <option value="">Select Activity Goal</option>
                                         {{#each activity_goal}}
                                             <option value="{{this.id}}">{{this.activity_goal}}</option>
                                         {{/each}}
                                     </select>
-                                    <strong style="background-color:#ff0000; color:#fff">Note! </strong>
-                                    No Activity Goal? Click Here
+                                    <strong style="background-color:#ff0000; color:#fff">Note! </strong> No Activity Goal? Click Here
                                     <a href="/activity-goal/add">activity goals</a>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Practice Area Type
-                                        <span class="req-lbl">*</span>
-                                    </label>
-                                    <select id="practice_area" name="practice_area" class="select form-control floating">
+                                    <label class="control-label">Practice Area Type <span class="req-lbl">*</span> </label>
+                                    <select id="practice_area" name="practice_area" class="form-control floating">
                                         <option value="">Select Practice Area</option>
                                         {{#each practice_area}}
                                             <option value="{{this.id}}">{{this.name}}</option>
@@ -193,7 +171,8 @@
                                     </select>
                                 </div>
                             </div>
-                           {{!--  <div class="col-md-6">
+                            {{!--
+                            <div class="col-md-6">
                                 <div class="form-group form-focus">
                                     <label class="control-label">Potential Revenue
                                         <span class="req-lbl">*</span>
@@ -203,19 +182,30 @@
                             </div> --}}
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">Creation Date
-                                        <span class="req-lbl">*</span>
-                                    </label>
+                                    <label class="control-label">Activity Name <span class="req-lbl">*</span> </label>
+                                    <input class="form-control floating" type="text" id="activity_name" name="activity_name">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-focus">
+                                    <label class="control-label">Activity Reason <span class="req-lbl">*</span> </label>
+                                    <input class="form-control floating" type="text" id="activity_reason" name="activity_reason">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-focus">
+                                    <label class="control-label">Creation Date <span class="req-lbl">*</span> </label>
                                     <div class="cal-icon">
                                         <input class="form-control floating datetimepicker" type="text" id="activity_creation_date" name="activity_creation_date">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
+                                <div class="form-group form-focus select-focus"></div>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">From Date
-                                        <span class="req-lbl">*</span>
-                                    </label>
+                                    <label class="control-label">From Date <span class="req-lbl">*</span> </label>
                                     <div class="cal-icon">
                                         <input class="form-control floating datetimepicker" type="text" id="activity_from_date" name="activity_from_date">
                                     </div>
@@ -223,9 +213,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">To Date
-                                        <span class="req-lbl">*</span>
-                                    </label>
+                                    <label class="control-label">To Date <span class="req-lbl">*</span> </label>
                                     <div class="cal-icon">
                                         <input class="form-control floating datetimepicker" type="text" id="activity_to_date" name="activity_to_date">
                                     </div>
@@ -233,38 +221,20 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">Activity Name
-                                        <span class="req-lbl">*</span>
-                                    </label>
-                                    <input class="form-control floating" type="text" id="activity_name" name="activity_name">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group form-focus">
-                                    <label class="control-label">Activity Reason
-                                        <span class="req-lbl">*</span>
-                                    </label>
-                                    <input class="form-control floating" type="text" id="activity_reason" name="activity_reason">
-                                </div>
-                            </div>
-
-                             <div class="col-md-6">
-                                <div class="form-group form-focus select-focus">
-                                  <label class="control-label">Attachment</label>
-                                  <input class="form-control floating" type="file" id="activity_attachment" name="activity_attachment" style="height: auto;">
-                                </div>
-                              </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group form-focus">
-                                    <label class="control-label">Remarks </label>
+                                    <label class="control-label">Remarks</label>
                                     <textarea class="form-control floating" id="remarks" name="remarks" rows="5"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
+                                    <label class="control-label">Attachment</label>
+                                    <input class="form-control floating" type="file" id="activity_attachment" name="activity_attachment" style="height: auto;">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-focus select-focus">
                                     <label class="control-label">Activity Details Status</label>
-                                    <select class="select" id="budget_status" name="budget_status">
+                                    <select class="form-control floating" id="budget_status" name="budget_status">
                                         <option value="">Select One</option>
                                         <option value="planned">PLANNED</option>
                                         <option value="unplanned">UNPLANNED</option>
@@ -275,7 +245,7 @@
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
                                     <label class="control-label">Activity Budget Details Status</label>
-                                    <select class="select" id="budget_details_status" name="budget_details_status">
+                                    <select class="form-control floating" id="budget_details_status" name="budget_details_status">
                                         <option value="">Select One</option>
                                         <option value="planned">PLANNED BUDGET</option>
                                         <option value="unplanned">UNPLANNED BUDGET</option>
@@ -283,15 +253,13 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-12 budgetAdd" style="display:none;">
-                                <a href="#" class="btn btn-primary btn-lg" id="budgetAdd" data-toggle="modal" data-target="#add_budget" style="margin: 0 auto; display: table;">
-                                    <i class="fa fa-plus"></i> Add Budget</a>
+                            <div class="col-md-12 budgetAdd" style="display: none;">
+                                <a href="#" class="btn btn-primary btn-lg" id="budgetAdd" data-toggle="modal" data-target="#add_budget" style="margin: 0 auto; display: table;"><i class="fa fa-plus"></i> Add Budget</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
             <div class="text-center m-t-20">
                 <button class="btn btn-primary btn-lg" type="submit" id="btnAdd">Add Activity</button>
                 <a href="/activitypage" class="btn btn-primary btn-lg m-l-10">Cancel</a>
@@ -321,10 +289,8 @@
                                                 <span class="input-group-addon">
                                                     <input type="radio" id="evenly_equated" name="activity_level_type" value="Evenly Equated" />
                                                 </span>
-                                                <div class="form-control form-control-static">
-                                                    Evenly Equated
-                                                </div>
-                                                <span class="glyphicon form-control-feedback "></span>
+                                                <div class="form-control form-control-static">Evenly Equated</div>
+                                                <span class="glyphicon form-control-feedback"></span>
                                             </label>
                                         </div>
                                         <div class="form-group ">
@@ -332,10 +298,8 @@
                                                 <span class="input-group-addon">
                                                     <input type="radio" id="individual" name="activity_level_type" value="Individual" checked />
                                                 </span>
-                                                <div class="form-control form-control-static">
-                                                    Individual
-                                                </div>
-                                                <span class="glyphicon form-control-feedback "></span>
+                                                <div class="form-control form-control-static">Individual</div>
+                                                <span class="glyphicon form-control-feedback"></span>
                                             </label>
                                         </div>
                                     </div>
@@ -349,14 +313,11 @@
                                             <div class="list">
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <h5>
-                                                            {{this.name}}
-                                                        </h5>
+                                                        <h5>{{this.name}}</h5>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <input class="form-control budget_hour number_budget" type="text" data-budget-id="{{this.id}}" id="budget_hour" name="budget_hour"
-                                                                placeholder="Hours">
+                                                            <input class="form-control budget_hour number_budget" type="text" data-budget-id="{{this.id}}" id="budget_hour" name="budget_hour" placeholder="Hours">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
@@ -443,7 +404,6 @@
         $('#target_list').show();
         $('#general_list').hide();
         $(".budgetAdd").hide();
-        $('#client_id').empty();
     });
 
     $(document).on('click', '#organization_type', function () {
@@ -499,7 +459,7 @@
 
     var count = 0;
     $(document).on('click', '#budgetAdd', function (e) {
-        count++
+        count++;
         if (count === 1) {
             var activityName = $('#activity_name').val();
             $.ajax({
@@ -567,11 +527,9 @@
             }
         });
     });
-</script>
-<script type="text/javascript">
+
     // add designation ajax and form validation starts
     $(document).ready(function (e) {
-
         $(".number_budget").keydown(function (e) {
             // Allow: backspace, delete, tab, escape, enter and .
             if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
@@ -590,9 +548,6 @@
 
         $("#frmAddFirm").validate({
             rules: {
-                firm: {
-                    required: true
-                },
                 activity_type: {
                     required: true
                 },
@@ -602,10 +557,9 @@
                 practice_area: {
                     required: true
                 },
-                potiential_revenue: {
+                /* potiential_revenue: {
                     required: true
-                },
-
+                }, */
                 activity_creation_date: {
                     required: true
                 },
@@ -621,79 +575,74 @@
                 activity_reason: {
                     required: true
                 }
-
             },
             messages: {
-                firm: {
-                    required: "firm can't be blank"
-                },
                 activity_type: {
-                    required: "activity type can't be blank"
+                    required: "Activity type can't be blank"
                 },
                 activity_goal: {
-                    required: "activity goal can't be blank"
+                    required: "Activity goal can't be blank"
                 },
                 practice_area: {
-                    required: "practice area can't be blank"
+                    required: "Practice area can't be blank"
                 },
-                potiential_revenue: {
-                    required: "potiential revenue can't be blank"
-                },
-
+                /* potiential_revenue: {
+                    required: "Potiential revenue can't be blank"
+                }, */
                 activity_creation_date: {
-                    required: "creation date can't be blank"
+                    required: "Creation date can't be blank"
                 },
                 activity_from_date: {
-                    required: "from date can't be blank"
+                    required: "From date can't be blank"
                 },
                 activity_to_date: {
-                    required: "to date can't be blank"
+                    required: "To date can't be blank"
                 },
                 activity_name: {
-                    required: "activity name can't be blank"
+                    required: "Activity name can't be blank"
                 },
                 activity_reason: {
-                    required: "activity reason can't be blank"
+                    required: "Activity reason can't be blank"
                 }
             }
         });
     });
 
     $(document).ready(function () {
-        $("#potiential_revenue").inputmask("numeric", {
+        /* $("#potiential_revenue").inputmask("numeric", {
             radixPoint: ".",
             groupSeparator: ",",
             digits: 2,
             autoGroup: true,
             prefix: '$ ',
             rightAlign: false
-        });
+        }); */
 
         $("#activity_type").change(function () {
             if ($(this).val() == 'team') {
-                $('#potiential_revenue').val('0.00');
-                $('#potiential_revenue').prop('readonly', true);
+                //$('#potiential_revenue').val('0.00');
+                //$('#potiential_revenue').prop('readonly', true);
                 $(".none").show();
                 $(".section").hide();
                 $(".strategyGroup").hide();
             } else if ($(this).val() == 'section') {
-                $('#potiential_revenue').val('0.00');
+                //$('#potiential_revenue').val('0.00');
                 $(".none").hide();
                 $(".section").show();
                 $(".strategyGroup").hide();
-                $('#potiential_revenue').prop('readonly', false);
+                //$('#potiential_revenue').prop('readonly', false);
             } else if ($(this).val() == 'strategic_group') {
-                $('#potiential_revenue').val('0.00');
+                //$('#potiential_revenue').val('0.00');
                 $(".none").hide();
                 $(".strategyGroup").show();
                 $(".section").hide();
-                $('#potiential_revenue').prop('readonly', false);
+                //$('#potiential_revenue').prop('readonly', false);
             } else {
-                $('#potiential_revenue').val('0.00');
+                //$('#potiential_revenue').val('0.00');
                 $(".none").show();
                 $(".section").hide();
                 $(".strategyGroup").hide();
-                $('#potiential_revenue').prop('readonly', false);
+                //$('#potiential_revenue').prop('readonly', false);
             }
         });
 
@@ -713,7 +662,6 @@
             alwaysVisible: false,
             height: '350px'
         });
-
     });
-
-</script> {{/content}}
+</script>
+{{/content}}
