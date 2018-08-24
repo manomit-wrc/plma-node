@@ -306,11 +306,11 @@ router.post('/activity/add', auth, upload.single('activity_attachment'), firmAtt
                 hour: totalHour,
                 amount: totalAmount
             }, {
-                where: {
-                    'activity_id': req.body.activity_id,
-                    'budget_id': activityBudgetData[b].budget_id
-                }
-            });
+                    where: {
+                        'activity_id': req.body.activity_id,
+                        'budget_id': activityBudgetData[b].budget_id
+                    }
+                });
         }
     }
 
@@ -337,10 +337,10 @@ router.post('/activity/add', auth, upload.single('activity_attachment'), firmAtt
         attachment_field: fileName,
         activity_update: 'new'
     }, {
-        where: {
-            id: req.body.activity_id
-        }
-    });
+            where: {
+                id: req.body.activity_id
+            }
+        });
 
     if (req.body.ref_type == "T") {
         for (var i = 0; i < target_user.length; i++) {
@@ -559,21 +559,21 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 
 router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 
-    const _allActivity =  await Activity.findOne({
-        where:{
+    const _allActivity = await Activity.findOne({
+        where: {
             id: req.params['id']
         }
     });
 
-    if (_allActivity['activity_status']==3) {
+    if (_allActivity['activity_status'] == 3) {
         await Activity.update({
-            'activity_update':'update',
+            'activity_update': 'update',
             'activity_status': 0
-        },{
-            where : {
-                id: req.params['id']
-            }
-        })
+        }, {
+                where: {
+                    id: req.params['id']
+                }
+            })
     }
 
 
@@ -762,10 +762,10 @@ router.post('/activity/edit-budget', auth, firmAttrAuth, csrfProtection, async (
         total_budget_amount: req.body.total_amount,
         total_budget_hour: req.body.total_Hour
     }, {
-        where: {
-            id: req.body.activity_id
-        }
-    });
+            where: {
+                id: req.body.activity_id
+            }
+        });
     res.json({
         success: true
     });
@@ -809,11 +809,11 @@ router.post('/activity/update/:id', auth, upload.single('activity_attachment'), 
                 hour: totalHour,
                 amount: totalAmount
             }, {
-                where: {
-                    'activity_id': req.body.activity_id,
-                    'budget_id': activityBudgetData[b].budget_id
-                }
-            });
+                    where: {
+                        'activity_id': req.body.activity_id,
+                        'budget_id': activityBudgetData[b].budget_id
+                    }
+                });
         }
     }
 
@@ -838,10 +838,10 @@ router.post('/activity/update/:id', auth, upload.single('activity_attachment'), 
         attachment_field: fileName,
         activity_update: 'update'
     }, {
-        where: {
-            id: req.params['id']
-        }
-    });
+            where: {
+                id: req.params['id']
+            }
+        });
     await Activity_to_user_type.destroy({
         where: {
             activity_id: req.params['id']
@@ -960,18 +960,18 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
         const _activityApprovals = await requestApproval.findOne({
             attributes: [[Sequelize.fn('MAX', Sequelize.col('approver_status')), 'max_approver_status']],
             where: {
-                'activity_id' : req.params['id']
+                'activity_id': req.params['id']
             }
         });
 
-       await requestApproval.update({
-        'status':'1'
-       },{
-           where:{
-            'activity_id' : req.params['id'],
-            'approver_status':_activityApprovals.get('max_approver_status')
-           }
-       });
+        await requestApproval.update({
+            'status': '1'
+        }, {
+                where: {
+                    'activity_id': req.params['id'],
+                    'approver_status': _activityApprovals.get('max_approver_status')
+                }
+            });
 
 
     } else if (firmDetails['approval_level'] === 3) {
@@ -1068,18 +1068,18 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
         const _activityApprovals = await requestApproval.findOne({
             attributes: [[Sequelize.fn('MAX', Sequelize.col('approver_status')), 'max_approver_status']],
             where: {
-                'activity_id' : req.params['id']
+                'activity_id': req.params['id']
             }
         });
 
-       await requestApproval.update({
-        'status':'1'
-       },{
-           where:{
-            'activity_id' : req.params['id'],
-            'approver_status':_activityApprovals.get('max_approver_status')
-           }
-       });
+        await requestApproval.update({
+            'status': '1'
+        }, {
+                where: {
+                    'activity_id': req.params['id'],
+                    'approver_status': _activityApprovals.get('max_approver_status')
+                }
+            });
 
     } else if (firmDetails['approval_level'] === 4) {
 
@@ -1200,18 +1200,18 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
         const _activityApprovals = await requestApproval.findOne({
             attributes: [[Sequelize.fn('MAX', Sequelize.col('approver_status')), 'max_approver_status']],
             where: {
-                'activity_id' : req.params['id']
+                'activity_id': req.params['id']
             }
         });
 
-       await requestApproval.update({
-        'status':'1'
-       },{
-           where:{
-            'activity_id' : req.params['id'],
-            'approver_status':_activityApprovals.get('max_approver_status')
-           }
-       });
+        await requestApproval.update({
+            'status': '1'
+        }, {
+                where: {
+                    'activity_id': req.params['id'],
+                    'approver_status': _activityApprovals.get('max_approver_status')
+                }
+            });
 
 
     } else {
@@ -1233,7 +1233,7 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
                     'firm_id': req.user.firm_id
                 }
             });
-        } 
+        }
 
         if (userInformation_1_l1 !== null) {
             await requestApproval.create({
@@ -1248,28 +1248,27 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
         const _activityApprovals = await requestApproval.findOne({
             attributes: [[Sequelize.fn('MAX', Sequelize.col('approver_status')), 'max_approver_status']],
             where: {
-                'activity_id' : req.params['id']
+                'activity_id': req.params['id']
             }
         });
 
-       await requestApproval.update({
-        'status':'1'
-       },{
-           where:{
-            'activity_id' : req.params['id'],
-            'approver_status':_activityApprovals.get('max_approver_status')
-           }
-       });
-
+        await requestApproval.update({
+            'status': '1'
+        }, {
+                where: {
+                    'activity_id': req.params['id'],
+                    'approver_status': _activityApprovals.get('max_approver_status')
+                }
+            });
     }
 
     await Activity.update({
         activity_status: 1
     }, {
-        where: {
-            id: req.params['id']
-        }
-    });
+            where: {
+                id: req.params['id']
+            }
+        });
 
     res.json({
         success: true
