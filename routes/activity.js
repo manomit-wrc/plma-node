@@ -813,7 +813,8 @@ router.post('/activity/update/:id', auth, upload.single('activity_attachment'), 
         section_id: req.body.section,
         s_group_id: req.body.strategy_group,
         activity_status: req.body.activity_status,
-        attachment_field: fileName
+        attachment_field: fileName,
+        activity_update: 'update'
     }, {
         where: {
             id: req.params['id']
@@ -1097,7 +1098,7 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
         });
 
         if (userInformation_4_l4 === null) {
-            var userInformation_4_l4 = await User.findOne({
+            userInformation_4_l4 = await User.findOne({
                 where: {
                     'designation_id': firmDetails['level_4'],
                     'section_id': req.user['section_id'],
@@ -1107,7 +1108,7 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
             });
         }
         if (userInformation_4_l3 === null) {
-            var userInformation_4_l3 = await User.findOne({
+            userInformation_4_l3 = await User.findOne({
                 where: {
                     'designation_id': firmDetails['level_3'],
                     'section_id': req.user['section_id'],
