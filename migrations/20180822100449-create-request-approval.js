@@ -17,6 +17,12 @@ module.exports = {
       status: {
         type: Sequelize.STRING
       },
+      approver_status : {
+        type: Sequelize.STRING
+      },
+      approve : {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

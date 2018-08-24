@@ -63,6 +63,9 @@ module.exports = {
       },
       attachment_field: {
         type: Sequelize.STRING
+      },
+      activity_update: {
+        type: Sequelize.STRING
       }
     });
   },

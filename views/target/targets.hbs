@@ -54,7 +54,8 @@
                                 <th>Target Type</th>
                                 <th>Email Id</th>
                                 <th>Mobile Number</th>
-                                <th class="text-right">Action</th>
+                                <th>Estimated Revenue</th>
+                                <th class="text-right" style="width: 15%;">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -74,6 +75,7 @@
                                 </td>
                                 <td>{{this.email}}</td>
                                 <td class="number_validator">{{this.mobile_no}}</td>
+                                <td>$ {{this.estimated_revenue}}</td>
                                 <td class="text-right">
                                     <a href="/target/view-referral/{{this.id}}" class="btn btn-success btn-sm" title="See associate referral">
                                         <i class="fa fa-user-plus"></i>
