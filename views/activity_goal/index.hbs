@@ -37,10 +37,10 @@
                             <tr>
                                 <th>SL#</th>
                                 <th>Activity Goals</th>
-                                <th>Firm Name</th>
                                 <th>Duration</th>
-                                <th>Remarks</th>
-                                <th>Created Date &amp; time</th>
+                                <th>Total Activities</th>
+                                <th>Total Hours</th>
+                                <th>Total Budget</th>
                                 <th class="text-right"  style="width:20%;">Action</th>
                             </tr>
                         </thead>
@@ -54,10 +54,10 @@
                                     </a>
                                 </td>
                                
-                                <td>{{this.firm.title}}</td>
                                 <td>{{dateFormat this.from_date "DD-MM-YYYY"}} To {{dateFormat this.to_date "DD-MM-YYYY"}}</td>
-                                <td>{{this.remarks}}</td>
-                                <td>{{dateFormat this.createdAt "DD-MM-YYYY, hh:mm a"}}</td>
+                                <td>{{get_total_activity this.activities}}</td>
+                                <td>{{get_activity_goal_hours this.activity_budgets}}</td>
+                                <td>$ {{get_activity_goal_amounts this.activity_budgets}}</td>
                                 <td class="text-right">
                                     <a href="/budget-report/activity-goal/{{this.id}}" class="btn btn-success btn-sm" id="setUrlItem" title="See Budget Report">
                                         <i class="fa fa-money"></i>

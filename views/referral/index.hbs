@@ -1,0 +1,509 @@
+{{#content "style" mode="prepend"}}
+<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-sweetalert/sweet-alert.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="pg-header">
+            <div class="row">
+                {{#if success_message}}
+                <div class="alert alert-success">
+                    <strong>Success! </strong>{{success_message}}
+                </div>
+                {{/if}} {{#if successEdit_message}}
+                <div class="alert alert-success">
+                    <strong>Success! </strong>{{successEdit_message}}
+                </div>
+                {{/if}} {{#if successDel_message}}
+                <div class="alert alert-success">
+                    <strong>Success! </strong>{{successDel_message}}
+                </div>
+                {{/if}}
+                <div class="col-xs-4">
+                    <h4 class="page-title">Referral</h4>
+                </div>
+                <div class="col-xs-8 text-right">
+
+                    <a href="javascript:void(0);" class="btn btn-primary rounded referral-delete">
+                        <i class="fa fa-trash" aria-hidden="true"></i> Delete </a>
+                    <a href="/referral/add" class="btn btn-primary pull-right rounded">
+                        <i class="fa fa-plus"></i> Add Referral</a>
+                    <a href="#" class="btn btn-primary rounded mr-10" data-toggle="modal" data-target="#add_user">
+                        <i class="fa fa-cloud-download"></i> Import Referral</a>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                     {{#if count_query}}
+                    <a href="/referral" class="btn btn-primary rounded advancedFilter" style="right: 595px !important;">
+                        <i class="fa fa-eraser"></i> Clear Filter</a>
+                    {{/if}}
+                    <button class="btn btn-primary rounded advancedFilter" data-toggle="modal" data-target="#add_filter">
+                        <i class="fa fa-filter"></i> Filter</button>
+                    <table class="table table-striped custom-table datatable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <input type="checkbox" onClick="checkall(this);" /> SL#
+                                </th>
+                                <th>Referral Name</th>
+                                <th>Referral Type</th>
+                                <th>Email ID</th>
+                                <th>Mobile Number</th>
+                                <th>Estimated Revenue</th>
+                                <th class="text-right"  style="width:12%;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each referral}}
+                            <tr>
+                                <td> <input type="checkbox" name="referral_check_id" value="{{this.id}}" /> {{math @index "+" 1}}</td>
+                                <td>
+
+
+                                    <a href="/referral/view/{{this.id}}">
+                                        {{#if_eq referral_type "I"}} {{this.first_name}} {{this.last_name}} {{/if_eq}} {{#if_eq referral_type "O"}} {{this.organization_name}}
+                                        {{/if_eq}}
+                                    </a>
+                                </td>
+                                <td>
+                                    {{#if_eq referral_type "I"}} Individual {{/if_eq}} {{#if_eq referral_type "O"}} Organization {{/if_eq}}
+                                </td>
+                                <td>
+
+                                    {{this.email}}
+
+                                </td>
+                                <td class="number_validator">{{this.mobile}}</td>
+                                <td>$ {{this.estimated_revenue}}</td>
+                                <td class="text-right">
+                                    <a href="/referral/view-activity/{{this.id}}" class="btn btn-success btn-sm" title="See associated activity">
+                                        <i class="fa fa-tasks"></i>
+                                    </a>
+                                    <a href="/referral/view/{{this.id}}" class="btn btn-success btn-sm">
+                                        <i class="fa fa-eye m-r-5"></i>
+                                    </a>
+
+                                    <a href="/referral/edit/{{this.id}}" class="btn btn-success btn-sm">
+                                        <i class="fa fa-pencil m-r-5"></i>
+                                    </a>
+
+                                    <a href="javascript:void(0);" data-toggle="modal" data-target="delete_users" data-referral-id="{{this.id}}" id="delete_referral"
+                                        class="btn btn-danger btn-sm">
+                                        <i class="fa fa-trash-o m-r-5"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                             {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+<div id="delete_user" class="modal custom-modal fade del-referral" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content modal-md">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Referral</h4>
+            </div>
+            <form>
+                <div class="modal-body card-box">
+                    <p>are you sure you want to delete this referral?</p>
+                    <div class="m-t-20" id="delDiv">
+                        <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                        {{!--
+                        <a href="/activity-goal/delete/{{this.id}}" class="btn btn-danger">Delete</a> --}}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="add_user" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">Import Excel</h4>
+            </div>
+            <div class="modal-body">
+                <div class="card-box">
+                    <form class="m-b-10 uploadExcel" name="upload_excel" id="upload_excel" method="POST" action="/referral/upload-excel" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="m-t-10">
+                                        <input type="file" name="ref_excel_file" id="ref_excel_file" class="inputfile inputfile-6" onchange="return fileValidation()"
+                                        />
+                                        <label for="ref_excel_file">
+                                            <span></span>
+                                            <strong>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                                    <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"
+                                                    />
+                                                </svg> Choose a file&hellip;</strong>
+                                        </label>
+                                    </div>
+                                </div>
+                                <span class="err_span" id="error_msg">Choose a file to enable button</span>
+                            </div>
+                        </div>
+                        <div class="m-t-20 text-center">
+                            <button class="btn btn-primary" type="submit" id="btnUploadXls" disabled>Upload File</button>
+                            <br/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="add_filter" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <i class="fa fa-filter"></i> Filter By</h4>
+            </div>
+            <div class="modal-body">
+                <form class="m-b-30" name="advancedFilterReferral" id="advancedFilterReferral" method="GET">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label class="control-label">Target Type
+                            </label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="form-inline m-b-15">
+                                <div class="form-group m-r-5">
+                                    <label class="input-group">
+                                        <span class="input-group-addon">
+                                            <input type="radio" id="individual_client" name="referral_type" value="I" {{#if_eq referral_type_search "I"}} checked {{/if_eq}}/>
+                                        </span>
+                                        <div class="form-control form-control-static">Individual</div>
+                                        <span class="glyphicon form-control-feedback "></span>
+                                    </label>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="input-group">
+                                        <span class="input-group-addon">
+                                            <input type="radio" id="organization_client" name="referral_type" value="O" {{#if_eq referral_type_search "O"}} checked {{/if_eq}}/>
+                                        </span>
+                                        <div class="form-control form-control-static">Organization</div>
+                                        <span class="glyphicon form-control-feedback "></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        {{#if_eq user.role_id "2"}}
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Attorney Name
+                                </label>
+                                <select class="select form-control" id="attorney" name="attorney">
+                                    <option value="">Select Attorney</option>
+                                    {{#each attorney}}
+                                    <option value="{{this.id}}" {{#if_eq this.id ../attr_search}} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                        </div>
+                        {{/if_eq}}
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Industry Type
+                                </label>
+                                <select class="select form-control" id="industry_type" name="industry_type">
+                                    <option value="">Select Industry Type</option>
+                                    {{#each industry}}
+                                    <option value="{{this.id}}" {{#if_eq this.id ../industry_type}} selected="selected" {{/if_eq}}>{{this.industry_name}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="control-label">Refferred By </label>
+                            <div class="form-inline m-b-15">
+                                <div class="form-group m-r-5">
+                                    <label class="input-group">
+                                        <span class="input-group-addon">
+                                            <input type="radio" id="referral_type" name="ref_type" value="T" {{#if_eq ref_type_search "T"}} checked {{/if_eq}}/>
+                                        </span>
+                                        <div class="form-control form-control-static">Target</div>
+                                        <span class="glyphicon form-control-feedback "></span>
+                                    </label>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="input-group">
+                                        <span class="input-group-addon">
+                                            <input type="radio" id="organization_type" name="ref_type" value="C" {{#if_eq ref_type_search "C"}} checked {{/if_eq}}/>
+                                        </span>
+                                        <div class="form-control form-control-static">Client</div>
+                                        <span class="glyphicon form-control-feedback "></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" id="target_list" {{#if_eq ref_type_search "T"}} style="display:block;" {{else}} style="display:none;" {{/if_eq}}>
+                            <div class="form-group">
+                                <label class="control-label">Target Name
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select id="target_id" name="referred_id_t" class="select form-control">
+                                    <option value="">Select Target</option>
+                                    {{#each target}} {{#if_eq target_type "I"}}
+                                    <option value="{{this.id}}" {{#if_eq this.id ../referred_id_t_search}} selected {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+                                    {{/if_eq}} {{#if_eq target_type "O"}}
+                                    <option value="{{this.id}}" {{#if_eq this.id ../referred_id_t_search}} selected {{/if_eq}}>{{this.organization_name}}</option>
+                                    {{/if_eq}} {{/each}}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6" id="client_list" {{#if_eq ref_type_search "C"}} style="display:block;" {{else}} style="display:none;" {{/if_eq}}>
+                            <div class="form-group">
+                                <label class="control-label">Client Name
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select id="client_id" name="referred_id_c" class="select form-control">
+                                    <option value="">Select Client</option>
+                                    {{#each client}} {{#if_eq client_type "I"}}
+                                    <option value="{{this.id}}" {{#if_eq this.id ../referred_id_c_search}} selected {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+                                    {{/if_eq}} {{#if_eq client_type "O"}}
+                                    <option value="{{this.id}}" {{#if_eq this.id ../referred_id_c_search}} selected {{/if_eq}}>{{this.organization_name}}</option>
+                                    {{/if_eq}} {{/each}}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Association Status
+                                </label>
+                                <select class="select form-control" id="association" name="association">
+                                    <option value="">Select Association</option>
+                                    <option value="NEW TARGET" {{#if_eq association "NEW TARGET"}} selected="selected" {{/if_eq}}>NEW TARGET</option>
+                                    <option value="CONVERTED" {{#if_eq association "CONVERTED"}} selected="selected" {{/if_eq}}>CONVERTED</option>
+                                    <option value="TS-INTERIM" {{#if_eq association "TS-INTERIM"}} selected="selected" {{/if_eq}}>TS-INTERIM</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Country
+                                </label>
+                                <select class="select form-control" id="country" name="country">
+                                    <option value="">Select Country</option>
+                                    {{#each country}}
+                                    <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">State
+                                </label>
+                                <select class="select form-control" id="state" name="state">
+                                    <option value="">Select State</option>
+                                    {{#each state}}
+                                    <option value="{{this.id}}" {{#if_eq this.id ../state_search}} selected {{/if_eq}}>{{this.name}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">City
+                                </label>
+                                <select class="select form-control" id="city" name="city">
+                                    <option value="">Select City</option>
+                                    {{#each city}}
+                                    <option value="{{this.id}}" {{#if_eq this.id ../city_search}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Zipcode
+                                </label>
+                                <select class="select form-control" id="zipcode" name="zipcode">
+                                    <option value="">Select Zipcode</option>
+                                    {{#each zipcode}}
+                                    <option value="{{this.id}}" {{#if_eq this.id ../zipcode_search}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m-t-20 text-center">
+                        <button class="btn btn-primary btn-lg" type="submit" id="btnAddGroup">Search</button>
+                        <a href="/referral" class="btn btn-primary btn-lg m-l-10">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{{#content "script" mode="append"}}
+<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+
+<script type="text/javascript" src="/assets/plugins/bootstrap-sweetalert/sweet-alert.min.js"></script>
+
+<script type="text/javascript" src="/assets/js/select2.min.js"></script>
+<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript">
+    'use strict';
+
+    ; (function (document, window, index) {
+        var inputs = document.querySelectorAll('.inputfile');
+        Array.prototype.forEach.call(inputs, function (input) {
+            var label = input.nextElementSibling,
+                labelVal = label.innerHTML;
+
+            input.addEventListener('change', function (e) {
+                var fileName = '';
+                if (this.files && this.files.length > 1)
+                    fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}', this.files.length);
+                else
+                    fileName = e.target.value.split('\\').pop();
+
+                if (fileName)
+                    label.querySelector('span').innerHTML = fileName;
+                else
+                    label.innerHTML = labelVal;
+            });
+
+            // Firefox bug fix
+            input.addEventListener('focus', function () { input.classList.add('has-focus'); });
+            input.addEventListener('blur', function () { input.classList.remove('has-focus'); });
+        });
+    }(document, window, 0));
+
+    function fileValidation() {
+        document.getElementById("error_msg").innerHTML = "Choose a file to enable button";
+        document.getElementById("btnUploadXls").disabled = true;
+        var fileInput = document.getElementById('ref_excel_file');
+        var filePath = fileInput.value;
+        var allowedExtensions = /(\.xlsx|\.xls)$/i;
+        if (!allowedExtensions.exec(filePath)) {
+            document.getElementById("error_msg").innerHTML = "Please upload file having extensions .xlsx or .xls only.";
+            fileInput.value = '';
+            return false;
+        } else {
+            document.getElementById("btnUploadXls").disabled = false;
+            document.getElementById("error_msg").innerHTML = "";
+            return true;
+        }
+    }
+
+    function checkall(source) {
+        var checkboxes = document.getElementsByName('referral_check_id');
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+    $(document).on('click', '#referral_type', function () {
+        $('#target_list').show();
+        $('#client_list').hide();
+    });
+
+    $(document).on('click', '#organization_type', function () {
+        $('#target_list').hide();
+        $('#client_list').show();
+    });
+
+    $('.referral-delete').on('click', function (e) {
+        var referral_id = [];
+        $('input[name="referral_check_id"]:checked').each(function () {
+            referral_id.push(this.value);
+        });
+        if (referral_id.length == 0) {
+            swal("", "Please select one or more referral!", "warning");
+        } else {
+
+            swal({
+                title: "",
+                text: "are you sure you want to delete this referral?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Ok",
+                closeOnConfirm: false
+            }, function() {
+               $.ajax({
+                    url: '/referral/multi-delete/',
+                    type: 'POST',
+                    data: { referral_id: referral_id },
+                    success: function (response) {
+                        if (response.code === '200') {
+                            swal({
+                                title: "Nice!",
+                                text: "Referral delete successfully",
+                                type: "success"
+                            }, function() {
+                                window.location.reload();
+                            });
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+
+        }
+    })
+
+
+    $(document).on('click', '#delete_referral', function (e) {
+        var referral_id = $(this).data('referral-id');
+        $("#removeBtnDelete").remove();
+        $("#delete_user").modal('show');
+        $("#delDiv").append('<a href="/referral/delete/' + referral_id + '" class="btn btn-danger" id="removeBtnDelete">' + "Delete" + '</a>');
+    });
+    $(document).ready(function(){
+        $("#advancedFilterReferral").validate({
+            rules: {
+              referred_id_t: {
+                  required: true
+              },  
+              referred_id_c: {
+                  required: true
+              }  
+            },
+            messages: {
+                referred_id_t: {
+                    required: "Please select target name"
+                },
+                referred_id_c: {
+                    required: "Please select client name"
+                }
+            }
+        });
+    });
+
+</script> {{/content}}
