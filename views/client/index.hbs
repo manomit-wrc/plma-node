@@ -51,6 +51,8 @@
 								<th>Client Type</th>
 								<th>Email Id</th>
 								<th>Mobile Number</th>
+								<th>Estimated Revenue</th>
+								<th>Current Revenue</th>
 								<th class="text-right">Action</th>
 							</tr>
 						</thead>
@@ -71,6 +73,8 @@
 								</td>
 								<td>{{this.email}}</td>
 								<td class="number_validator">{{this.mobile_no}}</td>
+								<td>$ {{this.estimated_revenue}}</td>
+								<td>$ {{this.current_revenue}}</td>
 								<td class="text-right">
 									<a href="/client/view-referral/{{this.id}}" class="btn btn-success btn-sm" title="See associate referral">
 										<i class="fa fa-user-plus"></i>

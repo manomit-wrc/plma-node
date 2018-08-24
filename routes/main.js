@@ -1016,8 +1016,8 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 			remarks: req.body.remarks,
 			social_url: req.body.social,
 			website_url: req.body.website,
-			current_revenue: req.body.current_revenue,
-			estimated_revenue: req.body.estimated_revenue,
+			current_revenue: removePhoneMask(req.body.current_revenue),
+			estimated_revenue: removePhoneMask(req.body.estimated_revenue),
 
 		}, {
 			where: {
