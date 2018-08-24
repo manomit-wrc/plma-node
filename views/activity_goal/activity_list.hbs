@@ -36,7 +36,13 @@
                             {{#each activity}}
                             <tr>
                                 <td>{{math @index "+" 1}}</td>
-                                <td>{{this.activity_name}}</td>
+                                <td>
+                                     <a href="/activity/view/{{this.id}}">
+                                        {{this.activity_name}}
+                                    </a>
+                                </td>
+
+                                {{!-- <td>{{this.activity_name}}</td> --}}
                                 <td>{{dateFormat this.activity_from_date "DD-MM-YYYY"}}</td>
                                 <td>{{dateFormat this.activity_to_date "DD-MM-YYYY"}}</td>
                                 <td>{{this.remarks}}</td>

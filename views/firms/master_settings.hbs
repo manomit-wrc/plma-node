@@ -389,7 +389,7 @@
 															<a href="#" data-toggle="modal" data-target="#view_offices" data-office-id="{{this.id}}" data-name="{{this.name}}" data-address="{{this.address}}" data-city="{{this.city}}" data-state="{{this.state}}" data-country="{{this.country}}" data-zipcode="{{this.zipcode}}" data-mobile="{{this.mobile}}" data-firm-id="{{this.firm_id}}" id="view-office-detail" class="btn btn-success btn-sm">
 																<i class="fa fa-eye m-r-5"></i>
 															</a>
-															<a href="#" data-toggle="modal" data-target="#edit_offices" data-office-id="{{this.id}}" data-name="{{this.name}}" data-address="{{this.address}}" data-city="{{this.city}}" data-state="{{this.state}}" data-country="{{this.country}}" data-zipcode="{{this.zipcode}}" data-mobile="{{this.mobile}}" data-firm-id="{{this.firm_id}}" id="edit-office-detail" class="btn btn-info btn-sm">
+															<a href="#" data-toggle="modal" data-target="#edit_offices" data-office-id="{{this.id}}" data-name="{{this.name}}" data-address="{{this.address}}" data-city="{{this.city}}" data-state="{{this.state}}" data-country="{{this.country}}" data-zipcode="{{this.zipcode}}" data-mobile="{{this.mobile}}" data-firm-id="{{this.firm_id}}" id="edit-office-detail" class="btn btn-success btn-sm">
 																<i class="fa fa-pencil m-r-5"></i>
 															</a>
 															<a href="#" data-toggle="modal" data-target="#delete_offices" data-office-id="{{this.id}}" id="delete-office-details" class="btn btn-danger btn-sm">
@@ -447,7 +447,7 @@
 															<a href="#" data-toggle="modal" data-target="#view_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}" data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}" data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}" data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}" data-contact-zipcode="{{this.zipcode}}" id="view-office-contact" class="btn btn-success btn-sm">
 																<i class="fa fa-eye m-r-5"></i>
 															</a>
-															<a href="#" data-toggle="modal" data-target="#edit_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}" data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}" data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}" data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}" data-contact-zipcode="{{this.zipcode}}" id="edit-office-contact" class="edit btn btn-info btn-sm">
+															<a href="#" data-toggle="modal" data-target="#edit_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}" data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}" data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}" data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}" data-contact-zipcode="{{this.zipcode}}" id="edit-office-contact" class="edit btn btn-success btn-sm">
 																<i class="fa fa-pencil m-r-5"></i>
 															</a>
 															<a href="#" data-toggle="modal" data-target="#delete_contacts" data-contact-id="{{this.id}}" id="delete-office-contact-details" class="edit btn btn-danger btn-sm">
@@ -506,17 +506,10 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-<<<<<<< HEAD
 							<div class="form-group form-focus">
 								<label class="control-label">Country</label>
 								<select class="form-control floating" id="country" name="country">
-=======
-							<div class="form-group">
-								<label class="control-label">Country
-									<span class="text-danger">*</span>
-								</label>
-								<select class="select form-control floating" id="country" name="country">
->>>>>>> 4b9ef7370bc1eee115cb69b1cfb505c1c6258cc4
+
 									<option value="">Select Country</option>
 									{{#each country}}
 										<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
