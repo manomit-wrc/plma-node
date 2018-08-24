@@ -14,7 +14,7 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
 router.get('/activity-approvals', auth, async (req, res) => {
-    
+
     const activityRequest = await requestApproval.findAll({
         where: {
             'approver_id': req.user.id,
@@ -25,12 +25,16 @@ router.get('/activity-approvals', auth, async (req, res) => {
 
     var activity_approvals;
     if (activityRequest.length > 0) {
-        activity_approvals = await Activity.findAll({
-            where: {
-                'activity_status': 1,
-                'firm_id': req.user.firm_id
-            }
-        });
+        for (let i=0; i< activityRequest.length; i++) {
+            activity_approvals = await Activity.findAll({
+                where: {
+                    // 'activity_status': 1,
+                    // 'firm_id': req.user.firm_id
+                    id:activityRequest[i].activity_id
+                }
+            });
+
+        }
     }
 
     res.render('activity-approvals/index', {
@@ -112,10 +116,11 @@ router.post('/update_activity_approve_reject', auth, async (req, res) => {
      if (req.body.status==3){
         await requestApproval.update({
             'approve': '0',
-            'status': '2'
+            'status': '2',
         }, {
             where: {
-                'approver_id': req.user.id
+                'approver_id': req.user.id,
+                'activity_id': req.body.activity_id
             }
         })
 
@@ -133,7 +138,8 @@ router.post('/update_activity_approve_reject', auth, async (req, res) => {
             'status': '0'
         }, {
             where: {
-                'approver_id': req.user.id
+                'approver_id': req.user.id,
+                'activity_id': req.body.activity_id
             }
         })
     
