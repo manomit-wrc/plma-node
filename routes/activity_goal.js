@@ -5,6 +5,7 @@ const csrf = require('csurf');
 const Firm = require('../models').firm;
 const ActivityGoal = require('../models').activity_goal;
 const Activity = require('../models').activity;
+const ActivityBudget = require('../models').activity_budget;
 var csrfProtection = csrf({ cookie: true });
 const router = express.Router();
 
@@ -25,10 +26,18 @@ router.get('/activity-goal', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	}
 	whereGoals.firm_id = req.user.firm_id;
 	ActivityGoal.belongsTo(Firm, { foreignKey: 'firm_id' });
+	ActivityGoal.hasMany(ActivityBudget, { foreignKey: 'activity_goal_id' });
+	ActivityGoal.hasMany(Activity, {
+		foreignKey: 'activity_goal_id'
+	});
 	ActivityGoal.findAll({
 		where: whereGoals,
 		include: [{
 			model: Firm
+		}, {
+			model: Activity
+		}, {
+			model: ActivityBudget
 		}]
 	}).then(goals => {
 		res.render('activity_goal/index', {
