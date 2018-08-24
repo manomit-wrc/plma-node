@@ -52,11 +52,12 @@
                                 <th>
                                     <input type="checkbox" onClick="checkall(this);" /> SL#
                                 </th>
-                                <th style="width:25%;">Referral Name</th>
+                                <th>Referral Name</th>
                                 <th>Referral Type</th>
                                 <th>Email ID</th>
                                 <th>Mobile Number</th>
-                                <th class="text-right">Action</th>
+                                <th>Estimated Revenue</th>
+                                <th class="text-right"  style="width:12%;">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -80,6 +81,7 @@
 
                                 </td>
                                 <td class="number_validator">{{this.mobile}}</td>
+                                <td>$ {{this.estimated_revenue}}</td>
                                 <td class="text-right">
                                     <a href="/referral/view-activity/{{this.id}}" class="btn btn-info btn-sm" title="See associated activity">
                                         <i class="fa fa-tasks"></i>
