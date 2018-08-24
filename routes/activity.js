@@ -332,7 +332,8 @@ router.post('/activity/add', auth, upload.single('activity_attachment'), firmAtt
         total_budget_amount: req.body.total_amount,
         section_id: req.body.section,
         s_group_id: req.body.strategy_group,
-        attachment_field: fileName
+        attachment_field: fileName,
+        activity_update: 'new'
     }, {
         where: {
             id: req.body.activity_id
@@ -535,6 +536,25 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 //.....................{{   edit data  }}.......................................//
 
 router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+
+    const _allActivity =  await Activity.findOne({
+        where:{
+            id: req.params['id']
+        }
+    });
+
+    if (_allActivity['activity_status']==3) {
+        await Activity.update({
+            'activity_update':'update',
+            'activity_status': 0
+        },{
+            where : {
+                id: req.params['id']
+            }
+        })
+    }
+
+
     Activity.hasMany(Activity_to_user_type, {
         foreignKey: 'activity_id'
     });
@@ -678,7 +698,6 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
         }]
     });
 
-    // req.flash('success-message', 'Activity update Successfully');
     res.render('activity/update', {
         layout: 'dashboard',
         csrfToken: req.csrfToken(),
@@ -850,13 +869,8 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
     const firmDetails = await Firm.findOne({
         where: {
             'id': req.user.firm_id,
-            // 'approver': 1
         }
     });
-
-    // console.log('firmDetails',firmDetails);
-    
-
 
     if (firmDetails['approval_level'] === 2) {
 
