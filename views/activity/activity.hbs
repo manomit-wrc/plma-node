@@ -75,7 +75,7 @@
                     <i class="fa fa-eye m-r-5"></i>
                   </a>
                   {{#if (or (eq this.activity_status "0")(eq this.activity_status "3"))}}
-                    <a href="/activity/edit/{{this.id}}" class="btn btn-info btn-sm">
+                    <a href="/activity/edit/{{this.id}}" class="btn btn-success btn-sm">
                       <i class="fa fa-pencil m-r-5"></i>
                     </a>
                     <a href="javascript:void(0);" data-toggle="modal" data-target="delete_users" data-activity-id="{{this.id}}" id="delete_activity"
