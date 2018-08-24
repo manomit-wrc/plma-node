@@ -5634,6 +5634,54 @@ i.fa.fa-eye.m-r-5 {
 	padding-top: 6px;
 }
 
+
+
+/* Starts css on 2018-08-21 */
+
+.select-attorney .btn-group {
+	padding: 0;
+}
+.select-attorney .btn {
+    height: 50px;
+    border-radius: 0;
+}
+.select-attorney .btn:active,
+.select-attorney .btn:focus,
+.select-attorney .btn:hover,
+ {
+  background: #ffffff !important;
+  border-color: #ccc !important;
+}
+
+.select-attorney .btn-default:hover {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.select-attorney .open>.dropdown-toggle.btn-default.focus,
+.select-attorney   .open>.dropdown-toggle.btn-default:focus,
+.select-attorney   .open>.dropdown-toggle.btn-default:hover {
+    background-color: #fff;
+    border-color: #ff9b44;
+}
+
+.select-attorney  .open>.dropdown-toggle.btn-default {
+    background-color: #fff;
+    box-shadow: none !important;
+    border-color: #ccc;
+}
+
+.select-attorney  .btn-default:focus {
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+/* Ends css on 2018-08-21 */
+
+
+
+
 /* loader css starts */
 
 .loader {

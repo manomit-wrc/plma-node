@@ -3,7 +3,12 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-sweetalert/sweet-alert.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css"> {{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+
+
+ {{/content}}
 
 <div class="page-wrapper">
     <div class="content container-fluid">
@@ -52,12 +57,12 @@
 
 
                             <div class="col-md-6">
-                                <div class="form-group form-focus select-focus">
+                                <div class="form-group form-focus select-focus select-attorney">
                                     <label class="control-label">Group
                                         <span class="req-lbl">*</span>
                                     </label>
 
-                                    <select id="group" name="group" class="form-control floating">
+                                    <select id="group" name="group" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
                                         <option value="">Select Group</option>
                                         {{#each group}}
                                         <option value="{{this.id}}">{{this.name}}</option>
@@ -68,12 +73,12 @@
 
 
                             <div class="col-md-6">
-                                <div class="form-group form-focus select-focus">
+                                <div class="form-group form-focus select-focus select-attorney">
                                     <label class="control-label">Section
                                         <span class="req-lbl">*</span>
 
                                     </label>
-                                    <select id="section" name="section" class="form-control floating">
+                                    <select id="section" name="section" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
                                         <option value="">Select Section</option>
                                         {{#each section}}
                                         <option value="{{this.section.id}}">{{this.section.name}}</option>
@@ -82,12 +87,12 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group form-focus select-focus">
+                                <div class="form-group form-focus select-focus select-attorney">
                                     <label class="control-label">Designation
                                         <span class="req-lbl">*</span>
 
                                     </label>
-                                    <select id="designation" name="designation" class=" form-control floating">
+                                    <select id="designation" name="designation" class=" form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
                                         <option value="">Select Designation</option>
                                         {{#each designation}}
                                         <option value="{{this.id}}">{{this.title}}</option>
@@ -128,9 +133,9 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group form-focus select-focus">
+                        <div class="form-group form-focus select-focus select-attorney">
                             <label class="control-label">Gender</label>
-                            <select class="form-control floating" id="gender" name="gender">
+                            <select class="form-control floating selectpicker" id="gender" name="gender" data-show-subtext="true" data-live-search="true">
                                 <option value="">Select Gender</option>
                                 <option value="M">Male</option>
                                 <option value="F">Female</option>
@@ -152,9 +157,9 @@
                     </div>
 
                     <div class="col-md-6">
-                        <div class="form-group form-focus select-focus">
+                        <div class="form-group form-focus select-focus select-attorney">
                             <label class="control-label">Attorney Type</label>
-                            <select class="form-control floating" id="attorney_type" name="attorney_type">
+                            <select class="form-control floating selectpicker" id="attorney_type" name="attorney_type" data-show-subtext="true" data-live-search="true">
                                 <option value="">Select Attorney Type</option>
                                 <option value="AT-APPROVED">APPROVED ATTORNEY</option>
                                 <option value="PENDING">ATTORNEY TO BE ASSIGNED</option>
@@ -168,6 +173,13 @@
                             <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" />
                         </div>
                     </div>
+                    {{!--
+                    <div class="col-md-6">
+                        <div class="form-group form-focus">
+                            <label class="control-label">Education</label>
+                            <input type="text" class="form-control floating" id="education" name="education" />
+                        </div>
+                    </div> --}}
                 </div>
             </div>
             <div class="card-box">
@@ -232,9 +244,9 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group form-focus select-focus">
+                        <div class="form-group form-focus select-focus select-attorney">
                             <label class="control-label">Job Type</label>
-                            <select class="form-control floating" id="job_type" name="job_type">
+                            <select class="form-control floating selectpicker" id="job_type" name="job_type" data-show-subtext="true" data-live-search="true">
                                 <option value="">Select Job Type</option>
                                 <option value="FULLTIME">FULLTIME</option>
                                 <option value="STERMCON">SHORT TERM CONTRACT</option>
@@ -259,7 +271,20 @@
                         </div>
                     </div>
 
-                    
+                    <div class="col-md-6">
+                        <div class="form-group form-focus select-focus select-attorney">
+                            <label class="control-label">Jurisdiction
+                                <span class="req-lbl">*</span>
+
+                            </label>
+                            <select id="jurisdiction" name="jurisdiction" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
+                                <option value="">Select Jurisdiction</option>
+                                {{#each jurisdiction}}
+                                <option value="{{this.id}}">{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
 
                     {{!--
                     <div class="col-md-6">
@@ -305,20 +330,9 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group">
+                        <div class="form-group form-focus select-focus select-attorney">
                             <div class="">
-                                <select class="form-control floating" id="jurisdiction" name="jurisdiction" multiple="multiple">
-                                    {{#each allJurisdiction}}
-                                    <option value="{{this.jurisdiction.id}}">{{this.jurisdiction.name}}</option>
-                                    {{/each}}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <div class="">
-                                <select class="form-control floating" id="practice_area" name="practice_area" multiple="multiple">
+                                <select class="form-control floating" id="practice_area" name="practice_area" multiple="multiple" >
                                      {{#each allPracticeArea}}
                                     <option value="{{this.practicearea.id}}">{{this.practicearea.name}}</option>
                                     {{/each}}
@@ -460,16 +474,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+
+
+
 <script type="text/javascript">
     $("#addattorneyform").validate({
         rules: {
-            mail:{
-                required: true,
-                email:true
-            },
-            pass: {
-                required: true
-            },
             jurisdiction: {
                 required: true
             },
@@ -508,14 +520,10 @@
 
         },
         messages: {
-            mail: {
-                required: "Email Id can't be blank"
-            },
-            pass: {
-                required: "Password can't be blank"
-            },
+
+
             jurisdiction: {
-                required: "Jurisdiction can't be blank"
+                required: "jurisdiction can't be blank"
             },
             practice_area: {
                 required: "Practice area can't be blank"
@@ -556,14 +564,6 @@
     });
     $('#practice_area').multiselect({
         nonSelectedText: 'Select Practice Area',
-        enableFiltering: true,
-        includeSelectAllOption: true,
-        buttonWidth: '100%',
-        maxHeight: 400,
-        dropUp: true
-    });
-    $('#jurisdiction').multiselect({
-        nonSelectedText: 'Select Jurisdiction',
         enableFiltering: true,
         includeSelectAllOption: true,
         buttonWidth: '100%',
@@ -705,52 +705,5 @@
             suffix: '% ',
             rightAlign: false
         });
-        $("#mail").keyup(function () {
-             $("div").remove(".validation");
-            
-        });
     });
-/* ================================ Duplicate email checking ajax call ========================*/
-    function validateEmail(email) {
-        var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-        if (filter.test(email)) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-    $(document).on('change', "#mail", function(e){
-        var email = $(this).val();
-        $("div").remove(".validation");
-        if(email !== ''){
-            $.ajax({
-                type: "POST",
-                url: "/get-duplicate-email-block",
-                data: {
-                    email: email
-                },
-                success: function (response) {
-                    if(response.success == true)
-                    {
-                        $("#mail").parent().append("<div class='validation' style='color:red;margin-bottom: 20px;'><i class='fa fa-close iconDuplicateEmail'></i><b> Email Id already exists</b></div>");
-                    }
-                    else
-                    {
-                        if (validateEmail(email)) {
-                            $("#mail").parent().append("<div class='validation' style='color:green;margin-bottom: 20px;'><i class='fa fa-check iconDuplicateEmail' style='background-color:#c2f7c6 !important;''></i></div>");
-                        }
-                        else {
-                            $("#mail").parent().append("<div class='validation' style='color:red;margin-bottom: 20px;'><i class='fa fa-close iconDuplicateEmail'></i></div>");
-                            
-                        }
-                    }
-                },
-                error: function (xhr) {
-
-                }
-            });
-        }
-    });
-/* ================================ Duplicate email checking ajax call ========================*/
 </script> {{/content}}

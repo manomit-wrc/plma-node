@@ -1,142 +1,188 @@
 {{#content "style" mode="prepend"}}
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+
+
 {{/content}}
+
 <div class="page-wrapper">
-    <div class="content container-fluid">
-        <div class="row">
-            <div class="col-sm-8">
-                <h4 class="page-title">Edit Financial Goal</h4>
-            </div>
-        </div>
-        {{#if error_message1}}
+   <div class="content container-fluid">
+      <div class="row">
+         <div class="col-sm-8">
+            <h4 class="page-title">Edit Financial Goal</h4>
+         </div>
+      </div>
+      {{#if error_message1}}
         <div class="alert alert-danger">
             <strong>Error! </strong>{{error_message1}}
         </div>
-        {{/if}} {{#if error_message}}
+      {{/if}}
+      {{#if error_message}}
         <div class="alert alert-danger">
             <strong>Error! </strong>{{error_message}}
         </div>
-        {{/if}}
-        <form id="frmEditFinancialGoal" method="POST" action="/financial-goal/edit/{{finan_goal.id}}">
-            <input type="hidden" name="_csrf" value="{{csrfToken}}">
-            <div class="card-box">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Attorney <span class="req-lbl">*</span> </label>
-                                    <select class="form-control floating" id="attr_id" name="attr_id">
-                                        <option value="">Select Attorney</option>
-                                        {{#each attorney}}
-                                            <option value="{{this.id}}" {{#if_eq this.id ../finan_goal.attorney_id}} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
-                                        {{/each}}
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Current Year <span class="req-lbl">*</span> </label>
-                                    <select class="form-control floating" id="year" name="year">
-                                        <option value="">Select Current Year</option>
-                                        {{#each year}}
-                                            <option value="{{this}}" {{#if_eq this ../finan_goal.year}} selected="selected" {{/if_eq}}>{{this}}</option>
-                                        {{/each}}
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group form-focus">
-                                    <label class="control-label">Current Year Goal <span class="req-lbl">*</span> </label>
-                                    <input type="text" class="form-control floating" id="year_goal" name="year_goal" value="{{finan_goal.year_goal}}" />
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group form-focus">
-                                    <label class="control-label">Current Year Goal % <span class="req-lbl">*</span> </label>
-                                    <input type="text" class="form-control floating" id="year_goal_precentage" name="year_goal_precentage" value="{{finan_goal.year_goal_percentage}}" />
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group form-focus">
-                                    <label class="control-label">Summary Info</label>
-                                    <textarea name="summary_info" id="summary_info" class="form-control floating">{{finan_goal.summary}}</textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group form-focus">
-                                    <label class="control-label">Remarks / Comments</label>
-                                    <textarea name="remarks" id="remarks" class="form-control floating">{{finan_goal.remarks}}</textarea>
-                                </div>
-                            </div>
+      {{/if}}
+      <form id="frmEditFinancialGoal" method="POST" action="/financial-goal/edit/{{finan_goal.id}}">
+         <input type="hidden" name="_csrf" value="{{csrfToken}}">
+         <div class="card-box">
+            <div class="row">
+               <div class="col-md-12">
+                     <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group form-focus select-attorney">
+                             <label class="control-label">Select Attorney
+                               <span class="req-lbl">*</span>
+
+                             </label>
+                             <select class="form-control floating selectpicker" id="attr_id" name="attr_id" data-show-subtext="true" data-live-search="true">
+                                <option value=""></option>
+                                {{#each attorney}}
+                                <option value="{{this.id}}" {{#if_eq this.id ../finan_goal.attorney_id}} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+                                {{/each}}
+                            </select>
+                          </div>
                         </div>
-                    </div>
-                </div>
+                        <div class="col-md-6">
+                          <div class="form-group form-focus select-attorney">
+                             <label class="control-label">Select Current Year
+                               <span class="req-lbl">*</span>
+
+                             </label>
+                             <select class="form-control floating selectpicker" id="year" name="year" data-show-subtext="true" data-live-search="true">
+                                <option value=""></option>
+                                {{#each year}}
+                                <option value="{{this}}"{{#if_eq this ../finan_goal.year}} selected="selected" {{/if_eq}}>{{this}}</option>
+                                {{/each}}
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="form-group form-focus">
+                              <label class="control-label">Current Year Goal
+                                <span class="req-lbl">*</span>
+
+                              </label>
+                              <input type="text" class="form-control floating"
+                              id="year_goal" name="year_goal" value="{{finan_goal.year_goal}}"
+                              />
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="form-group form-focus">
+                              <label class="control-label">Current Year Goal %
+                                <span class="req-lbl">*</span>
+
+                              </label>
+                              <input type="text" class="form-control floating"
+                              id="year_goal_precentage" name="year_goal_precentage" value="{{finan_goal.year_goal_percentage}}"
+                              />
+                           </div>
+                        </div>
+                        <div class="col-md-12">
+                           <div class="form-group form-focus">
+                              <label class="control-label">Summary Info
+                                <span class="req-lbl">*</span>
+
+                              </label>
+                              <textarea name="summary_info" id="summary_info" class="form-control floating">{{finan_goal.summary}}</textarea>
+                           </div>
+                        </div>
+                        <div class="col-md-12">
+                           <div class="form-group form-focus">
+                              <label class="control-label">Remark/Comments
+                                <span class="req-lbl">*</span>
+
+                              </label>
+                              <textarea name="remarks" id="remarks" class="form-control floating">{{finan_goal.remarks}}</textarea>
+                           </div>
+                        </div>
+                     </div>
+               </div>
             </div>
-            <div class="text-center m-t-20">
-                <button class="btn btn-primary btn-lg" type="submit">Save &amp; Update</button>
-                <a href="/financial-goal" class="btn btn-primary btn-lg m-l-10">Cancel</a>
-            </div>
-        </form>
-    </div>
+         </div>
+         <div class="text-center m-t-20">
+            <button class="btn btn-primary btn-lg" type="submit">Save &amp; update</button>
+            <a href="/financial-goal" class="btn btn-primary btn-lg m-l-10">Cancel</a>
+         </div>
+      </form>
+   </div>
+
 </div>
 {{#content "script" mode="append"}}
-<script type="text/javascript" src="/assets/js/moment.min.js"></script>
-<script type="text/javascript" src="/assets/js/select2.min.js"></script>
-<script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
-<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#year_goal").inputmask("numeric", {
-            radixPoint: ".",
-            groupSeparator: ",",
-            digits: 2,
-            autoGroup: true,
-            prefix: '$ ',
-            rightAlign: false
-        });
-        $("#year_goal_precentage").inputmask("numeric", {
-            radixPoint: ".",
-            groupSeparator: ",",
-            digits: 2,
-            autoGroup: true,
-            suffix: ' %',
-            rightAlign: false
-        });
-        $("#frmEditFinancialGoal").validate({
-            ignore: [],
-            rules: {
-                attr_id: {
-                    required: true
+    <script type="text/javascript" src="/assets/js/moment.min.js"></script>
+    <script type="text/javascript" src="/assets/js/select2.min.js"></script>
+    <script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
+    <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#year_goal").inputmask("numeric", {
+                radixPoint: ".",
+                groupSeparator: ",",
+                digits: 2,
+                autoGroup: true,
+                prefix: '$ ',
+                rightAlign: false
+            });
+            $("#year_goal_precentage").inputmask("numeric", {
+                radixPoint: ".",
+                groupSeparator: ",",
+                digits: 2,
+                autoGroup: true,
+                suffix: ' %',
+                rightAlign: false
+            });
+            $("#frmEditFinancialGoal").validate({
+                ignore: [],
+                rules: {
+                    attr_id: {
+                        required: true
+                    },
+                    year: {
+                        required: true
+                    },
+                    year_goal: {
+                        required: true
+                    },
+                    year_goal_precentage: {
+                        required: true
+                    },
+                    summary_info: {
+                        required: true
+                    },
+                    remarks: {
+                        required: true
+                    }
                 },
-                year: {
-                    required: true
-                },
-                year_goal: {
-                    required: true
-                },
-                year_goal_precentage: {
-                    required: true
+                messages: {
+                    attr_id: {
+                        required: "Please select an attorney"
+                    },
+                    year: {
+                        required: "Please select current year"
+                    },
+                    year_goal: {
+                        required: "Current year goal can't be blank"
+                    },
+                    year_goal_precentage: {
+                        required: "Current year goal percentage can't be blank"
+                    },
+                    summary_info: {
+                        required: "Summary info can't be blank"
+                    },
+                    remarks: {
+                        required: "Remarsks can't be blank"
+                    }
                 }
-            },
-            messages: {
-                attr_id: {
-                    required: "Please select attorney"
-                },
-                year: {
-                    required: "Please select current year"
-                },
-                year_goal: {
-                    required: "Current year goal can't be blank"
-                },
-                year_goal_precentage: {
-                    required: "Current year goal percentage can't be blank"
-                }
-            }
+            });
         });
-    });
-</script> {{/content}}
+    </script>
+{{/content}}

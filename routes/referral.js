@@ -209,10 +209,19 @@ router.get('/referral/add', auth, firmAttrAuth, csrfProtection, async (req, res)
 	});
 
 	const client = await Client.findAll({
-		where: fetchClient
+		order: [
+			['first_name', 'ASC'],
+		],
+
+		where:fetchClient
 	});
 
 	const target = await Target.findAll({
+
+		order: [
+			['first_name', 'ASC'],
+		],
+
 		where: fetchTarget
 	});
 
@@ -460,9 +469,19 @@ router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		}
 	});
 	const client = await Client.findAll({
+		order: [
+			['first_name', 'ASC'],
+		],
+
+
 		where: fetchClient
 	});
 	const target = await Target.findAll({
+
+		order: [
+			['first_name', 'ASC'],
+		],
+
 		where: fetchTarget
 	});
 

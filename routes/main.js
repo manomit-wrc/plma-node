@@ -72,6 +72,10 @@ router.get('/budget', csrfProtection, auth, siteAuth, (req, res) => {
 		whereCondition.name = req.query.budget_name;
 	}
 	budget.findAll({
+		order: [
+			['name', 'ASC']
+		],
+
 		where: whereCondition
 	}).then(show => {
 		res.render('budget/index', {
@@ -87,6 +91,7 @@ router.get('/budget', csrfProtection, auth, siteAuth, (req, res) => {
 
 router.post('/budget/add', auth, siteAuth, csrfProtection, (req, res) => {
 	budget.findAndCountAll({
+		
 		where: {
 			name: req.body.name
 		}
@@ -574,6 +579,10 @@ router.get('/client/add', auth, firmAttrAuth, csrfProtection, async (req, res) =
 	const tags = await Tag.findAll();
 
 	const attorney = await user.findAll({
+		order: [
+			['first_name', 'ASC']
+		],
+
 		where: {
 			role_id: 3,
 			firm_id: req.user.firm_id
@@ -621,6 +630,11 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 	const industrys = await Industry.findAll();
 	const client_country = await Country.findAll();
 	const attorney = await user.findAll({
+		order: [
+			['first_name', 'ASC']
+		],
+
+
 		where: {
 			role_id: 3,
 			firm_id: req.user.firm_id
