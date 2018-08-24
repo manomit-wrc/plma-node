@@ -402,7 +402,18 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 			'contact_id': req.params['id']
 		}
 	});
-
+	TargetActivity.belongsTo(Activity, {
+		foreignKey: 'activity_id'
+	});
+	const activity_details = await TargetActivity.findAll({
+		where: {
+			target_client_type: "R",
+			type: req.params['id']
+		},
+		include: [{
+			model: Activity
+		}]
+	});
 	res.render('referral/view', {
 		layout: 'dashboard',
 		industry,
@@ -415,7 +426,8 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		attorney,
 		client,
 		target,
-		contactDetails
+		contactDetails,
+		activity_details
 	});
 });
 

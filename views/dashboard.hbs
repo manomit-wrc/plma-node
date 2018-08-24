@@ -224,7 +224,7 @@
                 <span class="dash-widget-icon"><i class="fa fa-cubes" aria-hidden="true"></i></span>
                 <div class="dash-widget-info">
                     <h3>{{activity_count}}</h3>
-                    <span>Activities</span>
+                    <span><a href="/activitypage" style="color:#333;">Activities</a></span>
                 </div>
               </div>
           </div>
@@ -233,7 +233,7 @@
                 <span class="dash-widget-icon"><i class="fa fa-users" aria-hidden="true"></i></span>
                 <div class="dash-widget-info">
                     <h3>{{target_count}}</h3>
-                    <span>Targets</span>
+                    <span><a href="/target" style="color:#333;">Targets</a></span>
                 </div>
               </div>
           </div>
@@ -242,7 +242,7 @@
                 <span class="dash-widget-icon"><i class="fa fa-users"></i></span>
                 <div class="dash-widget-info">
                     <h3>{{client_count}}</h3>
-                    <span>Clients</span>
+                    <span><a href="/client" style="color:#333;">Clients</a></span>
                 </div>
               </div>
           </div>
@@ -251,7 +251,7 @@
                 <span class="dash-widget-icon"><i class="fa fa-users" aria-hidden="true"></i></span>
                 <div class="dash-widget-info">
                     <h3>{{referral_count}}</h3>
-                    <span>Referrals</span>
+                    <span><a href="/referral" style="color:#333;">Referrals</a></span>
                 </div>
               </div>
           </div>
@@ -283,7 +283,7 @@
                     <div class="card-box">
                       <div id="pie-chart" ></div>
                     </div>
-                </div> --}}
+                </div>  --}}
               </div>
           </div>
         </div>
@@ -573,231 +573,63 @@
         </div>
         {{/if_eq}}
     </div>
-    {{!-- <div class="notification-box">
-        <div class="msg-sidebar notifications msg-noti">
-          <div class="topnav-dropdown-header">
-              <span>Messages</span>
-          </div>
-          <div class="drop-scroll msg-list-scroll">
-              <ul class="list-box">
-                <li>
-                    <a href="chat.html">
-                      <div class="list-item">
-                          <div class="list-left">
-                            <span class="avatar">R</span>
-                          </div>
-                          <div class="list-body">
-                            <span class="message-author">Richard Miles </span>
-                            <span class="message-time">12:28 AM</span>
-                            <div class="clearfix"></div>
-                            <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                          </div>
-                      </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="chat.html">
-                      <div class="list-item new-message">
-                          <div class="list-left">
-                            <span class="avatar">J</span>
-                          </div>
-                          <div class="list-body">
-                            <span class="message-author">John Doe</span>
-                            <span class="message-time">1 Aug</span>
-                            <div class="clearfix"></div>
-                            <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                          </div>
-                      </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="chat.html">
-                      <div class="list-item">
-                          <div class="list-left">
-                            <span class="avatar">T</span>
-                          </div>
-                          <div class="list-body">
-                            <span class="message-author"> Tarah Shropshire </span>
-                            <span class="message-time">12:28 AM</span>
-                            <div class="clearfix"></div>
-                            <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                          </div>
-                      </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="chat.html">
-                      <div class="list-item">
-                          <div class="list-left">
-                            <span class="avatar">M</span>
-                          </div>
-                          <div class="list-body">
-                            <span class="message-author">Mike Litorus</span>
-                            <span class="message-time">12:28 AM</span>
-                            <div class="clearfix"></div>
-                            <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                          </div>
-                      </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="chat.html">
-                      <div class="list-item">
-                          <div class="list-left">
-                            <span class="avatar">C</span>
-                          </div>
-                          <div class="list-body">
-                            <span class="message-author"> Catherine Manseau </span>
-                            <span class="message-time">12:28 AM</span>
-                            <div class="clearfix"></div>
-                            <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                          </div>
-                      </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="chat.html">
-                      <div class="list-item">
-                          <div class="list-left">
-                            <span class="avatar">D</span>
-                          </div>
-                          <div class="list-body">
-                            <span class="message-author"> Domenic Houston </span>
-                            <span class="message-time">12:28 AM</span>
-                            <div class="clearfix"></div>
-                            <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                          </div>
-                      </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="chat.html">
-                      <div class="list-item">
-                          <div class="list-left">
-                            <span class="avatar">B</span>
-                          </div>
-                          <div class="list-body">
-                            <span class="message-author"> Buster Wigton </span>
-                            <span class="message-time">12:28 AM</span>
-                            <div class="clearfix"></div>
-                            <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                          </div>
-                      </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="chat.html">
-                      <div class="list-item">
-                          <div class="list-left">
-                            <span class="avatar">R</span>
-                          </div>
-                          <div class="list-body">
-                            <span class="message-author"> Rolland Webber </span>
-                            <span class="message-time">12:28 AM</span>
-                            <div class="clearfix"></div>
-                            <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                          </div>
-                      </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="chat.html">
-                      <div class="list-item">
-                          <div class="list-left">
-                            <span class="avatar">C</span>
-                          </div>
-                          <div class="list-body">
-                            <span class="message-author"> Claire Mapes </span>
-                            <span class="message-time">12:28 AM</span>
-                            <div class="clearfix"></div>
-                            <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                          </div>
-                      </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="chat.html">
-                      <div class="list-item">
-                          <div class="list-left">
-                            <span class="avatar">M</span>
-                          </div>
-                          <div class="list-body">
-                            <span class="message-author">Melita Faucher</span>
-                            <span class="message-time">12:28 AM</span>
-                            <div class="clearfix"></div>
-                            <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                          </div>
-                      </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="chat.html">
-                      <div class="list-item">
-                          <div class="list-left">
-                            <span class="avatar">J</span>
-                          </div>
-                          <div class="list-body">
-                            <span class="message-author">Jeffery Lalor</span>
-                            <span class="message-time">12:28 AM</span>
-                            <div class="clearfix"></div>
-                            <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                          </div>
-                      </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="chat.html">
-                      <div class="list-item">
-                          <div class="list-left">
-                            <span class="avatar">L</span>
-                          </div>
-                          <div class="list-body">
-                            <span class="message-author">Loren Gatlin</span>
-                            <span class="message-time">12:28 AM</span>
-                            <div class="clearfix"></div>
-                            <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                          </div>
-                      </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="chat.html">
-                      <div class="list-item">
-                          <div class="list-left">
-                            <span class="avatar">T</span>
-                          </div>
-                          <div class="list-body">
-                            <span class="message-author">Tarah Shropshire</span>
-                            <span class="message-time">12:28 AM</span>
-                            <div class="clearfix"></div>
-                            <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                          </div>
-                      </div>
-                    </a>
-                </li>
-              </ul>
-          </div>
-          <div class="topnav-dropdown-footer">
-              <a href="chat.html">See all messages</a>
-          </div>
-        </div>
-    </div> --}}
   </div>
 {{/if_eq}}
 {{#content "script" mode="append"}}
+<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
         <script>
-        var data = [
+        $(document).ready(function(e){
+          $.ajax({
+            type: "GET",
+            url: "/get-chart-value",
+            success: function (response) {
+              console.log(response.pieChart);
+              config = {
+                data: response.pieChart,
+                xkey: 'y',
+                ykeys: ['a', 'b'],
+                labels: ['Total Income', 'Total Outcome'],
+                fillOpacity: 0.6,
+                hideHover: 'auto',
+                behaveLikeLine: true,
+                resize: true,
+                pointFillColors: ['#ffffff'],
+                pointStrokeColors: ['black'],
+                gridLineColor: '#eef0f2',
+                lineColors: ['gray', 'orange']
+              };
+              config.element = 'area-chart';
+              Morris.Area(config);
+              config.element = 'line-chart';
+              Morris.Line(config);
+              config.element = 'bar-chart';
+              Morris.Bar(config);
+              config.element = 'stacked';
+              config.stacked = true;
+              Morris.Bar(config);
+              Morris.Donut({
+                element: 'pie-chart',
+                data: [
+                  { label: "Employees", value: 30 },
+                  { label: "Clients", value: 15 },
+                  { label: "Projects", value: 45 },
+                  { label: "Tasks", value: 10 }
+                ]
+              });
+            },
+            error: function (xhr) {
+
+            }
+          });
+        });
+       /* var data = [
 			  { y: '2014', a: 50, b: 90},
 			  { y: '2015', a: 65,  b: 75},
 			  { y: '2016', a: 50,  b: 50},
-			  { y: '2017', a: 75,  b: 60},
-			  { y: '2018', a: 80,  b: 65},
-			  { y: '2019', a: 90,  b: 70},
-			  { y: '2020', a: 100, b: 75},
-			  { y: '2021', a: 115, b: 75},
-			  { y: '2022', a: 120, b: 85},
-			  { y: '2023', a: 145, b: 85},
-			  { y: '2024', a: 160, b: 95}
+			  { y: '2017', a: 75,  b: 60}
 			],
 			config = {
 			  data: data,
@@ -830,6 +662,6 @@
 			{label: "Projects", value: 45},
 			{label: "Tasks", value: 10}
 		  ]
-		});
+		});*/
 		</script>
 {{/content}}

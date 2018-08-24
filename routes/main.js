@@ -24,6 +24,8 @@ const Jurisdiction = require('../models').jurisdiction;
 const client = require('../models').client;
 const user = require('../models').user;
 const ContactInformation = require('../models').contact_information;
+const Activity = require('../models').activity;
+const TargetActivity = require('../models').jointactivity;
 var csrfProtection = csrf({
 	cookie: true
 });
@@ -730,6 +732,18 @@ router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 			'contact_id': req.params['id']
 		}
 	});
+	TargetActivity.belongsTo(Activity, {
+		foreignKey: 'activity_id'
+	});
+	const activity_details = await TargetActivity.findAll({
+		where: {
+			target_client_type: "C",
+			type: req.params['id']
+		},
+		include: [{
+			model: Activity
+		}]
+	});
 
 	res.render('client/viewClient', {
 		layout: 'dashboard',
@@ -745,7 +759,8 @@ router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		zipcode: client_zipcode,
 		error_message,
 		existing_tag: existingTag,
-		contactDetails
+		contactDetails,
+		activity_details
 	});
 });
 

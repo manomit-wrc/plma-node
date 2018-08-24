@@ -195,6 +195,33 @@ router.get('/dashboard', auth,  async(req, res) => {
     }
     var total_budget_amount = budgetArr.reduce((a, b) => a + b, 0);
 /* =================== Total Budgets Count Ends =============================================== */
+
+/* =================== Starts Chart Section ====================================================*/
+
+    var pieChart = [];
+    pieChart.push({
+        y:2014,
+        a:40,
+        b:60
+    });
+    pieChart.push({
+        y:2015,
+        a:70,
+        b:60
+    })
+    pieChart.push({
+       y:2016,
+       a:40,
+       b:65
+    })
+    pieChart.push({
+        y:2017,
+        a:70,
+        b:45
+    })
+
+    
+/* =================== Ends Chart Section ======================================================*/
     res.render('dashboard', {
         layout: 'dashboard',
         auth_msg: auth_msg,
@@ -218,11 +245,39 @@ router.get('/dashboard', auth,  async(req, res) => {
         employee,
         attorney_count,
         attorney,
-        total_budget_amount
+        total_budget_amount,
+        pieChart
     });
 }).get('/logout', auth, (req, res) => {
     req.logout();
     res.redirect('/');
+});
+
+router.get("/get-chart-value", auth, async(req, res)=> {
+    var pieChart = [];
+    pieChart.push({
+        y: '2014',
+        a: 40,
+        b: 60
+    });
+    pieChart.push({
+        y: '2015',
+        a: 70,
+        b: 60
+    })
+    pieChart.push({
+        y: '2016',
+        a: 40,
+        b: 65
+    })
+    pieChart.push({
+        y: '2017',
+        a: 70,
+        b: 45
+    });
+    res.send({
+        pieChart
+    });
 });
 
 router.get('/profile', auth, async (req, res) => {
