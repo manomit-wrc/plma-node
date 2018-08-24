@@ -285,7 +285,7 @@
           }
           if (response.approval_noti.length > 0) {
             for (var j = 0; j < response.approval_noti.length; j++) {
-              var todayTime = new Date(response.approval_noti[j].activity_creation_date);
+              var todayTime = new Date(response.approval_noti[j].activity.activity_creation_date);
               month = '' + (todayTime.getMonth() + 1),
               day = '' + todayTime.getDate(),
               year = todayTime.getFullYear();
@@ -295,7 +295,7 @@
 
               var creation_date = [month, day, year].join('-');
 
-              var d = new Date(response.approval_noti[j].updatedAt),
+              var d = new Date(response.approval_noti[j].activity.updatedAt),
                 dformat = [d.getMonth() + 1,
                 d.getDate(),
                 d.getFullYear()].join('-') + ' ' +
@@ -341,7 +341,7 @@
                   '<div class="media-body">' +
                     '<p class="m-0 noti-details">' +
                       '<span class="noti-title">' +
-                        " Request for approval for " + '<b>' + response.approval_noti[j].activity_name + '</b>' + " from " + response.approval_noti[j].user.first_name + " " + response.approval_noti[j].user.last_name + " on " + creation_date +"."+
+                        " Request for approval for " + '<b>' + response.approval_noti[j].activity.activity_name + '</b>' + " from " + response.approval_noti[j].user.first_name + " " + response.approval_noti[j].user.last_name + " on " + creation_date +"."+
                       '</span>' +
                     '</p>' +
                     '<p class="m-0">' +
