@@ -104,9 +104,14 @@ router.get('/master_contact', auth, firmAttrAuth, csrfProtection, async (req, re
 	}
 	whereCondition.contact_status = 1;
 
+	// console.log(whereCondition);
+	
 	const result = await Contact.findAll({
 		where: whereCondition
 	});
+
+	// console.log(result.length);
+	
 
 	const attorney = await user.findAll({
         where: {

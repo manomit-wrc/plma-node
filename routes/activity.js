@@ -21,6 +21,9 @@ const User = require('../models').user;
 const requestApproval = require('../models').request_approval;
 var fileName = '';
 
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+
 // File upload
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -836,14 +839,23 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
     var userInformation_4_l3;
     var userInformation_4_l2;
     var userInformation_4_l1;
+    var userInformation_3_l3;
+    var userInformation_3_l2;
+    var userInformation_3_l1;
     var userInformation_2_l2;
     var userInformation_2_l1;
+    var userInformation_1_l1;
+
 
     const firmDetails = await Firm.findOne({
         where: {
-            'id': req.user.firm_id
+            'id': req.user.firm_id,
+            // 'approver': 1
         }
     });
+
+    // console.log('firmDetails',firmDetails);
+    
 
 
     if (firmDetails['approval_level'] === 2) {
@@ -852,6 +864,16 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
             where: {
                 'designation_id': firmDetails['level_2'],
                 'section_id': 0,
+                'approver': 1,
+                'firm_id': req.user.firm_id
+            }
+        });
+
+        userInformation_2_l1 = await User.findOne({
+            where: {
+                'designation_id': firmDetails['level_1'],
+                'section_id': 0,
+                'approver': 1,
                 'firm_id': req.user.firm_id
             }
         });
@@ -861,85 +883,166 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
                 where: {
                     'designation_id': firmDetails['level_2'],
                     'section_id': req.user['section_id'],
+                    'approver': 1,
                     'firm_id': req.user.firm_id
                 }
             });
         }
-
-        userInformation_2_l1 = await User.findOne({
-            where: {
-                'designation_id': firmDetails['level_1'],
-                'section_id': 0,
-                'firm_id': req.user.firm_id
-            }
-        });
 
         if (userInformation_2_l1 === null) {
             userInformation_2_l1 = await User.findOne({
                 where: {
                     'designation_id': firmDetails['level_1'],
                     'section_id': req.user['section_id'],
+                    'approver': 1,
                     'firm_id': req.user.firm_id
                 }
             });
         }
+
+        if (userInformation_2_l2 !== null) {
+            await requestApproval.create({
+                activity_id: req.params['id'],
+                approver_id: userInformation_2_l2.id,
+                status: 1,
+                approver_status: 2,
+                approve: 0
+            });
+        }
+
+        if (userInformation_2_l1 !== null) {
+            await requestApproval.create({
+                activity_id: req.params['id'],
+                approver_id: userInformation_2_l1.id,
+                status: 0,
+                approver_status: 1,
+                approve: 0
+            });
+        }
+
+        const _activityApprovals = await requestApproval.findOne({
+            attributes: [[Sequelize.fn('MAX', Sequelize.col('approver_status')), 'max_approver_status']],
+            where: {
+                'activity_id' : req.params['id']
+            }
+        });
+
+       await requestApproval.update({
+        'status':'1'
+       },{
+           where:{
+            'activity_id' : req.params['id'],
+            'approver_status':_activityApprovals.get('max_approver_status')
+           }
+       });
+
 
     } else if (firmDetails['approval_level'] === 3) {
 
-        var userInformation_3_l3 = await User.findOne({
+        userInformation_3_l3 = await User.findOne({
             where: {
                 'designation_id': firmDetails['level_3'],
                 'section_id': 0,
+                'approver': 1,
                 'firm_id': req.user.firm_id
             }
         });
 
-        if (userInformation_3_l3 === null) {
-            var userInformation_3_l3 = await User.findOne({
-                where: {
-                    'designation_id': firmDetails['level_3'],
-                    'section_id': req.user['section_id'],
-                    'firm_id': req.user.firm_id
-                }
-            });
-        }
-
-
-        var userInformation_3_l2 = await User.findOne({
+        userInformation_3_l2 = await User.findOne({
             where: {
                 'designation_id': firmDetails['level_2'],
                 'section_id': 0,
+                'approver': 1,
                 'firm_id': req.user.firm_id
             }
         });
 
-        if (userInformation_3_l2 === null) {
-            var userInformation_3_l2 = await User.findOne({
-                where: {
-                    'designation_id': firmDetails['level_2'],
-                    'section_id': req.user['section_id'],
-                    'firm_id': req.user.firm_id
-                }
-            });
-        }
-
-        var userInformation_3_l1 = await User.findOne({
+        userInformation_3_l1 = await User.findOne({
             where: {
                 'designation_id': firmDetails['level_1'],
                 'section_id': 0,
+                'approver': 1,
                 'firm_id': req.user.firm_id
             }
         });
 
-        if (userInformation_3_l1 === null) {
-            var userInformation_3_l1 = await User.findOne({
+
+        if (userInformation_3_l3 === null) {
+            userInformation_3_l3 = await User.findOne({
                 where: {
-                    'designation_id': firmDetails['level_1'],
+                    'designation_id': firmDetails['level_3'],
                     'section_id': req.user['section_id'],
+                    'approver': 1,
                     'firm_id': req.user.firm_id
                 }
             });
         }
+
+        if (userInformation_3_l2 === null) {
+            userInformation_3_l2 = await User.findOne({
+                where: {
+                    'designation_id': firmDetails['level_2'],
+                    'section_id': req.user['section_id'],
+                    'approver': 1,
+                    'firm_id': req.user.firm_id
+                }
+            });
+        }
+
+        if (userInformation_3_l1 === null) {
+            userInformation_3_l1 = await User.findOne({
+                where: {
+                    'designation_id': firmDetails['level_1'],
+                    'section_id': req.user['section_id'],
+                    'approver': 1,
+                    'firm_id': req.user.firm_id
+                }
+            });
+        }
+
+        if (userInformation_3_l3 !== null) {
+            await requestApproval.create({
+                activity_id: req.params['id'],
+                approver_id: userInformation_3_l3.id,
+                status: 1,
+                approver_status: 3,
+                approve: 0
+            });
+        }
+        if (userInformation_3_l2 !== null) {
+            await requestApproval.create({
+                activity_id: req.params['id'],
+                approver_id: userInformation_3_l2.id,
+                status: 0,
+                approver_status: 2,
+                approve: 0
+            });
+        }
+        if (userInformation_3_l1 !== null) {
+            await requestApproval.create({
+                activity_id: req.params['id'],
+                approver_id: userInformation_3_l1.id,
+                status: 0,
+                approver_status: 1,
+                approve: 0
+            });
+        }
+
+        const _activityApprovals = await requestApproval.findOne({
+            attributes: [[Sequelize.fn('MAX', Sequelize.col('approver_status')), 'max_approver_status']],
+            where: {
+                'activity_id' : req.params['id']
+            }
+        });
+
+       await requestApproval.update({
+        'status':'1'
+       },{
+           where:{
+            'activity_id' : req.params['id'],
+            'approver_status':_activityApprovals.get('max_approver_status')
+           }
+       });
 
     } else if (firmDetails['approval_level'] === 4) {
 
@@ -947,19 +1050,16 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
             where: {
                 'designation_id': firmDetails['level_4'],
                 'section_id': 0,
+                'approver': 1,
                 'firm_id': req.user.firm_id
             }
         });
-        // if (userInformation_4_l4) {
-        //     requestApproval.create({
-                
-        //     })
-        // }
 
         userInformation_4_l3 = await User.findOne({
             where: {
                 'designation_id': firmDetails['level_3'],
                 'section_id': 0,
+                'approver': 1,
                 'firm_id': req.user.firm_id
             }
         });
@@ -968,6 +1068,7 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
             where: {
                 'designation_id': firmDetails['level_2'],
                 'section_id': 0,
+                'approver': 1,
                 'firm_id': req.user.firm_id
             }
         });
@@ -976,6 +1077,7 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
             where: {
                 'designation_id': firmDetails['level_1'],
                 'section_id': 0,
+                'approver': 1,
                 'firm_id': req.user.firm_id
             }
         });
@@ -985,16 +1087,17 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
                 where: {
                     'designation_id': firmDetails['level_4'],
                     'section_id': req.user['section_id'],
+                    'approver': 1,
                     'firm_id': req.user.firm_id
                 }
             });
-
         }
         if (userInformation_4_l3 === null) {
             var userInformation_4_l3 = await User.findOne({
                 where: {
                     'designation_id': firmDetails['level_3'],
                     'section_id': req.user['section_id'],
+                    'approver': 1,
                     'firm_id': req.user.firm_id
                 }
             });
@@ -1004,6 +1107,7 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
                 where: {
                     'designation_id': firmDetails['level_2'],
                     'section_id': req.user['section_id'],
+                    'approver': 1,
                     'firm_id': req.user.firm_id
                 }
             });
@@ -1013,35 +1117,122 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
                 where: {
                     'designation_id': firmDetails['level_1'],
                     'section_id': req.user['section_id'],
+                    'approver': 1,
                     'firm_id': req.user.firm_id
                 }
             });
         }
 
+        if (userInformation_4_l4 !== null) {
+            await requestApproval.create({
+                activity_id: req.params['id'],
+                approver_id: userInformation_4_l4.id,
+                status: 0,
+                approver_status: 4,
+                approve: 0
+            });
+        }
+        if (userInformation_4_l3 !== null) {
+            await requestApproval.create({
+                activity_id: req.params['id'],
+                approver_id: userInformation_4_l3.id,
+                status: 0,
+                approver_status: 3,
+                approve: 0
+            });
+        }
+        if (userInformation_4_l2 !== null) {
+            await requestApproval.create({
+                activity_id: req.params['id'],
+                approver_id: userInformation_4_l2.id,
+                status: 0,
+                approver_status: 2,
+                approve: 0
+            });
+        }
+        if (userInformation_4_l1 !== null) {
+            await requestApproval.create({
+                activity_id: req.params['id'],
+                approver_id: userInformation_4_l1.id,
+                status: 0,
+                approver_status: 1,
+                approve: 0
+            });
+        }
 
+        const _activityApprovals = await requestApproval.findOne({
+            attributes: [[Sequelize.fn('MAX', Sequelize.col('approver_status')), 'max_approver_status']],
+            where: {
+                'activity_id' : req.params['id']
+            }
+        });
+
+       await requestApproval.update({
+        'status':'1'
+       },{
+           where:{
+            'activity_id' : req.params['id'],
+            'approver_status':_activityApprovals.get('max_approver_status')
+           }
+       });
+
+
+    } else {
+        userInformation_1_l1 = await User.findAll({
+            where: {
+                'designation_id': firmDetails['level_1'],
+                'section_id': 0,
+                'approver': 1,
+                'firm_id': req.user.firm_id
+            }
+        });
+
+        if (userInformation_1_l1 === null) {
+            userInformation_1_l1 = await User.findOne({
+                where: {
+                    'designation_id': firmDetails['level_1'],
+                    'section_id': req.user['section_id'],
+                    'approver': 1,
+                    'firm_id': req.user.firm_id
+                }
+            });
+        } 
+
+        if (userInformation_1_l1 !== null) {
+            await requestApproval.create({
+                activity_id: req.params['id'],
+                approver_id: userInformation_1_l1.id,
+                status: 1,
+                approver_status: 2,
+                approve: 0
+            });
+        }
+
+        const _activityApprovals = await requestApproval.findOne({
+            attributes: [[Sequelize.fn('MAX', Sequelize.col('approver_status')), 'max_approver_status']],
+            where: {
+                'activity_id' : req.params['id']
+            }
+        });
+
+       await requestApproval.update({
+        'status':'1'
+       },{
+           where:{
+            'activity_id' : req.params['id'],
+            'approver_status':_activityApprovals.get('max_approver_status')
+           }
+       });
 
     }
 
-    console.log('------------------------------');
-    console.log('------------------------->1', userInformation_4_l4.id);
-    console.log('------------------------->2', userInformation_4_l3);
-    console.log('------------------------->3', userInformation_4_l2.id);
-    console.log('------------------------->4', userInformation_4_l1);
-    console.log('------------------------------');
-
-
-
-    // console.log(userInformation_4_l4[0]['id'],userInformation_4_l3[0]['id'],userInformation_4_l2[0]['id'],userInformation_4_l1[0]['id']);
-
-
-
-    /* await Activity.update({
+    await Activity.update({
         activity_status: 1
     }, {
         where: {
             id: req.params['id']
         }
-    }); */
+    });
 
     res.json({
         success: true
