@@ -3,6 +3,10 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+
 {{/content}}
 <div class="page-wrapper">
 	<div class="content container-fluid">
@@ -775,11 +779,11 @@
 					<input type="hidden" name="_csrf" value="{{csrfToken}}">
 					<div class="row">
 						<div class="col-md-6">
-							<div class="form-group form-focus select-focus">
+							<div class="form-group form-focus select-focus select-attorney">
 								<label class="control-label">Office Name
 									<span class="text-danger">*</span>
 								</label>
-								<select class="select" name="office_id" id="office_id">
+								<select class="form-control floating selectpicker" name="office_id" id="office_id" data-show-subtext="true" data-live-search="true">
 									<option value="">Select Office</option>
 									{{#each office}}
 										<option value="{{this.id}}">{{this.name}}</option>
@@ -788,11 +792,11 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group form-focus select-focus">
+							<div class="form-group form-focus select-focus select-attorney">
 								<label class="control-label">Designation
 									<span class="text-danger">*</span>
 								</label>
-								<select class="select" name="designation_id" id="designation_id">
+								<select class="form-control floating selectpicker" name="designation_id" id="designation_id" data-show-subtext="true" data-live-search="true">
 									<option value="">Select Designation</option>
 									{{#each designation}}
 									<option value="{{this.id}}">{{this.title}}</option>
@@ -1036,11 +1040,11 @@
 					<input type="hidden" name="_csrf" value="{{csrfToken}}">
 					<div class="row">
 						<div class="col-md-6">
-							<div class="form-group">
+							<div class="form-group select-attorney">
 								<label class="control-label">Office Name
 									<span class="text-danger">*</span>
 								</label>
-								<select class="select" name="edit_office_id" id="edit_office_id">
+								<select class="form-control floating selectpicker" name="edit_office_id" id="edit_office_id" data-show-subtext="true" data-live-search="true">
 									{{#each office}}
 									<option value="{{this.id}}">{{this.name}}</option>
 									{{/each}}
@@ -1048,11 +1052,11 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group">
+							<div class="form-group select-attorney">
 								<label class="control-label">Designation
 									<span class="text-danger">*</span>
 								</label>
-								<select class="select" name="edit_designation_id" id="edit_designation_id">
+								<select class="form-control floating selectpicker" name="edit_designation_id" id="edit_designation_id" data-show-subtext="true" data-live-search="true">
 									{{#each designation}}
 									<option value="{{this.id}}">{{this.title}}</option>
 									{{/each}}
@@ -1185,6 +1189,12 @@
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+
+
+
 <script type="text/javascript">
 
 	/*===============================Starts Add Ofiice Section========================================*/

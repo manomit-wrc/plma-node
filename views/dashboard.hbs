@@ -1,575 +1,635 @@
-<div class="page-wrapper">
-   <div class="content container-fluid">
+{{#if_eq user.role_id "1"}}
+  <div class="page-wrapper">
+    <div class="content container-fluid">
       {{#if auth_msg}}
-        <div class="alert alert-danger">
-            <strong>Error! </strong>{{auth_msg}}
-        </div>
-      {{/if}}
-      {{#if changeFirmToAttr}}
-        <div class="alert alert-success">
-            <strong>Success! </strong>{{changeFirmToAttr}}
-        </div>
-      {{/if}}
-      {{#if changeAttrToFirm}}
-        <div class="alert alert-success">
-            <strong>Success! </strong>{{changeAttrToFirm}}
-        </div>
-      {{/if}}
-      {{#if changeSite}}
-        <div class="alert alert-success">
-            <strong>Success! </strong>{{changeSite}}
-        </div>
+      <div class="alert alert-danger">
+        <strong>Error! </strong>{{auth_msg}}
+      </div>
+      {{/if}} {{#if changeFirmToAttr}}
+      <div class="alert alert-success">
+        <strong>Success! </strong>{{changeFirmToAttr}}
+      </div>
+      {{/if}} {{#if changeAttrToFirm}}
+      <div class="alert alert-success">
+        <strong>Success! </strong>{{changeAttrToFirm}}
+      </div>
+      {{/if}} {{#if changeSite}}
+      <div class="alert alert-success">
+        <strong>Success! </strong>{{changeSite}}
+      </div>
       {{/if}}
       <div class="row">
-         <div class="col-md-6 col-sm-6 col-lg-3">
-            <div class="dash-widget clearfix card-box">
-               <span class="dash-widget-icon"><i class="fa fa-cubes" aria-hidden="true"></i></span>
-               <div class="dash-widget-info">
-                  <h3>{{activity_count}}</h3>
-                  <span>Activities</span>
-               </div>
+        <div class="col-md-6 col-sm-6 col-lg-3">
+          <div class="dash-widget clearfix card-box">
+            <span class="dash-widget-icon">
+              <i class="fa fa-cubes" aria-hidden="true"></i>
+            </span>
+            <div class="dash-widget-info">
+              <h3>{{firm_count}}</h3>
+              <span>Firms</span>
             </div>
-         </div>
-         <div class="col-md-6 col-sm-6 col-lg-3">
-            <div class="dash-widget clearfix card-box">
-               <span class="dash-widget-icon"><i class="fa fa-users" aria-hidden="true"></i></span>
-               <div class="dash-widget-info">
-                  <h3>{{target_count}}</h3>
-                  <span>Targets</span>
-               </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-3">
+          <div class="dash-widget clearfix card-box">
+            <span class="dash-widget-icon">
+              <i class="fa fa-users" aria-hidden="true"></i>
+            </span>
+            <div class="dash-widget-info">
+              <h3>{{employee_count}}</h3>
+              <span>Employess</span>
             </div>
-         </div>
-         <div class="col-md-6 col-sm-6 col-lg-3">
-            <div class="dash-widget clearfix card-box">
-               <span class="dash-widget-icon"><i class="fa fa-users"></i></span>
-               <div class="dash-widget-info">
-                  <h3>{{client_count}}</h3>
-                  <span>Clients</span>
-               </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-3">
+          <div class="dash-widget clearfix card-box">
+            <span class="dash-widget-icon">
+              <i class="fa fa-users"></i>
+            </span>
+            <div class="dash-widget-info">
+              <h3>{{attorney_count}}</h3>
+              <span>Attorneys</span>
             </div>
-         </div>
-         <div class="col-md-6 col-sm-6 col-lg-3">
-            <div class="dash-widget clearfix card-box">
-               <span class="dash-widget-icon"><i class="fa fa-users" aria-hidden="true"></i></span>
-               <div class="dash-widget-info">
-                  <h3>{{referral_count}}</h3>
-                  <span>Referrals</span>
-               </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-3">
+          <div class="dash-widget clearfix card-box">
+            <span class="dash-widget-icon">
+              <i class="fa fa-dollar" aria-hidden="true"></i>
+            </span>
+            <div class="dash-widget-info">
+              <h3>$ {{total_budget_amount}}</h3>
+              <span>Budgets</span>
             </div>
-         </div>
+          </div>
+        </div>
       </div>
       <div class="row">
-         <div class="col-md-12">
-            <div class="row">
-               <div class="col-sm-6 text-center">
-                  <div class="card-box">
-                     <div id="area-chart" ></div>
-                  </div>
-               </div>
-               <div class="col-sm-6 text-center">
-                  <div class="card-box">
-                     <div id="line-chart"></div>
-                  </div>
-               </div>
-               {{!-- <div  class="col-md-4 col-sm-12 text-center">
-                  <div class="card-box">
-                     <div id="bar-chart" ></div>
-                  </div>
-               </div>
-               <div class="col-md-4 col-sm-12 text-center">
-                  <div class="card-box">
-                     <div id="stacked" ></div>
-                  </div>
-               </div>
-               <div class="col-md-4 col-sm-12 text-center">
-                  <div class="card-box">
-                     <div id="pie-chart" ></div>
-                  </div>
-               </div> --}}
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-sm-6 text-center">
+              <div class="card-box">
+                <div id="area-chart"></div>
+              </div>
             </div>
-         </div>
+            <div class="col-sm-6 text-center">
+              <div class="card-box">
+                <div id="line-chart"></div>
+              </div>
+            </div>
+            {{!--
+            <div class="col-md-4 col-sm-12 text-center">
+              <div class="card-box">
+                <div id="bar-chart"></div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-12 text-center">
+              <div class="card-box">
+                <div id="stacked"></div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-12 text-center">
+              <div class="card-box">
+                <div id="pie-chart"></div>
+              </div>
+            </div> --}}
+          </div>
+        </div>
       </div>
-      {{#if_eq user.role_id "1"}}{{else}}
       <div class="row">
-         <div class="col-md-12">
+        <div class="col-md-6">
+          <div class="panel panel-table">
+            <div class="panel-heading">
+              <h3 class="panel-title">Firms</h3>
+            </div>
+            <div class="panel-body">
+              <div class="table-responsive">
+                <table class="table table-striped custom-table m-b-0">
+                  <thead>
+                    <tr>
+                      <th style="min-width:200px;">Firm Name</th>
+                      <th>Firm Admin</th>
+                      <th>Email</th>
+                      <th>Mobile</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#if_eq firm_count "0"}}
+                      <tr>
+                        <td colspan="4" class="text-center">No data available in table</td>
+                      </tr>
+                    {{else}}
+                      {{#each firm_admins}}
+                      <tr class="site_dashboard_custom_del">
+                        <td style="min-width:250px;">
+                          <a href="/firms" class="avatar">{{first_letter this.firm.title}}</a>
+                          <h2>
+                            <a href="/firms">{{this.firm.title}}</a>
+                          </h2>
+                        </td>
+                        <td>{{this.first_name}} {{this.last_name}}</td>
+                        <td>{{this.email}}</td>
+                        <td>{{this.mobile_no}}</td>
+                      </tr>
+                      {{/each}}
+                    {{/if_eq}}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="panel-footer">
+              <a href="/firms" class="text-primary">View all firms</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="panel panel-table">
+            <div class="panel-heading">
+              <h3 class="panel-title">Employees</h3>
+            </div>
+            <div class="panel-body">
+              <div class="table-responsive">
+                <table class="table table-striped custom-table m-b-0">
+                  <thead>
+                    <tr>
+                      <th style="min-width:200px;">Name</th>
+                      <th>Email</th>
+                      <th>Mobile</th>
+                      <th>Gender</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#if_eq employee_count "0"}}
+                      <tr>
+                        <td colspan="4" class="text-center">No data available in table</td>
+                      </tr>
+                    {{else}}
+                      {{#each employee}}
+                      <tr class="site_dashboard_custom_del">
+                        <td style="min-width:200px;">
+                          <a href="/employee/view/{{this.id}}" class="avatar">{{first_letter this.first_name}}</a>
+                          <h2>
+                            <a href="/employee/view/{{this.id}}">{{this.first_name}} {{this.last_name}}</a>
+                          </h2>
+                        </td>
+                        <td>{{this.email}}</td>
+                        <td>{{this.mobile_no}}</td>
+                        <td>{{#if_eq this.gender "M"}}
+                          Male
+                          {{/if_eq}}
+                          {{#if_eq this.gender "F"}} Female {{/if_eq}}
+                          {{#if_eq this.gender "O"}} Others {{/if_eq}}
+                        </td>
+                      </tr>
+                      {{/each}}
+                    {{/if_eq}}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="panel-footer">
+              <a href="/employees" class="text-primary">View all employees</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{{else}}
+  <div class="page-wrapper">
+    <div class="content container-fluid">
+        {{#if auth_msg}}
+          <div class="alert alert-danger">
+              <strong>Error! </strong>{{auth_msg}}
+          </div>
+        {{/if}}
+        {{#if changeFirmToAttr}}
+          <div class="alert alert-success">
+              <strong>Success! </strong>{{changeFirmToAttr}}
+          </div>
+        {{/if}}
+        {{#if changeAttrToFirm}}
+          <div class="alert alert-success">
+              <strong>Success! </strong>{{changeAttrToFirm}}
+          </div>
+        {{/if}}
+        {{#if changeSite}}
+          <div class="alert alert-success">
+              <strong>Success! </strong>{{changeSite}}
+          </div>
+        {{/if}}
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-lg-3">
+              <div class="dash-widget clearfix card-box">
+                <span class="dash-widget-icon"><i class="fa fa-cubes" aria-hidden="true"></i></span>
+                <div class="dash-widget-info">
+                    <h3>{{activity_count}}</h3>
+                    <span><a href="/activitypage" style="color:#333;">Activities</a></span>
+                </div>
+              </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-lg-3">
+              <div class="dash-widget clearfix card-box">
+                <span class="dash-widget-icon"><i class="fa fa-users" aria-hidden="true"></i></span>
+                <div class="dash-widget-info">
+                    <h3>{{target_count}}</h3>
+                    <span><a href="/target" style="color:#333;">Targets</a></span>
+                </div>
+              </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-lg-3">
+              <div class="dash-widget clearfix card-box">
+                <span class="dash-widget-icon"><i class="fa fa-users"></i></span>
+                <div class="dash-widget-info">
+                    <h3>{{client_count}}</h3>
+                    <span><a href="/client" style="color:#333;">Clients</a></span>
+                </div>
+              </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-lg-3">
+              <div class="dash-widget clearfix card-box">
+                <span class="dash-widget-icon"><i class="fa fa-users" aria-hidden="true"></i></span>
+                <div class="dash-widget-info">
+                    <h3>{{referral_count}}</h3>
+                    <span><a href="/referral" style="color:#333;">Referrals</a></span>
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+              <div class="row">
+                <div class="col-sm-6 text-center">
+                    <div class="card-box">
+                      <div id="area-chart" ></div>
+                    </div>
+                </div>
+                <div class="col-sm-6 text-center">
+                    <div class="card-box">
+                      <div id="line-chart"></div>
+                    </div>
+                </div>
+                {{!-- <div  class="col-md-4 col-sm-12 text-center">
+                    <div class="card-box">
+                      <div id="bar-chart" ></div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12 text-center">
+                    <div class="card-box">
+                      <div id="stacked" ></div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12 text-center">
+                    <div class="card-box">
+                      <div id="pie-chart" ></div>
+                    </div>
+                </div>  --}}
+              </div>
+          </div>
+        </div>
+        {{#if_eq user.role_id "1"}}{{else}}
+        <div class="row">
+          <div class="col-md-12">
+              <div class="panel panel-table">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Activities</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                      <table class="table table-striped custom-table m-b-0 ">
+                          <thead>
+                            <tr>
+                                <th style="width:10%">Creation Date</th>
+                                <th>Activity Name</th>
+                                <th>From Date</th>
+                                <th>To Date</th>
+                                <th>Total Hours</th>
+                                <th>Total Amount</th>
+                                <th>Status</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {{#if_eq activity_count "0"}}
+                                <tr>
+                                  <td colspan="7" class="text-center">No data available in table</td>
+                                </tr>
+                            {{else}}
+                            {{#each activity}}
+                              <tr class="activity_custom_del">
+                                  <td>{{dateFormat this.activity_creation_date "DD-MM-YYYY"}}</td>
+                                  <td>
+                                    <a href="/activity/view/{{this.id}}">{{this.activity_name}}</a></td>
+                                  <td>{{dateFormat this.activity_from_date "DD-MM-YYYY"}}</td>
+                                  <td>{{dateFormat this.activity_to_date "DD-MM-YYYY"}}</td>
+                                  <td>{{this.total_budget_hour}}</td>
+                                  <td>$ {{this.total_budget_amount}}</td>
+                                  <td>
+                                    {{#if_eq this.activity_status '0'}} <span class="label label-info-border">NEW ACTIVITY - CREATED </span>{{/if_eq}} {{#if_eq this.activity_status '1'}}
+                                    <span class="label label-warning-border">SENT FOR APPROVAL</span> {{/if_eq}} {{#if_eq this.activity_status '2'}} <span class="label label-success-border">APPROVED</span> {{/if_eq}} {{#if_eq
+                                    this.activity_status '3'}} <span class="label label-danger-border">NOT APPROVED</span> {{/if_eq}}
+                                  </td>
+                              </tr>
+                              {{/each}}
+                            {{/if_eq}}  
+                          </tbody>
+                      </table>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <a href="/activitypage" class="text-primary">View all activities</a>
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+              <div class="panel panel-table">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Clients</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                      <table class="table table-striped custom-table m-b-0">
+                          <thead>
+                            <tr>
+                                <th style="min-width:200px;">Name</th>
+                                <th>Email</th>
+                                <th>Client Type</th>
+                                <th>Mobile</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {{#if_eq client_count "0"}}
+                              <tr>
+                                <td colspan="4" class="text-center">No data available in table</td>
+                              </tr>
+                            {{else}}
+                              {{#each client}}
+                              <tr class="activity_custom_del">
+                                  <td style="min-width:200px;">
+                                    {{#if_eq client_type "I"}}
+                                      <a href="/client/view/{{this.id}}" class="avatar">{{first_letter this.first_name}}</a>
+                                    <h2><a href="/client/view/{{this.id}}">{{this.first_name}} {{this.last_name}} </a></h2>
+                                    {{else}}
+                                      <a href="/client/view/{{this.id}}" class="avatar">{{first_letter this.organization_name}}</a>
+                                      <h2>
+                                        <a href="/client/view/{{this.id}}">{{this.organization_name}}</a>
+                                      </h2>
+                                    {{/if_eq}}
+                                  </td>
+                                  <td>{{this.email}}</td>
+                                  <td>{{#if_eq client_type "I"}}
+                                    <span class="label label-success-border">Individual</span>
+                                    {{else}}
+                                    <span class="label label-info-border">Organization</span>
+                                    {{/if_eq}}
+                                  </td>
+                                  <td>{{this.mobile_no}}</td>
+                              </tr>
+                              {{/each}}
+                            {{/if_eq}}
+                          </tbody>
+                      </table>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <a href="/client" class="text-primary">View all clients</a>
+                </div>
+              </div>
+          </div>
+          <div class="col-md-6">
             <div class="panel panel-table">
-               <div class="panel-heading">
-                  <h3 class="panel-title">Activities</h3>
-               </div>
-               <div class="panel-body">
-                  <div class="table-responsive">
-                     <table class="table table-striped custom-table m-b-0 ">
-                        <thead>
-                           <tr>
-                              <th style="width:10%">Creation Date</th>
-                              <th>Activity Name</th>
-                              <th>From Date</th>
-                              <th>To Date</th>
-                              <th>Total Hours</th>
-                              <th>Total Amount</th>
-                              <th>Status</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                          {{#each activity}}
-                           <tr class="activity_custom_del">
-                              <td>{{dateFormat this.activity_creation_date "DD-MM-YYYY"}}</td>
-                              <td>
-                                <a href="/activity/view/{{this.id}}">{{this.activity_name}}</a></td>
-                              <td>{{dateFormat this.activity_from_date "DD-MM-YYYY"}}</td>
-                              <td>{{dateFormat this.activity_to_date "DD-MM-YYYY"}}</td>
-                              <td>{{this.total_budget_hour}}</td>
-                              <td>$ {{this.total_budget_amount}}</td>
-                              <td>
-                                 {{#if_eq this.activity_status '0'}} <span class="label label-info-border">NEW ACTIVITY - CREATED </span>{{/if_eq}} {{#if_eq this.activity_status '1'}}
-                                <span class="label label-warning-border">PENDING APPROVAL</span> {{/if_eq}} {{#if_eq this.activity_status '2'}} <span class="label label-success-border">APPROVED</span> {{/if_eq}} {{#if_eq
-                                this.activity_status '3'}} <span class="label label-danger-border">NOT APPROVED</span> {{/if_eq}}
-                              </td>
-                           </tr>
-                           {{/each}}
-                        </tbody>
-                     </table>
-                  </div>
-               </div>
-               <div class="panel-footer">
-                  <a href="/activitypage" class="text-primary">View all activities</a>
-               </div>
+              <div class="panel-heading">
+                <h3 class="panel-title">Targets</h3>
+              </div>
+              <div class="panel-body">
+                <div class="table-responsive">
+                  <table class="table table-striped custom-table m-b-0">
+                    <thead>
+                      <tr>
+                        <th style="min-width:200px;">Name</th>
+                        <th>Email</th>
+                        <th>Target Type</th>
+                        <th>Mobile</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {{#if_eq target_count "0"}}
+                          <tr>
+                            <td colspan="4" class="text-center">No data available in table</td>
+                          </tr>
+                      {{else}}
+                        {{#each target}}
+                        <tr class="activity_custom_del">
+                          <td style="min-width:200px;">
+                            {{#if_eq target_type "I"}}
+                            <a href="/target/view/{{this.id}}" class="avatar">{{first_letter this.first_name}}</a>
+                            <h2>
+                              <a href="/target/view/{{this.id}}">{{this.first_name}} {{this.last_name}} </a>
+                            </h2>
+                            {{else}}
+                            <a href="/target/view/{{this.id}}" class="avatar">{{first_letter this.organization_name}}</a>
+                            <h2>
+                              <a href="/target/view/{{this.id}}">{{this.organization_name}}</a>
+                            </h2>
+                            {{/if_eq}}
+                          </td>
+                          <td>{{this.email}}</td>
+                          <td>{{#if_eq target_type "I"}}
+                            <span class="label label-success-border">Individual</span>
+                            {{else}}
+                            <span class="label label-info-border">Organization</span>
+                            {{/if_eq}}
+                          </td>
+                          <td>{{this.mobile_no}}</td>
+                        </tr>
+                        {{/each}}
+                      {{/if_eq}}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="panel-footer">
+                <a href="/target" class="text-primary">View all targets</a>
+              </div>
             </div>
-         </div>
-      </div>
-      <div class="row">
-         <div class="col-md-6">
+          </div>
+        </div> 
+        <div class="row">
+          <div class="col-md-6">
             <div class="panel panel-table">
-               <div class="panel-heading">
-                  <h3 class="panel-title">Clients</h3>
-               </div>
-               <div class="panel-body">
-                  <div class="table-responsive">
-                     <table class="table table-striped custom-table m-b-0">
-                        <thead>
-                           <tr>
-                              <th style="min-width:200px;">Name</th>
-                              <th>Email</th>
-                              <th>Client Type</th>
-                              <th>Mobile</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                          {{#each client}}
-                           <tr class="activity_custom_del">
-                              <td style="min-width:200px;">
-                                {{#if_eq client_type "I"}}
-                                  <a href="/client/view/{{this.id}}" class="avatar">{{first_letter this.first_name}}</a>
-                                 <h2><a href="/client/view/{{this.id}}">{{this.first_name}} {{this.last_name}} </a></h2>
-                                 {{else}}
-                                  <a href="/client/view/{{this.id}}" class="avatar">{{first_letter this.organization_name}}</a>
-                                  <h2>
-                                    <a href="/client/view/{{this.id}}">{{this.organization_name}}</a>
-                                  </h2>
-                                 {{/if_eq}}
-                              </td>
-                              <td>{{this.email}}</td>
-                              <td>{{#if_eq client_type "I"}}
-                                <span class="label label-success-border">Individual</span>
-                                {{else}}
-                                <span class="label label-info-border">Organization</span>
-                                {{/if_eq}}
-                              </td>
-                              <td>{{this.mobile_no}}</td>
-                           </tr>
-                           {{/each}}
-                        </tbody>
-                     </table>
-                  </div>
-               </div>
-               <div class="panel-footer">
-                  <a href="/client" class="text-primary">View all clients</a>
-               </div>
+              <div class="panel-heading">
+                <h3 class="panel-title">Referrals</h3>
+              </div>
+              <div class="panel-body">
+                <div class="table-responsive">
+                  <table class="table table-striped custom-table m-b-0">
+                    <thead>
+                      <tr>
+                        <th style="min-width:200px;">Name</th>
+                        <th>Email</th>
+                        <th>Referral Type</th>
+                        <th>Mobile</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {{#if_eq referral_count "0"}}
+                        <tr>
+                          <td colspan="4" class="text-center">No data available in table</td>
+                        </tr>
+                      {{else}}
+                        {{#each referral}}
+                        <tr class="activity_custom_del">
+                          <td style="min-width:200px;">
+                            {{#if_eq referral_type "I"}}
+                            <a href="/referral/view/{{this.id}}" class="avatar">{{first_letter this.first_name}}</a>
+                            <h2>
+                              <a href="/referral/view/{{this.id}}">{{this.first_name}} {{this.last_name}}</a>
+                            </h2>
+                            {{else}}
+                            <a href="/referral/view/{{this.id}}" class="avatar">{{first_letter this.organization_name}}</a>
+                            <h2>
+                              <a href="/referral/view/{{this.id}}">{{this.organization_name}}</a>
+                            </h2>
+                            {{/if_eq}}
+                          </td>
+                          <td>{{this.email}}</td>
+                          <td>{{#if_eq referral_type "I"}}
+                            <span class="label label-success-border">Individual</span>
+                            {{else}}
+                            <span class="label label-info-border">Organization</span>
+                            {{/if_eq}}
+                          </td>
+                          <td>{{this.mobile}}</td>
+                        </tr>
+                        {{/each}}
+                      {{/if_eq}}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="panel-footer">
+                <a href="/referral" class="text-primary">View all referrals</a>
+              </div>
             </div>
-         </div>
-         <div class="col-md-6">
+          </div>
+          <div class="col-md-6">
             <div class="panel panel-table">
-               <div class="panel-heading">
-                  <h3 class="panel-title">Clients</h3>
-               </div>
-               <div class="panel-body">
-                  <div class="table-responsive">
-                     <table class="table table-striped custom-table m-b-0">
-                        <thead>
-                           <tr>
-                              <th style="min-width:200px;">Name</th>
-                              <th>Email</th>
-                              <th>Status</th>
-                              <th class="text-right">Action</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           <tr>
-                              <td style="min-width:200px;">
-                                 <a href="#" class="avatar">B</a>
-                                 <h2><a href="client-profile.html">Barry Cuda </a></h2>
-                              </td>
-                              <td>barrycuda@example.com</td>
-                              <td>
-                                 <div class="dropdown action-label">
-                                    <a class="btn btn-white btn-sm rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-dot-circle-o text-success"></i> Active <i class="caret"></i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-success"></i> Active</a></li>
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                              <td class="text-right">
-                                 <div class="dropdown">
-                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                       <li><a href="#" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <a class="avatar">T</a>
-                                 <h2><a href="client-profile.html">Tressa Wexler </a></h2>
-                              </td>
-                              <td>tressawexler@example.com</td>
-                              <td>
-                                 <div class="dropdown action-label">
-                                    <a class="btn btn-white btn-sm rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-dot-circle-o text-danger"></i> Inactive <i class="caret"></i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-success"></i> Active</a></li>
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                              <td class="text-right">
-                                 <div class="dropdown">
-                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                       <li><a href="#" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <a href="client-profile.html" class="avatar">R</a>
-                                 <h2><a href="client-profile.html">Ruby Bartlett </a></h2>
-                              </td>
-                              <td>rubybartlett@example.com</td>
-                              <td>
-                                 <div class="dropdown action-label">
-                                    <a class="btn btn-white btn-sm rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-dot-circle-o text-danger"></i> Inactive <i class="caret"></i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-success"></i> Active</a></li>
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                              <td class="text-right">
-                                 <div class="dropdown">
-                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                       <li><a href="#" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <a href="client-profile.html" class="avatar">M</a>
-                                 <h2><a href="client-profile.html"> Misty Tison </a></h2>
-                              </td>
-                              <td>mistytison@example.com</td>
-                              <td>
-                                 <div class="dropdown action-label">
-                                    <a class="btn btn-white btn-sm rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-dot-circle-o text-success"></i> Active <i class="caret"></i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-success"></i> Active</a></li>
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                              <td class="text-right">
-                                 <div class="dropdown">
-                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                       <li><a href="#" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <a href="client-profile.html" class="avatar">D</a>
-                                 <h2><a href="client-profile.html"> Daniel Deacon <span>CEO</span></a></h2>
-                              </td>
-                              <td>danieldeacon@example.com</td>
-                              <td>
-                                 <div class="dropdown action-label">
-                                    <a class="btn btn-white btn-sm rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-dot-circle-o text-danger"></i> Inactive <i class="caret"></i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-success"></i> Active</a></li>
-                                       <li><a href="#"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                              <td class="text-right">
-                                 <div class="dropdown">
-                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                    <ul class="dropdown-menu pull-right">
-                                       <li><a href="#" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                       <li><a href="#" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                    </ul>
-                                 </div>
-                              </td>
-                           </tr>
-                        </tbody>
-                     </table>
-                  </div>
-               </div>
-               <div class="panel-footer">
-                  <a href="clients.html" class="text-primary">View all clients</a>
-               </div>
+              <div class="panel-heading">
+                <h3 class="panel-title">Master Contacts</h3>
+              </div>
+              <div class="panel-body">
+                <div class="table-responsive">
+                  <table class="table table-striped custom-table m-b-0">
+                    <thead>
+                      <tr>
+                        <th style="min-width:200px;">Name</th>
+                        <th>Email</th>
+                        <th>Client Type</th>
+                        <th>Mobile</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {{#if_eq master_contact_count "0"}}
+                        <tr>
+                          <td colspan="4" class="text-center">No data available in table</td>
+                        </tr>
+                      {{else}}
+                        {{#each master_contact}}
+                        <tr class="activity_custom_del">
+                          <td style="min-width:200px;">
+                            {{#if_eq master_contact_type "I"}}
+                            <a href="/master_contact/view/{{this.id}}" class="avatar">{{first_letter this.first_name}}</a>
+                            <h2>
+                              <a href="/master_contact/view/{{this.id}}">{{this.first_name}} {{this.last_name}} </a>
+                            </h2>
+                            {{else}}
+                            <a href="/master_contact/view/{{this.id}}" class="avatar">{{first_letter this.organization_name}}</a>
+                            <h2>
+                              <a href="/master_contact/view/{{this.id}}">{{this.organization_name}}</a>
+                            </h2>
+                            {{/if_eq}}
+                          </td>
+                          <td>{{this.email}}</td>
+                          <td>{{#if_eq master_contact_type "I"}}
+                            <span class="label label-success-border">Individual</span>
+                            {{else}}
+                            <span class="label label-info-border">Organization</span>
+                            {{/if_eq}}
+                          </td>
+                          <td>{{this.mobile_no}}</td>
+                        </tr>
+                        {{/each}}
+                      {{/if_eq}}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="panel-footer">
+                <a href="/master_contact" class="text-primary">View all master contacts</a>
+              </div>
             </div>
-         </div>
-      </div> 
-      {{/if_eq}}
-   </div>
-   {{!-- <div class="notification-box">
-      <div class="msg-sidebar notifications msg-noti">
-         <div class="topnav-dropdown-header">
-            <span>Messages</span>
-         </div>
-         <div class="drop-scroll msg-list-scroll">
-            <ul class="list-box">
-               <li>
-                  <a href="chat.html">
-                     <div class="list-item">
-                        <div class="list-left">
-                           <span class="avatar">R</span>
-                        </div>
-                        <div class="list-body">
-                           <span class="message-author">Richard Miles </span>
-                           <span class="message-time">12:28 AM</span>
-                           <div class="clearfix"></div>
-                           <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                        </div>
-                     </div>
-                  </a>
-               </li>
-               <li>
-                  <a href="chat.html">
-                     <div class="list-item new-message">
-                        <div class="list-left">
-                           <span class="avatar">J</span>
-                        </div>
-                        <div class="list-body">
-                           <span class="message-author">John Doe</span>
-                           <span class="message-time">1 Aug</span>
-                           <div class="clearfix"></div>
-                           <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                        </div>
-                     </div>
-                  </a>
-               </li>
-               <li>
-                  <a href="chat.html">
-                     <div class="list-item">
-                        <div class="list-left">
-                           <span class="avatar">T</span>
-                        </div>
-                        <div class="list-body">
-                           <span class="message-author"> Tarah Shropshire </span>
-                           <span class="message-time">12:28 AM</span>
-                           <div class="clearfix"></div>
-                           <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                        </div>
-                     </div>
-                  </a>
-               </li>
-               <li>
-                  <a href="chat.html">
-                     <div class="list-item">
-                        <div class="list-left">
-                           <span class="avatar">M</span>
-                        </div>
-                        <div class="list-body">
-                           <span class="message-author">Mike Litorus</span>
-                           <span class="message-time">12:28 AM</span>
-                           <div class="clearfix"></div>
-                           <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                        </div>
-                     </div>
-                  </a>
-               </li>
-               <li>
-                  <a href="chat.html">
-                     <div class="list-item">
-                        <div class="list-left">
-                           <span class="avatar">C</span>
-                        </div>
-                        <div class="list-body">
-                           <span class="message-author"> Catherine Manseau </span>
-                           <span class="message-time">12:28 AM</span>
-                           <div class="clearfix"></div>
-                           <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                        </div>
-                     </div>
-                  </a>
-               </li>
-               <li>
-                  <a href="chat.html">
-                     <div class="list-item">
-                        <div class="list-left">
-                           <span class="avatar">D</span>
-                        </div>
-                        <div class="list-body">
-                           <span class="message-author"> Domenic Houston </span>
-                           <span class="message-time">12:28 AM</span>
-                           <div class="clearfix"></div>
-                           <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                        </div>
-                     </div>
-                  </a>
-               </li>
-               <li>
-                  <a href="chat.html">
-                     <div class="list-item">
-                        <div class="list-left">
-                           <span class="avatar">B</span>
-                        </div>
-                        <div class="list-body">
-                           <span class="message-author"> Buster Wigton </span>
-                           <span class="message-time">12:28 AM</span>
-                           <div class="clearfix"></div>
-                           <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                        </div>
-                     </div>
-                  </a>
-               </li>
-               <li>
-                  <a href="chat.html">
-                     <div class="list-item">
-                        <div class="list-left">
-                           <span class="avatar">R</span>
-                        </div>
-                        <div class="list-body">
-                           <span class="message-author"> Rolland Webber </span>
-                           <span class="message-time">12:28 AM</span>
-                           <div class="clearfix"></div>
-                           <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                        </div>
-                     </div>
-                  </a>
-               </li>
-               <li>
-                  <a href="chat.html">
-                     <div class="list-item">
-                        <div class="list-left">
-                           <span class="avatar">C</span>
-                        </div>
-                        <div class="list-body">
-                           <span class="message-author"> Claire Mapes </span>
-                           <span class="message-time">12:28 AM</span>
-                           <div class="clearfix"></div>
-                           <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                        </div>
-                     </div>
-                  </a>
-               </li>
-               <li>
-                  <a href="chat.html">
-                     <div class="list-item">
-                        <div class="list-left">
-                           <span class="avatar">M</span>
-                        </div>
-                        <div class="list-body">
-                           <span class="message-author">Melita Faucher</span>
-                           <span class="message-time">12:28 AM</span>
-                           <div class="clearfix"></div>
-                           <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                        </div>
-                     </div>
-                  </a>
-               </li>
-               <li>
-                  <a href="chat.html">
-                     <div class="list-item">
-                        <div class="list-left">
-                           <span class="avatar">J</span>
-                        </div>
-                        <div class="list-body">
-                           <span class="message-author">Jeffery Lalor</span>
-                           <span class="message-time">12:28 AM</span>
-                           <div class="clearfix"></div>
-                           <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                        </div>
-                     </div>
-                  </a>
-               </li>
-               <li>
-                  <a href="chat.html">
-                     <div class="list-item">
-                        <div class="list-left">
-                           <span class="avatar">L</span>
-                        </div>
-                        <div class="list-body">
-                           <span class="message-author">Loren Gatlin</span>
-                           <span class="message-time">12:28 AM</span>
-                           <div class="clearfix"></div>
-                           <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                        </div>
-                     </div>
-                  </a>
-               </li>
-               <li>
-                  <a href="chat.html">
-                     <div class="list-item">
-                        <div class="list-left">
-                           <span class="avatar">T</span>
-                        </div>
-                        <div class="list-body">
-                           <span class="message-author">Tarah Shropshire</span>
-                           <span class="message-time">12:28 AM</span>
-                           <div class="clearfix"></div>
-                           <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                        </div>
-                     </div>
-                  </a>
-               </li>
-            </ul>
-         </div>
-         <div class="topnav-dropdown-footer">
-            <a href="chat.html">See all messages</a>
-         </div>
-      </div>
-   </div> --}}
-</div>
+          </div>
+        </div>
+        {{/if_eq}}
+    </div>
+  </div>
+{{/if_eq}}
 {{#content "script" mode="append"}}
+<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
         <script>
-        var data = [
+        $(document).ready(function(e){
+          $.ajax({
+            type: "GET",
+            url: "/get-chart-value",
+            success: function (response) {
+              console.log(response.pieChart);
+              config = {
+                data: response.pieChart,
+                xkey: 'y',
+                ykeys: ['a', 'b'],
+                labels: ['Total Income', 'Total Outcome'],
+                fillOpacity: 0.6,
+                hideHover: 'auto',
+                behaveLikeLine: true,
+                resize: true,
+                pointFillColors: ['#ffffff'],
+                pointStrokeColors: ['black'],
+                gridLineColor: '#eef0f2',
+                lineColors: ['gray', 'orange']
+              };
+              config.element = 'area-chart';
+              Morris.Area(config);
+              config.element = 'line-chart';
+              Morris.Line(config);
+              config.element = 'bar-chart';
+              Morris.Bar(config);
+              config.element = 'stacked';
+              config.stacked = true;
+              Morris.Bar(config);
+              Morris.Donut({
+                element: 'pie-chart',
+                data: [
+                  { label: "Employees", value: 30 },
+                  { label: "Clients", value: 15 },
+                  { label: "Projects", value: 45 },
+                  { label: "Tasks", value: 10 }
+                ]
+              });
+            },
+            error: function (xhr) {
+
+            }
+          });
+        });
+       /* var data = [
 			  { y: '2014', a: 50, b: 90},
 			  { y: '2015', a: 65,  b: 75},
 			  { y: '2016', a: 50,  b: 50},
-			  { y: '2017', a: 75,  b: 60},
-			  { y: '2018', a: 80,  b: 65},
-			  { y: '2019', a: 90,  b: 70},
-			  { y: '2020', a: 100, b: 75},
-			  { y: '2021', a: 115, b: 75},
-			  { y: '2022', a: 120, b: 85},
-			  { y: '2023', a: 145, b: 85},
-			  { y: '2024', a: 160, b: 95}
+			  { y: '2017', a: 75,  b: 60}
 			],
 			config = {
 			  data: data,
@@ -602,6 +662,6 @@
 			{label: "Projects", value: 45},
 			{label: "Tasks", value: 10}
 		  ]
-		});
+		});*/
 		</script>
 {{/content}}

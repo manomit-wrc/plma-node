@@ -153,6 +153,9 @@ router.get('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =>
         }
     });
     const attorney = await user.findAll({
+        order: [
+			['first_name', 'ASC'],
+		],
         where: {
             role_id: 3,
             firm_id: req.user.firm_id
@@ -325,6 +328,9 @@ router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, re
         }
     });
     const attorney = await user.findAll({
+        order: [
+			['first_name', 'ASC'],
+		],
         where: {
             role_id: 3,
             firm_id: req.user.firm_id
@@ -386,7 +392,19 @@ router.get('/target/view/:id', auth, firmAttrAuth, csrfProtection, async(req, re
 		where: {
 			'contact_id': req.params['id']
 		}
-	});
+    });
+    TargetActivity.belongsTo(Activity, {
+        foreignKey: 'activity_id'
+    });
+    const activity_details = await TargetActivity.findAll({
+        where: {
+            target_client_type: "T",
+            type: req.params['id']
+        },
+        include: [{
+            model: Activity
+        }]
+    });
 
     res.render('target/targetview', {
         layout: 'dashboard',
@@ -400,7 +418,8 @@ router.get('/target/view/:id', auth, firmAttrAuth, csrfProtection, async(req, re
         attorney: attorney,
         zipcode: zipcode,
         error_message,
-        contactDetails
+        contactDetails,
+        activity_details
     });
 });
 

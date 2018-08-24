@@ -4,6 +4,10 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/jquery.tagsinput.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+
+
 {{/content}}
 <div class="page-wrapper">
 	<div class="content container-fluid">
@@ -134,14 +138,15 @@
 									<input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue">
 								</div>
 							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus select-focus">
+				           <div class="col-md-6">
+								<div class="form-group form-focus select-focus select-attorney">
 									<label class="control-label">Gender <span class="req-lbl">*</span> </label>
-									<select class="form-control floating" id="client_gender" name="client_gender">
+									<select class="form-control floating selectpicker" id="client_gender" name="client_gender" data-show-subtext="true" data-live-search="true">
 										<option value="">Select Gender</option>
 										<option value="M">Male</option>
 										<option value="F">Female</option>
-										<option value="O">Other</option>
+										<option value="O">Others</option>
+
 									</select>
 								</div>
 							</div>
@@ -248,23 +253,23 @@
 				<h3 class="card-title">Attorney Information</h3>
 				<div class="row">
 					<div class="col-md-12">
-						<div class="form-group form-focus select-focus">
-							<label class="control-label">Attorney <span class="req-lbl">*</span> </label>
-							<select id="attorney_id" name="attorney_id" class="form-control floating">
+						<div class="form-group form-focus select-focus select-attorney">
+							<label class="control-label">Attorney
+								<span class="req-lbl">*</span>
+							</label>
+							<select id="designation" name="attorney_id" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
 								{{#if_eq user.role_id "3"}}
-									<option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
+								<option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
 								{{else}}
-									<option value="">Select Attorney</option>
-									{{#each attorney}}
-										<option value="{{this.id}}" {{#if_eq this.id ../user.id}} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
-									{{/each}}
-								{{/if_eq}}
+								<option value="">Select Attorney</option>
+								{{#each attorney}}
+								<option value="{{this.id}}" {{#if_eq this.id ../user.id}} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+								{{/each}} {{/if_eq}}
 							</select>
 						</div>
 					</div>
 				</div>
 			</div>
-
 			<div class="card-box" id="m_s_target" style="display:none;">
 				<h3 class="card-title">Contact Information</h3>
 				<div class="contact-information targetPlus" id="contactInformationPlus">
@@ -475,9 +480,9 @@
 						</div>
 					</div>
 					<div class="col-md-6">
-						<div class="form-group form-focus select-focus">
+						<div class="form-group form-focus select-focus select-attorney">
 							<label class="control-label">Association Status</label>
-							<select id="association" name="association" class="form-control floating">
+							<select id="association" name="association" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
 								<option value="">Select Association</option>
 								<option value="NEW TARGET">NEW TARGET</option>
 								<option value="CONVERTED">CONVERTED</option>
@@ -486,9 +491,10 @@
 						</div>
 					</div>
 					<div class="col-md-6">
-						<div class="form-group form-focus select-focus">
-							<label class="control-label">Industry Type</label>
-							<select id="industry_type" name="industry_type" class="form-control floating">
+						<div class="form-group form-focus select-focus select-attorney">
+							<label class="control-label">Industry Type <span class="req-lbl">*</span> </label>
+							<select id="industry_type" name="industry_type" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
+
 								<option value="">Select Industry Type</option>
 								{{#each industry}}
 									<option value="{{this.id}}">{{this.industry_name}}</option>
@@ -521,6 +527,10 @@
 <script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+
+
 <script type="text/javascript">
 	$(document).ready(function (e) {
 		$("#current_revenue").inputmask("numeric", {

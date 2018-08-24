@@ -100,18 +100,13 @@ router.get('/master_contact', auth, firmAttrAuth, csrfProtection, async (req, re
 	}
 	whereCondition.firm_id = req.user.firm_id;
 	if (req.user.role_id != 2) {
-		whereCondition.user_id = req.user.id;
+		whereCondition.attorney_id = req.user.id;
 	}
 	whereCondition.contact_status = 1;
-
-	// console.log(whereCondition);
 	
 	const result = await Contact.findAll({
 		where: whereCondition
 	});
-
-	// console.log(result.length);
-	
 
 	const attorney = await user.findAll({
         where: {
@@ -156,6 +151,13 @@ router.get('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (req
 	});
 
 	const attorney = await user.findAll({
+
+		order: [
+			['first_name', 'ASC'],
+		],
+
+
+
 		where: {
 			role_id: 3,
 			firm_id: req.user.firm_id
@@ -321,6 +323,10 @@ router.get('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, async
 	});
 
 	const attorney = await user.findAll({
+		order: [
+			['first_name', 'ASC'],
+		],
+
 		where: {
 			'role_id': 3,
 			'firm_id': req.user.firm_id

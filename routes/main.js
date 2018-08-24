@@ -24,6 +24,8 @@ const Jurisdiction = require('../models').jurisdiction;
 const client = require('../models').client;
 const user = require('../models').user;
 const ContactInformation = require('../models').contact_information;
+const Activity = require('../models').activity;
+const TargetActivity = require('../models').jointactivity;
 var csrfProtection = csrf({
 	cookie: true
 });
@@ -70,6 +72,10 @@ router.get('/budget', csrfProtection, auth, siteAuth, (req, res) => {
 		whereCondition.name = req.query.budget_name;
 	}
 	budget.findAll({
+		order: [
+			['name', 'ASC']
+		],
+
 		where: whereCondition
 	}).then(show => {
 		res.render('budget/index', {
@@ -85,6 +91,7 @@ router.get('/budget', csrfProtection, auth, siteAuth, (req, res) => {
 
 router.post('/budget/add', auth, siteAuth, csrfProtection, (req, res) => {
 	budget.findAndCountAll({
+		
 		where: {
 			name: req.body.name
 		}
@@ -572,6 +579,10 @@ router.get('/client/add', auth, firmAttrAuth, csrfProtection, async (req, res) =
 	const tags = await Tag.findAll();
 
 	const attorney = await user.findAll({
+		order: [
+			['first_name', 'ASC']
+		],
+
 		where: {
 			role_id: 3,
 			firm_id: req.user.firm_id
@@ -619,6 +630,11 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 	const industrys = await Industry.findAll();
 	const client_country = await Country.findAll();
 	const attorney = await user.findAll({
+		order: [
+			['first_name', 'ASC']
+		],
+
+
 		where: {
 			role_id: 3,
 			firm_id: req.user.firm_id
@@ -730,6 +746,18 @@ router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 			'contact_id': req.params['id']
 		}
 	});
+	TargetActivity.belongsTo(Activity, {
+		foreignKey: 'activity_id'
+	});
+	const activity_details = await TargetActivity.findAll({
+		where: {
+			target_client_type: "C",
+			type: req.params['id']
+		},
+		include: [{
+			model: Activity
+		}]
+	});
 
 	res.render('client/viewClient', {
 		layout: 'dashboard',
@@ -745,7 +773,8 @@ router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		zipcode: client_zipcode,
 		error_message,
 		existing_tag: existingTag,
-		contactDetails
+		contactDetails,
+		activity_details
 	});
 });
 

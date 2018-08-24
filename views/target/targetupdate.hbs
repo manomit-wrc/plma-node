@@ -1,7 +1,12 @@
 {{#content "style" mode="prepend"}}
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> 
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+
+
+{{/content}}
 <div class="page-wrapper">
 	<div class="content container-fluid">
 		<div class="row">
@@ -110,14 +115,16 @@
 								</div>
 
 								<div class="col-md-6">
-									<div class="form-group form-focus select-focus">
+									<div class="form-group form-focus select-focus select-attorney">
 										<label class="control-label">Gender
 											<span class="req-lbl">*</span>
 										</label>
-										<select class="select form-control floating" id="gender" name="gender">
+										<select class="form-control floating selectpicker" id="gender" name="gender" data-show-subtext="true" data-live-search="true">
 											<option value="">Select Gender</option>
 											<option value="M" {{#if_eq client.gender "M"}} selected {{/if_eq}}>Male</option>
 											<option value="F" {{#if_eq client.gender "F"}} selected {{/if_eq}}>Female</option>
+											<option value="O" {{#if_eq client.gender "O"}} selected {{/if_eq}}>Others</option>
+
 										</select>
 									</div>
 								</div>
@@ -247,11 +254,11 @@
 				<h3 class="card-title">Attorney Information</h3>
 				<div class="row">
 					<div class="col-md-12">
-						<div class="form-group form-focus select-focus">
-							<label class="control-label">Attorney-{{client.attorney_id}}
+						<div class="form-group form-focus select-focus select-attorney">
+							<label class="control-label">Attorney
 								<span class="req-lbl">*</span>
 							</label>
-							<select id="attorney_id" name="attorney_id" class="select form-control floating">
+							<select id="attorney_id" name="attorney_id" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
 								{{#if_eq user.role_id "3"}}
 								<option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
 								{{else}}
@@ -490,9 +497,9 @@
 						</div>
 					</div>
 					<div class="col-md-6">
-						<div class="form-group form-focus select-focus">
+						<div class="form-group form-focus select-focus select-attorney">
 							<label class="control-label">Association Status </label>
-							<select id="association" name="association" class="select form-control">
+							<select id="association" name="association" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
 								<option value="NEW TARGET" {{#if_eq client.association "NEW TARGET"}} selected="selected" {{/if_eq}}>NEW TARGET</option>
 								<option value="CONVERTED" {{#if_eq client.association "CONVERTED"}} selected="selected" {{/if_eq}}>CONVERTED</option>
 								<option value="TS-INTERIM" {{#if_eq client.association "TS-INTERIM"}} selected="selected" {{/if_eq}}>TS-INTERIM</option>
@@ -500,9 +507,9 @@
 						</div>
 					</div>
 					<div class="col-md-6">
-						<div class="form-group form-focus select-focus">
+						<div class="form-group form-focus select-focus select-attorney">
 							<label class="control-label">Industry Type </label>
-							<select id="industry_type" name="industry_type" class="select form-control">
+							<select id="industry_type" name="industry_type" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
 								{{#each industry}}
 								<option value="{{this.id}}" {{#if_eq this.id ../client.industry_type}} selected="selected" {{/if_eq}}>{{this.industry_name}}</option>
 								{{/each}}
@@ -533,6 +540,10 @@
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+
+
 <script type="text/javascript">
 	$(document).ready(function (e) {
 		$("#attorney_id").trigger('change');

@@ -209,10 +209,19 @@ router.get('/referral/add', auth, firmAttrAuth, csrfProtection, async (req, res)
 	});
 
 	const client = await Client.findAll({
-		where: fetchClient
+		order: [
+			['first_name', 'ASC'],
+		],
+
+		where:fetchClient
 	});
 
 	const target = await Target.findAll({
+
+		order: [
+			['first_name', 'ASC'],
+		],
+
 		where: fetchTarget
 	});
 
@@ -402,7 +411,18 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 			'contact_id': req.params['id']
 		}
 	});
-
+	TargetActivity.belongsTo(Activity, {
+		foreignKey: 'activity_id'
+	});
+	const activity_details = await TargetActivity.findAll({
+		where: {
+			target_client_type: "R",
+			type: req.params['id']
+		},
+		include: [{
+			model: Activity
+		}]
+	});
 	res.render('referral/view', {
 		layout: 'dashboard',
 		industry,
@@ -415,7 +435,8 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		attorney,
 		client,
 		target,
-		contactDetails
+		contactDetails,
+		activity_details
 	});
 });
 
@@ -448,9 +469,19 @@ router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		}
 	});
 	const client = await Client.findAll({
+		order: [
+			['first_name', 'ASC'],
+		],
+
+
 		where: fetchClient
 	});
 	const target = await Target.findAll({
+
+		order: [
+			['first_name', 'ASC'],
+		],
+
 		where: fetchTarget
 	});
 

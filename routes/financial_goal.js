@@ -54,7 +54,10 @@ router.get('/financial-goal/add', auth, firmAuth, csrfProtection, async (req, re
 		year.push(i);
 	}
 	const attorney = await User.findAll({
-		where: { role_id: 3 }
+		order: [
+			['first_name', 'ASC']
+		],
+		where: {role_id: 3}
 	});
 	res.render('financial_goal/add', {layout: 'dashboard', csrfToken: req.csrfToken(), year, attorney});
 });
@@ -92,7 +95,12 @@ router.get("/financial-goal/edit/:id", auth, firmAuth, csrfProtection, async (re
 	}
 	const edit_financial_goal = await FinancialGoal.findById(req.params['id']);
 	const attorney = await User.findAll({
-		where: { role_id: 3 }
+
+		order: [
+			['first_name', 'ASC'],
+		],
+
+		where: {role_id: 3}
 	});
 	res.render('financial_goal/edit', {layout: 'dashboard', csrfToken: req.csrfToken(), finan_goal: edit_financial_goal, attorney, year});
 });

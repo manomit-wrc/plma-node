@@ -26,6 +26,8 @@ const Activity = require('../models').activity;
 const Target = require('../models').target;
 const Client = require('../models').client;
 const Referral = require('../models').referral;
+const MasterContact = require('../models').master_contact;
+const ActivityBudget = require('../models').activity_budget;
 
 var csrfProtection = csrf({ cookie: true });
 
@@ -127,6 +129,99 @@ router.get('/dashboard', auth,  async(req, res) => {
     });
     var referral_count = referral.length;
 /* =================== Referral Count Ends ================================*/
+
+/* =================== Master Contact Count Ends ================================*/
+    var masterContatcCondition = {};
+    if (req.user.role_id != "1") {
+        masterContatcCondition.firm_id = req.user.firm_id;
+        masterContatcCondition.contact_status = 1;
+        if (req.user.role_id != "2") {
+            masterContatcCondition.attorney_id = req.user.id;
+        }
+    }
+    
+    var master_contact = await MasterContact.findAll({
+        where: masterContatcCondition,
+        order: [
+            ['createdAt', 'DESC']
+        ]
+    });
+/* =================== Master Contact Count Ends ================================*/
+
+/* =================== Firm Count Starts =============================================== */
+    var firm = await Firm.findAll();
+    var firm_count = firm.length; 
+    
+    User.belongsTo(Firm, {
+        foreignKey: 'firm_id'
+    });
+    const firm_admins = await User.findAll({
+        where: {
+            role_id: "2"
+        },
+        order: [
+            ['createdAt', 'DESC']
+        ],
+        include: [{
+            model: Firm
+        }]
+    });
+/* =================== Firm Count Ends =============================================== */
+
+/* =================== Employee Count Starts =============================================== */
+    var employee = await User.findAll({
+        where: {
+            role_id: "4"
+        }
+    });
+    var employee_count = employee.length;     
+/* =================== Employee Count Ends =============================================== */
+
+/* =================== Attorney Count Starts =============================================== */
+    var attorney = await User.findAll({
+        where: {
+            role_id: "3"
+        }
+    });
+    var attorney_count = attorney.length;     
+/* =================== Attorney Count Ends =============================================== */
+
+/* =================== Total Budgets Count Starts =============================================== */
+    var budgetArr = [];
+    var budget = await ActivityBudget.findAll();
+    for(var b = 0; b< budget.length; b++)
+    {
+        budgetArr.push(budget[b].amount);
+    }
+    var total_budget_amount = budgetArr.reduce((a, b) => a + b, 0);
+/* =================== Total Budgets Count Ends =============================================== */
+
+/* =================== Starts Chart Section ====================================================*/
+
+    var pieChart = [];
+    pieChart.push({
+        y:2014,
+        a:40,
+        b:60
+    });
+    pieChart.push({
+        y:2015,
+        a:70,
+        b:60
+    })
+    pieChart.push({
+       y:2016,
+       a:40,
+       b:65
+    })
+    pieChart.push({
+        y:2017,
+        a:70,
+        b:45
+    })
+
+    
+/* =================== Ends Chart Section ======================================================*/
     res.render('dashboard', {
         layout: 'dashboard',
         auth_msg: auth_msg,
@@ -135,14 +230,54 @@ router.get('/dashboard', auth,  async(req, res) => {
         changeAttrToFirm,
         activity,
         activity_count,
+        target,
         target_count,
         client,
         client_count,
-        referral_count
+        referral,
+        referral_count,
+        master_contact,
+        master_contact_count: master_contact.length,
+        firm_count,
+        firm_admins,
+        firm,
+        employee_count,
+        employee,
+        attorney_count,
+        attorney,
+        total_budget_amount,
+        pieChart
     });
 }).get('/logout', auth, (req, res) => {
     req.logout();
     res.redirect('/');
+});
+
+router.get("/get-chart-value", auth, async(req, res)=> {
+    var pieChart = [];
+    pieChart.push({
+        y: '2014',
+        a: 40,
+        b: 60
+    });
+    pieChart.push({
+        y: '2015',
+        a: 70,
+        b: 60
+    })
+    pieChart.push({
+        y: '2016',
+        a: 40,
+        b: 65
+    })
+    pieChart.push({
+        y: '2017',
+        a: 70,
+        b: 45
+    });
+    res.send({
+        pieChart
+    });
 });
 
 router.get('/profile', auth, async (req, res) => {
