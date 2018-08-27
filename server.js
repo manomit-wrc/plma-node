@@ -319,6 +319,27 @@ const hbs = exphbs.create({
             else
                 return opts.inverse(this);
         },
+        get_activity_goal_amounts: function(array){
+            var bdgArr = [];
+            for(var w=0; w<array.length; w++)
+            {
+                bdgArr.push(array[w].amount);
+            }
+            var sum = bdgArr.reduce((a, b) => a + b, 0);
+            return sum;
+        },
+        get_activity_goal_hours: function (array) {
+            var bdghourArr = [];
+            for(var w=0; w<array.length; w++)
+            {
+                bdghourArr.push(array[w].hour);
+            }
+            var hour = bdghourArr.reduce((a, b) => a + b, 0);
+            return hour;
+        },
+        get_total_activity: function (array) {
+            return array.length;
+        },
         eq: function (v1, v2) {
           return v1 == v2;
         },

@@ -66,6 +66,9 @@ router.get('/employees', auth, siteAuth, async (req, res) => {
 });
 
 router.post('/employees/add', auth, siteAuth, csrfProtection, async (req, res) => {
+
+// console.log('bnjhjbhjbh'+ req.body.gender);
+
     var firm_id = req.body.firm_id;
     const formatDate = req.body.dob ? req.body.dob.split("-") : '';
     const avatar = gravatar.url(req.body.email, {

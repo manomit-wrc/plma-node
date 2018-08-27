@@ -23,7 +23,7 @@
                     <h4 class="page-title">Master Contacts</h4>
                 </div>
                 <div class="col-md-8 text-right">
-                    <a href="/master_contact/add" class="btn btn-primary rounded pull-right"><i class="fa fa-plus"></i> Add Contact </a>
+                    <a href="/master_contact/add" class="btn btn-primary rounded pull-right"><i class="fa fa-plus"></i> Add Master Contact</a>
                     <a href="javascript:void(0)" data-toggle="modal" data-target="#import" class="btn btn-primary rounded pull-right m-r-5"><i class="fa fa-cloud-download"></i> Import Master Contact </a>
                     <a href="javascript:void(0);" class="btn btn-primary rounded move-target pull-right"><i class="fa fa-share" aria-hidden="true"></i> Move to Target </a>
                     <a href="javascript:void(0);" class="btn btn-primary rounded master-contact-delete pull-right m-r-5"><i class="fa fa-trash" aria-hidden="true"></i> Delete </a>
@@ -41,6 +41,7 @@
 
                     <button class="btn btn-primary rounded advancedFilter" data-toggle="modal" data-target="#advanceSearchForMasterContact">
                         <i class="fa fa-filter"></i> Filter</button>
+
                         <table class="table table-striped custom-table datatable master_contact">
                             <thead>
                                 <tr>
@@ -81,6 +82,47 @@
                             </tbody>
                         </table>
                     </div>
+
+                    <table class="table table-striped custom-table datatable">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" onClick="checkall(this);" /> SL#</th>
+                                <th>Name</th>
+                                <th>Email Id</th>
+                                <th>Contact Code</th>
+                                <th>Mobile Number</th>
+                                <th>Company Name</th>
+                                <th>Status</th>
+                                <th class="text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each contacts}}
+                            <tr>
+                                <td><input type="checkbox" name="contact_id" value="{{this.id}}" /> {{math @index "+" 1}}</td>
+                                <td><a href="/master_contact/view/{{this.id}}">{{#if organization_name}} {{this.organization_name}} {{else}} {{this.first_name}} {{this.last_name}} {{/if}}  </a></td>
+                                <td>{{this.email}}</td>
+                                <td> {{#if this.master_contact_code}} {{this.master_contact_code}} {{else}} {{this.organization_code}} {{/if}} </td>
+                                <td class="number_validator">{{this.mobile_no}}</td>
+                                <td>{{this.company_name}}</td>
+                                <td>{{this.status}}</td>
+                                <td class="text-right">
+                                    <a href="/master_contact/view/{{this.id}}" class="btn btn-success btn-sm">
+                                        <i class="fa fa-eye m-r-5"></i>
+                                    </a>
+                                    <a href="/master_contact/edit/{{this.id}}" class="btn btn-success btn-sm">
+                                        <i class="fa fa-pencil m-r-5"></i>
+                                    </a>
+                                    
+                                    <a href="javascript:void(0)" data-toggle="modal" data-target="delete_users" data-mastercontact-id="{{this.id}}" id="delete_mastercontact" class="btn btn-danger btn-sm">
+                                        <i class="fa fa-trash-o m-r-5"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+
                 </div>
             </div>
         </div>

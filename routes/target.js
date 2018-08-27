@@ -18,6 +18,7 @@ const user = require('../models').user;
 const Activity = require('../models').activity;
 const TargetActivity = require('../models').jointactivity;
 const Referral = require('../models').referral;
+const ContactInformation = require('../models').contact_information;
 var csrfProtection = csrf({
     cookie: true
 });
@@ -152,6 +153,9 @@ router.get('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =>
         }
     });
     const attorney = await user.findAll({
+        order: [
+			['first_name', 'ASC'],
+		],
         where: {
             role_id: 3,
             firm_id: req.user.firm_id
@@ -170,6 +174,31 @@ router.get('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =>
 });
 
 router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) => {
+
+    var targetDetails = [];
+	var first_name = req.body.targetDetailsFirstName;
+	var last_name = req.body.targetDetailsSecondName;
+	var gender = req.body.targetDetailsGender;
+	var email = req.body.targetDetailsEmail;
+	var phone_no = req.body.targetDetailsPhone_no;
+	var fax = req.body.targetDetailsFax;
+	var mobile_no = req.body.targetDetailsMobile_no;
+
+    let length = first_name.length;
+	for (let i=0; i< length; i++) {
+		if (first_name[i]!=="") {
+			targetDetails.push({
+				"first_name":first_name[i],
+				"last_name":last_name[i],
+				"gender":gender[i],
+				"email":email[i],
+				"phone_no":removePhoneMask(phone_no[i]),
+				"fax":removePhoneMask(fax[i]),
+				"mobile_no":removePhoneMask(mobile_no[i])
+			});
+		}
+	}
+
     const formatDate = req.body.dob ? req.body.dob.split("-") : '';
     const target_data = await Target.findOne({
         where: {
@@ -178,7 +207,7 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
     });
     if (target_data === null) {
         if (req.body.target_type === "O") {
-            await Target.create({
+            const insertData = await Target.create({
                 organization_name: req.body.org_name,
                 organization_id: req.body.org_id,
                 organization_code: req.body.org_code,
@@ -211,8 +240,24 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
                 target_type: req.body.target_type,
                 estimated_revenue: removePhoneMask(req.body.estimated_revenue)
             });
+
+            for (let j=0; j< targetDetails.length; j++) {
+				await ContactInformation.create({
+					first_name: targetDetails[j].first_name,
+					last_name: targetDetails[j].last_name,
+					gender: targetDetails[j].gender,
+					email: targetDetails[j].email,
+					mobile_no: targetDetails[j].mobile_no,
+					phone_no: targetDetails[j].phone_no,
+					fax: targetDetails[j].fax,
+					type: 'M',
+					contact_id: insertData.id
+				});
+			} 
+
             req.flash('success-message', 'Target Added Successfully');
             res.redirect('/target')
+
         } else {
             await Target.create({
                 first_name: req.body.first_name,
@@ -283,11 +328,21 @@ router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, re
         }
     });
     const attorney = await user.findAll({
+        order: [
+			['first_name', 'ASC'],
+		],
         where: {
             role_id: 3,
             firm_id: req.user.firm_id
         }
     });
+
+    const contactDetails = await ContactInformation.findAll({
+		where: {
+			'contact_id': req.params['id']
+		}
+    });
+    
     res.render('target/targetupdate', {
         layout: 'dashboard',
         csrfToken: req.csrfToken(),
@@ -299,7 +354,8 @@ router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, re
         state: state,
         city: city,
         zipcode: zipcode,
-        error_message
+        error_message,
+        contactDetails
     });
 });
 
@@ -332,6 +388,24 @@ router.get('/target/view/:id', auth, firmAttrAuth, csrfProtection, async(req, re
         }
     });
 
+    const contactDetails = await ContactInformation.findAll({
+		where: {
+			'contact_id': req.params['id']
+		}
+    });
+    TargetActivity.belongsTo(Activity, {
+        foreignKey: 'activity_id'
+    });
+    const activity_details = await TargetActivity.findAll({
+        where: {
+            target_client_type: "T",
+            type: req.params['id']
+        },
+        include: [{
+            model: Activity
+        }]
+    });
+
     res.render('target/targetview', {
         layout: 'dashboard',
         csrfToken: req.csrfToken(),
@@ -343,11 +417,38 @@ router.get('/target/view/:id', auth, firmAttrAuth, csrfProtection, async(req, re
         city: city,
         attorney: attorney,
         zipcode: zipcode,
-        error_message
+        error_message,
+        contactDetails,
+        activity_details
     });
 });
 
 router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, res) => {
+    var contactDetails = [];
+	var first_name = req.body.contactDetailsFirstName;
+	var last_name = req.body.contactDetailsSecondName;
+	var gender = req.body.contactDetailsGender;
+	var email = req.body.contactDetailsEmail;
+	var phone_no = req.body.contactDetailsPhone_no;
+	var fax = req.body.contactDetailsFax;
+	var mobile_no = req.body.contactDetailsMobile_no;
+
+	let length = first_name.length;
+	for (let i=0; i< length; i++) {
+		if (first_name[i]!=="") {
+			contactDetails.push({
+				"first_name":first_name[i],
+				"last_name":last_name[i],
+				"gender":gender[i],
+				"email":email[i],
+				"phone_no":removePhoneMask(phone_no[i]),
+				"fax":removePhoneMask(fax[i]),
+				"mobile_no":removePhoneMask(mobile_no[i])
+			});
+		}
+	}
+
+
     const formatDate = req.body.dob ? req.body.dob.split("-") : '';
     const target_edit_data = await Target.findOne({
         where: {
@@ -399,7 +500,29 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
             where: {
                 id: req.params['id']
             }
+            
         });
+            
+        await ContactInformation.destroy({
+			where: {
+				contact_id: req.params['id']
+			}
+		});
+
+        for (let j=0; j< contactDetails.length; j++) {
+            await ContactInformation.create({
+                first_name: contactDetails[j].first_name,
+                last_name: contactDetails[j].last_name,
+                gender: contactDetails[j].gender,
+                email: contactDetails[j].email,
+                mobile_no: contactDetails[j].mobile_no,
+                phone_no: contactDetails[j].phone_no,
+                fax: contactDetails[j].fax,
+                type: 'M',
+                contact_id: req.params['id']
+            });
+        } 
+
         req.flash('success-message', 'Target Updated Successfully');
         res.redirect('/target');
     } else {
@@ -497,7 +620,7 @@ router.post('/target/import', auth, upload.single('file_name'), csrfProtection, 
         });
         if (target_excel_data === null) {
             if (excelTarget[i].target_type == "organization") {
-                const storeTargetXlO = await Target.create({
+                await Target.create({
                     organization_name: excelTarget[i].oraganisation_name,
                     organization_id: excelTarget[i].organisation_id,
                     organization_code: excelTarget[i].organisation_code,
@@ -523,7 +646,7 @@ router.post('/target/import', auth, upload.single('file_name'), csrfProtection, 
                     remarks: excelTarget[i].edit_remarks
                 });
             } else {
-                const storeTargetXlI = await Target.create({
+                await Target.create({
                     first_name: excelTarget[i].first_name,
                     last_name: excelTarget[i].last_name,
                     target_id: excelTarget[i].target_id,

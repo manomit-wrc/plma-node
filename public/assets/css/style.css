@@ -5641,6 +5641,54 @@ i.fa.fa-eye.m-r-5 {
 	padding-top: 6px;
 }
 
+
+
+/* Starts css on 2018-08-21 */
+
+.select-attorney .btn-group {
+	padding: 0;
+}
+.select-attorney .btn {
+    height: 50px;
+    border-radius: 0;
+}
+.select-attorney .btn:active,
+.select-attorney .btn:focus,
+.select-attorney .btn:hover,
+ {
+  background: #ffffff !important;
+  border-color: #ccc !important;
+}
+
+.select-attorney .btn-default:hover {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.select-attorney .open>.dropdown-toggle.btn-default.focus,
+.select-attorney   .open>.dropdown-toggle.btn-default:focus,
+.select-attorney   .open>.dropdown-toggle.btn-default:hover {
+    background-color: #fff;
+    border-color: #ff9b44;
+}
+
+.select-attorney  .open>.dropdown-toggle.btn-default {
+    background-color: #fff;
+    box-shadow: none !important;
+    border-color: #ccc;
+}
+
+.select-attorney  .btn-default:focus {
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+/* Ends css on 2018-08-21 */
+
+
+
+
 /* loader css starts */
 
 .loader {
@@ -5651,8 +5699,30 @@ i.fa.fa-eye.m-r-5 {
 	height: 100%;
 	z-index: 9999;
 	background: url('images/loading.gif') 50% 50% no-repeat rgb(249, 249, 249);
+
 	opacity: .9;
 	background-color: #fff;
+
+	/* opacity: .8; */
+}
+
+.iconDuplicateEmail {
+	border-radius: 50%;
+	background-color: #fdd4d4;
+	padding: 5px;
+	margin-top: 4px;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+}
+
+.activity_custom_del:nth-child(n+4) {
+	display: none;
+}
+
+.site_dashboard_custom_del:nth-child(n+6) {
+	display: none;
+
 }
 
 
@@ -5814,6 +5884,42 @@ select.gender {
 
 	.firms-table .dataTable thead th:nth-child(5) {
 		width: 10% !important;
+	}
+
+	.card-box.contact-information .masterContactDetailsAdd {
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+
+	.contact-information {
+		position: relative;
+		box-shadow: 0 0 15px rgba(0,0,0,0.14);
+		-webkit-box-shadow: 0 0 15px rgba(0,0,0,0.14);
+		-moz-box-shadow: 0 0 15px rgba(0,0,0,0.14);
+		-ms-box-shadow: 0 0 15px rgba(0,0,0,0.14);
+		-o-box-shadow: 0 0 15px rgba(0,0,0,0.14);
+		margin-bottom: 25px;
+		padding: 10px;
+	}
+
+	.contact-margin {
+		margin-top: 15px;
+	}
+
+	
+
+	.contact-information .masterContactDetailsAdd {
+		position: absolute;
+		right: -13px;
+		top: -16px;
+		border-radius: 50%;
+		-webkit-border-radius: 50%;
+		-moz-border-radius: 50%;
+		-ms-border-radius: 50%;
+		-o-border-radius: 50%;
+		padding: 5px 10px;
+		z-index: 111;
 	}
 
 	/*Ends on css 14-08-2018*/

@@ -23,6 +23,9 @@ const target = require('../models').target;
 const Jurisdiction = require('../models').jurisdiction;
 const client = require('../models').client;
 const user = require('../models').user;
+const ContactInformation = require('../models').contact_information;
+const Activity = require('../models').activity;
+const TargetActivity = require('../models').jointactivity;
 var csrfProtection = csrf({
 	cookie: true
 });
@@ -69,6 +72,10 @@ router.get('/budget', csrfProtection, auth, siteAuth, (req, res) => {
 		whereCondition.name = req.query.budget_name;
 	}
 	budget.findAll({
+		order: [
+			['name', 'ASC']
+		],
+
 		where: whereCondition
 	}).then(show => {
 		res.render('budget/index', {
@@ -84,6 +91,7 @@ router.get('/budget', csrfProtection, auth, siteAuth, (req, res) => {
 
 router.post('/budget/add', auth, siteAuth, csrfProtection, (req, res) => {
 	budget.findAndCountAll({
+		
 		where: {
 			name: req.body.name
 		}
@@ -558,7 +566,7 @@ router.get('/client', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 		attr_search: req.query.attorney ? req.query.attorney : "",
 		client_type_search: req.query.client_type ? req.query.client_type : "",
 		city,
-		zipcode					
+		zipcode
 	});
 });
 
@@ -571,6 +579,10 @@ router.get('/client/add', auth, firmAttrAuth, csrfProtection, async (req, res) =
 	const tags = await Tag.findAll();
 
 	const attorney = await user.findAll({
+		order: [
+			['first_name', 'ASC']
+		],
+
 		where: {
 			role_id: 3,
 			firm_id: req.user.firm_id
@@ -618,6 +630,11 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 	const industrys = await Industry.findAll();
 	const client_country = await Country.findAll();
 	const attorney = await user.findAll({
+		order: [
+			['first_name', 'ASC']
+		],
+
+
 		where: {
 			role_id: 3,
 			firm_id: req.user.firm_id
@@ -654,6 +671,12 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		existingTag.push(Number(existing_tag[i]));
 	}
 
+	const contactDetails = await ContactInformation.findAll({
+		where: {
+			'contact_id': req.params['id']
+		}
+    });
+
 	res.render('client/editclient', {
 		layout: 'dashboard',
 		csrfToken: req.csrfToken(),
@@ -667,7 +690,8 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		city: client_city,
 		zipcode: client_zipcode,
 		error_message,
-		existing_tag: existingTag
+		existing_tag: existingTag,
+		contactDetails
 	});
 });
 
@@ -717,6 +741,24 @@ router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		}
 	}
 
+	const contactDetails = await ContactInformation.findAll({
+		where: {
+			'contact_id': req.params['id']
+		}
+	});
+	TargetActivity.belongsTo(Activity, {
+		foreignKey: 'activity_id'
+	});
+	const activity_details = await TargetActivity.findAll({
+		where: {
+			target_client_type: "C",
+			type: req.params['id']
+		},
+		include: [{
+			model: Activity
+		}]
+	});
+
 	res.render('client/viewClient', {
 		layout: 'dashboard',
 		csrfToken: req.csrfToken(),
@@ -730,11 +772,38 @@ router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		city: client_city,
 		zipcode: client_zipcode,
 		error_message,
-		existing_tag: existingTag
+		existing_tag: existingTag,
+		contactDetails,
+		activity_details
 	});
 });
 
 router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+	// contact information
+	var clientDetails = [];
+	var first_name = req.body.clientDetailsFirstName;
+	var last_name = req.body.clientDetailsSecondName;
+	var gender = req.body.clientDetailsGender;
+	var email = req.body.clientDetailsEmail;
+	var phone_no = req.body.clientDetailsPhone_no;
+	var fax = req.body.clientDetailsFax;
+	var mobile_no = req.body.clientDetailsMobile_no;
+
+    let length = first_name.length;
+	for (let i=0; i< length; i++) {
+		if (first_name[i]!=="") {
+			clientDetails.push({
+				"first_name":first_name[i],
+				"last_name":last_name[i],
+				"gender":gender[i],
+				"email":email[i],
+				"phone_no":removePhoneMask(phone_no[i]),
+				"fax":removePhoneMask(fax[i]),
+				"mobile_no":removePhoneMask(mobile_no[i])
+			});
+		}
+	}
+
 	const formatDate = req.body.client_dob ? req.body.client_dob.split("-") : '';
 	const client_data = await client.findOne({
 		where: {
@@ -754,14 +823,13 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				tags: all_tags[i]
 			}).then(result => {
 				tag_ids += result.id + ',';
-				//console.log(result.id);
 			});
 		}
 		tag_ids = tag_ids.slice(0, -1);
 	}
 	if (client_data === null) {
 		if (req.body.client_type === "O") {
-			await client.create({
+			const insertData = await client.create({
 				organization_name: req.body.org_name,
 				organization_id: req.body.org_id,
 				organization_code: req.body.org_code,
@@ -797,8 +865,25 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				current_revenue: removePhoneMask(req.body.current_revenue),
 				estimated_revenue: removePhoneMask(req.body.estimated_revenue)
 			});
+
+			for (let j=0; j< clientDetails.length; j++) {
+				await ContactInformation.create({
+					first_name: clientDetails[j].first_name,
+					last_name: clientDetails[j].last_name,
+					gender: clientDetails[j].gender,
+					email: clientDetails[j].email,
+					mobile_no: clientDetails[j].mobile_no,
+					phone_no: clientDetails[j].phone_no,
+					fax: clientDetails[j].fax,
+					type: 'M',
+					contact_id: insertData.id
+				});
+			} 
+
+
 			req.flash('success-message', 'Client Added Successfully');
-			res.redirect('/client')
+			res.redirect('/client');
+
 		} else {
 			await client.create({
 				first_name: req.body.client_first_name,
@@ -841,7 +926,7 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				estimated_revenue: removePhoneMask(req.body.estimated_revenue)
 			});
 			req.flash('success-message', 'Client Added Successfully');
-			res.redirect('/client')
+			res.redirect('/client');
 		}
 	} else {
 		req.flash('error-client-message', 'Email already taken.');
@@ -850,6 +935,30 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 });
 
 router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+
+	var contactDetails = [];
+	var first_name = req.body.contactDetailsFirstName;
+	var last_name = req.body.contactDetailsSecondName;
+	var gender = req.body.contactDetailsGender;
+	var email = req.body.contactDetailsEmail;
+	var phone_no = req.body.contactDetailsPhone_no;
+	var fax = req.body.contactDetailsFax;
+	var mobile_no = req.body.contactDetailsMobile_no;
+
+	let length = first_name.length;
+	for (let i=0; i< length; i++) {
+		if (first_name[i]!=="") {
+			contactDetails.push({
+				"first_name":first_name[i],
+				"last_name":last_name[i],
+				"gender":gender[i],
+				"email":email[i],
+				"phone_no":removePhoneMask(phone_no[i]),
+				"fax":removePhoneMask(fax[i]),
+				"mobile_no":removePhoneMask(mobile_no[i])
+			});
+		}
+	}
 
 	const formatDate = req.body.client_dob ? req.body.client_dob.split("-") : '';
 	const client_edit_data = await client.findOne({
@@ -907,14 +1016,35 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 			remarks: req.body.remarks,
 			social_url: req.body.social,
 			website_url: req.body.website,
-			current_revenue: req.body.current_revenue,
-			estimated_revenue: req.body.estimated_revenue,
+			current_revenue: removePhoneMask(req.body.current_revenue),
+			estimated_revenue: removePhoneMask(req.body.estimated_revenue),
 
 		}, {
 			where: {
 				id: req.params['id']
 			}
 		});
+
+		await ContactInformation.destroy({
+			where: {
+				contact_id: req.params['id']
+			}
+		});
+
+        for (let j=0; j< contactDetails.length; j++) {
+            await ContactInformation.create({
+                first_name: contactDetails[j].first_name,
+                last_name: contactDetails[j].last_name,
+                gender: contactDetails[j].gender,
+                email: contactDetails[j].email,
+                mobile_no: contactDetails[j].mobile_no,
+                phone_no: contactDetails[j].phone_no,
+                fax: contactDetails[j].fax,
+                type: 'M',
+                contact_id: req.params['id']
+            });
+        } 
+
 		req.flash('success-edit-message', 'Client Updated Successfully');
 		res.redirect('/client')
 	} else {

@@ -6,17 +6,36 @@ const User = require('../models').user;
 const ActivityBudget = require('../models').activity_budget;
 const Jointactivities = require('../models').jointactivity;
 const lodash = require("lodash");
+const requestApproval = require('../models').request_approval;
 
 const router = express.Router();
 
-router.get('/activity-approvals', auth, async(req, res) => {
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
-    const activity_approvals = await Activity.findAll({
+router.get('/activity-approvals', auth, async (req, res) => {
+
+    const activityRequest = await requestApproval.findAll({
         where: {
-            'activity_status': 1,
-            'firm_id': req.user.firm_id
+            'approver_id': req.user.id,
+            'status': '1',
+            'approve': '0'
         }
     });
+
+    var activity_approvals;
+    if (activityRequest.length > 0) {
+        for (let i=0; i< activityRequest.length; i++) {
+            activity_approvals = await Activity.findAll({
+                where: {
+                    // 'activity_status': 1,
+                    // 'firm_id': req.user.firm_id
+                    id:activityRequest[i].activity_id
+                }
+            });
+
+        }
+    }
 
     res.render('activity-approvals/index', {
         layout: 'dashboard',
@@ -24,7 +43,7 @@ router.get('/activity-approvals', auth, async(req, res) => {
     });
 });
 
-router.get('/approval_details/:id', auth, async(req, res) => {
+router.get('/approval_details/:id', auth, async (req, res) => {
 
     const budgetList = await Budget.findAll();
 
@@ -78,7 +97,7 @@ router.get('/approval_details/:id', auth, async(req, res) => {
 });
 
 
-router.post('/add_activity_budget_remark', auth, async(req, res) => {
+router.post('/add_activity_budget_remark', auth, async (req, res) => {
     await ActivityBudget.update({
         approver_remarks: req.body.approver_remarks
     }, {
@@ -92,35 +111,99 @@ router.post('/add_activity_budget_remark', auth, async(req, res) => {
     })
 });
 
-router.post('/update_activity_approve_reject', auth, async(req, res) => {
-    await Activity.update({
-        activity_status: req.body.status
-    }, {
-        where: {
-            id: req.body.activity_id
+router.post('/update_activity_approve_reject', auth, async (req, res) => {
+
+     if (req.body.status==3){
+        await requestApproval.update({
+            'approve': '0',
+            'status': '2',
+        }, {
+            where: {
+                'approver_id': req.user.id,
+                'activity_id': req.body.activity_id
+            }
+        })
+
+        await Activity.update({
+            activity_status: req.body.status
+        }, {
+            where: {
+                id: req.body.activity_id
+            }
+        });
+
+    } else {
+        await requestApproval.update({
+            'approve': '1',
+            'status': '0'
+        }, {
+            where: {
+                'approver_id': req.user.id,
+                'activity_id': req.body.activity_id
+            }
+        })
+    
+        const _activityApprovals = await requestApproval.findOne({
+            attributes: [
+                [Sequelize.fn('MAX', Sequelize.col('approver_status')), 'max_approver_status']
+            ],
+            where: {
+                'activity_id': req.body.activity_id,
+                'approve': '0'
+            }
+        });
+    
+        if (_activityApprovals.get('max_approver_status') !== null) {
+            await requestApproval.update({
+                'status': '1'
+            }, {
+                where: {
+                    'activity_id': req.body.activity_id,
+                    'approver_status': _activityApprovals.get('max_approver_status')
+                }
+            });
+        } else {
+            await Activity.update({
+                activity_status: req.body.status
+            }, {
+                where: {
+                    id: req.body.activity_id
+                }
+            });
         }
-    });
+    } 
+
     res.send({
         "success": true
     })
 });
 
-router.post("/get-notification", auth, async(req, res) => {
-    Activity.belongsTo(User, {
-        foreignKey: 'user_id'
+router.post("/get-notification", auth, async (req, res) => {
+
+     requestApproval.belongsTo(Activity, {
+        foreignKey: 'activity_id'
     });
-    const noti = await Activity.findAll({
+
+    requestApproval.belongsTo(User, {
+        foreignKey: 'approver_id'
+    });
+    
+    const noti = await requestApproval.findAll({
         where: {
-            firm_id: req.user.firm_id,
-            activity_status: 1
+            'approver_id': req.user.id,
+            'status': '1'
         },
         include: [{
             model: User
+        },
+        {
+            model: Activity
         }],
         order: [
             ['updatedAt', 'DESC']
         ]
     });
+
     res.send({
         "success": true,
         "count": noti.length,

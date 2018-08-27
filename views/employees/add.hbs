@@ -2,6 +2,11 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+
+
+
+
+ <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
 {{/content}}
 
 <div class="page-wrapper">
@@ -29,28 +34,29 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">First Name</label>
+                                    <label class="control-label">First Name <span class="text-danger">*</span></label>
+
                                     <input type="text" class="form-control floating" id="first_name" name="first_name" />
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">Last Name</label>
+                                    <label class="control-label">Last Name<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control floating" id="last_name" name="last_name" />
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">Email</label>
+                                    <label class="control-label">Email<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control floating" id="email" name="email" />
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">Password</label>
+                                    <label class="control-label">Password<span class="text-danger">*</span></label>
                                     <input type="password" class="form-control floating" id="password" name="password" />
                                 </div>
                             </div>
@@ -65,9 +71,9 @@
                             </div>
 
                             <div class="col-md-6">
-                                <div class="form-group form-focus select-focus">
+                                <div class="form-group form-focus select-focus select-attorney">
                                     <label class="control-label">Gender</label>
-                                    <select class="form-control floating" id="gender" name="gender">
+                                    <select class="form-control floating selectpicker" id="gender" name="gender" data-show-subtext="true" data-live-search="true">
                                         <option value="">Select Gender</option>
                                         <option value="M">Male</option>
                                         <option value="F">Female</option>
@@ -140,9 +146,9 @@
                     </div>
 
                     <div class="col-md-12">
-                        <div class="form-group form-focus select-focus">
+                        <div class="form-group form-focus select-focus select-attorney">
                             <label class="control-label">Firm Name</label>
-                            <select class="form-control floating" id="firm_id" name="firm_id">
+                            <select class="form-control floating selectpicker" id="firm_id" name="firm_id" data-show-subtext="true" data-live-search="true">
                                 {{#each firms}}
                                     <option value="{{this.id}}">{{this.title}}</option>
                                 {{/each}}
@@ -166,6 +172,11 @@
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+
+
+
 <script type="text/javascript">
     $(document).ready(function () {
         $('#firm_id').multiselect({
@@ -214,4 +225,7 @@
         });
     });
 </script>
+
+
+
 {{/content}}

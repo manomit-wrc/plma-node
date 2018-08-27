@@ -2,6 +2,10 @@
     <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
     <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
     <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+
+
+     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+
 {{/content}}
 
 <div class="page-wrapper">
@@ -36,13 +40,13 @@
                            </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group form-focus select-focus">
+                            <div class="form-group form-focus select-focus select-attorney">
                                 <label class="control-label">Category</label>
-                                <select class="select form-control floating" id="category" name="category">
+                                <select class="form-control floating selectpicker" id="category" name="category" data-show-subtext="true" data-live-search="true">
                                     <option value="">Select Category</option>
                                     <option value="content development">Content Development</option>
-                                    <option value="relationship building">Relationship Building</option>
                                     <option value="contact management">Contact Management</option>
+                                    <option value="relationship building">Relationship Building</option>
                                 </select>
                             </div>
                         </div>
@@ -100,6 +104,10 @@
     <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+
+
     <script type="text/javascript">
         $(document).ready(function() {
             

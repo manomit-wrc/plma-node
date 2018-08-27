@@ -2,7 +2,14 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+
+
 {{/content}}
+
+
 <div class="page-wrapper">
 	<div class="content container-fluid">
 		<div class="row">
@@ -18,13 +25,14 @@
 		<form id="contactform" method="POST" action="/master_contact/edit/{{contact.id}}">
 			<input type="hidden" name="_csrf" value="{{csrfToken}}">
 			<input type="hidden" value="{{contact.id}}" id="id" />
+			<input type="hidden" value="{{contact.master_contact_type}}" id="_masyterContact"/>
 
 			<div class="form-inline m-b-15">
 				<div class="form-group m-r-5">
 					<label class="input-group">
 						<span class="input-group-addon">
-							<input type="radio" id="individual_client" name="masterContact_type" value="I" {{#if_eq contact.master_contact_type "I"}} checked {{/if_eq}}
-							 disabled/>
+							<input type="radio" id="individual_client" name="masterContact_type" value="I" {{#if_eq contact.master_contact_type "I"}}
+							 checked {{/if_eq}} disabled/>
 						</span>
 						<div class="form-control form-control-static">Individual</div>
 						<span class="glyphicon form-control-feedback "></span>
@@ -33,8 +41,8 @@
 				<div class="form-group ">
 					<label class="input-group">
 						<span class="input-group-addon">
-							<input type="radio" id="organization_client" name="masterContact_type" value="O" {{#if_eq contact.master_contact_type "O"}} checked {{/if_eq}}
-							 disabled />
+							<input type="radio" id="organization_client" name="masterContact_type" value="O" {{#if_eq contact.master_contact_type "O"}}
+							 checked {{/if_eq}} disabled />
 						</span>
 						<div class="form-control form-control-static">Organization</div>
 						<span class="glyphicon form-control-feedback "></span>
@@ -47,57 +55,74 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">First Name
-										<span class="req-lbl">*</span>
 
-									</label>
-									<input type="text" class="form-control floating" id="first_name" name="first_name" maxlength="50" value="{{contact.first_name}}" />
+							<div id="org_type" style="display:none;">
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Organisation Name
+											<span class="req-lbl">*</span>
+										</label>
+										<input type="text" class="form-control floating" id="org_name" name="org_name" value="{{contact.organization_name}}" />
+									</div>
 								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Last Name
-										<span class="req-lbl">*</span>
-
-									</label>
-									<input type="text" class="form-control floating" id="last_name" name="last_name" maxlength="50" value="{{contact.last_name}}" />
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Master Contact ID
-
-									</label>
-									<input type="text" class="form-control floating" id="master_contact_id" name="master_contact_id" maxlength="50" value="{{contact.master_contact_id}}" />
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Master Contact Code
-										<span class="req-lbl">*</span>
-
-									 </label>
-									<input type="text" class="form-control floating" id="master_contact_code" name="master_contact_code" maxlength="50" value="{{contact.master_contact_code}}" />
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Organisation Code
+											<span class="req-lbl">*</span>
+										</label>
+										<input type="text" class="form-control floating" id="org_code" name="org_code" value={{contact.organization_code}} />
+									</div>
 								</div>
 							</div>
 
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Estimated revenue
-										<span class="req-lbl">*</span>
-									</label>
-									<input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue" maxlength="50" value="{{contact.estimated_revenue}}">
+							<div id="indivisual_type">
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">First Name
+											<span class="req-lbl">*</span>
+
+										</label>
+										<input type="text" class="form-control floating" id="first_name" name="first_name" maxlength="50" value="{{contact.first_name}}"
+										/>
+									</div>
 								</div>
-							</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Last Name
+											<span class="req-lbl">*</span>
+
+										</label>
+										<input type="text" class="form-control floating" id="last_name" name="last_name" maxlength="50" value="{{contact.last_name}}"
+										/>
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Master Contact Code
+											<span class="req-lbl">*</span>
+
+										</label>
+										<input type="text" class="form-control floating" id="master_contact_code" name="master_contact_code" maxlength="50" value="{{contact.master_contact_code}}"
+										/>
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Estimated revenue
+											<span class="req-lbl">*</span>
+										</label>
+										<input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue" maxlength="50" value="{{contact.estimated_revenue}}">
+									</div>
+								</div>
 
 							<div class="col-md-6">
-								<div class="form-group form-focus select-focus">
+								<div class="form-group form-focus select-focus select-attorney">
 									<label class="control-label">Gender
 										<span class="req-lbl">*</span>
 									</label>
-									<select class="select form-control floating" id="gender" name="gender">
+									<select class="form-control floating selectpicker" id="gender" name="gender" data-show-subtext="true" data-live-search="true">
 										<option value="">Select Gender</option>
 										<option value="M" {{#if_eq contact.gender "M"}} selected {{/if_eq}}>Male</option>
 										<option value="F" {{#if_eq contact.gender "F"}} selected {{/if_eq}}>Female</option>
@@ -123,7 +148,8 @@
 										<span class="req-lbl">*</span>
 
 									</label>
-									<input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" maxlength="20" value="{{contact.phone_no}}" />
+									<input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" maxlength="20" value="{{contact.phone_no}}"
+									/>
 								</div>
 							</div>
 
@@ -132,7 +158,8 @@
 									<label class="control-label">Fax
 
 									</label>
-									<input type="text" class="form-control floating number_validator" id="fax" name="fax" maxlength="20" value="{{contact.fax}}" />
+									<input type="text" class="form-control floating number_validator" id="fax" name="fax" maxlength="20" value="{{contact.fax}}"
+									/>
 								</div>
 							</div>
 
@@ -142,11 +169,12 @@
 										<span class="req-lbl">*</span>
 
 									</label>
-									<input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" maxlength="20" value="{{contact.mobile_no}}" />
+									<input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" maxlength="20" value="{{contact.mobile_no}}"
+									/>
 								</div>
 							</div>
 
-							
+
 
 						</div>
 					</div>
@@ -154,7 +182,7 @@
 			</div>
 
 			<div class="card-box">
-				<h3 class="card-title">Contact Informations</h3>
+				<h3 class="card-title">Address</h3>
 				<div class="row">
 					<div class="col-md-12">
 						<div class="form-group form-focus">
@@ -238,15 +266,17 @@
 				</div>
 			</div>
 
+			
+
 			<div class="card-box">
 				<h3 class="card-title">Attorney Information</h3>
 				<div class="row">
 					<div class="col-md-12">
-						<div class="form-group form-focus select-focus">
+						<div class="form-group form-focus select-focus select-attorney">
 							<label class="control-label">Attorney
 								<span class="req-lbl">*</span>
 							</label>
-							<select id="designation" name="attorney_id" class="select form-control floating">
+							<select id="designation" name="attorney_id" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
 								{{#if_eq user.role_id "3"}}
 								<option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
 								{{else}}
@@ -260,6 +290,174 @@
 				</div>
 			</div>
 
+			<div class="card-box" id="m_s_contactInformation" style="display:none;">
+				<h3 class="card-title">Contact Information</h3>
+				<div id="masterContactPlus" >
+				{{#each contactDetails}}
+					<div class="contact-information contactDetailsRemove" >
+					
+						{{#if_eq @index "0"}}
+						<button class="btn btn-primary btn-lg masterContactDetailsAdd" id="masterContactDetailsPlus" type="button" title="Remove">
+						<i class="fa fa-plus"></i>
+						</button>
+						{{else}}
+						<button class="btn btn-primary btn-lg masterContactDetailsAdd masterContactDetailsClose" type="button" title="Remove">
+							<i class="fa fa-close"></i>
+						</button>
+						{{/if_eq}}
+					
+						<div class="contact-margin">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">First Name
+											<span class="req-lbl">*</span>
+
+										</label>
+										<input type="text" class="form-control floating" id="contactDetailsFirstName" name="contactDetailsFirstName[]" value="{{this.first_name}}"/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Last Name</label>
+										<input type="text" class="form-control floating" id="contactDetailsSecondName" name="contactDetailsSecondName[]" value="{{this.last_name}}"/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus select-focus">
+										<label class="control-label">Gender
+											<span class="req-lbl">*</span>
+
+										</label>
+										<select class="select form-control floating" id="contactDetailsGender" name="contactDetailsGender[]">
+											<option value="">Select Gender</option>
+											<option value="M" {{#if_eq this.gender "M"}} selected {{/if_eq}}>Male</option>
+											<option value="F"{{#if_eq this.gender "F"}} selected {{/if_eq}} >Female</option>
+											<option value="O" {{#if_eq this.gender "O"}} selected {{/if_eq}} >Others</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Email Id
+											<span class="req-lbl">*</span>
+
+										</label>
+										<input type="text" class="form-control floating" id="contactDetailsEmail" name="contactDetailsEmail[]" value="{{this.email}}" />
+										<span id="uniqueEmail" style="color: red"></span>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Phone No.
+											<span class="req-lbl">*</span>
+
+										</label>
+										<input type="text" class="form-control floating number_validator" id="contactDetailsPhone_no" name="contactDetailsPhone_no[]"
+										maxlength="50" value={{this.phone_no}} />
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Fax</label>
+										<input type="text" class="form-control floating number_validator" id="contactDetailsFax" name="contactDetailsFax[]" maxlength="50" value="{{this.fax}}"
+										/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Mobile No.
+											<span class="req-lbl">*</span>
+										</label>
+										<input type="text" class="form-control floating number_validator" id="contactDetailsMobile_no" name="contactDetailsMobile_no[]"
+										maxlength="50" value="{{this.mobile_no}}"/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				{{/each}}
+				</div>
+				<div class="masterContactClose" style="display:none;">
+					<div class="contactDetailsRemove">
+						<div class="contact-information" id="contactInformatinClose">
+							<button class="btn btn-primary btn-lg masterContactDetailsAdd masterContactDetailsClose" type="button" title="Remove">
+								<i class="fa fa-close"></i>
+							</button>
+							<div class="contact-margin ">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group form-focus">
+											<label class="control-label">First Name
+												<span class="req-lbl">*</span>
+
+											</label>
+											<input type="text" class="form-control floating"  name="contactDetailsFirstName[]" />
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group form-focus">
+											<label class="control-label">Last Name</label>
+											<input type="text" class="form-control floating"  name="contactDetailsSecondName[]" />
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group form-focus select-focus">
+											<label class="control-label">Gender
+												<span class="req-lbl">*</span>
+
+											</label>
+											<select class="form-control floating"  name="contactDetailsGender[]">
+												<option value="">Select Gender</option>
+												<option value="M">Male</option>
+												<option value="F">Female</option>
+												<option value="O">Others</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group form-focus">
+											<label class="control-label">Email Id
+												<span class="req-lbl">*</span>
+
+											</label>
+											<input type="text" class="form-control floating"  name="contactDetailsEmail[]" />
+											<span id="uniqueEmail" style="color: red"></span>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group form-focus">
+											<label class="control-label">Phone No.
+												<span class="req-lbl">*</span>
+
+											</label>
+											<input type="text" class="form-control floating number_validator"  name="contactDetailsPhone_no[]"
+											 maxlength="50" />
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group form-focus">
+											<label class="control-label">Fax</label>
+											<input type="text" class="form-control floating number_validator"  name="contactDetailsFax[]" maxlength="50"
+											/>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group form-focus">
+											<label class="control-label">Mobile No.
+												<span class="req-lbl">*</span>
+											</label>
+											<input type="text" class="form-control floating number_validator" id="contactDetailsMobile_no" name="contactDetailsMobile_no[]"
+											maxlength="50" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<div class="card-box">
 				<h3 class="card-title">Other Informations</h3>
 				<div class="row">
@@ -268,33 +466,25 @@
 							<label class="control-label">Master Contact Company
 								<span class="req-lbl">*</span>
 							</label>
-							<input type="text" class="form-control floating" id="master_contact_comp" name="master_contact_comp" value="{{contact.company_name}}" />
+							<input type="text" class="form-control floating" id="master_contact_comp" name="master_contact_comp" value="{{contact.company_name}}"
+							/>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Website URL </label>
-							<input type="text" class="form-control floating url_selector" id="website_url" name="website_url" value="{{contact.website_url}}" />
+							<input type="text" class="form-control floating url_selector" id="website_url" name="website_url" value="{{contact.website_url}}"
+							/>
 						</div>
 					</div>
-					<div class="col-md-6">
-						<div class="form-group form-focus">
-							<label class="control-label">Social URL </label>
-							<input type="text" class="form-control floating url_selector" id="social_url" name="social_url" value="{{contact.social_url}}" />
-						</div>
-					</div>
+					
 					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">IM</label>
 							<input type="text" class="form-control floating" id="im" name="im" value="{{contact.im}}" />
 						</div>
 					</div>
-					<div class="col-md-6">
-						<div class="form-group form-focus">
-							<label class="control-label">Social Security No</label>
-							<input type="text" class="form-control floating number_validator" id="social_sec_no" name="social_sec_no" value="{{contact.social_security_no}}" />
-						</div>
-					</div>
+					
 					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Twitter URL</label>
@@ -304,13 +494,15 @@
 					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Linkedin URL</label>
-							<input type="text" class="form-control floating url_selector" id="linkedin" name="linkedin" value="{{contact.linkedin}}" />
+							<input type="text" class="form-control floating url_selector" id="linkedin" name="linkedin" value="{{contact.linkedin}}"
+							/>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Facebook URL</label>
-							<input type="text" class="form-control floating url_selector" id="facebook_url" name="facebook_url" value="{{contact.facebook}}" />
+							<input type="text" class="form-control floating url_selector" id="facebook_url" name="facebook_url" value="{{contact.facebook}}"
+							/>
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -326,9 +518,9 @@
 						</div>
 					</div>
 					<div class="col-md-6">
-						<div class="form-group form-focus select-focus">
+						<div class="form-group form-focus select-focus select-attorney">
 							<label class="control-label">Status</label>
-							<select id="status" name="status" class="select form-control floating">
+							<select id="status" name="status" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
 								<option value="NEW TARGET" {{#if_eq contact.status "NEW TARGET"}} selected="selected" {{/if_eq}}>NEW TARGET</option>
 								<option value="CONVERTED" {{#if_eq contact.status "CONVERTED"}} selected="selected" {{/if_eq}}>CONVERTED TO CLIENT</option>
 								<option value="TS-INTERIM" {{#if_eq contact.status "TS-INTERIM"}} selected="selected" {{/if_eq}}>INTERIM - REVIEW IN-PROGRESS</option>
@@ -336,12 +528,12 @@
 						</div>
 					</div>
 					<div class="col-md-6">
-						<div class="form-group form-focus select-focus">
+						<div class="form-group form-focus select-focus select-attorney">
 							<label class="control-label">Industry Type
 								<span class="req-lbl">*</span>
 
 							</label>
-							<select id="industry_type" name="industry_type" class="select form-control floating">
+							<select id="industry_type" name="industry_type" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
 								<option value="">Select Industry Type</option>
 								{{#each industry_types}}
 								<option value="{{this.id}}" {{#if_eq this.id ../contact.industry_type}} selected="selected" {{/if_eq}}>{{this.industry_name}}</option>
@@ -372,17 +564,42 @@
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+
+
 <script type="text/javascript">
-	$(document).ready(function(e) {
+	$(document).ready(function (e) {
 
 		$("#estimated_revenue").inputmask("numeric", {
-            radixPoint: ".",
-            groupSeparator: ",",
-            digits: 2,
-            autoGroup: true,
-            prefix: '$ ',
-            rightAlign: false
-        });
+			radixPoint: ".",
+			groupSeparator: ",",
+			digits: 2,
+			autoGroup: true,
+			prefix: '$ ',
+			rightAlign: false
+		});
+
+		//hide show type
+		let _msType = $('#_masyterContact').val();
+		if (_msType==='O') {
+			$('#org_type').show();
+			$('#indivisual_type').hide();
+			$('#m_s_contactInformation').show();
+		} else {
+			$('#org_type').hide();
+			$('#indivisual_type').show();
+			$('#m_s_contactInformation').hide();
+		}
+
+		//contact information 
+		$(document).on('click', '#masterContactDetailsPlus', function () {
+			$('#masterContactPlus').append($('.masterContactClose').html());
+		});
+
+		$(document).on('click', '.masterContactDetailsClose', function (e) {
+			$(this).parents(".contactDetailsRemove").remove();
+		});
 
 
 		$("#contactform").validate({
@@ -498,5 +715,4 @@
 			}
 		});
 	});
-</script>
-{{/content}}
+</script> {{/content}}

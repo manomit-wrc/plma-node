@@ -1,7 +1,12 @@
 {{#content "style" mode="prepend"}}
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+
+ {{/content}}
 
 <div class="page-wrapper">
     <div class="content container-fluid">
@@ -26,12 +31,12 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="form-group form-focus select-focus">
+                                <div class="form-group form-focus select-focus select-attorney">
                                     <label class="control-label">Select Attorney
                                       <span class="req-lbl">*</span>
 
                                     </label>
-                                    <select class="select form-control floating" id="attr_id" name="attr_id">
+                                    <select class="form-control floating selectpicker" id="attr_id" name="attr_id" data-show-subtext="true" data-live-search="true">
                                         <option value="">Select Attorney</option>
                                         {{#each attorney}}
                                         <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
@@ -40,12 +45,12 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                               <div class="form-group form-focus select-focus">
+                               <div class="form-group form-focus select-focus select-attorney">
                                     <label class="control-label">Select Current Year
                                       <span class="req-lbl">*</span>
 
                                      </label>
-                                    <select class="select form-control floating" id="year" name="year">
+                                    <select class="form-control floating selectpicker" id="year" name="year" data-show-subtext="true" data-live-search="true">
                                         <option value="">Select Current Year</option>
                                         {{#each year}}
                                         <option value="{{this}}">{{this}}</option>
@@ -107,6 +112,11 @@
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+
+
+
 <script type="text/javascript">
     $(document).ready(function () {
         $("#year_goal").inputmask("numeric", {
@@ -169,4 +179,5 @@
             }
         });
     });
-</script> {{/content}}
+</script>
+ {{/content}}

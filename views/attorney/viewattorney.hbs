@@ -225,29 +225,6 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="form-group form-focus select-focus">
-              <label class="control-label">Jurisdiction</label>
-              <select  id="jurisdiction" name="jurisdiction" disabled class="form-control floating">
-                <option value="">Select Jurisdiction</option>
-                {{#each jurisdiction}}
-                <option value="{{this.id}}" {{#if_eq this.id ../edata.0.attorney_details.0.jurisdiction}} selected="selected" {{/if_eq}}>{{this.name}}</option>
-                {{/each}}
-              </select>
-            </div>
-          </div>
-
-          {{!-- <div class="col-md-6">
-            <div class="form-group form-focus select-focus">
-              <label class="control-label">Industry Type</label>
-              <select  id="industry_type" name="industry_type" disabled class="form-control floating">
-                <option value="">Select Industry Type</option>
-                {{#each industry_type}}
-                <option value="{{this.id}}" {{#if_eq this.id ../edata.0.attorney_details.0.industry_type}} selected="selected" {{/if_eq}}>{{this.industry_name}}</option>
-                {{/each}}
-              </select>
-            </div>
-          </div> --}}
 
           <div class="col-md-6">
             <div class="form-group form-focus">
@@ -284,7 +261,18 @@
           <div class="col-md-6">
             <div class="form-group">
               <div class="">
-                <select class="form-control floating" id="practice_area" name="practice_area" multiple="multiple">
+                <select class="form-control floating" id="jurisdiction" name="jurisdiction" multiple="multiple" disabled>
+                  {{#each allJurisdiction}}
+                  <option value="{{this.jurisdiction.id}}" disabled {{#inArray ../jurisdiction_arr this.jurisdiction.id}} selected="selected" {{/inArray}}>{{this.jurisdiction.name}}</option>
+                  {{/each}}
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <div class="">
+                <select class="form-control floating" id="practice_area" name="practice_area" multiple="multiple" disabled>
                   {{#each allPracticeArea}}
                   <option value="{{this.practicearea.id}}" {{#inArray ../arr this.practicearea.id}} selected="selected" {{/inArray}} disabled>{{this.practicearea.name}}</option>
                   {{/each}}
@@ -424,6 +412,14 @@
 <script>
   $('#practice_area').multiselect({
       nonSelectedText: 'Select Practice Area',
+      enableFiltering: true,
+      includeSelectAllOption: true,
+      buttonWidth: '100%',
+      maxHeight: 400,
+      dropUp: true
+    });
+  $('#jurisdiction').multiselect({
+      nonSelectedText: 'Select Jurisdiction',
       enableFiltering: true,
       includeSelectAllOption: true,
       buttonWidth: '100%',

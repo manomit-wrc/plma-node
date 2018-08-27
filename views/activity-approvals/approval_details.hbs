@@ -63,8 +63,8 @@
                 </div>
 
                 <div class="m-t-15 text-center">
-                    <button class="btn btn-primary btn-lg" data-activity_id="{{activity_id}}" data-status="2" type="button" id="btnApproveActivityBudget">Approve</button>
-                    <button class="btn btn-primary btn-lg" data-activity_id="{{activity_id}}" data-status="3" type="button" id="btnRejectActivityBudget">Reject</button>
+                    <button class="btn btn-primary btn-lg" data-activity_id="{{activity_id}}" data-status_id="2" type="button" id="btnApproveActivityBudget">Approve</button>
+                    <button class="btn btn-primary btn-lg" data-activity_id="{{activity_id}}" data-status_id="3" type="button" id="btnRejectActivityBudget">Reject</button>
                 </div>
             </form>
         </div>
@@ -146,7 +146,7 @@
 
     $(document).on('click', '#btnApproveActivityBudget, #btnRejectActivityBudget', function(e) {
         var activity_id = $(this).data('activity_id');
-        var status = $(this).data('status');
+        var status = $(this).data('status_id');
         $.ajax({
             type: 'POST',
             url: '/update_activity_approve_reject',
