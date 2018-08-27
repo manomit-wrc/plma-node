@@ -6342,6 +6342,14 @@ select.gender {
 		}
 	}
 
+	@media only screen and (max-width: 768px) {
+
+		.btn-group-sm > .btn, .btn-sm {
+			display: block;
+			margin-bottom: 2px;
+		}
+	}
+
 	@media only screen and (max-width: 767px) {
 		.navbar-nav .open .dropdown-menu {
 			float: left;
@@ -6758,5 +6766,9 @@ select.gender {
 	@media only screen and (max-width: 390px) {
 		.pie-chart .svg {
 			left: -62px !important;
+		}
+
+		.modal-body #addDesignation .m-l-10 {
+			margin-left: 0 !important;
 		}
 	}
