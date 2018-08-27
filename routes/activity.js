@@ -776,7 +776,7 @@ router.post('/activity/update/:id', auth, upload.single('activity_attachment'), 
 
     const activityBudgetData = await ActivityBudget.findAll({
         where: { 'activity_id': req.body.activity_id }
-    })
+    });
 
     var targetClientLength;
     if (activityBudgetData[0].level_type === 'Individual') {
