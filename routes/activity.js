@@ -537,24 +537,6 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 
 router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 
-    const _allActivity =  await Activity.findOne({
-        where:{
-            id: req.params['id']
-        }
-    });
-
-    if (_allActivity['activity_status']==3) {
-        await Activity.update({
-            'activity_update':'update',
-            'activity_status': 0
-        },{
-            where : {
-                id: req.params['id']
-            }
-        })
-    }
-
-
     Activity.hasMany(Activity_to_user_type, {
         foreignKey: 'activity_id'
     });
@@ -763,9 +745,7 @@ router.post('/activity/update/:id', auth, upload.single('activity_attachment'), 
     const ToDate1 = req.body.activity_to_date ? req.body.activity_to_date.split("-") : '';
 
     const activityBudgetData = await ActivityBudget.findAll({
-        where: {
-            'activity_id': req.body.activity_id
-        }
+        where: { 'activity_id': req.body.activity_id }
     })
 
     var targetClientLength;
@@ -813,17 +793,20 @@ router.post('/activity/update/:id', auth, upload.single('activity_attachment'), 
         section_id: req.body.section,
         s_group_id: req.body.strategy_group,
         activity_status: req.body.activity_status,
-        attachment_field: fileName
+        attachment_field: fileName,
+        activity_update: 'update'
     }, {
         where: {
             id: req.params['id']
         }
     });
+ 
     await Activity_to_user_type.destroy({
         where: {
             activity_id: req.params['id']
         }
     });
+
     if (req.body.ref_type == "T") {
         for (var i = 0; i < target_user.length; i++) {
             await Activity_to_user_type.create({
@@ -1097,7 +1080,7 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
         });
 
         if (userInformation_4_l4 === null) {
-            var userInformation_4_l4 = await User.findOne({
+            userInformation_4_l4 = await User.findOne({
                 where: {
                     'designation_id': firmDetails['level_4'],
                     'section_id': req.user['section_id'],
@@ -1107,7 +1090,7 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
             });
         }
         if (userInformation_4_l3 === null) {
-            var userInformation_4_l3 = await User.findOne({
+            userInformation_4_l3 = await User.findOne({
                 where: {
                     'designation_id': firmDetails['level_3'],
                     'section_id': req.user['section_id'],
