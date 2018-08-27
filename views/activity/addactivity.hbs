@@ -62,22 +62,28 @@
                             <div class="col-md-6" id="target_list">
                                 <div class="form-group select-focus">
                                     <select id="target_id" name="target_user[]" class="form-control floating onchangeBudget" multiple="multiple">
-                                        {{#each target}} {{#if_eq target_type "I"}}
-                                        <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
-                                        {{/if_eq}} {{#if_eq target_type "O"}}
-                                        <option value="{{this.id}}">{{this.organization_name}}</option>
-                                        {{/if_eq}} {{/each}}
+                                        {{#each target}}
+                                            {{#if_eq target_type "I"}}
+                                                <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
+                                            {{/if_eq}}
+                                            {{#if_eq target_type "O"}}
+                                                <option value="{{this.id}}">{{this.organization_name}}</option>
+                                            {{/if_eq}}
+                                        {{/each}}
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6" style="display: none;" id="client_list">
                                 <div class="form-group select-focus">
                                     <select id="client_id" name="client_user[]" class="form-control floating onchangeBudget" multiple="multiple">
-                                        {{#each client}} {{#if_eq client_type "I"}}
-                                        <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
-                                        {{/if_eq}} {{#if_eq client_type "O"}}
-                                        <option value="{{this.id}}">{{this.organization_name}}</option>
-                                        {{/if_eq}} {{/each}}
+                                        {{#each client}}
+                                            {{#if_eq client_type "I"}}
+                                                <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
+                                            {{/if_eq}}
+                                            {{#if_eq client_type "O"}}
+                                                <option value="{{this.id}}">{{this.organization_name}}</option>
+                                            {{/if_eq}}
+                                        {{/each}}
                                     </select>
                                 </div>
                             </div>
@@ -85,7 +91,7 @@
                                 <div class="form-group select-focus">
                                     <select id="referral_id" name="referral_user[]" class="form-control floating onchangeBudget" multiple="multiple">
                                         {{#each referral}}
-                                        <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
+                                            <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
                                         {{/each}}
                                     </select>
                                 </div>
@@ -147,17 +153,17 @@
                                     </select>
                                 </div>
                             </div>
-                            {{!-- <div class="col-md-6 attorney" style="display: none;">
+                            <div class="col-md-6 attorney" style="display: none;">
                                 <div class="form-group form-focus select-focus">
                                     <label class="control-label">Attorney <span class="req-lbl">*</span> </label>
-                                    <select class="form-control floating" id="section" name="section">
+                                    <select class="form-control floating" id="attorney_user" name="attorney_user" multiple="multiple">
                                         <option value="0">Select Attorney</option>
                                         {{#each attorney}}
                                             <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
                                         {{/each}}
                                     </select>
                                 </div>
-                            </div> --}}
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus">
                                     <label class="control-label">Activity Goal <span class="req-lbl">*</span> </label>
@@ -446,7 +452,7 @@
         includeSelectAllOption: true,
         buttonWidth: '100%',
         maxHeight: 400,
-        dropUp: true
+        dropDown: true
     });
 
     $('#client_id').multiselect({
@@ -455,7 +461,7 @@
         includeSelectAllOption: true,
         buttonWidth: '100%',
         maxHeight: 400,
-        dropUp: true
+        dropDown: true
     });
 
     $('#referral_id').multiselect({
@@ -464,7 +470,7 @@
         includeSelectAllOption: true,
         buttonWidth: '100%',
         maxHeight: 400,
-        dropUp: true
+        dropDown: true
     });
 
     var count = 0;
@@ -632,26 +638,30 @@
             if ($(this).val() == 'team') {
                 //$('#potiential_revenue').val('0.00');
                 //$('#potiential_revenue').prop('readonly', true);
-                $(".none").show();
+                $(".none").hide();
                 $(".section").hide();
                 $(".strategyGroup").hide();
+                $(".attorney").show();
             } else if ($(this).val() == 'section') {
                 //$('#potiential_revenue').val('0.00');
                 $(".none").hide();
                 $(".section").show();
                 $(".strategyGroup").hide();
+                $(".attorney").hide();
                 //$('#potiential_revenue').prop('readonly', false);
             } else if ($(this).val() == 'strategic_group') {
                 //$('#potiential_revenue').val('0.00');
                 $(".none").hide();
                 $(".strategyGroup").show();
                 $(".section").hide();
+                $(".attorney").hide();
                 //$('#potiential_revenue').prop('readonly', false);
             } else {
                 //$('#potiential_revenue').val('0.00');
                 $(".none").show();
                 $(".section").hide();
                 $(".strategyGroup").hide();
+                $(".attorney").hide();
                 //$('#potiential_revenue').prop('readonly', false);
             }
         });

@@ -710,36 +710,90 @@ router.post("/edit-attorney-profile", auth, profile.single('avatar'), csrfProtec
 });
 
 router.get("/get-chart-activity-count-value", auth, async(req, res)=> {
-
+    var activityCondition = {};
+    if (req.user.role_id != "1") {
+        activityCondition.firm_id = req.user.firm_id;
+        if (req.user.role_id != "2") {
+            activityCondition.user_id = req.user.id;
+        }
+    }
     const monthNames = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
     ];
-    var month = [];
-    var arr = [];
+    var jan = [];
     var feb = [];
-    var activity = await Activity.findAll();
-    
+    var mar = [];
+    var apr = [];
+    var may = [];
+    var jun = [];
+    var jul = [];
+    var aug = [];
+    var sep = [];
+    var oct = [];
+    var nov = [];
+    var dec = [];
+    var activity = await Activity.findAll({
+        where: activityCondition
+    });
     for(var i=0; i<activity.length; i++)
     {
         if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "January")
         {
-            
-            month.push(i);
+            jan.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
         }
         if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "February")
         {
-            feb.push(i);
+            feb.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+        }
+        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "March")
+        {
+            mar.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+        }
+        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "April")
+        {
+            apr.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+        }
+        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "May")
+        {
+            may.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+        }
+        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "June")
+        {
+            jun.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+        }
+        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "July")
+        {
+            jul.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
         }
         if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "August")
         {
-            console.log(activity[i].total_budget_amount)
-            arr.push(i);
-            
+            aug.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
         }
-        //console.log(monthNames[new Date(activity[i].activity_creation_date).getMonth()]);
+        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "September")
+        {
+            sep.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+        }
+        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "October")
+        {
+            oct.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+        }
+        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "November")
+        {
+            nov.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+        }
+        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "December")
+        {
+            dec.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+        }
     }
-    var tot = [month.length,feb.length,arr.length];
-   // console.log(tot);
+    var tot = [jan.length, feb.length, mar.length, apr.length, may.length, jun.length, jul.length, aug.length, sep.length, oct.length, nov.length, dec.length];
+    var tot_sum = [jan.reduce((a, b) => a + b, 0), feb.reduce((a, b) => a + b, 0), mar.reduce((a, b) => a + b, 0), apr.reduce((a, b) => a + b, 0), may.reduce((a, b) => a + b, 0), jun.reduce((a, b) => a + b, 0), jul.reduce((a, b) => a + b, 0), aug.reduce((a, b) => a + b, 0), sep.reduce((a, b) => a + b, 0), oct.reduce((a, b) => a + b, 0), nov.reduce((a, b) => a + b, 0), dec.reduce((a, b) => a + b, 0)];
+
+    res.send({
+        success: true,
+        total_activity: tot,
+        total_budget: tot_sum,
+    });
 });
 
 module.exports = router;

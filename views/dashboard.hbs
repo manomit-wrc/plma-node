@@ -81,11 +81,13 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="panel panel-table">
-            <div class="panel-heading">
-              <h3 class="panel-title">Firms</h3>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-sm-6 text-center">
+            <div class="card-box">
+              <div id='myChart'></div>
             </div>
             <div class="panel-body">
               <div class="table-responsive">
@@ -575,40 +577,82 @@
                 type: "GET",
                 url: "/get-chart-activity-count-value",
                 success: function (response) {
-                 
+                 var myConfig = {
+                    type: "area",
+                    utc: true,
+                    plotarea: {
+                      /*Add an adjust-layout attribute for automatic margin adjustment*/
+                      adjustLayout: true
+                    },
+                    
+                    scaleX: {
+                      label: {  /*Add a scale title with a label object*/
+                        text: "Month",
+                      },
+                      /*Add your scale labels with a labels array*/
+                      labels: ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
+                    },
+                   scaleY: {
+                     label: {
+                       text: "Total No. of activities and budgets"
+                     }
+                   },
+                    guide: {
+                     lineStyle: 'dotted'
+                   },
+                    series: [
+                      {
+                        values: response.total_activity,
+                        text: 'Total Activities:',
+                        "line-color": "#666",
+                        "background-color": "#c2c2c2",
+                        "marker": {
+                          "background-color": "#666",
+                          "size": 6,
+                          "borderColor": "black",
+                          "borderWidth": 1
+                        },
+                        "hover-marker": {
+                          "background-color": "#666",
+                          "size": 8,
+                          "borderColor": "black",
+                          "borderWidth": 1
+                        }
+                      },
+                      {
+                        values: response.total_budget,
+                        text: 'Total Budgets ($):',
+                        "line-color": "#ffa500",
+                        "background-color": "#ff881f",
+                        "marker": {
+                          "background-color": "#ffa500",
+                          "size": 6,
+                          "borderColor": "black",
+                          "borderWidth": 1
+                        },
+                        "hover-marker": {
+                          "background-color": "#ffa500",
+                          "size": 8,
+                          "borderColor": "black",
+                          "borderWidth": 1
+                        }
+                      }
+                    ]
+                  };
+
+                  zingchart.render({
+                    id: 'myChart',
+                    data: myConfig,
+                    height: 250,
+                    width: '100%'
+                  });
                 },
                 error: function (xhr) {
 
                 }
               });
             });
-          var myConfig = {
-              type: "area",
-              plotarea: {
-                /*Add an adjust-layout attribute for automatic margin adjustment*/
-                adjustLayout: true
-              },
-              scaleX: {
-                label: {  /*Add a scale title with a label object*/
-                  text: "Above is an example of a category scale",
-                },
-                /*Add your scale labels with a labels array*/
-                labels: ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug"]
-              },
-              series: [
-                {
-                  values: [20, 40, 25, 50, 15, 45, 33, 34]
-                },
-                {
-                  values: [5, 30, 21, 18, 59, 50, 28, 33]
-                }
-              ]
-            };
-
-            zingchart.render({
-              id: 'myChart',
-              data: myConfig
-            });
+          
         /*$(document).ready(function(e){
           $.ajax({
             type: "GET",

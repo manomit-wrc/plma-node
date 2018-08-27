@@ -6030,10 +6030,27 @@ select.gender {
 	}
 
 
-
-
-
 	/*Ends on css 20-08-2018*/
+
+
+	/*Starts on css 27-08-2018*/
+
+	.multiselect-container.dropdown-menu {
+		height: 120px;
+		overflow-y: scroll;
+		overflow-x: hidden;
+		width: 100%;
+	}
+
+	.dropdown-menu.inner.selectpicker {
+		height: 120px;
+		overflow-y: scroll;
+		overflow-x: hidden;
+		width: 100%;
+	}
+
+	/*Ends on css 27-08-2018*/
+
 
 
 
@@ -6217,6 +6234,32 @@ select.gender {
 	@media (min-width: 992px) and (max-width: 1350px) {
 		.filter-row>.col-md-2 {
 			width: 33.3333%;
+		}
+	}
+
+	@media (max-width: 1506px) {
+		.custom-table .btn.btn-sm {
+			padding: 2px !important;
+		}
+	}
+
+	@media (max-width: 1425px) {
+		#mainTable .btn.btn-sm, .custom-table .btn.btn-sm {
+			padding: 5px;
+		}
+	}
+
+	@media (max-width: 1382px) {
+		#mainTable .btn.btn-sm, .custom-table .btn.btn-sm {
+			display: block;
+			margin-bottom: 2px;
+		}
+	}
+
+	@media (max-width: 1169px) {
+		#mainTable .btn.btn-sm, .custom-table .btn.btn-sm {
+			display: block;
+			margin-bottom: 2px;
 		}
 	}
 
