@@ -32,9 +32,9 @@
                             {{#each activity_approvals}}
                             <tr>
                                 <td>{{math @index "+" 1}}</td>
-                                <td>{{this.activity_name}}</td>
+                                <td>{{this.activity.activity_name}}</td>
                                 <td>
-                                    <a href="/approval_details/{{this.id}}" id="budgetUpdate">View Remarks
+                                    <a href="/approval_details/{{this.activity.id}}" id="budgetUpdate">View Remarks
                                     </a>
                                 </td>
                             </tr>

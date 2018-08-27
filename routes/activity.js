@@ -559,6 +559,7 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 
 router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 
+<<<<<<< HEAD
     const _allActivity = await Activity.findOne({
         where: {
             id: req.params['id']
@@ -577,6 +578,8 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
     }
 
 
+=======
+>>>>>>> d3cd9b34b653ce3668d2dfee3dcb56ee279c2832
     Activity.hasMany(Activity_to_user_type, {
         foreignKey: 'activity_id'
     });
@@ -785,9 +788,7 @@ router.post('/activity/update/:id', auth, upload.single('activity_attachment'), 
     const ToDate1 = req.body.activity_to_date ? req.body.activity_to_date.split("-") : '';
 
     const activityBudgetData = await ActivityBudget.findAll({
-        where: {
-            'activity_id': req.body.activity_id
-        }
+        where: { 'activity_id': req.body.activity_id }
     })
 
     var targetClientLength;
@@ -838,15 +839,24 @@ router.post('/activity/update/:id', auth, upload.single('activity_attachment'), 
         attachment_field: fileName,
         activity_update: 'update'
     }, {
+<<<<<<< HEAD
             where: {
                 id: req.params['id']
             }
         });
+=======
+        where: {
+            id: req.params['id']
+        }
+    });
+ 
+>>>>>>> d3cd9b34b653ce3668d2dfee3dcb56ee279c2832
     await Activity_to_user_type.destroy({
         where: {
             activity_id: req.params['id']
         }
     });
+
     if (req.body.ref_type == "T") {
         for (var i = 0; i < target_user.length; i++) {
             await Activity_to_user_type.create({
