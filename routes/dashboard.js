@@ -28,6 +28,8 @@ const Client = require('../models').client;
 const Referral = require('../models').referral;
 const MasterContact = require('../models').master_contact;
 const ActivityBudget = require('../models').activity_budget;
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 var csrfProtection = csrf({ cookie: true });
 
@@ -705,6 +707,37 @@ router.post("/edit-attorney-profile", auth, profile.single('avatar'), csrfProtec
     }
     req.flash('success-message', 'Profile updated successfully.');
     res.redirect('/edit-attorney-profile');
+});
+
+router.get("/get-chart-activity-count-value", auth, async(req, res)=> {
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+    var month = [];
+    var arr = [];
+    var feb = [];
+    var activity = await Activity.findAll();
+    for(var i=0; i<activity.length; i++)
+    {
+        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "January")
+        {
+            
+            month.push(i);
+        }
+        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "February")
+        {
+            feb.push(i);
+        }
+        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "August")
+        {
+            console.log(activity[i].total_budget_amount)
+            arr.push(i);
+            
+        }
+        //console.log(monthNames[new Date(activity[i].activity_creation_date).getMonth()]);
+    }
+    var tot = [month.length,feb.length,arr.length];
+   // console.log(tot);
 });
 
 module.exports = router;
