@@ -81,6 +81,13 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
         }]
     });
 
+    const allAttorney = await User.findAll({
+        where: {
+            firm_id: req.user.firm_id,
+            role_id: 3
+        }
+    });
+
     const activity_goal = await ActivityGoal.findAll({
         where: {
             'firm_id': req.user.firm_id
@@ -129,6 +136,7 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
         csrfToken: req.csrfToken(),
         firm: firm[0].title,
         section: allSection,
+        attorney: allAttorney,
         originAttorney: req.user.first_name + " " + req.user.last_name,
         success_message,
         activity_goal: activity_goal,
@@ -306,11 +314,11 @@ router.post('/activity/add', auth, upload.single('activity_attachment'), firmAtt
                 hour: totalHour,
                 amount: totalAmount
             }, {
-                    where: {
-                        'activity_id': req.body.activity_id,
-                        'budget_id': activityBudgetData[b].budget_id
-                    }
-                });
+                where: {
+                    'activity_id': req.body.activity_id,
+                    'budget_id': activityBudgetData[b].budget_id
+                }
+            });
         }
     }
 
