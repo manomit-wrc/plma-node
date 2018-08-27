@@ -57,20 +57,27 @@
                 <td>
                   <input type="hidden" name="_csrf" value="{{csrfToken}}">
                   <input type="hidden" name="activity_id" id="activity_id" value="{{this.id}}">
-                  {{#if (and (eq this.activity_status '0')(eq this.activity_update 'new')) }} NEW ACTIVITY - CREATED {{/if}}
-                  {{#if (and (eq this.activity_status '0')(eq this.activity_update 'update')) }} ACTIVITY UPDATE {{/if}}
+                  {{#if_eq this.activity_status '0'}} NEW ACTIVITY - CREATED {{/if_eq}}
+                  {{#if (and (eq this.activity_status '3')(eq this.activity_update 'update')) }} ACTIVITY UPDATE {{else}}
+                  {{#if_eq this.activity_status '3'}} NOT APPROVED - DISCARD ACTIVITY {{/if_eq}}
+                   {{/if}}
                   {{#if_eq this.activity_status '1'}} PENDING APPROVAL - IN-PROGRESS {{/if_eq}}
                   {{#if_eq this.activity_status '2'}} APPROVED - PROCEED {{/if_eq}}
-                  {{#if_eq this.activity_status '3'}} NOT APPROVED - DISCARD ACTIVITY {{/if_eq}}
+                  
                 </td>
                 <td class="text-right">
-                  {{#if_eq this.activity_status "0"}}
-                  {{!-- {{#if (or (eq this.activity_status "0")(eq this.activity_update "update"))}} --}}
-                    <a href="javascript:void(0);" class="btn btn-info btn-sm approval_request_sent" id="approval_request_sent" title="REQUEST FOR APPROVAL"
+                  {{#if (or (eq this.activity_status "0")(and (eq this.activity_status "3")(eq this.activity_update "update"))) }}
+                  <a href="javascript:void(0);" class="btn btn-info btn-sm approval_request_sent" id="approval_request_sent" title="REQUEST FOR APPROVAL"
                       data-target-request-id="{{this.id}}" class="btn btn-danger btn-sm target-delete">
                       <i class="fa fa-check" aria-hidden="true"></i>
                     </a>
-                  {{/if_eq}}
+                   {{!-- {{else}} --}}
+                  {{!-- {{#if (and (eq this.activity_status "0")(eq this.activity_update "update"))}} --}}
+                    {{!-- <a href="javascript:void(0);" class="btn btn-info btn-sm approval_request_sent" id="approval_request_sent" title="REQUEST FOR APPROVAL"
+                      data-target-request-id="{{this.id}}" class="btn btn-danger btn-sm target-delete">
+                      <i class="fa fa-check" aria-hidden="true"></i>
+                    </a> --}}
+                  {{/if}}
                   <a href="/activity/view/{{this.id}}" class="btn btn-success btn-sm" id="setUrlItem">
                     <i class="fa fa-eye m-r-5"></i>
                   </a>
