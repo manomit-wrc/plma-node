@@ -15,31 +15,24 @@ const Op = Sequelize.Op;
 
 router.get('/activity-approvals', auth, async (req, res) => {
 
+    requestApproval.belongsTo(Activity, {
+        foreignKey: 'activity_id'
+    });
+
     const activityRequest = await requestApproval.findAll({
         where: {
             'approver_id': req.user.id,
             'status': '1',
             'approve': '0'
-        }
+        },
+        include: [{
+            model: Activity
+        }],
     });
-
-    var activity_approvals;
-    if (activityRequest.length > 0) {
-        for (let i=0; i< activityRequest.length; i++) {
-            activity_approvals = await Activity.findAll({
-                where: {
-                    // 'activity_status': 1,
-                    // 'firm_id': req.user.firm_id
-                    id:activityRequest[i].activity_id
-                }
-            });
-
-        }
-    }
-
+    
     res.render('activity-approvals/index', {
         layout: 'dashboard',
-        activity_approvals: activity_approvals
+        activity_approvals: activityRequest
     });
 });
 

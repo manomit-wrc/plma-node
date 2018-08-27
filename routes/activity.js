@@ -537,24 +537,6 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 
 router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 
-    const _allActivity =  await Activity.findOne({
-        where:{
-            id: req.params['id']
-        }
-    });
-
-    if (_allActivity['activity_status']==3) {
-        await Activity.update({
-            'activity_update':'update',
-            'activity_status': 0
-        },{
-            where : {
-                id: req.params['id']
-            }
-        })
-    }
-
-
     Activity.hasMany(Activity_to_user_type, {
         foreignKey: 'activity_id'
     });
@@ -763,9 +745,7 @@ router.post('/activity/update/:id', auth, upload.single('activity_attachment'), 
     const ToDate1 = req.body.activity_to_date ? req.body.activity_to_date.split("-") : '';
 
     const activityBudgetData = await ActivityBudget.findAll({
-        where: {
-            'activity_id': req.body.activity_id
-        }
+        where: { 'activity_id': req.body.activity_id }
     })
 
     var targetClientLength;
@@ -820,11 +800,13 @@ router.post('/activity/update/:id', auth, upload.single('activity_attachment'), 
             id: req.params['id']
         }
     });
+ 
     await Activity_to_user_type.destroy({
         where: {
             activity_id: req.params['id']
         }
     });
+
     if (req.body.ref_type == "T") {
         for (var i = 0; i < target_user.length; i++) {
             await Activity_to_user_type.create({
