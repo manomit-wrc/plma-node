@@ -1,83 +1,247 @@
 {{#if_eq user.role_id "1"}}
-  <div class="page-wrapper">
-    <div class="content container-fluid">
-      {{#if auth_msg}}
-      <div class="alert alert-danger">
-        <strong>Error! </strong>{{auth_msg}}
-      </div>
-      {{/if}} {{#if changeFirmToAttr}}
-      <div class="alert alert-success">
-        <strong>Success! </strong>{{changeFirmToAttr}}
-      </div>
-      {{/if}} {{#if changeAttrToFirm}}
-      <div class="alert alert-success">
-        <strong>Success! </strong>{{changeAttrToFirm}}
-      </div>
-      {{/if}} {{#if changeSite}}
-      <div class="alert alert-success">
-        <strong>Success! </strong>{{changeSite}}
-      </div>
-      {{/if}}
-      <div class="row">
-        <div class="col-md-6 col-sm-6 col-lg-3">
-          <div class="dash-widget clearfix card-box">
-            <span class="dash-widget-icon">
-              <i class="fa fa-cubes" aria-hidden="true"></i>
-            </span>
-            <div class="dash-widget-info">
-              <h3>{{firm_count}}</h3>
-              <span>Firms</span>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-sm-6 col-lg-3">
-          <div class="dash-widget clearfix card-box">
-            <span class="dash-widget-icon">
-              <i class="fa fa-users" aria-hidden="true"></i>
-            </span>
-            <div class="dash-widget-info">
-              <h3>{{employee_count}}</h3>
-              <span>Employess</span>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-sm-6 col-lg-3">
-          <div class="dash-widget clearfix card-box">
-            <span class="dash-widget-icon">
-              <i class="fa fa-users"></i>
-            </span>
-            <div class="dash-widget-info">
-              <h3>{{attorney_count}}</h3>
-              <span>Attorneys</span>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-sm-6 col-lg-3">
-          <div class="dash-widget clearfix card-box">
-            <span class="dash-widget-icon">
-              <i class="fa fa-dollar" aria-hidden="true"></i>
-            </span>
-            <div class="dash-widget-info">
-              <h3>$ {{total_budget_amount}}</h3>
-              <span>Budgets</span>
-            </div>
+<div class="page-wrapper">
+  <div class="content container-fluid">
+    {{#if auth_msg}}
+    <div class="alert alert-danger">
+      <strong>Error! </strong>{{auth_msg}}
+    </div>
+    {{/if}} {{#if changeFirmToAttr}}
+    <div class="alert alert-success">
+      <strong>Success! </strong>{{changeFirmToAttr}}
+    </div>
+    {{/if}} {{#if changeAttrToFirm}}
+    <div class="alert alert-success">
+      <strong>Success! </strong>{{changeAttrToFirm}}
+    </div>
+    {{/if}} {{#if changeSite}}
+    <div class="alert alert-success">
+      <strong>Success! </strong>{{changeSite}}
+    </div>
+    {{/if}}
+    <div class="row">
+      <div class="col-md-6 col-sm-6 col-lg-3">
+        <div class="dash-widget clearfix card-box">
+          <span class="dash-widget-icon">
+            <i class="fa fa-cubes" aria-hidden="true"></i>
+          </span>
+          <div class="dash-widget-info">
+            <h3>{{firm_count}}</h3>
+            <span>Firms</span>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-sm-6 text-center">
-              <div class="card-box">
-                <div id="area-chart"></div>
-              </div>
+      <div class="col-md-6 col-sm-6 col-lg-3">
+        <div class="dash-widget clearfix card-box">
+          <span class="dash-widget-icon">
+            <i class="fa fa-users" aria-hidden="true"></i>
+          </span>
+          <div class="dash-widget-info">
+            <h3>{{employee_count}}</h3>
+            <span>Employess</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6 col-lg-3">
+        <div class="dash-widget clearfix card-box">
+          <span class="dash-widget-icon">
+            <i class="fa fa-users"></i>
+          </span>
+          <div class="dash-widget-info">
+            <h3>{{attorney_count}}</h3>
+            <span>Attorneys</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6 col-lg-3">
+        <div class="dash-widget clearfix card-box">
+          <span class="dash-widget-icon">
+            <i class="fa fa-dollar" aria-hidden="true"></i>
+          </span>
+          <div class="dash-widget-info">
+            <h3>$ {{total_budget_amount}}</h3>
+            <span>Budgets</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{!-- <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-sm-6 text-center">
+            <div class="card-box">
+              <div id="area-chart"></div>
             </div>
-            <div class="col-sm-6 text-center">
-              <div class="card-box">
-                <div id="line-chart"></div>
-              </div>
+          </div>
+          <div class="col-sm-6 text-center">
+            <div class="card-box">
+              <div id="line-chart"></div>
             </div>
-            
+          </div>
+        </div>
+      </div>
+    </div> --}}
+    <div class="row">
+      <div class="col-md-6">
+        <div class="panel panel-table">
+          <div class="panel-heading">
+            <h3 class="panel-title">Firms</h3>
+          </div>
+          <div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-striped custom-table m-b-0">
+                <thead>
+                  <tr>
+                    <th style="min-width:200px;">Firm Name</th>
+                    <th>Firm Admin</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#if_eq firm_count "0"}}
+                  <tr>
+                    <td colspan="4" class="text-center">No data available in table</td>
+                  </tr>
+                  {{else}} {{#each firm_admins}}
+                  <tr class="site_dashboard_custom_del">
+                    <td style="min-width:250px;">
+                      <a href="/firms" class="avatar">{{first_letter this.firm.title}}</a>
+                      <h2>
+                        <a href="/firms">{{this.firm.title}}</a>
+                      </h2>
+                    </td>
+                    <td>{{this.first_name}} {{this.last_name}}</td>
+                    <td>{{this.email}}</td>
+                    <td>{{this.mobile_no}}</td>
+                  </tr>
+                  {{/each}} {{/if_eq}}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="panel-footer">
+            <a href="/firms" class="text-primary">View all firms</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="panel panel-table">
+          <div class="panel-heading">
+            <h3 class="panel-title">Employees</h3>
+          </div>
+          <div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-striped custom-table m-b-0">
+                <thead>
+                  <tr>
+                    <th style="min-width:200px;">Name</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>Gender</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#if_eq employee_count "0"}}
+                  <tr>
+                    <td colspan="4" class="text-center">No data available in table</td>
+                  </tr>
+                  {{else}} {{#each employee}}
+                  <tr class="site_dashboard_custom_del">
+                    <td style="min-width:200px;">
+                      <a href="/employee/view/{{this.id}}" class="avatar">{{first_letter this.first_name}}</a>
+                      <h2>
+                        <a href="/employee/view/{{this.id}}">{{this.first_name}} {{this.last_name}}</a>
+                      </h2>
+                    </td>
+                    <td>{{this.email}}</td>
+                    <td>{{this.mobile_no}}</td>
+                    <td>{{#if_eq this.gender "M"}} Male {{/if_eq}} {{#if_eq this.gender "F"}} Female {{/if_eq}} {{#if_eq this.gender
+                      "O"}} Others {{/if_eq}}
+                    </td>
+                  </tr>
+                  {{/each}} {{/if_eq}}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="panel-footer">
+            <a href="/employees" class="text-primary">View all employees</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{else}}
+<div class="page-wrapper">
+  <div class="content container-fluid">
+    {{#if auth_msg}}
+    <div class="alert alert-danger">
+      <strong>Error! </strong>{{auth_msg}}
+    </div>
+    {{/if}} {{#if changeFirmToAttr}}
+    <div class="alert alert-success">
+      <strong>Success! </strong>{{changeFirmToAttr}}
+    </div>
+    {{/if}} {{#if changeAttrToFirm}}
+    <div class="alert alert-success">
+      <strong>Success! </strong>{{changeAttrToFirm}}
+    </div>
+    {{/if}} {{#if changeSite}}
+    <div class="alert alert-success">
+      <strong>Success! </strong>{{changeSite}}
+    </div>
+    {{/if}}
+    <div class="row">
+      <div class="col-md-6 col-sm-6 col-lg-3">
+        <div class="dash-widget clearfix card-box">
+          <span class="dash-widget-icon">
+            <i class="fa fa-cubes" aria-hidden="true"></i>
+          </span>
+          <div class="dash-widget-info">
+            <h3>{{activity_count}}</h3>
+            <span>
+              <a href="/activitypage" style="color:#333;">Activities</a>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6 col-lg-3">
+        <div class="dash-widget clearfix card-box">
+          <span class="dash-widget-icon">
+            <i class="fa fa-users" aria-hidden="true"></i>
+          </span>
+          <div class="dash-widget-info">
+            <h3>{{target_count}}</h3>
+            <span>
+              <a href="/target" style="color:#333;">Targets</a>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6 col-lg-3">
+        <div class="dash-widget clearfix card-box">
+          <span class="dash-widget-icon">
+            <i class="fa fa-users"></i>
+          </span>
+          <div class="dash-widget-info">
+            <h3>{{client_count}}</h3>
+            <span>
+              <a href="/client" style="color:#333;">Clients</a>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6 col-lg-3">
+        <div class="dash-widget clearfix card-box">
+          <span class="dash-widget-icon">
+            <i class="fa fa-users" aria-hidden="true"></i>
+          </span>
+          <div class="dash-widget-info">
+            <h3>{{referral_count}}</h3>
+            <span>
+              <a href="/referral" style="color:#333;">Referrals</a>
+            </span>
           </div>
         </div>
       </div>
@@ -89,480 +253,314 @@
             <div class="card-box">
               <div id='myChart'></div>
             </div>
-            <div class="panel-body">
-              <div class="table-responsive">
-                <table class="table table-striped custom-table m-b-0">
-                  <thead>
-                    <tr>
-                      <th style="min-width:200px;">Firm Name</th>
-                      <th>Firm Admin</th>
-                      <th>Email</th>
-                      <th>Mobile</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {{#if_eq firm_count "0"}}
-                      <tr>
-                        <td colspan="4" class="text-center">No data available in table</td>
-                      </tr>
-                    {{else}}
-                      {{#each firm_admins}}
-                      <tr class="site_dashboard_custom_del">
-                        <td style="min-width:250px;">
-                          <a href="/firms" class="avatar">{{first_letter this.firm.title}}</a>
-                          <h2>
-                            <a href="/firms">{{this.firm.title}}</a>
-                          </h2>
-                        </td>
-                        <td>{{this.first_name}} {{this.last_name}}</td>
-                        <td>{{this.email}}</td>
-                        <td>{{this.mobile_no}}</td>
-                      </tr>
-                      {{/each}}
-                    {{/if_eq}}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div class="panel-footer">
-              <a href="/firms" class="text-primary">View all firms</a>
+          </div>
+          <div class="col-sm-6 text-center">
+            <div class="card-box">
+              <div id='myChart1'></div>
             </div>
           </div>
+          {{!--
+          <div class="col-md-4 col-sm-12 text-center">
+            <div class="card-box">
+              <div id="bar-chart"></div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-12 text-center">
+            <div class="card-box">
+              <div id="stacked"></div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-12 text-center">
+            <div class="card-box">
+              <div id="pie-chart"></div>
+            </div>
+          </div> --}}
         </div>
-        <div class="col-md-6">
-          <div class="panel panel-table">
-            <div class="panel-heading">
-              <h3 class="panel-title">Employees</h3>
+      </div>
+    </div>
+    {{#if_eq user.role_id "1"}}{{else}}
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel panel-table">
+          <div class="panel-heading">
+            <h3 class="panel-title">Activities</h3>
+          </div>
+          <div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-striped custom-table m-b-0 ">
+                <thead>
+                  <tr>
+                    <th style="width:10%">Creation Date</th>
+                    <th>Activity Name</th>
+                    <th>From Date</th>
+                    <th>To Date</th>
+                    <th>Total Hours</th>
+                    <th>Total Amount</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#if_eq activity_count "0"}}
+                  <tr>
+                    <td colspan="7" class="text-center">No data available in table</td>
+                  </tr>
+                  {{else}} {{#each activity}}
+                  <tr class="activity_custom_del">
+                    <td>{{dateFormat this.activity_creation_date "DD-MM-YYYY"}}</td>
+                    <td>
+                      <a href="/activity/view/{{this.id}}">{{this.activity_name}}</a>
+                    </td>
+                    <td>{{dateFormat this.activity_from_date "DD-MM-YYYY"}}</td>
+                    <td>{{dateFormat this.activity_to_date "DD-MM-YYYY"}}</td>
+                    <td>{{this.total_budget_hour}}</td>
+                    <td>$ {{this.total_budget_amount}}</td>
+                    <td>
+                      {{#if_eq this.activity_status '0'}}
+                      <span class="label label-info-border">NEW ACTIVITY - CREATED </span>{{/if_eq}} {{#if_eq this.activity_status '1'}}
+                      <span class="label label-warning-border">SENT FOR APPROVAL</span> {{/if_eq}} {{#if_eq this.activity_status '2'}}
+                      <span class="label label-success-border">APPROVED</span> {{/if_eq}} {{#if_eq this.activity_status '3'}}
+                      <span class="label label-danger-border">NOT APPROVED</span> {{/if_eq}}
+                    </td>
+                  </tr>
+                  {{/each}} {{/if_eq}}
+                </tbody>
+              </table>
             </div>
-            <div class="panel-body">
-              <div class="table-responsive">
-                <table class="table table-striped custom-table m-b-0">
-                  <thead>
-                    <tr>
-                      <th style="min-width:200px;">Name</th>
-                      <th>Email</th>
-                      <th>Mobile</th>
-                      <th>Gender</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {{#if_eq employee_count "0"}}
-                      <tr>
-                        <td colspan="4" class="text-center">No data available in table</td>
-                      </tr>
-                    {{else}}
-                      {{#each employee}}
-                      <tr class="site_dashboard_custom_del">
-                        <td style="min-width:200px;">
-                          <a href="/employee/view/{{this.id}}" class="avatar">{{first_letter this.first_name}}</a>
-                          <h2>
-                            <a href="/employee/view/{{this.id}}">{{this.first_name}} {{this.last_name}}</a>
-                          </h2>
-                        </td>
-                        <td>{{this.email}}</td>
-                        <td>{{this.mobile_no}}</td>
-                        <td>{{#if_eq this.gender "M"}}
-                          Male
-                          {{/if_eq}}
-                          {{#if_eq this.gender "F"}} Female {{/if_eq}}
-                          {{#if_eq this.gender "O"}} Others {{/if_eq}}
-                        </td>
-                      </tr>
-                      {{/each}}
-                    {{/if_eq}}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div class="panel-footer">
-              <a href="/employees" class="text-primary">View all employees</a>
-            </div>
+          </div>
+          <div class="panel-footer">
+            <a href="/activitypage" class="text-primary">View all activities</a>
           </div>
         </div>
       </div>
     </div>
-  </div>
-{{else}}
-  <div class="page-wrapper">
-    <div class="content container-fluid">
-        {{#if auth_msg}}
-          <div class="alert alert-danger">
-              <strong>Error! </strong>{{auth_msg}}
+    <div class="row">
+      <div class="col-md-6">
+        <div class="panel panel-table">
+          <div class="panel-heading">
+            <h3 class="panel-title">Clients</h3>
           </div>
-        {{/if}}
-        {{#if changeFirmToAttr}}
-          <div class="alert alert-success">
-              <strong>Success! </strong>{{changeFirmToAttr}}
-          </div>
-        {{/if}}
-        {{#if changeAttrToFirm}}
-          <div class="alert alert-success">
-              <strong>Success! </strong>{{changeAttrToFirm}}
-          </div>
-        {{/if}}
-        {{#if changeSite}}
-          <div class="alert alert-success">
-              <strong>Success! </strong>{{changeSite}}
-          </div>
-        {{/if}}
-        <div class="row">
-          <div class="col-md-6 col-sm-6 col-lg-3">
-              <div class="dash-widget clearfix card-box">
-                <span class="dash-widget-icon"><i class="fa fa-cubes" aria-hidden="true"></i></span>
-                <div class="dash-widget-info">
-                    <h3>{{activity_count}}</h3>
-                    <span><a href="/activitypage" style="color:#333;">Activities</a></span>
-                </div>
-              </div>
-          </div>
-          <div class="col-md-6 col-sm-6 col-lg-3">
-              <div class="dash-widget clearfix card-box">
-                <span class="dash-widget-icon"><i class="fa fa-users" aria-hidden="true"></i></span>
-                <div class="dash-widget-info">
-                    <h3>{{target_count}}</h3>
-                    <span><a href="/target" style="color:#333;">Targets</a></span>
-                </div>
-              </div>
-          </div>
-          <div class="col-md-6 col-sm-6 col-lg-3">
-              <div class="dash-widget clearfix card-box">
-                <span class="dash-widget-icon"><i class="fa fa-users"></i></span>
-                <div class="dash-widget-info">
-                    <h3>{{client_count}}</h3>
-                    <span><a href="/client" style="color:#333;">Clients</a></span>
-                </div>
-              </div>
-          </div>
-          <div class="col-md-6 col-sm-6 col-lg-3">
-              <div class="dash-widget clearfix card-box">
-                <span class="dash-widget-icon"><i class="fa fa-users" aria-hidden="true"></i></span>
-                <div class="dash-widget-info">
-                    <h3>{{referral_count}}</h3>
-                    <span><a href="/referral" style="color:#333;">Referrals</a></span>
-                </div>
-              </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-              <div class="row">
-                <div class="col-sm-6 text-center">
-                    <div class="card-box">
-                      <div id='myChart'></div>
-                    </div>
-                </div>
-                <div class="col-sm-6 text-center">
-                    <div class="card-box">
-                      <div id="line-chart"></div>
-                    </div>
-                </div>
-                {{!-- <div  class="col-md-4 col-sm-12 text-center">
-                    <div class="card-box">
-                      <div id="bar-chart" ></div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-12 text-center">
-                    <div class="card-box">
-                      <div id="stacked" ></div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-12 text-center">
-                    <div class="card-box">
-                      <div id="pie-chart" ></div>
-                    </div>
-                </div>  --}}
-              </div>
-          </div>
-        </div>
-        {{#if_eq user.role_id "1"}}{{else}}
-        <div class="row">
-          <div class="col-md-12">
-              <div class="panel panel-table">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Activities</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="table-responsive">
-                      <table class="table table-striped custom-table m-b-0 ">
-                          <thead>
-                            <tr>
-                                <th style="width:10%">Creation Date</th>
-                                <th>Activity Name</th>
-                                <th>From Date</th>
-                                <th>To Date</th>
-                                <th>Total Hours</th>
-                                <th>Total Amount</th>
-                                <th>Status</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {{#if_eq activity_count "0"}}
-                                <tr>
-                                  <td colspan="7" class="text-center">No data available in table</td>
-                                </tr>
-                            {{else}}
-                            {{#each activity}}
-                              <tr class="activity_custom_del">
-                                  <td>{{dateFormat this.activity_creation_date "DD-MM-YYYY"}}</td>
-                                  <td>
-                                    <a href="/activity/view/{{this.id}}">{{this.activity_name}}</a></td>
-                                  <td>{{dateFormat this.activity_from_date "DD-MM-YYYY"}}</td>
-                                  <td>{{dateFormat this.activity_to_date "DD-MM-YYYY"}}</td>
-                                  <td>{{this.total_budget_hour}}</td>
-                                  <td>$ {{this.total_budget_amount}}</td>
-                                  <td>
-                                    {{#if_eq this.activity_status '0'}} <span class="label label-info-border">NEW ACTIVITY - CREATED </span>{{/if_eq}} {{#if_eq this.activity_status '1'}}
-                                    <span class="label label-warning-border">SENT FOR APPROVAL</span> {{/if_eq}} {{#if_eq this.activity_status '2'}} <span class="label label-success-border">APPROVED</span> {{/if_eq}} {{#if_eq
-                                    this.activity_status '3'}} <span class="label label-danger-border">NOT APPROVED</span> {{/if_eq}}
-                                  </td>
-                              </tr>
-                              {{/each}}
-                            {{/if_eq}}  
-                          </tbody>
-                      </table>
-                    </div>
-                </div>
-                <div class="panel-footer">
-                    <a href="/activitypage" class="text-primary">View all activities</a>
-                </div>
-              </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-              <div class="panel panel-table">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Clients</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="table-responsive">
-                      <table class="table table-striped custom-table m-b-0">
-                          <thead>
-                            <tr>
-                                <th style="min-width:200px;">Name</th>
-                                <th>Email</th>
-                                <th>Client Type</th>
-                                <th>Mobile</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {{#if_eq client_count "0"}}
-                              <tr>
-                                <td colspan="4" class="text-center">No data available in table</td>
-                              </tr>
-                            {{else}}
-                              {{#each client}}
-                              <tr class="activity_custom_del">
-                                  <td style="min-width:200px;">
-                                    {{#if_eq client_type "I"}}
-                                      <a href="/client/view/{{this.id}}" class="avatar">{{first_letter this.first_name}}</a>
-                                    <h2><a href="/client/view/{{this.id}}">{{this.first_name}} {{this.last_name}} </a></h2>
-                                    {{else}}
-                                      <a href="/client/view/{{this.id}}" class="avatar">{{first_letter this.organization_name}}</a>
-                                      <h2>
-                                        <a href="/client/view/{{this.id}}">{{this.organization_name}}</a>
-                                      </h2>
-                                    {{/if_eq}}
-                                  </td>
-                                  <td>{{this.email}}</td>
-                                  <td>{{#if_eq client_type "I"}}
-                                    <span class="label label-success-border">Individual</span>
-                                    {{else}}
-                                    <span class="label label-info-border">Organization</span>
-                                    {{/if_eq}}
-                                  </td>
-                                  <td>{{this.mobile_no}}</td>
-                              </tr>
-                              {{/each}}
-                            {{/if_eq}}
-                          </tbody>
-                      </table>
-                    </div>
-                </div>
-                <div class="panel-footer">
-                    <a href="/client" class="text-primary">View all clients</a>
-                </div>
-              </div>
-          </div>
-          <div class="col-md-6">
-            <div class="panel panel-table">
-              <div class="panel-heading">
-                <h3 class="panel-title">Targets</h3>
-              </div>
-              <div class="panel-body">
-                <div class="table-responsive">
-                  <table class="table table-striped custom-table m-b-0">
-                    <thead>
-                      <tr>
-                        <th style="min-width:200px;">Name</th>
-                        <th>Email</th>
-                        <th>Target Type</th>
-                        <th>Mobile</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {{#if_eq target_count "0"}}
-                          <tr>
-                            <td colspan="4" class="text-center">No data available in table</td>
-                          </tr>
+          <div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-striped custom-table m-b-0">
+                <thead>
+                  <tr>
+                    <th style="min-width:200px;">Name</th>
+                    <th>Email</th>
+                    <th>Client Type</th>
+                    <th>Mobile</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#if_eq client_count "0"}}
+                  <tr>
+                    <td colspan="4" class="text-center">No data available in table</td>
+                  </tr>
+                  {{else}} {{#each client}}
+                  <tr class="activity_custom_del">
+                    <td style="min-width:200px;">
+                      {{#if_eq client_type "I"}}
+                      <a href="/client/view/{{this.id}}" class="avatar">{{first_letter this.first_name}}</a>
+                      <h2>
+                        <a href="/client/view/{{this.id}}">{{this.first_name}} {{this.last_name}} </a>
+                      </h2>
                       {{else}}
-                        {{#each target}}
-                        <tr class="activity_custom_del">
-                          <td style="min-width:200px;">
-                            {{#if_eq target_type "I"}}
-                            <a href="/target/view/{{this.id}}" class="avatar">{{first_letter this.first_name}}</a>
-                            <h2>
-                              <a href="/target/view/{{this.id}}">{{this.first_name}} {{this.last_name}} </a>
-                            </h2>
-                            {{else}}
-                            <a href="/target/view/{{this.id}}" class="avatar">{{first_letter this.organization_name}}</a>
-                            <h2>
-                              <a href="/target/view/{{this.id}}">{{this.organization_name}}</a>
-                            </h2>
-                            {{/if_eq}}
-                          </td>
-                          <td>{{this.email}}</td>
-                          <td>{{#if_eq target_type "I"}}
-                            <span class="label label-success-border">Individual</span>
-                            {{else}}
-                            <span class="label label-info-border">Organization</span>
-                            {{/if_eq}}
-                          </td>
-                          <td>{{this.mobile_no}}</td>
-                        </tr>
-                        {{/each}}
+                      <a href="/client/view/{{this.id}}" class="avatar">{{first_letter this.organization_name}}</a>
+                      <h2>
+                        <a href="/client/view/{{this.id}}">{{this.organization_name}}</a>
+                      </h2>
                       {{/if_eq}}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="panel-footer">
-                <a href="/target" class="text-primary">View all targets</a>
-              </div>
+                    </td>
+                    <td>{{this.email}}</td>
+                    <td>{{#if_eq client_type "I"}}
+                      <span class="label label-success-border">Individual</span>
+                      {{else}}
+                      <span class="label label-info-border">Organization</span>
+                      {{/if_eq}}
+                    </td>
+                    <td>{{this.mobile_no}}</td>
+                  </tr>
+                  {{/each}} {{/if_eq}}
+                </tbody>
+              </table>
             </div>
           </div>
-        </div> 
-        <div class="row">
-          <div class="col-md-6">
-            <div class="panel panel-table">
-              <div class="panel-heading">
-                <h3 class="panel-title">Referrals</h3>
-              </div>
-              <div class="panel-body">
-                <div class="table-responsive">
-                  <table class="table table-striped custom-table m-b-0">
-                    <thead>
-                      <tr>
-                        <th style="min-width:200px;">Name</th>
-                        <th>Email</th>
-                        <th>Referral Type</th>
-                        <th>Mobile</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {{#if_eq referral_count "0"}}
-                        <tr>
-                          <td colspan="4" class="text-center">No data available in table</td>
-                        </tr>
-                      {{else}}
-                        {{#each referral}}
-                        <tr class="activity_custom_del">
-                          <td style="min-width:200px;">
-                            {{#if_eq referral_type "I"}}
-                            <a href="/referral/view/{{this.id}}" class="avatar">{{first_letter this.first_name}}</a>
-                            <h2>
-                              <a href="/referral/view/{{this.id}}">{{this.first_name}} {{this.last_name}}</a>
-                            </h2>
-                            {{else}}
-                            <a href="/referral/view/{{this.id}}" class="avatar">{{first_letter this.organization_name}}</a>
-                            <h2>
-                              <a href="/referral/view/{{this.id}}">{{this.organization_name}}</a>
-                            </h2>
-                            {{/if_eq}}
-                          </td>
-                          <td>{{this.email}}</td>
-                          <td>{{#if_eq referral_type "I"}}
-                            <span class="label label-success-border">Individual</span>
-                            {{else}}
-                            <span class="label label-info-border">Organization</span>
-                            {{/if_eq}}
-                          </td>
-                          <td>{{this.mobile}}</td>
-                        </tr>
-                        {{/each}}
-                      {{/if_eq}}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="panel-footer">
-                <a href="/referral" class="text-primary">View all referrals</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="panel panel-table">
-              <div class="panel-heading">
-                <h3 class="panel-title">Master Contacts</h3>
-              </div>
-              <div class="panel-body">
-                <div class="table-responsive">
-                  <table class="table table-striped custom-table m-b-0">
-                    <thead>
-                      <tr>
-                        <th style="min-width:200px;">Name</th>
-                        <th>Email</th>
-                        <th>Client Type</th>
-                        <th>Mobile</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {{#if_eq master_contact_count "0"}}
-                        <tr>
-                          <td colspan="4" class="text-center">No data available in table</td>
-                        </tr>
-                      {{else}}
-                        {{#each master_contact}}
-                        <tr class="activity_custom_del">
-                          <td style="min-width:200px;">
-                            {{#if_eq master_contact_type "I"}}
-                            <a href="/master_contact/view/{{this.id}}" class="avatar">{{first_letter this.first_name}}</a>
-                            <h2>
-                              <a href="/master_contact/view/{{this.id}}">{{this.first_name}} {{this.last_name}} </a>
-                            </h2>
-                            {{else}}
-                            <a href="/master_contact/view/{{this.id}}" class="avatar">{{first_letter this.organization_name}}</a>
-                            <h2>
-                              <a href="/master_contact/view/{{this.id}}">{{this.organization_name}}</a>
-                            </h2>
-                            {{/if_eq}}
-                          </td>
-                          <td>{{this.email}}</td>
-                          <td>{{#if_eq master_contact_type "I"}}
-                            <span class="label label-success-border">Individual</span>
-                            {{else}}
-                            <span class="label label-info-border">Organization</span>
-                            {{/if_eq}}
-                          </td>
-                          <td>{{this.mobile_no}}</td>
-                        </tr>
-                        {{/each}}
-                      {{/if_eq}}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="panel-footer">
-                <a href="/master_contact" class="text-primary">View all master contacts</a>
-              </div>
-            </div>
+          <div class="panel-footer">
+            <a href="/client" class="text-primary">View all clients</a>
           </div>
         </div>
-        {{/if_eq}}
+      </div>
+      <div class="col-md-6">
+        <div class="panel panel-table">
+          <div class="panel-heading">
+            <h3 class="panel-title">Targets</h3>
+          </div>
+          <div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-striped custom-table m-b-0">
+                <thead>
+                  <tr>
+                    <th style="min-width:200px;">Name</th>
+                    <th>Email</th>
+                    <th>Target Type</th>
+                    <th>Mobile</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#if_eq target_count "0"}}
+                  <tr>
+                    <td colspan="4" class="text-center">No data available in table</td>
+                  </tr>
+                  {{else}} {{#each target}}
+                  <tr class="activity_custom_del">
+                    <td style="min-width:200px;">
+                      {{#if_eq target_type "I"}}
+                      <a href="/target/view/{{this.id}}" class="avatar">{{first_letter this.first_name}}</a>
+                      <h2>
+                        <a href="/target/view/{{this.id}}">{{this.first_name}} {{this.last_name}} </a>
+                      </h2>
+                      {{else}}
+                      <a href="/target/view/{{this.id}}" class="avatar">{{first_letter this.organization_name}}</a>
+                      <h2>
+                        <a href="/target/view/{{this.id}}">{{this.organization_name}}</a>
+                      </h2>
+                      {{/if_eq}}
+                    </td>
+                    <td>{{this.email}}</td>
+                    <td>{{#if_eq target_type "I"}}
+                      <span class="label label-success-border">Individual</span>
+                      {{else}}
+                      <span class="label label-info-border">Organization</span>
+                      {{/if_eq}}
+                    </td>
+                    <td>{{this.mobile_no}}</td>
+                  </tr>
+                  {{/each}} {{/if_eq}}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="panel-footer">
+            <a href="/target" class="text-primary">View all targets</a>
+          </div>
+        </div>
+      </div>
     </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="panel panel-table">
+          <div class="panel-heading">
+            <h3 class="panel-title">Referrals</h3>
+          </div>
+          <div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-striped custom-table m-b-0">
+                <thead>
+                  <tr>
+                    <th style="min-width:200px;">Name</th>
+                    <th>Email</th>
+                    <th>Referral Type</th>
+                    <th>Mobile</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#if_eq referral_count "0"}}
+                  <tr>
+                    <td colspan="4" class="text-center">No data available in table</td>
+                  </tr>
+                  {{else}} {{#each referral}}
+                  <tr class="activity_custom_del">
+                    <td style="min-width:200px;">
+                      {{#if_eq referral_type "I"}}
+                      <a href="/referral/view/{{this.id}}" class="avatar">{{first_letter this.first_name}}</a>
+                      <h2>
+                        <a href="/referral/view/{{this.id}}">{{this.first_name}} {{this.last_name}}</a>
+                      </h2>
+                      {{else}}
+                      <a href="/referral/view/{{this.id}}" class="avatar">{{first_letter this.organization_name}}</a>
+                      <h2>
+                        <a href="/referral/view/{{this.id}}">{{this.organization_name}}</a>
+                      </h2>
+                      {{/if_eq}}
+                    </td>
+                    <td>{{this.email}}</td>
+                    <td>{{#if_eq referral_type "I"}}
+                      <span class="label label-success-border">Individual</span>
+                      {{else}}
+                      <span class="label label-info-border">Organization</span>
+                      {{/if_eq}}
+                    </td>
+                    <td>{{this.mobile}}</td>
+                  </tr>
+                  {{/each}} {{/if_eq}}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="panel-footer">
+            <a href="/referral" class="text-primary">View all referrals</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="panel panel-table">
+          <div class="panel-heading">
+            <h3 class="panel-title">Master Contacts</h3>
+          </div>
+          <div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-striped custom-table m-b-0">
+                <thead>
+                  <tr>
+                    <th style="min-width:200px;">Name</th>
+                    <th>Email</th>
+                    <th>Client Type</th>
+                    <th>Mobile</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#if_eq master_contact_count "0"}}
+                  <tr>
+                    <td colspan="4" class="text-center">No data available in table</td>
+                  </tr>
+                  {{else}} {{#each master_contact}}
+                  <tr class="activity_custom_del">
+                    <td style="min-width:200px;">
+                      {{#if_eq master_contact_type "I"}}
+                      <a href="/master_contact/view/{{this.id}}" class="avatar">{{first_letter this.first_name}}</a>
+                      <h2>
+                        <a href="/master_contact/view/{{this.id}}">{{this.first_name}} {{this.last_name}} </a>
+                      </h2>
+                      {{else}}
+                      <a href="/master_contact/view/{{this.id}}" class="avatar">{{first_letter this.organization_name}}</a>
+                      <h2>
+                        <a href="/master_contact/view/{{this.id}}">{{this.organization_name}}</a>
+                      </h2>
+                      {{/if_eq}}
+                    </td>
+                    <td>{{this.email}}</td>
+                    <td>{{#if_eq master_contact_type "I"}}
+                      <span class="label label-success-border">Individual</span>
+                      {{else}}
+                      <span class="label label-info-border">Organization</span>
+                      {{/if_eq}}
+                    </td>
+                    <td>{{this.mobile_no}}</td>
+                  </tr>
+                  {{/each}} {{/if_eq}}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="panel-footer">
+            <a href="/master_contact" class="text-primary">View all master contacts</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/if_eq}}
   </div>
-{{/if_eq}}
-{{#content "script" mode="append"}}
+</div>
+{{/if_eq}} {{#content "script" mode="append"}}
 <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
@@ -573,85 +571,212 @@
           ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];</script>
         <script>
           $(document).ready(function (e) {
-              $.ajax({
-                type: "GET",
-                url: "/get-chart-activity-count-value",
-                success: function (response) {
-                 var myConfig = {
-                    type: "area",
-                    utc: true,
-                    plotarea: {
-                      /*Add an adjust-layout attribute for automatic margin adjustment*/
-                      adjustLayout: true
+            $.ajax({
+              type: "GET",
+              url: "/get-chart-activity-count-value",
+              success: function (response) {
+                var myConfig = {
+                  type: "area",
+                  utc: true,
+                  plotarea: {
+                    /*Add an adjust-layout attribute for automatic margin adjustment*/
+                    adjustLayout: true
+                  },
+                  
+                  scaleX: {
+                    label: {  /*Add a scale title with a label object*/
+                      text: "Month",
                     },
-                    
-                    scaleX: {
-                      label: {  /*Add a scale title with a label object*/
-                        text: "Month",
+                    /*Add your scale labels with a labels array*/
+                    labels: ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
+                  },
+                  scaleY: {
+                    label: {
+                      text: "Total No. of activities and budgets"
+                    }
+                  },
+                  guide: {
+                    lineStyle: 'dotted'
+                  },
+                  series: [
+                    {
+                      values: response.total_activity,
+                      text: 'Total Activities',
+                      "line-color": "#a5a5a5",
+                      "background-color": "#c2c2c2",
+                      "marker": {
+                        "background-color": "#a5a5a5",
+                        "size": 6,
+                        "borderColor": "black",
+                        "borderWidth": 1
                       },
-                      /*Add your scale labels with a labels array*/
-                      labels: ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
-                    },
-                   scaleY: {
-                     label: {
-                       text: "Total No. of activities and budgets"
-                     }
-                   },
-                    guide: {
-                     lineStyle: 'dotted'
-                   },
-                    series: [
-                      {
-                        values: response.total_activity,
-                        text: 'Total Activities:',
-                        "line-color": "#666",
-                        "background-color": "#c2c2c2",
-                        "marker": {
-                          "background-color": "#666",
-                          "size": 6,
-                          "borderColor": "black",
-                          "borderWidth": 1
-                        },
-                        "hover-marker": {
-                          "background-color": "#666",
-                          "size": 8,
-                          "borderColor": "black",
-                          "borderWidth": 1
-                        }
-                      },
-                      {
-                        values: response.total_budget,
-                        text: 'Total Budgets ($):',
-                        "line-color": "#ffa500",
-                        "background-color": "#ff881f",
-                        "marker": {
-                          "background-color": "#ffa500",
-                          "size": 6,
-                          "borderColor": "black",
-                          "borderWidth": 1
-                        },
-                        "hover-marker": {
-                          "background-color": "#ffa500",
-                          "size": 8,
-                          "borderColor": "black",
-                          "borderWidth": 1
-                        }
+                      "hover-marker": {
+                        "background-color": "#a5a5a5",
+                        "size": 8,
+                        "borderColor": "black",
+                        "borderWidth": 1
                       }
-                    ]
-                  };
+                    },
+                    {
+                      values: response.total_budget,
+                      text: 'Total Budgets ($)',
+                      "line-color": "#ffa500",
+                      "background-color": "#ff881f",
+                      "marker": {
+                        "background-color": "#ffa500",
+                        "size": 6,
+                        "borderColor": "black",
+                        "borderWidth": 1
+                      },
+                      "hover-marker": {
+                        "background-color": "#ffa500",
+                        "size": 8,
+                        "borderColor": "black",
+                        "borderWidth": 1
+                      }
+                    }
+                  ]
+                };
 
-                  zingchart.render({
-                    id: 'myChart',
-                    data: myConfig,
-                    height: 250,
-                    width: '100%'
-                  });
-                },
-                error: function (xhr) {
+                zingchart.render({
+                  id: 'myChart',
+                  data: myConfig,
+                  height: 250,
+                  width: '100%'
+                });
+              },
+              error: function (xhr) {
 
-                }
-              });
+              }
             });
+          });
+
+            var myConfig1 = {
+                "type": "line",
+                "plotarea": {
+                  "adjust-layout": true
+                },
+                "scale-x": {
+                  "label": {
+                    "text": "Above is an example of a category scale",
+
+                  },
+                  "labels": [
+                    "2014",
+                    "2015",
+                    "2016",
+                    "2017",
+                    "2018",
+                    "2019",
+                    "2020",
+                    "2021"
+                  ]
+                },
+                guide: {
+                  lineStyle: 'dotted'
+                },
+                "series": [
+                  {
+                    "values": [
+                      20,
+                      40,
+                      25,
+                      50,
+                      15,
+                      45,
+                      33,
+                      34
+                    ],
+                    text: 'Total Activities',
+                    "line-color": "#a5a5a5",
+                    "background-color": "#c2c2c2",
+                    "marker": {
+                      "background-color": "#a5a5a5",
+                      "size": 6,
+                      "borderColor": "black",
+                      "borderWidth": 1
+                    },
+                    "hover-marker": {
+                      "background-color": "#a5a5a5",
+                      "size": 8,
+                      "borderColor": "black",
+                      "borderWidth": 1
+                    }
+                  },
+                  {
+                    "values": [
+                      5,
+                      30,
+                      21,
+                      18,
+                      59,
+                      50,
+                      28,
+                      33
+                    ],
+                    text: 'Total Budgets ($)',
+                    "line-color": "#ffa500",
+                    "background-color": "#ff881f",
+                    "marker": {
+                      "background-color": "#ffa500",
+                      "size": 6,
+                      "borderColor": "black",
+                      "borderWidth": 1
+                    },
+                    "hover-marker": {
+                      "background-color": "#ffa500",
+                      "size": 8,
+                      "borderColor": "black",
+                      "borderWidth": 1
+                    }
+                  }
+                ]
+              };
+
+              zingchart.render({
+                id: 'myChart1',
+                data: myConfig1,
+                height: 250,
+                width: '100%'
+              });
           
-		</script>
-{{/content}}
+
+        var data = [
+			  { y: '2014', a: 50, b: 90},
+			  { y: '2015', a: 65,  b: 75},
+			  { y: '2016', a: 50,  b: 50},
+			  { y: '2017', a: 75,  b: 60}
+			],
+			config = {
+			  data: data,
+			  xkey: 'y',
+			  ykeys: ['a', 'b'],
+			  labels: ['Total Income', 'Total Outcome'],
+			  fillOpacity: 0.6,
+			  hideHover: 'auto',
+			  behaveLikeLine: true,
+			  resize: true,
+			  pointFillColors:['#ffffff'],
+			  pointStrokeColors: ['black'],
+				gridLineColor: '#eef0f2',
+			  lineColors:['gray','orange']
+		  };
+		config.element = 'area-chart';
+		Morris.Area(config);
+		config.element = 'line-chart';
+		Morris.Line(config);
+		config.element = 'bar-chart';
+		Morris.Bar(config);
+		config.element = 'stacked';
+		config.stacked = true;
+		Morris.Bar(config);
+		Morris.Donut({
+		  element: 'pie-chart',
+		  data: [
+			{label: "Employees", value: 30},
+			{label: "Clients", value: 15},
+			{label: "Projects", value: 45},
+			{label: "Tasks", value: 10}
+		  ]
+		});
+</script> {{/content}}
