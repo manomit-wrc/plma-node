@@ -878,6 +878,11 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
     var userInformation_2_l1;
     var userInformation_1_l1;
 
+    await requestApproval.destroy({
+        where: {
+            activity_id: req.params['id']
+        }
+    });
 
     const firmDetails = await Firm.findOne({
         where: {
@@ -1277,6 +1282,11 @@ router.get('/activity/deletedata/:id', auth, firmAttrAuth, async (req, res) => {
         }
     });
     await ActivityBudget.destroy({
+        where: {
+            activity_id: req.params['id']
+        }
+    });
+    await requestApproval.destroy({
         where: {
             activity_id: req.params['id']
         }

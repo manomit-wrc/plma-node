@@ -118,10 +118,11 @@ router.post('/update_activity_approve_reject', auth, async (req, res) => {
         })
 
         await Activity.update({
-            activity_status: req.body.status
+            'activity_status': req.body.status,
+            'activity_update': 'new'
         }, {
             where: {
-                id: req.body.activity_id
+                'id': req.body.activity_id
             }
         });
 
