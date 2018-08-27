@@ -45,8 +45,8 @@
             </thead>
             <tbody id="mainTable">
               {{#each row}}
-              <tr {{#if_eq this.activity_status '2'}} style="background-color:#5cc65c;" {{/if_eq}} {{#if_eq this.activity_status '3'}}
-                style="background-color:#ff0000;" {{/if_eq}} {{#if_eq this.activity_status '1'}} style="background-color:#ff9b44"
+              <tr {{#if_eq this.activity_status '2'}} style="background-color:rgb(225, 255, 225);" {{/if_eq}} {{#if_eq this.activity_status '3'}}
+                style="background-color:rgb(255, 225, 225);" {{/if_eq}} {{#if_eq this.activity_status '1'}} style="background-color:#ff9b44"
                 {{/if_eq}}>
                 <td>{{math @index "+" 1}}</td>
                 <td>{{this.activity_name}}</td>
