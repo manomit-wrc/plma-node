@@ -14,7 +14,7 @@
         {{#if (or (eq editdata.activity_status "0")(eq editdata.activity_status "3"))}}
         <a href="/activity/edit/{{editdata.id}}" class="btn btn-primary pull-right rounded"><i class="fa fa-edit"></i> Edit Activity</a>
         {{/if}}
-        <button class="btn btn-primary pull-right rounded m-r-5" id="backActivityByn"><i class="fa fa-arrow-left"></i> Back</button>
+        <a href="javascript:history.back()" class="btn btn-primary pull-right rounded m-r-5"><i class="fa fa-arrow-left"></i> Back</a>
       </div>
     </div>
     <form name="updateActivityForm" id="updateActivityForm" action="/activity/update/{{editdata.id}}" method="POST">
