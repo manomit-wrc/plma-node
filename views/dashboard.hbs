@@ -251,7 +251,7 @@
         <div class="row">
           <div class="col-sm-6 text-center">
             <div class="card-box">
-              <div id='myChart'></div>ukihuikyuh
+              <div id='myChart'></div>
             </div>
           </div>
           <div class="col-sm-6 text-center">
@@ -585,13 +585,18 @@
                     
                     scaleX: {
                       label: {  /*Add a scale title with a label object*/
-                        text: "Total No. of activities and budgets Vs Month",
+                        text: "Month",
                       },
                       /*Add your scale labels with a labels array*/
                       labels: ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
                     },
-                    tooltip: {
-                     text: '%t <br>%v'
+                   scaleY: {
+                     label: {
+                       text: "Total No. of activities and budgets"
+                     }
+                   },
+                    guide: {
+                     lineStyle: 'dotted'
                    },
                     series: [
                       {
@@ -635,7 +640,9 @@
 
                   zingchart.render({
                     id: 'myChart',
-                    data: myConfig
+                    data: myConfig,
+                    height: 250,
+                    width: '100%'
                   });
                 },
                 error: function (xhr) {

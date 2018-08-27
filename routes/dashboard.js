@@ -788,8 +788,7 @@ router.get("/get-chart-activity-count-value", auth, async(req, res)=> {
     }
     var tot = [jan.length, feb.length, mar.length, apr.length, may.length, jun.length, jul.length, aug.length, sep.length, oct.length, nov.length, dec.length];
     var tot_sum = [jan.reduce((a, b) => a + b, 0), feb.reduce((a, b) => a + b, 0), mar.reduce((a, b) => a + b, 0), apr.reduce((a, b) => a + b, 0), may.reduce((a, b) => a + b, 0), jun.reduce((a, b) => a + b, 0), jul.reduce((a, b) => a + b, 0), aug.reduce((a, b) => a + b, 0), sep.reduce((a, b) => a + b, 0), oct.reduce((a, b) => a + b, 0), nov.reduce((a, b) => a + b, 0), dec.reduce((a, b) => a + b, 0)];
-    console.log(tot);
-    console.log(tot_sum);
+
     res.send({
         success: true,
         total_activity: tot,
