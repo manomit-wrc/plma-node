@@ -45,8 +45,8 @@
             </thead>
             <tbody id="mainTable">
               {{#each row}}
-              <tr {{#if_eq this.activity_status '2'}} style="background-color:rgb(225, 255, 225);" {{/if_eq}} {{#if_eq this.activity_status '3'}}
-                style="background-color:rgb(255, 225, 225);" {{/if_eq}} {{#if_eq this.activity_status '1'}} style="background-color:#ff9b44"
+              <tr {{#if_eq this.activity_status '2'}}  {{/if_eq}} {{#if_eq this.activity_status '3'}}
+                 {{/if_eq}} {{#if_eq this.activity_status '1'}}
                 {{/if_eq}}>
                 <td>{{math @index "+" 1}}</td>
                 <td>{{this.activity_name}}</td>
@@ -57,12 +57,12 @@
                 <td>
                   <input type="hidden" name="_csrf" value="{{csrfToken}}">
                   <input type="hidden" name="activity_id" id="activity_id" value="{{this.id}}">
-                  {{#if_eq this.activity_status '0'}} NEW ACTIVITY - CREATED {{/if_eq}}
+                  {{#if_eq this.activity_status '0'}} <span class="label label-success-border">NEW ACTIVITY - CREATED</span> {{/if_eq}}
                   {{#if (and (eq this.activity_status '3')(eq this.activity_update 'update')) }} ACTIVITY UPDATE {{else}}
-                  {{#if_eq this.activity_status '3'}} NOT APPROVED - DISCARD ACTIVITY {{/if_eq}}
+                  {{#if_eq this.activity_status '3'}} <span class="label label-danger-border">NOT APPROVED - DISCARD ACTIVITY</span> {{/if_eq}}
                    {{/if}}
-                  {{#if_eq this.activity_status '1'}} PENDING APPROVAL - IN-PROGRESS {{/if_eq}}
-                  {{#if_eq this.activity_status '2'}} APPROVED - PROCEED {{/if_eq}}
+                  {{#if_eq this.activity_status '1'}} <span class="label label-warning-border">PENDING APPROVAL - IN-PROGRESS</span> {{/if_eq}}
+                  {{#if_eq this.activity_status '2'}} <span class="label label-success-border">APPROVED - PROCEED</span> {{/if_eq}}
                   
                 </td>
                 <td class="text-right">
