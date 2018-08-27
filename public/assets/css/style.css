@@ -5649,39 +5649,39 @@ i.fa.fa-eye.m-r-5 {
 	padding: 0;
 }
 .select-attorney .btn {
-    height: 50px;
-    border-radius: 0;
+	height: 50px;
+	border-radius: 0;
 }
 .select-attorney .btn:active,
 .select-attorney .btn:focus,
 .select-attorney .btn:hover,
- {
-  background: #ffffff !important;
-  border-color: #ccc !important;
+{
+	background: #ffffff !important;
+	border-color: #ccc !important;
 }
 
 .select-attorney .btn-default:hover {
-    color: #333;
-    background-color: #fff;
-    border-color: #ccc;
+	color: #333;
+	background-color: #fff;
+	border-color: #ccc;
 }
 
 .select-attorney .open>.dropdown-toggle.btn-default.focus,
 .select-attorney   .open>.dropdown-toggle.btn-default:focus,
 .select-attorney   .open>.dropdown-toggle.btn-default:hover {
-    background-color: #fff;
-    border-color: #ff9b44;
+	background-color: #fff;
+	border-color: #ff9b44;
 }
 
 .select-attorney  .open>.dropdown-toggle.btn-default {
-    background-color: #fff;
-    box-shadow: none !important;
-    border-color: #ccc;
+	background-color: #fff;
+	box-shadow: none !important;
+	border-color: #ccc;
 }
 
 .select-attorney  .btn-default:focus {
-    background-color: #fff;
-    border-color: #ccc;
+	background-color: #fff;
+	border-color: #ccc;
 }
 
 /* Ends css on 2018-08-21 */
@@ -6342,6 +6342,14 @@ select.gender {
 		}
 	}
 
+	@media only screen and (max-width: 768px) {
+
+		.btn-group-sm > .btn, .btn-sm {
+			display: block;
+			margin-bottom: 2px;
+		}
+	}
+
 	@media only screen and (max-width: 767px) {
 		.navbar-nav .open .dropdown-menu {
 			float: left;
@@ -6575,6 +6583,10 @@ select.gender {
 		font-size: 24px;
 	}
 
+	.sidebar-menu li a {
+		font-size: 13px;
+	}
+
 
 }
 
@@ -6754,5 +6766,9 @@ select.gender {
 	@media only screen and (max-width: 390px) {
 		.pie-chart .svg {
 			left: -62px !important;
+		}
+
+		.modal-body #addDesignation .m-l-10 {
+			margin-left: 0 !important;
 		}
 	}

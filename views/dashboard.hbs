@@ -261,7 +261,7 @@
               <div class="row">
                 <div class="col-sm-6 text-center">
                     <div class="card-box">
-                      <div id="area-chart" ></div>
+                      <div id='myChart'></div>
                     </div>
                 </div>
                 <div class="col-sm-6 text-center">
@@ -580,8 +580,51 @@
 <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+        
+        <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+        <script> zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
+          ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];</script>
         <script>
-        $(document).ready(function(e){
+          $(document).ready(function (e) {
+              $.ajax({
+                type: "GET",
+                url: "/get-chart-activity-count-value",
+                success: function (response) {
+                 
+                },
+                error: function (xhr) {
+
+                }
+              });
+            });
+          var myConfig = {
+              type: "area",
+              plotarea: {
+                /*Add an adjust-layout attribute for automatic margin adjustment*/
+                adjustLayout: true
+              },
+              scaleX: {
+                label: {  /*Add a scale title with a label object*/
+                  text: "Above is an example of a category scale",
+                },
+                /*Add your scale labels with a labels array*/
+                labels: ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug"]
+              },
+              series: [
+                {
+                  values: [20, 40, 25, 50, 15, 45, 33, 34]
+                },
+                {
+                  values: [5, 30, 21, 18, 59, 50, 28, 33]
+                }
+              ]
+            };
+
+            zingchart.render({
+              id: 'myChart',
+              data: myConfig
+            });
+        /*$(document).ready(function(e){
           $.ajax({
             type: "GET",
             url: "/get-chart-value",
@@ -624,7 +667,7 @@
 
             }
           });
-        });
+        });*/
        /* var data = [
 			  { y: '2014', a: 50, b: 90},
 			  { y: '2015', a: 65,  b: 75},
