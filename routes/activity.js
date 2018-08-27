@@ -141,7 +141,6 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 });
 
 //fetch
-
 router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res) => {
     var whereCondition = {};
 
@@ -153,6 +152,9 @@ router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res)
     }
     if (req.query.approval_status) {
         whereCondition.activity_status = req.query.approval_status;
+    }
+    if (req.query.ref_type) {
+        whereCondition.target = req.query.ref_type;
     }
     if (req.query.ref_type && req.query.target_user || req.query.client_user || req.query.referral_user) {
         var acti_user = '';
@@ -304,11 +306,11 @@ router.post('/activity/add', auth, upload.single('activity_attachment'), firmAtt
                 hour: totalHour,
                 amount: totalAmount
             }, {
-                where: {
-                    'activity_id': req.body.activity_id,
-                    'budget_id': activityBudgetData[b].budget_id
-                }
-            });
+                    where: {
+                        'activity_id': req.body.activity_id,
+                        'budget_id': activityBudgetData[b].budget_id
+                    }
+                });
         }
     }
 
@@ -335,10 +337,10 @@ router.post('/activity/add', auth, upload.single('activity_attachment'), firmAtt
         attachment_field: fileName,
         activity_update: 'new'
     }, {
-        where: {
-            id: req.body.activity_id
-        }
-    });
+            where: {
+                id: req.body.activity_id
+            }
+        });
 
     if (req.body.ref_type == "T") {
         for (var i = 0; i < target_user.length; i++) {
@@ -423,15 +425,20 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
     const budgetList = await Budget.findAll({});
     var budgetArr = [];
     var level_type = '';
+    const all_activity_client = [];
 
-    const all_activity_client = await Activity_to_user_type.findAll({
-        where: {
-            'activity_id': editdata[0].id
-        }
-    });
+    if (editdata[0].target != 'G') {
+        all_activity_client = await Activity_to_user_type.findAll({
+            where: {
+                'activity_id': editdata[0].id
+            }
+        });
+    }
 
     for (var i = 0; i < budgetList.length; i++) {
         if (budgetList[i].parent_id === 0) {
+            var hour = 0;
+            var amount = 0;
             const parent_name = budgetList[i].name;
             const child_budget = lodash.filter(budgetList, arr => arr.parent_id === budgetList[i].id);
             var child_budget_arr = [];
@@ -444,8 +451,14 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
                 });
                 level_type = activity_budget.length > 0 ? activity_budget[0].level_type : level_type;
 
-                const hour = activity_budget.length > 0 ? ((level_type === 'Individual') ? activity_budget[0].hour / all_activity_client.length : activity_budget[0].hour) : '';
-                const amount = activity_budget.length > 0 ? ((level_type === 'Individual') ? activity_budget[0].amount / all_activity_client.length : activity_budget[0].amount) : '';
+                if (editdata[0].target != 'G') {
+                    hour = activity_budget.length > 0 ? ((level_type === 'Individual') ? activity_budget[0].hour / all_activity_client.length : activity_budget[0].hour) : 0;
+                    amount = activity_budget.length > 0 ? ((level_type === 'Individual') ? activity_budget[0].amount / all_activity_client.length : activity_budget[0].amount) : 0;
+                } else {
+                    hour = activity_budget.length > 0 ? activity_budget[0].hour : 0;
+                    amount = activity_budget.length > 0 ? activity_budget[0].amount : 0;
+                }
+
                 const approval_remarks = activity_budget.length > 0 ? activity_budget[0].approver_remarks : '';
 
                 child_budget_arr.push({
@@ -472,32 +485,41 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
         }
     });
 
-    for (let i = 0; i < all_activity_client.length; i++) {
-        if (all_activity_client[i].target_client_type == 'C') {
-            target_client_list = await Client.findAll({
-                where: {
-                    'id': all_activity_client[i].type
-                }
-            })
-        } else if (all_activity_client[i].target_client_type == 'T') {
-            target_client_list = await Target.findAll({
-                where: {
-                    'id': all_activity_client[i].type
-                }
-            })
-        } else {
-            target_client_list = await Referral.findAll({
-                where: {
-                    'id': all_activity_client[i].type
-                }
+    if (editdata[0].target != 'G') {
+        for (let i = 0; i < all_activity_client.length; i++) {
+            if (all_activity_client[i].target_client_type == 'C') {
+                target_client_list = await Client.findAll({
+                    where: {
+                        'id': all_activity_client[i].type
+                    }
+                });
+            } else if (all_activity_client[i].target_client_type == 'T') {
+                target_client_list = await Target.findAll({
+                    where: {
+                        'id': all_activity_client[i].type
+                    }
+                });
+            } else if (all_activity_client[i].target_client_type == 'R') {
+                target_client_list = await Referral.findAll({
+                    where: {
+                        'id': all_activity_client[i].type
+                    }
+                });
+            }
+            alldata.push({
+                'attorney_name': req.user.first_name + " " + req.user.last_name,
+                'company_name': target_client_list.length > 0 ? (target_client_list[0].first_name + " " + target_client_list[0].last_name) : "",
+                'relation': all_activity_client[i].target_client_type,
+                'total_cost': activity_budget.level_type == 'Individual' ? editdata[0].total_budget_amount : parseFloat(editdata[0].total_budget_amount / all_activity_client.length)
+                //'potential_revenue': activity_budget.level_type == 'Individual' ? editdata[0].potiential_revenue : parseFloat(editdata[0].potiential_revenue / all_activity_client.length)
             });
         }
+    } else {
         alldata.push({
             'attorney_name': req.user.first_name + " " + req.user.last_name,
-            'company_name': target_client_list.length > 0 ? (target_client_list[0].first_name + " " + target_client_list[0].last_name) : "",
-            'relation': all_activity_client[i].target_client_type,
-            'total_cost': activity_budget.level_type == 'Individual' ? editdata[0].total_budget_amount : parseFloat(editdata[0].total_budget_amount / all_activity_client.length),
-            'potential_revenue': activity_budget.level_type == 'Individual' ? editdata[0].potiential_revenue : parseFloat(editdata[0].potiential_revenue / all_activity_client.length)
+            'company_name': 'In-House',
+            'relation': 'General',
+            'total_cost': parseFloat(editdata[0].total_budget_amount)
         });
     }
 
@@ -722,10 +744,10 @@ router.post('/activity/edit-budget', auth, firmAttrAuth, csrfProtection, async (
         total_budget_amount: req.body.total_amount,
         total_budget_hour: req.body.total_Hour
     }, {
-        where: {
-            id: req.body.activity_id
-        }
-    });
+            where: {
+                id: req.body.activity_id
+            }
+        });
     res.json({
         success: true
     });
@@ -767,11 +789,11 @@ router.post('/activity/update/:id', auth, upload.single('activity_attachment'), 
                 hour: totalHour,
                 amount: totalAmount
             }, {
-                where: {
-                    'activity_id': req.body.activity_id,
-                    'budget_id': activityBudgetData[b].budget_id
-                }
-            });
+                    where: {
+                        'activity_id': req.body.activity_id,
+                        'budget_id': activityBudgetData[b].budget_id
+                    }
+                });
         }
     }
 
@@ -920,18 +942,18 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
         const _activityApprovals = await requestApproval.findOne({
             attributes: [[Sequelize.fn('MAX', Sequelize.col('approver_status')), 'max_approver_status']],
             where: {
-                'activity_id' : req.params['id']
+                'activity_id': req.params['id']
             }
         });
 
-       await requestApproval.update({
-        'status':'1'
-       },{
-           where:{
-            'activity_id' : req.params['id'],
-            'approver_status':_activityApprovals.get('max_approver_status')
-           }
-       });
+        await requestApproval.update({
+            'status': '1'
+        }, {
+                where: {
+                    'activity_id': req.params['id'],
+                    'approver_status': _activityApprovals.get('max_approver_status')
+                }
+            });
 
 
     } else if (firmDetails['approval_level'] === 3) {
@@ -1028,18 +1050,18 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
         const _activityApprovals = await requestApproval.findOne({
             attributes: [[Sequelize.fn('MAX', Sequelize.col('approver_status')), 'max_approver_status']],
             where: {
-                'activity_id' : req.params['id']
+                'activity_id': req.params['id']
             }
         });
 
-       await requestApproval.update({
-        'status':'1'
-       },{
-           where:{
-            'activity_id' : req.params['id'],
-            'approver_status':_activityApprovals.get('max_approver_status')
-           }
-       });
+        await requestApproval.update({
+            'status': '1'
+        }, {
+                where: {
+                    'activity_id': req.params['id'],
+                    'approver_status': _activityApprovals.get('max_approver_status')
+                }
+            });
 
     } else if (firmDetails['approval_level'] === 4) {
 
@@ -1160,18 +1182,18 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
         const _activityApprovals = await requestApproval.findOne({
             attributes: [[Sequelize.fn('MAX', Sequelize.col('approver_status')), 'max_approver_status']],
             where: {
-                'activity_id' : req.params['id']
+                'activity_id': req.params['id']
             }
         });
 
-       await requestApproval.update({
-        'status':'1'
-       },{
-           where:{
-            'activity_id' : req.params['id'],
-            'approver_status':_activityApprovals.get('max_approver_status')
-           }
-       });
+        await requestApproval.update({
+            'status': '1'
+        }, {
+                where: {
+                    'activity_id': req.params['id'],
+                    'approver_status': _activityApprovals.get('max_approver_status')
+                }
+            });
 
 
     } else {
@@ -1193,7 +1215,7 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
                     'firm_id': req.user.firm_id
                 }
             });
-        } 
+        }
 
         if (userInformation_1_l1 !== null) {
             await requestApproval.create({
@@ -1208,28 +1230,27 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
         const _activityApprovals = await requestApproval.findOne({
             attributes: [[Sequelize.fn('MAX', Sequelize.col('approver_status')), 'max_approver_status']],
             where: {
-                'activity_id' : req.params['id']
+                'activity_id': req.params['id']
             }
         });
 
-       await requestApproval.update({
-        'status':'1'
-       },{
-           where:{
-            'activity_id' : req.params['id'],
-            'approver_status':_activityApprovals.get('max_approver_status')
-           }
-       });
-
+        await requestApproval.update({
+            'status': '1'
+        }, {
+                where: {
+                    'activity_id': req.params['id'],
+                    'approver_status': _activityApprovals.get('max_approver_status')
+                }
+            });
     }
 
     await Activity.update({
         activity_status: 1
     }, {
-        where: {
-            id: req.params['id']
-        }
-    });
+            where: {
+                id: req.params['id']
+            }
+        });
 
     res.json({
         success: true
