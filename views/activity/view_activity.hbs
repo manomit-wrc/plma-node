@@ -107,13 +107,13 @@
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-6">
-                <div class="form-group form-focus">
+                <div class="form-group form-focus select-focus">
                   <label class="control-label">Activity Name</label>
                   <input class="form-control floating" type="text" id="activity_name" name="activity_name" value="{{editdata.activity_name}}" disabled>
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="form-group form-focus">
+                <div class="form-group form-focus select-focus">
                   <label class="control-label">Activity Reason</label>
                   <input class="form-control floating" type="text" id="activity_reason" name="activity_reason" value="{{editdata.activity_reason}}" disabled>
                 </div>
@@ -137,6 +137,7 @@
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">Section <span class="req-lbl">*</span> </label>
                   <select class="form-control floating" id="section" name="section" disabled>
+                    <option value="0">Select Section</option>
                     {{#each section}}
                       <option value="{{this.section.id}}" {{#if_eq this.id ../editdata.section_id}} selected="selected" {{/if_eq}}>{{this.section.name}}</option>
                     {{/each}}
@@ -175,7 +176,7 @@
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="form-group form-focus">
+                <div class="form-group form-focus select-focus">
                   <label class="control-label">Creation Date</label>
                   <div class="cal-icon">
                     <input class="form-control floating datetimepicker" type="text" id="activity_creation_date" name="activity_creation_date"
@@ -187,7 +188,7 @@
                 <div class="form-group form-focus select-focus"></div>
               </div>
               <div class="col-md-6">
-                <div class="form-group form-focus">
+                <div class="form-group form-focus select-focus">
                   <label class="control-label">From Date</label>
                   <div class="cal-icon">
                     <input class="form-control floating datetimepicker" type="text" id="activity_from_date" name="activity_from_date" value="{{dateFormat editdata.activity_from_date "DD-MM-YYYY"}}" disabled>
@@ -195,51 +196,24 @@
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="form-group form-focus">
+                <div class="form-group form-focus select-focus">
                   <label class="control-label">To Date</label>
                   <div class="cal-icon">
                     <input class="form-control floating datetimepicker" type="text" id="activity_to_date" name="activity_to_date" value="{{dateFormat editdata.activity_to_date "DD-MM-YYYY"}}" disabled>
                   </div>
                 </div>
               </div>
-
-
-              <div class="col-md-4">
-                <div class="form-group form-focus select-focus" >
-                  <input class="form-control floating" type="file" id="activity_attachment" name="activity_attachment" multiple disabled>
-                  <div class="btn btn-primary"><img src="/assets/img/choose-file.png" alt="">Choose File</div>
-                </div>
-              </div>
-
-              
-               <div class="col-md-2">
-                 <div class="download-btn">
-                   <div class="form-group form-focus">
-                    <a href="/activity/{{editdata.attachment_field}}" download  class="btn btn-primary btn-lg"> 
-                      <i class="fa fa-download" aria-hidden="true"></i>
-                    </a>
-                  </div>
-                 </div>
-              </div>
-
-
               <div class="col-md-6">
-                <div class="form-group form-focus">
+                <div class="form-group form-focus select-focus">
                   <label class="control-label">Remarks</label>
                   <textarea class="form-control floating" id="remarks" name="remarks" rows="5" disabled>{{editdata.remarks}}</textarea>
                 </div>
               </div>
-              <div class="col-md-5">
-                <div class="form-group form-focus select-focus">
-                  <label class="control-label">Attachment</label>
-                  <input class="form-control floating" type="file" id="activity_attachment" name="activity_attachment" style="height: auto;" disabled>
-                </div>
-              </div>
-              <div class="col-md-1">
+              <div class="col-md-6 pull-right">
                 {{#if editdata.attachment_field}}
                 <div class="download-btn">
                   <div class="form-group form-focus">
-                    <a href="/activity/{{editdata.attachment_field}}" download class="btn btn-primary btn-lg">
+                    <a href="/activity/{{editdata.attachment_field}}" download class="btn btn-primary btn-lg" title="View Attachment">
                       <i class="fa fa-download" aria-hidden="true"></i>
                     </a>
                   </div>
