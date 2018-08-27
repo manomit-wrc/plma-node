@@ -710,6 +710,7 @@ router.post("/edit-attorney-profile", auth, profile.single('avatar'), csrfProtec
 });
 
 router.get("/get-chart-activity-count-value", auth, async(req, res)=> {
+
     const monthNames = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
     ];
@@ -717,6 +718,7 @@ router.get("/get-chart-activity-count-value", auth, async(req, res)=> {
     var arr = [];
     var feb = [];
     var activity = await Activity.findAll();
+    
     for(var i=0; i<activity.length; i++)
     {
         if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "January")
