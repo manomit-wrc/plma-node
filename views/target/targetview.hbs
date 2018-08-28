@@ -134,6 +134,34 @@
 										</div>
 									</div>
 								</div>
+
+                                <div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Lifetime Client Value
+										</label>
+										<input class="form-control floating" type="text" id="lifetimeClient" name="lifetimeClient" value="{{client.lifetimeClientValue}}" disabled>
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Start Date<span class="req-lbl">*</span> </label>
+										<div class="cal-icon">
+											<input class="form-control floating datetimepicker" type="text" id="targetStartDate" name="targetStartDate" value="{{dateFormat client.targetStartDate "
+											 DD-MM-YYYY "}}" disabled>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">End Date<span class="req-lbl">*</span> </label>
+										<div class="cal-icon">
+											<input class="form-control floating datetimepicker" type="text" id="targetEndDate" name="targetEndDate" value="{{dateFormat client.targetEndDate "
+											 DD-MM-YYYY "}}" disabled> 
+										</div>
+									</div>
+								</div>
                                 
                                 
                             <div class="col-md-12">
