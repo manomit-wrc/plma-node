@@ -55,9 +55,15 @@
                                 </td>
                                 
                                 <td>{{dateFormat this.from_date "DD-MM-YYYY"}} To {{dateFormat this.to_date "DD-MM-YYYY"}}</td>
-                                <td>{{get_total_activity this.activities}}</td>
-                                <td>{{get_activity_goal_hours this.activity_budgets}}</td>
-                                <td>$ {{get_activity_goal_amounts this.activity_budgets}}</td>
+                                <td>
+                                    <a href="/activity-goal/view-activity/{{this.id}}">{{get_total_activity this.activities}}</a>
+                                </td>
+                                <td>
+                                    <a href="/budget-report/activity-goal/{{this.id}}">{{get_activity_goal_hours this.activity_budgets}}</a>
+                                </td>
+                                <td>
+                                    <a href="/budget-report/activity-goal/{{this.id}}">$ {{get_activity_goal_amounts this.activity_budgets}}</a>
+                                </td>
                                 <td class="text-right">
                                     <a href="/activity-goal/view/{{this.id}}" class="btn btn-success btn-sm">
                                         <i class="fa fa-eye m-r-5"></i>
