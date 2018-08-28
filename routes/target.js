@@ -744,6 +744,12 @@ router.post('/target/move-to-client', auth, async(req, res) => {
                 }
             });
 
+            // const testDate = target_data.revenueclosingDate ? target_data.revenueclosingDate.split("-") : '';
+            console.log('testDate',target_data.revenueclosingDate);
+            // console.log('target_data.targetStartDate',target_data.targetStartDate);
+            // console.log('target_data.targetEndDate',target_data.targetEndDate);
+            
+
             await Client.create({
                 first_name: target_data.first_name,
                 last_name: target_data.last_name,
@@ -773,7 +779,6 @@ router.post('/target/move-to-client', auth, async(req, res) => {
                 tag_type: "n",
                 tags: "new",
                 date_of_birth: target_data.date_of_birth,
-
                 IM: target_data.im,
                 organization_name: target_data.organization_name,
                 organization_id: target_data.organization_id,
@@ -782,6 +787,11 @@ router.post('/target/move-to-client', auth, async(req, res) => {
                 client_type: target_data.target_type,
                 remarks: target_data.remarks,
                 attorney_id: req.user.id,
+
+                estimated_revenue: target_data.estimated_revenue,
+                // revenueclosingDate: target_data.revenueclosingDate,
+                // clientStartDate: target_data.targetStartDate,
+                // clientEndDate: target_data.targetEndDate
 
             });
 
@@ -799,6 +809,7 @@ router.post('/target/move-to-client', auth, async(req, res) => {
         });
     }
 });
+
 // Starts all  asssociated activitsies for target and client
 router.get("/target/view-activity/:id", auth, async(req, res) => {
     TargetActivity.belongsTo(Activity, {
