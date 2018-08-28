@@ -6414,26 +6414,25 @@ select.gender {
 	}
 
 	.custom-table .btn.btn-success {
-		background: #131313;
-		border-color: #131313;
+		background: #afa399;
+		border-color: #afa399;
 	}
 
 	.custom-table .btn.btn-success:hover {
-		background: #000000;
-		border-color: #000000;
+		background: #9c8e82;
+		border-color: #9c8e82;
 	}
 
 	
 
 	.custom-table tr td:nth-child(2) a {
-		color: #286EBB;
-		text-decoration: underline;
+		color: #009ce7;
+		text-decoration: none;
 	}
 
 	.custom-table tr td:nth-child(2) a:hover {
 		color: #FF881F;
-		text-decoration: underline;
-		border-color: #FF881F;
+		text-decoration: none;
 	}
 
 	/*.panel-footer a {
