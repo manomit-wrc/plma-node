@@ -67,14 +67,14 @@
                 </td>
                 <td class="text-right">
                   {{#if (or (eq this.activity_status "0")(and (eq this.activity_status "3")(eq this.activity_update "update"))) }}
-                  <a href="javascript:void(0);" class="btn btn-info btn-sm approval_request_sent" id="approval_request_sent" title="REQUEST FOR APPROVAL"
+                  <a href="javascript:void(0);" class="btn btn-success btn-sm approval_request_sent" id="approval_request_sent" title="REQUEST FOR APPROVAL"
                       data-target-request-id="{{this.id}}" class="btn btn-danger btn-sm target-delete">
                       <i class="fa fa-check" aria-hidden="true"></i>
                     </a>
                     
                    {{!-- {{else}} --}}
                   {{!-- {{#if (and (eq this.activity_status "0")(eq this.activity_update "update"))}} --}}
-                    {{!-- <a href="javascript:void(0);" class="btn btn-info btn-sm approval_request_sent" id="approval_request_sent" title="REQUEST FOR APPROVAL"
+                    {{!-- <a href="javascript:void(0);" class="btn btn-success btn-sm approval_request_sent" id="approval_request_sent" title="REQUEST FOR APPROVAL"
                       data-target-request-id="{{this.id}}" class="btn btn-danger btn-sm target-delete">
                       <i class="fa fa-check" aria-hidden="true"></i>
                     </a> --}}
