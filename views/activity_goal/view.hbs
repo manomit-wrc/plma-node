@@ -11,7 +11,7 @@
             </div>
             <div class="right">
                 <a href="/activity-goal/edit/{{edit_goals.id}}" class="btn btn-primary pull-right rounded"><i class="fa fa-pencil"></i> Edit Tactical Marketing Goals</a>
-                <a href="/activity-goal" class="btn btn-primary pull-right rounded m-r-5"><i class="fa fa-arrow-left"></i> Back</a>
+                <a href="javascript:history.back()" class="btn btn-primary pull-right rounded m-r-5"><i class="fa fa-arrow-left"></i> Back</a>
             </div>
         </div>
         {{#if error_message1}}
@@ -29,10 +29,21 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group form-focus">
                                     <label class="control-label">Tactical Marketing Goals <span class="req-lbl">*</span> </label>
                                     <input type="text" name="activity_goal" id="activity_goal" disabled class="form-control floating" value="{{edit_goals.activity_goal}}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-focus select-focus select-attorney">
+                                    <label class="control-label">Strategic Goals</label>
+                                    <select class="form-control floating selectpicker" disabled id="strategic_goal" name="strategic_goal" data-show-subtext="true" data-live-search="true">
+                                        <option value="">Select Strategic Goals</option>
+                                        {{#each stragic_goal}}
+                                        <option value="{{this.id}}" {{#if_eq this.id ../edit_goals.strategic_goal_id}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                                        {{/each}}
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6">

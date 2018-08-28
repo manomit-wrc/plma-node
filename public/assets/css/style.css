@@ -1046,7 +1046,7 @@ table.dataTable {
 	height: auto;
 	line-height: 50px;
 	min-height: 50px;
-	padding: 0 15px;
+	padding: 0 10px;
 	/*white-space: nowrap;*/
 }
 
@@ -1056,7 +1056,7 @@ table.dataTable {
 
 .sidebar-menu li a .fa {
 	font-size: 18px;
-	width: 24px;
+	width: 20px;
 }
 
 .sidebar-menu li a>.badge {
@@ -6426,7 +6426,7 @@ select.gender {
 	
 
 	.custom-table tr td:nth-child(2) a {
-		color: #000;
+		color: #286EBB;
 		text-decoration: underline;
 	}
 
@@ -6436,7 +6436,7 @@ select.gender {
 		border-color: #FF881F;
 	}
 
-	.panel-footer a {
+	/*.panel-footer a {
 		border: 1px solid;
 		border-radius: 3px;
 		-webkit-border-radius: 3px;
@@ -6444,7 +6444,7 @@ select.gender {
 		-ms-border-radius: 3px;
 		-o-border-radius: 3px;
 		padding: 3px 10px;
-	}
+	}*/
 
 	.activity_custom_del h2 a {
 		display: table;
@@ -6457,6 +6457,16 @@ select.gender {
 	.bs-searchbox input {
 		padding: 10px 12px !important;
 	}
+
+	.select-attorney .bootstrap-select .btn.btn-default:hover {
+		background: transparent none repeat scroll 0 0;
+	}
+
+	.select-attorney .bootstrap-select .btn-default:focus {
+		background: transparent none repeat scroll 0 0;
+	}
+
+
 
 	/*Ends on css 27-08-2018*/
 
@@ -6701,7 +6711,7 @@ select.gender {
 		}
 		}*/
 
-		@media (max-width: 1258px) {
+		@media (max-width: 1374px) {
 			#mainTable .btn.btn-sm, .custom-table .btn.btn-sm {
 				padding: 5px;
 			}
