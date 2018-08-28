@@ -6477,6 +6477,15 @@ select.gender {
 			width: 6% !important;
 		}
 
+		.custom-table tr.odd td:nth-child(5) a, .custom-table tr.even td:nth-child(5) a {
+			color: #fff;
+		}
+
+		.custom-table tr.odd td.text-right:nth-child(6) a, .custom-table tr.even td.text-right:nth-child(6) a {
+			color: #fff;
+		}
+		
+
 
 
 		/*Ends on css 27-08-2018*/
