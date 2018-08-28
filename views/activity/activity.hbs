@@ -50,7 +50,7 @@
               <tr {{#if_eq this.activity_status '2'}} {{/if_eq}} {{#if_eq this.activity_status '3'}} {{/if_eq}} {{#if_eq this.activity_status
                 '1'}} {{/if_eq}}>
                 <td>{{math @index "+" 1}}</td>
-                <td>{{this.activity_name}}</td>
+                <td><a href="/activity/view/{{this.id}}">{{this.activity_name}}</a></td>
                 <td>{{dateFormat this.activity_from_date "DD-MM-YYYY"}}</td>
                 <td>{{dateFormat this.activity_to_date "DD-MM-YYYY"}}</td>
                 <td>$ {{this.total_budget_amount}}</td>
