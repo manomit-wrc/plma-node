@@ -81,6 +81,9 @@ module.exports = {
       },
       estimated_revenue: {
          type: Sequelize.STRING
+      },
+      revenueclosingDate: {
+         type: Sequelize.STRING
       }
     });
   },

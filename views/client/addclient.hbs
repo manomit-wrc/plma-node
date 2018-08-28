@@ -75,18 +75,7 @@
 									<input type="text" class="form-control floating" id="client_last_name" name="client_last_name" />
 								</div>
 							</div>
-							{{!-- <div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Client ID <span class="req-lbl">*</span></label>
-									<input type="text" class="form-control floating" id="client_id" name="client_id" />
-								</div>
-							</div> --}}
-							{{!-- <div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Master ID <span class="req-lbl">*</span></label>
-									<input type="text" class="form-control floating" id="master_id" name="master_id" />
-								</div>
-							</div> --}}
+							
 							<div class="col-md-6">
 								<div class="form-inline m-b-15">
 									<div class="form-group m-r-5">
@@ -134,10 +123,20 @@
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus">
-									<label class="control-label">Estimated Revenue</label>
+									<label class="control-label">Estimated annual revenue</label>
 									<input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue">
 								</div>
 							</div>
+
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Closing Date<span class="req-lbl">*</span> </label>
+									<div class="cal-icon">
+										<input class="form-control floating datetimepicker" type="text" id="revenueclosingDate" name="revenueclosingDate">
+									</div>
+								</div>
+							</div>
+
 				           <div class="col-md-6">
 								<div class="form-group form-focus select-focus select-attorney">
 									<label class="control-label">Gender <span class="req-lbl">*</span> </label>

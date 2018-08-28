@@ -24,7 +24,6 @@ module.exports = (sequelize, DataTypes) => {
     twitter: DataTypes.STRING,
     linkdn: DataTypes.STRING,
     youtub: DataTypes.STRING,
-    // facebook: DataTypes.STRING,
     google: DataTypes.STRING,
     association_type: DataTypes.STRING,
     industry_type: DataTypes.STRING,
@@ -44,6 +43,7 @@ module.exports = (sequelize, DataTypes) => {
     social_security_no: DataTypes.STRING,
     current_revenue: DataTypes.STRING,
     estimated_revenue: DataTypes.STRING,
+    revenueclosingDate: DataTypes.STRING
   }, {});
   client.associate = function(models) {
     // associations can be defined here
