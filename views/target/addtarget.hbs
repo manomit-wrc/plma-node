@@ -96,7 +96,7 @@
 								
 								<div class="col-md-6">
 									<div class="form-group form-focus">
-										<label class="control-label">Estimated revenue
+										<label class="control-label">Estimated annual revenue
 											<span class="req-lbl">*</span>
 										</label>
 										<input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue">
@@ -108,6 +108,32 @@
 										<label class="control-label">Closing Date<span class="req-lbl">*</span> </label>
 										<div class="cal-icon">
 											<input class="form-control floating datetimepicker" type="text" id="revenueclosingDate" name="revenueclosingDate">
+										</div>
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Lifetime Client Value
+										</label>
+										<input class="form-control floating" type="text" id="lifetimeClient" name="lifetimeClient">
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Start Date<span class="req-lbl">*</span> </label>
+										<div class="cal-icon">
+											<input class="form-control floating datetimepicker" type="text" id="targetStartDate" name="targetStartDate">
+										</div>
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">End Date<span class="req-lbl">*</span> </label>
+										<div class="cal-icon">
+											<input class="form-control floating datetimepicker" type="text" id="targetEndDate" name="targetEndDate">
 										</div>
 									</div>
 								</div>
@@ -248,7 +274,7 @@
 							<label class="control-label">Attorney
 								<span class="req-lbl">*</span>
 							</label>
-							<select id="designation" name="attorney_id" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
+							<select id="designation" name="attorney_id" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true" >
 								{{#if_eq user.role_id "3"}}
 								<option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
 								{{else}}
@@ -534,6 +560,15 @@
 	$(document).ready(function (e) {
 
 		$("#estimated_revenue").inputmask("numeric", {
+            radixPoint: ".",
+            groupSeparator: ",",
+            digits: 2,
+            autoGroup: true,
+            prefix: '$ ',
+            rightAlign: false
+        });
+
+		$("#lifetimeClient").inputmask("numeric", {
             radixPoint: ".",
             groupSeparator: ",",
             digits: 2,

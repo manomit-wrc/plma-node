@@ -1,18 +1,15 @@
 {{#content "style" mode="prepend"}}
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> 
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
 
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
-
-
-{{/content}}
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" /> {{/content}}
 
 <div class="page-wrapper">
   <div class="content container-fluid">
     <div class="row">
       <div class="col-sm-8">
-        <h4 class="page-title">Edit Referral</h4>
+        <h4 class="page-title">Edit Referral Sources</h4>
       </div>
     </div>
     {{#if err_message}}
@@ -26,7 +23,7 @@
     {{/if}}
     <form id="frmEditReferral" method="POST" action="/referral/edit/{{referral.id}}">
       <input type="hidden" name="_csrf" value="{{csrfToken}}">
-      <input type="hidden" value="{{referral.referral_type}}" id="_contactInformation"/>
+      <input type="hidden" value="{{referral.referral_type}}" id="_contactInformation" />
       <div class="form-inline m-b-15">
         <div class="form-group m-r-5">
           <label class="input-group">
@@ -101,7 +98,7 @@
 
               <div class="col-md-6">
                 <div class="form-group">
-                  <label class="control-label">Refferred By: </label>
+                  <label class="control-label">Refferred: </label>
                   <div class="form-inline m-b-15">
                     <div class="form-group m-r-5">
                       <label class="input-group">
@@ -131,7 +128,8 @@
                   <select id="target_id" name="referred_id_t" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
                     <option value="0" {{#if_eq referral.target_id "0"}} selected {{/if_eq}}>Select Target</option>
                     {{#each target}} {{#if_eq target_type "I"}}
-                    <option value="{{this.id}}" {{#if_eq this.id ../referral.target_id}} selected {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+                    <option value="{{this.id}}" {{#if_eq this.id ../referral.target_id}} selected {{/if_eq}}>{{this.first_name}}
+                      {{this.last_name}}</option>
                     {{/if_eq}} {{#if_eq target_type "O"}}
                     <option value="{{this.id}}" {{#if_eq this.id ../referral.target_id}} selected {{/if_eq}}>{{this.organization_name}}</option>
                     {{/if_eq}} {{/each}}
@@ -143,7 +141,8 @@
                   <select id="client_id" name="referred_id_c" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
                     <option value="0" {{#if_eq referral.client_id "0"}} selected {{/if_eq}}>Select Client</option>
                     {{#each client}} {{#if_eq client_type "I"}}
-                    <option value="{{this.id}}" {{#if_eq this.id ../referral.client_id}} selected {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+                    <option value="{{this.id}}" {{#if_eq this.id ../referral.client_id}} selected {{/if_eq}}>{{this.first_name}}
+                      {{this.last_name}}</option>
                     {{/if_eq}} {{#if_eq client_type "O"}}
                     <option value="{{this.id}}" {{#if_eq this.id ../referral.client_id}} selected {{/if_eq}}>{{this.organization_name}}</option>
                     {{/if_eq}} {{/each}}
@@ -164,12 +163,24 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group form-focus">
-                  <label class="control-label">Estimated revenue
+                  <label class="control-label">Estimated annual revenue
                     <span class="req-lbl">*</span>
                   </label>
                   <input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue" value="{{referral.estimated_revenue}}">
                 </div>
               </div>
+
+              <div class="col-md-6">
+                <div class="form-group form-focus">
+                  <label class="control-label">Closing Date<span class="req-lbl">*</span> </label>
+                  <div class="cal-icon">
+                    <input class="form-control floating datetimepicker" type="text" id="revenueclosingDate" name="revenueclosingDate" value="{{dateFormat referral.revenueclosingDate "
+                      DD-MM-YYYY "}}" >
+                  </div>
+                </div>
+              </div>
+
+
             </div>
           </div>
         </div>
@@ -271,7 +282,8 @@
                 {{#if_eq user.role_id "2"}}
                 <option value="">Select Attorney</option>
                 {{#each attorney}}
-                <option value="{{this.id}}" {{#if_eq this.id ../referral.attorney_id }} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+                <option value="{{this.id}}" {{#if_eq this.id ../referral.attorney_id }} selected="selected" {{/if_eq}}>{{this.first_name}}
+                  {{this.last_name}}</option>
                 {{/each}} {{else}}
                 <option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
                 {{/if_eq}}
@@ -455,7 +467,7 @@
         <div class="row">
           <div class="col-md-6">
             <div class="form-group form-focus">
-              <label class="control-label">Referral Company </label>
+              <label class="control-label">Referral Sources Company </label>
               <input type="text" class="form-control floating" id="company_name" name="company_name" value="{{referral.company_name}}"
               />
             </div>
@@ -583,7 +595,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 
-  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 
 
 <script type="text/javascript">
@@ -740,11 +752,11 @@
   });
 
   let _msType = $('#_contactInformation').val();
-		if (_msType==='O') {
-			$('#m_s_contactInformation').show();
-		} else {
-			$('#m_s_contactInformation').hide();
-		}
+  if (_msType === 'O') {
+    $('#m_s_contactInformation').show();
+  } else {
+    $('#m_s_contactInformation').hide();
+  }
 
   //contact information 
   $(document).on('click', '#_contactDetailsPlus', function () {

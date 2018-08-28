@@ -1,8 +1,13 @@
 {{#content "style" mode="prepend"}}
-<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-sweetalert/sweet-alert.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+
+
 {{/content}}
 <div class="page-wrapper">
     <div class="content container-fluid">
@@ -119,9 +124,9 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group form-focus select-focus">
+                                <div class="form-group form-focus select-focus select-attorney">
                                     <label class="control-label">Activity Type <span class="req-lbl">*</span> </label>
-                                    <select class="form-control floating" id="activity_type" name="activity_type">
+                                    <select class="form-control floating selectpicker" id="activity_type" name="activity_type" data-show-subtext="true" data-live-search="true">
                                         <option value="">Select One</option>
                                         <option value="individual">INDIVIDUAL LEVEL</option>
                                         <option value="section">SECTION LEVEL</option>
@@ -165,9 +170,9 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group form-focus select-focus">
+                                <div class="form-group form-focus select-focus select-attorney">
                                     <label class="control-label">Tactical Marketing Goals <span class="req-lbl">*</span> </label>
-                                    <select id="activity_goal" name="activity_goal" class="form-control floating">
+                                    <select id="activity_goal" name="activity_goal" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
                                         <option value="">Select Tactical Marketing Goals</option>
                                         {{#each activity_goal}}
                                             <option value="{{this.id}}">{{this.activity_goal}}</option>
@@ -178,9 +183,9 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group form-focus select-focus">
+                                <div class="form-group form-focus select-focus select-attorney">
                                     <label class="control-label">Practice Area Type <span class="req-lbl">*</span> </label>
-                                    <select id="practice_area" name="practice_area" class="form-control floating">
+                                    <select id="practice_area" name="practice_area" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
                                         <option value="">Select Practice Area</option>
                                         {{#each practice_area}}
                                             <option value="{{this.id}}">{{this.name}}</option>
@@ -248,9 +253,9 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group form-focus select-focus">
+                                <div class="form-group form-focus select-focus select-attorney">
                                     <label class="control-label">Activity Details Status</label>
-                                    <select class="form-control floating" id="budget_status" name="budget_status">
+                                    <select class="form-control floatingb selectpicker" id="budget_status" name="budget_status" data-show-subtext="true" data-live-search="true">
                                         <option value="">Select One</option>
                                         <option value="planned">PLANNED</option>
                                         <option value="unplanned">UNPLANNED</option>
@@ -259,9 +264,9 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group form-focus select-focus">
+                                <div class="form-group form-focus select-focus select-attorney">
                                     <label class="control-label">Activity Budget Details Status</label>
-                                    <select class="form-control floating" id="budget_details_status" name="budget_details_status">
+                                    <select class="form-control floating selectpicker" id="budget_details_status" name="budget_details_status" data-show-subtext="true" data-live-search="true">
                                         <option value="">Select One</option>
                                         <option value="planned">PLANNED BUDGET</option>
                                         <option value="unplanned">UNPLANNED BUDGET</option>
@@ -384,14 +389,21 @@
 </div>
 
 {{!-- Ends add budget modal --}} {{#content "script" mode="append"}}
-<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
-<script type="text/javascript" src="/assets/js/select2.min.js"></script>
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="/assets/js/select2.min.js"></script>
+<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="/assets/plugins/bootstrap-sweetalert/sweet-alert.min.js"></script>
+<script type="text/javascript" src="/assets/js/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+
+
 <script type="text/javascript">
 
     $(document).on('keyup', '.budget_hour', function () {

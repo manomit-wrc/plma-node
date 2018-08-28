@@ -67,7 +67,7 @@
                                         />
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{!-- <div class="col-md-6">
                                     <div class="form-group form-focus">
                                         <label class="control-label">Organisation ID
                                             <span class="req-lbl">*</span>
@@ -75,7 +75,7 @@
                                         <input type="text" class="form-control floating" id="org_id" name="org_id" value="{{client.organization_id}}" disabled="disabled"
                                         />
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-6">
                                     <div class="form-group form-focus">
                                         <label class="control-label">Organisation Code
@@ -118,10 +118,48 @@
                                 
                                 <div class="col-md-6">
 									<div class="form-group form-focus">
-										<label class="control-label">Estimated revenue
+										<label class="control-label">Estimated annual revenue
 											<span class="req-lbl">*</span>
 										</label>
 										<input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue" value="$ {{client.estimated_revenue}}" disabled>
+									</div>
+								</div>
+
+                                <div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Closing Date<span class="req-lbl">*</span> </label>
+										<div class="cal-icon">
+											<input class="form-control floating datetimepicker" type="text" id="revenueclosingDate" name="revenueclosingDate" value="{{dateFormat client.revenueclosingDate "
+											 DD-MM-YYYY "}}" disabled>
+										</div>
+									</div>
+								</div>
+
+                                <div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Lifetime Client Value
+										</label>
+										<input class="form-control floating" type="text" id="lifetimeClient" name="lifetimeClient" value="{{client.lifetimeClientValue}}" disabled>
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Start Date<span class="req-lbl">*</span> </label>
+										<div class="cal-icon">
+											<input class="form-control floating datetimepicker" type="text" id="targetStartDate" name="targetStartDate" value="{{dateFormat client.targetStartDate "
+											 DD-MM-YYYY "}}" disabled>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">End Date<span class="req-lbl">*</span> </label>
+										<div class="cal-icon">
+											<input class="form-control floating datetimepicker" type="text" id="targetEndDate" name="targetEndDate" value="{{dateFormat client.targetEndDate "
+											 DD-MM-YYYY "}}" disabled> 
+										</div>
 									</div>
 								</div>
                                 
@@ -409,7 +447,6 @@
                                 />
                             </div>
                         </div>
-                    </div>
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
                             <label class="control-label">Association Status </label>
@@ -419,6 +456,7 @@
                                 <option value="TS-INTERIM" {{#if_eq client.association "TS-INTERIM"}} selected="selected" {{/if_eq}}>TS-INTERIM</option>
                             </select>
                         </div>
+                    </div>
                         <div class="col-md-6">
                             <div class="form-group form-focus select-focus">
                                 <label class="control-label">Association Status </label>

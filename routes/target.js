@@ -174,7 +174,6 @@ router.get('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =>
 });
 
 router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) => {
-
     var targetDetails = [];
 	var first_name = req.body.targetDetailsFirstName;
 	var last_name = req.body.targetDetailsSecondName;
@@ -182,7 +181,11 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
 	var email = req.body.targetDetailsEmail;
 	var phone_no = req.body.targetDetailsPhone_no;
 	var fax = req.body.targetDetailsFax;
-	var mobile_no = req.body.targetDetailsMobile_no;
+    var mobile_no = req.body.targetDetailsMobile_no;
+
+    const closingDate = req.body.revenueclosingDate ? req.body.revenueclosingDate.split("-") : '';
+    const startDate = req.body.targetStartDate ? req.body.targetStartDate.split("-") : '';
+    const endDate = req.body.targetEndDate ? req.body.targetEndDate.split("-") : '';
 
     let length = first_name.length;
 	for (let i=0; i< length; i++) {
@@ -224,7 +227,7 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
                 postal_code: req.body.zipcode,
                 address_remarks: req.body.address_remarks,
                 company_name: req.body.company_name,
-                attorney_id: req.body.attorney,
+                attorney_id: req.body.attorney_id,
                 website_url: req.body.website_url,
                 social_url: req.body.social_url,
                 twitter: req.body.twitter,
@@ -238,7 +241,11 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
                 firm_id: req.user.firm_id,
                 user_id: req.user.id,
                 target_type: req.body.target_type,
-                estimated_revenue: removePhoneMask(req.body.estimated_revenue)
+                estimated_revenue: removePhoneMask(req.body.estimated_revenue),
+                revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null,
+                targetStartDate: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
+                targetEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
+                lifetimeClientValue: removePhoneMask(req.body.lifetimeClient)
             });
 
             for (let j=0; j< targetDetails.length; j++) {
@@ -280,7 +287,7 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
                 postal_code: req.body.zipcode,
                 address_remarks: req.body.address_remarks,
                 company_name: req.body.company_name,
-                attorney_id: req.body.attorney,
+                attorney_id: req.body.attorney_id,
                 website_url: req.body.website_url,
                 social_url: req.body.social_url,
                 twitter: req.body.twitter,
@@ -294,7 +301,11 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
                 firm_id: req.user.firm_id,
                 user_id: req.user.id,
                 target_type: req.body.target_type,
-                estimated_revenue: removePhoneMask(req.body.estimated_revenue)
+                estimated_revenue: removePhoneMask(req.body.estimated_revenue),
+                revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null,
+                targetStartDate: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
+                targetEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
+                lifetimeClientValue: removePhoneMask(req.body.lifetimeClient)
             });
             req.flash('success-message', 'Target Added Successfully');
             res.redirect('/target')
@@ -431,7 +442,11 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
 	var email = req.body.contactDetailsEmail;
 	var phone_no = req.body.contactDetailsPhone_no;
 	var fax = req.body.contactDetailsFax;
-	var mobile_no = req.body.contactDetailsMobile_no;
+    var mobile_no = req.body.contactDetailsMobile_no;
+    
+    const closingDate = req.body.revenueclosingDate ? req.body.revenueclosingDate.split("-") : '';
+    const startDate = req.body.targetStartDate ? req.body.targetStartDate.split("-") : '';
+    const endDate = req.body.targetEndDate ? req.body.targetEndDate.split("-") : '';
 
 	let length = first_name.length;
 	for (let i=0; i< length; i++) {
@@ -458,6 +473,7 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
             }
         }
     });
+    
     if (target_edit_data === null) {
         await Target.update({
             organization_name: req.body.org_name,
@@ -495,7 +511,11 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
             target_id: req.body.target_id,
             target_code: req.body.target_code,
             remarks: req.body.remarks,
-            estimated_revenue: removePhoneMask(req.body.estimated_revenue)
+            estimated_revenue: removePhoneMask(req.body.estimated_revenue),
+            revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null,
+            targetStartDate: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
+            targetEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
+            lifetimeClientValue: removePhoneMask(req.body.lifetimeClient)
         }, {
             where: {
                 id: req.params['id']
