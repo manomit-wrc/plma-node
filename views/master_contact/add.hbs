@@ -1,13 +1,10 @@
 {{#content "style" mode="prepend"}}
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> 
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
 
 
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
-
-
-{{/content}}
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" /> {{/content}}
 <div class="page-wrapper">
 	<div class="content container-fluid">
 		<div class="row">
@@ -85,7 +82,7 @@
 										<input type="text" class="form-control floating" id="last_name" name="last_name" maxlength="50" />
 									</div>
 								</div>
-								
+
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Master Contact Code
@@ -105,580 +102,587 @@
 									</div>
 								</div>
 
-
-                          <div class="col-md-6">
-								<div class="form-group form-focus select-focus select-attorney">
-									<label class="control-label">Gender
-										<span class="req-lbl">*</span>
-
-									</label>
-									<select class="form-control floating selectpicker" id="gender" name="gender" data-show-subtext="true" data-live-search="true">
-										<option value="">Select Gender</option>
-										<option value="M">Male</option>
-										<option value="F">Female</option>
-										<option value="O">Others</option>
-
-									</select>
-								</div>
-							</div>
-							
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Email Id
-										<span class="req-lbl">*</span>
-
-									</label>
-									<input type="text" class="form-control floating" id="email" name="email" />
-									<span id="uniqueEmail" style="color: red"></span>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Phone No.
-										<span class="req-lbl">*</span>
-
-									</label>
-									<input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" maxlength="50" />
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Fax</label>
-									<input type="text" class="form-control floating number_validator" id="fax" name="fax" maxlength="50" />
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Mobile No.
-										<span class="req-lbl">*</span>
-
-									</label>
-									<input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" maxlength="50" />
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="card-box">
-				<h3 class="card-title">Address</h3>
-				<div class="row">
-					<div class="col-md-12">
-						<div class="form-group form-focus">
-							<label class="control-label">Address Line 1
-								<span class="req-lbl">*</span>
-
-							</label>
-							<input type="text" class="form-control floating" id="address1" name="address1" />
-						</div>
-					</div>
-					<div class="col-md-12">
-						<div class="form-group form-focus">
-							<label class="control-label">Address Line 2</label>
-							<input type="text" class="form-control floating" id="address2" name="address2" />
-						</div>
-					</div>
-					<div class="col-md-12">
-						<div class="form-group form-focus">
-							<label class="control-label">Address Line 3</label>
-							<input type="text" class="form-control floating" id="address3" name="address3" />
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group form-focus select-focus">
-							<label class="control-label">Country</label>
-							<select id="country" name="country" class="select form-control floating">
-								<option value="">Select Country</option>
-								{{#each country}}
-								<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
-								{{/each}}
-							</select>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group form-focus select-focus">
-							<label class="control-label">State
-								<span class="req-lbl">*</span>
-
-							</label>
-							<select id="state" name="state" class="select form-control floating">
-								<option value="">Select State</option>
-								{{#each state}}
-								<option value="{{this.id}}">{{this.name}}</option>
-								{{/each}}
-							</select>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group form-focus select-focus">
-							<label class="control-label">City
-								<span class="req-lbl">*</span>
-
-							</label>
-							<select id="city" name="city" class="select form-control floating">
-								<option value="">Select City</option>
-							</select>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group form-focus select-focus">
-							<label class="control-label">Zip Code
-								<span class="req-lbl">*</span>
-
-							</label>
-							<select id="zipcode" name="zipcode" class="select form-control floating">
-								<option value="">Select Zipcode</option>
-							</select>
-						</div>
-					</div>
-					<div class="col-md-12">
-						<div class="form-group form-focus">
-							<label class="control-label">Address Remarks </label>
-							<textarea class="form-control floating" id="address_remarks" name="address_remarks" rows="5"></textarea>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="card-box">
-				<h3 class="card-title">Attorney Information</h3>
-				<div class="row">
-					<div class="col-md-12">
-						<div class="form-group form-focus select-focus select-attorney">
-							<label class="control-label">Attorney
-								<span class="req-lbl">*</span>
-							</label>
-							<select id="designation" name="attorney_id" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
-								{{#if_eq user.role_id "3"}}
-								<option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
-								{{else}}
-								<option value="">Select Attorney</option>
-								{{#each attorney}}
-								<option value="{{this.id}}" {{#if_eq this.id ../user.id}} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
-								{{/each}} {{/if_eq}}
-							</select>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="card-box" id="m_s_contactInformation" style="display:none;">
-				<h3 class="card-title">Contact Information</h3>
-				<div class="contact-information masterContactPlus" id="contactInformationPlus">
-					<button class="btn btn-primary btn-lg masterContactDetailsAdd" id="masterContactDetailsPlus" type="button" title="Remove">
-						<i class="fa fa-plus"></i>
-					</button>
-					<div class="contact-margin">
-						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">First Name
-										<span class="req-lbl">*</span>
-
-									</label>
-									<input type="text" class="form-control floating" id="contactDetailsFirstName" name="contactDetailsFirstName[]" />
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Last Name</label>
-									<input type="text" class="form-control floating" id="contactDetailsSecondName" name="contactDetailsSecondName[]" />
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus select-focus">
-									<label class="control-label">Gender
-										<span class="req-lbl">*</span>
-
-									</label>
-									<select class="select form-control floating" id="contactDetailsGender" name="contactDetailsGender[]">
-										<option value="">Select Gender</option>
-										<option value="M">Male</option>
-										<option value="F">Female</option>
-										<option value="O">Others</option>
-
-									</select>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Email Id
-										<span class="req-lbl">*</span>
-
-									</label>
-									<input type="text" class="form-control floating" id="contactDetailsEmail" name="contactDetailsEmail[]" />
-									<span id="uniqueEmail" style="color: red"></span>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Phone No.
-										<span class="req-lbl">*</span>
-
-									</label>
-									<input type="text" class="form-control floating number_validator" id="contactDetailsPhone_no" name="contactDetailsPhone_no[]"
-									 maxlength="50" />
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Fax</label>
-									<input type="text" class="form-control floating number_validator" id="contactDetailsFax" name="contactDetailsFax[]" maxlength="50"
-									/>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Mobile No.
-										<span class="req-lbl">*</span>
-									</label>
-									<input type="text" class="form-control floating number_validator" id="contactDetailsMobile_no" name="contactDetailsMobile_no[]"
-									 maxlength="50" />
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="masterContactClose" style="display:none;">
-					<div class="contactDetailsRemove">
-						<div class="contact-information" id="contactInformatinClose">
-							<button class="btn btn-primary btn-lg masterContactDetailsAdd masterContactDetailsClose" type="button" title="Remove">
-								<i class="fa fa-close"></i>
-							</button>
-							<div class="contact-margin ">
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-group form-focus">
-											<label class="control-label">First Name
-												<span class="req-lbl">*</span>
-
-											</label>
-											<input type="text" class="form-control floating"  name="contactDetailsFirstName[]" />
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Closing Date<span class="req-lbl">*</span> </label>
+										<div class="cal-icon">
+											<input class="form-control floating datetimepicker" type="text" id="revenueclosingDate" name="revenueclosingDate">
 										</div>
 									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus">
-											<label class="control-label">Last Name</label>
-											<input type="text" class="form-control floating"  name="contactDetailsSecondName[]" />
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus select-focus">
-											<label class="control-label">Gender
-												<span class="req-lbl">*</span>
+								</div>
 
-											</label>
-											<select class="form-control floating"  name="contactDetailsGender[]">
-												<option value="">Select Gender</option>
-												<option value="M">Male</option>
-												<option value="F">Female</option>
-												<option value="O">Others</option>
-											</select>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus">
-											<label class="control-label">Email Id
-												<span class="req-lbl">*</span>
 
-											</label>
-											<input type="text" class="form-control floating"  name="contactDetailsEmail[]" />
-											<span id="uniqueEmail" style="color: red"></span>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus">
-											<label class="control-label">Phone No.
-												<span class="req-lbl">*</span>
+								<div class="col-md-6">
+									<div class="form-group form-focus select-focus select-attorney">
+										<label class="control-label">Gender
+											<span class="req-lbl">*</span>
 
-											</label>
-											<input type="text" class="form-control floating number_validator"  name="contactDetailsPhone_no[]"
-											 maxlength="50" />
-										</div>
+										</label>
+										<select class="form-control floating selectpicker" id="gender" name="gender" data-show-subtext="true" data-live-search="true">
+											<option value="">Select Gender</option>
+											<option value="M">Male</option>
+											<option value="F">Female</option>
+											<option value="O">Others</option>
+
+										</select>
 									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus">
-											<label class="control-label">Fax</label>
-											<input type="text" class="form-control floating number_validator"  name="contactDetailsFax[]" maxlength="50"
-											/>
-										</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Email Id
+											<span class="req-lbl">*</span>
+
+										</label>
+										<input type="text" class="form-control floating" id="email" name="email" />
+										<span id="uniqueEmail" style="color: red"></span>
 									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus">
-											<label class="control-label">Mobile No.
-												<span class="req-lbl">*</span>
-											</label>
-											<input type="text" class="form-control floating number_validator" id="contactDetailsMobile_no" name="contactDetailsMobile_no[]"
-											maxlength="50" />
-										</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Phone No.
+											<span class="req-lbl">*</span>
+
+										</label>
+										<input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" maxlength="50" />
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Fax</label>
+										<input type="text" class="form-control floating number_validator" id="fax" name="fax" maxlength="50" />
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Mobile No.
+											<span class="req-lbl">*</span>
+
+										</label>
+										<input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" maxlength="50" />
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+				<div class="card-box">
+					<h3 class="card-title">Address</h3>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group form-focus">
+								<label class="control-label">Address Line 1
+									<span class="req-lbl">*</span>
 
-			<div class="card-box">
-				<h3 class="card-title">Other Informations</h3>
-				<div class="row">
-					<div class="col-md-6">
-						<div class="form-group form-focus">
-							<label class="control-label">Master Contact Company
-								<span class="req-lbl">*</span>
+								</label>
+								<input type="text" class="form-control floating" id="address1" name="address1" />
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group form-focus">
+								<label class="control-label">Address Line 2</label>
+								<input type="text" class="form-control floating" id="address2" name="address2" />
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group form-focus">
+								<label class="control-label">Address Line 3</label>
+								<input type="text" class="form-control floating" id="address3" name="address3" />
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus select-focus">
+								<label class="control-label">Country</label>
+								<select id="country" name="country" class="select form-control floating">
+									<option value="">Select Country</option>
+									{{#each country}}
+									<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus select-focus">
+								<label class="control-label">State
+									<span class="req-lbl">*</span>
 
-							</label>
-							<input type="text" class="form-control floating" id="master_contact_comp" name="master_contact_comp" />
+								</label>
+								<select id="state" name="state" class="select form-control floating">
+									<option value="">Select State</option>
+									{{#each state}}
+									<option value="{{this.id}}">{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
 						</div>
-					</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus select-focus">
+								<label class="control-label">City
+									<span class="req-lbl">*</span>
 
-					<div class="col-md-6">
-						<div class="form-group form-focus">
-							<label class="control-label">Website URL </label>
-							<input type="text" class="form-control floating url_selector" id="website_url" name="website_url" />
+								</label>
+								<select id="city" name="city" class="select form-control floating">
+									<option value="">Select City</option>
+								</select>
+							</div>
 						</div>
-					</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus select-focus">
+								<label class="control-label">Zip Code
+									<span class="req-lbl">*</span>
 
-					<div class="col-md-6">
-						<div class="form-group form-focus">
-							<label class="control-label">IM</label>
-							<input type="text" class="form-control floating" id="im" name="im" />
+								</label>
+								<select id="zipcode" name="zipcode" class="select form-control floating">
+									<option value="">Select Zipcode</option>
+								</select>
+							</div>
 						</div>
-					</div>
-
-					<div class="col-md-6">
-						<div class="form-group form-focus">
-							<label class="control-label">Twitter URL</label>
-							<input type="text" class="form-control floating url_selector" id="twitter" name="twitter" />
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group form-focus">
-							<label class="control-label">Linkedin URL</label>
-							<input type="text" class="form-control floating url_selector" id="linkedin" name="linkedin" />
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group form-focus">
-							<label class="control-label">Facebook URL</label>
-							<input type="text" class="form-control floating url_selector" id="facebook_url" name="facebook_url" />
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group form-focus">
-							<label class="control-label">Google Plus URL</label>
-							<input type="text" class="form-control floating url_selector" id="google" name="google" />
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group form-focus">
-							<label class="control-label">Youtube URL</label>
-							<input type="text" class="form-control floating url_selector" id="youtube" name="youtube" />
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group form-focus select-focus select-attorney">
-							<label class="control-label">Master Contact Status</label>
-							<select id="status" name="status" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
-								<option value="NEW TARGET">NEW TARGET</option>
-								<option value="CONVERTED">CONVERTED TO CLIENT</option>
-								<option value="TS-INTERIM">INTERIM - REVIEW IN-PROGRESS</option>
-							</select>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group form-focus select-focus select-attorney">
-							<label class="control-label">Industry Type
-								<span class="req-lbl">*</span>
-
-							</label>
-							<select id="industry_type" name="industry_type" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
-								<option value="">Select Industry Type</option>
-								{{#each industry_types}}
-								<option value="{{this.id}}">{{this.industry_name}}</option>
-								{{/each}}
-							</select>
-						</div>
-					</div>
-					<div class="col-md-12">
-						<div class="form-group form-focus">
-							<label class="control-label">Remarks </label>
-							<textarea class="form-control floating" id="remarks" name="remarks" rows="5"></textarea>
+						<div class="col-md-12">
+							<div class="form-group form-focus">
+								<label class="control-label">Address Remarks </label>
+								<textarea class="form-control floating" id="address_remarks" name="address_remarks" rows="5"></textarea>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="text-center m-t-20">
-				<button class="btn btn-primary btn-lg" type="submit">Add Contact</button>
-				<a href="/master_contact" class="btn btn-primary btn-lg m-l-10">Cancel</a>
-			</div>
+
+				<div class="card-box">
+					<h3 class="card-title">Attorney Information</h3>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group form-focus select-focus select-attorney">
+								<label class="control-label">Attorney
+									<span class="req-lbl">*</span>
+								</label>
+								<select id="designation" name="attorney_id" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
+									{{#if_eq user.role_id "3"}}
+									<option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
+									{{else}}
+									<option value="">Select Attorney</option>
+									{{#each attorney}}
+									<option value="{{this.id}}" {{#if_eq this.id ../user.id}} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+									{{/each}} {{/if_eq}}
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="card-box" id="m_s_contactInformation" style="display:none;">
+					<h3 class="card-title">Contact Information</h3>
+					<div class="contact-information masterContactPlus" id="contactInformationPlus">
+						<button class="btn btn-primary btn-lg masterContactDetailsAdd" id="masterContactDetailsPlus" type="button" title="Remove">
+							<i class="fa fa-plus"></i>
+						</button>
+						<div class="contact-margin">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">First Name
+											<span class="req-lbl">*</span>
+
+										</label>
+										<input type="text" class="form-control floating" id="contactDetailsFirstName" name="contactDetailsFirstName[]" />
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Last Name</label>
+										<input type="text" class="form-control floating" id="contactDetailsSecondName" name="contactDetailsSecondName[]" />
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus select-focus">
+										<label class="control-label">Gender
+											<span class="req-lbl">*</span>
+
+										</label>
+										<select class="select form-control floating" id="contactDetailsGender" name="contactDetailsGender[]">
+											<option value="">Select Gender</option>
+											<option value="M">Male</option>
+											<option value="F">Female</option>
+											<option value="O">Others</option>
+
+										</select>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Email Id
+											<span class="req-lbl">*</span>
+
+										</label>
+										<input type="text" class="form-control floating" id="contactDetailsEmail" name="contactDetailsEmail[]" />
+										<span id="uniqueEmail" style="color: red"></span>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Phone No.
+											<span class="req-lbl">*</span>
+
+										</label>
+										<input type="text" class="form-control floating number_validator" id="contactDetailsPhone_no" name="contactDetailsPhone_no[]"
+										 maxlength="50" />
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Fax</label>
+										<input type="text" class="form-control floating number_validator" id="contactDetailsFax" name="contactDetailsFax[]" maxlength="50"
+										/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Mobile No.
+											<span class="req-lbl">*</span>
+										</label>
+										<input type="text" class="form-control floating number_validator" id="contactDetailsMobile_no" name="contactDetailsMobile_no[]"
+										 maxlength="50" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="masterContactClose" style="display:none;">
+						<div class="contactDetailsRemove">
+							<div class="contact-information" id="contactInformatinClose">
+								<button class="btn btn-primary btn-lg masterContactDetailsAdd masterContactDetailsClose" type="button" title="Remove">
+									<i class="fa fa-close"></i>
+								</button>
+								<div class="contact-margin ">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group form-focus">
+												<label class="control-label">First Name
+													<span class="req-lbl">*</span>
+
+												</label>
+												<input type="text" class="form-control floating" name="contactDetailsFirstName[]" />
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group form-focus">
+												<label class="control-label">Last Name</label>
+												<input type="text" class="form-control floating" name="contactDetailsSecondName[]" />
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group form-focus select-focus">
+												<label class="control-label">Gender
+													<span class="req-lbl">*</span>
+
+												</label>
+												<select class="form-control floating" name="contactDetailsGender[]">
+													<option value="">Select Gender</option>
+													<option value="M">Male</option>
+													<option value="F">Female</option>
+													<option value="O">Others</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group form-focus">
+												<label class="control-label">Email Id
+													<span class="req-lbl">*</span>
+
+												</label>
+												<input type="text" class="form-control floating" name="contactDetailsEmail[]" />
+												<span id="uniqueEmail" style="color: red"></span>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group form-focus">
+												<label class="control-label">Phone No.
+													<span class="req-lbl">*</span>
+
+												</label>
+												<input type="text" class="form-control floating number_validator" name="contactDetailsPhone_no[]" maxlength="50" />
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group form-focus">
+												<label class="control-label">Fax</label>
+												<input type="text" class="form-control floating number_validator" name="contactDetailsFax[]" maxlength="50" />
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group form-focus">
+												<label class="control-label">Mobile No.
+													<span class="req-lbl">*</span>
+												</label>
+												<input type="text" class="form-control floating number_validator" id="contactDetailsMobile_no" name="contactDetailsMobile_no[]"
+												 maxlength="50" />
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="card-box">
+					<h3 class="card-title">Other Informations</h3>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<label class="control-label">Master Contact Company
+									<span class="req-lbl">*</span>
+
+								</label>
+								<input type="text" class="form-control floating" id="master_contact_comp" name="master_contact_comp" />
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<label class="control-label">Website URL </label>
+								<input type="text" class="form-control floating url_selector" id="website_url" name="website_url" />
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<label class="control-label">IM</label>
+								<input type="text" class="form-control floating" id="im" name="im" />
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<label class="control-label">Twitter URL</label>
+								<input type="text" class="form-control floating url_selector" id="twitter" name="twitter" />
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<label class="control-label">Linkedin URL</label>
+								<input type="text" class="form-control floating url_selector" id="linkedin" name="linkedin" />
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<label class="control-label">Facebook URL</label>
+								<input type="text" class="form-control floating url_selector" id="facebook_url" name="facebook_url" />
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<label class="control-label">Google Plus URL</label>
+								<input type="text" class="form-control floating url_selector" id="google" name="google" />
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<label class="control-label">Youtube URL</label>
+								<input type="text" class="form-control floating url_selector" id="youtube" name="youtube" />
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus select-focus select-attorney">
+								<label class="control-label">Master Contact Status</label>
+								<select id="status" name="status" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
+									<option value="NEW TARGET">NEW TARGET</option>
+									<option value="CONVERTED">CONVERTED TO CLIENT</option>
+									<option value="TS-INTERIM">INTERIM - REVIEW IN-PROGRESS</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus select-focus select-attorney">
+								<label class="control-label">Industry Type
+									<span class="req-lbl">*</span>
+
+								</label>
+								<select id="industry_type" name="industry_type" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
+									<option value="">Select Industry Type</option>
+									{{#each industry_types}}
+									<option value="{{this.id}}">{{this.industry_name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group form-focus">
+								<label class="control-label">Remarks </label>
+								<textarea class="form-control floating" id="remarks" name="remarks" rows="5"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="text-center m-t-20">
+					<button class="btn btn-primary btn-lg" type="submit">Add Contact</button>
+					<a href="/master_contact" class="btn btn-primary btn-lg m-l-10">Cancel</a>
+				</div>
 		</form>
+		</div>
 	</div>
-</div>
-{{#content "script" mode="append"}}
-<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
-<script type="text/javascript" src="/assets/js/select2.min.js"></script>
-<script type="text/javascript" src="/assets/js/moment.min.js"></script>
-<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+	{{#content "script" mode="append"}}
+	<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+	<script type="text/javascript" src="/assets/js/select2.min.js"></script>
+	<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+	<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 
-  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
-
+	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 
 
-<script type="text/javascript">
-	$(document).ready(function (e) {
 
-		$("#estimated_revenue").inputmask("numeric", {
-			radixPoint: ".",
-			groupSeparator: ",",
-			digits: 2,
-			autoGroup: true,
-			prefix: '$ ',
-			rightAlign: false
+	<script type="text/javascript">
+		$(document).ready(function (e) {
+
+			$("#estimated_revenue").inputmask("numeric", {
+				radixPoint: ".",
+				groupSeparator: ",",
+				digits: 2,
+				autoGroup: true,
+				prefix: '$ ',
+				rightAlign: false
+			});
+
+
+			$("#contactform").validate({
+				rules: {
+					first_name: {
+						required: true
+					},
+					last_name: {
+						required: true
+					},
+					email: {
+						required: true,
+						email: true
+					},
+					phone_no: {
+						required: true
+					},
+					mobile_no: {
+						required: true
+					},
+					master_contact_id: {
+						required: true
+					},
+					master_contact_code: {
+						required: true
+					},
+					master_contact_desg: {
+						required: true
+					},
+					master_contact_comp: {
+						required: true
+					},
+					dob: {
+						required: true
+					},
+					gender: {
+						required: true
+					},
+					address1: {
+						required: true
+					},
+					country: {
+						required: true
+					},
+					state: {
+						required: true
+					},
+					city: {
+						required: true
+					},
+					zipcode: {
+						required: true
+					},
+					status: {
+						required: true
+					},
+					industry_type: {
+						required: true
+					}
+				},
+				messages: {
+					first_name: {
+						required: "First name can't be blank"
+					},
+					last_name: {
+						required: "Last name can't be blank"
+					},
+					email: {
+						required: "Email id can't be blank",
+						email: "Enter valid email id"
+					},
+					phone_no: {
+						required: "Phone number can't blank"
+					},
+					mobile_no: {
+						required: "Mobile number can't blank"
+					},
+					master_contact_id: {
+						required: "Master Contact ID can't be blank"
+					},
+					master_contact_code: {
+						required: "Master Contact Code can't be blank"
+					},
+					master_contact_desg: {
+						required: "Master Contact Designation can't be blank"
+					},
+					master_contact_comp: {
+						required: "Master Contact Company can't be blank"
+					},
+					dob: {
+						required: "Must select date of birth"
+					},
+					gender: {
+						required: "Must select gender"
+					},
+					address1: {
+						required: "Must provide address"
+					},
+					country: {
+						required: "Choose your country"
+					},
+					state: {
+						required: "Choose your state"
+					},
+					city: {
+						required: "Choose your city"
+					},
+					zipcode: {
+						required: "Choose your zipcode"
+					},
+					status: {
+						required: "Choose master contact status"
+					},
+					industry_type: {
+						required: "Choose industry type"
+					}
+				}
+			});
 		});
 
-
-		$("#contactform").validate({
-			rules: {
-				first_name: {
-					required: true
-				},
-				last_name: {
-					required: true
-				},
-				email: {
-					required: true,
-					email: true
-				},
-				phone_no: {
-					required: true
-				},
-				mobile_no: {
-					required: true
-				},
-				master_contact_id: {
-					required: true
-				},
-				master_contact_code: {
-					required: true
-				},
-				master_contact_desg: {
-					required: true
-				},
-				master_contact_comp: {
-					required: true
-				},
-				dob: {
-					required: true
-				},
-				gender: {
-					required: true
-				},
-				address1: {
-					required: true
-				},
-				country: {
-					required: true
-				},
-				state: {
-					required: true
-				},
-				city: {
-					required: true
-				},
-				zipcode: {
-					required: true
-				},
-				status: {
-					required: true
-				},
-				industry_type: {
-					required: true
-				}
-			},
-			messages: {
-				first_name: {
-					required: "First name can't be blank"
-				},
-				last_name: {
-					required: "Last name can't be blank"
-				},
-				email: {
-					required: "Email id can't be blank",
-					email: "Enter valid email id"
-				},
-				phone_no: {
-					required: "Phone number can't blank"
-				},
-				mobile_no: {
-					required: "Mobile number can't blank"
-				},
-				master_contact_id: {
-					required: "Master Contact ID can't be blank"
-				},
-				master_contact_code: {
-					required: "Master Contact Code can't be blank"
-				},
-				master_contact_desg: {
-					required: "Master Contact Designation can't be blank"
-				},
-				master_contact_comp: {
-					required: "Master Contact Company can't be blank"
-				},
-				dob: {
-					required: "Must select date of birth"
-				},
-				gender: {
-					required: "Must select gender"
-				},
-				address1: {
-					required: "Must provide address"
-				},
-				country: {
-					required: "Choose your country"
-				},
-				state: {
-					required: "Choose your state"
-				},
-				city: {
-					required: "Choose your city"
-				},
-				zipcode: {
-					required: "Choose your zipcode"
-				},
-				status: {
-					required: "Choose master contact status"
-				},
-				industry_type: {
-					required: "Choose industry type"
-				}
-			}
+		$(document).on('click', '#individual_masterContact', function () {
+			$('#org_type').hide();
+			$('#indivisual_type').show();
+			$('#m_s_contactInformation').hide();
 		});
-	});
 
-	$(document).on('click', '#individual_masterContact', function () {
-		$('#org_type').hide();
-		$('#indivisual_type').show();
-		$('#m_s_contactInformation').hide();
-	});
+		$(document).on('click', '#organization_masterContact', function () {
+			$('#org_type').show();
+			$('#indivisual_type').hide();
+			$('#m_s_contactInformation').show();
+		});
 
-	$(document).on('click', '#organization_masterContact', function () {
-		$('#org_type').show();
-		$('#indivisual_type').hide();
-		$('#m_s_contactInformation').show();
-	});
+		//contact information 
+		$(document).on('click', '#masterContactDetailsPlus', function () {
+			$('.masterContactPlus').append($('.masterContactClose').html());
+		});
 
-	//contact information 
-	$(document).on('click', '#masterContactDetailsPlus', function () {
-		$('.masterContactPlus').append($('.masterContactClose').html());
-	});
+		$(document).on('click', '.masterContactDetailsClose', function (e) {
+			$(this).parents(".contactDetailsRemove").remove();
+		});
 
-	$(document).on('click', '.masterContactDetailsClose', function (e) {
-		$(this).parents(".contactDetailsRemove").remove();
-	});
-
-</script> {{/content}}
+	</script> {{/content}}

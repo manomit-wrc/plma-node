@@ -93,13 +93,7 @@
 										/>
 									</div>
 								</div>
-								<div class="col-md-6">
-									<div class="form-group form-focus">
-										<label class="control-label">Master Contact ID </label>
-										<input type="text" class="form-control floating" id="master_contact_id" name="master_contact_id" value="{{contact.master_contact_id}}"
-										 disabled="disabled" />
-									</div>
-								</div>
+								
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Master Contact Code </label>
@@ -115,6 +109,16 @@
 										</label>
 										<input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue" value="{{contact.estimated_revenue}}"
 										 disabled>
+									</div>
+								</div>
+
+								
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Closing Date<span class="req-lbl">*</span> </label>
+										<div class="cal-icon">
+											<input class="form-control floating datetimepicker" type="text" id="revenueclosingDate" name="revenueclosingDate" value="{{dateFormat contact.revenueclosingDate "DD-MM-YYYY"}}" disabled>
+										</div>
 									</div>
 								</div>
 
