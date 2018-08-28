@@ -81,6 +81,9 @@ module.exports = {
       },
       target_status: {
         type: Sequelize.INTEGER
+      },
+      revenueclosingDate: {
+        type: Sequelize.INTEGER
       }
     });
   },
