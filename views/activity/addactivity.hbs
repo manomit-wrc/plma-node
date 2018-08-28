@@ -153,10 +153,10 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6 attorney" style="display: none; margin-bottom: 38px; margin-top: 8px;">
+                            <div class="col-md-6 attorney" style="display: none; margin-bottom: 23px; margin-top: 8px;">
                                 <div class="form-group select-focus">
                                     {{!-- <label class="control-label">Attorney <span class="req-lbl">*</span> </label> --}}
-                                    <select class="form-control floating" id="attorney_user" name="attorney_user" multiple="multiple">
+                                    <select class="form-control floating" id="attorney_user" name="attorney_user[]" multiple="multiple">
                                         {{!-- <option value="0">Select Attorney</option> --}}
                                         {{#each attorney}}
                                             <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>

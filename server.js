@@ -98,6 +98,14 @@ const hbs = exphbs.create({
                 return block.inverse(this);
             }
         },
+        inArrayCustom: function(array, value, type, block) {
+            var filter = lodash.filter(array, arr => arr.id === value && arr.type === type);
+            if (!!filter.length) {
+                return block.fn(this);
+            } else {
+                return block.inverse(this);
+            }
+        },
         get_parent_head: function(value, array) {
             var parent_category = lodash.filter(array, arr => arr.id === value);
             if (parent_category[0].parent_id == "0") {
