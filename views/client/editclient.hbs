@@ -192,6 +192,26 @@
 								<input type="text" class="form-control floating number_validator" id="fax" name="fax" value="{{client.fax}}" />
 							</div>
 						</div>
+
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<label class="control-label">Start Date<span class="req-lbl">*</span> </label>
+								<div class="cal-icon">
+									<input class="form-control floating datetimepicker" type="text" id="clientStartDate" name="clientStartDate" value="{{dateFormat client.clientStartDate "
+										 DD-MM-YYYY "}}" >
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<label class="control-label">End Date<span class="req-lbl">*</span> </label>
+								<div class="cal-icon">
+									<input class="form-control floating datetimepicker" type="text" id="clientEndDate" name="clientEndDate" value="{{dateFormat client.clientEndDate "
+										 DD-MM-YYYY "}}" >
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
