@@ -3,8 +3,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-sweetalert/sweet-alert.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
-{{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
 <div class="page-wrapper">
   <div class="content container-fluid">
     <div class="pg-header">
@@ -18,7 +17,8 @@
           <h4 class="page-title">ACTIVITY</h4>
         </div>
         <div class="col-xs-8 text-right">
-          <a href="/activityseen" class="btn btn-primary rounded"><i class="fa fa-plus"></i> Add Activity</a>
+          <a href="/activityseen" class="btn btn-primary rounded">
+            <i class="fa fa-plus"></i> Add Activity</a>
         </div>
       </div>
     </div>
@@ -27,9 +27,11 @@
       <div class="col-md-12">
         <div class="table-responsive">
           {{#if_eq count_query "0"}}{{else}}
-            <a href="/activitypage" class="btn btn-primary rounded advancedFilter" style="right: 595px !important;"><i class="fa fa-eraser"></i> Clear Filter</a>
+          <a href="/activitypage" class="btn btn-primary rounded advancedFilter" style="right: 595px !important;">
+            <i class="fa fa-eraser"></i> Clear Filter</a>
           {{/if_eq}}
-          <button class="btn btn-primary rounded advancedFilter" data-toggle="modal" data-target="#add_user"><i class="fa fa-filter"></i> Filter</button>
+          <button class="btn btn-primary rounded advancedFilter" data-toggle="modal" data-target="#add_user">
+            <i class="fa fa-filter"></i> Filter</button>
           <table class="table table-striped custom-table datatable" id="searchData">
             <thead>
               <tr>
@@ -45,9 +47,8 @@
             </thead>
             <tbody id="mainTable">
               {{#each row}}
-              <tr {{#if_eq this.activity_status '2'}}  {{/if_eq}} {{#if_eq this.activity_status '3'}}
-                 {{/if_eq}} {{#if_eq this.activity_status '1'}}
-                {{/if_eq}}>
+              <tr {{#if_eq this.activity_status '2'}} {{/if_eq}} {{#if_eq this.activity_status '3'}} {{/if_eq}} {{#if_eq this.activity_status
+                '1'}} {{/if_eq}}>
                 <td>{{math @index "+" 1}}</td>
                 <td>{{this.activity_name}}</td>
                 <td>{{dateFormat this.activity_from_date "DD-MM-YYYY"}}</td>
@@ -56,41 +57,32 @@
                 <td>{{this.remarks}}</td>
                 <td>
                   <input type="hidden" name="_csrf" value="{{csrfToken}}">
-                  <input type="hidden" name="activity_id" id="activity_id" value="{{this.id}}">
-                  {{#if_eq this.activity_status '0'}} <span class="label label-success-border">NEW ACTIVITY - CREATED</span> {{/if_eq}}
-                  {{#if (and (eq this.activity_status '3')(eq this.activity_update 'update')) }} ACTIVITY UPDATE {{else}}
-                  {{#if_eq this.activity_status '3'}} <span class="label label-danger-border">NOT APPROVED - DISCARD ACTIVITY</span> {{/if_eq}}
-                   {{/if}}
-                  {{#if_eq this.activity_status '1'}} <span class="label label-warning-border">PENDING APPROVAL - IN-PROGRESS</span> {{/if_eq}}
-                  {{#if_eq this.activity_status '2'}} <span class="label label-success-border">APPROVED - PROCEED</span> {{/if_eq}}
-                  
+                  <input type="hidden" name="activity_id" id="activity_id" value="{{this.id}}"> {{#if_eq this.activity_status '0'}}
+                  <span class="label label-success-border" style="color:#22518F;border:#225518F">NEW ACTIVITY - CREATED</span> {{/if_eq}} {{#if (and (eq this.activity_status '3')(eq this.activity_update
+                  'update')) }} ACTIVITY UPDATE {{else}} {{#if_eq this.activity_status '3'}}
+                  <span class="label label-danger-border">NOT APPROVED - DISCARD ACTIVITY</span> {{/if_eq}} {{/if}} {{#if_eq this.activity_status '1'}}
+                  <span class="label label-warning-border">PENDING APPROVAL - IN-PROGRESS</span> {{/if_eq}} {{#if_eq this.activity_status '2'}}
+                  <span class="label label-success-border">APPROVED - PROCEED</span> {{/if_eq}}
+
                 </td>
                 <td class="text-right">
                   {{#if (or (eq this.activity_status "0")(and (eq this.activity_status "3")(eq this.activity_update "update"))) }}
-                  <a href="javascript:void(0);" class="btn btn-success btn-sm approval_request_sent" id="approval_request_sent" title="REQUEST FOR APPROVAL"
-                      data-target-request-id="{{this.id}}" class="btn btn-danger btn-sm target-delete">
-                      <i class="fa fa-check" aria-hidden="true"></i>
-                    </a>
-                    
-                   {{!-- {{else}} --}}
-                  {{!-- {{#if (and (eq this.activity_status "0")(eq this.activity_update "update"))}} --}}
-                    {{!-- <a href="javascript:void(0);" class="btn btn-success btn-sm approval_request_sent" id="approval_request_sent" title="REQUEST FOR APPROVAL"
-                      data-target-request-id="{{this.id}}" class="btn btn-danger btn-sm target-delete">
-                      <i class="fa fa-check" aria-hidden="true"></i>
-                    </a> --}}
-
+                  <a href="javascript:void(0);" class="btn btn-info btn-sm approval_request_sent" id="approval_request_sent" title="REQUEST FOR APPROVAL"
+                    data-target-request-id="{{this.id}}" class="btn btn-danger btn-sm target-delete">
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                  </a>
                   {{/if}}
                   <a href="/activity/view/{{this.id}}" class="btn btn-success btn-sm" id="setUrlItem">
                     <i class="fa fa-eye m-r-5"></i>
                   </a>
                   {{#if (or (eq this.activity_status "0")(eq this.activity_status "3"))}}
-                    <a href="/activity/edit/{{this.id}}" class="btn btn-success btn-sm">
-                      <i class="fa fa-pencil m-r-5"></i>
-                    </a>
-                    <a href="javascript:void(0);" data-toggle="modal" data-target="delete_users" data-activity-id="{{this.id}}" id="delete_activity"
+                  <a href="/activity/edit/{{this.id}}" class="btn btn-success btn-sm">
+                    <i class="fa fa-pencil m-r-5"></i>
+                  </a>
+                  <a href="javascript:void(0);" data-toggle="modal" data-target="delete_users" data-activity-id="{{this.id}}" id="delete_activity"
                     class="btn btn-danger btn-sm target-delete">
-                      <i class="fa fa-trash-o m-r-5"></i>
-                    </a>
+                    <i class="fa fa-trash-o m-r-5"></i>
+                  </a>
                   {{/if}}
                 </td>
               </tr>
@@ -125,18 +117,19 @@
     <button type="button" class="close" data-dismiss="modal">&times;</button>
     <div class="modal-content modal-lg">
       <div class="modal-header">
-        <h4 class="modal-title"><i class="fa fa-filter"></i> Filter By</h4>
+        <h4 class="modal-title">
+          <i class="fa fa-filter"></i> Filter By</h4>
       </div>
       <div class="modal-body">
         <form class="m-b-30" name="advancedFilter" id="advancedFilter" method="GET">
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label class="control-label">Activity Goal</label>
+                <label class="control-label">Tactical Marketing Goals</label>
                 <select class="form-control" id="activity_goal_id" name="activity_goal_id">
-                  <option value="">Select Activity Goal</option>
+                  <option value="">Select Tactical Marketing Goals</option>
                   {{#each activity_goal}}
-                    <option value="{{this.id}}" {{#if_eq this.id ../activity_goal_id}} selected="selected" {{/if_eq}}>{{this.activity_goal}}</option>
+                  <option value="{{this.id}}" {{#if_eq this.id ../activity_goal_id}} selected="selected" {{/if_eq}}>{{this.activity_goal}}</option>
                   {{/each}}
                 </select>
               </div>
@@ -206,50 +199,54 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6" id="target_list" {{#if_eq refer_type "T"}} style="display: block;" {{else}} style="display: none;" {{/if_eq}}>
+            <div class="col-md-6" id="target_list" {{#if_eq refer_type "T"}} style="display: block;" {{else}} style="display: none;"
+              {{/if_eq}}>
               <div class="form-group">
-                <label class="control-label">Target List <span class="text-danger">*</span> </label>
+                <label class="control-label">Target List
+                  <span class="text-danger">*</span>
+                </label>
                 <select id="target_id" name="target_user" class="form-control">
                   <option value="">Please Select One</option>
-                  {{#each target}}
-                    {{#if_eq target_type "I"}}
-                      <option value="{{this.id}}" {{#if_eq this.id ../user_target}} selected {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
-                    {{/if_eq}}
-                    {{#if_eq target_type "O"}}
-                      <option value="{{this.id}}" {{#if_eq this.id ../user_target}} selected {{/if_eq}}>{{this.organization_name}}</option>
-                    {{/if_eq}}
-                  {{/each}}
+                  {{#each target}} {{#if_eq target_type "I"}}
+                  <option value="{{this.id}}" {{#if_eq this.id ../user_target}} selected {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+                  {{/if_eq}} {{#if_eq target_type "O"}}
+                  <option value="{{this.id}}" {{#if_eq this.id ../user_target}} selected {{/if_eq}}>{{this.organization_name}}</option>
+                  {{/if_eq}} {{/each}}
                 </select>
               </div>
             </div>
-            <div class="col-md-6" id="client_list" {{#if_eq refer_type "C"}} style="display: block;" {{else}} style="display: none;" {{/if_eq}}>
+            <div class="col-md-6" id="client_list" {{#if_eq refer_type "C"}} style="display: block;" {{else}} style="display: none;"
+              {{/if_eq}}>
               <div class="form-group">
-                <label class="control-label">Client List <span class="text-danger">*</span> </label>
+                <label class="control-label">Client List
+                  <span class="text-danger">*</span>
+                </label>
                 <select id="client_id" name="client_user" class="form-control">
                   <option value="">Please Select One</option>
-                  {{#each client}}
-                    {{#if_eq client_type "I"}}
-                      <option value="{{this.id}}" {{#if_eq this.id ../user_client}} selected {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
-                    {{/if_eq}}
-                    {{#if_eq client_type "O"}}
-                      <option value="{{this.id}}" {{#if_eq this.id ../user_client}} selected {{/if_eq}}>{{this.organization_name}}</option>
-                    {{/if_eq}}
-                  {{/each}}
+                  {{#each client}} {{#if_eq client_type "I"}}
+                  <option value="{{this.id}}" {{#if_eq this.id ../user_client}} selected {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+                  {{/if_eq}} {{#if_eq client_type "O"}}
+                  <option value="{{this.id}}" {{#if_eq this.id ../user_client}} selected {{/if_eq}}>{{this.organization_name}}</option>
+                  {{/if_eq}} {{/each}}
                 </select>
               </div>
             </div>
-            <div class="col-md-6" id="referral_list" {{#if_eq refer_type "R"}} style="display: block;" {{else}} style="display: none;" {{/if_eq}}>
+            <div class="col-md-6" id="referral_list" {{#if_eq refer_type "R"}} style="display: block;" {{else}} style="display: none;"
+              {{/if_eq}}>
               <div class="form-group">
-                <label class="control-label">Referral List <span class="text-danger">*</span> </label>
+                <label class="control-label">Referral List
+                  <span class="text-danger">*</span>
+                </label>
                 <select id="referral_id" name="referral_user" class="form-control">
                   <option value="">Please Select One</option>
                   {{#each referral}}
-                    <option value="{{this.id}}" {{#if_eq this.id ../user_referral}} selected {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+                  <option value="{{this.id}}" {{#if_eq this.id ../user_referral}} selected {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
                   {{/each}}
                 </select>
               </div>
             </div>
-            <div class="col-md-6" id="general_list" {{#if_eq refer_type "G"}} style="display: block;" {{else}} style="display: none;" {{/if_eq}}>&nbsp;</div>
+            <div class="col-md-6" id="general_list" {{#if_eq refer_type "G"}} style="display: block;" {{else}} style="display: none;"
+              {{/if_eq}}>&nbsp;</div>
           </div>
           <div class="m-t-20 text-center">
             <button class="btn btn-primary btn-lg" type="submit" id="btnAddGroup">Search</button>
@@ -372,5 +369,4 @@
     $("#delDiv").append('<a href="/activity/deletedata/' + activity_id + '" class="btn btn-danger" id="removeBtnDelete">' + "Delete" + '</a>');
   });
 
-</script>
-{{/content}}
+</script> {{/content}}
