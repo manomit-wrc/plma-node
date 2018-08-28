@@ -380,6 +380,21 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
         }
     });
     const practice_area = await PracticeArea.findAll();
+    const allAttorney = await User.findAll({
+        where: {
+            firm_id: req.user.firm_id,
+            role_id: 3
+        }
+    });
+    const selected_attr = await Activity_attorney.findAll({
+        where: {
+            activity_id: req.params['id']
+        }
+    });
+    var attr_arr = [];
+    for (var i = 0; i < selected_attr.length; i++) {
+        attr_arr.push(parseInt(selected_attr[i].attorney_id));
+    }
     const target = await Target.findAll({
         where: {
             'target_type': "I",
@@ -532,9 +547,11 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
         originAttorney: req.user.first_name + " " + req.user.last_name,
         activity_goal: activity_goal,
         budgetArr,
+        attr_arr,
         practice_area: practice_area,
         level_type,
-        section: allSection
+        section: allSection,
+        attorney: allAttorney
     });
 });
 
@@ -554,6 +571,21 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
         }
     });
     const practice_area = await PracticeArea.findAll();
+    const allAttorney = await User.findAll({
+        where: {
+            firm_id: req.user.firm_id,
+            role_id: 3
+        }
+    });
+    const selected_attr = await Activity_attorney.findAll({
+        where: {
+            activity_id: req.params['id']
+        }
+    });
+    var attr_arr = [];
+    for (var i = 0; i < selected_attr.length; i++) {
+        attr_arr.push(parseInt(selected_attr[i].attorney_id));
+    }
     const target = await Target.findAll({
         where: {
             'target_type': "I",
@@ -682,6 +714,7 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
         target: target,
         referral: referral,
         arr,
+        attr_arr,
         alltarget_client: alldata,
         editdata: editdata[0],
         firm: firm[0].title,
@@ -690,7 +723,8 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
         budgetArr,
         practice_area: practice_area,
         level_type,
-        section: allSection
+        section: allSection,
+        attorney: allAttorney
     });
 });
 
