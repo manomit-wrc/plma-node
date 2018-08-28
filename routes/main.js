@@ -786,6 +786,8 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 	var mobile_no = req.body.clientDetailsMobile_no;
 
 	const closingDate = req.body.revenueclosingDate ? req.body.revenueclosingDate.split("-") : '';
+	const startDate = req.body.clientStartDate ? req.body.clientStartDate.split("-") : '';
+    const endDate = req.body.clientEndDate ? req.body.clientEndDate.split("-") : '';
 
     let length = first_name.length;
 	for (let i=0; i< length; i++) {
@@ -862,7 +864,9 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				remarks: req.body.remarks,
 				current_revenue: removePhoneMask(req.body.current_revenue),
 				estimated_revenue: removePhoneMask(req.body.estimated_revenue),
-				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null
+				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null,
+				clientStartDate: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
+           		clientEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null
 			});
 
 			for (let j=0; j< clientDetails.length; j++) {
@@ -923,7 +927,9 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				remarks: req.body.remarks,
 				current_revenue: removePhoneMask(req.body.current_revenue),
 				estimated_revenue: removePhoneMask(req.body.estimated_revenue),
-				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null
+				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null,
+				clientStartDate: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
+           		clientEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null
 			});
 			req.flash('success-message', 'Client Added Successfully');
 			res.redirect('/client');
@@ -946,6 +952,8 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 	var mobile_no = req.body.contactDetailsMobile_no;
 
 	const closingDate = req.body.revenueclosingDate ? req.body.revenueclosingDate.split("-") : '';
+	const startDate = req.body.clientStartDate ? req.body.clientStartDate.split("-") : '';
+    const endDate = req.body.clientEndDate ? req.body.clientEndDate.split("-") : '';
 
 	let length = first_name.length;
 	for (let i=0; i< length; i++) {
@@ -1020,7 +1028,9 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 			website_url: req.body.website,
 			current_revenue: removePhoneMask(req.body.current_revenue),
 			estimated_revenue: removePhoneMask(req.body.estimated_revenue),
-			revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null 
+			revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null,
+			clientStartDate: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
+           	clientEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null 
 
 		}, {
 			where: {

@@ -84,6 +84,12 @@ module.exports = {
       },
       revenueclosingDate: {
          type: Sequelize.STRING
+      },
+      clientStartDate: {
+         type: Sequelize.STRING
+      },
+      clientEndDate: {
+         type: Sequelize.STRING
       }
     });
   },

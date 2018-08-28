@@ -58,7 +58,7 @@
                 <td>
                   <input type="hidden" name="_csrf" value="{{csrfToken}}">
                   <input type="hidden" name="activity_id" id="activity_id" value="{{this.id}}"> {{#if_eq this.activity_status '0'}}
-                  <span class="label label-success-border" style="color:#22518F;border:#225518F">NEW ACTIVITY - CREATED</span> {{/if_eq}} {{#if (and (eq this.activity_status '3')(eq this.activity_update
+                  <span class="label label-info-border">NEW ACTIVITY - CREATED</span> {{/if_eq}} {{#if (and (eq this.activity_status '3')(eq this.activity_update
                   'update')) }} ACTIVITY UPDATE {{else}} {{#if_eq this.activity_status '3'}}
                   <span class="label label-danger-border">NOT APPROVED - DISCARD ACTIVITY</span> {{/if_eq}} {{/if}} {{#if_eq this.activity_status '1'}}
                   <span class="label label-warning-border">PENDING APPROVAL - IN-PROGRESS</span> {{/if_eq}} {{#if_eq this.activity_status '2'}}
