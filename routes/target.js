@@ -184,6 +184,8 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
     var mobile_no = req.body.targetDetailsMobile_no;
 
     const closingDate = req.body.revenueclosingDate ? req.body.revenueclosingDate.split("-") : '';
+    const startDate = req.body.targetStartDate ? req.body.targetStartDate.split("-") : '';
+    const endDate = req.body.targetEndDate ? req.body.targetEndDate.split("-") : '';
 
     let length = first_name.length;
 	for (let i=0; i< length; i++) {
@@ -240,7 +242,10 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
                 user_id: req.user.id,
                 target_type: req.body.target_type,
                 estimated_revenue: removePhoneMask(req.body.estimated_revenue),
-                revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null
+                revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null,
+                targetStartDate: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
+                targetEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
+                lifetimeClientValue: removePhoneMask(req.body.lifetimeClient)
             });
 
             for (let j=0; j< targetDetails.length; j++) {
@@ -297,7 +302,10 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
                 user_id: req.user.id,
                 target_type: req.body.target_type,
                 estimated_revenue: removePhoneMask(req.body.estimated_revenue),
-                revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null
+                revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null,
+                targetStartDate: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
+                targetEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
+                lifetimeClientValue: removePhoneMask(req.body.lifetimeClient)
             });
             req.flash('success-message', 'Target Added Successfully');
             res.redirect('/target')
@@ -437,6 +445,8 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
     var mobile_no = req.body.contactDetailsMobile_no;
     
     const closingDate = req.body.revenueclosingDate ? req.body.revenueclosingDate.split("-") : '';
+    const startDate = req.body.targetStartDate ? req.body.targetStartDate.split("-") : '';
+    const endDate = req.body.targetEndDate ? req.body.targetEndDate.split("-") : '';
 
 	let length = first_name.length;
 	for (let i=0; i< length; i++) {
@@ -502,7 +512,10 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
             target_code: req.body.target_code,
             remarks: req.body.remarks,
             estimated_revenue: removePhoneMask(req.body.estimated_revenue),
-            revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null
+            revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null,
+            targetStartDate: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
+            targetEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
+            lifetimeClientValue: removePhoneMask(req.body.lifetimeClient)
         }, {
             where: {
                 id: req.params['id']
