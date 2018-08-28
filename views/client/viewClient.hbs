@@ -3,8 +3,7 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/jquery.tagsinput.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
-{{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css"> {{/content}}
 <div class="page-wrapper">
 	<div class="content container-fluid">
 		<div class="row">
@@ -17,7 +16,7 @@
 				<h4 class="page-title">Client Details</h4>
 			</div>
 			<div class="col-sm-4">
-                <div class="text-right">
+				<div class="text-right">
 					<a href="/client/edit/{{client.id}}" class="btn btn-primary pull-right rounded"><i class="fa fa-pencil"></i> Edit Client</a>
 					<a href="/client" class="btn btn-primary pull-right rounded m-r-5"><i class="fa fa-arrow-left"></i> Back</a>
 				</div>
@@ -27,7 +26,7 @@
 			<input type="hidden" name="_csrf" value="{{csrfToken}}">
 			<input type="hidden" value="{{client.id}}" id="id" disabled />
 			<input type="hidden" id="activity_type_details" name="activity_type_details" value="{{client.tag_type}}">
-			<input type="hidden" value="{{client.client_type}}" id="_clientContact"/>
+			<input type="hidden" value="{{client.client_type}}" id="_clientContact" />
 
 			<div class="form-inline m-b-15">
 				<div class="form-group m-r-5">
@@ -59,49 +58,42 @@
 							<div class="col-md-12">
 								<div class="form-group form-focus">
 									<label class="control-label">Organization Name</label>
-									<input type="text" class="form-control floating" id="org_name" name="org_name" value="{{client.organization_name}}" disabled="disabled" />
+									<input type="text" class="form-control floating" id="org_name" name="org_name" value="{{client.organization_name}}" disabled="disabled"
+									/>
 								</div>
 							</div>
-							
+
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Organisation Code</label>
 									<input type="text" class="form-control floating" id="org_code" name="org_code" value="{{client.organization_code}}" disabled="disabled"
 									/>
 								</div>
-							</div> 
+							</div>
 						</div>
 						<div id="individual_type" {{#if_eq client.client_type "O"}} style="display: none;" {{/if_eq}}>
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">First Name <span class="req-lbl">*</span> </label>
-									<input type="text" class="form-control floating" id="edit_client_first_name" name="edit_client_first_name" value="{{client.first_name}}" disabled="disabled" />
+									<input type="text" class="form-control floating" id="edit_client_first_name" name="edit_client_first_name" value="{{client.first_name}}"
+									 disabled="disabled" />
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Last Name <span class="req-lbl">*</span> </label>
-									<input type="text" class="form-control floating" id="edit_client_last_name" name="edit_client_last_name" value="{{client.last_name}}" disabled="disabled" />
+									<input type="text" class="form-control floating" id="edit_client_last_name" name="edit_client_last_name" value="{{client.last_name}}"
+									 disabled="disabled" />
 								</div>
 							</div>
-							{{!-- <div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Client ID</label>
-									<input type="text" class="form-control floating" id="client_id" name="client_id" value="{{client.client_id}}" disabled="disabled" />
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Master ID</label>
-									<input type="text" class="form-control floating" id="master_id" name="master_id" value="{{client.master_id}}" disabled="disabled" />
-								</div>
-							</div> --}}
+
 							<div class="col-md-6">
 								<div class="form-inline m-b-15">
 									<div class="form-group m-r-5">
 										<label class="input-group">
 											<span class="input-group-addon">
-												<input type="radio" id="new-add-tag" name="add-tag" value="new" disabled="disabled" {{#if_eq client.tag_type 'n'}} checked {{/if_eq}} />
+												<input type="radio" id="new-add-tag" name="add-tag" value="new" disabled="disabled" {{#if_eq client.tag_type 'n'}} checked
+												 {{/if_eq}} />
 											</span>
 											<div class="form-control form-control-static">New Tags {{client.tag_type}}</div>
 											<span class="glyphicon form-control-feedback"></span>
@@ -110,7 +102,8 @@
 									<div class="form-group">
 										<label class="input-group">
 											<span class="input-group-addon">
-												<input type="radio" id="existing-tag" name="add-tag" value="existing" disabled="disabled" {{#if_eq client.tag_type 'e'}} checked {{/if_eq}} />
+												<input type="radio" id="existing-tag" name="add-tag" value="existing" disabled="disabled" {{#if_eq client.tag_type 'e'}}
+												 checked {{/if_eq}} />
 											</span>
 											<div class="form-control form-control-static">Existing Tags</div>
 											<span class="glyphicon form-control-feedback"></span>
@@ -123,7 +116,7 @@
 									<div class="form-group form-focus select-focus">
 										<select id="select-existing-tags" name="existing_tags" class="form-control floating" multiple="multiple" disabled>
 											{{#each tags}}
-												<option value="{{this.id}}" {{#inArray ../existing_tag this.id}} selected="selected" {{/inArray}}>{{this.tags}}</option>
+											<option value="{{this.id}}" {{#inArray ../existing_tag this.id}} selected="selected" {{/inArray}}>{{this.tags}}</option>
 											{{/each}}
 										</select>
 									</div>
@@ -131,33 +124,37 @@
 								<div id="add-tag-client">
 									<div class="form-group form-focus">
 										<label class="control-label">Add New Tags</label>
-										<input type="text" class="form-control floating" id="add-new-tags" name="add_new_tags" disabled="disabled" value="{{client.tags}}" />
+										<input type="text" class="form-control floating" id="add-new-tags" name="add_new_tags" disabled="disabled" value="{{client.tags}}"
+										/>
 									</div>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Current Revenue</label>
-									<input class="form-control floating" type="text" id="current_revenue" name="current_revenue" value="{{client.current_revenue}}" disabled>
+									<input class="form-control floating" type="text" id="current_revenue" name="current_revenue" value="{{client.current_revenue}}"
+									 disabled>
 								</div>
 							</div>
+
 							<div class="col-md-6">
 								<div class="form-group form-focus">
-									<label class="control-label">Estimated Revenue</label>
-									<input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue" value="{{client.estimated_revenue}}" disabled>
+									<label class="control-label">Estimated annual revenue</label>
+									<input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue" value="{{client.estimated_revenue}}"
+									 disabled>
 								</div>
 							</div>
-							{{!-- <div class="col-md-6">
+
+							<div class="col-md-6">
 								<div class="form-group form-focus">
-									<label class="control-label">Birth Date
-										<span class="req-lbl">*</span>
-									</label>
+									<label class="control-label">Closing Date<span class="req-lbl">*</span> </label>
 									<div class="cal-icon">
-										<input class="form-control floating datetimepicker" type="text" id="client_dob" name="client_dob" value="{{dateFormat client.date_of_birth "
-										 DD-MM-YYYY "}}" disabled="disabled" />
+										<input class="form-control floating datetimepicker" type="text" id="revenueclosingDate" name="revenueclosingDate" value="{{dateFormat client.revenueclosingDate "
+										 DD-MM-YYYY "}}" disabled>
 									</div>
 								</div>
-							</div> --}}
+							</div>
+
 							<div class="col-md-6">
 								<div class="form-group form-focus select-focus">
 									<label class="control-label">Gender <span class="req-lbl">*</span> </label>
@@ -172,7 +169,8 @@
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Client Company</label>
-									<input type="text" class="form-control floating" id="client_company" name="client_company" value="{{client.client_company}}" disabled="disabled" />
+									<input type="text" class="form-control floating" id="client_company" name="client_company" value="{{client.client_company}}"
+									 disabled="disabled" />
 								</div>
 							</div>
 						</div>
@@ -186,20 +184,23 @@
 						<div class="col-md-6">
 							<div class="form-group form-focus">
 								<label class="control-label">Phone No. <span class="req-lbl">*</span> </label>
-								<input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" value="{{client.phone_no}}" disabled="disabled" />
+								<input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" value="{{client.phone_no}}"
+								 disabled="disabled" />
 								<span id="uniquePhone" style="color: red"></span>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-focus select-focus">
 								<label class="control-label">Mobile No. <span class="req-lbl">*</span> </label>
-								<input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" value="{{client.mobile_no}}" disabled="disabled" />
+								<input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" value="{{client.mobile_no}}"
+								 disabled="disabled" />
 							</div>
 						</div>
 						<div class="col-md-5">
 							<div class="form-group form-focus select-focus">
 								<label class="control-label">Fax</label>
-								<input type="text" class="form-control floating number_validator" id="fax" name="fax" value="{{client.fax}}" disabled="disabled" />
+								<input type="text" class="form-control floating number_validator" id="fax" name="fax" value="{{client.fax}}" disabled="disabled"
+								/>
 							</div>
 						</div>
 						<div class="col-md-1">
@@ -217,19 +218,22 @@
 						<div class="col-md-12">
 							<div class="form-group form-focus">
 								<label class="control-label">Address Line 1 <span class="req-lbl">*</span> </label>
-								<input type="text" class="form-control floating" id="address1" name="address1" value="{{client.address1}}" disabled="disabled" />
+								<input type="text" class="form-control floating" id="address1" name="address1" value="{{client.address1}}" disabled="disabled"
+								/>
 							</div>
 						</div>
 						<div class="col-md-12">
 							<div class="form-group form-focus">
 								<label class="control-label">Address Line 2</label>
-								<input type="text" class="form-control floating" id="address2" name="address2" value="{{client.address2}}" disabled="disabled" />
+								<input type="text" class="form-control floating" id="address2" name="address2" value="{{client.address2}}" disabled="disabled"
+								/>
 							</div>
 						</div>
 						<div class="col-md-12">
 							<div class="form-group form-focus">
 								<label class="control-label">Address Line 3</label>
-								<input type="text" class="form-control floating" id="address3" name="address3" value="{{client.address_line_3}}" disabled="disabled" />
+								<input type="text" class="form-control floating" id="address3" name="address3" value="{{client.address_line_3}}" disabled="disabled"
+								/>
 							</div>
 						</div>
 						<div class="col-md-6">
@@ -237,7 +241,7 @@
 								<label class="control-label">Country <span class="req-lbl">*</span> </label>
 								<select id="country" name="country" class="form-control floating" disabled="disabled">
 									{{#each country}}
-										<option value="{{this.id}}">{{this.name}}</option>
+									<option value="{{this.id}}">{{this.name}}</option>
 									{{/each}}
 								</select>
 							</div>
@@ -248,7 +252,7 @@
 								<select id="state" name="state" class="form-control floating" disabled="disabled">
 									<option value="">Select State</option>
 									{{#each state}}
-										<option value="{{this.id}}" {{#if_eq this.id ../client.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+									<option value="{{this.id}}" {{#if_eq this.id ../client.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
 									{{/each}}
 								</select>
 							</div>
@@ -259,7 +263,7 @@
 								<select id="city" name="city" class="form-control floating" disabled="disabled">
 									<option value="">Select City</option>
 									{{#each city}}
-										<option value="{{this.id}}" {{#if_eq this.id ../client.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+									<option value="{{this.id}}" {{#if_eq this.id ../client.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
 									{{/each}}
 								</select>
 							</div>
@@ -270,7 +274,7 @@
 								<select id="zipcode" name="zipcode" class="form-control floating" disabled="disabled">
 									<option value="">Select Zipcode</option>
 									{{#each zipcode}}
-										<option value="{{this.id}}" {{#if_eq this.id ../client.pin_code}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
+									<option value="{{this.id}}" {{#if_eq this.id ../client.pin_code}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
 									{{/each}}
 								</select>
 							</div>
@@ -285,7 +289,8 @@
 								<label class="control-label">Attorney <span class="req-lbl">*</span> </label>
 								<select id="designation" name="attorney_id" class="select form-control floating" disabled="disabled">
 									{{#each attorney}}
-										<option value="{{this.id}}" {{#if_eq this.id ../client.attorney_id}} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+									<option value="{{this.id}}" {{#if_eq this.id ../client.attorney_id}} selected="selected" {{/if_eq}}>{{this.first_name}}
+										{{this.last_name}}</option>
 									{{/each}}
 								</select>
 							</div>
@@ -294,9 +299,9 @@
 				</div>
 				<div class="card-box" id="m_s_contactInformation" style="display:none;">
 					<h3 class="card-title">Contact Information</h3>
-					<div id="masterContactPlus" >
-					{{#each contactDetails}}
-						<div class="contact-information contactDetailsRemove" >
+					<div id="masterContactPlus">
+						{{#each contactDetails}}
+						<div class="contact-information contactDetailsRemove">
 							<div class="contact-margin">
 								<div class="row">
 									<div class="col-md-6">
@@ -305,13 +310,15 @@
 												<span class="req-lbl">*</span>
 
 											</label>
-											<input type="text" class="form-control floating" id="contactDetailsFirstName" name="contactDetailsFirstName[]" value="{{this.first_name}}" disabled/>
+											<input type="text" class="form-control floating" id="contactDetailsFirstName" name="contactDetailsFirstName[]" value="{{this.first_name}}"
+											 disabled/>
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group form-focus">
 											<label class="control-label">Last Name</label>
-											<input type="text" class="form-control floating" id="contactDetailsSecondName" name="contactDetailsSecondName[]" value="{{this.last_name}}" disabled/>
+											<input type="text" class="form-control floating" id="contactDetailsSecondName" name="contactDetailsSecondName[]" value="{{this.last_name}}"
+											 disabled/>
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -323,8 +330,8 @@
 											<select class="select form-control floating" id="contactDetailsGender" name="contactDetailsGender[]" disabled>
 												<option value="">Select Gender</option>
 												<option value="M" {{#if_eq this.gender "M"}} selected {{/if_eq}}>Male</option>
-												<option value="F"{{#if_eq this.gender "F"}} selected {{/if_eq}} >Female</option>
-												<option value="O" {{#if_eq this.gender "O"}} selected {{/if_eq}} >Others</option>
+												<option value="F" {{#if_eq this.gender "F"}} selected {{/if_eq}}>Female</option>
+												<option value="O" {{#if_eq this.gender "O"}} selected {{/if_eq}}>Others</option>
 											</select>
 										</div>
 									</div>
@@ -334,7 +341,8 @@
 												<span class="req-lbl">*</span>
 
 											</label>
-											<input type="text" class="form-control floating" id="contactDetailsEmail" name="contactDetailsEmail[]" value="{{this.email}}" disabled/>
+											<input type="text" class="form-control floating" id="contactDetailsEmail" name="contactDetailsEmail[]" value="{{this.email}}"
+											 disabled/>
 											<span id="uniqueEmail" style="color: red"></span>
 										</div>
 									</div>
@@ -345,14 +353,14 @@
 
 											</label>
 											<input type="text" class="form-control floating number_validator" id="contactDetailsPhone_no" name="contactDetailsPhone_no[]"
-											maxlength="50" value={{this.phone_no}} disabled/>
+											 maxlength="50" value={{this.phone_no}} disabled/>
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group form-focus">
 											<label class="control-label">Fax</label>
-											<input type="text" class="form-control floating number_validator" id="contactDetailsFax" name="contactDetailsFax[]" maxlength="50" value="{{this.fax}}"
-											disabled/>
+											<input type="text" class="form-control floating number_validator" id="contactDetailsFax" name="contactDetailsFax[]" maxlength="50"
+											 value="{{this.fax}}" disabled/>
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -361,37 +369,41 @@
 												<span class="req-lbl">*</span>
 											</label>
 											<input type="text" class="form-control floating number_validator" id="contactDetailsMobile_no" name="contactDetailsMobile_no[]"
-											maxlength="50" value="{{this.mobile_no}}" disabled/>
+											 maxlength="50" value="{{this.mobile_no}}" disabled/>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					{{/each}}
+						{{/each}}
 					</div>
 				</div>
 				<div class="card-box">
 					<h3 class="card-title">Other Information</h3>
 					<div class="row">
-						{{!-- <div class="col-md-6">
+						{{!--
+						<div class="col-md-6">
 							<div class="form-group form-focus">
 								<label class="control-label">Social URL</label>
-								<input type="text" class="form-control floating url_selector" id="social" name="social" value="{{client.social_url}}" disabled="disabled" />
+								<input type="text" class="form-control floating url_selector" id="social" name="social" value="{{client.social_url}}" disabled="disabled"
+								/>
 							</div>
 						</div> --}}
 						<div class="col-md-6">
 							<div class="form-group form-focus">
 								<label class="control-label">Website</label>
-								<input type="text" class="form-control floating" id="website" name="website" value="{{client.website_url}}" disabled="disabled" />
+								<input type="text" class="form-control floating" id="website" name="website" value="{{client.website_url}}" disabled="disabled"
+								/>
 							</div>
 						</div>
-						{{!-- <div class="col-md-6">
+						{{!--
+						<div class="col-md-6">
 							<div class="form-group form-focus select-focus">
 								<label class="control-label">Designation</label>
 								<select id="designation" name="designation" class="select form-control" disabled="disabled">
 									<option value="">Select Designation</option>
 									{{#each designation}}
-										<option value="{{this.id}}" {{#if_eq this.id ../client.designation_id}} selected="selected" {{/if_eq}}>{{this.title}}</option>
+									<option value="{{this.id}}" {{#if_eq this.id ../client.designation_id}} selected="selected" {{/if_eq}}>{{this.title}}</option>
 									{{/each}}
 								</select>
 							</div>
@@ -405,43 +417,51 @@
 						<div class="col-md-6">
 							<div class="form-group form-focus">
 								<label class="control-label">Company Name</label>
-								<input type="text" class="form-control floating" id="company_name" name="company_name" value="{{client.company_name}}" disabled="disabled" />
+								<input type="text" class="form-control floating" id="company_name" name="company_name" value="{{client.company_name}}" disabled="disabled"
+								/>
 							</div>
 						</div>
-						{{!-- <div class="col-md-6">
+						{{!--
+						<div class="col-md-6">
 							<div class="form-group form-focus">
 								<label class="control-label">Social Security No</label>
-								<input type="text" class="form-control floating number_validator" id="social_sec_no" name="social_sec_no" value="{{client.social_security_no}}" disabled="disabled" />
+								<input type="text" class="form-control floating number_validator" id="social_sec_no" name="social_sec_no" value="{{client.social_security_no}}"
+								 disabled="disabled" />
 							</div>
 						</div> --}}
 						<div class="col-md-6">
 							<div class="form-group form-focus">
 								<label class="control-label">Twitter</label>
-								<input type="text" class="form-control floating url_selector" id="twitter" name="twitter" value="{{client.twitter}}" disabled="disabled" />
+								<input type="text" class="form-control floating url_selector" id="twitter" name="twitter" value="{{client.twitter}}" disabled="disabled"
+								/>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-focus">
 								<label class="control-label">Linkedin</label>
-								<input type="text" class="form-control floating url_selector" id="linkdn" name="linkdn" value="{{client.linkdn}}" disabled="disabled" />
+								<input type="text" class="form-control floating url_selector" id="linkdn" name="linkdn" value="{{client.linkdn}}" disabled="disabled"
+								/>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-focus">
 								<label class="control-label">Facebook</label>
-								<input type="text" class="form-control floating url_selector" id="social" name="social" value="{{client.social_url}}" disabled="disabled" />
+								<input type="text" class="form-control floating url_selector" id="social" name="social" value="{{client.social_url}}" disabled="disabled"
+								/>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-focus">
 								<label class="control-label">Youtube</label>
-								<input type="text" class="form-control floating url_selector" id="youtub" name="youtub" value="{{client.youtub}}" disabled="disabled" />
+								<input type="text" class="form-control floating url_selector" id="youtub" name="youtub" value="{{client.youtub}}" disabled="disabled"
+								/>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-focus">
 								<label class="control-label">Google </label>
-								<input type="text" class="form-control floating url_selector" id="google" name="google" value="{{client.google}}" disabled="disabled" />
+								<input type="text" class="form-control floating url_selector" id="google" name="google" value="{{client.google}}" disabled="disabled"
+								/>
 							</div>
 						</div>
 						<div class="col-md-6">
@@ -459,7 +479,7 @@
 								<label class="control-label">Industry Type</label>
 								<select id="industry_type" name="industry_type" class="select form-control" disabled="disabled">
 									{{#each industry}}
-										<option value="{{this.id}}" {{#if_eq this.id ../client.industry_type}} selected="selected" {{/if_eq}}>{{this.industry_name}}</option>
+									<option value="{{this.id}}" {{#if_eq this.id ../client.industry_type}} selected="selected" {{/if_eq}}>{{this.industry_name}}</option>
 									{{/each}}
 								</select>
 							</div>
@@ -499,8 +519,8 @@
 									<td>{{dateFormat this.activity.activity_to_date "DD-MM-YYYY"}}</td>
 									<td>{{this.activity.remarks}}</td>
 									<td> {{#if_eq this.activity.activity_status '0'}} NEW ACTIVITY - CREATED {{/if_eq}} {{#if_eq this.activity.activity_status
-										'1'}} PENDING APPROVAL - IN-PROGRESS {{/if_eq}} {{#if_eq this.activity.activity_status '2'}} APPROVED - PROCEED {{/if_eq}}
-										{{#if_eq this.activity.activity_status '3'}} NOT APPROVED - DISCARD ACTIVITY {{/if_eq}}
+										'1'}} PENDING APPROVAL - IN-PROGRESS {{/if_eq}} {{#if_eq this.activity.activity_status '2'}} APPROVED - PROCEED
+										{{/if_eq}} {{#if_eq this.activity.activity_status '3'}} NOT APPROVED - DISCARD ACTIVITY {{/if_eq}}
 									</td>
 								</tr>
 								{{/each}}
@@ -525,28 +545,28 @@
 		localStorage.setItem("url", window.location.pathname);
 	});
 	$(document).on('click', '#expandBtn', function () {
-			$("#expandToggle").toggle();
-			$("i", this).toggleClass("fa fa-arrow-up fa fa-arrow-down");
-		});
+		$("#expandToggle").toggle();
+		$("i", this).toggleClass("fa fa-arrow-up fa fa-arrow-down");
+	});
 	$(document).ready(function (e) {
 
 		$("#current_revenue").inputmask("numeric", {
-            radixPoint: ".",
-            groupSeparator: ",",
-            digits: 2,
-            autoGroup: true,
-            prefix: '$ ',
-            rightAlign: false
-        });
+			radixPoint: ".",
+			groupSeparator: ",",
+			digits: 2,
+			autoGroup: true,
+			prefix: '$ ',
+			rightAlign: false
+		});
 
 		$("#estimated_revenue").inputmask("numeric", {
-            radixPoint: ".",
-            groupSeparator: ",",
-            digits: 2,
-            autoGroup: true,
-            prefix: '$ ',
-            rightAlign: false
-        });
+			radixPoint: ".",
+			groupSeparator: ",",
+			digits: 2,
+			autoGroup: true,
+			prefix: '$ ',
+			rightAlign: false
+		});
 
 		$('#select-existing-tags').multiselect({
 			nonSelectedText: 'Select Existing Tags',
@@ -566,7 +586,7 @@
 
 		//hide show type
 		let _msType = $('#_clientContact').val();
-		if (_msType==='O') {
+		if (_msType === 'O') {
 			$('#m_s_contactInformation').show();
 		} else {
 			$('#m_s_contactInformation').hide();

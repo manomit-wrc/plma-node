@@ -248,6 +248,8 @@ router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async (req, res
 	var fax = req.body.clientDetailsFax;
 	var mobile_no = req.body.clientDetailsMobile_no;
 
+	const closingDate = req.body.revenueclosingDate ? req.body.revenueclosingDate.split("-") : '';
+
 	let length = first_name.length;
 	for (let i = 0; i < length; i++) {
 		if (first_name[i] !== "") {
@@ -305,7 +307,8 @@ router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async (req, res
 				google: req.body.google,
 				youtube: req.body.youtube,
 				association: req.body.association,
-				industry_type: req.body.industry_type
+				industry_type: req.body.industry_type,
+				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null
 			});
 		} else {
 			const insertData = await Referral.create({
@@ -341,7 +344,8 @@ router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async (req, res
 				google: req.body.google,
 				youtube: req.body.youtube,
 				association: req.body.association,
-				industry_type: req.body.industry_type
+				industry_type: req.body.industry_type,
+				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null
 			});
 
 			for (let j = 0; j < clientDetails.length; j++) {
@@ -537,6 +541,8 @@ router.post('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req
 	var fax = req.body.contactDetailsFax;
 	var mobile_no = req.body.contactDetailsMobile_no;
 
+	const closingDate = req.body.revenueclosingDate ? req.body.revenueclosingDate.split("-") : '';
+
 	let length = first_name.length;
 	for (let i = 0; i < length; i++) {
 		if (first_name[i] !== "") {
@@ -594,7 +600,8 @@ router.post('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req
 			youtube: req.body.youtube,
 			association: req.body.association,
 			industry_type: req.body.industry_type,
-			remarks: req.body.remarks
+			remarks: req.body.remarks,
+			revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null
 		}, {
 			where: {
 				id: req.params['id']

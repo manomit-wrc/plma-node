@@ -3,8 +3,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
-{{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
 
 <div class="page-wrapper">
   <div class="content container-fluid">
@@ -13,14 +12,14 @@
         <h4 class="page-title">View Referral</h4>
       </div>
 
-    <div class="col-sm-4">
-      <div class="text-right">
-        <a href="/referral/edit/{{referral.id}}" class="btn btn-primary pull-right rounded">
-          <i class="fa fa-pencil"></i> Edit Referral</a>
+      <div class="col-sm-4">
+        <div class="text-right">
+          <a href="/referral/edit/{{referral.id}}" class="btn btn-primary pull-right rounded">
+            <i class="fa fa-pencil"></i> Edit Referral</a>
 
           <a href="/referral" class="btn btn-primary pull-right rounded m-r-5"><i class="fa fa-arrow-left"></i>Back</a>
+        </div>
       </div>
-    </div>
 
 
     </div>
@@ -35,14 +34,11 @@
     {{/if}}
     <form id="frmEditReferral" method="POST" action="/referral/edit/{{referral.id}}">
       <input type="hidden" name="_csrf" value="{{csrfToken}}">
-      <input type="hidden" value="{{referral.referral_type}}" id="_contactInformation"/>
-
-       {{!--
-      <input type="radio" id="individual_referral" name="referral_type" value="I" {{#if_eq referral.referral_type
-        "I"}} checked {{/if_eq}} disabled />Individual
+      <input type="hidden" value="{{referral.referral_type}}" id="_contactInformation" /> {{!--
+      <input type="radio" id="individual_referral" name="referral_type" value="I" {{#if_eq referral.referral_type "I"}} checked
+        {{/if_eq}} disabled />Individual
       <input type="radio" id="organization_referral" name="referral_type" value="O" {{#if_eq referral.referral_type "O"}} checked
-        {{/if_eq}} disabled/>Organization
-        --}}
+        {{/if_eq}} disabled/>Organization --}}
 
 
       <div class="form-inline m-b-15">
@@ -79,7 +75,8 @@
                       <span class="req-lbl">*</span>
 
                     </label>
-                    <input type="text" disabled class="form-control floating" id="first_name" name="first_name" value="{{referral.first_name}}" />
+                    <input type="text" disabled class="form-control floating" id="first_name" name="first_name" value="{{referral.first_name}}"
+                    />
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -88,14 +85,16 @@
                       <span class="req-lbl">*</span>
 
                     </label>
-                    <input type="text" disabled class="form-control floating" id="last_name" name="last_name" value="{{referral.last_name}}" />
+                    <input type="text" disabled class="form-control floating" id="last_name" name="last_name" value="{{referral.last_name}}"
+                    />
                   </div>
                 </div>
               </div>
               <div class="col-md-12" id="org_referral" {{#if_eq referral.referral_type "I"}} style="display:none;" {{/if_eq}}>
                 <div class="form-group form-focus">
                   <label class="control-label">Organization Name</label>
-                  <input type="text" disabled class="form-control floating" id="org_name" name="org_name" value="{{referral.organization_name}}" />
+                  <input type="text" disabled class="form-control floating" id="org_name" name="org_name" value="{{referral.organization_name}}"
+                  />
                 </div>
               </div>
               <div class="col-md-6">
@@ -113,8 +112,7 @@
                     <span class="req-lbl">*</span>
 
                   </label>
-                  <input type="text" disabled class="form-control floating" id="mobile_no" name="mobile_no" value="{{referral.mobile}}"
-                  />
+                  <input type="text" disabled class="form-control floating" id="mobile_no" name="mobile_no" value="{{referral.mobile}}" />
                 </div>
               </div>
               <div class="col-md-6">
@@ -122,9 +120,10 @@
                   <label class="control-label">Refferred By: </label>
                   <div class="form-inline m-b-15">
                     <div class="form-group m-r-5">
-                      <label class="input-group" >
+                      <label class="input-group">
                         <span class="input-group-addon">
-                          <input type="radio" id="referral_type" name="ref_type" value="T" {{#if_eq referral.referred_type "T"}} checked {{/if_eq}} disabled/>
+                          <input type="radio" id="referral_type" name="ref_type" value="T" {{#if_eq referral.referred_type "T"}} checked {{/if_eq}}
+                            disabled/>
                         </span>
                         <div class="form-control form-control-static">Target</div>
                         <span class="glyphicon form-control-feedback "></span>
@@ -133,7 +132,8 @@
                     <div class="form-group ">
                       <label class="input-group">
                         <span class="input-group-addon">
-                          <input type="radio" id="organization_type" name="ref_type" value="C" {{#if_eq referral.referred_type "C"}} checked {{/if_eq}} disabled/>
+                          <input type="radio" id="organization_type" name="ref_type" value="C" {{#if_eq referral.referred_type "C"}} checked {{/if_eq}}
+                            disabled/>
                         </span>
                         <div class="form-control form-control-static">Client</div>
                         <span class="glyphicon form-control-feedback "></span>
@@ -149,7 +149,8 @@
                   <select disabled class="form-control floating" id="target_id" name="referred_id_t" class="select form-control floating">
                     <option value="0" {{#if_eq referral.target_id "0"}} selected {{/if_eq}}>Select Target</option>
                     {{#each target}} {{#if_eq target_type "I"}}
-                    <option value="{{this.id}}" {{#if_eq this.id ../referral.target_id}} selected {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+                    <option value="{{this.id}}" {{#if_eq this.id ../referral.target_id}} selected {{/if_eq}}>{{this.first_name}}
+                      {{this.last_name}}</option>
                     {{/if_eq}} {{#if_eq target_type "O"}}
                     <option value="{{this.id}}" {{#if_eq this.id ../referral.target_id}} selected {{/if_eq}}>{{this.organization_name}}</option>
                     {{/if_eq}} {{/each}}
@@ -161,7 +162,8 @@
                   <select disabled class="form-control floating" id="client_id" name="referred_id_c" class="select form-control floating">
                     <option value="0" {{#if_eq referral.client_id "0"}} selected {{/if_eq}}>Select Client</option>
                     {{#each client}} {{#if_eq client_type "I"}}
-                    <option value="{{this.id}}" {{#if_eq this.id ../referral.client_id}} selected {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+                    <option value="{{this.id}}" {{#if_eq this.id ../referral.client_id}} selected {{/if_eq}}>{{this.first_name}}
+                      {{this.last_name}}</option>
                     {{/if_eq}} {{#if_eq client_type "O"}}
                     <option value="{{this.id}}" {{#if_eq this.id ../referral.client_id}} selected {{/if_eq}}>{{this.organization_name}}</option>
                     {{/if_eq}} {{/each}}
@@ -182,12 +184,24 @@
               </div>
               <div class="col-md-5">
                 <div class="form-group form-focus">
-                  <label class="control-label">Estimated revenue
+                  <label class="control-label">Estimated annual revenue
                     <span class="req-lbl">*</span>
                   </label>
                   <input class="form-control floating" type="text" id="estimated_revenue" disabled name="estimated_revenue" value="{{referral.estimated_revenue}}">
                 </div>
               </div>
+
+              <div class="col-md-6">
+                <div class="form-group form-focus">
+                  <label class="control-label">Closing Date<span class="req-lbl">*</span> </label>
+                  <div class="cal-icon">
+                    <input class="form-control floating datetimepicker" type="text" id="revenueclosingDate" name="revenueclosingDate" value="{{dateFormat referral.revenueclosingDate "
+                      DD-MM-YYYY "}}" disabled>
+                  </div>
+                </div>
+              </div>
+
+
               <div class="col-md-1">
                 <button type="button" id="expandBtn" class="btn btn-primary btn-lg" title="View All">
                   <i class="fa fa-arrow-down"></i>
@@ -293,7 +307,8 @@
                 <select id="attr_id" name="attr_id" disabled class="form-control floating">
                   <option value="">Select Attorney</option>
                   {{#each attorney}}
-                  <option value="{{this.id}}" {{#if_eq this.id ../referral.attorney_id }} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+                  <option value="{{this.id}}" {{#if_eq this.id ../referral.attorney_id }} selected="selected" {{/if_eq}}>{{this.first_name}}
+                    {{this.last_name}}</option>
                   {{/each}}
                 </select>
               </div>
@@ -303,9 +318,9 @@
 
         <div class="card-box" id="m_s_contactInformation" style="display:none;">
           <h3 class="card-title">Contact Information</h3>
-          <div id="masterContactPlus" >
-          {{#each contactDetails}}
-            <div class="contact-information contactDetailsRemove" >
+          <div id="masterContactPlus">
+            {{#each contactDetails}}
+            <div class="contact-information contactDetailsRemove">
               <div class="contact-margin">
                 <div class="row">
                   <div class="col-md-6">
@@ -314,13 +329,15 @@
                         <span class="req-lbl">*</span>
 
                       </label>
-                      <input type="text" class="form-control floating" id="contactDetailsFirstName" name="contactDetailsFirstName[]" value="{{this.first_name}}" disabled/>
+                      <input type="text" class="form-control floating" id="contactDetailsFirstName" name="contactDetailsFirstName[]" value="{{this.first_name}}"
+                        disabled/>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group form-focus">
                       <label class="control-label">Last Name</label>
-                      <input type="text" class="form-control floating" id="contactDetailsSecondName" name="contactDetailsSecondName[]" value="{{this.last_name}}" disabled/>
+                      <input type="text" class="form-control floating" id="contactDetailsSecondName" name="contactDetailsSecondName[]" value="{{this.last_name}}"
+                        disabled/>
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -332,8 +349,8 @@
                       <select class="select form-control floating" id="contactDetailsGender" name="contactDetailsGender[]" disabled>
                         <option value="">Select Gender</option>
                         <option value="M" {{#if_eq this.gender "M"}} selected {{/if_eq}}>Male</option>
-                        <option value="F"{{#if_eq this.gender "F"}} selected {{/if_eq}} >Female</option>
-                        <option value="O" {{#if_eq this.gender "O"}} selected {{/if_eq}} >Others</option>
+                        <option value="F" {{#if_eq this.gender "F"}} selected {{/if_eq}}>Female</option>
+                        <option value="O" {{#if_eq this.gender "O"}} selected {{/if_eq}}>Others</option>
                       </select>
                     </div>
                   </div>
@@ -343,7 +360,8 @@
                         <span class="req-lbl">*</span>
 
                       </label>
-                      <input type="text" class="form-control floating" id="contactDetailsEmail" name="contactDetailsEmail[]" value="{{this.email}}" disabled/>
+                      <input type="text" class="form-control floating" id="contactDetailsEmail" name="contactDetailsEmail[]" value="{{this.email}}"
+                        disabled/>
                       <span id="uniqueEmail" style="color: red"></span>
                     </div>
                   </div>
@@ -354,14 +372,14 @@
 
                       </label>
                       <input type="text" class="form-control floating number_validator" id="contactDetailsPhone_no" name="contactDetailsPhone_no[]"
-                      maxlength="50" value={{this.phone_no}} disabled/>
+                        maxlength="50" value={{this.phone_no}} disabled/>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group form-focus">
                       <label class="control-label">Fax</label>
-                      <input type="text" class="form-control floating number_validator" id="contactDetailsFax" name="contactDetailsFax[]" maxlength="50" value="{{this.fax}}"
-                      disabled/>
+                      <input type="text" class="form-control floating number_validator" id="contactDetailsFax" name="contactDetailsFax[]" maxlength="50"
+                        value="{{this.fax}}" disabled/>
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -370,13 +388,13 @@
                         <span class="req-lbl">*</span>
                       </label>
                       <input type="text" class="form-control floating number_validator" id="contactDetailsMobile_no" name="contactDetailsMobile_no[]"
-                      maxlength="50" value="{{this.mobile_no}}" disabled/>
+                        maxlength="50" value="{{this.mobile_no}}" disabled/>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          {{/each}}
+            {{/each}}
           </div>
         </div>
 
@@ -434,7 +452,8 @@
             <div class="col-md-6">
               <div class="form-group form-focus">
                 <label class="control-label">Twitter</label>
-                <input type="text" class="form-control floating url_selector" id="twitter" name="twitter" disabled value="{{referral.twitter}}" />
+                <input type="text" class="form-control floating url_selector" id="twitter" name="twitter" disabled value="{{referral.twitter}}"
+                />
               </div>
             </div>
             <div class="col-md-6">
@@ -454,13 +473,15 @@
             <div class="col-md-6">
               <div class="form-group form-focus">
                 <label class="control-label">Google </label>
-                <input type="text" class="form-control floating url_selector" id="google" name="google" disabled value="{{referral.google}}" />
+                <input type="text" class="form-control floating url_selector" id="google" name="google" disabled value="{{referral.google}}"
+                />
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group form-focus">
                 <label class="control-label">Youtube </label>
-                <input type="text" class="form-control floating url_selector" id="youtube" name="youtube" disabled value="{{referral.youtube}}" />
+                <input type="text" class="form-control floating url_selector" id="youtube" name="youtube" disabled value="{{referral.youtube}}"
+                />
               </div>
             </div>
             <div class="col-md-6">
@@ -525,8 +546,8 @@
                   <td>{{dateFormat this.activity.activity_to_date "DD-MM-YYYY"}}</td>
                   <td>{{this.activity.remarks}}</td>
                   <td> {{#if_eq this.activity.activity_status '0'}} NEW ACTIVITY - CREATED {{/if_eq}} {{#if_eq this.activity.activity_status
-                    '1'}} PENDING APPROVAL - IN-PROGRESS {{/if_eq}} {{#if_eq this.activity.activity_status '2'}} APPROVED - PROCEED
-                    {{/if_eq}} {{#if_eq this.activity.activity_status '3'}} NOT APPROVED - DISCARD ACTIVITY {{/if_eq}}
+                    '1'}} PENDING APPROVAL - IN-PROGRESS {{/if_eq}} {{#if_eq this.activity.activity_status '2'}} APPROVED
+                    - PROCEED {{/if_eq}} {{#if_eq this.activity.activity_status '3'}} NOT APPROVED - DISCARD ACTIVITY {{/if_eq}}
                   </td>
                 </tr>
                 {{/each}}
@@ -554,9 +575,9 @@
     localStorage.setItem("url", window.location.pathname);
   });
   $(document).on('click', '#expandBtn', function () {
-      $("#expandToggle").toggle();
-      $("i", this).toggleClass("fa fa-arrow-up fa fa-arrow-down");
-    });
+    $("#expandToggle").toggle();
+    $("i", this).toggleClass("fa fa-arrow-up fa fa-arrow-down");
+  });
   $(document).ready(function () {
     $("#frmEditReferral").validate({
       rules: {
@@ -642,19 +663,16 @@
   });
 
   //hide show type
-		let _msType = $('#_contactInformation').val();
-		if (_msType==='O') {
-			$('#org_type').show();
-			$('#indivisual_type').hide();
-			$('#m_s_contactInformation').show();
-		} else {
-			$('#org_type').hide();
-			$('#indivisual_type').show();
-			$('#m_s_contactInformation').hide();
-		}
+  let _msType = $('#_contactInformation').val();
+  if (_msType === 'O') {
+    $('#org_type').show();
+    $('#indivisual_type').hide();
+    $('#m_s_contactInformation').show();
+  } else {
+    $('#org_type').hide();
+    $('#indivisual_type').show();
+    $('#m_s_contactInformation').hide();
+  }
 
 
-</script>
-
-
- {{/content}}
+</script> {{/content}}

@@ -114,6 +114,9 @@ module.exports = {
       },
       organization_code: {
         type: Sequelize.STRING
+      },
+      revenueclosingDate: {
+        type: Sequelize.STRING
       }
     });
   },
