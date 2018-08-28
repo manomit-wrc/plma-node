@@ -36,7 +36,8 @@ module.exports = (sequelize, DataTypes) => {
     master_contact_type:DataTypes.STRING,
     estimated_revenue :DataTypes.STRING,
     organization_name: DataTypes.STRING,
-    organization_code: DataTypes.STRING
+    organization_code: DataTypes.STRING,
+    revenueclosingDate: DataTypes.STRING
 
   }, {});
   master_contact.associate = function(models) {

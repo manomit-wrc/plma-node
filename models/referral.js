@@ -36,7 +36,8 @@ module.exports = (sequelize, DataTypes) => {
     firm_id: DataTypes.INTEGER,
     user_id: DataTypes.INTEGER,
     remarks: DataTypes.TEXT,
-    status: DataTypes.INTEGER
+    status: DataTypes.INTEGER,
+    revenueclosingDate:DataTypes.STRING
   }, {});
   referral.associate = function(models) {
     // associations can be defined here

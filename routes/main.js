@@ -466,14 +466,11 @@ router.post('/client/findCityByState', auth, firmAttrAuth, csrfProtection, (req,
 
 router.post('/client/findPinByCity', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	city.findById(req.body.city_id).then(row => {
-		// console.log(row.name);
 		Zipcode.findAll({
 			where: {
 				city_name: row.name
 			}
 		}).then(pin => {
-			console.log(JSON.stringify(pin, undefined, 2));
-			// res.send(city);
 			res.json({
 				pin: pin
 			});
@@ -779,7 +776,6 @@ router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 });
 
 router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req, res) => {
-	// contact information
 	var clientDetails = [];
 	var first_name = req.body.clientDetailsFirstName;
 	var last_name = req.body.clientDetailsSecondName;
@@ -788,6 +784,8 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 	var phone_no = req.body.clientDetailsPhone_no;
 	var fax = req.body.clientDetailsFax;
 	var mobile_no = req.body.clientDetailsMobile_no;
+
+	const closingDate = req.body.revenueclosingDate ? req.body.revenueclosingDate.split("-") : '';
 
     let length = first_name.length;
 	for (let i=0; i< length; i++) {
@@ -863,7 +861,8 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				website_url: req.body.website,
 				remarks: req.body.remarks,
 				current_revenue: removePhoneMask(req.body.current_revenue),
-				estimated_revenue: removePhoneMask(req.body.estimated_revenue)
+				estimated_revenue: removePhoneMask(req.body.estimated_revenue),
+				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null
 			});
 
 			for (let j=0; j< clientDetails.length; j++) {
@@ -923,7 +922,8 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				website_url: req.body.website,
 				remarks: req.body.remarks,
 				current_revenue: removePhoneMask(req.body.current_revenue),
-				estimated_revenue: removePhoneMask(req.body.estimated_revenue)
+				estimated_revenue: removePhoneMask(req.body.estimated_revenue),
+				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null
 			});
 			req.flash('success-message', 'Client Added Successfully');
 			res.redirect('/client');
@@ -944,6 +944,8 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 	var phone_no = req.body.contactDetailsPhone_no;
 	var fax = req.body.contactDetailsFax;
 	var mobile_no = req.body.contactDetailsMobile_no;
+
+	const closingDate = req.body.revenueclosingDate ? req.body.revenueclosingDate.split("-") : '';
 
 	let length = first_name.length;
 	for (let i=0; i< length; i++) {
@@ -1018,6 +1020,7 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 			website_url: req.body.website,
 			current_revenue: removePhoneMask(req.body.current_revenue),
 			estimated_revenue: removePhoneMask(req.body.estimated_revenue),
+			revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null 
 
 		}, {
 			where: {
@@ -1084,7 +1087,6 @@ router.post('/client/findPinByCity', auth, firmAttrAuth, csrfProtection, (req, r
 				city_name: row.name
 			}
 		}).then(pin => {
-			// console.log(JSON.stringify(pin, undefined, 2));
 			res.json({
 				pin: pin
 			});
@@ -1105,7 +1107,7 @@ router.get('/import/csv', auth, csrfProtection, (req, res) => {
 	csv
 		.fromPath("./public/states (1).csv")
 		.on("data", function (data) {
-			console.log(data[2]);
+			// console.log(data[2]);
 			state.create({
 				id: data[0],
 				code: data[1],

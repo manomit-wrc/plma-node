@@ -14,7 +14,7 @@
         {{#if (or (eq editdata.activity_status "0")(eq editdata.activity_status "3"))}}
         <a href="/activity/edit/{{editdata.id}}" class="btn btn-primary pull-right rounded"><i class="fa fa-edit"></i> Edit Activity</a>
         {{/if}}
-        <button class="btn btn-primary pull-right rounded m-r-5" id="backActivityByn"><i class="fa fa-arrow-left"></i> Back</button>
+        <a href="javascript:history.back()" class="btn btn-primary pull-right rounded m-r-5"><i class="fa fa-arrow-left"></i> Back</a>
       </div>
     </div>
     <form name="updateActivityForm" id="updateActivityForm" action="/activity/update/{{editdata.id}}" method="POST">
@@ -107,13 +107,13 @@
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-6">
-                <div class="form-group form-focus">
+                <div class="form-group form-focus select-focus">
                   <label class="control-label">Activity Name</label>
                   <input class="form-control floating" type="text" id="activity_name" name="activity_name" value="{{editdata.activity_name}}" disabled>
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="form-group form-focus">
+                <div class="form-group form-focus select-focus">
                   <label class="control-label">Activity Reason</label>
                   <input class="form-control floating" type="text" id="activity_reason" name="activity_reason" value="{{editdata.activity_reason}}" disabled>
                 </div>
@@ -137,6 +137,7 @@
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">Section <span class="req-lbl">*</span> </label>
                   <select class="form-control floating" id="section" name="section" disabled>
+                    <option value="0">Select Section</option>
                     {{#each section}}
                       <option value="{{this.section.id}}" {{#if_eq this.id ../editdata.section_id}} selected="selected" {{/if_eq}}>{{this.section.name}}</option>
                     {{/each}}
@@ -154,9 +155,9 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group form-focus select-focus">
-                  <label class="control-label">Activity Goal</label>
+                  <label class="control-label">Tactical Marketing Goals</label>
                   <select id="activity_goal" name="activity_goal" class="form-control floating" disabled>
-                    <option value="">Select Activity Goal</option>
+                    <option value="">Select Tactical Marketing Goals</option>
                     {{#each activity_goal}}
                       <option value="{{this.id}}" {{#if_eq this.id ../editdata.activity_goal_id}} selected="selected" {{/if_eq}}>{{this.activity_goal}}</option>
                     {{/each}}
@@ -175,7 +176,7 @@
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="form-group form-focus">
+                <div class="form-group form-focus select-focus">
                   <label class="control-label">Creation Date</label>
                   <div class="cal-icon">
                     <input class="form-control floating datetimepicker" type="text" id="activity_creation_date" name="activity_creation_date"
@@ -187,7 +188,7 @@
                 <div class="form-group form-focus select-focus"></div>
               </div>
               <div class="col-md-6">
-                <div class="form-group form-focus">
+                <div class="form-group form-focus select-focus">
                   <label class="control-label">From Date</label>
                   <div class="cal-icon">
                     <input class="form-control floating datetimepicker" type="text" id="activity_from_date" name="activity_from_date" value="{{dateFormat editdata.activity_from_date "DD-MM-YYYY"}}" disabled>
@@ -195,7 +196,7 @@
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="form-group form-focus">
+                <div class="form-group form-focus select-focus">
                   <label class="control-label">To Date</label>
                   <div class="cal-icon">
                     <input class="form-control floating datetimepicker" type="text" id="activity_to_date" name="activity_to_date" value="{{dateFormat editdata.activity_to_date "DD-MM-YYYY"}}" disabled>
@@ -203,22 +204,16 @@
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="form-group form-focus">
+                <div class="form-group form-focus select-focus">
                   <label class="control-label">Remarks</label>
                   <textarea class="form-control floating" id="remarks" name="remarks" rows="5" disabled>{{editdata.remarks}}</textarea>
                 </div>
               </div>
-              <div class="col-md-5">
-                <div class="form-group form-focus select-focus">
-                  <label class="control-label">Attachment</label>
-                  <input class="form-control floating" type="file" id="activity_attachment" name="activity_attachment" style="height: auto;" disabled>
-                </div>
-              </div>
-              <div class="col-md-1">
+              <div class="col-md-6 pull-right">
                 {{#if editdata.attachment_field}}
                 <div class="download-btn">
                   <div class="form-group form-focus">
-                    <a href="/activity/{{editdata.attachment_field}}" download class="btn btn-primary btn-lg">
+                    <a href="/activity/{{editdata.attachment_field}}" download class="btn btn-primary btn-lg" title="View Attachment">
                       <i class="fa fa-download" aria-hidden="true"></i>
                     </a>
                   </div>
@@ -240,7 +235,7 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="table-responsive">
-                  <table class="table table-striped custom-table datatable" id="searchData">
+                  <table class="table table-striped custom-table datatable view-activity" id="searchData">
                     <thead>
                       <tr>
                         <th>Attorney Name</th>
