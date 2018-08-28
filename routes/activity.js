@@ -435,7 +435,7 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
     const budgetList = await Budget.findAll({});
     var budgetArr = [];
     var level_type = '';
-    const all_activity_client = [];
+    var all_activity_client = [];
 
     if (editdata[0].target != 'G') {
         all_activity_client = await Activity_to_user_type.findAll({
