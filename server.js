@@ -28,6 +28,7 @@ const attorney = require('./routes/attorney');
 const budget_report = require('./routes/budget_report');
 const forgot_password = require('./routes/forgot_password');
 const activity_approvals = require('./routes/activity-approval');
+const strategic_goal = require('./routes/strategic_goal');
 
 const allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -340,6 +341,9 @@ const hbs = exphbs.create({
         get_total_activity: function (array) {
             return array.length;
         },
+        get_activity_goal_total: function (array) {
+            return array.length;
+        },
         eq: function (v1, v2) {
           return v1 == v2;
         },
@@ -412,6 +416,7 @@ app.use(attorney);
 app.use(budget_report);
 app.use(forgot_password);
 app.use(activity_approvals);
+app.use(strategic_goal);
 
 /********** End **********/
 app.listen(port, () => console.log(`Server listening to port ${port}`));

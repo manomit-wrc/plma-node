@@ -1046,7 +1046,7 @@ table.dataTable {
 	height: auto;
 	line-height: 50px;
 	min-height: 50px;
-	padding: 0 15px;
+	padding: 0 10px;
 	/*white-space: nowrap;*/
 }
 
@@ -1056,7 +1056,7 @@ table.dataTable {
 
 .sidebar-menu li a .fa {
 	font-size: 18px;
-	width: 24px;
+	width: 20px;
 }
 
 .sidebar-menu li a>.badge {
@@ -6458,6 +6458,16 @@ select.gender {
 		padding: 10px 12px !important;
 	}
 
+	.select-attorney .bootstrap-select .btn.btn-default:hover {
+		background: transparent none repeat scroll 0 0;
+	}
+
+	.select-attorney .bootstrap-select .btn-default:focus {
+		background: transparent none repeat scroll 0 0;
+	}
+
+
+
 	/*Ends on css 27-08-2018*/
 
 
@@ -6701,7 +6711,7 @@ select.gender {
 		}
 		}*/
 
-		@media (max-width: 1258px) {
+		@media (max-width: 1374px) {
 			#mainTable .btn.btn-sm, .custom-table .btn.btn-sm {
 				padding: 5px;
 			}

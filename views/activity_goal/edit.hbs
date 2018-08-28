@@ -31,7 +31,7 @@
             <div class="row">
                <div class="col-md-12">
                      <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                            <div class="form-group form-focus">
                               <label class="control-label">Tactical Marketing Goals
                                 <span class="req-lbl">*</span>
@@ -39,6 +39,17 @@
                               </label>
                               <textarea name="activity_goal" id="activity_goal" class="form-control floating">{{edit_goals.activity_goal}}</textarea>
                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-focus select-focus select-attorney">
+                                <label class="control-label">Strategic Goals</label>
+                                <select class="form-control floating selectpicker" id="strategic_goal" name="strategic_goal" data-show-subtext="true" data-live-search="true">
+                                    <option value="">Select Strategic Goals</option>
+                                    {{#each stragic_goal}}
+                                    <option value="{{this.id}}" {{#if_eq this.id ../edit_goals.strategic_goal_id}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group form-focus select-focus select-attorney">
@@ -125,6 +136,9 @@
                     category: {
                         required: true
                     },
+                    strategic_goal: {
+                        required: true
+                    },
                     from_date: {
                         required: true
                     },
@@ -141,6 +155,9 @@
                     },
                     category: {
                         required: "Please select category"
+                    },
+                    strategic_goal: {
+                        required: "Please select Strategic Goal"
                     },
                     from_date: {
                         required: "From date can't be blank"
