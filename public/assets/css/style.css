@@ -1403,7 +1403,7 @@ table.dataTable {
 	color: #777;
 	display: inline-block;
 	float: left;
-	font-size: 30px;
+	font-size: 0;
 	height: 60px;
 	line-height: 60px;
 	margin-right: 10px;
@@ -6433,12 +6433,12 @@ select.gender {
 
 	
 
-	.custom-table tr td:nth-child(2) a {
+	.custom-table tr td:nth-child(2) a, .custom-table tr td:nth-child(4) a, .custom-table tr td:nth-child(5) a, .custom-table tr td:nth-child(6) a {
 		color: #009ce7;
 		text-decoration: none;
 	}
 
-	.custom-table tr td:nth-child(2) a:hover {
+	.custom-table tr td:nth-child(2) a:hover, .custom-table tr td:nth-child(4) a:hover, .custom-table tr td:nth-child(5) a:hover, .custom-table tr td:nth-child(6) a:hover {
 		color: #FF881F;
 		text-decoration: none;
 	}
@@ -6471,6 +6471,10 @@ select.gender {
 
 		.select-attorney .bootstrap-select .btn-default:focus {
 			background: transparent none repeat scroll 0 0;
+		}
+
+		.custom-table.mast thead th:nth-child(1) {
+			width: 6% !important;
 		}
 
 
