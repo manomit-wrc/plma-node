@@ -540,6 +540,8 @@ router.get('/client', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 		whereCondition.attorney_id = req.user.id;
 	}
 
+	console.log('whereCondition',whereCondition);
+	
 	const clientDetails = await client.findAll({
 		where: whereCondition
 	});

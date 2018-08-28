@@ -105,8 +105,10 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 
     const client = await Client.findAll({
         where: {
-            'client_type': "I",
+            // 'client_type': "I",
+            'firm_id': req.user.firm_id,
             'attorney_id': req.user.id
+            // firm_id: 5, attorney_id: 84
         }
     });
 

@@ -185,6 +185,8 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 	var fax = req.body.contactDetailsFax;
 	var mobile_no = req.body.contactDetailsMobile_no;
 
+	const closingDate = req.body.revenueclosingDate ? req.body.revenueclosingDate.split("-") : '';
+
 	let length = first_name.length;
 	for (let i=0; i< length; i++) {
 		if (first_name[i]!=="") {
@@ -241,7 +243,8 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 				attorney_id: req.body.attorney_id,
 				facebook: req.body.facebook_url,
 				master_contact_type: req.body.masterContact_type,
-				estimated_revenue: removePhoneMask(req.body.estimated_revenue)
+				estimated_revenue: removePhoneMask(req.body.estimated_revenue),
+				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null, 
 			});
 		} else {
 			const insertData = await Contact.create({
@@ -277,6 +280,7 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 				attorney_id: req.body.attorney_id,
 				facebook: req.body.facebook_url,
 				master_contact_type: req.body.masterContact_type,
+				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null, 
 			});
 
 			  for (let j=0; j< contactDetails.length; j++) {
@@ -425,6 +429,8 @@ router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, asyn
 	var fax = req.body.contactDetailsFax;
 	var mobile_no = req.body.contactDetailsMobile_no;
 
+	const closingDate = req.body.revenueclosingDate ? req.body.revenueclosingDate.split("-") : '';
+	
 	let length = first_name.length;
 	for (let i=0; i< length; i++) {
 		if (first_name[i]!=="") {
@@ -476,6 +482,7 @@ router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, asyn
 			attorney_id: req.body.attorney_id,
 			facebook: req.body.facebook_url,
 			master_contact_type: req.body.masterContact_type,
+			revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null,
 		}, {
 			where: { id: req.params['id'] }
 		});
@@ -516,6 +523,7 @@ router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, asyn
 			attorney_id: req.body.attorney_id,
 			facebook: req.body.facebook_url,
 			master_contact_type: req.body.masterContact_type,
+			revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null,
 		}, {
 			where: { id: req.params['id'] }
 		});
