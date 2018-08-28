@@ -1046,7 +1046,7 @@ table.dataTable {
 	height: auto;
 	line-height: 50px;
 	min-height: 50px;
-	padding: 0 15px;
+	padding: 0 10px;
 	/*white-space: nowrap;*/
 }
 
@@ -1056,7 +1056,7 @@ table.dataTable {
 
 .sidebar-menu li a .fa {
 	font-size: 18px;
-	width: 24px;
+	width: 20px;
 }
 
 .sidebar-menu li a>.badge {

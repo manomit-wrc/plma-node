@@ -6,6 +6,7 @@ const Firm = require('../models').firm;
 const ActivityGoal = require('../models').activity_goal;
 const Activity = require('../models').activity;
 const ActivityBudget = require('../models').activity_budget;
+const StrategicGoal = require('../models').strategic_goal;
 var csrfProtection = csrf({ cookie: true });
 const router = express.Router();
 
@@ -52,8 +53,17 @@ router.get('/activity-goal', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	});
 });
 
-router.get('/activity-goal/add', auth, firmAttrAuth, csrfProtection, (req, res) => {
-	res.render('activity_goal/add', { layout: 'dashboard', csrfToken: req.csrfToken() });
+router.get('/activity-goal/add', auth, firmAttrAuth, csrfProtection, async(req, res) => {
+	const stragic_goal = await StrategicGoal.findAll({
+		where:{
+			firm_id: req.user.firm_id
+		}
+	})
+	res.render('activity_goal/add', {
+		layout: 'dashboard',
+		csrfToken: req.csrfToken(),
+		stragic_goal
+	});
 });
 
 router.post('/activity-goal/add', auth, firmAttrAuth, csrfProtection, (req, res) => {
@@ -63,6 +73,7 @@ router.post('/activity-goal/add', auth, firmAttrAuth, csrfProtection, (req, res)
 		firm_id: req.user.firm_id,
 		user_id: req.user.id,
 		activity_goal: req.body.activity_goal,
+		strategic_goal_id: req.body.strategic_goal,
 		category: req.body.category,
 		from_date: formatFromDate ? formatFromDate[2] + "-" + formatFromDate[1] + "-" + formatFromDate[0] : null,
 		to_date: formatToDate ? formatToDate[2] + "-" + formatToDate[1] + "-" + formatToDate[0] : null,
@@ -73,16 +84,36 @@ router.post('/activity-goal/add', auth, firmAttrAuth, csrfProtection, (req, res)
 	});
 });
 
-router.get('/activity-goal/edit/:id', auth, firmAttrAuth, csrfProtection, (req, res) => {
-	ActivityGoal.findById(req.params['id']).then(result => {
-		res.render('activity_goal/edit', { layout: 'dashboard', csrfToken: req.csrfToken(), edit_goals: result })
-	});
+router.get('/activity-goal/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, res) => {
+	const edit_goals = await ActivityGoal.findById(req.params['id']);
+	const stragic_goal = await StrategicGoal.findAll({
+		where: {
+			firm_id: req.user.firm_id
+		}
+	})
+	res.render('activity_goal/edit', {
+		layout: 'dashboard',
+		csrfToken: req.csrfToken(),
+		edit_goals,
+		stragic_goal
+	})
+
 });
 
-router.get('/activity-goal/view/:id', auth, firmAttrAuth, csrfProtection, (req, res) => {
-	ActivityGoal.findById(req.params['id']).then(result => {
-		res.render('activity_goal/view', { layout: 'dashboard', csrfToken: req.csrfToken(), edit_goals: result })
-	});
+router.get('/activity-goal/view/:id', auth, firmAttrAuth, csrfProtection, async(req, res) => {
+	const edit_goals = await ActivityGoal.findById(req.params['id']);
+	const stragic_goal = await StrategicGoal.findAll({
+		where: {
+			firm_id: req.user.firm_id
+		}
+	})
+		res.render('activity_goal/view', {
+			layout: 'dashboard',
+			csrfToken: req.csrfToken(),
+			edit_goals,
+			stragic_goal
+		})
+
 });
 
 router.post('/activity-goal/edit/:id', auth, firmAttrAuth, csrfProtection, (req, res) => {
@@ -91,6 +122,7 @@ router.post('/activity-goal/edit/:id', auth, firmAttrAuth, csrfProtection, (req,
 	ActivityGoal.update({
 		activity_goal: req.body.activity_goal,
 		category: req.body.category,
+		strategic_goal_id: req.body.strategic_goal,
 		from_date: formatFromDate1 ? formatFromDate1[2] + "-" + formatFromDate1[1] + "-" + formatFromDate1[0] : null,
 		to_date: formatToDate1 ? formatToDate1[2] + "-" + formatToDate1[1] + "-" + formatToDate1[0] : null,
 		remarks: req.body.remarks
