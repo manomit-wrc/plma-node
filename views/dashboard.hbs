@@ -591,6 +591,9 @@
                     labels: ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
                   },
                   scaleY: {
+                    "progression": "log",
+                    "log-base": 10,
+                    "thousands-separator": ",",
                     label: {
                       text: "Total No. of activities and budgets"
                     }
@@ -598,12 +601,15 @@
                   guide: {
                     lineStyle: 'dotted'
                   },
+                  "scale": {
+                    "size-factor":1
+                  },
                   series: [
                     {
                       values: response.total_activity,
                       text: 'Total Activities',
                       "line-color": "#a5a5a5",
-                      "background-color": "#c2c2c2",
+                      "background-color": "#fffffff",
                       "marker": {
                         "background-color": "#a5a5a5",
                         "size": 6,
@@ -619,6 +625,9 @@
                     },
                     {
                       values: response.total_budget,
+                      "tooltip": {
+                        "text": "$ %vt"
+                      },
                       text: 'Total Budgets ($)',
                       "line-color": "#ffa500",
                       "background-color": "#ff881f",
