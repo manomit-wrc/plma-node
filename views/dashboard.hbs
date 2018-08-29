@@ -560,6 +560,8 @@
     {{/if_eq}}
   </div>
 </div>
+
+
 {{/if_eq}} {{#content "script" mode="append"}}
 <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
@@ -791,45 +793,9 @@
 
               }
             });
+          
+            
           });
           
 
-        var data = [
-			  { y: '2014', a: 50, b: 90},
-			  { y: '2015', a: 65,  b: 75},
-			  { y: '2016', a: 50,  b: 50},
-			  { y: '2017', a: 75,  b: 60}
-			],
-			config = {
-			  data: data,
-			  xkey: 'y',
-			  ykeys: ['a', 'b'],
-			  labels: ['Total Income', 'Total Outcome'],
-			  fillOpacity: 0.6,
-			  hideHover: 'auto',
-			  behaveLikeLine: true,
-			  resize: true,
-			  pointFillColors:['#ffffff'],
-			  pointStrokeColors: ['black'],
-				gridLineColor: '#eef0f2',
-			  lineColors:['gray','orange']
-		  };
-		config.element = 'area-chart';
-		Morris.Area(config);
-		config.element = 'line-chart';
-		Morris.Line(config);
-		config.element = 'bar-chart';
-		Morris.Bar(config);
-		config.element = 'stacked';
-		config.stacked = true;
-		Morris.Bar(config);
-		Morris.Donut({
-		  element: 'pie-chart',
-		  data: [
-			{label: "Employees", value: 30},
-			{label: "Clients", value: 15},
-			{label: "Projects", value: 45},
-			{label: "Tasks", value: 10}
-		  ]
-		});
 </script> {{/content}}

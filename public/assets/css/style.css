@@ -1016,7 +1016,7 @@ table.dataTable {
 .sidebar {
 	top: 60px;
 	width: 230px;
-	z-index: 1041;
+	z-index: 1050;
 	background-color: #fff;
 	bottom: 0;
 	margin-top: 0px;
@@ -6077,6 +6077,11 @@ i.fa.fa-eye.m-r-5 {
 .site_dashboard_custom_del:nth-child(n+6) {
 	display: none;
 
+}
+
+.backdrop-in {
+	background-color: #fff !important;
+	opacity: 0.9 !important;
 }
 
 
