@@ -6112,6 +6112,15 @@ i.fa.fa-eye.m-r-5 {
 	font-size: 18px;
 }
 
+.error404 {
+	color: #d6b161;
+	text-shadow: rgba(113, 115, 114, 1) 5px 1px;
+	font-size: 100px;
+	font-weight: 700;
+	line-height: 1;
+	margin: 30px 0;
+}
+
 /* loader css ends */
 
 /*------------------------------------------------------------------

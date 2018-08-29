@@ -163,6 +163,12 @@
   </a>
   <script>
     $(document).ready(function () {
+      $('#confirm_password').on("cut copy paste", function (e) {
+        e.preventDefault();
+      });
+      $('#new_password').on("cut copy paste", function (e) {
+        e.preventDefault();
+      });
         $('#new_password').keyup(function () {
         $('#result').html(checkStrength($('#new_password').val()))
       })
