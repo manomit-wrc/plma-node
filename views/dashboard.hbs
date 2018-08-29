@@ -624,6 +624,24 @@
                       }
                     },
                     {
+                      "values": response.total_hour,
+                      text: 'Total Hour',
+                      "line-color": "#50a069",
+                      "background-color": "#50a069",
+                      "marker": {
+                        "background-color": "#50a069",
+                        "size": 6,
+                        "borderColor": "black",
+                        "borderWidth": 1
+                      },
+                      "hover-marker": {
+                        "background-color": "#50a069",
+                        "size": 8,
+                        "borderColor": "black",
+                        "borderWidth": 1
+                      }
+                    },
+                    {
                       values: response.total_budget,
                       "tooltip": {
                         "text": "$ %vt"
@@ -658,96 +676,122 @@
 
               }
             });
-          });
 
-            var myConfig1 = {
-                "type": "line",
-                "plotarea": {
-                  "adjust-layout": true
-                },
-                "scale-x": {
-                  "label": {
-                    "text": "Above is an example of a category scale",
 
+            /*=============================== Chart 2 =============================*/
+
+            $.ajax({
+              type: "GET",
+              url: "/get-chart-two-activity-count-value",
+              success: function (response) {
+                var myConfig1 = {
+                  "type": "line",
+                  "plotarea": {
+                    "adjust-layout": true
                   },
-                  "labels": [
-                    "2014",
-                    "2015",
-                    "2016",
-                    "2017",
-                    "2018",
-                    "2019",
-                    "2020",
-                    "2021"
+                  "scale-x": {
+                    "label": {
+                      "text": "Year",
+
+                    },
+                    "labels": [
+                      "2017",
+                      "2018",
+                      "2019",
+                      "2020",
+                      "2021",
+                      "2022",
+                      "2023",
+                      "2024"
+                    ]
+                  },
+                  scaleY: {
+                    "progression": "log",
+                    "log-base": 10,
+                    "thousands-separator": ",",
+                    label: {
+                      text: "Total No. of activities and budgets"
+                    }
+                  },
+                  guide: {
+                    lineStyle: 'dotted'
+                  },
+                  "scale": {
+                    "size-factor": 1
+                  },
+                  "series": [
+                    {
+                      "values": response.total_activity,
+                      text: 'Total Activities',
+                      "line-color": "#a5a5a5",
+                      "background-color": "#c2c2c2",
+                      "marker": {
+                        "background-color": "#a5a5a5",
+                        "size": 6,
+                        "borderColor": "black",
+                        "borderWidth": 1
+                      },
+                      "hover-marker": {
+                        "background-color": "#a5a5a5",
+                        "size": 8,
+                        "borderColor": "black",
+                        "borderWidth": 1
+                      }
+                    },
+                    {
+                      "values": response.total_hour,
+                      text: 'Total Hour',
+                      "line-color": "#50a069",
+                      "background-color": "#50a069",
+                      "marker": {
+                        "background-color": "#50a069",
+                        "size": 6,
+                        "borderColor": "black",
+                        "borderWidth": 1
+                      },
+                      "hover-marker": {
+                        "background-color": "#50a069",
+                        "size": 8,
+                        "borderColor": "black",
+                        "borderWidth": 1
+                      }
+                    },
+                    {
+                      "values": response.total_amount,
+                      "tooltip": {
+                        "text": "$ %vt"
+                      },
+                      text: 'Total Budgets ($)',
+                      "line-color": "#ffa500",
+                      "background-color": "#ff881f",
+                      "marker": {
+                        "background-color": "#ffa500",
+                        "size": 6,
+                        "borderColor": "black",
+                        "borderWidth": 1
+                      },
+                      "hover-marker": {
+                        "background-color": "#ffa500",
+                        "size": 8,
+                        "borderColor": "black",
+                        "borderWidth": 1
+                      }
+                    }
                   ]
-                },
-                guide: {
-                  lineStyle: 'dotted'
-                },
-                "series": [
-                  {
-                    "values": [
-                      20,
-                      40,
-                      25,
-                      50,
-                      15,
-                      45,
-                      33,
-                      34
-                    ],
-                    text: 'Total Activities',
-                    "line-color": "#a5a5a5",
-                    "background-color": "#c2c2c2",
-                    "marker": {
-                      "background-color": "#a5a5a5",
-                      "size": 6,
-                      "borderColor": "black",
-                      "borderWidth": 1
-                    },
-                    "hover-marker": {
-                      "background-color": "#a5a5a5",
-                      "size": 8,
-                      "borderColor": "black",
-                      "borderWidth": 1
-                    }
-                  },
-                  {
-                    "values": [
-                      5,
-                      30,
-                      21,
-                      18,
-                      59,
-                      50,
-                      28,
-                      33
-                    ],
-                    text: 'Total Budgets ($)',
-                    "line-color": "#ffa500",
-                    "background-color": "#ff881f",
-                    "marker": {
-                      "background-color": "#ffa500",
-                      "size": 6,
-                      "borderColor": "black",
-                      "borderWidth": 1
-                    },
-                    "hover-marker": {
-                      "background-color": "#ffa500",
-                      "size": 8,
-                      "borderColor": "black",
-                      "borderWidth": 1
-                    }
-                  }
-                ]
-              };
+                };
 
-              zingchart.render({
-                id: 'myChart1',
-                data: myConfig1,
-                height: 250,
-                width: '100%'
-              });
+                zingchart.render({
+                  id: 'myChart1',
+                  data: myConfig1,
+                  height: 250,
+                  width: '100%'
+                });
+              },
+              error: function (xhr) {
+
+              }
+            });
+          });
           
 
         var data = [

@@ -732,6 +732,18 @@ router.get("/get-chart-activity-count-value", auth, async(req, res)=> {
     var oct = [];
     var nov = [];
     var dec = [];
+    var jan_hour = [];
+    var feb_hour = [];
+    var mar_hour = [];
+    var apr_hour = [];
+    var may_hour = [];
+    var jun_hour = [];
+    var jul_hour = [];
+    var aug_hour = [];
+    var sep_hour = [];
+    var oct_hour = [];
+    var nov_hour = [];
+    var dec_hour = [];
     var activity = await Activity.findAll({
         where: activityCondition
     });
@@ -740,60 +752,158 @@ router.get("/get-chart-activity-count-value", auth, async(req, res)=> {
         if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "January")
         {
             jan.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+            jan_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
         }
         if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "February")
         {
             feb.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+            feb_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
         }
         if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "March")
         {
             mar.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+            mar_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
         }
         if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "April")
         {
             apr.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+            apr_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
         }
         if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "May")
         {
             may.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+            may_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
         }
         if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "June")
         {
             jun.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+            jun_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
         }
         if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "July")
         {
             jul.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+            jul_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
         }
         if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "August")
         {
             aug.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+            aug_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
         }
         if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "September")
         {
             sep.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+            sep_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
         }
         if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "October")
         {
             oct.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+            oct_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
         }
         if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "November")
         {
             nov.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+            nov_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
         }
         if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "December")
         {
             dec.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+            dec_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
         }
     }
     var tot = [jan.length, feb.length, mar.length, apr.length, may.length, jun.length, jul.length, aug.length, sep.length, oct.length, nov.length, dec.length];
     var tot_sum = [jan.reduce((a, b) => a + b, 0), feb.reduce((a, b) => a + b, 0), mar.reduce((a, b) => a + b, 0), apr.reduce((a, b) => a + b, 0), may.reduce((a, b) => a + b, 0), jun.reduce((a, b) => a + b, 0), jul.reduce((a, b) => a + b, 0), aug.reduce((a, b) => a + b, 0), sep.reduce((a, b) => a + b, 0), oct.reduce((a, b) => a + b, 0), nov.reduce((a, b) => a + b, 0), dec.reduce((a, b) => a + b, 0)];
+    var tot_hour = [jan_hour.reduce((a, b) => a + b, 0), feb_hour.reduce((a, b) => a + b, 0), mar_hour.reduce((a, b) => a + b, 0), apr_hour.reduce((a, b) => a + b, 0), may_hour.reduce((a, b) => a + b, 0), jun_hour.reduce((a, b) => a + b, 0), jul_hour.reduce((a, b) => a + b, 0), aug_hour.reduce((a, b) => a + b, 0), sep_hour.reduce((a, b) => a + b, 0), oct_hour.reduce((a, b) => a + b, 0), nov_hour.reduce((a, b) => a + b, 0), dec_hour.reduce((a, b) => a + b, 0)];
 
     res.send({
         success: true,
         total_activity: tot,
         total_budget: tot_sum,
+        total_hour: tot_hour
     });
+});
+
+router.get("/get-chart-two-activity-count-value", auth, async(req, res)=> {
+    var activityCondition = {};
+    if (req.user.role_id != "1") {
+        activityCondition.firm_id = req.user.firm_id;
+        if (req.user.role_id != "2") {
+            activityCondition.user_id = req.user.id;
+        }
+    }
+    var year1 = [];
+    var year2 = [];
+    var year3 = [];
+    var year4 = [];
+    var year5 = [];
+    var year6 = [];
+    var year7 = [];
+    var year8 = [];
+    var year1_hour = [];
+    var year2_hour = [];
+    var year3_hour = [];
+    var year4_hour = [];
+    var year5_hour = [];
+    var year6_hour = [];
+    var year7_hour = [];
+    var year8_hour = [];
+    var activity = await Activity.findAll({
+        where: activityCondition
+    });
+
+    for(var i=0; i<activity.length; i++)
+    {
+        if (new Date(activity[i].activity_creation_date).getFullYear() == "2017")
+        {
+            year1.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+            year1_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
+        }
+        if (new Date(activity[i].activity_creation_date).getFullYear() == "2018")
+        {
+            year2.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+            year2_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
+        }
+        if (new Date(activity[i].activity_creation_date).getFullYear() == "2019")
+        {
+            year3.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+            year3_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
+        }
+        if (new Date(activity[i].activity_creation_date).getFullYear() == "2024")
+        {
+            year4.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+            year4_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
+        }
+        if (new Date(activity[i].activity_creation_date).getFullYear() == "2021")
+        {
+            year5.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+            year5_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
+        }
+        if (new Date(activity[i].activity_creation_date).getFullYear() == "2022")
+        {
+            year6.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+            year6_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
+        }
+        if (new Date(activity[i].activity_creation_date).getFullYear() == "2023")
+        {
+            year7.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+            year7_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
+        }
+        if (new Date(activity[i].activity_creation_date).getFullYear() == "2024")
+        {
+            year8.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
+            year8_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
+        }
+    }
+    var tot_activity = [year1.length, year2.length, year3.length, year4.length, year5.length, year6.length, year7.length, year8.length];
+    var tot_amount = [year1.reduce((a, b) => a + b, 0), year2.reduce((a, b) => a + b, 0), year3.reduce((a, b) => a + b, 0), year4.reduce((a, b) => a + b, 0), year5.reduce((a, b) => a + b, 0), year6.reduce((a, b) => a + b, 0), year7.reduce((a, b) => a + b, 0), year8.reduce((a, b) => a + b, 0)];
+    var tot_hour = [year1_hour.reduce((a, b) => a + b, 0), year2_hour.reduce((a, b) => a + b, 0), year3_hour.reduce((a, b) => a + b, 0), year4_hour.reduce((a, b) => a + b, 0), year5_hour.reduce((a, b) => a + b, 0), year6_hour.reduce((a, b) => a + b, 0), year7_hour.reduce((a, b) => a + b, 0), year8_hour.reduce((a, b) => a + b, 0)];
+    
+    res.send({
+        success: true,
+        total_activity: tot_activity,
+        total_amount: tot_amount,
+        total_hour: tot_hour
+    });
+    
 });
 
 module.exports = router;
