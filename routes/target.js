@@ -788,7 +788,7 @@ router.post('/target/move-to-client', auth, async(req, res) => {
                 remarks: target_data.remarks,
                 attorney_id: req.user.id,
 
-                estimated_revenue: target_data.estimated_revenue,
+                estimated_revenue: target_data.estimated_revenue
                 // revenueclosingDate: target_data.revenueclosingDate,
                 // clientStartDate: target_data.targetStartDate,
                 // clientEndDate: target_data.targetEndDate
