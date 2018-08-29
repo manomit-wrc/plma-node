@@ -279,8 +279,15 @@ router.post('/firms/add', auth, siteAuth, csrfProtection, async (req, res) => {
 							 </h1>
 	   
 							 
-							 <table width="325" border="0" cellspacing="0" cellpadding="0">
-							   
+                             <table width="325" border="0" cellspacing="0" cellpadding="0">
+							 <tr>
+							   <td width="325" height="60" bgcolor="#FF851A" style="text-align:center;">
+								<a href="http://localhost:5000/" align="center" style="display:block; font-family:'Open Sans',Calibri, Arial, sans-serif;; font-size:20px; color:#ffffff; text-align: center; line-height:60px; display:block; text-decoration:none;">Click Here to LogIn</a>
+							   </td>
+							   <td>&nbsp;</td>
+							   <td>&nbsp;</td>
+							 </tr>
+						   </table>								   
 					   </div>
 					 </td>
 				   </tr>

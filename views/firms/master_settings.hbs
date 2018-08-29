@@ -776,7 +776,7 @@
 								<label class="control-label">Office Name
 									<span class="text-danger">*</span>
 								</label>
-								<select class="form-control floating selectpicker" name="office_id" id="office_id" data-show-subtext="true" data-live-search="true">
+								<select class="form-control floating " name="office_id" id="office_id" >
 									<option value="">Select Office</option>
 									{{#each office}}
 										<option value="{{this.id}}">{{this.name}}</option>
@@ -789,7 +789,7 @@
 								<label class="control-label">Designation
 									<span class="text-danger">*</span>
 								</label>
-								<select class="form-control floating selectpicker" name="designation_id" id="designation_id" data-show-subtext="true" data-live-search="true">
+								<select class="form-control floating " name="designation_id" id="designation_id" >
 									<option value="">Select Designation</option>
 									{{#each designation}}
 									<option value="{{this.id}}">{{this.title}}</option>
@@ -1037,7 +1037,7 @@
 								<label class="control-label">Office Name
 									<span class="text-danger">*</span>
 								</label>
-								<select class="form-control floating selectpicker" name="edit_office_id" id="edit_office_id" data-show-subtext="true" data-live-search="true">
+								<select class="form-control floating " name="edit_office_id" id="edit_office_id" >
 									{{#each office}}
 									<option value="{{this.id}}">{{this.name}}</option>
 									{{/each}}
@@ -1049,7 +1049,7 @@
 								<label class="control-label">Designation
 									<span class="text-danger">*</span>
 								</label>
-								<select class="form-control floating selectpicker" name="edit_designation_id" id="edit_designation_id" data-show-subtext="true" data-live-search="true">
+								<select class="form-control floating " name="edit_designation_id" id="edit_designation_id" >
 									{{#each designation}}
 									<option value="{{this.id}}">{{this.title}}</option>
 									{{/each}}

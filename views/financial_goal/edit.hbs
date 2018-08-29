@@ -37,7 +37,7 @@
                                <span class="req-lbl">*</span>
 
                              </label>
-                             <select class="form-control floating selectpicker" id="attr_id" name="attr_id" data-show-subtext="true" data-live-search="true">
+                             <select class="form-control floating " id="attr_id" name="attr_id" >
                                 <option value=""></option>
                                 {{#each attorney}}
                                 <option value="{{this.id}}" {{#if_eq this.id ../finan_goal.attorney_id}} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
@@ -51,7 +51,7 @@
                                <span class="req-lbl">*</span>
 
                              </label>
-                             <select class="form-control floating selectpicker" id="year" name="year" data-show-subtext="true" data-live-search="true">
+                             <select class="form-control floating " id="year" name="year" >
                                 <option value=""></option>
                                 {{#each year}}
                                 <option value="{{this}}"{{#if_eq this ../finan_goal.year}} selected="selected" {{/if_eq}}>{{this}}</option>

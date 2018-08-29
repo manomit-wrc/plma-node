@@ -43,7 +43,7 @@
                                     <label class="control-label">Group
                                         <span class="req-lbl">*</span>
                                     </label>
-                                    <select id="group" name="group" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
+                                    <select id="group" name="group" class="form-control floating " >
                                         <option value="">Select Group</option>
                                         {{#each group}}
                                         <option value="{{this.id}}" {{#if_eq this.id ../edata.0.group_id}} selected="selected" {{/if_eq}}>{{this.name}}</option>
@@ -57,7 +57,7 @@
                                     <label class="control-label">Section
                                         <span class="req-lbl">*</span>
                                     </label>
-                                    <select id="section" name="section" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
+                                    <select id="section" name="section" class="form-control floating " >
                                         <option value="">Select Section</option>
                                         {{#each section}}
                                         <option value="{{this.section.id}}" {{#if_eq this.section.id ../edata.0.section_id}} selected="selected" {{/if_eq}}>{{this.section.name}}</option>
@@ -71,7 +71,7 @@
                                         <span class="req-lbl">*</span>
 
                                     </label>
-                                    <select id="designation" name="designation" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
+                                    <select id="designation" name="designation" class="form-control floating " >
                                         <option value="">Select Designation</option>
                                         {{#each designation}}
                                         <option value="{{this.id}}" {{#if_eq this.id ../edata.0.designation_id}} selected="selected" {{/if_eq}}>{{this.title}}</option>
@@ -119,7 +119,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus select-attorney">
                             <label class="control-label">Gender</label>
-                            <select class="form-control floating selectpicker" id="gender" name="gender" data-show-subtext="true" data-live-search="true">
+                            <select class="form-control floating " id="gender" name="gender" >
                                 <option value="">Select Gender</option>
                                 <option value="M" {{#if_eq edata.0.gender "M"}} selected {{/if_eq}}>Male</option>
                                 <option value="F" {{#if_eq edata.0.gender "F"}} selected {{/if_eq}}>Female</option>
@@ -145,7 +145,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus select-attorney">
                             <label class="control-label">Attorney Type</label>
-                            <select class="form-control floating selectpicker" id="attorney_type" name="attorney_type" data-show-subtext="true" data-live-search="true">
+                            <select class="form-control floating " id="attorney_type" name="attorney_type" >
                                 <option value="">Select Attorney Type</option>
                                 <option value="AT-INTERIM" {{#if_eq edata.0.attorney_details.0.attorney_type "AT-INTERIM"}} selected="selected" {{/if_eq}}>INTERIM ATTORNEY</option>
                                 <option value="AT-APPROVED" {{#if_eq edata.0.attorney_details.0.attorney_type "AT-APPROVED"}} selected="selected" {{/if_eq}}>APPROVED ATTORNEY</option>
@@ -268,7 +268,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus select-attorney">
                             <label class="control-label">Job Type</label>
-                            <select class="form-control floating selectpicker" id="job_type" name="job_type" data-show-subtext="true" data-live-search="true">
+                            <select class="form-control floating " id="job_type" name="job_type" >
                                 <option value="">Select Job Type</option>
                                 <option value="FULLTIME" {{#if_eq edata.0.attorney_details.0.job_type "FULLTIME"}} selected="selected" {{/if_eq}}>FULLTIME</option>
                                 <option value="STERMCON" {{#if_eq edata.0.attorney_details.0.job_type "STERMCON"}} selected="selected" {{/if_eq}}>SHORT TERM CONTRACT</option>
@@ -301,7 +301,7 @@
                             <label class="control-label">Jurisdiction
                                 <span class="req-lbl">*</span>
                             </label>
-                            <select id="jurisdiction" name="jurisdiction" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
+                            <select id="jurisdiction" name="jurisdiction" class="form-control floating " >
                                 <option value="">Select Jurisdiction</option>
                                 {{#each jurisdiction}}
                                 <option value="{{this.id}}" {{#if_eq this.id ../edata.0.attorney_details.0.jurisdiction}} selected="selected" {{/if_eq}}>{{this.name}}</option>
