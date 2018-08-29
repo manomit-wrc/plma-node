@@ -1368,11 +1368,11 @@ table.dataTable {
 
 .custom-table tr {
 	background-color: #fff;
-	box-shadow: 0 0 3px #e5e5e5;
-	-webkit-box-shadow: 0 0 3px #e5e5e5;
-	-moz-box-shadow: 0 0 3px #e5e5e5;
-	-ms-box-shadow: 0 0 3px #e5e5e5;
-	-o-box-shadow: 0 0 3px #e5e5e5;
+	box-shadow: 0 2px 0 #e5e5e5;
+	-webkit-box-shadow: 0 2px 0 #e5e5e5;
+	-moz-box-shadow: 0 2px 0 #e5e5e5;
+	-ms-box-shadow: 0 2px 0 #e5e5e5;
+	-o-box-shadow: 0 2px 0 #e5e5e5;
 }
 
 .table.custom-table>tbody>tr>td,
@@ -5472,7 +5472,7 @@ table.table-inbox tbody tr.checked {
 	width: 100px;
 	display: block;
 	line-height: 1;
-	padding-top: 30px;
+	padding-top: 18px;
 	padding-left: 10px;
 	padding-right: 10px;
 	white-space: normal;
@@ -5481,6 +5481,12 @@ table.table-inbox tbody tr.checked {
 	text-transform: capitalize;
 	text-align: center;
 	cursor: pointer;
+	box-shadow: 0 4px 0 rgba(36, 37, 38, 0.08);
+	-webkit-box-shadow: 0 4px 0 rgba(36, 37, 38, 0.08);
+	-moz-box-shadow: 0 4px 0 rgba(36, 37, 38, 0.08);
+	-ms-box-shadow: 0 4px 0 rgba(36, 37, 38, 0.08);
+	-o-box-shadow: 0 4px 0 rgba(36, 37, 38, 0.08);
+	border: 8px solid #fff;
 }
 
 .firm-box.tab .nav-tabs li a i {
@@ -6505,6 +6511,22 @@ select.gender {
 				padding: 10px 12px;
 			}
 
+			select {
+				-moz-appearance: none;
+				-webkit-appearance: none;
+				background-attachment: scroll !important;
+				background-clip: border-box !important;
+				background-color: rgba(0, 0, 0, 0) !important;
+				background-image: url("../img/arrow.png") !important;
+				background-origin: padding-box !important;
+				background-position: right center;
+				background-repeat: no-repeat;
+				background-size: auto auto !important;
+				background-color: #fff !important
+			}
+
+
+
 
 
 			/*Ends on css 27-08-2018*/
@@ -7139,6 +7161,7 @@ select.gender {
 		width: 50px;
 		font-size: 0;
 		margin-left: 5px;
+		border: 0 none;
 	}
 
 	.tab .nav-tabs li:not(:last-of-type)::after {
@@ -7152,6 +7175,10 @@ select.gender {
 
 	.sidebar-menu li a {
 		font-size: 13px;
+	}
+
+	.firm-box .nav.nav-tabs {
+		padding: 8px 5px;
 	}
 
 
@@ -7187,8 +7214,10 @@ select.gender {
 		width: auto;
 	}
 
-
 }
+
+@media screen and (max-height: 575px){ #rc-imageselect, .g-recaptcha {transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;}
+
 /*Ends Tab Css 18-06-2018*/
 @media only screen and (max-width: 479px) {
 	.user-menu {
@@ -7315,6 +7344,7 @@ select.gender {
 	.ghanta .notifications .drop-scroll {
 		width: auto;
 		}*/
+
 	}
 
 	@media only screen and (max-width: 460px) {
@@ -7337,5 +7367,9 @@ select.gender {
 
 		.modal-body #addDesignation .m-l-10 {
 			margin-left: 0 !important;
+		}
+
+		.firm-box.tab .nav-tabs li a {
+			margin-right: 5px;
 		}
 	}
