@@ -150,21 +150,24 @@
                   </select>
                 </div>
               </div>
-              <div class="col-md-6 none" {{#if_eq editdata.activity_type "individual"}} style="display: block;" {{else}} style="display: none;" {{/if_eq}}>
+              <div class="col-md-6 none" {{#if_eq editdata.activity_type "individual"}} style="display: block;" {{else}} style="display: none;"
+                {{/if_eq}}>
                 <div class="form-group form-focus select-focus"></div>
               </div>
-              <div class="col-md-6 section" {{#if_eq editdata.activity_type "section"}} style="display: block;" {{else}} style="display: none;" {{/if_eq}}>
+              <div class="col-md-6 section" {{#if_eq editdata.activity_type "section"}} style="display: block;" {{else}} style="display: none;"
+                {{/if_eq}}>
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">Section <span class="req-lbl">*</span> </label>
                   <select class="form-control floating" id="section" name="section" disabled>
                     <option value="0">Select Section</option>
                     {{#each section}}
-                    <option value="{{this.section.id}}" {{#if_eq this.id ../editdata.section_id}} selected="selected" {{/if_eq}}>{{this.section.name}}</option>
+                    <option value="{{this.section.id}}" {{#if_eq this.section.id ../editdata.section_id}} selected="selected" {{/if_eq}}>{{this.section.name}}</option>
                     {{/each}}
                   </select>
                 </div>
               </div>
-              <div class="col-md-6 strategyGroup" {{#if_eq editdata.activity_type "strategic_group"}} style="display: block;" {{else}} style="display: none;" {{/if_eq}}>
+              <div class="col-md-6 strategyGroup" {{#if_eq editdata.activity_type "strategic_group"}} style="display: block;" {{else}}
+                style="display: none;" {{/if_eq}}>
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">Strategy Group <span class="req-lbl">*</span> </label>
                   <select class="form-control floating" id="strategyGroup" name="strategy_group" disabled>
@@ -173,7 +176,8 @@
                   </select>
                 </div>
               </div>
-              <div class="col-md-6 attorney" {{#if_eq editdata.activity_type "team"}} style="display: block; margin-bottom: 23px; margin-top: 8px;" {{else}} style="display: none; margin-bottom: 23px; margin-top: 8px;" {{/if_eq}}>
+              <div class="col-md-6 attorney" {{#if_eq editdata.activity_type "team"}} style="display: block; margin-bottom: 23px; margin-top: 8px;"
+                {{else}} style="display: none; margin-bottom: 23px; margin-top: 8px;" {{/if_eq}}>
                 <div class="form-group select-focus">
                   {{!-- <label class="control-label">Attorney <span class="req-lbl">*</span> </label> --}}
                   <select class="form-control floating" id="attorney_user" name="attorney_user[]" multiple="multiple" disabled>
@@ -252,7 +256,34 @@
                     </a>
                   </div>
                 </div>
+                {{else}}
+                <div class="form-group form-focus"></div>
                 {{/if}}
+              </div>
+              <div class="col-md-6">
+                <div class="form-group form-focus select-focus select-attorney">
+                  <label class="control-label">Activity Details Status</label>
+                  <select class="form-control floatingb " id="budget_status" name="budget_status" disabled>
+                    <option value="">Select One</option>
+                    <option value="planned" {{#if_eq editdata.budget_details_status "planned"}} selected="selected" {{/if_eq}}>PLANNED</option>
+                    <option value="unplanned" {{#if_eq editdata.budget_details_status "unplanned"}} selected="selected" {{/if_eq}}>UNPLANNED</option>
+                    <option value="delete_team" {{#if_eq editdata.budget_details_status "delete_team"}} selected="selected" {{/if_eq}}>DELETED
+                      ITEM - TO BE SKIPPED</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group form-focus select-focus select-attorney">
+                  <label class="control-label">Activity Budget Details Status</label>
+                  <select class="form-control floating " id="budget_details_status" name="budget_details_status" disabled>
+                    <option value="">Select One</option>
+                    <option value="planned" {{#if_eq editdata.budget_details_status "planned"}} selected="selected" {{/if_eq}}>PLANNED
+                      BUDGET</option>
+                    <option value="unplanned" {{#if_eq editdata.budget_details_status "unplanned"}} selected="selected" {{/if_eq}}>UNPLANNED
+                      BUDGET</option>
+                    <option value="guestimate" {{#if_eq editdata.budget_details_status "guestimate"}} selected="selected" {{/if_eq}}>GUESTIMATE</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
@@ -311,10 +342,10 @@
       <div class="modal-header">
         <h4 class="modal-title">Marketing Budget Details</h4>
       </div>
-        <form class="m-b-10" name="editActivityBudgetFrm" id="editActivityBudgetFrm">
-          <div class="card-box">
-            <div class="modal-body">
-              <div class="modal-scroll">
+      <form class="m-b-10" name="editActivityBudgetFrm" id="editActivityBudgetFrm">
+        <div class="card-box">
+          <div class="modal-body">
+            <div class="modal-scroll">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-inline m-b-15">
@@ -380,36 +411,31 @@
                   {{/each}}
                 </div>
               </div>
-              </div>
             </div>
-
-            <div class="modal-footer">
-              <div class="panel panel-primary modal-footer-panel">
-                <div class="panel-body">
-                  <div class="list">
-                    <div class="row">
-                      <div class="col-md-6">
-                        <h5>Total</h5>
+          </div>
+          <div class="modal-footer">
+            <div class="panel panel-primary modal-footer-panel">
+              <div class="panel-body">
+                <div class="list">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <h5>Total</h5>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <span class="form-control" id="hourDetails"></span>
                       </div>
-                      <div class="col-md-2">
-                        <div class="form-group">
-                          <span class="form-control" id="hourDetails"></span>
-                        </div>
-                      </div>
-                      <div class="col-md-2">
-                        <div class="form-group">
-                          <span class="form-control" id="amountDetails"></span>
-                        </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <span class="form-control" id="amountDetails"></span>
                       </div>
                     </div>
                   </div>
                 </div>
-                {{!-- <div class="text-center">
-                  <button class="btn btn-primary btn-lg" type="button" id="btnEditActivityBudget">Update</button>
-                </div> --}}
               </div>
             </div>
-
+          </div>
         </div>
       </form>
     </div>
@@ -456,33 +482,33 @@
 
 
   $(document).ready(function (e) {
-      // budget hour count total 
+    // budget hour count total 
 
-      var sumHour = 0;
-      $('.budget_hour').each(function (index) {
-        if ($(this).val() !== "") {
-          sumHour += Number($(this).val());
-        }
-      });
-      $('#hourDetails').html(sumHour);
-      
-      var sumAmount = 0;
-      $('.budget_amount').each(function (index) {
-        if ($(this).val() !== "") {
-          sumAmount += Number($(this).val());
-        }
-      });
-      $('#amountDetails').html(sumAmount);
-
-      // Slim Scrollbar for Activity Budget Modal
-      $('#update_budget .modal-scroll').slimScroll({
-        color: '#455A64',
-        size: '10px',
-        alwaysVisible: false,
-        height: '350px'
-      });
-
+    var sumHour = 0;
+    $('.budget_hour').each(function (index) {
+      if ($(this).val() !== "") {
+        sumHour += Number($(this).val());
+      }
     });
+    $('#hourDetails').html(sumHour);
+
+    var sumAmount = 0;
+    $('.budget_amount').each(function (index) {
+      if ($(this).val() !== "") {
+        sumAmount += Number($(this).val());
+      }
+    });
+    $('#amountDetails').html(sumAmount);
+
+    // Slim Scrollbar for Activity Budget Modal
+    $('#update_budget .modal-scroll').slimScroll({
+      color: '#455A64',
+      size: '10px',
+      alwaysVisible: false,
+      height: '350px'
+    });
+
+  });
 
 
 </script> {{/content}}
