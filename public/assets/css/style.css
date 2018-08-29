@@ -6381,9 +6381,9 @@ select.gender {
 		width: 8% !important;
 	}
 
-	.card-box input[type="checkbox"] {
+	/* .card-box input[type="checkbox"] {
 
-	}
+	} */
 
 	.dash-widget .dash-widget-icon {
 		background: #ff881f none repeat scroll 0 0;
@@ -6433,7 +6433,7 @@ select.gender {
 
 	
 
-	.custom-table tr td:nth-child(2) a, .custom-table tr td:nth-child(4) a, .custom-table tr td:nth-child(5) a, .custom-table tr td:nth-child(6) a {
+	/* .custom-table tr td:nth-child(2) a, .custom-table tr td:nth-child(4) a, .custom-table tr td:nth-child(5) a, .custom-table tr td:nth-child(6) a {
 		color: #009ce7;
 		text-decoration: none;
 	}
@@ -6441,7 +6441,7 @@ select.gender {
 	.custom-table tr td:nth-child(2) a:hover, .custom-table tr td:nth-child(4) a:hover, .custom-table tr td:nth-child(5) a:hover, .custom-table tr td:nth-child(6) a:hover {
 		color: #FF881F;
 		text-decoration: none;
-	}
+	} */
 
 	/*.panel-footer a {
 		border: 1px solid;
@@ -6477,15 +6477,23 @@ select.gender {
 			width: 6% !important;
 		}
 
-		.custom-table tr.odd td:nth-child(5) a, .custom-table tr.even td:nth-child(5) a {
+		/* .custom-table tr.odd td:nth-child(5) a, .custom-table tr.even td:nth-child(5) a {
 			color: #fff;
-		}
+		} */
 
 		.custom-table tr.odd td.text-right:nth-child(6) a, .custom-table tr.even td.text-right:nth-child(6) a {
 			color: #fff;
 		}
 		
+		.custom-table tr td:not(:last-child) a {
+			color: #009ce7;
+			text-decoration: none;
+		}
 
+		.custom-table tr td:not(:last-child) a:hover {
+			color: #FF881F;
+			text-decoration: none;
+		}
 
 
 		/*Ends on css 27-08-2018*/
