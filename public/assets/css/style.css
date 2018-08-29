@@ -6084,6 +6084,32 @@ i.fa.fa-eye.m-r-5 {
 	opacity: 0.9 !important;
 }
 
+#newChangePass .short {
+	font-weight: bold;
+	color: #FF0000;
+}
+
+#newChangePass .weak {
+	font-weight: bold;
+	color: orange;
+}
+
+#newChangePass .good {
+	font-weight: bold;
+	color: #2D98F3;
+}
+
+#newChangePass .strong {
+	font-weight: bold;
+	color: limegreen;
+}
+
+.toggle-password {
+	position: absolute;
+	top: 35px;
+	right: 20px;
+	font-size: 18px;
+}
 
 /* loader css ends */
 
