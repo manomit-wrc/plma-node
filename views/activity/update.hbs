@@ -16,8 +16,8 @@
     <form name="updateActivityForm" id="updateActivityForm" action="/activity/update/{{editdata.id}}" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="_csrf" value="{{csrfToken}}">
       <input type="hidden" name="activity_id" id="activity_id" value="{{editdata.id}}">
-      <input type="hidden" name="total_hour" id="total_hour">
-      <input type="hidden" name="total_amount" id="total_amount">
+      <input type="hidden" name="total_hour" id="total_hour" value="{{editdata.total_budget_hour}}">
+      <input type="hidden" name="total_amount" id="total_amount" value="{{editdata.total_budget_amount}}">
       <input type="hidden" id="activityTypeDetails" value="{{editdata.target}}">
       <div class="card-box">
         <h3 class="card-title">Client / Target Information</h3>
