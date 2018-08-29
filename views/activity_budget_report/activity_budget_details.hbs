@@ -7,7 +7,13 @@
     <div class="content container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <h4 class="page-title">Activity Budget Report</h4>
+                <div class="col-md-10">
+                    <h4 class="page-title">Activity Budget Report</h4>
+                </div>
+                <div class="col-md-2 text-right">
+                    <button class="btn btn-primary rounded" id="exportExcelBtn">
+                        <i class="fa fa-file-excel-o"></i> Export to excel</button>
+                </div>
             </div>
             <div class="col-md-12">
                     <div id="update_budget_by_activity" >
@@ -23,141 +29,141 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="row">
-                                                    <div class="col-md-5">
-                                                        <table class="table">
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td style="width: 100%; padding: 0;">
-                                                                        <table style="margin-bottom: 0;" class="table table-bordered">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th colspan="2" style="width: 80%; height: 50px; vertical-align: middle; border-bottom: 1px solid #ddd; border-top: 1px solid #ddd;">
-                                                                                        Marketing Budget Codes
-                                                                                    </th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                        </table>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="2" style="height: 25px; border-bottom: 1px solid #e7ecf1;border-left: 1px solid #e7ecf1;border-right: 1px solid #e7ecf1;">&nbsp;</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td width="100%" style="padding: 0;">
-                                                                        <table class="table table-bordered">
+                                                    <div id="mytable1">
+                                                        <table width="100%">
+                                                            <tr class="row">
+                                                                <td class="col-md-5"><div>
+                                                                    <table class="table">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td style="width: 100%; padding: 0;">
+                                                                                    <table style="margin-bottom: 0;" class="table table-bordered">
+                                                                                        <thead>
+                                                                                            <tr>
+                                                                                                <th colspan="2" style="width: 80%; height: 50px; vertical-align: middle; border-bottom: 1px solid #ddd; border-top: 1px solid #ddd;">
+                                                                                                    Marketing Budget Codes
+                                                                                                </th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td colspan="2" style="height: 25px; border-bottom: 1px solid #e7ecf1;border-left: 1px solid #e7ecf1;border-right: 1px solid #e7ecf1;">&nbsp;</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td width="100%" style="padding: 0;">
+                                                                                    <table class="table table-bordered">
+                                                                                        <tbody>
+                                                                                            {{#each budgetArr}}
+                                                                                            <tr>
+                                                                                                <td style="height: 25px; width: 100%; padding: 0">
+                                                                                                    <table style="margin-bottom: 0;" class="table">
+                                                                                                        <tbody>
+                                                                                                            <tr>
+                                                                                                                <td style="height: 25px; vertical-align: middle;width: 80%; border-right: 1px solid #e7ecf1;" title="{{this.parent_name}}">
+                                                                                                                    <strong>{{this.parent_name}}</strong>
+                                                                                                                </td>
+                                                                                                            </tr>
+                                                                                                            {{#each this.child_budget}}
+                                                                                                            <tr>
+                                                                                                                <td style=" height: 25px;width: 80%; vertical-align: middle;border-top: 1px solid #e7ecf1; border-right: 1px solid #e7ecf1;"
+                                                                                                                    title="{{this.name}}">{{this.name}}
+                                                                                                                </td>
+                                                                                                            </tr>
+                                                                                                            {{/each}}
+                                                                                                        </tbody>
+                                                                                                    </table>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            {{/each}}
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div></td>
+                                                                <td class="col-md-7"><div>
+                                                                    <div class="table-responsive tbl-ovyh">
+                                                                        {{#each marketingBudget}}
+                                                                        <table class="table table-bordered tbl-w50p activiTy_legTh">
                                                                             <tbody>
-                                                                                {{#each budgetArr}}
                                                                                 <tr>
-                                                                                    <td style="height: 25px; width: 100%; padding: 0">
-                                                                                        <table style="margin-bottom: 0;" class="table">
+                                                                                    <td style=" padding: 0; border-bottom: none">
+                                                                                        <table class="table" style="border-right: 1px solid #e7ecf1;">
                                                                                             <tbody>
                                                                                                 <tr>
-                                                                                                    <td style="height: 25px; vertical-align: middle;width: 80%; border-right: 1px solid #e7ecf1;" title="{{this.parent_name}}">
-                                                                                                        <strong>{{this.parent_name}}</strong>
+                                                                                                    <td style=" padding: 0;">
+                                                                                                        <table style="margin-bottom: 0;" class="table">
+                                                                                                            <thead>
+                                                                                                                <tr>
+                                                                                                                    <th colspan="2" style=" height: 50px; vertical-align: middle; border-top: 1px solid #ddd;">
+                                                                                                                        {{this.name}}
+                                                                                                                    </th>
+                                                                                                                </tr>
+                                                                                                            </thead>
+                                                                                                        </table>
                                                                                                     </td>
                                                                                                 </tr>
-                                                                                                {{#each this.child_budget}} 
                                                                                                 <tr>
-                                                                                                    <td style=" height: 25px;width: 80%; vertical-align: middle;border-top: 1px solid #e7ecf1; border-right: 1px solid #e7ecf1;"
-                                                                                                        title="{{this.name}}">{{this.name}}
+                                                                                                    <td style="padding: 0; height: 25px;  border-top: 1px solid #e7ecf1;  border-bottom: 1px solid #e7ecf1;">
+                                                                                                        <table style="margin-bottom: 0;" class="table">
+                                                                                                            <thead>
+                                                                                                                <tr>
+                                                                                                                    <th style="height: 25px; width: 65px; vertical-align: middle;  border-right: 1px solid #e7ecf1; border-bottom: none">Hours</th>
+                                                                                                                    <th style="height: 25px; width: 65px; vertical-align: middle; border-right: none; border-bottom: none;">US $</th>
+                                                                                                                </tr>
+                                                                                                            </thead>
+                                                                                                        </table>
                                                                                                     </td>
                                                                                                 </tr>
-                                                                                                {{/each}}
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </td>
-                                                                                </tr>
-                                                                                {{/each}}
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                    <div class="col-md-7">
-                                                        <div class="table-responsive tbl-ovyh">
-                                                            {{#each marketingBudget}}
-                                                            <table class="table table-bordered tbl-w50p activiTy_legTh">
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td style=" padding: 0; border-bottom: none">
-                                                                            <table class="table" style="border-right: 1px solid #e7ecf1;">
-                                                                                <tbody>
-                                                                                    <tr>
-                                                                                        <td style=" padding: 0;">
-                                                                                            <table style="margin-bottom: 0;" class="table">
-                                                                                                <thead>
-                                                                                                    <tr>
-                                                                                                        <th colspan="2" style=" height: 50px; vertical-align: middle; border-top: 1px solid #ddd;">
-                                                                                                            {{this.name}}
-                                                                                                        </th>
-                                                                                                    </tr>
-                                                                                                </thead>
-                                                                                            </table>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td style="padding: 0; height: 25px;  border-top: 1px solid #e7ecf1;  border-bottom: 1px solid #e7ecf1;">
-                                                                                            <table style="margin-bottom: 0;" class="table">
-                                                                                                <thead>
-                                                                                                    <tr>
-                                                                                                        <th style="height: 25px; width: 65px; vertical-align: middle;  border-right: 1px solid #e7ecf1; border-bottom: none">Hours</th>
-                                                                                                        <th style="height: 25px; width: 65px; vertical-align: middle; border-right: none; border-bottom: none;">US $</th>
-                                                                                                    </tr>
-                                                                                                </thead>
-                                                                                            </table>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                    {{#each this.budget_list}}
-                                                                                    <tr>
-                                                                                        <td colspan="2" style="height: 25px; border-bottom: 1px solid #e7ecf1;">&nbsp;</td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td style="padding: 0; border-bottom: none">
-                                                                                            <table class="table" style="margin-bottom: 0">
-                                                                                                <tbody>
-                                                                                                    {{#each this.child_budget}}
-                                                                                                    <tr>
-                                                                                                        <td colspan="2" style="width: 100%; padding: 0">
-                                                                                                            <table style="margin-bottom: 0;" class="table">
-                                                                                                                <tbody>
-                                                                                                                    <tr style="border-bottom: 1px solid #e7ecf1;">
-                                                                                                                        <td style="height: 25px; width: 65px; vertical-align: middle; border-right: 1px solid #e7ecf1;">
-                                                                                                                            {{#if_eq this.level_type 'I'}}
-                                                                                                                            {{marketing_budget_hour this.hour ../../../marketingBudget.length}}
-                                                                                                                            {{else}}
-                                                                                                                            {{this.hour}}
-                                                                                                                            {{/if_eq}}
-                                                                                                                        </td>
-                                                                                                                        <td style="text-align: center; width: 65px; height: 25px; vertical-align: middle" class="total_cost_original">
-                                                                                                                            {{#if_eq this.level_type 'I'}}
-                                                                                                                            {{marketing_budget_amount this.amount ../../../marketingBudget.length}}
-                                                                                                                            {{else}}
-                                                                                                                            {{this.amount}}
-                                                                                                                            {{/if_eq}}
-                                                                                                                            </td>
-                                                                                                                        </td>
+                                                                                                {{#each this.budget_list}}
+                                                                                                <tr>
+                                                                                                    <td colspan="2" style="height: 25px; border-bottom: 1px solid #e7ecf1;">&nbsp;</td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="padding: 0; border-bottom: none">
+                                                                                                        <table class="table" style="margin-bottom: 0">
+                                                                                                            <tbody>
+                                                                                                                {{#each this.child_budget}}
+                                                                                                                <tr>
+                                                                                                                    <td colspan="2" style="width: 100%; padding: 0">
+                                                                                                                        <table style="margin-bottom: 0;" class="table">
+                                                                                                                            <tbody>
+                                                                                                                                <tr style="border-bottom: 1px solid #e7ecf1;">
+                                                                                                                                    <td style="height: 25px; width: 65px; vertical-align: middle; border-right: 1px solid #e7ecf1;">
+                                                                                                                                        {{#if_eq this.level_type 'I'}} {{marketing_budget_hour this.hour ../../../marketingBudget.length}} {{else}} {{this.hour}}
+                                                                                                                                        {{/if_eq}}
+                                                                                                                                    </td>
+                                                                                                                                    <td style="text-align: center; width: 65px; height: 25px; vertical-align: middle" class="total_cost_original">
+                                                                                                                                        {{#if_eq this.level_type 'I'}} {{marketing_budget_amount this.amount ../../../marketingBudget.length}} {{else}} {{this.amount}}
+                                                                                                                                        {{/if_eq}}
+                                                                                                                                    </td>
+                                                                                                                    </td>
                                                                                                                     </tr>
-                                                                                                                </tbody>
-                                                                                                            </table>
-                                                                                                        </td>
+                                                                                                                    </tbody>
+                                                                                                                    </table>
+                                                                                                    </td>
                                                                                                     </tr>
                                                                                                     {{/each}}
-                                                                                                </tbody>
-                                                                                            </table>
-                                                                                        </td>
+                                                                                                    </tbody>
+                                                                                                    </table>
+                                                                                    </td>
                                                                                     </tr>
                                                                                     {{/each}}
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                            {{/each}}
-                                                        </div>
-                                                    </div>
+                                                                                    </tbody>
+                                                                                    </table>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        {{/each}}
+                                                                    </div>
+                                                                </div></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>    
                                                 </div>
                                             </div>
                                         </div>
@@ -171,6 +177,20 @@
             </div>
         </div>
     </div>
+{{#content "script" mode="append"}}
+<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="/assets/js/select2.min.js"></script>
+<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#exportExcelBtn").click(function (e) {
+            window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('#mytable1').html()));
+            e.preventDefault();
+        });
+    });
+</script> {{/content}}
 
 
 

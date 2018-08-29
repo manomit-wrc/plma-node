@@ -22,6 +22,8 @@ module.exports = (sequelize, DataTypes) => {
     group_id: DataTypes.INTEGER,
     designation_id: DataTypes.INTEGER,
     section_id: DataTypes.INTEGER,
+    new_user_status: DataTypes.INTEGER,
+
     approver: DataTypes.INTEGER
   }, {});
   user.associate = function(models) {

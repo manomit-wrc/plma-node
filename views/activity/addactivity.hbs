@@ -126,7 +126,7 @@
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus select-attorney">
                                     <label class="control-label">Activity Type <span class="req-lbl">*</span> </label>
-                                    <select class="form-control floating selectpicker" id="activity_type" name="activity_type" data-show-subtext="true" data-live-search="true">
+                                    <select class="form-control floating" id="activity_type" name="activity_type">
                                         <option value="">Select One</option>
                                         <option value="individual">INDIVIDUAL LEVEL</option>
                                         <option value="section">SECTION LEVEL</option>
@@ -172,7 +172,7 @@
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus select-attorney">
                                     <label class="control-label">Tactical Marketing Goals <span class="req-lbl">*</span> </label>
-                                    <select id="activity_goal" name="activity_goal" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
+                                    <select id="activity_goal" name="activity_goal" class="form-control floating " >
                                         <option value="">Select Tactical Marketing Goals</option>
                                         {{#each activity_goal}}
                                             <option value="{{this.id}}">{{this.activity_goal}}</option>
@@ -185,7 +185,7 @@
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus select-attorney">
                                     <label class="control-label">Practice Area Type <span class="req-lbl">*</span> </label>
-                                    <select id="practice_area" name="practice_area" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
+                                    <select id="practice_area" name="practice_area" class="form-control floating" >
                                         <option value="">Select Practice Area</option>
                                         {{#each practice_area}}
                                             <option value="{{this.id}}">{{this.name}}</option>
@@ -255,7 +255,7 @@
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus select-attorney">
                                     <label class="control-label">Activity Details Status</label>
-                                    <select class="form-control floatingb selectpicker" id="budget_status" name="budget_status" data-show-subtext="true" data-live-search="true">
+                                    <select class="form-control floatingb " id="budget_status" name="budget_status">
                                         <option value="">Select One</option>
                                         <option value="planned">PLANNED</option>
                                         <option value="unplanned">UNPLANNED</option>
@@ -266,7 +266,7 @@
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus select-attorney">
                                     <label class="control-label">Activity Budget Details Status</label>
-                                    <select class="form-control floating selectpicker" id="budget_details_status" name="budget_details_status" data-show-subtext="true" data-live-search="true">
+                                    <select class="form-control floating " id="budget_details_status" name="budget_details_status" >
                                         <option value="">Select One</option>
                                         <option value="planned">PLANNED BUDGET</option>
                                         <option value="unplanned">UNPLANNED BUDGET</option>
@@ -291,7 +291,7 @@
 
 {{!-- Starts add budget modal --}}
 
-<div id="add_budget" class="modal custom-modal fade" role="dialog">
+<div id="add_budget" class="modal custom-modal fade budget-modal" role="dialog">
     <div class="modal-dialog">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <div class="modal-content modal-lg">
@@ -356,6 +356,7 @@
                             </div>
                         </div>
                     </div>
+                    
                     <div class="modal-footer">
                         <div class="panel panel-primary modal-footer-panel">
                             <div class="panel-body">
@@ -382,6 +383,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
             </form>
         </div>

@@ -62,7 +62,7 @@
                                         <span class="req-lbl">*</span>
                                     </label>
 
-                                    <select id="group" name="group" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
+                                    <select id="group" name="group" class="form-control floating " >
                                         <option value="">Select Group</option>
                                         {{#each group}}
                                         <option value="{{this.id}}">{{this.name}}</option>
@@ -78,7 +78,7 @@
                                         <span class="req-lbl">*</span>
 
                                     </label>
-                                    <select id="section" name="section" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
+                                    <select id="section" name="section" class="form-control floating ">
                                         <option value="">Select Section</option>
                                         {{#each section}}
                                         <option value="{{this.section.id}}">{{this.section.name}}</option>
@@ -92,7 +92,7 @@
                                         <span class="req-lbl">*</span>
 
                                     </label>
-                                    <select id="designation" name="designation" class=" form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
+                                    <select id="designation" name="designation" class=" form-control floating " >
                                         <option value="">Select Designation</option>
                                         {{#each designation}}
                                         <option value="{{this.id}}">{{this.title}}</option>
@@ -135,7 +135,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus select-attorney">
                             <label class="control-label">Gender</label>
-                            <select class="form-control floating selectpicker" id="gender" name="gender" data-show-subtext="true" data-live-search="true">
+                            <select class="form-control floating " id="gender" name="gender" >
                                 <option value="">Select Gender</option>
                                 <option value="M">Male</option>
                                 <option value="F">Female</option>
@@ -159,7 +159,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus select-attorney">
                             <label class="control-label">Attorney Type</label>
-                            <select class="form-control floating selectpicker" id="attorney_type" name="attorney_type" data-show-subtext="true" data-live-search="true">
+                            <select class="form-control floating " id="attorney_type" name="attorney_type" >
                                 <option value="">Select Attorney Type</option>
                                 <option value="AT-APPROVED">APPROVED ATTORNEY</option>
                                 <option value="PENDING">ATTORNEY TO BE ASSIGNED</option>
@@ -246,7 +246,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus select-attorney">
                             <label class="control-label">Job Type</label>
-                            <select class="form-control floating selectpicker" id="job_type" name="job_type" data-show-subtext="true" data-live-search="true">
+                            <select class="form-control floating " id="job_type" name="job_type" >
                                 <option value="">Select Job Type</option>
                                 <option value="FULLTIME">FULLTIME</option>
                                 <option value="STERMCON">SHORT TERM CONTRACT</option>
@@ -277,7 +277,7 @@
                                 <span class="req-lbl">*</span>
 
                             </label>
-                            <select id="jurisdiction" name="jurisdiction" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
+                            <select id="jurisdiction" name="jurisdiction" class="form-control floating " >
                                 <option value="">Select Jurisdiction</option>
                                 {{#each jurisdiction}}
                                 <option value="{{this.id}}">{{this.name}}</option>
@@ -330,7 +330,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group form-focus select-focus select-attorney">
+                        <div class="form-group form-focus select-focus ">
                             <div class="">
                                 <select class="form-control floating" id="practice_area" name="practice_area" multiple="multiple" >
                                      {{#each allPracticeArea}}

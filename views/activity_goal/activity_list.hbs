@@ -46,10 +46,10 @@
                                 <td>{{dateFormat this.activity_from_date "DD-MM-YYYY"}}</td>
                                 <td>{{dateFormat this.activity_to_date "DD-MM-YYYY"}}</td>
                                 <td>{{this.remarks}}</td>
-                                <td> {{#if_eq this.activity_status '0'}} NEW ACTIVITY - CREATED {{/if_eq}} {{#if_eq this.activity_status
-                                    '1'}} PENDING APPROVAL - IN-PROGRESS {{/if_eq}} {{#if_eq this.activity_status
-                                    '2'}} APPROVED - PROCEED {{/if_eq}} {{#if_eq this.activity_status '3'}} NOT
-                                    APPROVED - DISCARD ACTIVITY {{/if_eq}}
+                                <td> {{#if_eq this.activity_status '0'}} <span class="label label-info-border">NEW ACTIVITY - CREATED</span> {{/if_eq}} {{#if_eq this.activity_status
+                                    '1'}} <span class="label label-warning-border">PENDING APPROVAL - IN-PROGRESS</span> {{/if_eq}} {{#if_eq this.activity_status
+                                    '2'}} <span class="label label-success-border">APPROVED - PROCEED</span> {{/if_eq}} {{#if_eq this.activity_status '3'}} NOT
+                                    <span class="label label-danger-border">REJECTED - DISCARD ACTIVITY</span> {{/if_eq}}
                                 </td>
                                 <td>
                                     <a href="/activity/view/{{this.id}}" class="btn btn-success btn-sm" id="setUrlItem">
