@@ -906,4 +906,19 @@ router.get("/get-chart-two-activity-count-value", auth, async(req, res)=> {
     
 });
 
+
+router.post("/change-password-new-user", auth, async (req, res) => {
+    const chngPass = await User.update({
+        password: bCrypt.hashSync(req.body.new_password),
+        new_user_status: 0
+    },{
+        where: {
+            id: req.user.id
+        }
+    })
+    res.send({
+        success: true
+    });
+});
+
 module.exports = router;
