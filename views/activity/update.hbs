@@ -140,7 +140,7 @@
                   </select>
                 </div>
               </div>
-              <div class="col-md-6 none" {{#if_eq editdata.activity_type "individual"}} style="display: block;" {{else}} style="display: none;" {{/if_eq}}>
+              <div class="col-md-6 indi" {{#if_eq editdata.activity_type "individual"}} style="display: block;" {{else}} style="display: none;" {{/if_eq}}>
                 <div class="form-group form-focus select-focus"></div>
               </div>
               <div class="col-md-6 section" {{#if_eq editdata.activity_type "section"}} style="display: block;" {{else}} style="display: none;" {{/if_eq}}>
@@ -163,7 +163,7 @@
                   </select>
                 </div>
               </div>
-              <div class="col-md-6 attorney" {{#if_eq editdata.activity_type "team"}} style="display: block; margin-bottom: 23px; margin-top: 8px;" {{else}} style="display: none; margin-bottom: 23px; margin-top: 8px;" {{/if_eq}}>
+              <div class="col-md-6 attorney" {{#if_eq editdata.activity_type "team"}} style="display: block; margin-bottom: 23px; margin-top: 8px;" {{else}} style="display: none;" {{/if_eq}}>
                 <div class="form-group select-focus">
                   {{!-- <label class="control-label">Attorney <span class="req-lbl">*</span> </label> --}}
                   <select class="form-control floating" id="attorney_user" name="attorney_user[]" multiple="multiple">
@@ -537,28 +537,6 @@
     $('#client_list').hide();
     $('#general_list').show();
   });
-  var typeDetails = $('#activityTypeDetails').val();
-  if (typeDetails == 'T') {
-    $('#client_list').hide();
-    $('#referral_list').hide();
-    $('#target_list').show();
-    $('#general_list').hide();
-  } else if (typeDetails == 'C') {
-    $('#client_list').show();
-    $('#target_list').hide();
-    $('#referral_list').hide();
-    $('#general_list').hide();
-  } else if (typeDetails == 'R') {
-    $('#referral_list').show();
-    $('#client_list').hide();
-    $('#target_list').hide();
-    $('#general_list').hide();
-  } else if (typeDetails == 'G') {
-    $('#referral_list').hide();
-    $('#client_list').hide();
-    $('#target_list').hide();
-    $('#general_list').show();
-  }
   $(document).on('click', "#btnEditActivityBudget", function (e) {
     var EditBudgetArr = [];
     var totalAmount = 0;
@@ -614,47 +592,28 @@
   });
   $("#activity_type").change(function () {
     if ($(this).val() == 'team') {
-      $(".none").hide();
+      $(".indi").hide();
       $(".section").hide();
       $(".strategyGroup").hide();
       $(".attorney").show();
     } else if ($(this).val() == 'section') {
-      $(".none").hide();
+      $(".indi").hide();
       $(".section").show();
       $(".strategyGroup").hide();
       $(".attorney").hide();
     } else if ($(this).val() == 'strategic_group') {
-      $(".none").hide();
+      $(".indi").hide();
       $(".strategyGroup").show();
       $(".section").hide();
       $(".attorney").hide();
     } else {
-      $(".none").show();
+      $(".indi").show();
       $(".section").hide();
       $(".strategyGroup").hide();
       $(".attorney").hide();
     }
   })
-  if ($('#activity_type').val() == 'team') {
-    $(".none").show();
-    $(".section").hide();
-    $(".strategyGroup").hide();
-  } else if ($('#activity_type').val() == 'section') {
-    $(".none").hide();
-    $(".section").show();
-    $(".strategyGroup").hide();
-  } else if ($('#activity_type').val() == 'strategic_group') {
-    $(".none").hide();
-    $(".strategyGroup").show();
-    $(".section").hide();
-  } else {
-    $(".none").show();
-    $(".section").hide();
-    $(".strategyGroup").hide();
-  }
-</script>
-
-<script type="text/javascript">
+  
   // add designation ajax and form validation starts
   $(document).ready(function (e) {
     $(".number_budget").keydown(function (e) {
