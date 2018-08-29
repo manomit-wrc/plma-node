@@ -2,8 +2,7 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
-{{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
 <div class="page-wrapper">
   <div class="content container-fluid">
     <div class="row">
@@ -12,9 +11,12 @@
       </div>
       <div class="right">
         {{#if (or (eq editdata.activity_status "0")(eq editdata.activity_status "3"))}}
-        <a href="/activity/edit/{{editdata.id}}" class="btn btn-primary pull-right rounded"><i class="fa fa-edit"></i> Edit Activity</a>
+        <a href="/activity/edit/{{editdata.id}}" class="btn btn-primary pull-right rounded"><i class="fa fa-edit"></i> Edit
+          Activity
+        </a>
         {{/if}}
-        <a href="javascript:history.back()" class="btn btn-primary pull-right rounded m-r-5"><i class="fa fa-arrow-left"></i> Back</a>
+        <a href="javascript:history.back()" class="btn btn-primary pull-right rounded m-r-5"><i class="fa fa-arrow-left"></i>
+          Back</a>
       </div>
     </div>
     <form name="updateActivityForm" id="updateActivityForm" action="/activity/update/{{editdata.id}}" method="POST">
@@ -32,7 +34,8 @@
                 <div class="form-group">
                   <label class="input-group">
                     <span class="input-group-addon">
-                      <input type="radio" id="target_type" name="ref_type" value="T" {{#if_eq editdata.target "T"}} checked {{/if_eq}} disabled />
+                      <input type="radio" id="target_type" name="ref_type" value="T" {{#if_eq editdata.target "T"}} checked {{/if_eq}} disabled
+                      />
                     </span>
                     <div class="form-control form-control-static">Target</div>
                     <span class="glyphicon form-control-feedback"></span>
@@ -41,7 +44,8 @@
                 <div class="form-group">
                   <label class="input-group">
                     <span class="input-group-addon">
-                      <input type="radio" id="organization_type" name="ref_type" value="C" {{#if_eq editdata.target "C"}} checked {{/if_eq}} disabled />
+                      <input type="radio" id="organization_type" name="ref_type" value="C" {{#if_eq editdata.target "C"}} checked {{/if_eq}} disabled
+                      />
                     </span>
                     <div class="form-control form-control-static">Client</div>
                     <span class="glyphicon form-control-feedback"></span>
@@ -50,7 +54,8 @@
                 <div class="form-group">
                   <label class="input-group">
                     <span class="input-group-addon">
-                      <input type="radio" id="referral_type" name="ref_type" value="R" {{#if_eq editdata.target "R"}} checked {{/if_eq}} disabled />
+                      <input type="radio" id="referral_type" name="ref_type" value="R" {{#if_eq editdata.target "R"}} checked {{/if_eq}} disabled
+                      />
                     </span>
                     <div class="form-control form-control-static">Referral</div>
                     <span class="glyphicon form-control-feedback"></span>
@@ -59,7 +64,8 @@
                 <div class="form-group">
                   <label class="input-group">
                     <span class="input-group-addon">
-                      <input type="radio" id="general_type" name="ref_type" value="G" {{#if_eq editdata.target "G"}} checked {{/if_eq}} disabled />
+                      <input type="radio" id="general_type" name="ref_type" value="G" {{#if_eq editdata.target "G"}} checked {{/if_eq}} disabled
+                      />
                     </span>
                     <div class="form-control form-control-static">General</div>
                     <span class="glyphicon form-control-feedback"></span>
@@ -67,36 +73,43 @@
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="form-group form-focus select-focus" id="target_list" {{#if_eq editdata.target "T"}} style="display: block;" {{else}} style="display: none;" {{/if_eq}}>
+                <div class="form-group form-focus select-focus" id="target_list" {{#if_eq editdata.target "T"}} style="display: block;" {{else}}
+                  style="display: none;" {{/if_eq}}>
                   <select id="target_id" name="target_user[]" class="form-control floating" multiple="multiple" disabled>
                     {{#each target}}
-                    <option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.first_name}}
-                      {{this.last_name}}</option>
+                    <option value="{{this.id}}" {{#inArrayCustom ../arr this.id "T"}} selected="selected" {{/inArrayCustom}}>{{this.first_name}}
+                      {{this.last_name}}
+                    </option>
                     {{/each}}
                   </select>
                 </div>
               </div>
-              <div class="col-md-6" id="client_list" {{#if_eq editdata.target "C"}} style="display: block;" {{else}} style="display: none;" {{/if_eq}}>
+              <div class="col-md-6" id="client_list" {{#if_eq editdata.target "C"}} style="display: block;" {{else}} style="display: none;"
+                {{/if_eq}}>
                 <div class="form-group form-focus select-focus">
                   <select id="client_id" name="client_user[]" class="form-control floating" multiple="multiple" disabled>
                     {{#each client}}
-                    <option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.first_name}}
-                      {{this.last_name}}</option>
+                    <option value="{{this.id}}" {{#inArrayCustom ../arr this.id "C"}} selected="selected" {{/inArrayCustom}}>{{this.first_name}}
+                      {{this.last_name}}
+                    </option>
                     {{/each}}
                   </select>
                 </div>
               </div>
-              <div class="col-md-6" id="referral_list" {{#if_eq editdata.target "R"}} style="display: block;" {{else}} style="display: none;" {{/if_eq}}>
+              <div class="col-md-6" id="referral_list" {{#if_eq editdata.target "R"}} style="display: block;" {{else}} style="display: none;"
+                {{/if_eq}}>
                 <div class="form-group form-focus select-focus">
                   <select id="referral_id" name="referral_user[]" class="form-control floating" multiple="multiple" disabled>
                     {{#each referral}}
-                    <option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.first_name}}
-                      {{this.last_name}}</option>
+                    <option value="{{this.id}}" {{#inArrayCustom ../arr this.id "R"}} selected="selected" {{/inArrayCustom}}>{{this.first_name}}
+                      {{this.last_name}}
+                    </option>
                     {{/each}}
                   </select>
                 </div>
               </div>
-              <div class="col-md-6" id="general_list" {{#if_eq editdata.target "G"}} style="display: block;" {{else}} style="display: none;" {{/if_eq}}></div>
+              <div class="col-md-6" id="general_list" {{#if_eq editdata.target "G"}} style="display: block;" {{else}} style="display: none;"
+                {{/if_eq}}></div>
             </div>
           </div>
         </div>
@@ -109,13 +122,15 @@
               <div class="col-md-6">
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">Activity Name</label>
-                  <input class="form-control floating" type="text" id="activity_name" name="activity_name" value="{{editdata.activity_name}}" disabled>
+                  <input class="form-control floating" type="text" id="activity_name" name="activity_name" value="{{editdata.activity_name}}"
+                    disabled />
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">Activity Reason</label>
-                  <input class="form-control floating" type="text" id="activity_reason" name="activity_reason" value="{{editdata.activity_reason}}" disabled>
+                  <input class="form-control floating" type="text" id="activity_reason" name="activity_reason" value="{{editdata.activity_reason}}"
+                    disabled />
                 </div>
               </div>
               <div class="col-md-6">
@@ -123,33 +138,50 @@
                   <label class="control-label">Activity Type </label>
                   <select class="form-control floating" id="activity_type" name="activity_type" disabled>
                     <option value="">Select Activity Type</option>
-                    <option value="individual" {{#if_eq editdata.activity_type "individual"}} selected="selected" {{/if_eq}}>INDIVIDUAL LEVEL</option>
-                    <option value="section" {{#if_eq editdata.activity_type "section"}} selected="selected" {{/if_eq}}>SECTION LEVEL</option>
-                    <option value="strategic_group" {{#if_eq editdata.activity_type "strategic_group"}} selected="selected" {{/if_eq}}>STRATEGIC GROUP LEVEL</option>
+                    <option value="individual" {{#if_eq editdata.activity_type "individual"}} selected="selected" {{/if_eq}}>INDIVIDUAL
+                      LEVEL
+                    </option>
+                    <option value="section" {{#if_eq editdata.activity_type "section"}} selected="selected" {{/if_eq}}>SECTION
+                      LEVEL
+                    </option>
+                    <option value="strategic_group" {{#if_eq editdata.activity_type "strategic_group"}} selected="selected" {{/if_eq}}>STRATEGIC
+                      GROUP LEVEL</option>
                     <option value="team" {{#if_eq editdata.activity_type "team"}} selected="selected" {{/if_eq}}>TEAM LEVEL</option>
                   </select>
                 </div>
               </div>
-              <div class="col-md-6 none">
+              <div class="col-md-6 none" {{#if_eq editdata.activity_type "individual"}} style="display: block;" {{else}} style="display: none;" {{/if_eq}}>
                 <div class="form-group form-focus select-focus"></div>
               </div>
-              <div class="col-md-6 section" style="display: none;">
+              <div class="col-md-6 section" {{#if_eq editdata.activity_type "section"}} style="display: block;" {{else}} style="display: none;" {{/if_eq}}>
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">Section <span class="req-lbl">*</span> </label>
                   <select class="form-control floating" id="section" name="section" disabled>
                     <option value="0">Select Section</option>
                     {{#each section}}
-                      <option value="{{this.section.id}}" {{#if_eq this.id ../editdata.section_id}} selected="selected" {{/if_eq}}>{{this.section.name}}</option>
+                    <option value="{{this.section.id}}" {{#if_eq this.id ../editdata.section_id}} selected="selected" {{/if_eq}}>{{this.section.name}}</option>
                     {{/each}}
                   </select>
                 </div>
               </div>
-              <div class="col-md-6 strategyGroup" style="display: none;">
+              <div class="col-md-6 strategyGroup" {{#if_eq editdata.activity_type "strategic_group"}} style="display: block;" {{else}} style="display: none;" {{/if_eq}}>
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">Strategy Group <span class="req-lbl">*</span> </label>
                   <select class="form-control floating" id="strategyGroup" name="strategy_group" disabled>
                     <option value="0">Select Strategy Group</option>
                     <option value="1" {{#if_eq editdata.s_group_id 1}} selected="selected" {{/if_eq}}>NEED TO DISCUSS</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6 attorney" {{#if_eq editdata.activity_type "team"}} style="display: block; margin-bottom: 23px; margin-top: 8px;" {{else}} style="display: none; margin-bottom: 23px; margin-top: 8px;" {{/if_eq}}>
+                <div class="form-group select-focus">
+                  {{!-- <label class="control-label">Attorney <span class="req-lbl">*</span> </label> --}}
+                  <select class="form-control floating" id="attorney_user" name="attorney_user[]" multiple="multiple" disabled>
+                    {{!-- <option value="0">Select Attorney</option> --}} {{#each attorney}}
+                    <option value="{{this.id}}" {{#inArray ../attr_arr this.id}} selected="selected" {{/inArray}}>{{this.first_name}}
+                      {{this.last_name}}
+                    </option>
+                    {{/each}}
                   </select>
                 </div>
               </div>
@@ -159,7 +191,7 @@
                   <select id="activity_goal" name="activity_goal" class="form-control floating" disabled>
                     <option value="">Select Tactical Marketing Goals</option>
                     {{#each activity_goal}}
-                      <option value="{{this.id}}" {{#if_eq this.id ../editdata.activity_goal_id}} selected="selected" {{/if_eq}}>{{this.activity_goal}}</option>
+                    <option value="{{this.id}}" {{#if_eq this.id ../editdata.activity_goal_id}} selected="selected" {{/if_eq}}>{{this.activity_goal}}</option>
                     {{/each}}
                   </select>
                 </div>
@@ -170,7 +202,7 @@
                   <select id="practice_area" name="practice_area" class="form-control floating" disabled>
                     <option value="">Select Practice Area</option>
                     {{#each practice_area}}
-                      <option value="{{this.id}}" {{#if_eq this.id ../editdata.practice_area}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                    <option value="{{this.id}}" {{#if_eq this.id ../editdata.practice_area}} selected="selected" {{/if_eq}}>{{this.name}}</option>
                     {{/each}}
                   </select>
                 </div>
@@ -180,7 +212,7 @@
                   <label class="control-label">Creation Date</label>
                   <div class="cal-icon">
                     <input class="form-control floating datetimepicker" type="text" id="activity_creation_date" name="activity_creation_date"
-                      value="{{dateFormat editdata.activity_creation_date "DD-MM-YYYY"}}" disabled>
+                      value="{{dateFormat editdata.activity_creation_date " DD-MM-YYYY "}}" disabled>
                   </div>
                 </div>
               </div>
@@ -191,7 +223,8 @@
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">From Date</label>
                   <div class="cal-icon">
-                    <input class="form-control floating datetimepicker" type="text" id="activity_from_date" name="activity_from_date" value="{{dateFormat editdata.activity_from_date "DD-MM-YYYY"}}" disabled>
+                    <input class="form-control floating datetimepicker" type="text" id="activity_from_date" name="activity_from_date" value="{{dateFormat editdata.activity_from_date "
+                      DD-MM-YYYY "}}" disabled>
                   </div>
                 </div>
               </div>
@@ -199,7 +232,8 @@
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">To Date</label>
                   <div class="cal-icon">
-                    <input class="form-control floating datetimepicker" type="text" id="activity_to_date" name="activity_to_date" value="{{dateFormat editdata.activity_to_date "DD-MM-YYYY"}}" disabled>
+                    <input class="form-control floating datetimepicker" type="text" id="activity_to_date" name="activity_to_date" value="{{dateFormat editdata.activity_to_date "
+                      DD-MM-YYYY "}}" disabled>
                   </div>
                 </div>
               </div>
@@ -377,16 +411,22 @@
     buttonWidth: '100%'
   });
 
-  $("#potiential_revenue").inputmask("numeric", {
+  $('#attorney_user').multiselect({
+    nonSelectedText: 'Select Attorney',
+    includeSelectAllOption: true,
+    buttonWidth: '100%'
+  });
+
+  /* $("#potiential_revenue").inputmask("numeric", {
     radixPoint: ".",
     groupSeparator: ",",
     digits: 2,
     autoGroup: true,
     prefix: '$ ',
     rightAlign: false
-  });
+  }); */
 
-  var typeDetails = $('#activityTypeDetails').val();
+  /* var typeDetails = $('#activityTypeDetails').val();
   if (typeDetails == 'T') {
     $('#client_list').hide();
     $('#referral_list').hide();
@@ -407,11 +447,10 @@
     $('#general_list').show();
     $('#client_list').hide();
     $('#target_list').hide();
-  }
+  } */
 
   $(document).on('click', "#backActivityByn", function () {
     window.location.href = localStorage.getItem('url');
     localStorage.removeItem('url');
   });
-</script>
-{{/content}}
+</script> {{/content}}

@@ -22,7 +22,8 @@
       <div class="col-md-6 col-sm-6 col-lg-3">
         <div class="dash-widget clearfix card-box">
           <span class="dash-widget-icon">
-            <i class="fa fa-cubes" aria-hidden="true"></i>
+            <!-- <i class="fa fa-cubes" aria-hidden="true"></i> -->
+            <img src="assets/img/firms.png" alt="firms">
           </span>
           <div class="dash-widget-info">
             <h3>{{firm_count}}</h3>
@@ -33,7 +34,8 @@
       <div class="col-md-6 col-sm-6 col-lg-3">
         <div class="dash-widget clearfix card-box">
           <span class="dash-widget-icon">
-            <i class="fa fa-users" aria-hidden="true"></i>
+            <!-- <i class="fa fa-users" aria-hidden="true"></i> -->
+            <img src="assets/img/employess.png" alt="employess">
           </span>
           <div class="dash-widget-info">
             <h3>{{employee_count}}</h3>
@@ -44,7 +46,8 @@
       <div class="col-md-6 col-sm-6 col-lg-3">
         <div class="dash-widget clearfix card-box">
           <span class="dash-widget-icon">
-            <i class="fa fa-users"></i>
+            <!-- <i class="fa fa-users"></i> -->
+            <img src="assets/img/attorneys.png" alt="attorneys">
           </span>
           <div class="dash-widget-info">
             <h3>{{attorney_count}}</h3>
@@ -55,7 +58,8 @@
       <div class="col-md-6 col-sm-6 col-lg-3">
         <div class="dash-widget clearfix card-box">
           <span class="dash-widget-icon">
-            <i class="fa fa-dollar" aria-hidden="true"></i>
+            <!-- <i class="fa fa-dollar" aria-hidden="true"></i> -->
+            <img src="assets/img/budgets.png" alt="budgets">
           </span>
           <div class="dash-widget-info">
             <h3>$ {{total_budget_amount}}</h3>
@@ -196,7 +200,8 @@
       <div class="col-md-6 col-sm-6 col-lg-3">
         <div class="dash-widget clearfix card-box">
           <span class="dash-widget-icon">
-            <i class="fa fa-cubes" aria-hidden="true"></i>
+            <!-- <i class="fa fa-cubes" aria-hidden="true"></i> -->
+            <img src="assets/img/activities.png" alt="activities">
           </span>
           <div class="dash-widget-info">
             <h3>{{activity_count}}</h3>
@@ -209,7 +214,8 @@
       <div class="col-md-6 col-sm-6 col-lg-3">
         <div class="dash-widget clearfix card-box">
           <span class="dash-widget-icon">
-            <i class="fa fa-users" aria-hidden="true"></i>
+            <!-- <i class="fa fa-users" aria-hidden="true"></i> -->
+            <img src="assets/img/target.png" alt="target">
           </span>
           <div class="dash-widget-info">
             <h3>{{target_count}}</h3>
@@ -222,7 +228,8 @@
       <div class="col-md-6 col-sm-6 col-lg-3">
         <div class="dash-widget clearfix card-box">
           <span class="dash-widget-icon">
-            <i class="fa fa-users"></i>
+            <!-- <i class="fa fa-users"></i> -->
+            <img src="assets/img/clients.png" alt="clients">
           </span>
           <div class="dash-widget-info">
             <h3>{{client_count}}</h3>
@@ -235,7 +242,8 @@
       <div class="col-md-6 col-sm-6 col-lg-3">
         <div class="dash-widget clearfix card-box">
           <span class="dash-widget-icon">
-            <i class="fa fa-users" aria-hidden="true"></i>
+            <!-- <i class="fa fa-users" aria-hidden="true"></i> -->
+            <img src="assets/img/referrals.png" alt="referrals">
           </span>
           <div class="dash-widget-info">
             <h3>{{referral_count}}</h3>
@@ -347,7 +355,6 @@
                     <th style="min-width:200px;">Name</th>
                     <th>Email</th>
                     <th>Client Type</th>
-                    <th>Mobile</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -377,7 +384,6 @@
                       <span class="label label-info-border">Organization</span>
                       {{/if_eq}}
                     </td>
-                    <td>{{this.mobile_no}}</td>
                   </tr>
                   {{/each}} {{/if_eq}}
                 </tbody>
@@ -402,7 +408,6 @@
                     <th style="min-width:200px;">Name</th>
                     <th>Email</th>
                     <th>Target Type</th>
-                    <th>Mobile</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -432,7 +437,6 @@
                       <span class="label label-info-border">Organization</span>
                       {{/if_eq}}
                     </td>
-                    <td>{{this.mobile_no}}</td>
                   </tr>
                   {{/each}} {{/if_eq}}
                 </tbody>
@@ -459,7 +463,6 @@
                     <th style="min-width:200px;">Name</th>
                     <th>Email</th>
                     <th>Referral Type</th>
-                    <th>Mobile</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -489,7 +492,6 @@
                       <span class="label label-info-border">Organization</span>
                       {{/if_eq}}
                     </td>
-                    <td>{{this.mobile}}</td>
                   </tr>
                   {{/each}} {{/if_eq}}
                 </tbody>
@@ -513,8 +515,7 @@
                   <tr>
                     <th style="min-width:200px;">Name</th>
                     <th>Email</th>
-                    <th>Client Type</th>
-                    <th>Mobile</th>
+                    <th>Master Contacts Type</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -544,7 +545,6 @@
                       <span class="label label-info-border">Organization</span>
                       {{/if_eq}}
                     </td>
-                    <td>{{this.mobile_no}}</td>
                   </tr>
                   {{/each}} {{/if_eq}}
                 </tbody>
@@ -624,6 +624,24 @@
                       }
                     },
                     {
+                      "values": response.total_hour,
+                      text: 'Total Hour',
+                      "line-color": "#50a069",
+                      "background-color": "#50a069",
+                      "marker": {
+                        "background-color": "#50a069",
+                        "size": 6,
+                        "borderColor": "black",
+                        "borderWidth": 1
+                      },
+                      "hover-marker": {
+                        "background-color": "#50a069",
+                        "size": 8,
+                        "borderColor": "black",
+                        "borderWidth": 1
+                      }
+                    },
+                    {
                       values: response.total_budget,
                       "tooltip": {
                         "text": "$ %vt"
@@ -658,96 +676,122 @@
 
               }
             });
-          });
 
-            var myConfig1 = {
-                "type": "line",
-                "plotarea": {
-                  "adjust-layout": true
-                },
-                "scale-x": {
-                  "label": {
-                    "text": "Above is an example of a category scale",
 
+            /*=============================== Chart 2 =============================*/
+
+            $.ajax({
+              type: "GET",
+              url: "/get-chart-two-activity-count-value",
+              success: function (response) {
+                var myConfig1 = {
+                  "type": "line",
+                  "plotarea": {
+                    "adjust-layout": true
                   },
-                  "labels": [
-                    "2014",
-                    "2015",
-                    "2016",
-                    "2017",
-                    "2018",
-                    "2019",
-                    "2020",
-                    "2021"
+                  "scale-x": {
+                    "label": {
+                      "text": "Year",
+
+                    },
+                    "labels": [
+                      "2017",
+                      "2018",
+                      "2019",
+                      "2020",
+                      "2021",
+                      "2022",
+                      "2023",
+                      "2024"
+                    ]
+                  },
+                  scaleY: {
+                    "progression": "log",
+                    "log-base": 10,
+                    "thousands-separator": ",",
+                    label: {
+                      text: "Total No. of activities and budgets"
+                    }
+                  },
+                  guide: {
+                    lineStyle: 'dotted'
+                  },
+                  "scale": {
+                    "size-factor": 1
+                  },
+                  "series": [
+                    {
+                      "values": response.total_activity,
+                      text: 'Total Activities',
+                      "line-color": "#a5a5a5",
+                      "background-color": "#c2c2c2",
+                      "marker": {
+                        "background-color": "#a5a5a5",
+                        "size": 6,
+                        "borderColor": "black",
+                        "borderWidth": 1
+                      },
+                      "hover-marker": {
+                        "background-color": "#a5a5a5",
+                        "size": 8,
+                        "borderColor": "black",
+                        "borderWidth": 1
+                      }
+                    },
+                    {
+                      "values": response.total_hour,
+                      text: 'Total Hour',
+                      "line-color": "#50a069",
+                      "background-color": "#50a069",
+                      "marker": {
+                        "background-color": "#50a069",
+                        "size": 6,
+                        "borderColor": "black",
+                        "borderWidth": 1
+                      },
+                      "hover-marker": {
+                        "background-color": "#50a069",
+                        "size": 8,
+                        "borderColor": "black",
+                        "borderWidth": 1
+                      }
+                    },
+                    {
+                      "values": response.total_amount,
+                      "tooltip": {
+                        "text": "$ %vt"
+                      },
+                      text: 'Total Budgets ($)',
+                      "line-color": "#ffa500",
+                      "background-color": "#ff881f",
+                      "marker": {
+                        "background-color": "#ffa500",
+                        "size": 6,
+                        "borderColor": "black",
+                        "borderWidth": 1
+                      },
+                      "hover-marker": {
+                        "background-color": "#ffa500",
+                        "size": 8,
+                        "borderColor": "black",
+                        "borderWidth": 1
+                      }
+                    }
                   ]
-                },
-                guide: {
-                  lineStyle: 'dotted'
-                },
-                "series": [
-                  {
-                    "values": [
-                      20,
-                      40,
-                      25,
-                      50,
-                      15,
-                      45,
-                      33,
-                      34
-                    ],
-                    text: 'Total Activities',
-                    "line-color": "#a5a5a5",
-                    "background-color": "#c2c2c2",
-                    "marker": {
-                      "background-color": "#a5a5a5",
-                      "size": 6,
-                      "borderColor": "black",
-                      "borderWidth": 1
-                    },
-                    "hover-marker": {
-                      "background-color": "#a5a5a5",
-                      "size": 8,
-                      "borderColor": "black",
-                      "borderWidth": 1
-                    }
-                  },
-                  {
-                    "values": [
-                      5,
-                      30,
-                      21,
-                      18,
-                      59,
-                      50,
-                      28,
-                      33
-                    ],
-                    text: 'Total Budgets ($)',
-                    "line-color": "#ffa500",
-                    "background-color": "#ff881f",
-                    "marker": {
-                      "background-color": "#ffa500",
-                      "size": 6,
-                      "borderColor": "black",
-                      "borderWidth": 1
-                    },
-                    "hover-marker": {
-                      "background-color": "#ffa500",
-                      "size": 8,
-                      "borderColor": "black",
-                      "borderWidth": 1
-                    }
-                  }
-                ]
-              };
+                };
 
-              zingchart.render({
-                id: 'myChart1',
-                data: myConfig1,
-                height: 250,
-                width: '100%'
-              });
+                zingchart.render({
+                  id: 'myChart1',
+                  data: myConfig1,
+                  height: 250,
+                  width: '100%'
+                });
+              },
+              error: function (xhr) {
+
+              }
+            });
+          });
           
 
         var data = [

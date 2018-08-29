@@ -111,6 +111,32 @@
 										</div>
 									</div>
 								</div>
+
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Lifetime Client Value
+										</label>
+										<input class="form-control floating" type="text" id="lifetimeClient" name="lifetimeClient">
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Start Date<span class="req-lbl">*</span> </label>
+										<div class="cal-icon">
+											<input class="form-control floating datetimepicker" type="text" id="targetStartDate" name="targetStartDate">
+										</div>
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">End Date<span class="req-lbl">*</span> </label>
+										<div class="cal-icon">
+											<input class="form-control floating datetimepicker" type="text" id="targetEndDate" name="targetEndDate">
+										</div>
+									</div>
+								</div>
 								
 								<div class="col-md-6">
 									<div class="form-group form-focus select-focus select-attorney">
@@ -534,6 +560,15 @@
 	$(document).ready(function (e) {
 
 		$("#estimated_revenue").inputmask("numeric", {
+            radixPoint: ".",
+            groupSeparator: ",",
+            digits: 2,
+            autoGroup: true,
+            prefix: '$ ',
+            rightAlign: false
+        });
+
+		$("#lifetimeClient").inputmask("numeric", {
             radixPoint: ".",
             groupSeparator: ",",
             digits: 2,

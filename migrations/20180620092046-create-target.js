@@ -84,6 +84,15 @@ module.exports = {
       },
       revenueclosingDate: {
         type: Sequelize.INTEGER
+      },
+      targetStartDate: {
+        type: Sequelize.STRING
+      },
+      targetEndDate: {
+        type: Sequelize.STRING
+      },
+      lifetimeClientValue: {
+        type: Sequelize.INTEGER
       }
     });
   },

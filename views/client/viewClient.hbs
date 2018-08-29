@@ -196,13 +196,37 @@
 								 disabled="disabled" />
 							</div>
 						</div>
-						<div class="col-md-5">
+						
+						<div class="col-md-6">
 							<div class="form-group form-focus select-focus">
 								<label class="control-label">Fax</label>
 								<input type="text" class="form-control floating number_validator" id="fax" name="fax" value="{{client.fax}}" disabled="disabled"
 								/>
 							</div>
 						</div>
+
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<label class="control-label">Start Date<span class="req-lbl">*</span> </label>
+								<div class="cal-icon">
+									<input class="form-control floating datetimepicker" type="text" id="clientStartDate" name="clientStartDate" value="{{dateFormat client.clientStartDate "
+										 DD-MM-YYYY "}}" disabled>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<label class="control-label">End Date<span class="req-lbl">*</span> </label>
+								<div class="cal-icon">
+									<input class="form-control floating datetimepicker" type="text" id="clientEndDate" name="clientEndDate" value="{{dateFormat client.clientEndDate "
+										 DD-MM-YYYY "}}" disabled>
+								</div>
+							</div>
+						</div>
+
+						
+
 						<div class="col-md-1">
 							<button type="button" id="expandBtn" class="btn btn-primary btn-lg" title="View All">
 								<i class="fa fa-arrow-down"></i>
