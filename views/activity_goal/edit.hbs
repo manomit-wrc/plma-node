@@ -43,7 +43,7 @@
                         <div class="col-md-6">
                             <div class="form-group form-focus select-focus select-attorney">
                                 <label class="control-label">Strategic Goals</label>
-                                <select class="form-control floating selectpicker" id="strategic_goal" name="strategic_goal" data-show-subtext="true" data-live-search="true">
+                                <select class="form-control floating " id="strategic_goal" name="strategic_goal" >
                                     <option value="">Select Strategic Goals</option>
                                     {{#each stragic_goal}}
                                     <option value="{{this.id}}" {{#if_eq this.id ../edit_goals.strategic_goal_id}} selected="selected" {{/if_eq}}>{{this.name}}</option>
@@ -54,7 +54,7 @@
                         <div class="col-md-6">
                             <div class="form-group form-focus select-focus select-attorney">
                                 <label class="control-label">Category</label>
-                                <select class="form-control floating selectpicker" id="category" name="category" data-show-subtext="true" data-live-search="true">
+                                <select class="form-control floating " id="category" name="category" >
                                     <option value="">Select Category</option>
                                     <option value="content development" {{#if_eq edit_goals.category "content development"}} selected="selected" {{/if_eq}}>Content Development</option>
                                     <option value="relationship building" {{#if_eq edit_goals.category "relationship building"}} selected="selected" {{/if_eq}}>Relationship Building</option>

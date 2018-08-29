@@ -73,7 +73,7 @@
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus select-attorney">
                                     <label class="control-label">Gender</label>
-                                    <select class="form-control floating selectpicker" id="gender" name="gender" data-show-subtext="true" data-live-search="true">
+                                    <select class="form-control floating " id="gender" name="gender" >
                                         <option value="">Select Gender</option>
                                         <option value="M">Male</option>
                                         <option value="F">Female</option>
@@ -148,7 +148,7 @@
                     <div class="col-md-12">
                         <div class="form-group form-focus select-focus select-attorney">
                             <label class="control-label">Firm Name</label>
-                            <select class="form-control floating selectpicker" id="firm_id" name="firm_id" data-show-subtext="true" data-live-search="true">
+                            <select class="form-control floating " id="firm_id" name="firm_id">
                                 {{#each firms}}
                                     <option value="{{this.id}}">{{this.title}}</option>
                                 {{/each}}

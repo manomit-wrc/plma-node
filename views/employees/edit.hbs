@@ -57,7 +57,7 @@
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus select-attorney">
                                     <label class="control-label">Gender</label>
-                                    <select class="form-control floating selectpicker" id="gender" name="gender"data-show-subtext="true" data-live-search="true">
+                                    <select class="form-control floating " id="gender" name="gender">
                                         <option value="M" {{#if_eq empl.gender "M"}} selected="selected" {{/if_eq}}>Male</option>
                                         <option value="F" {{#if_eq empl.gender "F"}} selected="selected" {{/if_eq}}>Female</option>
                                         <option value="O" {{#if_eq empl.gender "O"}} selected="selected" {{/if_eq}}>Other</option>
@@ -133,7 +133,7 @@
                     <div class="col-md-12">
                         <div class="form-group form-focus select-focus select-attorney">
                             <label class="control-label">Firm Name</label>
-                            <select class="form-control floating selectpicker" id="firm_id" name="firm_id"data-show-subtext="true" data-live-search="true">
+                            <select class="form-control floating " id="firm_id" name="firm_id" >
                                 {{#each firms}}
                                     <option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.title}}</option>
                                 {{/each}}

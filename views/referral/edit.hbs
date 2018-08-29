@@ -125,7 +125,7 @@
 
               <div class="col-md-6" id="target_list" {{#if_eq referral.referred_type "C"}} style="display:none;" {{/if_eq}}>
                 <div class="form-group form-focus select-attorney">
-                  <select id="target_id" name="referred_id_t" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
+                  <select id="target_id" name="referred_id_t" class="form-control floating " >
                     <option value="0" {{#if_eq referral.target_id "0"}} selected {{/if_eq}}>Select Target</option>
                     {{#each target}} {{#if_eq target_type "I"}}
                     <option value="{{this.id}}" {{#if_eq this.id ../referral.target_id}} selected {{/if_eq}}>{{this.first_name}}
@@ -138,7 +138,7 @@
               </div>
               <div class="col-md-6" id="client_list" {{#if_eq referral.referred_type "T"}} style="display:none;" {{/if_eq}}>
                 <div class="form-group form-focus select-attorney">
-                  <select id="client_id" name="referred_id_c" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
+                  <select id="client_id" name="referred_id_c" class="form-control floating " >
                     <option value="0" {{#if_eq referral.client_id "0"}} selected {{/if_eq}}>Select Client</option>
                     {{#each client}} {{#if_eq client_type "I"}}
                     <option value="{{this.id}}" {{#if_eq this.id ../referral.client_id}} selected {{/if_eq}}>{{this.first_name}}
@@ -154,7 +154,7 @@
                   <label class="control-label">Gender
                     <span class="req-lbl">*</span>
                   </label>
-                  <select class="form-control floating selectpicker" id="gender" name="gender" data-show-subtext="true" data-live-search="true">
+                  <select class="form-control floating " id="gender" name="gender" >
                     <option value="">Select Gender</option>
                     <option value="M" {{#if_eq referral.gender "M"}} selected {{/if_eq}}>Male</option>
                     <option value="F" {{#if_eq referral.gender "F"}} selected {{/if_eq}}>Female</option>
@@ -278,7 +278,7 @@
               <label class="control-label">Attorney Name
                 <span class="req-lbl">*</span>
               </label>
-              <select id="attr_id" name="attr_id" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
+              <select id="attr_id" name="attr_id" class="form-control floating " >
                 {{#if_eq user.role_id "2"}}
                 <option value="">Select Attorney</option>
                 {{#each attorney}}
@@ -551,7 +551,7 @@
                 <span class="req-lbl">*</span>
 
               </label>
-              <select id="association" name="association" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
+              <select id="association" name="association" class="form-control floating " >
                 <option value=""> Select Association</option>
                 <option value="NEW TARGET" {{#if_eq referral.association "NEW TARGET"}} selected {{/if_eq}}>NEW TARGET</option>
                 <option value="CONVERTED" {{#if_eq referral.association "CONVERTED"}} selected {{/if_eq}}>CONVERTED</option>
@@ -564,7 +564,7 @@
               <label class="control-label">Industry Type
                 <span class="req-lbl">*</span>
               </label>
-              <select id="industry_type" name="industry_type" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
+              <select id="industry_type" name="industry_type" class="form-control floating ">
                 <option value=""> Select Industry Type</option>
                 {{#each industry}}
                 <option value="{{this.id}}" {{#if_eq this.id ../referral.industry_type}} selected="selected" {{/if_eq}}>{{this.industry_name}}</option>

@@ -147,7 +147,7 @@
 							<div class="col-md-6">
 								<div class="form-group form-focus select-focus select-attorney">
 									<label class="control-label">Gender<span class="req-lbl">*</span></label>
-									<select class="form-control floating selectpicker" id="client_gender" name="client_gender" data-show-subtext="true" data-live-search="true">
+									<select class="form-control floating " id="client_gender" name="client_gender" >
 										<option value="">Select Gender</option>
 										<option value="M" {{#if_eq client.gender "M"}} selected {{/if_eq}}>Male</option>
 										<option value="F" {{#if_eq client.gender "F"}} selected {{/if_eq}}>Female</option>
@@ -290,7 +290,7 @@
 							<label class="control-label">Attorney
 								<span class="req-lbl">*</span>
 							</label>
-							<select id="attorney_id" name="attorney_id" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
+							<select id="attorney_id" name="attorney_id" class="form-control floating " >
 
 								{{#if_eq user.role_id "3"}}
 								<option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
@@ -557,7 +557,7 @@
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus select-attorney">
 							<label class="control-label">Association Status :</label>
-							<select id="association" name="association" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
+							<select id="association" name="association" class="form-control floating " >
 								<option value="">Select Association</option>
 								<option value="NEW TARGET" {{#if_eq client.association_type "NEW TARGET"}} selected="selected" {{/if_eq}}>NEW TARGET</option>
 								<option value="CONVERTED" {{#if_eq client.association_type "CONVERTED"}} selected="selected" {{/if_eq}}>CONVERTED</option>
@@ -568,7 +568,7 @@
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus select-attorney">
 							<label class="control-label">Industry Type :</label>
-							<select id="industry_type" name="industry_type" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
+							<select id="industry_type" name="industry_type" class="form-control floating " >
 								<option value="">Select Industry Type</option>
 								{{#each industry}}
 								<option value="{{this.id}}" {{#if_eq this.id ../client.industry_type}} selected="selected" {{/if_eq}}>{{this.industry_name}}</option>

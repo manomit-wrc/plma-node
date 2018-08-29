@@ -143,7 +143,7 @@
 										<label class="control-label">Gender
 											<span class="req-lbl">*</span>
 										</label>
-										<select class="form-control floating selectpicker" id="gender" name="gender" data-show-subtext="true" data-live-search="true">
+										<select class="form-control floating " id="gender" name="gender" >
 											<option value="">Select Gender</option>
 											<option value="M">Male</option>
 											<option value="F">Female</option>
@@ -274,7 +274,7 @@
 							<label class="control-label">Attorney
 								<span class="req-lbl">*</span>
 							</label>
-							<select id="designation" name="attorney_id" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true" >
+							<select id="designation" name="attorney_id" class="form-control floating "  >
 								{{#if_eq user.role_id "3"}}
 								<option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
 								{{else}}
@@ -508,7 +508,7 @@
 								<span class="req-lbl">*</span>
 
 							</label>
-							<select id="association" name="association" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
+							<select id="association" name="association" class="form-control floating " >
 								<option value=""> Select Association</option>
 								<option value="CONVERTED">CONVERTED</option>
 								<option value="NEW TARGET">NEW TARGET</option>
@@ -521,7 +521,7 @@
 							<label class="control-label">Industry Type
 								<span class="req-lbl">*</span>
 							</label>
-							<select id="industry_type" name="industry_type" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
+							<select id="industry_type" name="industry_type" class="form-control floating " >
 								<option value=""> Select Industry Type</option>
 								{{#each industry}}
 								<option value="{{this.id}}">{{this.industry_name}}</option>
