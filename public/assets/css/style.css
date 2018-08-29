@@ -1016,7 +1016,7 @@ table.dataTable {
 .sidebar {
 	top: 60px;
 	width: 230px;
-	z-index: 1041;
+	z-index: 1050;
 	background-color: #fff;
 	bottom: 0;
 	margin-top: 0px;
@@ -6080,6 +6080,11 @@ i.fa.fa-eye.m-r-5 {
 
 }
 
+.backdrop-in {
+	background-color: #fff !important;
+	opacity: 0.9 !important;
+}
+
 
 /* loader css ends */
 
@@ -6160,11 +6165,11 @@ select.gender {
 
 
 
-	#add_budget .modal-footer {
+	.budget-modal .modal-footer {
 		padding: 0;
 	}
 
-	#add_budget .modal-footer .modal-footer-panel {
+	.budget-modal .modal-footer .modal-footer-panel {
 		box-shadow: none;
 		-webkit-box-shadow: none;
 		-moz-box-shadow: none;
@@ -6181,30 +6186,32 @@ select.gender {
 		margin-bottom: 0;
 	}
 
-	#add_budget .modal-footer .modal-footer-panel .panel-body {
+	.budget-modal .modal-footer .modal-footer-panel .panel-body {
 	}
 
-	#add_budget .modal-footer .modal-footer-panel .panel-body  .form-control {
+	.budget-modal .modal-footer .modal-footer-panel .panel-body  .form-control {
 		text-align: left;
 		font-weight: bold;
 	}
 
-	#add_budget .modal-footer .modal-footer-panel .list {
+	.budget-modal .modal-footer .modal-footer-panel .list {
 		margin-top: 5px;
 	}
 
-	#add_budget .modal-footer .modal-footer-panel .list h5 {
+	.budget-modal .modal-footer .modal-footer-panel .list h5 {
 		position: relative;
 		top: 8px;
 		font-size: 16px;
 		font-weight: bold;
 	}
 
-	#add_budget .modal-footer .modal-footer-panel .list .form-group {
+	.budget-modal .modal-footer .modal-footer-panel .list .form-group {
 		margin-bottom: 5px;
 	}
 
-	#add_budget .slimScrollBar {
+	.budget-modal .slimScrollBar, 
+	#update_budget .slimScrollBar 
+	 {
 		background: #ff9b44 !important;
 		opacity: 1 !important;
 	}
