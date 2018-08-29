@@ -1015,7 +1015,7 @@ table.dataTable {
 
 .sidebar {
 	top: 60px;
-	width: 230px;
+	width: 240px;
 	z-index: 1050;
 	background-color: #fff;
 	bottom: 0;
@@ -6221,8 +6221,8 @@ select.gender {
 		margin-bottom: 0;
 	}
 
-	.budget-modal .modal-footer .modal-footer-panel .panel-body {
-	}
+	/* .budget-modal .modal-footer .modal-footer-panel .panel-body {
+	} */
 
 	.budget-modal .modal-footer .modal-footer-panel .panel-body  .form-control {
 		text-align: left;
