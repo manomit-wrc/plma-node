@@ -5,8 +5,7 @@
 <link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-sweetalert/sweet-alert.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
-{{/content}}
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" /> {{/content}}
 <div class="page-wrapper">
   <div class="content container-fluid">
     <div class="row">
@@ -64,28 +63,35 @@
                 </div>
               </div>
               <!-------------------------------------------------------->
-              <div class="col-md-6" id="target_list" {{#if_eq editdata.target "T"}} style="display: block;" {{else}} style="display: none;" {{/if_eq}}>
-                <select id="target-example-dropUp" name="target_user[]" class=" form-control floating" multiple="multiple">
+              <div class="col-md-6" id="target_list" {{#if_eq editdata.target "T"}} style="display: block;" {{else}} style="display: none;"
+                {{/if_eq}}>
+                <select id="target_id" name="target_user[]" class=" form-control floating" multiple="multiple">
                   {{#each target}}
-                    <option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.first_name}} {{this.last_name}}</option>
+                  <option value="{{this.id}}" {{#inArrayCustom ../arr this.id "T"}} selected="selected" {{/inArrayCustom}}>{{this.first_name}}
+                    {{this.last_name}}</option>
                   {{/each}}
                 </select>
               </div>
-              <div class="col-md-6" id="client_list" {{#if_eq editdata.target "C"}} style="display: block;" {{else}} style="display: none;" {{/if_eq}}>
-                <select id="client-example-dropUp" name="client_user[]" class=" form-control floating" multiple="multiple">
+              <div class="col-md-6" id="client_list" {{#if_eq editdata.target "C"}} style="display: block;" {{else}} style="display: none;"
+                {{/if_eq}}>
+                <select id="client_id" name="client_user[]" class=" form-control floating" multiple="multiple">
                   {{#each client}}
-                    <option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.first_name}} {{this.last_name}}</option>
+                  <option value="{{this.id}}" {{#inArrayCustom ../arr this.id "C"}} selected="selected" {{/inArrayCustom}}>{{this.first_name}}
+                    {{this.last_name}}</option>
                   {{/each}}
                 </select>
               </div>
-              <div class="col-md-6" id="referral_list" {{#if_eq editdata.target "R"}} style="display: block;" {{else}} style="display: none;" {{/if_eq}}>
-                <select id="referral-example-dropUp" name="referral_user[]" class=" form-control floating" multiple="multiple">
+              <div class="col-md-6" id="referral_list" {{#if_eq editdata.target "R"}} style="display: block;" {{else}} style="display: none;"
+                {{/if_eq}}>
+                <select id="referral_id" name="referral_user[]" class=" form-control floating" multiple="multiple">
                   {{#each referral}}
-                    <option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.first_name}} {{this.last_name}}</option>
+                  <option value="{{this.id}}" {{#inArrayCustom ../arr this.id "R"}} selected="selected" {{/inArrayCustom}}>{{this.first_name}}
+                    {{this.last_name}}</option>
                   {{/each}}
                 </select>
               </div>
-              <div class="col-md-6" id="general_list" {{#if_eq editdata.target "G"}} style="display: block;" {{else}} style="display: none;" {{/if_eq}}></div>
+              <div class="col-md-6" id="general_list" {{#if_eq editdata.target "G"}} style="display: block;" {{else}} style="display: none;"
+                {{/if_eq}}></div>
             </div>
           </div>
         </div>
@@ -122,35 +128,50 @@
               <div class="col-md-6">
                 <div class="form-group form-focus select-focus select-attorney">
                   <label class="control-label">Activity Type <span class="req-lbl">*</span> </label>
-                  <select class="form-control floating selectpicker" id="activity_type" name="activity_type"  data-show-subtext="true" data-live-search="true">
+                  <select class="form-control floating selectpicker" id="activity_type" name="activity_type" data-show-subtext="true" data-live-search="true">
                     <option value="">Select Activity Type</option>
-                    <option value="individual" {{#if_eq editdata.activity_type "individual"}} selected="selected" {{/if_eq}}>INDIVIDUAL LEVEL</option>
-                    <option value="section" {{#if_eq editdata.activity_type "section"}} selected="selected" {{/if_eq}}>SECTION LEVEL</option>
-                    <option value="strategic_group" {{#if_eq editdata.activity_type "strategic_group"}} selected="selected" {{/if_eq}}>STRATEGIC GROUP LEVEL</option>
+                    <option value="individual" {{#if_eq editdata.activity_type "individual"}} selected="selected" {{/if_eq}}>INDIVIDUAL
+                      LEVEL</option>
+                    <option value="section" {{#if_eq editdata.activity_type "section"}} selected="selected" {{/if_eq}}>SECTION
+                      LEVEL</option>
+                    <option value="strategic_group" {{#if_eq editdata.activity_type "strategic_group"}} selected="selected" {{/if_eq}}>STRATEGIC
+                      GROUP LEVEL</option>
                     <option value="team" {{#if_eq editdata.activity_type "team"}} selected="selected" {{/if_eq}}>TEAM LEVEL</option>
                   </select>
                 </div>
               </div>
-              <div class="col-md-6 none">
+              <div class="col-md-6 none" {{#if_eq editdata.activity_type "individual"}} style="display: block;" {{else}} style="display: none;" {{/if_eq}}>
                 <div class="form-group form-focus select-focus"></div>
               </div>
-              <div class="col-md-6 section" style="display: none;">
+              <div class="col-md-6 section" {{#if_eq editdata.activity_type "section"}} style="display: block;" {{else}} style="display: none;" {{/if_eq}}>
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">Section <span class="req-lbl">*</span> </label>
                   <select class="form-control floating" id="section" name="section">
                     <option value="0">Select Section</option>
                     {{#each section}}
-                      <option value="{{this.section.id}}" {{#if_eq this.id ../editdata.section_id}} selected="selected" {{/if_eq}}>{{this.section.name}}</option>
+                    <option value="{{this.section.id}}" {{#if_eq this.id ../editdata.section_id}} selected="selected" {{/if_eq}}>{{this.section.name}}</option>
                     {{/each}}
                   </select>
                 </div>
               </div>
-              <div class="col-md-6 strategyGroup" style="display: none;">
+              <div class="col-md-6 strategyGroup" {{#if_eq editdata.activity_type "strategic_group"}} style="display: block;" {{else}} style="display: none;" {{/if_eq}}>
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">Strategy Group <span class="req-lbl">*</span> </label>
                   <select class="form-control floating" id="strategyGroup" name="strategy_group">
                     <option value="0">Select Strategy Group</option>
                     <option value="1" {{#if_eq editdata.s_group_id 1}} selected="selected" {{/if_eq}}>NEED TO DISCUSS</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6 attorney" {{#if_eq editdata.activity_type "team"}} style="display: block; margin-bottom: 23px; margin-top: 8px;" {{else}} style="display: none; margin-bottom: 23px; margin-top: 8px;" {{/if_eq}}>
+                <div class="form-group select-focus">
+                  {{!-- <label class="control-label">Attorney <span class="req-lbl">*</span> </label> --}}
+                  <select class="form-control floating" id="attorney_user" name="attorney_user[]" multiple="multiple">
+                    {{!-- <option value="0">Select Attorney</option> --}} {{#each attorney}}
+                    <option value="{{this.id}}" {{#inArray ../attr_arr this.id}} selected="selected" {{/inArray}}>{{this.first_name}}
+                      {{this.last_name}}
+                    </option>
+                    {{/each}}
                   </select>
                 </div>
               </div>
@@ -160,10 +181,11 @@
                   <select id="activity_goal" name="activity_goal" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
                     <option value="">Select Tactical Marketing Goals</option>
                     {{#each activity_goal}}
-                      <option value="{{this.id}}" {{#if_eq this.id ../editdata.activity_goal_id}} selected="selected" {{/if_eq}}>{{this.activity_goal}}</option>
+                    <option value="{{this.id}}" {{#if_eq this.id ../editdata.activity_goal_id}} selected="selected" {{/if_eq}}>{{this.activity_goal}}</option>
                     {{/each}}
                   </select>
-                  <strong style="background-color:#ff0000; color:#ffffff">Note! </strong> No Tactical Marketing Goals? Click Here
+                  <strong style="background-color:#ff0000; color:#ffffff">Note! </strong> No Tactical Marketing Goals? Click
+                  Here
                   <a href="/activity-goal/add">Add Tactical Marketing Goals</a>
                 </div>
               </div>
@@ -173,7 +195,7 @@
                   <select id="practice_area" name="practice_area" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
                     <option value="">Select Practice Area</option>
                     {{#each practice_area}}
-                      <option value="{{this.id}}" {{#if_eq this.id ../editdata.practice_area}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                    <option value="{{this.id}}" {{#if_eq this.id ../editdata.practice_area}} selected="selected" {{/if_eq}}>{{this.name}}</option>
                     {{/each}}
                   </select>
                 </div>
@@ -183,7 +205,7 @@
                   <label class="control-label">Creation Date <span class="req-lbl">*</span> </label>
                   <div class="cal-icon">
                     <input class="form-control floating datetimepicker" type="text" id="activity_creation_date" name="activity_creation_date"
-                      value="{{dateFormat editdata.activity_creation_date "DD-MM-YYYY"}}">
+                      value="{{dateFormat editdata.activity_creation_date " DD-MM-YYYY "}}">
                   </div>
                 </div>
               </div>
@@ -194,7 +216,8 @@
                 <div class="form-group form-focus">
                   <label class="control-label">From Date <span class="req-lbl">*</span> </label>
                   <div class="cal-icon">
-                    <input class="form-control floating datetimepicker" type="text" id="activity_from_date" name="activity_from_date" value="{{dateFormat editdata.activity_from_date "DD-MM-YYYY"}}">
+                    <input class="form-control floating datetimepicker" type="text" id="activity_from_date" name="activity_from_date" value="{{dateFormat editdata.activity_from_date "
+                      DD-MM-YYYY "}}">
                   </div>
                 </div>
               </div>
@@ -202,7 +225,8 @@
                 <div class="form-group form-focus">
                   <label class="control-label">To Date <span class="req-lbl">*</span> </label>
                   <div class="cal-icon">
-                    <input class="form-control floating datetimepicker" type="text" id="activity_to_date" name="activity_to_date" value="{{dateFormat editdata.activity_to_date "DD-MM-YYYY"}}">
+                    <input class="form-control floating datetimepicker" type="text" id="activity_to_date" name="activity_to_date" value="{{dateFormat editdata.activity_to_date "
+                      DD-MM-YYYY "}}">
                   </div>
                 </div>
               </div>
@@ -452,25 +476,36 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 
 
-  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 
 <script type="text/javascript">
   $(document).ready(function () {
-    $('#target-example-dropUp').multiselect({
+    $('#target_id').multiselect({
+      nonSelectedText: 'Select Targets',
       enableFiltering: true,
       includeSelectAllOption: true,
       buttonWidth: '100%',
       maxHeight: 400,
       dropDown: true
     });
-    $('#client-example-dropUp').multiselect({
+    $('#client_id').multiselect({
+      nonSelectedText: 'Select Clients',
       enableFiltering: true,
       includeSelectAllOption: true,
       maxHeight: 400,
       buttonWidth: '100%',
       dropDown: true
     });
-    $('#referral-example-dropUp').multiselect({
+    $('#referral_id').multiselect({
+      nonSelectedText: 'Select Referral',
+      enableFiltering: true,
+      includeSelectAllOption: true,
+      maxHeight: 400,
+      buttonWidth: '100%',
+      dropDown: true
+    });
+    $('#attorney_user').multiselect({
+      nonSelectedText: 'Select Attorney',
       enableFiltering: true,
       includeSelectAllOption: true,
       maxHeight: 400,
@@ -524,21 +559,6 @@
     $('#target_list').hide();
     $('#general_list').show();
   }
-  $('#target_id').multiselect({
-    nonSelectedText: 'Select Targets',
-    includeSelectAllOption: true,
-    buttonWidth: '100%'
-  });
-  $('#client_id').multiselect({
-    nonSelectedText: 'Select Clients',
-    includeSelectAllOption: true,
-    buttonWidth: '100%'
-  });
-  $('#referral_id').multiselect({
-    nonSelectedText: 'Select Referral',
-    includeSelectAllOption: true,
-    buttonWidth: '100%'
-  });
   $(document).on('click', "#btnEditActivityBudget", function (e) {
     var EditBudgetArr = [];
     var totalAmount = 0;
@@ -594,21 +614,25 @@
   });
   $("#activity_type").change(function () {
     if ($(this).val() == 'team') {
-      $(".none").show();
+      $(".none").hide();
       $(".section").hide();
       $(".strategyGroup").hide();
+      $(".attorney").show();
     } else if ($(this).val() == 'section') {
       $(".none").hide();
       $(".section").show();
       $(".strategyGroup").hide();
+      $(".attorney").hide();
     } else if ($(this).val() == 'strategic_group') {
       $(".none").hide();
       $(".strategyGroup").show();
       $(".section").hide();
+      $(".attorney").hide();
     } else {
       $(".none").show();
       $(".section").hide();
       $(".strategyGroup").hide();
+      $(".attorney").hide();
     }
   })
   if ($('#activity_type').val() == 'team') {
