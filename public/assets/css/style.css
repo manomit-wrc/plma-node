@@ -6494,6 +6494,13 @@ select.gender {
 			color: #FF881F;
 			text-decoration: none;
 		}
+		a.avatar {
+			color: white !important;
+		}
+		a.avatar:hover {
+			color: #009ce7 !important;
+		}
+		
 
 
 		/*Ends on css 27-08-2018*/
