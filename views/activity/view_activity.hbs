@@ -303,84 +303,114 @@
 
 {{!-- Starts add budget modal --}}
 
-<div id="update_budget" class="modal custom-modal fade" role="dialog">
+<div id="update_budget" class="modal custom-modal fade budget-modal" role="dialog">
   <div class="modal-dialog">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
     <div class="modal-content modal-lg">
       <div class="modal-header">
         <h4 class="modal-title">Marketing Budget Details</h4>
       </div>
-      <div class="modal-body">
-        <div class="card-box">
-          <form class="m-b-10" name="editActivityBudgetFrm" id="editActivityBudgetFrm">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-inline m-b-15">
-                  <div class="form-group m-r-5">
-                    <label class="input-group">
-                      <span class="input-group-addon">
-                        <input type="radio" id="evenly_equated" name="activity_level_type_edit" value="Evenly Equated" {{#if_eq level_type
-                          "Evenly Equated"}} checked {{/if_eq}} disabled />
-                      </span>
-                      <div class="form-control form-control-static">Evenly Equated</div>
-                      <span class="glyphicon form-control-feedback"></span>
-                    </label>
-                  </div>
-                  <div class="form-group">
-                    <label class="input-group">
-                      <span class="input-group-addon">
-                        <input type="radio" id="individual" name="activity_level_type_edit" value="Individual" {{#if_eq level_type "Individual"}}
-                          checked {{/if_eq}} disabled />
-                      </span>
-                      <div class="form-control form-control-static">Individual</div>
-                      <span class="glyphicon form-control-feedback"></span>
-                    </label>
-                  </div>
-                </div>
-                {{#each budgetArr}}
-                <div class="panel panel-primary">
-                  <div class="panel-heading">
-                    <h3 class="panel-title">{{this.parent_name}}</h3>
-                  </div>
-                  <div class="panel-body">
-                    {{#each this.child_budget}}
-                    <div class="list">
-                      <div class="row">
-                        <div class="col-md-6">
-                          <h5>
-                            {{this.name}}
-                          </h5>
-                        </div>
-                        <div class="col-md-2">
-                          <div class="form-group">
-                            <input class="form-control edit_budget_hour number_budget" type="text" data-budgets-id="{{this.id}}" id="edit_budget_hour"
-                              name="edit_budget_hour" placeholder="Hours" value="{{this.hour}}" readonly>
-                          </div>
-                        </div>
-                        <div class="col-md-2">
-                          <div class="form-group">
-                            <input class="form-control edit_budget_amount number_budget" type="text" id="edit_budget_amount" name="edit_budget_amount"
-                              placeholder="Dollars($)" value="{{this.amount}}" readonly>
-                          </div>
-                        </div>
-                        {{#if_con this.remarks}}
-                        <div class="col-md-2">
-                          <div class="form-group">
-                            <button type="button" class="btn btn-info" data-toggle="tooltip" title="{{this.remarks}}">Remarks</button>
-                          </div>
-                        </div>
-                        {{/if_con}}
-                      </div>
+        <form class="m-b-10" name="editActivityBudgetFrm" id="editActivityBudgetFrm">
+          <div class="card-box">
+            <div class="modal-body">
+              <div class="modal-scroll">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-inline m-b-15">
+                    <div class="form-group m-r-5">
+                      <label class="input-group">
+                        <span class="input-group-addon">
+                          <input type="radio" id="evenly_equated" name="activity_level_type_edit" value="Evenly Equated" {{#if_eq level_type
+                            "Evenly Equated"}} checked {{/if_eq}} disabled />
+                        </span>
+                        <div class="form-control form-control-static">Evenly Equated</div>
+                        <span class="glyphicon form-control-feedback"></span>
+                      </label>
                     </div>
-                    {{/each}}
+                    <div class="form-group">
+                      <label class="input-group">
+                        <span class="input-group-addon">
+                          <input type="radio" id="individual" name="activity_level_type_edit" value="Individual" {{#if_eq level_type "Individual"}}
+                            checked {{/if_eq}} disabled />
+                        </span>
+                        <div class="form-control form-control-static">Individual</div>
+                        <span class="glyphicon form-control-feedback"></span>
+                      </label>
+                    </div>
                   </div>
+                  {{#each budgetArr}}
+                  <div class="panel panel-primary">
+                    <div class="panel-heading">
+                      <h3 class="panel-title">{{this.parent_name}}</h3>
+                    </div>
+                    <div class="panel-body">
+                      {{#each this.child_budget}}
+                      <div class="list">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <h5>
+                              {{this.name}}
+                            </h5>
+                          </div>
+                          <div class="col-md-2">
+                            <div class="form-group">
+                              <input class="form-control budget_hour edit_budget_hour number_budget" type="text" data-budgets-id="{{this.id}}" id="edit_budget_hour"
+                                name="edit_budget_hour" placeholder="Hours" value="{{this.hour}}" readonly>
+                            </div>
+                          </div>
+                          <div class="col-md-2">
+                            <div class="form-group">
+                              <input class="form-control budget_amount edit_budget_amount number_budget" type="text" id="edit_budget_amount" name="edit_budget_amount"
+                                placeholder="Dollars($)" value="{{this.amount}}" readonly>
+                            </div>
+                          </div>
+                          {{#if_con this.remarks}}
+                          <div class="col-md-2">
+                            <div class="form-group">
+                              <button type="button" class="btn btn-info" data-toggle="tooltip" title="{{this.remarks}}">Remarks</button>
+                            </div>
+                          </div>
+                          {{/if_con}}
+                        </div>
+                      </div>
+                      {{/each}}
+                    </div>
+                  </div>
+                  {{/each}}
                 </div>
-                {{/each}}
+              </div>
               </div>
             </div>
-          </form>
+
+            <div class="modal-footer">
+              <div class="panel panel-primary modal-footer-panel">
+                <div class="panel-body">
+                  <div class="list">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <h5>Total</h5>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="form-group">
+                          <span class="form-control" id="hourDetails"></span>
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="form-group">
+                          <span class="form-control" id="amountDetails"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {{!-- <div class="text-center">
+                  <button class="btn btn-primary btn-lg" type="button" id="btnEditActivityBudget">Update</button>
+                </div> --}}
+              </div>
+            </div>
+
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </div>
@@ -393,6 +423,7 @@
 <script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript">
+
   $('#target_id').multiselect({
     nonSelectedText: 'Select Targets',
     includeSelectAllOption: true,
@@ -417,40 +448,40 @@
     buttonWidth: '100%'
   });
 
-  /* $("#potiential_revenue").inputmask("numeric", {
-    radixPoint: ".",
-    groupSeparator: ",",
-    digits: 2,
-    autoGroup: true,
-    prefix: '$ ',
-    rightAlign: false
-  }); */
-
-  /* var typeDetails = $('#activityTypeDetails').val();
-  if (typeDetails == 'T') {
-    $('#client_list').hide();
-    $('#referral_list').hide();
-    $('#general_list').hide();
-    $('#target_list').show();
-  } else if (typeDetails == 'C') {
-    $('#client_list').show();
-    $('#target_list').hide();
-    $('#referral_list').hide();
-    $('#general_list').hide();
-  } else if (typeDetails == 'R') {
-    $('#referral_list').show();
-    $('#general_list').hide();
-    $('#client_list').hide();
-    $('#target_list').hide();
-  } else if (typeDetails == 'G') {
-    $('#referral_list').hide();
-    $('#general_list').show();
-    $('#client_list').hide();
-    $('#target_list').hide();
-  } */
-
   $(document).on('click', "#backActivityByn", function () {
     window.location.href = localStorage.getItem('url');
     localStorage.removeItem('url');
   });
+
+
+  $(document).ready(function (e) {
+      // budget hour count total 
+
+      var sumHour = 0;
+      $('.budget_hour').each(function (index) {
+        if ($(this).val() !== "") {
+          sumHour += Number($(this).val());
+        }
+      });
+      $('#hourDetails').html(sumHour);
+      
+      var sumAmount = 0;
+      $('.budget_amount').each(function (index) {
+        if ($(this).val() !== "") {
+          sumAmount += Number($(this).val());
+        }
+      });
+      $('#amountDetails').html(sumAmount);
+
+      // Slim Scrollbar for Activity Budget Modal
+      $('#update_budget .modal-scroll').slimScroll({
+        color: '#455A64',
+        size: '10px',
+        alwaysVisible: false,
+        height: '350px'
+      });
+
+    });
+
+
 </script> {{/content}}
