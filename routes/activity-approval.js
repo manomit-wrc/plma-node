@@ -229,10 +229,11 @@ router.post("/get-notification", auth, async (req, res) => {
                 'name': teamActivityAttorney[i].activity.activity_name,
                 'createDate':teamActivityAttorney[i].activity.activity_creation_date,
                 'updateDate': teamActivityAttorney[i].activity.updatedAt,
-                'updateAt':teamActivityAttorney[i].updatedAt,
+                'updatedAt':teamActivityAttorney[i].updatedAt,
                 'activity_id':teamActivityAttorney[i].activity.id,
                 'userFirstName':teamActivityAttorney[i].user.first_name,
-                'userLastName':teamActivityAttorney[i].user.last_name
+                'userLastName':teamActivityAttorney[i].user.last_name,
+                'type': '1'
             })
         }
     }
@@ -243,10 +244,11 @@ router.post("/get-notification", auth, async (req, res) => {
                 'name':noti[i].activity.activity_name,
                 'createDate':noti[i].activity.activity_creation_date,
                 'updateDate': noti[i].activity.updatedAt,
-                'updateAt':noti[i].updatedAt,
+                'updatedAt':noti[i].updatedAt,
                 'activity_id':noti[i].activity.id,
                 'userFirstName':noti[i].user.first_name,
-                'userLastName':noti[i].user.last_name
+                'userLastName':noti[i].user.last_name,
+                'type':'2'
             }) 
         }
     }
