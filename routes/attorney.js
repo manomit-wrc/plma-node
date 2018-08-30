@@ -362,6 +362,7 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 				});
 			}
 		});
+		var url = req.protocol + '://' + req.get('host');
 		var email_body = 
 		`<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -560,7 +561,7 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
                         <tr>
                           <td width="325" height="60" bgcolor="#FF851A" style="text-align:center; display: table;
     margin: 0 auto;">
-                            <a href="http://localhost:5000/" align="center" style="display:block; font-family:'Open Sans',Calibri, Arial, sans-serif;; font-size:20px; color:#ffffff; text-align: center; line-height:60px; display:block; text-decoration:none;">Click to sign in</a>
+                            <a href=`+ url +` align="center" style="display:block; font-family:'Open Sans',Calibri, Arial, sans-serif;; font-size:20px; color:#ffffff; text-align: center; line-height:60px; display:block; text-decoration:none;">Click to sign in</a>
                           </td>
                           <td>&nbsp;</td>
                           <td>&nbsp;</td>

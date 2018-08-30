@@ -47,8 +47,7 @@
                     <span>[Strength: <span id="result"></span> ]</span>
                   </label>
                   <input class="form-control" type="password" id="new_password" name="new_password">
-                  <span toggle="#new_password" class="fa fa-fw fa-eye field-icon toggle-password" title="Show Password"></span>
-                  
+                  <span id="show_password" class="fa fa-eye showPassEyeCss" title="Show Password"></span>
                 </div>
               </div>
               <div class="col-md-12">
@@ -81,7 +80,7 @@
   <script src="/assets/input-mask/jquery.inputmask.bundle.min.js" type="text/javascript"></script>
 
   <script type="text/javascript">
-    $(".toggle-password").click(function () {
+    /*$(".toggle-password").click(function () {
 
         $(this).toggleClass("fa-eye fa-eye-slash");
         var input = $($(this).attr("toggle"));
@@ -90,7 +89,20 @@
         } else {
           input.attr("type", "password");
         }
-      });
+      });*/
+       $("#show_password").mousedown(function () {
+         $(this).removeClass("fa fa-eye");
+         $(this).addClass("fa fa-eye-slash");
+          $("#new_password").prop('type', 'text');
+        }).mouseup(function () {
+          $(this).removeClass("fa fa-eye-slash");
+          $(this).addClass("fa fa-eye");
+          $("#new_password").prop('type', 'password');
+        }).mouseout(function () {
+          $(this).removeClass("fa fa-eye-slash"); 
+          $(this).addClass("fa fa-eye");
+          $("#new_password").prop('type', 'password');
+        });
     $('.url_selector').keyup(function () {
       if (($(this).val().substr(0, 7) !== 'http://') || ($(this).val() === '')) {
         $(this).val('http://');
@@ -221,7 +233,7 @@
 
         var url = window.location.pathname;
           if (url == "/dashboard") {
-            $(".modal-backdrop").addClass("backdrop-in");
+            $(".sidebar").css("z-index", "1040");
           }
 
         if({{user.new_user_status}} == 1)
@@ -274,7 +286,7 @@
                   {
                     swal({
                       title: "Congratulations!",
-                      text: "Your password has been changed and profile activated successfully",
+                      text: "Your password has been changed and account activated successfully",
                       type: "success"
                     }, function () {
                       window.location.href = "/dashboard";
