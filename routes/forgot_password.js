@@ -43,8 +43,7 @@ router.get('/forgot-password', csrfProtection, (req, res) => {
 
 
 router.post('/forgot', csrfProtection, async (req, res) => {
-  //console.log(req.body.u_mail);
-
+ var url = req.protocol + '://' + req.get('host');
   let user_email;
   user_email = await User.findOne({
     where: {
@@ -267,7 +266,7 @@ router.post('/forgot', csrfProtection, async (req, res) => {
                         <tr>
                           <td width="325" height="60" bgcolor="#FF851A" style="text-align:center; display: table;
     margin: 0 auto;">
-                            <a href="http://localhost:5000/" align="center" style="display:block; font-family:'Open Sans',Calibri, Arial, sans-serif;; font-size:20px; color:#ffffff; text-align: center; line-height:60px; display:block; text-decoration:none;">Click to sign in</a>
+                            <a href=`+ url +` align="center" style="display:block; font-family:'Open Sans',Calibri, Arial, sans-serif;; font-size:20px; color:#ffffff; text-align: center; line-height:60px; display:block; text-decoration:none;">Click to sign in</a>
                           </td>
                           <td>&nbsp;</td>
                           <td>&nbsp;</td>
