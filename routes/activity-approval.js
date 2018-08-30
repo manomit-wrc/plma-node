@@ -7,6 +7,7 @@ const ActivityBudget = require('../models').activity_budget;
 const Jointactivities = require('../models').jointactivity;
 const lodash = require("lodash");
 const requestApproval = require('../models').request_approval;
+const activityAttorney = require('../models').activity_attorney;
 
 const router = express.Router();
 
@@ -174,6 +175,8 @@ router.post('/update_activity_approve_reject', auth, async (req, res) => {
 
 router.post("/get-notification", auth, async (req, res) => {
 
+    var notiFicationDetails = []
+
      requestApproval.belongsTo(Activity, {
         foreignKey: 'activity_id'
     });
@@ -198,10 +201,62 @@ router.post("/get-notification", auth, async (req, res) => {
         ]
     });
 
+
+    activityAttorney.belongsTo(Activity, {
+        foreignKey: 'activity_id'
+    });
+
+    activityAttorney.belongsTo(User, {
+        foreignKey: 'attorney_id'
+    });
+    
+    const teamActivityAttorney = await activityAttorney.findAll({
+        where: {
+            'attorney_id': req.user.id,
+            'status': '0',
+        },
+        include: [{
+            model: User
+        },{
+            model: Activity
+        }],
+    }); 
+
+
+    if (teamActivityAttorney.length>0) {
+        for (let i=0; i< teamActivityAttorney.length; i++) {
+            notiFicationDetails.push({
+                'name': teamActivityAttorney[i].activity.activity_name,
+                'createDate':teamActivityAttorney[i].activity.activity_creation_date,
+                'updateDate': teamActivityAttorney[i].activity.updatedAt,
+                'updateAt':teamActivityAttorney[i].updatedAt,
+                'activity_id':teamActivityAttorney[i].activity.id,
+                'userFirstName':teamActivityAttorney[i].user.first_name,
+                'userLastName':teamActivityAttorney[i].user.last_name
+            })
+        }
+    }
+
+    if (noti.length>0) {
+        for (let i=0; i< noti.length; i++) {
+            notiFicationDetails.push({
+                'name':noti[i].activity.activity_name,
+                'createDate':noti[i].activity.activity_creation_date,
+                'updateDate': noti[i].activity.updatedAt,
+                'updateAt':noti[i].updatedAt,
+                'activity_id':noti[i].activity.id,
+                'userFirstName':noti[i].user.first_name,
+                'userLastName':noti[i].user.last_name
+            }) 
+        }
+    }
+
+    
+ 
     res.send({
         "success": true,
-        "count": noti.length,
-        "approval_noti": noti
+        "count": notiFicationDetails.length,
+        "approval_noti": notiFicationDetails
     });
 });
 

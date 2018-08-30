@@ -180,10 +180,19 @@
                         </a>
                     </li>
                 </li>
-                {{/if_eq}} {{#if_eq user.approver "1"}}
+                {{/if_eq}} 
+                
+                {{#if_eq user.approver "1"}}
                 <li {{#if_eq client_url "activity-approvals" }} class="active" {{/if_eq}}>
                     <a href="/activity-approvals">
                         <i class="fa fa-check"></i> Activity Approvals</a>
+                </li>
+                {{/if_eq}}
+                
+                {{#if_eq user.approver "1"}}
+                <li {{#if_eq client_url "team-activity-approvals" }} class="active" {{/if_eq}}>
+                    <a href="/team-activity-approvals">
+                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>Team Activity Approvals</a>
                 </li>
                 {{/if_eq}}
 

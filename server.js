@@ -29,6 +29,7 @@ const budget_report = require('./routes/budget_report');
 const forgot_password = require('./routes/forgot_password');
 const activity_approvals = require('./routes/activity-approval');
 const strategic_goal = require('./routes/strategic_goal');
+const teamActivity_approval = require('./routes/teamActivity_approval')
 
 const allowCrossDomain = function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -423,6 +424,7 @@ app.use(attorney);
 app.use(budget_report);
 app.use(forgot_password);
 app.use(activity_approvals);
+app.use(teamActivity_approval);
 app.use(strategic_goal);
 
 /********** End **********/
