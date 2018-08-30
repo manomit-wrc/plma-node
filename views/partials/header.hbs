@@ -303,6 +303,7 @@
               var header = response.approval_noti[j].userFirstName;
 
               var startDate = new Date(response.approval_noti[j].updatedAt);
+              
               var endDate = new Date();
               var diffDays = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
               var diff = (endDate.getTime() - startDate.getTime()) / 1000;
@@ -328,6 +329,7 @@
                 get_time = dformat;
               }
 
+              if (response.approval_noti[j].type=='1') {
               $("#notiMsg").append('<li class="media notification-message">' +
                 '<a href="/approval_details/' + response.approval_noti[j].activity_id + '">' +
                   '<div class="media-left">' +
@@ -350,6 +352,33 @@
                 '</a>' +
                 '</li>'
               );
+              } else if (response.approval_noti[j].type=='2') {
+
+                $("#notiMsg").append('<li class="media notification-message">' +
+                '<a href="/team-activity-approvals/">' +
+                  '<div class="media-left">' +
+                    '<span class="avatar">' +
+                      header.charAt(0) +
+                    '</span>'+
+                  '</div>' +
+                  '<div class="media-body">' +
+                    '<p class="m-0 noti-details">' +
+                      '<span class="noti-title">' +
+                        " Request for approval for " + '<b>' + response.approval_noti[j].name + '</b>' + " from " + response.approval_noti[j].userFirstName + " " + response.approval_noti[j].userLastName + " on " + creation_date +"."+
+                      '</span>' +
+                    '</p>' +
+                    '<p class="m-0">' +
+                      '<span class="notification-time">' +
+                         get_time +
+                      '</span>' +
+                    '</p>' +
+                  '</div>' +
+                '</a>' +
+                '</li>'
+              );
+
+              }
+              
             }
           }
           else {
