@@ -63,7 +63,7 @@ body {
 	font-size: 13px;
 	color: #333;
 	/*background-color: #eff3f6;*/
-	background-color: #f8f8f8;
+	background-color: #f3f6f7;
 	overflow-x: hidden;
 }
 
@@ -884,7 +884,7 @@ table.dataTable {
 */
 
 .header {
-	background: #EDF1F4;
+	background: #e8e8e8;
 	left: 0;
 	position: fixed;
 	right: 0;
@@ -892,11 +892,11 @@ table.dataTable {
 	z-index: 1050;
 	height: 60px;
 	/*border-bottom: 1px solid #ededed;*/
-	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
-	-webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
-	-moz-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
-	-ms-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
-	-o-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+	box-shadow: 0 2px 4px rgba(33, 33, 33, 0.2);
+	-webkit-box-shadow: 0 2px 4px rgba(33, 33, 33, 0.2);
+	-moz-box-shadow: 0 2px 4px rgba(33, 33, 33, 0.2);
+	-ms-box-shadow: 0 2px 4px rgba(33, 33, 33, 0.2);
+	-o-box-shadow: 0 2px 4px rgba(33, 33, 33, 0.2);
 }
 
 .header .header-left {
@@ -6592,8 +6592,8 @@ select.gender {
 			}
 
 			.topnav-dropdown-footer a:hover {
-				background: #FF881F;
-				color: #fff;
+				background: #FFF;
+				color: #FF881F;
 			}
 
 
