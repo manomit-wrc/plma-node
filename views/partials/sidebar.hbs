@@ -183,7 +183,7 @@
                 {{/if_eq}} 
                 
                 {{#if_eq user.approver "1"}}
-                <li {{#if_eq client_url "activity-approvals" }} class="active" {{/if_eq}}>
+                <li {{#if (or (eq client_url "activity-approvals")(eq client_url "approval_details")) }} class="active" {{/if}}>
                     <a href="/activity-approvals">
                         <i class="fa fa-check"></i> Activity Approvals</a>
                 </li>
