@@ -5804,7 +5804,7 @@ table.table-inbox tbody tr.checked {
 	border-right: 2px solid #717372;
 	top: 21px;
 	padding-right: 15px;
-	color: #717372;
+	color: #333;
 }
 
 .pg-header .page-title {
@@ -5827,7 +5827,7 @@ table.table-inbox tbody tr.checked {
 }
 
 .nav-menu a {
-	color: #717372;
+	color: #333;
 	font-size: 12px;
 	position: relative;
 	left: -20px;
