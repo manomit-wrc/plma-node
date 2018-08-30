@@ -26,7 +26,7 @@
                                 <th>SL#</th>
                                 <th>Activity Name</th>
                                 <th>Approval Status</th>
-                                <th >Action</th>
+                                <th class="text-right" >Action</th>
                             </tr>
                         </thead>
                         <tbody id="mainTable">
@@ -35,8 +35,8 @@
                                 <td>{{math @index "+" 1}}</td>
                                 <td>{{this.activity.activity_name}}</td>
                                 <td><span class="label label-warning-border">Pending</span></td>
-                                <td>
-                                    <a href="/approval_details/{{this.activity.id}}" id="budgetUpdate">View Remarks
+                                <td class="text-right">
+                                    <a href="/approval_details/{{this.activity.id}}" id="budgetUpdate" class="btn btn-success btn-sm" ><i class="fa fa-eye m-r-5"></i> View
                                     </a>
                                 </td>
                             </tr>
