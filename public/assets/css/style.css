@@ -6222,213 +6222,213 @@ select.gender {
 	}
 
 	/* .budget-modal .modal-footer .modal-footer-panel .panel-body {
-	} */
+		} */
 
-	.budget-modal .modal-footer .modal-footer-panel .panel-body  .form-control {
-		text-align: left;
-		font-weight: bold;
-	}
+		.budget-modal .modal-footer .modal-footer-panel .panel-body  .form-control {
+			text-align: left;
+			font-weight: bold;
+		}
 
-	.budget-modal .modal-footer .modal-footer-panel .list {
-		margin-top: 5px;
-	}
+		.budget-modal .modal-footer .modal-footer-panel .list {
+			margin-top: 5px;
+		}
 
-	.budget-modal .modal-footer .modal-footer-panel .list h5 {
-		position: relative;
-		top: 8px;
-		font-size: 16px;
-		font-weight: bold;
-	}
+		.budget-modal .modal-footer .modal-footer-panel .list h5 {
+			position: relative;
+			top: 8px;
+			font-size: 16px;
+			font-weight: bold;
+		}
 
-	.budget-modal .modal-footer .modal-footer-panel .list .form-group {
-		margin-bottom: 5px;
-	}
+		.budget-modal .modal-footer .modal-footer-panel .list .form-group {
+			margin-bottom: 5px;
+		}
 
-	.budget-modal .slimScrollBar, 
-	#update_budget .slimScrollBar 
-	 {
-		background: #ff9b44 !important;
-		opacity: 1 !important;
-	}
+		.budget-modal .slimScrollBar, 
+		#update_budget .slimScrollBar 
+		{
+			background: #ff9b44 !important;
+			opacity: 1 !important;
+		}
 
-	/*Ends css on  10-08-2018*/
+		/*Ends css on  10-08-2018*/
 
-	/*Starts on css 14-08-2018*/
+		/*Starts on css 14-08-2018*/
 
-	.staff-name .dataTable thead th:nth-child(1), .staff-name .dataTable thead th:nth-child(2), .staff-name .dataTable thead th:nth-child(3), .staff-name .dataTable thead th:nth-child(4) {
-		width: 20% !important;
-	}
+		.staff-name .dataTable thead th:nth-child(1), .staff-name .dataTable thead th:nth-child(2), .staff-name .dataTable thead th:nth-child(3), .staff-name .dataTable thead th:nth-child(4) {
+			width: 20% !important;
+		}
 
-	.staff-name .dataTable thead th:nth-child(2), .staff-name .dataTable thead th:nth-child(3), .staff-name .dataTable thead th:nth-child(4) {
-		width: 15% !important;
-	}
+		.staff-name .dataTable thead th:nth-child(2), .staff-name .dataTable thead th:nth-child(3), .staff-name .dataTable thead th:nth-child(4) {
+			width: 15% !important;
+		}
 
-	.staff-name .dataTable thead th:nth-child(7) {
-		width: 10% !important;
-	}
-	
-	.employees-table .dataTable thead th:nth-child(1) {
-		width: 15% !important;
-	}
+		.staff-name .dataTable thead th:nth-child(7) {
+			width: 10% !important;
+		}
 
-	.employees-table .dataTable thead th:nth-child(2), .employees-table .dataTable thead th:nth-child(3), .employees-table .dataTable thead th:nth-child(4) {
-		width: 10% !important;
-	}
+		.employees-table .dataTable thead th:nth-child(1) {
+			width: 15% !important;
+		}
 
-	.employees-table .dataTable thead th:nth-child(5) {
-		width: 10% !important;
-	}
+		.employees-table .dataTable thead th:nth-child(2), .employees-table .dataTable thead th:nth-child(3), .employees-table .dataTable thead th:nth-child(4) {
+			width: 10% !important;
+		}
 
-	.firms-table .dataTable thead th:nth-child(2), .firms-table .dataTable thead th:nth-child(3), .firms-table .dataTable thead th:nth-child(4) {
-		width: 10% !important;
-	}
+		.employees-table .dataTable thead th:nth-child(5) {
+			width: 10% !important;
+		}
 
-	.firms-table .dataTable thead th:nth-child(1) {
-		width: 15% !important;
-	}
+		.firms-table .dataTable thead th:nth-child(2), .firms-table .dataTable thead th:nth-child(3), .firms-table .dataTable thead th:nth-child(4) {
+			width: 10% !important;
+		}
 
-	.firms-table .dataTable thead th:nth-child(5) {
-		width: 10% !important;
-	}
+		.firms-table .dataTable thead th:nth-child(1) {
+			width: 15% !important;
+		}
 
-	.card-box.contact-information .masterContactDetailsAdd {
-		position: absolute;
-		right: 0;
-		top: 0;
-	}
+		.firms-table .dataTable thead th:nth-child(5) {
+			width: 10% !important;
+		}
 
-	.contact-information {
-		position: relative;
-		box-shadow: 0 0 15px rgba(0,0,0,0.14);
-		-webkit-box-shadow: 0 0 15px rgba(0,0,0,0.14);
-		-moz-box-shadow: 0 0 15px rgba(0,0,0,0.14);
-		-ms-box-shadow: 0 0 15px rgba(0,0,0,0.14);
-		-o-box-shadow: 0 0 15px rgba(0,0,0,0.14);
-		margin-bottom: 25px;
-		padding: 10px;
-	}
+		.card-box.contact-information .masterContactDetailsAdd {
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
 
-	.contact-margin {
-		margin-top: 15px;
-	}
+		.contact-information {
+			position: relative;
+			box-shadow: 0 0 15px rgba(0,0,0,0.14);
+			-webkit-box-shadow: 0 0 15px rgba(0,0,0,0.14);
+			-moz-box-shadow: 0 0 15px rgba(0,0,0,0.14);
+			-ms-box-shadow: 0 0 15px rgba(0,0,0,0.14);
+			-o-box-shadow: 0 0 15px rgba(0,0,0,0.14);
+			margin-bottom: 25px;
+			padding: 10px;
+		}
 
-	
-
-	.contact-information .masterContactDetailsAdd {
-		position: absolute;
-		right: -13px;
-		top: -16px;
-		border-radius: 50%;
-		-webkit-border-radius: 50%;
-		-moz-border-radius: 50%;
-		-ms-border-radius: 50%;
-		-o-border-radius: 50%;
-		padding: 5px 10px;
-		z-index: 111;
-	}
-
-	/*Ends on css 14-08-2018*/
+		.contact-margin {
+			margin-top: 15px;
+		}
 
 
-	/*Starts on css 16-08-2018*/
 
-	.download-btn a {
-		height: 50px;
-		width: 50px;
-		border-radius: 50%;
-		-webkit-border-radius: 50%;
-		-moz-border-radius: 50%;
-		-ms-border-radius: 50%;
-		-o-border-radius: 50%;
-		line-height: 50px;
-		padding: 0;
-		box-shadow: 0 1px 5px 0 rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12);
-		-webkit-box-shadow: 0 1px 5px 0 rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12);
-		-moz-box-shadow: 0 1px 5px 0 rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12);
-		-ms-box-shadow: 0 1px 5px 0 rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12);
-		-o-box-shadow: 0 1px 5px 0 rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12);
-		text-align: center;
-	}
+		.contact-information .masterContactDetailsAdd {
+			position: absolute;
+			right: -13px;
+			top: -16px;
+			border-radius: 50%;
+			-webkit-border-radius: 50%;
+			-moz-border-radius: 50%;
+			-ms-border-radius: 50%;
+			-o-border-radius: 50%;
+			padding: 5px 10px;
+			z-index: 111;
+		}
 
-	/*Ends on css 16-08-2018*/
+		/*Ends on css 14-08-2018*/
 
-	/*Starts on css 20-08-2018*/
 
-	#activity_attachment {
-		cursor: pointer;
-		height: auto;
-		opacity: 0;
-		padding: 12px;
-		position: relative;
-		z-index: 111;
-	}
+		/*Starts on css 16-08-2018*/
 
-	#activity_attachment + .btn.btn-primary {
-		padding: 14px;
-		position: absolute;
-		top: 0;
-		width: 100%;
-	}
+		.download-btn a {
+			height: 50px;
+			width: 50px;
+			border-radius: 50%;
+			-webkit-border-radius: 50%;
+			-moz-border-radius: 50%;
+			-ms-border-radius: 50%;
+			-o-border-radius: 50%;
+			line-height: 50px;
+			padding: 0;
+			box-shadow: 0 1px 5px 0 rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12);
+			-webkit-box-shadow: 0 1px 5px 0 rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12);
+			-moz-box-shadow: 0 1px 5px 0 rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12);
+			-ms-box-shadow: 0 1px 5px 0 rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12);
+			-o-box-shadow: 0 1px 5px 0 rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12);
+			text-align: center;
+		}
 
-	#activity_attachment + .btn.btn-primary img {
-		margin-right: 8px;
-		vertical-align: top;
-		width: 16px;
-	}
+		/*Ends on css 16-08-2018*/
 
-	.view-activity thead th {
-		width: 15% !important;
-	}
+		/*Starts on css 20-08-2018*/
 
-	.edit-activity thead th {
-		width: 15% !important;
-	}
+		#activity_attachment {
+			cursor: pointer;
+			height: auto;
+			opacity: 0;
+			padding: 12px;
+			position: relative;
+			z-index: 111;
+		}
 
-	.master_contact thead th:nth-child(1) {
-		width: 8% !important;
-	}
+		#activity_attachment + .btn.btn-primary {
+			padding: 14px;
+			position: absolute;
+			top: 0;
+			width: 100%;
+		}
 
-	.target thead th:nth-child(1) {
-		width: 8% !important;
-	}
+		#activity_attachment + .btn.btn-primary img {
+			margin-right: 8px;
+			vertical-align: top;
+			width: 16px;
+		}
 
-	.target-view thead th:nth-child(1) {
-		width: 8% !important;
-	}
+		.view-activity thead th {
+			width: 15% !important;
+		}
 
-	.client thead th:nth-child(1) {
-		width: 8% !important;
-	}
+		.edit-activity thead th {
+			width: 15% !important;
+		}
 
-	.client thead th:nth-child(6) {
-		width: 8% !important;
-	}
+		.master_contact thead th:nth-child(1) {
+			width: 8% !important;
+		}
 
-	.client thead th:nth-child(7) {
-		width: 7% !important;
-	}
+		.target thead th:nth-child(1) {
+			width: 8% !important;
+		}
 
-	.view-referral thead th:nth-child(1) {
-		width: 8% !important;
-	}
+		.target-view thead th:nth-child(1) {
+			width: 8% !important;
+		}
 
-	.referral thead th:nth-child(1) {
-		width: 8% !important;
-	}
+		.client thead th:nth-child(1) {
+			width: 8% !important;
+		}
 
-	.nav .dropdown-toggle.user-link span img {
-		height: 35px;
-		width: 35px;
-	}
+		.client thead th:nth-child(6) {
+			width: 8% !important;
+		}
 
-	.user-menu .dropdown-menu a:hover {
-		background: #ff881f none repeat scroll 0 0 !important;
-		color: #fff !important;
-	}
+		.client thead th:nth-child(7) {
+			width: 7% !important;
+		}
 
-	.section thead th:nth-child(1), .practice-area thead th:nth-child(1), .jurisdiction thead th:nth-child(1), .group thead th:nth-child(1), .industry thead th:nth-child(1), .designation thead th:nth-child(1), .budget thead th:nth-child(1), .attorneys thead th:nth-child(1), .activity-goal thead th:nth-child(1), .financial-goal thead th:nth-child(1), .target thead th:nth-child(1), .activity-approvals thead th:nth-child(1) {
-		width: 8% !important;
-	}
+		.view-referral thead th:nth-child(1) {
+			width: 8% !important;
+		}
+
+		.referral thead th:nth-child(1) {
+			width: 8% !important;
+		}
+
+		.nav .dropdown-toggle.user-link span img {
+			height: 35px;
+			width: 35px;
+		}
+
+		.user-menu .dropdown-menu a:hover {
+			background: #ff881f none repeat scroll 0 0 !important;
+			color: #fff !important;
+		}
+
+		.section thead th:nth-child(1), .practice-area thead th:nth-child(1), .jurisdiction thead th:nth-child(1), .group thead th:nth-child(1), .industry thead th:nth-child(1), .designation thead th:nth-child(1), .budget thead th:nth-child(1), .attorneys thead th:nth-child(1), .activity-goal thead th:nth-child(1), .financial-goal thead th:nth-child(1), .target thead th:nth-child(1), .activity-approvals thead th:nth-child(1) {
+			width: 8% !important;
+		}
 
 	/* .card-box input[type="checkbox"] {
 
@@ -6569,11 +6569,16 @@ select.gender {
 			}
 
 
-
-
-
 			/*Ends on css 27-08-2018*/
 
+
+			/*Starts on css 30-08-2018*/
+
+			div.dataTables_wrapper div.dataTables_length select {
+				line-height: 20px;
+			}
+
+			/*Ends on css 30-08-2018*/
 
 
 
