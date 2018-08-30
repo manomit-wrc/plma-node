@@ -24,14 +24,44 @@ router.get('/team-activity-approvals', auth, async (req, res) => {
             model: Activity
         }],
     }); 
-
-    // console.log('activityAttorney',_activityAttorney[0].activity);
-    
     
     res.render('team_activity_approvals/index', {
         layout: 'dashboard',
         teamActivityAttorney
     });
+});
+
+router.get('/tempActivity/approvalRequest/', auth, async (req, res) => {
+
+    const activityId = req.query['activity_id'];
+    const requestApproval = req.query['approvalStatus'];
+
+    if (requestApproval==='approva') {
+        await activityAttorney.update({
+            'status': 1
+        },{
+            where: {
+                'activity_id': activityId,
+                'attorney_id' : req.user.id
+            }
+        });
+    } else {
+        await activityAttorney.update({
+            'status': 2
+        },{
+            where: {
+                'activity_id': activityId,
+                'attorney_id' : req.user.id
+            }
+        });
+    }
+
+    res.json({
+        success: true,
+        code: 100
+    });
+
+    
 });
 
 

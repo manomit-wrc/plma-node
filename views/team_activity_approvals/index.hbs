@@ -26,16 +26,17 @@
                                 <th>SL#</th>
                                 <th>Activity Name</th>
                                 <th>Approval Status</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody id="mainTable">
                             {{#each teamActivityAttorney}}
                             <tr>
                                 <td>{{math @index "+" 1}}</td>
-                                <td>{{this.activity.activity_name}}</td>
-                                <td>
-                                    {{this.status}}
-                                </td>
+                                <td>{{this.activity.activity_name}} </td>
+                                <td>{{#if_eq this.status "0"}}<span class="label label-warning-border">Pending</span>{{/if_eq}} {{#if_eq this.status "1"}} <span class="label label-success-border">Approve</span> {{/if_eq}} {{#if_eq this.status "2"}} <span class="label label-danger-border">Reject</span> {{/if_eq}} </td>
+                                <td><button type="button" class="btn btn-success btn-sm requestApproval" id="requestApproval" data-activity-request-id={{this.activity_id}} ><i class="fa fa-check-circle" aria-hidden="true"></i></button> 
+                                <button type="button" class="btn btn-danger btn-sm requestReject" id="requestReject"  data-activity-request-id={{this.activity_id}} ><i class="fa fa-times-circle" aria-hidden="true"></i></button></td>
                             </tr>
                             {{/each}}
                         </tbody>
@@ -43,6 +44,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 {{#content "script" mode="append"}}
@@ -59,4 +61,77 @@
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>ACTIVITY {{/content}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>ACTIVITY 
+
+<script type="text/javascript">
+
+// approve and reject
+$(document).on('click', '.requestApproval', function (e) {
+    var activity_id = $(this).data("activity-request-id");
+    swal({
+      title: "Are you sure?",
+      text: "You want to approve?",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonClass: "btn-danger",
+      confirmButtonText: "Yes",
+      closeOnConfirm: false
+    }, function () {
+      $.ajax({
+        type: "GET",
+        url: "/tempActivity/approvalRequest/",
+        data: {
+            approvalStatus: 'approva',
+            activity_id: activity_id
+        },
+        success: function (response) {
+          if (response.success == true) {
+            swal({
+              title: "Nice!",
+              text: "Approval successfully",
+              type: "success"
+            }, function () {
+              window.location.reload();
+            });
+          }
+        }
+      });
+    });
+  });
+
+$(document).on('click', '.requestReject', function (e) {
+    var activity_id = $(this).data("activity-request-id");
+    swal({
+      title: "Are you sure?",
+      text: "You want to reject?",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonClass: "btn-danger",
+      confirmButtonText: "Yes",
+      closeOnConfirm: false
+    }, function () {
+      $.ajax({
+        type: "GET",
+        url: "/tempActivity/approvalRequest/",
+        data: {
+            approvalStatus: 'reject',
+            activity_id: activity_id
+        },
+        success: function (response) {
+          if (response.success == true) {
+            swal({
+              title: "Nice!",
+              text: "Reject sent successfully",
+              type: "success"
+            }, function () {
+              window.location.reload();
+            });
+          }
+        }
+      });
+    });
+  });
+
+</script>
+
+{{/content}}
