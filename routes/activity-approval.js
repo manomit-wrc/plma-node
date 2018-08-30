@@ -201,7 +201,6 @@ router.post("/get-notification", auth, async (req, res) => {
         ]
     });
 
-
     activityAttorney.belongsTo(Activity, {
         foreignKey: 'activity_id'
     });
@@ -225,14 +224,20 @@ router.post("/get-notification", auth, async (req, res) => {
 
     if (teamActivityAttorney.length>0) {
         for (let i=0; i< teamActivityAttorney.length; i++) {
+            const userDetails = await User.findOne({
+                where:{
+                    'id':teamActivityAttorney[i].activity.user_id
+                }
+            })
+
             notiFicationDetails.push({
                 'name': teamActivityAttorney[i].activity.activity_name,
                 'createDate':teamActivityAttorney[i].activity.activity_creation_date,
                 'updateDate': teamActivityAttorney[i].activity.updatedAt,
                 'updatedAt':teamActivityAttorney[i].updatedAt,
                 'activity_id':teamActivityAttorney[i].activity.id,
-                'userFirstName':teamActivityAttorney[i].user.first_name,
-                'userLastName':teamActivityAttorney[i].user.last_name,
+                'userFirstName':userDetails.first_name,
+                'userLastName':userDetails.last_name,
                 'type': '1'
             })
         }
@@ -240,20 +245,24 @@ router.post("/get-notification", auth, async (req, res) => {
 
     if (noti.length>0) {
         for (let i=0; i< noti.length; i++) {
+            const userDetails = await User.findOne({
+                where:{
+                    'id':noti[i].activity.user_id
+                }
+            })
+
             notiFicationDetails.push({
                 'name':noti[i].activity.activity_name,
                 'createDate':noti[i].activity.activity_creation_date,
                 'updateDate': noti[i].activity.updatedAt,
                 'updatedAt':noti[i].updatedAt,
                 'activity_id':noti[i].activity.id,
-                'userFirstName':noti[i].user.first_name,
-                'userLastName':noti[i].user.last_name,
+                'userFirstName':userDetails.first_name,
+                'userLastName':userDetails.last_name,
                 'type':'2'
             }) 
         }
     }
-
-    
  
     res.send({
         "success": true,
