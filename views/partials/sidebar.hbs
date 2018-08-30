@@ -173,15 +173,21 @@
                         <i class="fa fa-user"></i>
                         Clients
                     </a>
-                    <li {{#if_eq client_url "referral" }} class="active" {{/if_eq}}>
-                        <a href="/referral">
-                            <i class="fa fa-user-plus"></i>
-                             Referral Sources
-                        </a>
-                    </li>
                 </li>
-                {{/if_eq}} {{#if_eq user.approver "1"}}
-                <li {{#if_eq client_url "activity-approvals" }} class="active" {{/if_eq}}>
+                <li {{#if_eq client_url "referral" }} class="active" {{/if_eq}}>
+                    <a href="/referral">
+                        <i class="fa fa-user-plus"></i>
+                            Referral Sources
+                    </a>
+                </li>
+                <li {{#if_eq client_url "team-activity-approvals" }} class="active" {{/if_eq}}>
+                    <a href="/team-activity-approvals">
+                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>Team Activity Invitation</a>
+                </li>
+                {{/if_eq}} 
+                
+                {{#if_eq user.approver "1"}}
+                <li {{#if (or (eq client_url "activity-approvals")(eq client_url "approval_details")) }} class="active" {{/if}}>
                     <a href="/activity-approvals">
                         <i class="fa fa-check"></i> Activity Approvals</a>
                 </li>
