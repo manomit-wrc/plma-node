@@ -6457,7 +6457,7 @@ select.gender {
 		/*Starts on css 27-08-2018*/
 
 		.multiselect-container.dropdown-menu {
-			height: 120px;
+			height: 190px;
 			overflow-y: scroll;
 			overflow-x: hidden;
 			width: 100%;
