@@ -283,10 +283,133 @@ router.get("/get-chart-value", auth, async(req, res)=> {
 });
 
 router.get('/profile', auth, async (req, res) => {
-    const country = await Country.findById(req.user.country);
-    const state = await State.findById(req.user.state);
-    const city = await City.findById(req.user.city);
-    res.render('profile', { layout: 'dashboard', country, state, city });
+    // const country = await Country.findById(req.user.country);
+    // const state = await State.findById(req.user.state);
+    // const city = await City.findById(req.user.city);
+
+    //profile information start
+    User.hasMany(Attorney_Details, {
+        foreignKey: 'user_id'
+    });
+    User.hasMany(Education, {
+        foreignKey: 'user_id'
+    });
+    User.hasMany(PracticeAreaToAttr, {
+        foreignKey: 'attorney_id'
+    });
+    User.hasMany(JurisdictionToAttr, {
+        foreignKey: 'attorney_id'
+    });
+    const designation = await Designation.findAll();
+    const group = await Group.findAll();
+    sectionToFirm.belongsTo(Section, {
+        foreignKey: 'section_id'
+    });
+    PracticeAreaToFirm.belongsTo(PracticeArea, {
+        foreignKey: 'practice_area_id'
+    });
+    JurisdictionToFirm.belongsTo(Jurisdiction, {
+        foreignKey: 'jurisdiction_id'
+    });
+
+    const allSection = await sectionToFirm.findAll({
+        where: {
+            firm_id: req.user.firm_id
+        },
+        include: [{
+            model: Section
+        }]
+    });
+    const allPracticeArea = await PracticeAreaToFirm.findAll({
+		where: {
+			firm_id: req.user.firm_id
+		},
+
+		include: [{
+			model: PracticeArea
+		}]
+    });
+    const allJurisdiction = await JurisdictionToFirm.findAll({
+        where: {
+            firm_id: req.user.firm_id
+        },
+
+        include: [{
+            model: Jurisdiction
+        }]
+    });
+    const industry_type = await Industry_type.findAll();
+
+    const country = await Country.findAll({});
+    const state = await State.findAll({});
+    const edata = await User.findAll({
+        where: {
+            id: req.user.id
+        },
+        include: [{
+            model: Attorney_Details
+        }, {
+            model: Education
+        },{
+			model: PracticeAreaToAttr
+		}, {
+		    model: JurisdictionToAttr
+		}]
+    });
+
+    var state_id = edata[0].state;
+    var city_id = edata[0].city; 
+
+    var city = [];
+    var zipcode = [];
+    if (state_id != null) {
+        city = await City.findAll({
+            where: {
+                state_id: state_id.toString()
+            }
+        });
+    }
+    if (city_id != null) {
+        const cities = await City.findById(city_id.toString());
+        zipcode = await Zipcode.findAll({
+            where: {
+                city_name: cities.name
+            }
+        });
+    }
+
+    var result = JSON.parse(JSON.stringify(edata[0].practice_area_to_attorneys));
+	 var arr = [];
+	 for (var i = 0; i < result.length; i++) {
+	 	arr.push(result[i].practice_area_id);
+     }
+     var result_jurisdiction = JSON.parse(JSON.stringify(edata[0].jurisdiction_to_attorneys));
+     var jurisdiction_arr = [];
+     for (var i = 0; i < result_jurisdiction.length; i++) {
+         jurisdiction_arr.push(result_jurisdiction[i].jurisdiction_id);
+     }
+
+    //profile information end 
+    
+
+
+    res.render('profile', { 
+        layout: 'dashboard', 
+        country, 
+        state, 
+        city,
+        designation,
+        group,
+        allSection,
+        allPracticeArea,
+        allJurisdiction,
+        industry_type, 
+        city,
+        zipcode,
+        arr,
+        jurisdiction_arr,
+        edata: edata[0]
+    });
 });
 
 router.get('/edit-profile', csrfProtection, auth, async (req, res) => {
@@ -549,8 +672,10 @@ router.get("/edit-attorney-profile", auth, csrfProtection, attrAuth, async (req,
 		    model: JurisdictionToAttr
 		}]
     });
+
     var state_id = edata[0].state;
     var city_id = edata[0].city;
+
     var city = [];
     var zipcode = [];
     if (state_id != null) {
