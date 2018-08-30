@@ -63,7 +63,7 @@ body {
 	font-size: 13px;
 	color: #333;
 	/*background-color: #eff3f6;*/
-	background-color: #f3f6f7;
+	background-color: #f0eff5;
 	overflow-x: hidden;
 }
 
@@ -383,17 +383,22 @@ table.dataTable {
 
 .card-box {
 	background-color: #fff;
-	border: 1px solid #ededed;
+	/*border: 1px solid #ededed;*/
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	-ms-border-radius: 4px;
 	-o-border-radius: 4px;
-	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+	/*box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
 	-webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
 	-moz-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
 	-ms-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
-	-o-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+	-o-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);*/
+	box-shadow: 0 1px 3px rgba(33, 33, 33, 0.2);
+	-webkit-box-shadow: 0 1px 3px rgba(33, 33, 33, 0.2);
+	-moz-box-shadow: 0 1px 3px rgba(33, 33, 33, 0.2);
+	-ms-box-shadow: 0 1px 3px rgba(33, 33, 33, 0.2);
+	-o-box-shadow: 0 1px 3px rgba(33, 33, 33, 0.2);
 	margin-bottom: 30px;
 	padding: 20px;
 }
@@ -474,12 +479,12 @@ table.dataTable {
 }
 
 .panel {
-	border: 1px solid #ededed;
-	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
-	-webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
-	-moz-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
-	-ms-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
-	-o-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+	/*border: 1px solid #ededed;*/
+	box-shadow: 0 1px 3px rgba(33, 33, 33, 0.2);
+	-webkit-box-shadow: 0 1px 3px rgba(33, 33, 33, 0.2);
+	-moz-box-shadow: 0 1px 3px rgba(33, 33, 33, 0.2);
+	-ms-box-shadow: 0 1px 3px rgba(33, 33, 33, 0.2);
+	-o-box-shadow: 0 1px 3px rgba(33, 33, 33, 0.2);
 	margin-bottom: 30px;
 }
 
@@ -884,7 +889,7 @@ table.dataTable {
 */
 
 .header {
-	background: #e8e8e8;
+	background: #ffffff;
 	left: 0;
 	position: fixed;
 	right: 0;
@@ -910,8 +915,9 @@ table.dataTable {
 }
 
 .logo {
-	display: block;
+	display: table;
 	line-height: 60px;
+	margin: 0 auto;
 }
 
 .header .navbar-nav .badge {
@@ -5830,7 +5836,7 @@ table.table-inbox tbody tr.checked {
 	color: #333;
 	font-size: 12px;
 	position: relative;
-	left: -20px;
+	left: -12px;
 	top: 20px;
 	z-index: 1000;
 	width: 20px;
