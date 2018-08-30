@@ -1071,7 +1071,7 @@ table.dataTable {
 
 	.sidebar-menu li.active a {
 		color: #fff;
-		background-color: rgba(255, 136, 31, 1);
+		background-color: #717372;
 	}
 
 	.menu-title {
@@ -6577,6 +6577,34 @@ select.gender {
 			div.dataTables_wrapper div.dataTables_length select {
 				line-height: 20px;
 			}
+
+			.dropdown-menu.notifications .topnav-dropdown-header {
+				background: #afa399;
+				color: #fff;
+				font-size: 14px;
+			}
+
+			/*.dropdown-menu.notifications .topnav-dropdown-footer a {
+				background: #ff9b44; 
+				border-radius: 5px;
+				-webkit-border-radius: 5px;
+				-moz-border-radius: 5px;
+				-ms-border-radius: 5px;
+				-o-border-radius: 5px;
+				color: #fff;
+				display: table;
+				margin: 0 auto 15px;
+				padding: 0 35px;
+			}
+
+			.dropdown-menu.notifications .topnav-dropdown-footer a:hover {
+				background: #ff881f;
+			}
+
+			.dropdown-menu.notifications .topnav-dropdown-footer {
+				border: 0 none;
+				height: auto;
+			}*/
 
 			/*Ends on css 30-08-2018*/
 
