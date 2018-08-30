@@ -279,7 +279,7 @@ router.post('/firms/add', auth, siteAuth, csrfProtection, async (req, res) => {
                       <p style = "font-size: 18px;" > A very special welcome to you ` + req.body.first_name + `, thank you
                       for joining perform law as a Firm Admin! </p>
                       <p style="font-size: 18px; font-family: &quot;OpenSans-Light&quot;,Calibri,Arial,sans-serif; text-align: center;">
-                        Your Username is - <span style = "color:#FF851A; font-weight: bold;" > ` + req.body.email + ` </span>
+                        Your Username is - <span style = "color:#FF851A; font-weight: bold;"> ` + req.body.email + ` </span>
                       </p>
                       <p style="font-size: 18px; font-family: &quot;OpenSans-Light&quot;,Calibri,Arial,sans-serif; text-align: center;">
                         Your Password is - <span style="color:#FF851A; font-weight: bold;">` + req.body.password + `</span>

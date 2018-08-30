@@ -221,7 +221,7 @@
 
         var url = window.location.pathname;
           if (url == "/dashboard") {
-            $(".modal-backdrop").addClass("backdrop-in");
+            $(".sidebar").css("z-index", "1040");
           }
 
         if({{user.new_user_status}} == 1)
@@ -274,7 +274,7 @@
                   {
                     swal({
                       title: "Congratulations!",
-                      text: "Your password has been changed and profile activated successfully",
+                      text: "Your password has been changed and account activated successfully",
                       type: "success"
                     }, function () {
                       window.location.href = "/dashboard";
