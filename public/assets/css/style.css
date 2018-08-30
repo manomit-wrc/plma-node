@@ -6110,6 +6110,7 @@ i.fa.fa-eye.m-r-5 {
 	top: 35px;
 	right: 20px;
 	font-size: 18px;
+	cursor: pointer;
 }
 
 .error404 {
