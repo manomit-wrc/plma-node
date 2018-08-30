@@ -80,7 +80,10 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
     const allAttorney = await User.findAll({
         where: {
             firm_id: req.user.firm_id,
-            role_id: 3
+            role_id: 3,
+            id: {
+                [Op.ne]: req.user.id
+            }
         }
     });
     const activity_goal = await ActivityGoal.findAll({
@@ -178,7 +181,22 @@ router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res)
         whereCondition.firm_id = req.user.firm_id;
     } else {
         whereCondition.firm_id = req.user.firm_id;
-        whereCondition.user_id = req.user.id;
+        const accepted_activity = await Activity_attorney.findAll({
+            where: {
+                'attorney_id': req.user.id,
+                'status': '1'
+            }
+        });
+        var accptActArr = [];
+        if (accepted_activity.length > 0) {
+            for (var j = 0; j < accepted_activity.length; j++) {
+                accptActArr.push(accepted_activity[j].activity_id);
+            }
+            //whereCondition.user_id = '';
+            whereCondition.id = accptActArr;
+        } else {
+            whereCondition.user_id = req.user.id;
+        }
     }
     var success_message = req.flash('success-message')[0];
     const activity_goal = await ActivityGoal.findAll({
@@ -205,6 +223,8 @@ router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res)
             'attorney_id': req.user.id
         }
     });
+    
+    console.log(whereCondition);
     var activity = await Activity.findAll({
         where: whereCondition,
     });
@@ -382,7 +402,10 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
     const allAttorney = await User.findAll({
         where: {
             firm_id: req.user.firm_id,
-            role_id: 3
+            role_id: 3,
+            id: {
+                [Op.ne]: req.user.id
+            }
         }
     });
     const selected_attr = await Activity_attorney.findAll({
@@ -572,7 +595,10 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
     const allAttorney = await User.findAll({
         where: {
             firm_id: req.user.firm_id,
-            role_id: 3
+            role_id: 3,
+            id: {
+                [Op.ne]: req.user.id
+            }
         }
     });
     const selected_attr = await Activity_attorney.findAll({
@@ -582,7 +608,10 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
     });
     var attr_arr = [];
     for (var i = 0; i < selected_attr.length; i++) {
-        attr_arr.push(parseInt(selected_attr[i].attorney_id));
+        attr_arr.push({
+            id: parseInt(selected_attr[i].attorney_id),
+            status: selected_attr[i].status
+        });
     }
     const target = await Target.findAll({
         where: {

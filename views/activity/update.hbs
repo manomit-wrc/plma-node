@@ -178,7 +178,7 @@
                   {{!-- <label class="control-label">Attorney <span class="req-lbl">*</span> </label> --}}
                   <select class="form-control floating" id="attorney_user" name="attorney_user[]" multiple="multiple">
                     {{!-- <option value="0">Select Attorney</option> --}} {{#each attorney}}
-                    <option value="{{this.id}}" {{#inArray ../attr_arr this.id}} selected="selected" {{/inArray}}>{{this.first_name}}
+                    <option value="{{this.id}}" {{#if '0'}} {{#inArrayCustom1 ../attr_arr this.id '0'}} selected="selected" {{/inArrayCustom1}} {{/if}} {{#if '1'}} {{#inArrayCustom1 ../attr_arr this.id '1'}} disabled selected="selected" {{/inArrayCustom1}} {{/if}} {{#if '2'}} {{#inArrayCustom1 ../attr_arr this.id '2'}} disabled {{/inArrayCustom1}} {{/if}}>{{this.first_name}}
                       {{this.last_name}}
                     </option>
                     {{/each}}
