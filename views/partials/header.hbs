@@ -331,7 +331,7 @@
 
               if (response.approval_noti[j].type=='1') {
               $("#notiMsg").append('<li class="media notification-message">' +
-                '<a href="/approval_details/' + response.approval_noti[j].activity_id + '">' +
+                '<a href="/team-activity-approvals/">' +
                   '<div class="media-left">' +
                     '<span class="avatar">' +
                       header.charAt(0) +
@@ -355,7 +355,7 @@
               } else if (response.approval_noti[j].type=='2') {
 
                 $("#notiMsg").append('<li class="media notification-message">' +
-                '<a href="/team-activity-approvals/">' +
+                '<a href="/approval_details/' + response.approval_noti[j].activity_id + '">' +
                   '<div class="media-left">' +
                     '<span class="avatar">' +
                       header.charAt(0) +
