@@ -428,4 +428,14 @@ app.use(teamActivity_approval);
 app.use(strategic_goal);
 
 /********** End **********/
+
+app.use(function (req, res, next) {
+    if (req.accepts('html')) {
+        res.render('error', {
+            layout:'login',
+            url: req.url
+        });
+        return;
+    }
+});
 app.listen(port, () => console.log(`Server listening to port ${port}`));

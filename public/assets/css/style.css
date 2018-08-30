@@ -1015,7 +1015,7 @@ table.dataTable {
 
 .sidebar {
 	top: 60px;
-	width: 230px;
+	width: 240px;
 	z-index: 1050;
 	background-color: #fff;
 	bottom: 0;
@@ -1057,6 +1057,7 @@ table.dataTable {
 .sidebar-menu li a .fa {
 	font-size: 18px;
 	width: 20px;
+	margin-right: 5px;
 }
 
 .sidebar-menu li a>.badge {
@@ -6084,6 +6085,41 @@ i.fa.fa-eye.m-r-5 {
 	opacity: 0.9 !important;
 }
 
+#newChangePass .short {
+	font-weight: bold;
+	color: #FF0000;
+}
+
+#newChangePass .weak {
+	font-weight: bold;
+	color: orange;
+}
+
+#newChangePass .good {
+	font-weight: bold;
+	color: #2D98F3;
+}
+
+#newChangePass .strong {
+	font-weight: bold;
+	color: limegreen;
+}
+
+.toggle-password {
+	position: absolute;
+	top: 35px;
+	right: 20px;
+	font-size: 18px;
+}
+
+.error404 {
+	color: #d6b161;
+	text-shadow: rgba(113, 115, 114, 1) 5px 1px;
+	font-size: 100px;
+	font-weight: 700;
+	line-height: 1;
+	margin: 30px 0;
+}
 
 /* loader css ends */
 
@@ -6185,8 +6221,8 @@ select.gender {
 		margin-bottom: 0;
 	}
 
-	.budget-modal .modal-footer .modal-footer-panel .panel-body {
-	}
+	/* .budget-modal .modal-footer .modal-footer-panel .panel-body {
+	} */
 
 	.budget-modal .modal-footer .modal-footer-panel .panel-body  .form-control {
 		text-align: left;
