@@ -3128,6 +3128,7 @@ label.error {
 
 .profile-view .profile-img-wrap {
 	height: 150px;
+	top: -9px;
 	width: 150px;
 }
 
@@ -6649,6 +6650,10 @@ select.gender {
 
 				.general .form-control {
 					width: 75%;
+				}
+
+				.user-profile .control-label:nth-child(1) {
+					width: 20%;
 				}
 
 
