@@ -477,35 +477,28 @@
       <div class="modal-body">
         <form class="m-b-30" name="advancedFilter" id="advancedFilter" method="GET">
           <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <label class="control-label">Firm</label>
 
-                {{!-- <select class="form-control" id="activity_goal_id" name="activity_goal_id">
-                  <option value="">Select Tactical Marketing Goals</option>
-                  {{#each activity_goal}}
-                  <option value="{{this.id}}" {{#if_eq this.id ../activity_goal_id}} selected="selected" {{/if_eq}}>{{this.activity_goal}}</option>
-                  {{/each}}
-                </select> --}}
+            <div class="col-md-6">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">Firm</label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">Firm</label>
+                </div>
               </div>
             </div>
-            
 
-            {{!-- <div class="col-md-12">
-              <div class="form-group">
-                <label class="control-label">Activity Approval Status</label>
-                <select class="form-control" id="approval_status" name="approval_status">
-                  <option value="">Select Approval Status</option>
-                  <option value="0" {{#if_eq approval_status "0"}} selected="selected" {{/if_eq}}>NEW ACTIVITY - CREATED</option>
-                  <option value="1" {{#if_eq approval_status "1"}} selected="selected" {{/if_eq}}>PENDING APPROVAL - IN-PROGRESS</option>
-                  <option value="2" {{#if_eq approval_status "2"}} selected="selected" {{/if_eq}}>APPROVED - PROCEED</option>
-                  <option value="3" {{#if_eq approval_status "3"}} selected="selected" {{/if_eq}}>NOT APPROVED - DISCARD ACTIVITY</option>
-                </select>
-              </div>
-            </div> --}}
+
 
             <div class="col-md-12">
-              <label class="control-label">Relation</label>
+              <div class="col-md-6">
+                 <label class="control-label">Relation</label>
+              </div>
+              <div class="col-md-6">
+               
               <div class="form-inline m-b-15">
                 <div class="form-group">
                   <label class="input-group">
@@ -516,6 +509,7 @@
                     <span class="glyphicon form-control-feedback"></span>
                   </label>
                 </div>
+
                 <div class="form-group">
                   <label class="input-group">
                     <span class="input-group-addon">
@@ -544,6 +538,9 @@
                   </label>
                 </div>
               </div>
+              </div>
+
+              
             </div>
             
             <div class="col-md-12">
