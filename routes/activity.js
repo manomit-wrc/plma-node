@@ -1333,6 +1333,27 @@ router.get('/activity/deletedata/:id', auth, firmAttrAuth, async (req, res) => {
     res.redirect('/activitypage');
 });
 
+
+router.post('/activity/adddetails/', auth, async (req, res) => {
+
+    const allDetailsId = req.body['allDetailsId'];
+    const type = req.body['type'];
+    const activity_id = req.body['activity_id'];
+
+    await Activity_to_user_type.create({
+        'target_client_type' : type,
+        'type' : allDetailsId,
+        'activity_id' : activity_id,
+        'attorney_id': req.user.id
+    })
+    res.json({
+        success: true,
+        code: 100
+    });
+
+    
+});
+
 //====================================END ACTIVITY=============================================================================//
 
 module.exports = router;
