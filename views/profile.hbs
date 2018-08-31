@@ -86,73 +86,73 @@
             <h3 class="card-title">Contact Informations</h3>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="form-group form-focus">
+                    <div class="form-group">
                         <label class="control-label">Address</label>
-                        <input type="text" class="form-control floating" id="address" name="address" value="{{user.address}}" disabled/>
+                        <!-- <input type="text" class="form-control floating" id="address" name="address" value="{{user.address}}" disabled/> -->
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="form-group form-focus">
+                    <div class="form-group">
                         <label class="control-label">Address Line 2</label>
-                        <input type="text" class="form-control floating" id="address2" name="address2" value="{{edata.attorney_details.0.address2}}"
-                            disabled/>
+                        <!-- <input type="text" class="form-control floating" id="address2" name="address2" value="{{edata.attorney_details.0.address2}}"
+                            disabled/> -->
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="form-group form-focus">
+                    <div class="form-group">
                         <label class="control-label">Address Line 3</label>
-                        <input type="text" class="form-control floating" id="address3" name="address3" value="{{edata.attorney_details.0.address3}}"
-                            disabled/>
+                        <!-- <input type="text" class="form-control floating" id="address3" name="address3" value="{{edata.attorney_details.0.address3}}"
+                            disabled/> -->
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="form-group form-focus">
+                    <div class="form-group">
                         <label class="control-label">Mobile No</label>
-                        <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" value="{{user.mobile_no}}"
-                            disabled/>
+                        <!-- <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" value="{{user.mobile_no}}"
+                            disabled/> -->
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group form-focus">
+                    <div class="form-group">
                         <label class="control-label">Country</label>
-                        <select class="select form-control floating" id="country" name="country" disabled>
+                        <!-- <select class="select form-control floating" id="country" name="country" disabled>
                             {{#each country}}
                             <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
                             {{/each}}
-                        </select>
+                        </select> -->
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group form-focus">
+                    <div class="form-group">
                         <label class="control-label">State</label>
-                        <select class="select form-control floating" id="state" name="state" disabled>
+                        <!-- <select class="select form-control floating" id="state" name="state" disabled>
                             <option value="">Select State</option>
                             {{#each state}}
                             <option value="{{this.id}}" {{#if_eq this.id ../user.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
                             {{/each}}
-                        </select>
+                        </select> -->
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group form-focus">
+                    <div class="form-group">
                         <label class="control-label">City</label>
-                        <select class="select form-control floating" id="city" name="city" disabled>
+                        <!-- <select class="select form-control floating" id="city" name="city" disabled>
                             <option value="">Select City</option>
                             {{#each city}}
                             <option value="{{this.id}}" {{#if_eq this.id ../user.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
                             {{/each}}
-                        </select>
+                        </select> -->
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group form-focus">
+                    <div class="form-group">
                         <label class="control-label">Zipcode</label>
-                        <select class="select form-control floating" id="zipcode" name="zipcode" disabled>
+                        <!-- <select class="select form-control floating" id="zipcode" name="zipcode" disabled>
                             <option value="">Select Zipcode</option>
                             {{#each zipcode}}
                             <option value="{{this.id}}" {{#if_eq this.id ../user.zipcode}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
                             {{/each}}
-                        </select>
+                        </select> -->
                     </div>
                 </div>
             </div>
@@ -163,22 +163,22 @@
 
                 {{#if_eq edata.education ""}}
                 <div class="col-md-4">
-                    <div class="form-group form-focus">
+                    <div class="form-group">
                         <label class="control-label">Degree Type</label>
-                        <input type="text" class="form-control floating" id="degree" name="degree[]" disabled/>
+                        <!-- <input type="text" class="form-control floating" id="degree" name="degree[]" disabled/> -->
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="form-group form-focus">
+                    <div class="form-group">
                         <label class="control-label">University</label>
-                        <input type="text" class="form-control floating" id="university" name="university[]" disabled/>
+                        <!-- <input type="text" class="form-control floating" id="university" name="university[]" disabled/> -->
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="form-group form-focus">
+                    <div class="form-group">
                         <label class="control-label">Year</label>
-                        <input type="text" class="form-control floating" id="year" name="year[]" onkeypress="return isNumber(event)" maxlength="4"
-                            title="Only numbers are allowed" disabled/>
+                        <!-- <input type="text" class="form-control floating" id="year" name="year[]" onkeypress="return isNumber(event)" maxlength="4"
+                            title="Only numbers are allowed" disabled/> -->
                     </div>
                 </div>
                 <div class="col-md-1">
