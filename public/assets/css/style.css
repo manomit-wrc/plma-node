@@ -1029,10 +1029,18 @@ table.dataTable {
 	margin-top: 0px;
 	position: fixed;
 	left: 0;
-	-webkit-transition: all 0.4s ease;
+	/* -webkit-transition: all 0.4s ease;
 	-moz-transition: all 0.4s ease;
-	transition: all 0.4s ease;
+	transition: all 0.4s ease; */
 	border-right: 1px solid #ddd;
+}
+
+.sidebar a {
+	-webkit-transition: all 0.7s ease;
+	-moz-transition: all 0.7s ease;
+	-ms-transition: all 0.7s ease;
+	-o-transition: all 0.7s ease;
+	transition: all 0.7s ease;
 }
 
 .sidebar-inner {
@@ -5449,6 +5457,10 @@ table.table-inbox tbody tr.checked {
 
 /*Ends on CSS Profile Tab 18-06-2018*/
 
+
+
+
+
 /*------------------------------------------------------------------
 [39-a. Custom Styles]
 */
@@ -5822,14 +5834,10 @@ table.table-inbox tbody tr.checked {
 	top: -5px;
 }
 
-.sidebar-hide {
-	left: -230px;
-	transition: all 0.2s linear 0s;
-}
 
 .page-wrapper-full {
 	transition: all 0.2s linear 0s;
-	margin-left: 0;
+	margin-left: 50px;
 }
 
 .nav-menu a {
@@ -6130,6 +6138,20 @@ i.fa.fa-eye.m-r-5 {
 }
 
 /* loader css ends */
+
+
+
+.sidebar-hide {
+	left: 0;
+	/* transition: all 0.2s linear 0s; */
+	width: 50px;
+}
+
+.sidebar-hide ul li a span {
+	display: none;
+}
+
+
 
 /*------------------------------------------------------------------
 [39-a.... Custom Styles]

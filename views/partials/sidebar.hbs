@@ -5,191 +5,196 @@
                 <li {{#if_eq client_url "dashboard" }} class="active" {{/if_eq}}>
                     <a href="/dashboard">
                         <i class="fa fa-tachometer"></i>
-                        Dashboard
+                        <span>Dashboard</span>
                     </a>
                 </li>
                 {{#if_eq user.role_id "1"}}
                 <li {{#if_eq client_url "section" }} class="active" {{/if_eq}}>
                     <a href="/section">
                         <i class="fa fa-book"></i>
-                        Section
+                        <span>Section</span>
                     </a>
                 </li>
                 <li {{#if_eq client_url "practice-area" }} class="active" {{/if_eq}}>
                     <a href="/practice-area">
                         <i class="fa fa-list-ul"></i>
-                        Practice Area
+                        <span> Practice Area</span>
                     </a>
                 </li>
                 <li {{#if_eq client_url "jurisdiction" }} class="active" {{/if_eq}}>
                     <a href="/jurisdiction">
                         <i class="fa fa-balance-scale"></i>
-                        Jurisdiction
+                        <span>Jurisdiction</span>
                     </a>
                 </li>
                 <li {{#if_eq client_url "group" }} class="active" {{/if_eq}}>
                     <a href="/group">
                         <i class="fa fa-object-group"></i>
-                        Group
+                        <span>Group</span>
                     </a>
                 </li>
                 <li {{#if_eq client_url "industry" }} class="active" {{/if_eq}}>
                     <a href="/industry">
                         <i class="fa fa-industry"></i>
-                        Industry Type
+                        <span>Industry Type</span>
                     </a>
                 </li>
                 <li {{#if_eq client_url "designation" }} class="active" {{/if_eq}}>
                     <a href="/designation">
                         <i class="fa fa-id-badge"></i>
-                        Designations
+                        <span>Designations</span>
                     </a>
                 </li>
                 <li {{#if_eq client_url "budget" }} class="active" {{/if_eq}}>
                     <a href="/budget">
                         <i class="fa fa-leanpub"></i>
-                        Budgets
+                        <span>Budgets</span>
                     </a>
                 </li>
                 <li {{#if_eq client_url "firms" }} class="active" {{/if_eq}}>
                     <a href="/firms">
                         <i class="fa fa-building-o"></i>
-                        Firms
+                        <span>Firms</span>
                     </a>
                 </li>
                 <li {{#if_eq client_url "employees" }} class="active" {{/if_eq}}>
                     <a href="/employees">
                         <i class="fa fa-users"></i>
-                        Employees
+                        <span>Employees</span>
                     </a>
                 </li>
                 {{/if_eq}} {{#if_eq user.role_id "2"}}
                 <li {{#if_eq client_url "firm-details" }} class="active" {{/if_eq}}>
                     <a href="/firm-details">
                         <i class="fa fa-table"></i>
-                        Firm Details
+                        <span>Firm Details</span>
                     </a>
                 </li>
                 <li {{#if_eq client_url "attorneys" }} class="active" {{/if_eq}}>
                     <a href="/attorneys">
                         <i class="fa fa-users"></i>
-                        Attorneys
+                        <span>Attorneys</span>
                     </a>
                 </li>
                 <li {{#if_eq client_url "strategic-marketing-goal" }} class="active" {{/if_eq}}>
                     <a href="/strategic-marketing-goal">
                         <i class="fa fa-lightbulb-o"></i>
-                         Strategic Marketing Goals
+                        <span>Strategic Marketing Goals</span>
                     </a>
                 </li>
                 <li {{#if_eq client_url "activity-goal" }} class="active" {{/if_eq}}>
                     <a href="/activity-goal">
                         <i class="fa fa-bullseye"></i>
-                        Tactical Marketing Goals
+                        <span>Tactical Marketing Goals</span>
                     </a>
                 </li>
-                
+
                 <li {{#if_eq client_url "financial-goal" }} class="active" {{/if_eq}}>
                     <a href="/financial-goal">
                         <i class="fa fa-money"></i>
-                        Financial Goals
+                        <span>Financial Goals</span>
                     </a>
                 </li>
 
                 {{#if_eq user.role_id "2"}}
                 <li {{#if_eq client_url "activity-budget-report" }} class="active" {{/if_eq}}>
                     <a href="/activity-budget-report">
-                        <i class="fa fa-file-text"></i> Activity Budget Report</a>
+                        <i class="fa fa-file-text"></i>
+                        <span>Activity Budget Report</span>
+                    </a>
                 </li>
                 {{/if_eq}}
 
 
-                
+
                 <li {{#if_eq client_url "master_contact" }} class="active" {{/if_eq}}>
                     <a href="/master_contact">
                         <i class="fa fa-address-book-o"></i>
-                        Master Contacts
+                        <span>Master Contacts</span>
                     </a>
                 </li>
                 <li {{#if_eq client_url "target" }} class="active" {{/if_eq}}>
                     <a href="/target">
                         <i class="fa fa-dot-circle-o"></i>
-                        Targets
+                        <span>Targets</span>
                     </a>
                 </li>
                 <li {{#if_eq client_url "client" }} class="active" {{/if_eq}}>
                     <a href="/client">
                         <i class="fa fa-user"></i>
-                        Clients
+                        <span>Clients</span>
                     </a>
                 </li>
 
                 <li {{#if_eq client_url "referral" }} class="active" {{/if_eq}}>
                     <a href="/referral">
                         <i class="fa fa-user-plus"></i>
-                         Referral Sources
+                        <span>Referral Sources</span>
                     </a>
                 </li>
-
-
-
                 {{/if_eq}} {{#if_eq user.role_id "3"}}
                 <li {{#if_eq client_url "strategic-marketing-goal" }} class="active" {{/if_eq}}>
                     <a href="/strategic-marketing-goal">
                         <i class="fa fa-lightbulb-o"></i>
-                        Strategic Marketing Goals
+                        <span>Strategic Marketing Goals</span>
                     </a>
                 </li>
                 <li {{#if_eq client_url "activity-goal" }} class="active" {{/if_eq}}>
                     <a href="/activity-goal">
                         <i class="fa fa-bullseye"></i>
-                         Tactical Marketing Goals
+                        <span>Tactical Marketing Goals</span>
                     </a>
                 </li>
-                <li {{#if (or_v1 (eq client_url "activitypage")(eq client_url "activityseen")(eq client_url "activity")) }} class="active" {{/if}}>
+                <li {{#if (or_v1 (eq client_url "activitypage")(eq client_url "activityseen")(eq client_url "activity")) }} class="active"
+                    {{/if}}>
                     <a href="/activitypage">
                         <i class="fa fa-tasks"></i>
-                         Activities
+                        <span>Activities</span>
+
                     </a>
                 </li>
                 <li {{#if_eq client_url "activity-budget-report" }} class="active" {{/if_eq}}>
                     <a href="/activity-budget-report">
-                        <i class="fa fa-file-text"></i> Activity Budget Report</a>
+                        <i class="fa fa-file-text"></i>
+                        <span>Activity Budget Report</span>
+                    </a>
                 </li>
                 <li {{#if_eq client_url "master_contact" }} class="active" {{/if_eq}}>
                     <a href="/master_contact">
                         <i class="fa fa-address-book-o"></i>
-                        Master Contacts
+                        <span>Master Contacts</span>
                     </a>
                 </li>
                 <li {{#if_eq client_url "target" }} class="active" {{/if_eq}}>
                     <a href="/target">
                         <i class="fa fa-dot-circle-o"></i>
-                        Targets
+                        <span>Targets</span>
                     </a>
                 </li>
                 <li {{#if_eq client_url "client" }} class="active" {{/if_eq}}>
                     <a href="/client">
                         <i class="fa fa-user"></i>
-                        Clients
+                        <span>Clients</span>
                     </a>
                 </li>
                 <li {{#if_eq client_url "referral" }} class="active" {{/if_eq}}>
                     <a href="/referral">
                         <i class="fa fa-user-plus"></i>
-                            Referral Sources
+                        <span>Referral Sources</span>
                     </a>
                 </li>
                 <li {{#if_eq client_url "team-activity-approvals" }} class="active" {{/if_eq}}>
                     <a href="/team-activity-approvals">
-                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>Team Activity Invitation</a>
+                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                        <span>Team Activity Invitation</span>
+                    </a>
                 </li>
-                {{/if_eq}} 
-                
-                {{#if_eq user.approver "1"}}
+                {{/if_eq}} {{#if_eq user.approver "1"}}
                 <li {{#if (or (eq client_url "activity-approvals")(eq client_url "approval_details")) }} class="active" {{/if}}>
                     <a href="/activity-approvals">
-                        <i class="fa fa-check"></i> Activity Approvals</a>
+                        <i class="fa fa-check"></i>
+                        <span>Activity Approvals</span>
+                    </a>
                 </li>
                 {{/if_eq}}
 
@@ -197,3 +202,13 @@
         </div>
     </div>
 </div>
+
+{{#content "script" mode="append"}}
+<script>
+    $(".sidebar").hover(function () {
+        if ($(this).is(".sidebar-hover")) {
+            $(this).toggleClass("sidebar-hide");
+            $(".page-wrapper").toggleClass("page-wrapper-full");
+        }
+    });
+</script> {{/content}}
