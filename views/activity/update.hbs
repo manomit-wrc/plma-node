@@ -12,6 +12,14 @@
       <div class="col-sm-8">
         <h4 class="page-title">Edit Activity</h4>
       </div>
+      <div class="col-sm-4">
+        <div class="text-right">
+          <a href="#" class="btn btn-primary pull-right rounded" data-toggle="modal" data-target="#addDetails">
+            <i class="fa fa-plus-circle"></i> Add Client/Traget/Referral/General</a>
+            {{!-- <button class="btn btn-primary rounded advancedFilter" data-toggle="modal" data-target="#add_user">
+            <i class="fa fa-filter"></i> Filter</button> --}}
+        </div>
+      </div>
     </div>
     <form name="updateActivityForm" id="updateActivityForm" action="/activity/update/{{editdata.id}}" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="_csrf" value="{{csrfToken}}">
@@ -178,7 +186,7 @@
                   {{!-- <label class="control-label">Attorney <span class="req-lbl">*</span> </label> --}}
                   <select class="form-control floating" id="attorney_user" name="attorney_user[]" multiple="multiple">
                     {{!-- <option value="0">Select Attorney</option> --}} {{#each attorney}}
-                    <option value="{{this.id}}" {{#inArray ../attr_arr this.id}} selected="selected" {{/inArray}}>{{this.first_name}}
+                    <option value="{{this.id}}" {{#if '0'}} {{#inArrayCustom1 ../attr_arr this.id '0'}} selected="selected" {{/inArrayCustom1}} {{/if}} {{#if '1'}} {{#inArrayCustom1 ../attr_arr this.id '1'}} disabled selected="selected" {{/inArrayCustom1}} {{/if}} {{#if '2'}} {{#inArrayCustom1 ../attr_arr this.id '2'}} disabled {{/inArrayCustom1}} {{/if}}>{{this.first_name}}
                       {{this.last_name}}
                     </option>
                     {{/each}}
@@ -456,6 +464,160 @@
     </div>
   </div>
 </div>
+
+  <!----------------------------Activity Update-08-13-2018---------------------------------->
+  <div id="addDetails" class="modal custom-modal fade" role="dialog">
+  <div class="modal-dialog">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <div class="modal-content modal-lg">
+      <div class="modal-header">
+        <h4 class="modal-title">
+          <i class="fa fa-filter"></i> Add Attorney Budget Per Client/Target/Referral/General </h4>
+      </div>
+      <div class="modal-body">
+        <form class="m-b-30" name="advancedFilter" id="advancedFilter" method="GET">
+          <div class="row">
+
+            <div class="col-md-6">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">Firm</label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">Firm</label>
+                </div>
+              </div>
+            </div>
+
+
+
+            <div class="col-md-12">
+              <div class="col-md-6">
+                 <label class="control-label">Relation</label>
+              </div>
+              <div class="col-md-6">
+               
+              <div class="form-inline m-b-15">
+                <div class="form-group">
+                  <label class="input-group">
+                    <span class="input-group-addon">
+                      <input type="radio" id="target_type" name="ref_type" value="T" {{#if_eq refer_type "T"}} checked {{/if_eq}} />
+                    </span>
+                    <div class="form-control form-control-static">Target</div>
+                    <span class="glyphicon form-control-feedback"></span>
+                  </label>
+                </div>
+
+                <div class="form-group">
+                  <label class="input-group">
+                    <span class="input-group-addon">
+                      <input type="radio" id="organization_type" name="ref_type" value="C" {{#if_eq refer_type "C"}} checked {{/if_eq}} />
+                    </span>
+                    <div class="form-control form-control-static">Client</div>
+                    <span class="glyphicon form-control-feedback"></span>
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label class="input-group">
+                    <span class="input-group-addon">
+                      <input type="radio" id="referral_type" name="ref_type" value="R" {{#if_eq refer_type "R"}} checked {{/if_eq}} />
+                    </span>
+                    <div class="form-control form-control-static">Referral</div>
+                    <span class="glyphicon form-control-feedback"></span>
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label class="input-group">
+                    <span class="input-group-addon">
+                      <input type="radio" id="general_type" name="ref_type" value="G" {{#if_eq refer_type "G"}} checked {{/if_eq}} />
+                    </span>
+                    <div class="form-control form-control-static">General</div>
+                    <span class="glyphicon form-control-feedback"></span>
+                  </label>
+                </div>
+              </div>
+              </div>
+
+              
+            </div>
+            
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="control-label">Relation:</label>
+                <select class="form-control" id="activity_type" name="activity_type">
+                  <option value="">Select Activity Type</option>
+                  <option value="individual" {{#if_eq activity_type "individual"}} selected="selected" {{/if_eq}}>INDIVIDUAL LEVEL</option>
+                  <option value="section" {{#if_eq activity_type "section"}} selected="selected" {{/if_eq}}>SECTION LEVEL</option>
+                  <option value="strategic_group" {{#if_eq activity_type "strategic_group"}} selected="selected" {{/if_eq}}>STRATEGIC GROUP LEVEL</option>
+                  <option value="team" {{#if_eq activity_type "team"}} selected="selected" {{/if_eq}}>TEAM LEVEL</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6" id="target_list" {{#if_eq refer_type "T"}} style="display: block;" {{else}} style="display: none;"
+              {{/if_eq}}>
+              <div class="form-group">
+                <label class="control-label">Target List
+                  <span class="text-danger">*</span>
+                </label>
+                <select id="target_id" name="target_user" class="form-control">
+                  <option value="">Please Select One</option>
+                  {{#each target}} {{#if_eq target_type "I"}}
+                  <option value="{{this.id}}" {{#if_eq this.id ../user_target}} selected {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+                  {{/if_eq}} {{#if_eq target_type "O"}}
+                  <option value="{{this.id}}" {{#if_eq this.id ../user_target}} selected {{/if_eq}}>{{this.organization_name}}</option>
+                  {{/if_eq}} {{/each}}
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6" id="client_list" {{#if_eq refer_type "C"}} style="display: block;" {{else}} style="display: none;"
+              {{/if_eq}}>
+              <div class="form-group">
+                <label class="control-label">Client List
+                  <span class="text-danger">*</span>
+                </label>
+                <select id="client_id" name="client_user" class="form-control">
+                  <option value="">Please Select One</option>
+                  {{#each client}} {{#if_eq client_type "I"}}
+                  <option value="{{this.id}}" {{#if_eq this.id ../user_client}} selected {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+                  {{/if_eq}} {{#if_eq client_type "O"}}
+                  <option value="{{this.id}}" {{#if_eq this.id ../user_client}} selected {{/if_eq}}>{{this.organization_name}}</option>
+                  {{/if_eq}} {{/each}}
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6" id="referral_list" {{#if_eq refer_type "R"}} style="display: block;" {{else}} style="display: none;"
+              {{/if_eq}}>
+              <div class="form-group">
+                <label class="control-label">Referral List
+                  <span class="text-danger">*</span>
+                </label>
+                <select id="referral_id" name="referral_user" class="form-control">
+                  <option value="">Please Select One</option>
+                  {{#each referral}}
+                  <option value="{{this.id}}" {{#if_eq this.id ../user_referral}} selected {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+                  {{/each}}
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6" id="general_list" {{#if_eq refer_type "G"}} style="display: block;" {{else}} style="display: none;"
+              {{/if_eq}}>&nbsp;</div>
+          </div>
+          <div class="m-t-20 text-center">
+            <button class="btn btn-primary btn-lg" type="submit" id="btnAddGroup">Search</button>
+            <a href="/activitypage" class="btn btn-primary btn-lg m-l-10">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!----------------------------Activity Update-08-13-2018----------------------------------->
+
+
+
+
 <!-------------------------------------Siddhartha 08-29-2018---------------------------------------------->
 
 {{!-- Ends add budget modal --}} {{#content "script" mode="append"}}
