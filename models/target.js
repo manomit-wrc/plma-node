@@ -45,6 +45,7 @@ module.exports = (sequelize, DataTypes) => {
     target_status:DataTypes.INTEGER,
     revenue_start_month:DataTypes.STRING,
     revenue_end_month:DataTypes.STRING,
+    estimated_lifetime_value:DataTypes.STRING,
     targetStartDate:DataTypes.STRING,
     targetEndDate:DataTypes.STRING,
     lifetimeClientValue:DataTypes.INTEGER,
