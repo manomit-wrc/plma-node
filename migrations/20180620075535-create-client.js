@@ -90,6 +90,12 @@ module.exports = {
       },
       clientEndDate: {
          type: Sequelize.STRING
+      },
+      revenue_start_month: {
+        type: Sequelize.STRING
+      },
+      revenue_end_month: {
+        type: Sequelize.STRING
       }
     });
   },

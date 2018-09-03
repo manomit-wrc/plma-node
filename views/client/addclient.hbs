@@ -117,7 +117,7 @@
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus">
-									<label class="control-label">Current Revenue</label>
+									<label class="control-label">Current annual revenue</label>
 									<input class="form-control floating" type="text" id="current_revenue" name="current_revenue">
 								</div>
 							</div>
@@ -134,6 +134,50 @@
 									<div class="cal-icon">
 										<input class="form-control floating datetimepicker" type="text" id="revenueclosingDate" name="revenueclosingDate">
 									</div>
+								</div>
+							</div>
+							
+							<div class="col-md-3">
+								<div class="form-group form-focus select-focus select-attorney">
+									<label class="control-label">Start Date
+									</label>
+									<select class="form-control floating " id="startMonth" name="startMonth">
+										<option value="">Select Gender</option>
+										<option value="1">January</option>
+										<option value="2">February</option>
+										<option value="3">March</option>
+										<option value="4">April</option>
+										<option value="5">May</option>
+										<option value="6">June</option>
+										<option value="7">July</option>
+										<option value="8">August</option>
+										<option value="9">September</option>
+										<option value="10">October</option>
+										<option value="11">November</option>
+										<option value="12">December</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="col-md-3">
+								<div class="form-group form-focus select-focus select-attorney">
+									<label class="control-label">End Date
+									</label>
+									<select class="form-control floating " id="endMonth" name="endMonth">
+										<option value="">Select Gender</option>
+										<option value="1">January</option>
+										<option value="2">February</option>
+										<option value="3">March</option>
+										<option value="4">April</option>
+										<option value="5">May</option>
+										<option value="6">June</option>
+										<option value="7">July</option>
+										<option value="8">August</option>
+										<option value="9">September</option>
+										<option value="10">October</option>
+										<option value="11">November</option>
+										<option value="12">December</option>
+									</select>
 								</div>
 							</div>
 
@@ -218,6 +262,9 @@
 								<option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
 								{{else}}
 								<option value="">Select Attorney</option>
+								{{#if_eq user.is_attorney "1"}}
+									<option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
+								{{/if_eq}}
 								{{#each attorney}}
 								<option value="{{this.id}}" {{#if_eq this.id ../user.id}} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
 								{{/each}} {{/if_eq}}

@@ -250,6 +250,9 @@
 								<option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
 								{{else}}
 								<option value="">Select Attorney</option>
+								{{#if_eq user.is_attorney "1"}}
+									<option value="{{user.id}}" {{#if_eq user.id client.attorney_id}} selected="selected" {{/if_eq}}>{{user.first_name}} {{user.last_name}}</option>
+								{{/if_eq}}
 								{{#each attorney}}
 								<option value="{{this.id}}" {{#if_eq this.id ../client.attorney_id}} selected="selected" {{/if_eq}}>{{this.first_name}}
 									{{this.last_name}}
