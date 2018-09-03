@@ -28,6 +28,7 @@ const Client = require('../models').client;
 const Referral = require('../models').referral;
 const MasterContact = require('../models').master_contact;
 const ActivityBudget = require('../models').activity_budget;
+const ActivityGoal = require('../models').activity_goal;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
@@ -64,6 +65,9 @@ router.get('/dashboard', auth,  async(req, res) => {
     var changeAttrToFirm = req.flash('change-attr-login')[0];
     var changeSite = req.flash('change-site-login')[0];
 /* =================== Activity Count starts ================================*/
+    Activity.belongsTo(ActivityGoal, {
+        foreignKey: 'activity_goal_id'
+    });
     var activityCondition = {};
     if(req.user.role_id != "1"){
         activityCondition.firm_id = req.user.firm_id;
@@ -75,7 +79,10 @@ router.get('/dashboard', auth,  async(req, res) => {
         where: activityCondition,
         order: [
             ['createdAt', 'DESC']
-        ]
+        ],
+        include: [{
+            model: ActivityGoal
+        }],
     });
     var activity_count = activity.length;
 /* =================== Activity Count Ends ================================*/
@@ -116,6 +123,12 @@ router.get('/dashboard', auth,  async(req, res) => {
 /* =================== Client Count Ends ================================*/
 
 /* =================== Referral Count Ends ================================*/
+    Referral.belongsTo(Target, {
+        foreignKey: 'target_id'
+    });
+    Referral.belongsTo(Client, {
+        foreignKey: 'client_id'
+    });
     var referralCondition = {};
     if (req.user.role_id != "1") {
         referralCondition.firm_id = req.user.firm_id;
@@ -125,11 +138,17 @@ router.get('/dashboard', auth,  async(req, res) => {
     }
     var referral = await Referral.findAll({
         where: referralCondition,
+        include: [{
+            model: Target
+        }, {
+            model: Client
+        }],
         order: [
             ['createdAt', 'DESC']
         ]
     });
     var referral_count = referral.length;
+    
 /* =================== Referral Count Ends ================================*/
 
 /* =================== Master Contact Count Ends ================================*/

@@ -267,7 +267,7 @@
               <table class="table table-striped custom-table m-b-0 ">
                 <thead>
                   <tr>
-                    <th style="width:10%">Creation Date</th>
+                    <th style="width:17%">Tactical Marketing Goals</th>
                     <th>Activity Name</th>
                     <th>From Date</th>
                     <th>To Date</th>
@@ -283,7 +283,7 @@
                   </tr>
                   {{else}} {{#each activity}}
                   <tr class="activity_custom_del">
-                    <td>{{dateFormat this.activity_creation_date "DD-MM-YYYY"}}</td>
+                    <td><a href="/activity-goal/view/{{this.activity_goal.id}}">{{this.activity_goal.activity_goal}}</a></td>
                     <td>
                       <a href="/activity/view/{{this.id}}">{{this.activity_name}}</a>
                     </td>
@@ -419,10 +419,10 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-12">
         <div class="panel panel-table">
           <div class="panel-heading">
-            <h3 class="panel-title">Referrals</h3>
+            <h3 class="panel-title">Referral Sources</h3>
           </div>
           <div class="panel-body">
             <div class="table-responsive refe">
@@ -431,7 +431,10 @@
                   <tr>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Referral Type</th>
+                    <th>Referral Sources Type</th>
+                    <th>Mobile</th>
+                    <th>Referred</th>
+                    <th>Referred Name</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -445,7 +448,7 @@
                       {{#if_eq referral_type "I"}}
                       <a href="/referral/view/{{this.id}}" class="avatar">{{first_letter this.first_name}}</a>
                       <h2>
-                        <a href="/referral/view/{{this.id}}">{{this.first_name}} {{this.last_name}}</a>
+                        <a href="/referral/view/{{this.id}}" style="width:auto">{{this.first_name}} {{this.last_name}}</a>
                       </h2>
                       {{else}}
                       <a href="/referral/view/{{this.id}}" class="avatar">{{first_letter this.organization_name}}</a>
@@ -461,6 +464,18 @@
                       <span class="label label-info-border">Organization</span>
                       {{/if_eq}}
                     </td>
+                    <td>{{this.mobile}}</td>
+                    <td>{{#if_eq this.referred_type "C"}}
+                        Client
+                        {{else}}
+                        Target
+                        {{/if_eq}}
+                    </td>
+                    <td>{{#if_eq this.referred_type "C"}}
+                       <a href="/client/view/{{this.client.id}}">{{this.client.first_name}} {{this.client.last_name}}</a> 
+                      {{else}} 
+                        <a href="/target/view/{{this.target.id}}">{{this.target.first_name}} {{this.target.last_name}}</a> 
+                      {{/if_eq}}</td>
                   </tr>
                   {{/each}} {{/if_eq}}
                 </tbody>
@@ -472,59 +487,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6">
-        <div class="panel panel-table">
-          <div class="panel-heading">
-            <h3 class="panel-title">Master Contacts</h3>
-          </div>
-          <div class="panel-body">
-            <div class="table-responsive">
-              <table class="table table-striped custom-table m-b-0">
-                <thead>
-                  <tr>
-                    <th style="min-width:200px;">Name</th>
-                    <th>Email</th>
-                    <th>Master Contacts Type</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {{#if_eq master_contact_count "0"}}
-                  <tr>
-                    <td colspan="4" class="text-center">No data available in table</td>
-                  </tr>
-                  {{else}} {{#each master_contact}}
-                  <tr class="activity_custom_del">
-                    <td style="min-width:200px;">
-                      {{#if_eq master_contact_type "I"}}
-                      <a href="/master_contact/view/{{this.id}}" class="avatar">{{first_letter this.first_name}}</a>
-                      <h2>
-                        <a href="/master_contact/view/{{this.id}}">{{this.first_name}} {{this.last_name}} </a>
-                      </h2>
-                      {{else}}
-                      <a href="/master_contact/view/{{this.id}}" class="avatar">{{first_letter this.organization_name}}</a>
-                      <h2>
-                        <a href="/master_contact/view/{{this.id}}">{{this.organization_name}}</a>
-                      </h2>
-                      {{/if_eq}}
-                    </td>
-                    <td>{{this.email}}</td>
-                    <td>{{#if_eq master_contact_type "I"}}
-                      <span class="label label-success-border">Individual</span>
-                      {{else}}
-                      <span class="label label-info-border">Organization</span>
-                      {{/if_eq}}
-                    </td>
-                  </tr>
-                  {{/each}} {{/if_eq}}
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="panel-footer">
-            <a href="/master_contact" class="text-primary">View all master contacts</a>
-          </div>
-        </div>
-      </div>
+      
     </div>
     {{/if_eq}}
   </div>
