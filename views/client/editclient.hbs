@@ -123,7 +123,7 @@
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus">
-									<label class="control-label">Current Revenue</label>
+									<label class="control-label">Current annual revenue</label>
 									<input class="form-control floating" type="text" id="current_revenue" name="current_revenue" value="{{client.current_revenue}}">
 								</div>
 							</div>
@@ -142,6 +142,50 @@
 										<input class="form-control floating datetimepicker" type="text" id="revenueclosingDate" name="revenueclosingDate" value="{{dateFormat client.revenueclosingDate "
 										 DD-MM-YYYY "}}" >
 									</div>
+								</div>
+							</div>
+
+							<div class="col-md-3">
+								<div class="form-group form-focus select-focus select-attorney">
+									<label class="control-label">Start Date
+									</label>
+									<select class="form-control floating " id="startMonth" name="startMonth" disabled>
+										<option value="">Select Start Date</option>
+										<option value="1" {{#if_eq client.revenue_start_month "1"}} selected {{/if_eq}} >January</option>
+										<option value="2" {{#if_eq client.revenue_start_month "2"}} selected {{/if_eq}} >February</option>
+										<option value="3" {{#if_eq client.revenue_start_month "3"}} selected {{/if_eq}} >March</option>
+										<option value="4" {{#if_eq client.revenue_start_month "4"}} selected {{/if_eq}} >April</option>
+										<option value="5" {{#if_eq client.revenue_start_month "5"}} selected {{/if_eq}} >May</option>
+										<option value="6" {{#if_eq client.revenue_start_month "6"}} selected {{/if_eq}} >June</option>
+										<option value="7" {{#if_eq client.revenue_start_month "7"}} selected {{/if_eq}} >July</option>
+										<option value="8" {{#if_eq client.revenue_start_month "8"}} selected {{/if_eq}} >August</option>
+										<option value="9" {{#if_eq client.revenue_start_month "9"}} selected {{/if_eq}} >September</option>
+										<option value="10" {{#if_eq client.revenue_start_month "10"}} selected {{/if_eq}} >October</option>
+										<option value="11" {{#if_eq client.revenue_start_month "11"}} selected {{/if_eq}} >November</option>
+										<option value="12" {{#if_eq client.revenue_start_month "12"}} selected {{/if_eq}} >December</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="col-md-3">
+								<div class="form-group form-focus select-focus select-attorney">
+									<label class="control-label">End Date
+									</label>
+									<select  {{#if_eq client.target_status ""}} {{/if_eq}} class="form-control floating " id="endMonth" name="endMonth" disabled>
+										<option value="">Select End Date</option>
+										<option value="1" {{#if_eq client.revenue_end_month "1"}} selected {{/if_eq}} >January</option>
+										<option value="2" {{#if_eq client.revenue_end_month "2"}} selected {{/if_eq}} >February</option>
+										<option value="3" {{#if_eq client.revenue_end_month "3"}} selected {{/if_eq}} >March</option>
+										<option value="4" {{#if_eq client.revenue_end_month "4"}} selected {{/if_eq}} >April</option>
+										<option value="5" {{#if_eq client.revenue_end_month "5"}} selected {{/if_eq}} >May</option>
+										<option value="6" {{#if_eq client.revenue_end_month "6"}} selected {{/if_eq}} >June</option>
+										<option value="7" {{#if_eq client.revenue_end_month "7"}} selected {{/if_eq}} >July</option>
+										<option value="8" {{#if_eq client.revenue_end_month "8"}} selected {{/if_eq}} >August</option>
+										<option value="9" {{#if_eq client.revenue_end_month "9"}} selected {{/if_eq}} >September</option>
+										<option value="10" {{#if_eq client.revenue_end_month "10"}} selected {{/if_eq}} >October</option>
+										<option value="11" {{#if_eq client.revenue_end_month "11"}} selected {{/if_eq}} >November</option>
+										<option value="12" {{#if_eq client.revenue_end_month "12"}} selected {{/if_eq}} >December</option>
+									</select>
 								</div>
 							</div>
 
@@ -232,6 +276,9 @@
 								<option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
 								{{else}}
 								<option value="">Select Attorney</option>
+								{{#if_eq user.is_attorney "1"}}
+									<option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
+								{{/if_eq}}
 								{{#each attorney}}
 								<option value="{{this.id}}" {{#if_eq this.id ../client.attorney_id}} selected="selected" {{/if_eq}}>{{this.first_name}}
 									{{this.last_name}}</option>
