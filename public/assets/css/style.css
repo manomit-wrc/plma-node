@@ -6536,9 +6536,9 @@ select.gender {
 
 		.activity_custom_del h2 a {
 			display: table;
-			overflow: hidden;
+			/*overflow: hidden;
 			text-overflow: ellipsis;
-			white-space: normal;
+			white-space: normal;*/
 			width: 120px;
 		}
 
@@ -6683,7 +6683,7 @@ select.gender {
 				}
 
 				.table-responsive.refe thead th:nth-child(1) {
-					width: 40%;
+					width: 22%;
 				}
 
 				/*Ends on css 03-09-2018*/
