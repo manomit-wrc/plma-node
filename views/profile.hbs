@@ -171,6 +171,34 @@
                 </div>
             </div>
         </div>
+
+        {{#if_eq user.role_id "3"}}
+            <div class="card-box">
+                <h3 class="card-title">Education Information</h3>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{#each education}}
+                        <ul class="personal-info educational-info">
+                            
+                            <li>
+                                <span class="title">Degree Type:</span>
+                                <span class="text">{{this.degree}}</span>
+                            </li>
+                            <li>
+                                <span class="title">University:</span>
+                                <span class="text">{{this.university}}</span>
+                            </li>
+                            <li>
+                                <span class="title">Year:</span>
+                                <span class="text">{{this.year}}</span>
+                            </li>
+                           
+                        </ul> 
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+            {{/if_eq}}
         {{/if_eq}}
     </div>
 

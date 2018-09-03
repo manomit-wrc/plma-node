@@ -6686,6 +6686,26 @@ select.gender {
 					width: 22%;
 				}
 
+				ul.personal-info.educational-info {
+					width: 33.3333%;
+					float: left;
+				}
+
+				ul.personal-info.educational-info {
+					width: 33.3333%;
+					float: left;
+				}
+
+				ul.personal-info.educational-info li {
+					display: block;
+				}
+
+				ul.personal-info.educational-info li span {
+					width: 30%;
+					overflow: visible;
+					display: inline-block;
+				}
+
 				/*Ends on css 03-09-2018*/
 
 
