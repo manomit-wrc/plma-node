@@ -866,7 +866,10 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				estimated_revenue: removePhoneMask(req.body.estimated_revenue),
 				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null,
 				clientStartDate: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
-           		clientEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null
+				clientEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
+				revenue_start_month: req.body.startMonth,
+            	revenue_end_month: req.body.endMonth
+				   
 			});
 
 			for (let j=0; j< clientDetails.length; j++) {
@@ -929,7 +932,9 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				estimated_revenue: removePhoneMask(req.body.estimated_revenue),
 				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null,
 				clientStartDate: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
-           		clientEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null
+				clientEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
+				revenue_start_month: req.body.startMonth,
+            	revenue_end_month: req.body.endMonth
 			});
 			req.flash('success-message', 'Client Added Successfully');
 			res.redirect('/client');
@@ -1030,7 +1035,9 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 			estimated_revenue: removePhoneMask(req.body.estimated_revenue),
 			revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null,
 			clientStartDate: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
-           	clientEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null 
+			clientEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
+			revenue_start_month: req.body.startMonth,
+            revenue_end_month: req.body.endMonth 
 
 		}, {
 			where: {
