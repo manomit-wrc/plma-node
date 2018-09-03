@@ -82,8 +82,11 @@ module.exports = {
       target_status: {
         type: Sequelize.INTEGER
       },
-      revenueclosingDate: {
-        type: Sequelize.INTEGER
+      revenue_start_month: {
+        type: Sequelize.STRING
+      },
+      revenue_end_month: {
+        type: Sequelize.STRING
       },
       targetStartDate: {
         type: Sequelize.STRING
