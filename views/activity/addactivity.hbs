@@ -66,7 +66,7 @@
                             </div>
                             <div class="col-md-6" id="target_list">
                                 <div class="form-group select-focus">
-                                    <select id="target_id" name="target_user[]" class="form-control floating onchangeBudget" multiple="multiple">
+                                    <select id="target_id" name="target_user[]" class="form-control floating onchangeBudget required" multiple="multiple" required>
                                         {{#each target}}
                                             {{#if_eq target_type "I"}}
                                                 <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
