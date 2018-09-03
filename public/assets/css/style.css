@@ -6678,9 +6678,13 @@ select.gender {
 					padding: 0 17px;
 				}
 
-				/*.table-responsive.refe .activity_custom_del h2 a {
-					width: 120px;
-				}*/
+				.table-responsive.refe .activity_custom_del h2 a {
+					width: 190px;
+				}
+
+				.table-responsive.refe thead th:nth-child(1) {
+					width: 40%;
+				}
 
 				/*Ends on css 03-09-2018*/
 
