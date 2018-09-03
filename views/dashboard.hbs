@@ -283,7 +283,7 @@
                   </tr>
                   {{else}} {{#each activity}}
                   <tr class="activity_custom_del">
-                    <td>{{dateFormat this.activity_creation_date "DD-MM-YYYY"}}</td>
+                    <td><a href="/activity-goal/view/{{this.activity_goal.id}}">{{this.activity_goal.activity_goal}}</a></td>
                     <td>
                       <a href="/activity/view/{{this.id}}">{{this.activity_name}}</a>
                     </td>
@@ -471,7 +471,11 @@
                         Target
                         {{/if_eq}}
                     </td>
-                    <td>{{#if_eq this.referred_type "C"}} {{this.client.first_name}} {{this.client.last_name}} {{else}} {{this.target.first_name}} {{this.target.last_name}} {{/if_eq}}</td>
+                    <td>{{#if_eq this.referred_type "C"}}
+                       <a href="/client/view/{{this.client.id}}">{{this.client.first_name}} {{this.client.last_name}}</a> 
+                      {{else}} 
+                        <a href="/target/view/{{this.target.id}}">{{this.target.first_name}} {{this.target.last_name}}</a> 
+                      {{/if_eq}}</td>
                   </tr>
                   {{/each}} {{/if_eq}}
                 </tbody>
