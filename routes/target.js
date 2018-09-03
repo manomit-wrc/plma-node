@@ -243,6 +243,7 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
                 estimated_revenue: removePhoneMask(req.body.estimated_revenue),
                 revenue_start_month: req.body.startMonth,
                 revenue_end_month: req.body.endMonth,
+                estimated_lifetime_value: req.body.estimatedLifetime,
                 targetStartDate: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
                 targetEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
                 lifetimeClientValue: removePhoneMask(req.body.lifetimeClient)
@@ -304,6 +305,7 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
                 estimated_revenue: removePhoneMask(req.body.estimated_revenue),
                 revenue_start_month: req.body.startMonth,
                 revenue_end_month: req.body.endMonth,
+                estimated_lifetime_value: removePhoneMask(req.body.estimatedLifetime),
                 targetStartDate: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
                 targetEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
                 lifetimeClientValue: removePhoneMask(req.body.lifetimeClient)
@@ -445,7 +447,6 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
 	var fax = req.body.contactDetailsFax;
     var mobile_no = req.body.contactDetailsMobile_no;
     
-    const closingDate = req.body.revenueclosingDate ? req.body.revenueclosingDate.split("-") : '';
     const startDate = req.body.targetStartDate ? req.body.targetStartDate.split("-") : '';
     const endDate = req.body.targetEndDate ? req.body.targetEndDate.split("-") : '';
 
@@ -513,7 +514,9 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
             target_code: req.body.target_code,
             remarks: req.body.remarks,
             estimated_revenue: removePhoneMask(req.body.estimated_revenue),
-            revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null,
+            estimated_lifetime_value: removePhoneMask(req.body.estimatedLifetime),
+            revenue_start_month: req.body.startMonth,
+            revenue_end_month: req.body.endMonth,
             targetStartDate: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
             targetEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
             lifetimeClientValue: removePhoneMask(req.body.lifetimeClient)
