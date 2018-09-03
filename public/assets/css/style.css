@@ -6715,6 +6715,12 @@ select.gender {
 					height: 50px;
 				}
 
+				/*.dropdown-menu.inner.selectpicker {
+					border-bottom: 1px solid #ccc !important;
+					border-left: 1px solid #ccc !important;
+					border-right: 1px solid #ccc !important;
+				}*/
+
 				/*Ends on css 03-09-2018*/
 
 
