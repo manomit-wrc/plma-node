@@ -163,6 +163,7 @@ textarea.form-control {
 	-moz-border-radius: 0;
 	-ms-border-radius: 0;
 	-o-border-radius: 0;
+	background-color: #fff !important;
 }
 
 .input-group .form-control {
@@ -6684,6 +6685,34 @@ select.gender {
 
 				.table-responsive.refe thead th:nth-child(1) {
 					width: 22%;
+				}
+
+				ul.personal-info.educational-info {
+					width: 33.3333%;
+					float: left;
+				}
+
+				ul.personal-info.educational-info {
+					width: 33.3333%;
+					float: left;
+				}
+
+				ul.personal-info.educational-info li {
+					display: block;
+				}
+
+				ul.personal-info.educational-info li span {
+					width: 30%;
+					overflow: visible;
+					display: inline-block;
+				}
+
+				.form-control.multiselect-search {
+					padding: 12px;
+				}
+
+				.btn.btn-default.multiselect-clear-filter {
+					height: 50px;
 				}
 
 				/*Ends on css 03-09-2018*/

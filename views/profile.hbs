@@ -7,10 +7,10 @@
             <div class="col-sm-4 text-right m-b-30">
                 {{#if_eq user.role_id "3"}}
                     <a href="/edit-attorney-profile" class="btn btn-primary rounded">
-                        <i class="fa fa-plus"></i> Edit Profile</a>
+                        <i class="fa fa-pencil"></i> Edit Profile</a>
                 {{else}}
                     <a href="/edit-profile" class="btn btn-primary rounded">
-                        <i class="fa fa-plus"></i> Edit Profile</a>
+                        <i class="fa fa-pencil"></i> Edit Profile</a>
                 {{/if_eq}}
             </div>
         </div>
@@ -125,10 +125,12 @@
                             <span class="title">Designation:</span>
                             <span class="text">{{desig.title}}</span>
                         </li>
+                        {{#if_eq user.role_id "3"}}
                         <li>
                             <span class="title">Section:</span>
                             <span class="text">{{section.name}}</span>
                         </li>
+                        {{/if_eq}}
                         <li>
                             <span class="title">Group:</span>
                             <span class="text">{{group.name}}</span>
@@ -171,6 +173,34 @@
                 </div>
             </div>
         </div>
+
+        {{#if_eq user.role_id "3"}}
+            <div class="card-box">
+                <h3 class="card-title">Education Information</h3>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{#each education}}
+                        <ul class="personal-info educational-info">
+                            
+                            <li>
+                                <span class="title">Degree Type:</span>
+                                <span class="text">{{this.degree}}</span>
+                            </li>
+                            <li>
+                                <span class="title">University:</span>
+                                <span class="text">{{this.university}}</span>
+                            </li>
+                            <li>
+                                <span class="title">Year:</span>
+                                <span class="text">{{this.year}}</span>
+                            </li>
+                           
+                        </ul> 
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+            {{/if_eq}}
         {{/if_eq}}
     </div>
 

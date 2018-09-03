@@ -310,6 +310,12 @@ router.get('/profile', auth, async (req, res) => {
         const group = await Group.findById(req.user.group_id);
         const section = await Section.findById(req.user.section_id);
         const firm = await Firm.findById(req.user.firm_id);
+        const education = await Education.findAll({
+            where: {
+                user_id: req.user.id
+            }
+        })
+        
         res.render('profile', {
             layout: 'dashboard',
             country,
@@ -319,7 +325,8 @@ router.get('/profile', auth, async (req, res) => {
             group,
             section,
             zip,
-            firm
+            firm,
+            education
         });
 });
 
