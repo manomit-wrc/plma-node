@@ -362,7 +362,7 @@
                         </div>
                         
                         
-                        <div class="col-md-6">
+                        {{!-- <div class="col-md-6">
                             <div class="form-group form-focus select-focus select-attorney">
                                 <label class="control-label">Jurisdiction
                                     <span class="req-lbl">*</span>
@@ -374,7 +374,7 @@
                                     {{/each}}
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
                         {{!-- <div class="col-md-6">
                             <div class="form-group form-focus select-focus">
                                 <label class="control-label">Industry Type
@@ -433,13 +433,19 @@
                                 />
                             </div>
                         </div>
+                        
                         <div class="col-md-6">
-                            <div class="form-group form-focus">
-                                <label class="control-label">Remarks </label>
-                                <textarea class="form-control floating" id="remarks" name="remarks">{{edata.attorney_details.0.remarks}}</textarea>
+                            <div class="form-group form-focus select-focus ">
+                                <div class="">
+                                    <select class="form-control floating" id="jurisdiction" name="jurisdiction" multiple="multiple">
+                                        {{#each allJurisdiction}}
+                                        <option value="{{this.jurisdiction.id}}" {{#inArray ../jurisdiction_arr this.jurisdiction.id}} selected="selected" {{/inArray}}>{{this.jurisdiction.name}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group form-focus select-focus select-attorney">
                                 <div class="">
                                     <select class="form-control floating" id="practice_area" name="practice_area" multiple="multiple">
@@ -448,6 +454,12 @@
                                         {{/each}}
                                     </select>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group form-focus">
+                                <label class="control-label">Remarks </label>
+                                <textarea class="form-control floating" id="remarks" name="remarks">{{edata.attorney_details.0.remarks}}</textarea>
                             </div>
                         </div>
                     </div>
@@ -476,6 +488,14 @@
 <script type="text/javascript">
     $('#practice_area').multiselect({
             nonSelectedText: 'Select Practice Area',
+            enableFiltering: true,
+            includeSelectAllOption: true,
+            buttonWidth: '100%',
+            maxHeight: 400,
+            dropDown: true
+        });
+    $('#jurisdiction').multiselect({
+            nonSelectedText: 'Select Jurisdiction',
             enableFiltering: true,
             includeSelectAllOption: true,
             buttonWidth: '100%',
