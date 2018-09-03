@@ -912,7 +912,7 @@ table.dataTable {
 	padding: 0 20px;
 	position: relative;
 	text-align: center;
-	width: 230px;
+	width: 240px;
 	z-index: 1;
 }
 
@@ -5847,7 +5847,7 @@ table.table-inbox tbody tr.checked {
 	color: #333;
 	font-size: 12px;
 	position: relative;
-	left: -12px;
+	left: 0;
 	top: 20px;
 	z-index: 1000;
 	width: 20px;
