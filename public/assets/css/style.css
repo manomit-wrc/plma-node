@@ -6692,8 +6692,10 @@ select.gender {
 				}
 
 				ul.personal-info.educational-info {
-					width: 33.3333%;
-					float: left;
+					    width: 27.3333%;
+					    float: left;
+					    margin-bottom: 20px;
+					    margin-left: 70px;
 				}
 
 				ul.personal-info.educational-info li {
