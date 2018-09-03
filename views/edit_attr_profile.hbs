@@ -254,7 +254,7 @@
                             <div class="form-group form-focus select-focus select-attorney">
                                 <label class="control-label">Group
                                 </label>
-                                <select id="group" name="group" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
+                                <select id="group" name="group" lass="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
                                     <option value="">Select Group</option>
                                     {{#each group}}
                                     <option value="{{this.id}}" {{#if_eq this.id ../edata.group_id}} selected="selected" {{/if_eq}}>{{this.name}}</option>
@@ -435,7 +435,7 @@
                         </div>
                         
                         <div class="col-md-6">
-                            <div class="form-group form-focus select-focus select-attorney">
+                            <div class="form-group form-focus select-focus">
                                 <div class="">
                                     <select class="form-control floating" id="jurisdiction" name="jurisdiction" multiple="multiple">
                                         {{#each allJurisdiction}}
@@ -446,7 +446,7 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group form-focus select-focus select-attorney">
+                            <div class="form-group form-focus select-focus">
                                 <div class="">
                                     <select class="form-control floating" id="practice_area" name="practice_area" multiple="multiple">
                                         {{#each allPracticeArea}}

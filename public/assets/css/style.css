@@ -6710,6 +6710,10 @@ select.gender {
 					padding: 12px;
 				}
 
+				.btn.btn-default.multiselect-clear-filter {
+					height: 50px;
+				}
+
 				/*Ends on css 03-09-2018*/
 
 
