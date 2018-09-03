@@ -183,7 +183,6 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
 	var fax = req.body.targetDetailsFax;
     var mobile_no = req.body.targetDetailsMobile_no;
 
-    const closingDate = req.body.revenueclosingDate ? req.body.revenueclosingDate.split("-") : '';
     const startDate = req.body.targetStartDate ? req.body.targetStartDate.split("-") : '';
     const endDate = req.body.targetEndDate ? req.body.targetEndDate.split("-") : '';
 
@@ -242,7 +241,8 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
                 user_id: req.user.id,
                 target_type: req.body.target_type,
                 estimated_revenue: removePhoneMask(req.body.estimated_revenue),
-                revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null,
+                revenue_start_month: req.body.startMonth,
+                revenue_end_month: req.body.endMonth,
                 targetStartDate: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
                 targetEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
                 lifetimeClientValue: removePhoneMask(req.body.lifetimeClient)
@@ -302,7 +302,8 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
                 user_id: req.user.id,
                 target_type: req.body.target_type,
                 estimated_revenue: removePhoneMask(req.body.estimated_revenue),
-                revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null,
+                revenue_start_month: req.body.startMonth,
+                revenue_end_month: req.body.endMonth,
                 targetStartDate: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
                 targetEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
                 lifetimeClientValue: removePhoneMask(req.body.lifetimeClient)

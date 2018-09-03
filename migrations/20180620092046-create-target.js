@@ -88,6 +88,9 @@ module.exports = {
       revenue_end_month: {
         type: Sequelize.STRING
       },
+      estimated_lifetime_value: {
+        type: Sequelize.STRING
+      },
       targetStartDate: {
         type: Sequelize.STRING
       },
