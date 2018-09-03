@@ -65,6 +65,7 @@ body {
 	/*background-color: #eff3f6;*/
 	background-color: #f0eff5;
 	overflow-x: hidden;
+	outline: none !important;
 }
 
 h1,
@@ -3107,7 +3108,7 @@ label.error {
 	float: left;
 	font-weight: 500;
 	margin-right: 30px;
-	width: 30%;
+	width: 20%;
 }
 
 .personal-info li .text {
@@ -3128,7 +3129,7 @@ label.error {
 
 .profile-view .profile-img-wrap {
 	height: 150px;
-	top: -9px;
+	top: -3px;
 	width: 150px;
 }
 
@@ -6597,6 +6598,7 @@ select.gender {
 				background-repeat: no-repeat;
 				background-size: auto auto !important;
 				background-color: #fff !important
+				outline: none !important;
 			}
 
 
@@ -6664,11 +6666,23 @@ select.gender {
 				}
 
 				.other-info li .title {
-					margin-right: 60px;
+					margin-right: 46px;
 				}
 
 
 				/*Starts on css 30-08-2018*/
+
+				/*Starts on css 03-09-2018*/
+
+				.sidebar.sidebar-hide.sidebar-hover li a {
+					padding: 0 17px;
+				}
+
+				/*.table-responsive.refe .activity_custom_del h2 a {
+					width: 120px;
+				}*/
+
+				/*Ends on css 03-09-2018*/
 
 
 
