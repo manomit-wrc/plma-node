@@ -6706,6 +6706,10 @@ select.gender {
 					display: inline-block;
 				}
 
+				.form-control.multiselect-search {
+					padding: 12px;
+				}
+
 				/*Ends on css 03-09-2018*/
 
 
