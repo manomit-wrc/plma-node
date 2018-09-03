@@ -163,6 +163,7 @@ textarea.form-control {
 	-moz-border-radius: 0;
 	-ms-border-radius: 0;
 	-o-border-radius: 0;
+	background-color: #fff !important;
 }
 
 .input-group .form-control {

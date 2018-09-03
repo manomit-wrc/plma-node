@@ -254,7 +254,7 @@
                             <div class="form-group form-focus select-focus select-attorney">
                                 <label class="control-label">Group
                                 </label>
-                                <select id="group" name="group" lass="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
+                                <select id="group" name="group" class="form-control floating selectpicker" data-show-subtext="true" data-live-search="true">
                                     <option value="">Select Group</option>
                                     {{#each group}}
                                     <option value="{{this.id}}" {{#if_eq this.id ../edata.group_id}} selected="selected" {{/if_eq}}>{{this.name}}</option>
