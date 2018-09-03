@@ -1,0 +1,149 @@
+{{#content "style" mode="prepend"}}
+<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="pg-header">
+            <div class="row">
+                {{#if success_message}}
+                <div class="alert alert-success">
+                    <strong>Success! </strong>{{success_message}}
+                </div>
+                {{/if}} {{#if success_finan_edit_message}}
+                <div class="alert alert-success">
+                    <strong>Success! </strong>{{success_finan_edit_message}}
+                </div>
+                {{/if}} {{#if success_finan_del_message}}
+                <div class="alert alert-success">
+                    <strong>Success! </strong>{{success_finan_del_message}}
+                </div>
+                {{/if}}
+                <div class="col-xs-4">
+                    <h4 class="page-title">Financial Goal</h4>
+                </div>
+                <div class="col-xs-8 text-right">
+                    <a href="/financial-goal/add" class="btn btn-primary pull-right rounded">
+                        <i class="fa fa-plus"></i> Add Financial Goal</a>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped custom-table datatable financial-goal">
+                        <thead>
+                            <tr>
+                                <th>SL#</th>
+                                <th style="width:20%;">Attorney</th>
+                                <th>Current Year</th>
+                                <th>Current Year Goal</th>
+                                <th>Current Year Goal Percentage</th>
+                                <th>Remarks</th>
+                                <th class="text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each financialGoal}}
+                            <tr>
+                                <td>{{math @index "+" 1}}</td>
+                                <td>
+
+                                  <a href="/financial-goal/view/{{this.id}}">
+                                      {{this.user.first_name}} {{this.user.last_name}}
+                                  </a>
+
+                                </td>
+                                <td>{{this.year}}</td>
+                                <td>{{this.year_goal}}</td>
+                                <td>{{this.year_goal_percentage}}</td>
+                                <td>{{this.remarks}}</td>
+                                <td class="text-right">
+                                  <a href="/financial-goal/view/{{this.id}}" class="btn btn-success btn-sm">
+                                    <i class="fa fa-eye m-r-5"></i>
+                                  </a>
+
+                                    <a href="/financial-goal/edit/{{this.id}}" class="btn btn-success btn-sm">
+                                        <i class="fa fa-pencil m-r-5"></i>
+                                    </a>
+                                   <a href="javascript:void(0);" data-toggle="modal" data-target="delete_users" data-financialgoal-id="{{this.id}}" id="delete_financialgoal" class="btn btn-danger btn-sm">
+                                        <i class="fa fa-trash-o m-r-5"></i>
+                                    </a>
+
+
+                                    {{!-- <a href="javascript:void(0);" data-toggle="modal" data-target="#{{this.id}}" class="btn btn-danger btn-sm">
+                                        <i class="fa fa-trash-o m-r-5"></i>
+                                    </a> --}}
+                                </td>
+                            </tr>
+                            {{!-- <div class="modal fade" id="{{this.id}}" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <p>are you sure you want to delete this financial goal?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="/financial-goal/delete/{{this.id}}" class="btn btn-danger">Delete</a>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> --}}
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div id="delete_user" class="modal custom-modal fade del-finamcialgoal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content modal-md">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Financial Goal</h4>
+            </div>
+            <form>
+                <div class="modal-body card-box">
+                    <p>are you sure you want to delete this financial goal?</p>
+                    <div class="m-t-20" id="delDiv">
+                        <a href="#" class="btn btn-default" data-dismiss="modal" >Close</a>
+                        {{!-- <a href="/activity-goal/delete/{{this.id}}" class="btn btn-danger">Delete</a> --}}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{{#content "script" mode="append"}}
+<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+<script type="text/javascript" src="/assets/js/select2.min.js"></script>
+<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+
+
+<script>
+$(document).on('click','#delete_financialgoal', function(e){
+    var financialgoal_id = $(this).data('financialgoal-id');
+    $("#removeBtnDelete").remove();
+    $("#delete_user").modal('show');
+    $("#delDiv").append('<a href="/financial-goal/delete/'+ financialgoal_id +'" class="btn btn-danger" id="removeBtnDelete">'+"Delete"+ '</a>');
+});
+
+
+</script>
+ {{/content}}

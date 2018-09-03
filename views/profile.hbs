@@ -1,0 +1,207 @@
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="row">
+            <div class="col-sm-8">
+                <h4 class="page-title">My Profile</h4>
+            </div>
+            <div class="col-sm-4 text-right m-b-30">
+                {{#if_eq user.role_id "3"}}
+                    <a href="/edit-attorney-profile" class="btn btn-primary rounded">
+                        <i class="fa fa-pencil"></i> Edit Profile</a>
+                {{else}}
+                    <a href="/edit-profile" class="btn btn-primary rounded">
+                        <i class="fa fa-pencil"></i> Edit Profile</a>
+                {{/if_eq}}
+            </div>
+        </div>
+        <div class="card-box">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="profile-view">
+                        <div class="profile-img-wrap">
+                            <div class="profile-img">
+                                <a href="#">
+                                    <img class="avatar" src="{{user.avatar}}" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="profile-basic">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="profile-info-left">
+                                        <h3 class="user-name m-t-0 m-b-0">{{user.first_name}}&nbsp;{{user.last_name}}</h3>
+                                        <small class="text-muted">{{user.role.title}}</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <ul class="personal-info">
+                                        {{#if_eq user.role_id "1"}}
+                                            <li>
+                                                <span class="title">Mobile:</span>
+                                                <span class="text">
+                                                    {{user.mobile_no}}
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="title">Email:</span>
+                                                <span class="text">
+                                                    {{user.email}}
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="title">Gender:</span>
+                                                <span class="text">{{#if_eq user.gender "M"}} Male {{else}} Female {{/if_eq}}</span>
+                                            </li>
+                                            <li>
+                                                <span class="title">Date Of Birth:</span>
+                                                <span class="text">{{dateFormat user.dob "DD-MM-YYYY"}}</span>
+                                            </li>
+                                            <li>
+                                                <span class="title">Address:</span>
+                                                <span class="text">{{user.address}}</span>
+                                            </li>
+                                            
+                                            <li>
+                                                <span class="title">City:</span>
+                                                <span class="text">{{city.name}}</span>
+                                            </li>
+                                            
+                                            <li>
+                                                <span class="title">State:</span>
+                                                <span class="text">{{state.name}}</span>
+                                            </li>
+                                            <li>
+                                                <span class="title">Zipcode:</span>
+                                                <span class="text">{{zip.zip}}</span>
+                                            </li>
+                                            
+                                            <li>
+                                                <span class="title">Country:</span>
+                                                <span class="text">{{country.name}}</span>
+                                            </li>
+                                        {{else}}
+                                        <li>
+                                            <span class="title">Firm Name:</span>
+                                            <span class="text">{{firm.title}}</span>
+                                        </li>
+                                        <li>
+                                            <span class="title">Mobile:</span>
+                                            <span class="text">
+                                                 {{user.mobile_no}}
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="title">Email:</span>
+                                            <span class="text">
+                                                {{user.email}}
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="title">Gender:</span>
+                                            <span class="text">{{#if_eq user.gender "M"}} Male {{else}} Female {{/if_eq}}</span>
+                                        </li>
+                                        <li>
+                                            <span class="title">Date Of Birth:</span>
+                                            <span class="text">{{dateFormat user.dob "DD-MM-YYYY"}}</span>
+                                        </li>
+                                        {{/if_eq}}
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{#if_eq user.role_id "1"}}
+        {{else}}
+        <div class="card-box">
+            <h3 class="card-title">Other Information</h3>
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="personal-info other-info">
+                        <li>
+                            <span class="title">Designation:</span>
+                            <span class="text">{{desig.title}}</span>
+                        </li>
+                        {{#if_eq user.role_id "3"}}
+                        <li>
+                            <span class="title">Section:</span>
+                            <span class="text">{{section.name}}</span>
+                        </li>
+                        {{/if_eq}}
+                        <li>
+                            <span class="title">Group:</span>
+                            <span class="text">{{group.name}}</span>
+                        </li>
+                        <li>
+                            <span class="title">Address:</span>
+                            <span class="text">{{user.address}}</span>
+                        </li>
+
+                        <li>
+                            <span class="title">City:</span>
+                            <span class="text">{{city.name}}</span>
+                        </li>
+
+                        <li>
+                            <span class="title">State:</span>
+                            <span class="text">{{state.name}}</span>
+                        </li>
+                        <li>
+                            <span class="title">Zipcode:</span>
+                            <span class="text">{{zip.zip}}</span>
+                        </li>
+
+                        <li>
+                            <span class="title">Country:</span>
+                            <span class="text">{{country.name}}</span>
+                        </li>
+                        
+                        {{#if_eq user.role_id "2"}}
+                        <li>
+                            <span class="title">Is Attorney:</span>
+                            <span class="text">{{#if_eq user.is_attorney "1"}} Yes {{else}} No {{/if_eq}}</span>
+                        </li>
+                        {{/if_eq}}
+                        <li>
+                            <span class="title">Approver:</span>
+                            <span class="text">{{#if_eq user.approver "1"}} Yes {{else}} No {{/if_eq}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        {{#if_eq user.role_id "3"}}
+            <div class="card-box">
+                <h3 class="card-title">Education Information</h3>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{#each education}}
+                        <ul class="personal-info educational-info">
+                            
+                            <li>
+                                <span class="title">Degree Type:</span>
+                                <span class="text">{{this.degree}}</span>
+                            </li>
+                            <li>
+                                <span class="title">University:</span>
+                                <span class="text">{{this.university}}</span>
+                            </li>
+                            <li>
+                                <span class="title">Year:</span>
+                                <span class="text">{{this.year}}</span>
+                            </li>
+                           
+                        </ul> 
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+            {{/if_eq}}
+        {{/if_eq}}
+    </div>
+
+</div>

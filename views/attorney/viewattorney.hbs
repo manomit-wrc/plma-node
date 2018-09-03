@@ -1,0 +1,429 @@
+{{#content "style" mode="prepend"}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+{{/content}}
+
+<div class="page-wrapper">
+  <div class="content container-fluid">
+    <div class="row">
+      <div class="col-xs-4">
+        <h4 class="page-title">View Attorney Details</h4>
+      </div>
+      <div class="col-xs-8 text-right">
+        <a href="/attorneys/edit/{{edata.0.id}}" class="btn btn-primary pull-right rounded">
+          <i class="fa fa-pencil"></i> Edit Attorney</a>
+          <a href="/attorneys" class="btn btn-primary pull-right rounded m-r-5"><i class="fa fa-arrow-left"></i>Back</a>
+      </div>
+    </div>
+
+    <form name="" id="addattorneyform" action="/attorneys/update/{{edata.0.id}}" method="POST">
+      <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+      <div class="card-box">
+        <h3 class="card-title">User credentials</h3>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group form-focus">
+                  <label class="control-label">Username</label>
+                  <input type="text" disabled class="form-control floating" id="email" name="email" value="{{edata.0.email}}" />
+                  <span id="uniqueEmail" style="color: red; font-weight:bolder"></span>
+                </div>
+              </div>
+
+
+              <div class="col-md-6">
+                <div class="form-group form-focus select-focus">
+                  <label class="control-label">Group</label>
+                  <select  id="group" name="group" disabled class="form-control floating">
+                    <option value="">Select Group</option>
+                    {{#each group}}
+                    <option value="{{this.id}}" {{#if_eq this.id ../edata.0.attorney_details.0.group}} selected="selected" {{/if_eq}}>{{this.name}} </option>
+                    {{/each}}
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group form-focus select-focus">
+                  <label class="control-label">Section</label>
+                  <select  id="section" name="section" disabled class="form-control floating">
+                    <option value="">Select Section</option>
+                    {{#each section}}
+                    <option value="{{this.id}}" {{#if_eq this.id ../edata.0.attorney_details.0.section}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                    {{/each}}
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group form-focus select-focus">
+                  <label class="control-label">Designation</label>
+                  <select  id="designation" name="designation" disabled class="form-control floating">
+                    <option value="">Select Designation</option>
+                    {{#each designation}}
+                    <option value="{{this.id}}" {{#if_eq this.id ../edata.0.attorney_details.0.designation}} selected="selected" {{/if_eq}}>{{this.title}}</option>
+                    {{/each}}
+                  </select>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <div class="card-box">
+        <h3 class="card-title">General Information</h3>
+        <div class="row">
+
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">First Name</label>
+              <input type="text" disabled class="form-control floating" id="first_name" name="first_name" value="{{edata.0.first_name}}" />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Last Name</label>
+              <input type="text" disabled class="form-control floating" id="last_name" name="last_name" value="{{edata.0.last_name}}" />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Birth Date</label>
+              <div class="cal-icon">
+                <input disabled class="form-control floating" type="text" id="dob" name="dob" value="{{dateFormat edata.0.dob " DD-MM-YYYY
+                  "}}" >
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus select-focus">
+              <label class="control-label">Gender</label>
+              <select disabled class="form-control floating" id="gender" name="gender">
+                <option value="">Select Gender</option>
+                <option value="M" {{#if_eq edata.0.gender "M"}} selected {{/if_eq}}>Male</option>
+                <option value="F" {{#if_eq edata.0.gender "F"}} selected {{/if_eq}}>Female</option>
+                <option value="0" {{#if_eq edata.0.gender "0"}} selected {{/if_eq}}>Others</option>
+
+              </select>
+
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Attorney ID</label>
+              <input type="text" disabled class="form-control floating" id="attorney_id" name="attorney_id" value="{{edata.0.attorney_details.0.attorney_id}}"
+                readonly onkeypress="return onlyNumbers();" />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Attorney Code</label>
+              <input type="text" disabled class="form-control floating" id="attorney_code" name="attorney_code" value="{{edata.0.attorney_details.0.attorney_code}}"
+                readonly/>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus select-focus">
+              <label class="control-label">Attorney Type</label>
+              <select disabled class="form-control floating" id="attorney_type" name="attorney_type">
+                <option value="">Select Attorney Type</option>
+                <option value="AT-INTERIM" {{#if_eq edata.0.attorney_details.0.attorney_type "AT-INTERIM"}} selected="selected" {{/if_eq}}>INTERIM ATTORNEY</option>
+                <option value="AT-APPROVED" {{#if_eq edata.0.attorney_details.0.attorney_type "AT-APPROVED"}} selected="selected" {{/if_eq}}>APPROVED ATTORNEY</option>
+                <option value="PENDING" {{#if_eq edata.0.attorney_details.0.attorney_type "PENDING"}} selected="selected" {{/if_eq}}>ATTORNEY TO BE ASSIGNED</option>
+              </select>
+            </div>
+          </div>
+          {{!-- <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Education</label>
+              <input type="text" disabled class="form-control floating" id="education" name="education" value="{{edata.0.attorney_details.0.education}}"
+                readonly/>
+            </div>
+          </div> --}}
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Mobile No</label>
+              <input type="text" disabled class="form-control floating" id="mobile_no" name="mobile_no" value="{{edata.0.mobile_no}}" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-box">
+        <h3 class="card-title">Education Information</h3>
+        <div class="row" id="educationRow">
+          {{#each edata.0.education}}
+          <div class="control-group">
+            <div class="col-md-4">
+              <div class="form-group form-focus">
+                <label class="control-label">Degree Type</label>
+                <input type="text" class="form-control floating" id="degree" name="degree[]" value="{{this.degree}}" disabled/>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group form-focus">
+                <label class="control-label">University</label>
+                <input type="text" class="form-control floating" id="university" name="university[]" value="{{this.university}}" disabled/>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group form-focus">
+                <label class="control-label">Year</label>
+                <input type="text" class="form-control floating" id="year" name="year[]" value="{{this.year}}" disabled/>
+              </div>
+            </div>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+
+
+
+
+      <div class="card-box">
+        <h3 class="card-title">Employment Information</h3>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Bar Registration</label>
+              <input type="text" disabled class="form-control floating" id="bar_registration" name="bar_registration" value="{{edata.0.attorney_details.0.bar_registration}}"
+                />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus select-focus">
+              <label class="control-label">Job Type</label>
+              <select disabled class="form-control floating" id="job_type" name="job_type">
+                <option value="">Select Job Type</option>
+                <option value="FULLTIME" {{#if_eq edata.0.attorney_details.0.job_type "FULLTIME"}} selected="selected" {{/if_eq}}>FULLTIME</option>
+                <option value="STERMCON" {{#if_eq edata.0.attorney_details.0.job_type "STERMCON"}} selected="selected" {{/if_eq}}>SHORT TERM CONTRACT</option>
+                <option value="TEMP" {{#if_eq edata.0.attorney_details.0.job_type "TEMP"}} selected="selected" {{/if_eq}}>TEMPORARY</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Practice Date</label>
+              <div class="cal-icon">
+                <input disabled class="form-control floating" type="text" id="bar_practice_date" name="bar_practice_date" value="{{dateFormat edata.0.attorney_details.0.bar_practice_date "DD-MM-YYYY "}}" >
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Firm Join Date</label>
+              <div class="cal-icon">
+                <input disabled class="form-control floating" type="text" id="firm_join_date" name="firm_join_date" value="{{dateFormat edata.0.attorney_details.0.firm_join_date "DD-MM-YYYY "}}" >
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Hourly Cost</label>
+              <input type="text" disabled class="form-control floating" id="hourly_cost" name="hourly_cost" value="{{edata.0.attorney_details.0.hourly_cost}}"
+                readonly onkeypress="return onlyNumbers();" />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Benefit Factor %</label>
+              <input type="text" disabled class="form-control floating" id="benefit_factor" name="benefit_factor" value="{{edata.0.attorney_details.0.benefit_factor}}"
+                readonly onkeypress="return onlyNumbers();" />
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Overhead Amount</label>
+              <input type="text" disabled class="form-control floating" id="overhead_amount" name="overhead_amount" value="{{edata.0.attorney_details.0.overhead_amount}}"
+                readonly onkeypress="return onlyNumbers();" />
+            </div>
+          </div>
+
+
+
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Billing Opp Cost</label>
+              <input type="text" disabled class="form-control floating" id="billing_opp_cost" name="billing_opp_cost" value="{{edata.0.attorney_details.0.billing_opp_cost}}"
+                readonly onkeypress="return onlyNumbers();" />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <div class="">
+                <select class="form-control floating" id="jurisdiction" name="jurisdiction" multiple="multiple" disabled>
+                  {{#each allJurisdiction}}
+                  <option value="{{this.jurisdiction.id}}" disabled {{#inArray ../jurisdiction_arr this.jurisdiction.id}} selected="selected" {{/inArray}}>{{this.jurisdiction.name}}</option>
+                  {{/each}}
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <div class="">
+                <select class="form-control floating" id="practice_area" name="practice_area" multiple="multiple" disabled>
+                  {{#each allPracticeArea}}
+                  <option value="{{this.practicearea.id}}" {{#inArray ../arr this.practicearea.id}} selected="selected" {{/inArray}} disabled>{{this.practicearea.name}}</option>
+                  {{/each}}
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="card-box">
+        <h3 class="card-title">Address Details</h3>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group form-focus">
+              <label class="control-label">Address Line 1</label>
+              <input type="text" disabled class="form-control floating" id="address" name="address" value="{{edata.0.address}}" />
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group form-focus">
+              <label class="control-label">Address Line 2</label>
+              <input type="text"disabled class="form-control floating"  id="address2" name="address2" value="{{edata.0.attorney_details.0.address2}}"
+                />
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group form-focus">
+              <label class="control-label">Address Line 3</label>
+              <input type="text"disabled class="form-control floating"  id="address3" name="address3" value="{{edata.0.attorney_details.0.address3}}"
+                />
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group form-focus select-focus">
+              <label class="control-label">Country</label>
+              <select disabled class="select form-control floating" id="country" name="country">
+                <option value="">Select Country</option>
+                {{#each country}}
+                <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus select-focus">
+              <label class="control-label">State</label>
+              <select disabled class="select form-control floating" id="state" name="state">
+                <option value="">select State</option>
+                {{#each state}}
+                <option value="{{this.id}}" {{#if_eq this.id ../edata.0.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus select-focus">
+              <label class="control-label">City</label>
+              <select disabled class="select form-control floating" id="city" name="city">
+                <option value="">Select City</option>
+                {{#each city}}
+                <option value="{{this.id}}" {{#if_eq this.id ../edata.0.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Zipcode</label>
+              <select disabled class="select form-control floating" id="zipcode" name="zipcode">
+                <option value="">Select Zipcode</option>
+                {{#each zipcode}}
+                <option value="{{this.id}}" {{#if_eq this.id ../edata.0.zipcode}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+
+          
+
+
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Phone No</label>
+              <input type="text" disabled class="form-control floating" id="phone_no" name="phone_no" value="{{edata.0.attorney_details.0.phone_no}}"
+                />
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Fax</label>
+              <input type="text" class="form-control floating number_validator" id="fax" name="fax" value="{{edata.0.attorney_details.0.fax}}" readonly/>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Website URL</label>
+              <input type="text" disabled class="form-control floating" id="website_url" name="website_url" value="{{edata.0.attorney_details.0.website_url}}"
+                />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Social URL</label>
+              <input type="text" disabled class="form-control floating" id="social_url" name="social_url" value="{{edata.0.attorney_details.0.social_url}}"
+                />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-box">
+        <h3 class="card-title">Remarks</h3>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group form-focus">
+              <label class="control-label">Remarks </label>
+              <textarea disabled class="form-control floating" id="remarks" name="remarks" rows="5">{{edata.0.attorney_details.0.remarks}}</textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{{#content "script" mode="append"}}
+<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+<script type="text/javascript" src="/assets/js/select2.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+
+<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="/assets/js/moment.min.js"></script> 
+<script>
+  $('#practice_area').multiselect({
+      nonSelectedText: 'Select Practice Area',
+      enableFiltering: true,
+      includeSelectAllOption: true,
+      buttonWidth: '100%',
+      maxHeight: 400,
+      dropUp: true
+    });
+  $('#jurisdiction').multiselect({
+      nonSelectedText: 'Select Jurisdiction',
+      enableFiltering: true,
+      includeSelectAllOption: true,
+      buttonWidth: '100%',
+      maxHeight: 400,
+      dropUp: true
+    });
+</script>{{/content}}

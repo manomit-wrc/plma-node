@@ -1,0 +1,231 @@
+{{#content "style" mode="prepend"}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+
+
+
+
+ <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+{{/content}}
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="row">
+            <div class="col-sm-8">
+                <h4 class="page-title">Add Employee</h4>
+            </div>
+        </div>
+        {{#if error_message1}}
+        <div class="alert alert-danger">
+            <strong>Error! </strong>{{error_message1}}
+        </div>
+        {{/if}} {{#if error_message}}
+        <div class="alert alert-danger">
+            <strong>Error! </strong>{{error_message}}
+        </div>
+        {{/if}}
+        <form id="frmAddEmployee" method="POST" action="/employees/add">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            <div class="card-box">
+                <h3 class="card-title">Basic Informations</h3>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group form-focus">
+                                    <label class="control-label">First Name <span class="text-danger">*</span></label>
+
+                                    <input type="text" class="form-control floating" id="first_name" name="first_name" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group form-focus">
+                                    <label class="control-label">Last Name<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control floating" id="last_name" name="last_name" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group form-focus">
+                                    <label class="control-label">Email<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control floating" id="email" name="email" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group form-focus">
+                                    <label class="control-label">Password<span class="text-danger">*</span></label>
+                                    <input type="password" class="form-control floating" id="password" name="password" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group form-focus">
+                                    <label class="control-label">Date of Birth</label>
+                                    <div class="cal-icon">
+                                        <input class="form-control floating datetimepicker" type="text" id="dob" name="dob">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group form-focus select-focus select-attorney">
+                                    <label class="control-label">Gender</label>
+                                    <select class="form-control floating " id="gender" name="gender" >
+                                        <option value="">Select Gender</option>
+                                        <option value="M">Male</option>
+                                        <option value="F">Female</option>
+                                        <option value="O">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="card-box">
+                <h3 class="card-title">Contact Informations</h3>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group form-focus">
+                            <label class="control-label">Mobile No.</label>
+                            <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no"/>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group form-focus">
+                            <label class="control-label">Address</label>
+                            <input type="text" class="form-control floating" id="address" name="address" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group form-focus select-focus">
+                            <label class="control-label">Country</label>
+                            <select class="form-control floating" id="country" name="country">
+                                <option value="">Select Country</option>
+                                {{#each country}}
+                                    <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group form-focus select-focus">
+                            <label class="control-label">State</label>
+                            <select class="form-control floating" id="state" name="state">
+                                <option value="">Select State</option>
+                                {{#each state}}
+                                    <option value="{{this.id}}">{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group form-focus select-focus">
+                            <label class="control-label">City</label>
+                            <select class="form-control floating" id="city" name="city">
+                                <option value="">Select City</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group form-focus select-focus">
+                            <label class="control-label">Zip Code</label>
+                            <select class="form-control floating" id="zipcode" name="zipcode">
+                                <option value="">Select Zipcode</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group form-focus select-focus select-attorney">
+                            <label class="control-label">Firm Name</label>
+                            <select class="form-control floating " id="firm_id" name="firm_id">
+                                {{#each firms}}
+                                    <option value="{{this.id}}">{{this.title}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center m-t-20">
+                <button class="btn btn-primary btn-lg" type="submit">Save &amp; create</button>
+                <a href="/employees" class="btn btn-primary btn-lg m-l-10">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+</div>
+{{#content "script" mode="append"}}
+<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+<script type="text/javascript" src="/assets/js/select2.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#firm_id').multiselect({
+            nonSelectedText: 'Select Firms',
+            includeSelectAllOption: true,
+            buttonWidth: '100%'
+        });
+        $("#frmAddEmployee").validate({
+            ignore: [],
+            rules: {
+                first_name: {
+                    required: true
+                },
+                last_name: {
+                    required: true
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true
+                },
+                firm_id: {
+                    required: true
+                }
+            },
+            messages: {
+                first_name: {
+                    required: "First name can't be blank"
+                },
+                last_name: {
+                    required: "Last name can't be blank"
+                },
+                email: {
+                    required: "Email can't be blank",
+                    email: "Must be valid email"
+                },
+                password: {
+                    required: "Password can't be blank"
+                },
+                firm_id: {
+                    required: "Select atleast one firm"
+                }
+            }
+        });
+    });
+</script>
+
+
+
+{{/content}}

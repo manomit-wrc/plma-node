@@ -1,0 +1,56 @@
+<div class="container">
+    <h3 class="account-title">Management Login</h3>
+    <div class="account-box">
+        <div class="account-wrapper">
+            <div class="account-logo">
+                <a href="#"><img src="/assets/img/Perform_Law.png" alt="Focus Technologies" class="img-responsive"></a>
+            </div>
+            {{#if message}}
+            <div class="alert alert-danger">
+                <strong>Error! </strong>{{message}}
+            </div>
+            {{/if}}
+            {{#if success_password_message}}
+            <div class="alert alert-success">
+                <strong>Success! </strong>{{success_password_message}}
+            </div>
+            {{/if}}
+
+            {{#if password_message}}
+           <div class="alert alert-danger">
+               <strong>Success! mail is sent</strong>{{password_message}}
+           </div>
+           {{/if}}
+            {{#if resetMsg}}
+           <div class="alert alert-success">
+               <strong>Success! </strong>{{resetMsg}}
+           </div>
+           {{/if}}
+
+            <form action="/" method="POST" id="frmLogin">
+                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                <div class="form-group form-focus">
+                    <label class="control-label">Username or Email</label>
+                    <input class="form-control floating" type="text" name="email" id="email">
+                </div>
+                <div class="form-group form-focus">
+                    <label class="control-label">Password</label>
+                    <input class="form-control floating" type="password" name="password" id="password">
+                </div>
+                <div class="form-group">
+                  <div class="g-recaptcha" data-sitekey="6Lfo1mQUAAAAAO8NY4gTTlaUmZcVOXPrY2zUBH4b"></div>
+                </div>
+
+                <div class="form-group text-center">
+                    <button class="btn btn-primary btn-block account-btn" type="submit">Login</button>
+                </div>
+
+
+
+                <div class="text-center">
+                    <a href="/forgot-password">Forgot your password?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

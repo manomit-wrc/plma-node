@@ -1,0 +1,2494 @@
+{{#content "style" mode="prepend"}}
+<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+
+{{/content}}
+<div class="page-wrapper">
+	<div class="content container-fluid">
+		<div class="row">
+			<div class="col-xs-4">
+				<h4 class="page-title">Firm Profile</h4>
+			</div>
+		</div>
+		<div class="row filter-row">
+			
+				<div class="col-md-12">
+					<div class="tab firm-box" role="tabpanel">
+						<!-- Nav tabs -->
+						<ul class="nav nav-tabs" role="tablist">
+							<li role="presentation" class="active">
+								<a href="#Section1" aria-controls="home" role="tab" data-toggle="tab">
+								<i class="fa fa-address-card-o"></i>Basic</a>
+							</li>
+							<li role="presentation">
+								<a href="#SectionFirm" aria-controls="profile" role="tab" data-toggle="tab">
+								<i class="fa fa-list"></i>Firm Details</a>
+							</li>
+							<li role="presentation">
+								<a href="#SectionApprove" aria-controls="profile" role="tab" data-toggle="tab">
+									<i class="fa fa-check"></i>Approval Process</a>
+							</li>
+							<li role="presentation">
+								<a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">
+								<i class="fa fa-building"></i>Offices</a>
+							</li>
+							<li role="presentation">
+								<a href="#Section3" aria-controls="messages" role="tab" data-toggle="tab">
+								<i class="fa fa-address-book-o"></i>Contacts</a>
+							</li>
+						</ul>
+						<!-- Tab panes -->
+						<div class="tab-content tabs">
+							<div role="tabpanel" class="tab-pane fade in active" id="Section1">
+								<div class="row filter-row">
+									<form class="m-b-30" method="POST" name="frmUpdateFirm" id="frmUpdateFirm">
+										<input type="hidden" name="_csrf" value="{{csrfToken}}">
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Address Line 1
+														<span class="text-danger">*</span>
+													</label>
+													<input class="form-control" type="text" name="address1" id="address1" placeholder="Address Line 1" value="{{firm.address}}">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Address Line 2</label>
+													<input class="form-control" type="text" name="address2" id="address2" placeholder="Address Line 2" value="{{firm.address1}}">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Address Line 3</label>
+													<input class="form-control" type="text" name="address3" id="address3" placeholder="Address Line 3" value="{{firm.address2}}">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Phone No.
+														<span class="text-danger">*</span>
+													</label>
+													<input class="form-control number_validator" type="text" name="phone_no" id="phone_no" placeholder="Phone No" value="{{firm.phone_no}}">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Country
+														<span class="text-danger">*</span>
+													</label>
+													<select class="form-control floating" id="firm_country" name="firm_country">
+														<option value="">Select Country</option>
+														{{#each country}}
+															<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+														{{/each}}
+													</select>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">State
+														<span class="text-danger">*</span>
+													</label>
+													<select class="form-control floating" id="firm_state" name="firm_state">
+														<option value="">Select State</option>
+														{{#each state}}
+															<option value="{{this.id}}" {{#if_eq this.id ../firm.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+														{{/each}}
+													</select>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">City
+														<span class="text-danger">*</span>
+													</label>
+													<select class="form-control" id="firm_city" name="firm_city">
+														<option value="">Select City</option>
+														{{#each firm_city}}
+															<option value="{{this.id}}" {{#if_eq this.id ../firm.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+														{{/each}}
+													</select>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Zip Code
+														<span class="text-danger">*</span>
+													</label>
+													<select class="form-control" id="firm_zipcode" name="firm_zipcode">
+														<option value="">Select Zipcode</option>
+														{{#each firm_zipcode}}
+															<option value="{{this.id}}" {{#if_eq this.id ../firm.zipcode}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
+														{{/each}}
+													</select>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Fax</label>
+													<input class="form-control number_validator" type="text" name="fax" id="fax" placeholder="Fax" value="{{firm.fax}}">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Mobile No.</label>
+													<input class="form-control number_validator" type="text" name="firm_mobile" id="firm_mobile" placeholder="Mobile" value="{{firm.mobile}}">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Website URL</label>
+													<input class="form-control url_selector" type="text" name="web_url" id="web_url" placeholder="Website URL" value="{{firm.website_url}}">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Social URL</label>
+													<input class="form-control url_selector" type="text" name="social_url" id="social_url" placeholder="Social URL" value="{{firm.social_url}}">
+												</div>
+											</div>
+										</div>
+										<div class="m-t-20 text-center">
+											<button class="btn btn-primary rounded common-rounded-btn" id="btnUpdateFirm">Save &amp; Next</button>
+										</div>
+									</form>
+								</div>
+							</div>
+							<div role="tabpanel" class="tab-pane fade" id="SectionFirm">
+								<div class="row filter-row">
+									<form class="m-b-30" method="POST" name="frmUpdateFirmDetails" id="frmUpdateFirmDetails">
+										<input type="hidden" name="_csrf" value="{{csrfToken}}">
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="control-label">Firm Name
+														<span class="text-danger">*</span>
+													</label>
+													<input class="form-control" type="text" name="firm_name" id="firm_name" placeholder="Firm Name" value="{{firm.title}}">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Firm Code
+														<span class="text-danger">*</span>
+													</label>
+													<input class="form-control" type="text" name="firm_code" id="firm_code" placeholder="Firm Code" value="{{firm.firm_code}}">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Firm Registration
+														<span class="text-danger">*</span>
+													</label>
+													<input class="form-control" type="text" name="firm_reg" id="firm_reg" placeholder="Firm Registration" value="{{firm.firm_registration}}">
+												</div>
+											</div>
+											<div class="col-md-12">
+												<label class="control-label">Section
+													<span class="text-danger">*</span>
+												</label>
+												<div class="">
+													<select class="form-control floating" id="section" name="section" multiple="multiple">
+														{{#each section}}
+															<option value="{{this.id}}" {{#inArray ../arr this.id}} selected="selected" {{/inArray}}>{{this.name}}</option>
+														{{/each}}
+													</select>
+												</div>
+											</div>
+
+											<div class="col-md-12">
+												<label class="control-label">Practice Area
+													<span class="text-danger">*</span>
+												</label>
+												<div class="">
+													<select class="form-control floating" id="practice_area" name="practice_area" multiple="multiple">
+														{{#each practice_area}}
+															<option value="{{this.id}}" {{#inArray ../PracticeAreaArr this.id}} selected="selected" {{/inArray}}>{{this.name}}</option>
+														{{/each}}
+													</select>
+												</div>
+											</div>
+
+											<div class="col-md-12">
+												<label class="control-label">Jurisdiction
+													<span class="text-danger">*</span>
+												</label>
+												<div class="">
+												{{!-- <div class="form-group form-focus select-focus"> --}}
+													<select class="form-control floating" id="firm_jurisdiction" name="firm_jurisdiction" multiple="multiple">
+														{{#each jurisdiction}}
+															<option value="{{this.id}}" {{#inArray ../jurisdictionArr this.id}} selected="selected" {{/inArray}}>{{this.name}}</option>
+														{{/each}}
+													</select>
+												</div>
+											</div>
+										</div>
+
+										<div class="m-t-20 text-center">
+											<button class="btn btn-primary rounded common-rounded-btn" id="btnUpdateFirmDetails">Save &amp; Next</button>
+										</div>
+									</form>
+								</div>
+							</div>
+							<div role="tabpanel" class="tab-pane fade" id="SectionApprove">
+								<div class="row filter-row">
+									<form class="m-b-30" method="POST" name="frmUpdateFirmApproval" id="frmUpdateFirmApproval">
+										<input type="hidden" name="_csrf" value="{{csrfToken}}">
+										<input type="hidden" name="approval_level_firm" id="approval_level_firm" value="{{firm.approval_level}}">
+										<input type="hidden" name="level_1" id="level_1" value="{{firm.level_1}}">
+										<input type="hidden" name="level_2" id="level_2" value="{{firm.level_2}}">
+										<input type="hidden" name="level_3" id="level_3" value="{{firm.level_3}}">
+										<input type="hidden" name="level_4" id="level_4" value="{{firm.level_4}}">
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group text-center">
+													<label class="control-label">How many level/s for the approval process ?
+														<span class="text-danger">*</span>
+													</label>
+													<div class="form-inline m-b-15">
+														<div class="form-group m-r-5">
+															<label class="input-group">
+																<span class="input-group-addon">
+																	<input type="radio" id="level_1" name="approval_level" value="1" {{#if_eq firm.approval_level "1"}} checked {{/if_eq}}/>
+																</span>
+																<div class="form-control form-control-static">Approval Level 1</div>
+																<span class="glyphicon form-control-feedback"></span>
+															</label>
+														</div>
+														<div class="form-group m-r-5">
+															<label class="input-group">
+																<span class="input-group-addon">
+																	<input type="radio" id="level_2" name="approval_level" value="2" {{#if_eq firm.approval_level "2"}} checked {{/if_eq}}/>
+																</span>
+																<div class="form-control form-control-static">Approval Level 2</div>
+																<span class="glyphicon form-control-feedback"></span>
+															</label>
+														</div>
+														<div class="form-group m-r-5">
+															<label class="input-group">
+																<span class="input-group-addon">
+																	<input type="radio" id="level_3" name="approval_level" value="3" {{#if_eq firm.approval_level "3"}} checked {{/if_eq}}/>
+																</span>
+																<div class="form-control form-control-static">Approval Level 3</div>
+																<span class="glyphicon form-control-feedback"></span>
+															</label>
+														</div>
+														<div class="form-group m-r-5">
+															<label class="input-group">
+																<span class="input-group-addon">
+																	<input type="radio" id="level_4" name="approval_level" value="4" {{#if_eq firm.approval_level "4"}} checked {{/if_eq}}/>
+																</span>
+																<div class="form-control form-control-static">Approval Level 4</div>
+																<span class="glyphicon form-control-feedback"></span>
+															</label>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">Level 1</label>
+													<span class="text-danger">*</span>
+													<select class="form-control floating section_remove remove_level_1" id="level_1_designation" name="level_1_designation">
+														<option value="">Select Designation</option>
+														{{#each designation}}
+														<option value="{{this.id}}" {{#if_eq this.id ../firm.level_1}} selected {{/if_eq}}>{{this.title}}</option>
+														{{/each}}
+													</select>
+												</div>
+											</div>
+											<div class="col-md-6" id="level2Designation">
+												<div class="form-group">
+													<label class="control-label">Level 2</label>
+													<span class="text-danger">*</span>
+													<select class="form-control floating remove_level_2" id="level_2_designation" name="level_2_designation">
+														<option value="">Select Designation</option>
+														 {{#each designation}}
+														<option value="{{this.id}}" {{#if_eq this.id ../firm.level_2}} selected {{/if_eq}}>{{this.title}}</option>
+														{{/each}}
+													</select>
+												</div>
+											</div>
+											<div class="col-md-6" id="level3Designation">
+												<div class="form-group">
+													<label class="control-label">Level 3</label>
+													<span class="text-danger">*</span>
+													<select class="form-control floating remove_level_3" id="level_3_designation" name="level_3_designation">
+														<option value="">Select Designation</option>
+														 {{#each designation}}
+														<option value="{{this.id}}" {{#if_eq this.id ../firm.level_3}} selected {{/if_eq}}>{{this.title}}</option>
+														{{/each}}
+													</select>
+												</div>
+											</div>
+											<div class="col-md-6" id="level4Designation">
+												<div class="form-group">
+													<label class="control-label">Level 4</label>
+													<span class="text-danger">*</span>
+													<select class="form-control floating remove_level_4" id="level_4_designation" name="level_4_designation">
+														<option value="">Select Designation</option>
+														 {{#each designation}}
+														<option value="{{this.id}}" {{#if_eq this.id ../firm.level_4}} selected {{/if_eq}}>{{this.title}}</option>
+														{{/each}}
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="m-t-20 text-center">
+											<button class="btn btn-primary rounded common-rounded-btn" type="button" id="btnUpdateFirmApproval">Save &amp; Next</button>
+										</div>
+									</form>
+								</div>
+							</div>
+							<div role="tabpanel" class="tab-pane fade" id="Section2">
+								<div class="row">
+									<div class="col-xs-4">
+										<h4 class="page-title">Office Details</h4>
+									</div>
+									<div class="col-xs-8 text-right m-b-30">
+										<a href="#" class="btn btn-primary rounded common-rounded-btn" data-toggle="modal" data-target="#add_office">
+										<i class="fa fa-plus"></i> Add Office</a>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="table-responsive">
+											<table class="table table-striped custom-table datatable">
+												<thead>
+													<tr>
+														<th>SL#</th>
+														<th>Firm Name</th>
+														<th>Office Name</th>
+														<th>Mobile No.</th>
+														<th>Address</th>
+														<th>Created Date</th>
+														<th class="text-right">Action</th>
+													</tr>
+												</thead>
+												<tbody>
+													{{#each office}}
+													<tr>
+														<td>{{math @index "+" 1}}</td>
+														<td>{{this.firm.title}}</td>
+														<td>
+															<a href="#" data-toggle="modal" data-target="#view_offices" data-office-id="{{this.id}}" data-name="{{this.name}}" data-address="{{this.address}}" data-city="{{this.city}}" data-state="{{this.state}}" data-country="{{this.country}}" data-zipcode="{{this.zipcode}}"
+															data-mobile="{{this.mobile}}" data-firm-id="{{this.firm_id}}" id="view-office-detail">
+																{{this.name}}+
+															</a>
+														</td>
+														<td class="number_validator">{{this.mobile}}</td>
+														<td>{{this.address}}</td>
+														<td>{{dateFormat this.createdAt "DD-MM-YYYY"}}</td>
+														<td class="text-right">
+															<a href="#" data-toggle="modal" data-target="#view_offices" data-office-id="{{this.id}}" data-name="{{this.name}}" data-address="{{this.address}}" data-city="{{this.city}}" data-state="{{this.state}}" data-country="{{this.country}}" data-zipcode="{{this.zipcode}}" data-mobile="{{this.mobile}}" data-firm-id="{{this.firm_id}}" id="view-office-detail" class="btn btn-success btn-sm">
+																<i class="fa fa-eye m-r-5"></i>
+															</a>
+															<a href="#" data-toggle="modal" data-target="#edit_offices" data-office-id="{{this.id}}" data-name="{{this.name}}" data-address="{{this.address}}" data-city="{{this.city}}" data-state="{{this.state}}" data-country="{{this.country}}" data-zipcode="{{this.zipcode}}" data-mobile="{{this.mobile}}" data-firm-id="{{this.firm_id}}" id="edit-office-detail" class="btn btn-success btn-sm">
+																<i class="fa fa-pencil m-r-5"></i>
+															</a>
+															<a href="#" data-toggle="modal" data-target="#delete_offices" data-office-id="{{this.id}}" id="delete-office-details" class="btn btn-danger btn-sm">
+																<i class="fa fa-trash-o m-r-5"></i>
+															</a>
+														</td>
+													</tr>
+													{{/each}}
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div role="tabpanel" class="tab-pane fade staff-name" id="Section3">
+								<div class="row">
+									<div class="col-xs-4">
+										<h4 class="page-title">Add Contact</h4>
+									</div>
+									<div class="col-xs-8 text-right m-b-30">
+										<a href="#" class="btn btn-primary rounded common-rounded-btn" data-toggle="modal" data-target="#add_contact">
+										<i class="fa fa-plus"></i> Add Contact</a>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="table-responsive">
+											<table class="table table-striped custom-table datatable">
+												<thead>
+													<tr>
+														<th>Staff Name</th>
+														<th>Office Name</th>
+														<th>Designation</th>
+														<th>Email</th>
+														<th>Mobile No.</th>
+														<th>Created Date</th>
+														<th class="text-right">Action</th>
+													</tr>
+												</thead>
+												<tbody>
+													{{#each contact}}
+													<tr>
+														<td>
+															<a href="javascript:void(0)" class="avatar">{{first_letter this.first_name}}</a>
+															<a href="#" data-toggle="modal" data-target="#view_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}" data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}" data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}" data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}" data-contact-zipcode="{{this.zipcode}}" id="view-office-contact">
+																{{this.first_name}} {{this.last_name}}
+															</a>
+														</td>
+														<td>{{this.office.name}}</td>
+														<td>{{this.designation.title}}</td>
+														<td>{{this.email}}</td>
+														<td class="number_validator">{{this.mobile}}</td>
+														<td>{{dateFormat this.createdAt "DD-MM-YYYY"}}</td>
+														<td class="text-right">
+															<a href="#" data-toggle="modal" data-target="#view_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}" data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}" data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}" data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}" data-contact-zipcode="{{this.zipcode}}" id="view-office-contact" class="btn btn-success btn-sm">
+																<i class="fa fa-eye m-r-5"></i>
+															</a>
+															<a href="#" data-toggle="modal" data-target="#edit_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}" data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}" data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}" data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}" data-contact-zipcode="{{this.zipcode}}" id="edit-office-contact" class="edit btn btn-success btn-sm">
+																<i class="fa fa-pencil m-r-5"></i>
+															</a>
+															<a href="#" data-toggle="modal" data-target="#delete_contacts" data-contact-id="{{this.id}}" id="delete-office-contact-details" class="edit btn btn-danger btn-sm">
+																<i class="fa fa-trash-o m-r-5"></i>
+															</a>
+														</td>
+													</tr>
+													{{/each}}
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			
+		</div>
+	</div>
+</div>
+<!-- ====================Starts Add Office ============================== -->
+<div id="add_office" class="modal custom-modal fade" role="dialog">
+	<div class="modal-dialog">
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+		<div class="modal-content modal-lg">
+			<div class="modal-header">
+				<h4 class="modal-title">Add Office</h4>
+			</div>
+			<div class="modal-body">
+				<form class="m-b-30" name="addOffice" id="addOffice" method="POST">
+					<input type="hidden" name="_csrf" value="{{csrfToken}}">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Office Name
+									<span class="text-danger">*</span>
+								</label>
+								<input class="form-control" type="text" name="name" id="name">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Mobile No.
+									<span class="text-danger">*</span>
+								</label>
+								<input class="form-control number_validator" type="text" name="mobile_no" id="mobile_no">
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<label class="control-label">Office Address
+									<span class="text-danger">*</span>
+								</label>
+								<textarea name="address" id="address" class="form-control"></textarea>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group ">
+
+								<label class="control-label">Country</label>
+								<select class="form-control floating" id="country" name="country">
+
+									<option value="">Select Country</option>
+									{{#each country}}
+										<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">State
+									<span class="text-danger">*</span>
+								</label>
+								<select class="select form-control floating" id="state" name="state">
+									<option value="">select State</option>
+									{{#each state}}
+										<option value="{{this.id}}">{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">City
+									<span class="text-danger">*</span>
+								</label>
+								<select class="select form-control floating" id="city" name="city">
+									<option value="">Select City</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Zipcode
+									<span class="text-danger">*</span>
+								</label>
+								<select class="select form-control floating" id="zipcode" name="zipcode">
+									<option value="">Select Zipcode</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="m-t-20 text-center">
+						<button class="btn btn-primary" id="btnAddOffice">Create Office</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="view_office" class="modal custom-modal fade view-office-modal" role="dialog">
+	<div class="modal-dialog">
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+		<div class="modal-content modal-lg">
+			<div class="modal-header">
+				<h4 class="modal-title">View Office Details</h4>
+			</div>
+			<div class="modal-body">
+				<form class="m-b-30">
+					<input type="hidden" name="_csrf" value="{{csrfToken}}">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Office Name
+									<span class="text-danger">*</span>
+								</label>
+								<input disabled class="form-control floating" type="text" name="view_office_name" id="view_office_name">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Mobile No.
+									<span class="text-danger">*</span>
+								</label>
+								<input disabled class="form-control floating" type="text" name="view_office_mobile_no" id="view_office_mobile_no">
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<label class="control-label">Office Address
+									<span class="text-danger">*</span>
+								</label>
+								<textarea disabled class="form-control floating" id="view_office_address" class="form-control"></textarea>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Country
+									<span class="text-danger">*</span>
+								</label>
+								<select disabled class="form-control floating" id="view_office_country" name="view_office_country">
+									<option value="">Select Country</option>
+									{{#each country}}
+										<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">State
+									<span class="text-danger">*</span>
+								</label>
+								<select disabled class="form-control floating" id="view_office_state" name="view_office_state">
+									<option value="">Select State</option>
+									{{#each state}}
+										<option value="{{this.id}}">{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">City
+									<span class="text-danger">*</span>
+								</label>
+								<select disabled class="form-control floating" id="view_office_city" name="view_office_city">
+									<option value="">Select City</option>
+									
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Zipcode
+									<span class="text-danger">*</span>
+								</label>
+								<select disabled class="form-control floating" id="view_office_zipcode" name="view_office_zipcode">
+									<option value="">Select Zipcode</option>
+									
+								</select>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="edit_office" class="modal custom-modal fade edit-office-modal" role="dialog">
+	<div class="modal-dialog">
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+		<div class="modal-content modal-lg">
+			<div class="modal-header">
+				<h4 class="modal-title">Edit Office Details</h4>
+			</div>
+			<div class="modal-body">
+				<form class="m-b-30" name="editOffice" id="editOffice" method="POST">
+					<input type="hidden" name="_csrf" value="{{csrfToken}}">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Office Name
+									<span class="text-danger">*</span>
+								</label>
+								<input class="form-control" type="text" name="edit_office_name" id="edit_office_name">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Mobile No.
+									<span class="text-danger">*</span>
+								</label>
+								<input class="form-control floating number_validator" type="text" name="edit_office_mobile_no" id="edit_office_mobile_no">
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<label class="control-label">Office Address
+									<span class="text-danger">*</span>
+								</label>
+								<textarea name="edit_office_address" id="edit_office_address" class="form-control"></textarea>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Country
+									<span class="text-danger">*</span>
+								</label>
+								<select class=" form-control floating" id="edit_office_country" name="edit_office_country">
+									<option value="">Select Country</option>
+									{{#each country}}
+										<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">State
+									<span class="text-danger">*</span>
+								</label>
+								<select class=" form-control floating" id="edit_office_state" name="edit_office_state">
+									<option value="">select State</option>
+									{{#each state}}
+										<option value="{{this.id}}">{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">City
+									<span class="text-danger">*</span>
+								</label>
+								<select class=" form-control floating" id="edit_office_city" name="edit_office_city">
+									<option value="">Select City</option>
+									
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Zipcode
+									<span class="text-danger">*</span>
+								</label>
+								<select class=" form-control floating" id="edit_office_zipcode" name="edit_office_zipcode">
+									<option value="">Select Zipcode</option>
+									
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="m-t-20 text-center">
+						<button class="btn btn-primary btnEditOffice">Save &amp; Update</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="delete_office" class="modal custom-modal fade delete-office-modal" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content modal-md">
+			<div class="modal-header">
+				<h4 class="modal-title">Delete Office</h4>
+			</div>
+			<form>
+				<div class="modal-body card-box">
+					<p>Are you sure want to delete this office?</p>
+					<div class="m-t-20">
+						<a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+						<button type="submit" class="btn btn-danger btnDeleteOffice">Delete</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- ====================Ends Add Office ============================== -->
+<!-- ====================Starts Add contact ============================== -->
+<div id="add_contact" class="modal custom-modal fade" role="dialog">
+	<div class="modal-dialog">
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+		<div class="modal-content modal-lg">
+			<div class="modal-header">
+				<h4 class="modal-title">Add Office Contact</h4>
+			</div>
+			<div class="modal-body">
+				<form class="m-b-30" name="addOfficeContactFrm" id="addOfficeContactFrm" method="POST">
+					<input type="hidden" name="_csrf" value="{{csrfToken}}">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group form-focus select-focus select-attorney">
+								<label class="control-label">Office Name
+									<span class="text-danger">*</span>
+								</label>
+								<select class="form-control floating " name="office_id" id="office_id" >
+									<option value="">Select Office</option>
+									{{#each office}}
+										<option value="{{this.id}}">{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus select-focus select-attorney">
+								<label class="control-label">Designation
+									<span class="text-danger">*</span>
+								</label>
+								<select class="form-control floating " name="designation_id" id="designation_id" >
+									<option value="">Select Designation</option>
+									{{#each designation}}
+									<option value="{{this.id}}">{{this.title}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">First Name
+									<span class="text-danger">*</span>
+								</label>
+								<input class="form-control" type="text" name="first_name" id="first_name">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Last Name
+									<span class="text-danger">*</span>
+								</label>
+								<input class="form-control" type="text" name="last_name" id="last_name">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Email
+									<span class="text-danger">*</span>
+								</label>
+								<input class="form-control" type="email" name="email" id="email">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Mobile No.
+									<span class="text-danger">*</span>
+								</label>
+								<input class="form-control floating number_validator" type="text" name="contact_mobile_no" id="contact_mobile_no">
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<label class="control-label">Address
+									<span class="text-danger">*</span>
+								</label>
+								<textarea name="contact_address" id="contact_address" class="form-control"></textarea>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Country
+									<span class="req-lbl">*</span>
+								</label>
+								<select class="form-control floating" id="contact_country" name="contact_country">
+									<option value="">Select Country</option>
+									{{#each country}}
+										<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">State
+									<span class="req-lbl">*</span>
+								</label>
+								<select class="form-control floating" id="contact_state" name="contact_state">
+									<option value="">select State</option>
+									{{#each state}}
+										<option value="{{this.id}}">{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">City
+									<span class="req-lbl">*</span>
+								</label>
+								<select class="form-control floating" id="contact_city" name="contact_city">
+									<option value="">Select City</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Zipcode
+									<span class="req-lbl">*</span>
+								</label>
+								<select class="form-control floating" id="contact_zipcode" name="contact_zipcode">
+									<option value="">Select Zipcode</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="m-t-20 text-center">
+						<button class="btn btn-primary" id="btnAddOfficeContact">Create Contact</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="view_contact" class="modal custom-modal fade viewContactModal" role="dialog">
+	<div class="modal-dialog">
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+		<div class="modal-content modal-lg">
+			<div class="modal-header">
+				<h4 class="modal-title">View Contact Details</h4>
+			</div>
+			<div class="modal-body">
+				<form class="m-b-30">
+					<input type="hidden" name="_csrf" value="{{csrfToken}}">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Office Name
+									<span class="text-danger">*</span>
+								</label>
+								<select disabled class="form-control floating" name="view_office_id" id="view_office_id">
+									{{#each office}}
+									<option value="{{this.id}}">{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Designation
+									<span class="text-danger">*</span>
+								</label>
+								<select disabled class="form-control floating" name="view_designation_id" id="view_designation_id">
+									{{#each designation}}
+									<option value="{{this.id}}">{{this.title}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">First Name
+									<span class="text-danger">*</span>
+								</label>
+								<input disabled class="form-control floating" type="text" name="view_contact_first_name" id="view_contact_first_name">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Last Name
+									<span class="text-danger">*</span>
+								</label>
+								<input disabled class="form-control floating" type="text" name="view_contact_last_name" id="view_contact_last_name">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Email
+									<span class="text-danger">*</span>
+								</label>
+								<input disabled class="form-control floating" type="email" name="view_contact_email" id="view_contact_email">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Mobile No.
+									<span class="text-danger">*</span>
+								</label>
+								<input disabled class="form-control floating" type="text" name="view_contact_mobile_no" id="view_contact_mobile_no">
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<label class="control-label">Address
+									<span class="text-danger">*</span>
+								</label>
+								<textarea disabled name="view_contact_address" id="view_contact_address" class="form-control"></textarea>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Country
+									<span class="req-lbl">*</span>
+								</label>
+								<select disabled class="form-control floating" id="view_contact_country" name="view_contact_country">
+									<option value="">Select Country</option>
+									{{#each country}}
+										<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">State
+									<span class="req-lbl">*</span>
+								</label>
+								<select disabled class="form-control floating" id="view_contact_state" name="view_contact_state">
+									<option value="">Select State</option>
+									{{#each state}}
+										<option value="{{this.id}}">{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">City
+									<span class="req-lbl">*</span>
+								</label>
+								<select disabled class="form-control floating" id="view_contact_city" name="view_contact_city">
+									<option value="">Select City</option>
+									
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Zipcode
+									<span class="req-lbl">*</span>
+								</label>
+								<select disabled class="form-control floating" id="view_contact_zipcode" name="view_contact_zipcode">
+									<option value="">Select Zipcode</option>
+									
+								</select>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="edit_contact" class="modal custom-modal fade editContactModal" role="dialog">
+	<div class="modal-dialog">
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+		<div class="modal-content modal-lg">
+			<div class="modal-header">
+				<h4 class="modal-title">Edit Contact Details</h4>
+			</div>
+			<div class="modal-body">
+				<form class="m-b-30" name="EditOfficeContactFrm" id="EditOfficeContactFrm" method="POST">
+					<input type="hidden" name="_csrf" value="{{csrfToken}}">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group select-attorney">
+								<label class="control-label">Office Name
+									<span class="text-danger">*</span>
+								</label>
+								<select class="form-control floating " name="edit_office_id" id="edit_office_id" >
+									{{#each office}}
+									<option value="{{this.id}}">{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group select-attorney">
+								<label class="control-label">Designation
+									<span class="text-danger">*</span>
+								</label>
+								<select class="form-control floating " name="edit_designation_id" id="edit_designation_id" >
+									{{#each designation}}
+									<option value="{{this.id}}">{{this.title}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">First Name
+									<span class="text-danger">*</span>
+								</label>
+								<input class="form-control" type="text" name="edit_contact_first_name" id="edit_contact_first_name">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Last Name
+									<span class="text-danger">*</span>
+								</label>
+								<input class="form-control" type="text" name="edit_contact_last_name" id="edit_contact_last_name">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Email
+									<span class="text-danger">*</span>
+								</label>
+								<input class="form-control" type="email" name="edit_contact_email" id="edit_contact_email">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Mobile No
+									<span class="text-danger">*</span>
+								</label>
+								<input class="form-control floating number_validator" type="text" name="edit_contact_mobile_no" id="edit_contact_mobile_no">
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<label class="control-label"> Address
+									<span class="text-danger">*</span>
+								</label>
+								<textarea name="edit_contact_address" id="edit_contact_address" class="form-control"></textarea>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Country
+									<span class="req-lbl">*</span>
+								</label>
+								<select class=" form-control floating" id="edit_contact_country" name="edit_contact_country">
+									<option value="">Select Country</option>
+									{{#each country}}
+									<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">State
+									<span class="req-lbl">*</span>
+								</label>
+								<select class=" form-control floating" id="edit_contact_state" name="edit_contact_state">
+									<option value="">select State</option>
+									{{#each state}}
+									<option value="{{this.id}}">{{this.name}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">City
+									<span class="req-lbl">*</span>
+								</label>
+								<select class=" form-control floating" id="edit_contact_city" name="edit_contact_city">
+									<option value="">Select City</option>
+									
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Zipcode
+									<span class="req-lbl">*</span>
+								</label>
+								<select class=" form-control floating" id="edit_contact_zipcode" name="edit_contact_zipcode">
+									<option value="">Select Zipcode</option>
+									
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="m-t-20 text-center">
+						<button class="btn btn-primary" id="btnEditContactOffice">Edit Contact</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="delete_contact" class="modal custom-modal fade deleteContactModal" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content modal-md">
+			<div class="modal-header">
+				<h4 class="modal-title">Delete Contact</h4>
+			</div>
+			<form>
+				<div class="modal-body card-box">
+					<p>Are you sure want to delete this?</p>
+					<div class="m-t-20">
+						<a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+						<button type="submit" class="btn btn-danger" id="btnDeleteContact">Delete</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- ====================Ends Add Office ============================== -->
+{{#content "script" mode="append"}}
+<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="/assets/js/select2.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
+<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+
+
+
+<script type="text/javascript">
+
+	/*===============================Starts Add Ofiice Section========================================*/
+
+	$(document).ready(function(e) {
+	    $('#section').multiselect({
+	        nonSelectedText: 'Select Section',
+	        enableFiltering: true,
+	        includeSelectAllOption: true,
+	        buttonWidth: '100%',
+	        maxHeight: 400,
+	        dropDown: true
+	    });
+
+	    $('#practice_area').multiselect({
+	        nonSelectedText: 'Select Practice Area',
+	        enableFiltering: true,
+	        includeSelectAllOption: true,
+	        buttonWidth: '100%',
+	        maxHeight: 400,
+	        dropDown: true
+	    });
+
+	    $('#firm_jurisdiction').multiselect({
+	        nonSelectedText: 'Select Jurisdiction',
+	        enableFiltering: true,
+	        includeSelectAllOption: true,
+	        buttonWidth: '100%',
+	        maxHeight: 400,
+	        dropDown: true
+	    });
+
+	    $("#btnAddOffice").click(function() {
+	        $("#addOffice").submit();
+	    });
+
+	    $("#addOffice").validate({
+	        rules: {
+	            name: {
+	                required: true
+	            },
+	            address: {
+	                required: true
+	            },
+	            city: {
+	                required: true
+	            },
+	            state: {
+	                required: true
+	            },
+	            country: {
+	                required: true
+	            },
+	            zipcode: {
+	                required: true
+	            },
+	            mobile_no: {
+	                required: true
+	            }
+	        },
+	        messages: {
+	            name: {
+	                required: "Name can't be blank"
+	            },
+	            address: {
+	                required: "Address can't be blank"
+	            },
+	            city: {
+	                required: "City can't be blank"
+	            },
+	            state: {
+	                required: "State can't be blank"
+	            },
+	            country: {
+	                required: "country can't be blank"
+	            },
+	            zipcode: {
+	                required: "Zipcode can't be blank"
+	            },
+	            mobile_no: {
+	                required: "Mobile Number can't be blank"
+	            }
+	        },
+	        submitHandler: function(form) {
+	            var name = $("#name").val(),
+	                address = $("#address").val(),
+	                city = $("#city").val();
+	            state = $("#state").val();
+	            country = $("#country").val();
+	            zipcode = $("#zipcode").val();
+	            mobile_no = $("#mobile_no").val();
+	            $.ajax({
+	                type: "POST",
+	                url: "/add-office",
+	                data: {
+	                    name: name,
+	                    address: address,
+	                    city: city,
+	                    state: state,
+	                    country: country,
+	                    zipcode: zipcode,
+	                    mobile_no: mobile_no
+	                },
+	                beforeSend: function(xhr) {
+	                    xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+	                    $("#btnAddOffice").prop('disabled', true);
+	                    $("#btnAddOffice").html("Loading...");
+	                },
+	                success: function(response) {
+	                    if (response.add_office == true) {
+	                        $(`<div class="alert alert-success"><strong>Success! </strong>Office Added Successfully</div>`).insertBefore("#addOffice");
+	                        setTimeout(function() {
+	                            window.location.href = "/firm-details";
+	                        }, 2000);
+	                    }
+	                }
+	            });
+	        }
+	    });
+	});
+
+	/*===============================Ends Add Ofiice Section========================================*/
+
+	/*===============================Stasts Edit Ofiice Section========================================*/
+
+	$(document).on('click', '#view-office-detail', function(e) {
+	    var office_id = $(this).data('office-id');
+	    var office_name = $(this).data('name');
+	    var office_address = $(this).data('address');
+	    var office_city = $(this).data('city');
+	    var office_state = $(this).data('state');
+	    var office_country = $(this).data('country');
+	    var office_zipcode = $(this).data('zipcode');
+	    var office_mobile = $(this).data('mobile');
+	    var firm_id = $(this).data('firm-id');
+	    localStorage.setItem('office_id', office_id);
+
+		$.ajax({
+			type: "POST",
+			url: "/edit-office-city-get",
+			data: {
+				office_state: office_state,
+				office_city: office_city
+			},
+			success: function (response) {
+				$('#view_office_city').children('option:not(:first)').remove();
+				for (var i = 0; i < response.city.length; i++) {
+					$("#view_office_city").append('<option value="' + response.city[i].id + '">' + response.city[i].name + '</option>');
+				}
+				$('#view_office_zipcode').children('option:not(:first)').remove();
+				for (var i = 0; i < response.zipcode.length; i++) {
+					$("#view_office_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
+				}
+				$('#view_office_city').val(office_city);
+				$('#view_office_zipcode').val(office_zipcode);
+			},
+			error: function (xhr) {
+
+			}
+		});
+
+	    $('#view_office_name').val(office_name);
+	    $('#view_office_address').val(office_address);
+	    $('#view_office_state').val(office_state);
+	    $('#view_office_country').val(office_country);
+	    $('#view_office_mobile_no').val(office_mobile);
+	    $('.view-office-modal').modal('show');
+	});
+
+	$(document).on('click', '#edit-office-detail', function(e) {
+	    var office_id = $(this).data('office-id');
+	    var office_name = $(this).data('name');
+	    var office_address = $(this).data('address');
+	    var office_city = $(this).data('city');
+	    var office_state = $(this).data('state');
+	    var office_country = $(this).data('country');
+	    var office_zipcode = $(this).data('zipcode');
+	    var office_mobile = $(this).data('mobile');
+	    var firm_id = $(this).data('firm-id');
+	    localStorage.setItem('office_id', office_id);
+		$.ajax({
+			type: "POST",
+			url: "/edit-office-city-get",
+			data: {
+				office_state: office_state,
+				office_city: office_city
+			},
+			success: function (response) {
+				$('#edit_office_city').children('option:not(:first)').remove();
+				for (var i = 0; i < response.city.length; i++) {
+					$("#edit_office_city").append('<option value="' + response.city[i].id + '">' + response.city[i].name + '</option>');
+				}
+				$('#edit_office_zipcode').children('option:not(:first)').remove();
+				for (var i = 0; i < response.zipcode.length; i++) {
+					$("#edit_office_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
+				}
+				$('#edit_office_city').val(office_city);
+				$('#edit_office_zipcode').val(office_zipcode);
+			},
+			error: function (xhr) {
+
+			}
+		});
+	    $('#edit_office_name').val(office_name);
+	    $('#edit_office_address').val(office_address);
+	    $('#edit_office_state').val(office_state);
+	    $('#edit_office_country').val(office_country);
+	    $('#edit_office_mobile_no').val(office_mobile);
+	    $('.edit-office-modal').modal('show');
+	});
+
+	$(document).ready(function(e) {
+	    $("#btnEditOffice").click(function() {
+	        $("#editOffice").submit();
+	    });
+
+	    $("#editOffice").validate({
+	        rules: {
+	            edit_office_name: {
+	                required: true
+	            },
+	            edit_office_address: {
+	                required: true
+	            },
+	            edit_office_city: {
+	                required: true
+	            },
+	            edit_office_state: {
+	                required: true
+	            },
+	            edit_office_country: {
+	                required: true
+	            },
+	            edit_office_zipcode: {
+	                required: true
+	            },
+	            edit_office_mobile_no: {
+	                required: true
+	            }
+	        },
+	        messages: {
+	            edit_office_name: {
+	                required: "Name can't be blank"
+	            },
+	            edit_office_address: {
+	                required: "Address can't be blank"
+	            },
+	            edit_office_city: {
+	                required: "City can't be blank"
+	            },
+	            edit_office_state: {
+	                required: "State can't be blank"
+	            },
+	            edit_office_country: {
+	                required: "country can't be blank"
+	            },
+	            edit_office_zipcode: {
+	                required: "Zipcode can't be blank"
+	            },
+	            edit_office_mobile_no: {
+	                required: "Mobile Number can't be blank"
+	            }
+	        },
+	        submitHandler: function(form) {
+	            $.ajax({
+	                type: "POST",
+	                url: "/edit-office/" + localStorage.getItem("office_id"),
+	                data: $("#editOffice").serialize() + "&office_id=" + localStorage.getItem("office_id"),
+	                beforeSend: function(xhr) {
+	                    xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+	                    $("#btnEditOffice").prop('disabled', true);
+	                    $("#btnEditOffice").html("Loading...");
+	                },
+	                success: function(response) {
+	                    if (response.edit_office == true) {
+	                        $(`<div class="alert alert-success"><strong>Success! </strong>Office Updated Successfully</div>`).insertBefore("#editOffice");
+	                        setTimeout(function() {
+	                            window.location.href = "/firm-details";
+	                        }, 2000);
+	                    }
+	                }
+	            });
+	        }
+	    });
+	});
+
+	/*===============================Ends Edit Ofiice Section========================================*/
+
+	/*===============================Starts Delete Ofiice Section========================================*/
+
+	$(document).on('click', '#delete-office-details', function(e) {
+	    var office_id = $(this).data('office-id');
+	    localStorage.setItem('office_id', office_id);
+	    $('.delete-office-modal').modal('show');
+	});
+
+	$(document).on('click', '.btnDeleteOffice', function(e) {
+	    $.ajax({
+	        type: "POST",
+	        url: "/delete-office/" + localStorage.getItem("office_id"),
+	        data: "&office_id=" + localStorage.getItem("office_id"),
+	        beforeSend: function(xhr) {
+	            xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+	        },
+	        success: function(response) {
+	            if (response.delete_office == true) {
+	                window.location.href = "/firm-details";
+	            }
+	        },
+	        error: function(xhr) {
+
+	        }
+	    });
+	    e.preventDefault();
+	});
+
+	/*===============================Ends Delete Ofiice Section========================================*/
+
+	/*===============================Starts Office Contact Section=============================*/
+
+	$(document).ready(function(e) {
+
+	    $("#btnAddOfficeContact").click(function() {
+	        $("#addOfficeContactFrm").submit();
+	    });
+
+	    $("#addOfficeContactFrm").validate({
+	        rules: {
+	            office_id: {
+	                required: true
+	            },
+	            designation_id: {
+	                required: true
+	            },
+	            first_name: {
+	                required: true
+	            },
+	            last_name: {
+	                required: true
+	            },
+	            email: {
+	                required: true,
+	                email: true
+	            },
+	            contact_address: {
+	                required: true
+	            },
+	            contact_city: {
+	                required: true
+	            },
+	            contact_state: {
+	                required: true
+	            },
+	            contact_country: {
+	                required: true
+	            },
+	            contact_zipcode: {
+	                required: true
+	            },
+	            contact_mobile_no: {
+	                required: true,
+	                number: true,
+	                maxlength: 10
+	            }
+	        },
+	        messages: {
+	            office_id: {
+	                required: "Please select a office name"
+	            },
+	            designation_id: {
+	                required: "Please select designation"
+	            },
+	            first_name: {
+	                required: "First name can't be blank"
+	            },
+	            last_name: {
+	                required: "Last name can't be blank"
+	            },
+	            email: {
+	                required: "Email can't be blank",
+	                email: "Must be valid email"
+	            },
+	            contact_address: {
+	                required: "Address can't be blank"
+	            },
+	            contact_city: {
+	                required: "City can't be blank"
+	            },
+	            contact_state: {
+	                required: "State can't be blank"
+	            },
+	            contact_country: {
+	                required: "country can't be blank"
+	            },
+	            contact_zipcode: {
+	                required: "Zipcode can't be blank"
+	            },
+	            contact_mobile_no: {
+	                required: "Mobile Number can't be blank"
+	            }
+	        },
+	        submitHandler: function(form) {
+	            var first_name = $("#first_name").val(),
+	                last_name = $("#last_name").val(),
+	                email = $("#email").val(),
+	                office_id = $("#office_id").val(),
+	                designation_id = $("#designation_id").val(),
+	                address = $("#contact_address").val();
+	            city = $("#contact_city").val();
+	            state = $("#contact_state").val();
+	            country = $("#contact_country").val();
+	            zipcode = $("#contact_zipcode").val();
+	            mobile_no = $("#contact_mobile_no").val();
+	            $.ajax({
+	                type: "POST",
+	                url: "/add-office-contact",
+	                data: {
+	                    office_id: office_id,
+	                    designation_id: designation_id,
+	                    first_name: first_name,
+	                    last_name: last_name,
+	                    email: email,
+	                    address: address,
+	                    city: city,
+	                    state: state,
+	                    country: country,
+	                    zipcode: zipcode,
+	                    mobile_no: mobile_no
+	                },
+	                beforeSend: function(xhr) {
+	                    xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+	                    $("#btnAddOfficeContact").prop('disabled', true);
+	                    $("#btnAddOfficeContact").html("Loading...");
+	                },
+	                success: function(response) {
+	                    if (response.add_office_contact == true) {
+	                        $(`<div class="alert alert-success"><strong>Success! </strong>Office Contact Added Successfully</div>`).insertBefore("#addOfficeContactFrm");
+	                        setTimeout(function() {
+	                            window.location.href = "/firm-details";
+	                        }, 2000);
+	                    }
+	                }
+	            });
+	        }
+	    });
+	});
+
+	$(document).on('click', '#edit-office-contact', function(e) {
+	    var contact_id = $(this).data('contact-id');
+	    var office_id = $(this).data('contact-office-id');
+	    var designation_id = $(this).data('designation-id');
+	    var first_name = $(this).data('first-name');
+	    var last_name = $(this).data('last-name');
+	    var email = $(this).data('email');
+	    var contact_mobile = $(this).data('contact-mobile');
+	    var contact_address = $(this).data('contact-address');
+	    var contact_city = $(this).data('contact-city');
+	    var contact_state = $(this).data('contact-state');
+	    var contact_country = $(this).data('contact-country');
+	    var contact_zipcode = $(this).data('contact-zipcode');
+
+		$.ajax({
+			type: "POST",
+			url: "/edit-office-city-get",
+			data: {
+				office_state: contact_state,
+				office_city: contact_city
+			},
+			success: function (response) {
+				$('#edit_contact_city').children('option:not(:first)').remove();
+				for (var i = 0; i < response.city.length; i++) {
+					$("#edit_contact_city").append('<option value="' + response.city[i].id + '">' + response.city[i].name + '</option>');
+				}
+				$('#edit_contact_zipcode').children('option:not(:first)').remove();
+				for (var i = 0; i < response.zipcode.length; i++) {
+					$("#edit_contact_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
+				}
+				$('#edit_contact_city').val(contact_city);
+				$('#edit_contact_zipcode').val(contact_zipcode);
+			},
+			error: function (xhr) {
+
+			}
+		});
+
+
+	    $("#edit_office_id").val(office_id);
+	    $('#edit_office_id').trigger('change');
+	    $("#edit_designation_id").val(designation_id);
+	    $('#edit_designation_id').trigger('change');
+	    $("#edit_contact_first_name").val(first_name);
+	    $("#edit_contact_last_name").val(last_name);
+	    $("#edit_contact_email").val(email);
+	    $("#edit_contact_mobile_no").val(contact_mobile);
+	    $("#edit_contact_address").val(contact_address);
+	    $("#edit_contact_state").val(contact_state);
+	    $("#edit_contact_country").val(contact_country);
+	    localStorage.setItem('contact_id', contact_id);
+	    $('.editContactModal').modal('show');
+	});
+
+	$(document).on('click', '#view-office-contact', function(e) {
+	    var contact_id = $(this).data('contact-id');
+	    var office_id = $(this).data('contact-office-id');
+	    var designation_id = $(this).data('designation-id');
+	    var first_name = $(this).data('first-name');
+	    var last_name = $(this).data('last-name');
+	    var email = $(this).data('email');
+	    var contact_mobile = $(this).data('contact-mobile');
+	    var contact_address = $(this).data('contact-address');
+	    var contact_city = $(this).data('contact-city');
+	    var contact_state = $(this).data('contact-state');
+	    var contact_country = $(this).data('contact-country');
+	    var contact_zipcode = $(this).data('contact-zipcode');
+
+		$.ajax({
+			type: "POST",
+			url: "/edit-office-city-get",
+			data: {
+				office_state: contact_state,
+				office_city: contact_city
+			},
+			success: function (response) {
+				$('#view_contact_city').children('option:not(:first)').remove();
+				for (var i = 0; i < response.city.length; i++) {
+					$("#view_contact_city").append('<option value="' + response.city[i].id + '">' + response.city[i].name + '</option>');
+				}
+				$('#view_contact_zipcode').children('option:not(:first)').remove();
+				for (var i = 0; i < response.zipcode.length; i++) {
+					$("#view_contact_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
+				}
+				$('#view_contact_city').val(contact_city);
+				$('#view_contact_zipcode').val(contact_zipcode);
+			},
+			error: function (xhr) {
+
+			}
+		});
+
+	    $("#view_office_id").val(office_id);
+	    $('#view_office_id').trigger('change');
+	    $("#view_designation_id").val(designation_id);
+	    $('#view_designation_id').trigger('change');
+	    $("#view_contact_first_name").val(first_name);
+	    $("#view_contact_last_name").val(last_name);
+	    $("#view_contact_email").val(email);
+	    $("#view_contact_mobile_no").val(contact_mobile);
+	    $("#view_contact_address").val(contact_address);
+	    $("#view_contact_state").val(contact_state);
+	    $("#view_contact_country").val(contact_country);
+	    localStorage.setItem('contact_id', contact_id);
+	    $('.viewContactModal').modal('show');
+	});
+
+	$(document).ready(function(e) {
+	    $("#btnEditContactOffice").click(function() {
+	        $("#EditOfficeContactFrm").submit();
+	    });
+
+	    $("#EditOfficeContactFrm").validate({
+	        rules: {
+	            edit_office_id: {
+	                required: true
+	            },
+	            edit_designation_id: {
+	                required: true
+	            },
+	            edit_contact_first_name: {
+	                required: true
+	            },
+	            edit_contact_last_name: {
+	                required: true
+	            },
+	            edit_contact_email: {
+	                required: true,
+	                email: true
+	            },
+	            edit_contact_address: {
+	                required: true
+	            },
+	            edit_contact_city: {
+	                required: true
+	            },
+	            edit_contact_state: {
+	                required: true
+	            },
+	            edit_contact_country: {
+	                required: true
+	            },
+	            edit_contact_zipcode: {
+	                required: true
+	            },
+	            edit_contact_mobile_no: {
+	                required: true
+	            }
+	        },
+	        messages: {
+	            edit_office_id: {
+	                required: "Please select a office name"
+	            },
+	            edit_designation_id: {
+	                required: "Please select designation"
+	            },
+	            edit_contact_first_name: {
+	                required: "First name can't be blank"
+	            },
+	            edit_contact_last_name: {
+	                required: "Last name can't be blank"
+	            },
+	            edit_contact_email: {
+	                required: "Email can't be blank",
+	                email: "Must be valid email"
+	            },
+	            edit_contact_address: {
+	                required: "Address can't be blank"
+	            },
+	            edit_contact_city: {
+	                required: "City can't be blank"
+	            },
+	            edit_contact_state: {
+	                required: "State can't be blank"
+	            },
+	            edit_contact_country: {
+	                required: "country can't be blank"
+	            },
+	            edit_contact_zipcode: {
+	                required: "Zipcode can't be blank"
+	            },
+	            edit_contact_mobile_no: {
+	                required: "Mobile Number can't be blank"
+	            }
+	        },
+	        submitHandler: function(form) {
+	            $.ajax({
+	                type: "POST",
+	                url: "/edit-office-contact/" + localStorage.getItem("contact_id"),
+	                data: $("#EditOfficeContactFrm").serialize() + "&contact_id=" + localStorage.getItem("contact_id"),
+	                beforeSend: function(xhr) {
+	                    xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+	                    $("#btnEditContactOffice").prop('disabled', true);
+	                    $("#btnEditContactOffice").html("Loading...");
+	                },
+	                success: function(response) {
+	                    if (response.edit_office_contact == true) {
+	                        $(`<div class="alert alert-success"><strong>Success! </strong>Office Contact Updated Successfully</div>`).insertBefore("#EditOfficeContactFrm");
+	                        setTimeout(function() {
+	                            window.location.href = "/firm-details";
+	                        }, 2000);
+	                    }
+	                }
+	            });
+	        }
+	    });
+	});
+
+	$(document).on('click', '#delete-office-contact-details', function(e) {
+	    var contact_id = $(this).data('contact-id');
+	    localStorage.setItem('contact_id', contact_id);
+	    $('.deleteContactModal').modal('show');
+	});
+
+	$(document).on('click', '#btnDeleteContact', function(e) {
+	    $.ajax({
+	        type: "POST",
+	        url: "/delete-contact/" + localStorage.getItem("contact_id"),
+	        data: "&contact_id=" + localStorage.getItem("contact_id"),
+	        beforeSend: function(xhr) {
+	            xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+	        },
+	        success: function(response) {
+	            if (response.delete_contact == true) {
+	                window.location.href = "/firm-details";
+	            }
+	        },
+	        error: function(xhr) {
+
+	        }
+	    });
+	    e.preventDefault();
+	});
+
+	/*===============================Ends Office Contact Section=============================*/
+
+	/*========================Office state country fetch===========================*/
+
+	$(document).ready(function() {
+	    $("#edit_office_state").change(function(e) {
+	        var state_id = $(this).val();
+	        $("#edit_office_city").find('option').not(':first').remove();
+	        if (state_id) {
+	            $.ajax({
+	                type: "POST",
+	                url: "/editoffice-get/get-city",
+	                data: {
+	                    state_id: state_id
+	                },
+	                success: function(response) {
+	                    for (var i = 0; i < response.get_city.length; i++) {
+	                        $("#edit_office_city").append('<option value="' + response.get_city[i].id + '">' + response.get_city[i].name + '</option>');
+	                    }
+	                },
+	                error: function(xhr) {
+
+	                }
+	            });
+	        }
+	    });
+
+	    $("#edit_office_city").change(function(e) {
+	        var city_name = $("#edit_office_city option:selected").text();
+	        $("#edit_office_zipcode").find('option').not(':first').remove();
+	        if (city_name) {
+	            $.ajax({
+	                type: "POST",
+	                url: "/edit-office-get/get-zipcode",
+	                data: {
+	                    city_name: city_name
+	                },
+	                success: function(response) {
+	                    for (var i = 0; i < response.zipcode.length; i++) {
+	                        $("#edit_office_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
+	                    }
+	                },
+	                error: function(xhr) {
+
+	                }
+	            });
+	        }
+	    });
+
+	    /*========================Ends Office state country fetch===========================*/
+
+	    /*========================Starts edit contact state country fetch===========================*/
+
+	    $("#edit_contact_state").change(function(e) {
+	        var state_id = $(this).val();
+	        $("#edit_contact_city").find('option').not(':first').remove();
+	        if (state_id) {
+	            $.ajax({
+	                type: "POST",
+	                url: "/edit-contact-get/get-city",
+	                data: {
+	                    state_id: state_id
+	                },
+	                success: function(response) {
+	                    for (var i = 0; i < response.get_city.length; i++) {
+	                        $("#edit_contact_city").append('<option value="' + response.get_city[i].id + '">' + response.get_city[i].name + '</option>');
+	                    }
+	                },
+	                error: function(xhr) {
+
+	                }
+	            });
+	        }
+	    });
+
+	    $("#edit_contact_city").change(function(e) {
+	        var city_name = $("#edit_contact_city option:selected").text();
+	        $("#edit_contact_zipcode").find('option').not(':first').remove();
+	        if (city_name) {
+	            $.ajax({
+	                type: "POST",
+	                url: "/edit-contact-get/get-zipcode",
+	                data: {
+	                    city_name: city_name
+	                },
+	                success: function(response) {
+	                    for (var i = 0; i < response.zipcode.length; i++) {
+	                        // console.log(response.zipcode[i]);
+	                        $("#edit_contact_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
+	                    }
+	                },
+	                error: function(xhr) {
+
+	                }
+	            });
+	        }
+	    });
+	});
+
+	/*========================Edit Contact state country fetch===========================*/
+
+	$(document).ready(function() {
+	    $("#contact_state").change(function(e) {
+	        var state_id = $(this).val();
+	        $("#contact_city").find('option').not(':first').remove();
+	        if (state_id) {
+	            $.ajax({
+	                type: "POST",
+	                url: "/contact/get-city",
+	                data: {
+	                    state_id: state_id
+	                },
+	                success: function(response) {
+	                    for (var i = 0; i < response.get_city.length; i++) {
+	                        $("#contact_city").append('<option value="' + response.get_city[i].id + '">' + response.get_city[i].name + '</option>');
+	                    }
+	                },
+	                error: function(xhr) {
+
+	                }
+	            });
+	        }
+	    });
+
+	    $("#contact_city").change(function(e) {
+	        var city_name = $("#contact_city option:selected").text();
+	        $("#contact_zipcode").find('option').not(':first').remove();
+	        if (city_name) {
+	            $.ajax({
+	                type: "POST",
+	                url: "/contact/get-zipcode",
+	                data: {
+	                    city_name: city_name
+	                },
+	                success: function(response) {
+	                    for (var i = 0; i < response.zipcode.length; i++) {
+	                        // console.log(response.zipcode[i]);
+	                        $("#contact_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
+	                    }
+	                },
+	                error: function(xhr) {
+
+	                }
+	            });
+	        }
+	    });
+
+	    /*===========================firm basic section =======================*/
+
+	    $("#firm_state").change(function(e) {
+	        var state_id = $(this).val();
+	        $("#firm_city").find('option').not(':first').remove();
+	        if (state_id) {
+	            $.ajax({
+	                type: "POST",
+	                url: "/firm-basic/get-city",
+	                data: {
+	                    state_id: state_id
+	                },
+	                success: function(response) {
+	                    for (var i = 0; i < response.get_city.length; i++) {
+	                        $("#firm_city").append('<option value="' + response.get_city[i].id + '">' + response.get_city[i].name + '</option>');
+	                    }
+	                },
+	                error: function(xhr) {
+
+	                }
+	            });
+	        }
+	    });
+
+	    $("#firm_city").change(function(e) {
+	        var city_name = $("#firm_city option:selected").text();
+	        $("#firm_zipcode").find('option').not(':first').remove();
+	        if (city_name) {
+	            $.ajax({
+	                type: "POST",
+	                url: "/firm-basic/get-zipcode",
+	                data: {
+	                    city_name: city_name
+	                },
+	                success: function(response) {
+	                    for (var i = 0; i < response.zipcode.length; i++) {
+	                        // console.log(response.zipcode[i]);
+	                        $("#firm_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
+	                    }
+	                },
+	                error: function(xhr) {
+
+	                }
+	            });
+	        }
+	    });
+	});
+
+	/*===========================firm basic section =======================*/
+
+	/*==================================Update Firm Section (BASIC) =============================*/
+
+	$(document).ready(function(e) {
+	    $("#btnUpdateFirm").click(function() {
+	        $("#frmUpdateFirm").submit();
+	    });
+
+	    $("#frmUpdateFirm").validate({
+	        rules: {
+	            address1: {
+	                required: true
+	            },
+	            phone_no: {
+	                required: true
+	            },
+	            firm_city: {
+	                required: true
+	            },
+	            firm_state: {
+	                required: true
+	            },
+	            firm_country: {
+	                required: true
+	            },
+	            firm_zipcode: {
+	                required: true
+	            }
+	        },
+	        messages: {
+	            address1: {
+	                required: "Address can't be blank"
+	            },
+	            phone_no: {
+	                required: "Phone number can't be blank"
+	            },
+	            firm_city: {
+	                required: "City can't be blank"
+	            },
+	            firm_state: {
+	                required: "State can't be blank"
+	            },
+	            firm_country: {
+	                required: "country can't be blank"
+	            },
+	            firm_zipcode: {
+	                required: "Zipcode can't be blank"
+	            }
+	        },
+	        submitHandler: function(form) {
+	            var address1 = $("#address1").val(),
+	                address2 = $("#address2").val(),
+	                address3 = $("#address3").val(),
+	                phone_no = $("#phone_no").val(),
+	                city = $("#firm_city").val();
+	            state = $("#firm_state").val();
+	            country = $("#firm_country").val();
+	            zipcode = $("#firm_zipcode").val();
+	            fax = $("#fax").val();
+	            mobile_no = $("#firm_mobile").val();
+	            web_url = $("#web_url").val();
+	            social_url = $("#social_url").val();
+	            $.ajax({
+	                type: "POST",
+	                url: "/update-own-firm",
+	                data: {
+	                    address1: address1,
+	                    address2: address2,
+	                    address3: address3,
+	                    phone_no: phone_no,
+	                    city: city,
+	                    state: state,
+	                    country: country,
+	                    zipcode: zipcode,
+	                    fax: fax,
+	                    web_url: web_url,
+	                    social_url: social_url,
+	                    mobile: mobile_no
+	                },
+	                beforeSend: function(xhr) {
+	                    xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+	                    $("#btnUpdateFirm").prop('disabled', true);
+	                    $("#btnUpdateFirm").html("Loading...");
+	                },
+	                success: function(response) {
+	                    if (response.update_firm == true) {
+	                        $(`<div class="alert alert-success"><strong>Success! </strong>Firm Updated Successfully</div>`).insertBefore("#frmUpdateFirm");
+	                        setTimeout(function() {
+	                            window.location.href = "/firm-details";
+	                        }, 2000);
+	                    }
+						$("#btnUpdateFirm").prop('disabled', false);
+                        $("#btnUpdateFirm").html("Save &amp; Next");
+	                }
+	            });
+	        }
+	    });
+	});
+
+	/*==================================Update Firm Section (BASIC) =============================*/
+
+	$(document).ready(function(e) {
+	    $("#btnUpdateFirmDetails").click(function() {
+	        $("#frmUpdateFirmDetails").submit();
+	    });
+
+	    $("#frmUpdateFirmDetails").validate({
+	        ignore: [],
+	        rules: {
+	            firm_name: {
+	                required: true
+	            },
+	            firm_code: {
+	                required: true
+	            },
+	            firm_reg: {
+	                required: true
+	            },
+	            section: {
+	                required: true
+	            },
+	            practice_area: {
+	                required: true
+	            },
+	            firm_jurisdiction: {
+	                required: true
+	            }
+	        },
+	        messages: {
+	            firm_name: {
+	                required: "Firm name can't be blank"
+	            },
+	            firm_code: {
+	                required: "Firm code can't be blank"
+	            },
+	            firm_reg: {
+	                required: "Firm registration can't be blank"
+	            },
+	            section: {
+	                required: "Select atleast one section"
+	            },
+	            practice_area: {
+	                required: "Select atleast one practice area"
+	            },
+	            firm_jurisdiction: {
+	                required: "Select atleast one jurisdiction"
+	            }
+	        },
+	        submitHandler: function(form) {
+	            var section = $("#section").val(),
+	                practice_area = $("#practice_area").val(),
+	                jurisdiction = $("#firm_jurisdiction").val(),
+	                firm_name = $("#firm_name").val(),
+	                firm_code = $("#firm_code").val(),
+	                firm_reg = $("#firm_reg").val();
+	            $.ajax({
+	                type: "POST",
+	                url: "/update-own-firmDetails",
+	                data: {
+	                    firm_name: firm_name,
+	                    firm_code: firm_code,
+	                    firm_reg: firm_reg,
+	                    section: section,
+	                    practice_area: practice_area,
+	                    jurisdiction: jurisdiction
+	                },
+	                beforeSend: function(xhr) {
+	                    xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+	                    $("#btnUpdateFirmDetails").prop('disabled', true);
+	                    $("#btnUpdateFirmDetails").html("Loading...");
+	                },
+	                success: function(response) {
+	                    if (response.update_firm_details == true) {
+	                        $(`<div class="alert alert-success"><strong>Success! </strong>Firm Details Updated Successfully</div>`).insertBefore("#frmUpdateFirmDetails");
+	                        setTimeout(function() {
+	                            window.location.href = "/firm-details";
+	                        }, 2000);
+	                    }
+						$("#btnUpdateFirm").prop('disabled', false);
+                        $("#btnUpdateFirm").html("Save &amp; Next");
+	                }
+	            });
+	        }
+	    });
+	});
+
+/*==================================Update Firm Details (BASIC) =============================*/
+/*==================================Firm Approval Level Process =============================*/
+
+	$(document).ready(function(){
+		$("input[name='approval_level'").change(function () {
+			$.ajax({
+				type: "GET",
+				url: "/get-all-designation",
+				success: function (response) {
+					for (var i = 0; i < response.designations.length; i++) {
+						$("#level_1_designation").append('<option value="' + response.designations[i].id + '">' + response.designations[i].title + '</option>');
+						$("#level_1_designation option[value='74']").remove();
+					}
+				},
+				error: function (xhr) {
+
+				}
+			});
+		});
+		
+		var approvalLevel = $("#approval_level_firm").val();
+		var level_1 = $("#level_1").val();
+		var level_2 = $("#level_2").val();
+		var level_3 = $("#level_3").val();
+		var level_4 = $("#level_4").val();
+		$(".remove_level_1 option[value="+ level_2 +"]").remove();
+		$(".remove_level_1 option[value="+ level_3 +"]").remove();
+		$(".remove_level_1 option[value="+ level_4 +"]").remove();
+		$(".remove_level_2 option[value="+ level_1 +"]").remove();
+		$(".remove_level_2 option[value="+ level_3 +"]").remove();
+		$(".remove_level_2 option[value="+ level_4 +"]").remove();
+		$(".remove_level_3 option[value="+ level_1 +"]").remove();
+		$(".remove_level_3 option[value="+ level_2 +"]").remove();
+		$(".remove_level_3 option[value="+ level_4 +"]").remove();
+		$(".remove_level_4 option[value="+ level_1 +"]").remove();
+		$(".remove_level_4 option[value="+ level_2 +"]").remove();
+		$(".remove_level_4 option[value="+ level_3 +"]").remove();
+		if(approvalLevel == "2")
+		{
+			$('#level2Designation').show();
+			$('#level3Designation').hide();
+			$('#level4Designation').hide();
+		}
+		if(approvalLevel == "3")
+		{
+			$('#level2Designation').show();
+			$('#level3Designation').show();
+			$('#level4Designation').hide();
+		}
+		if(approvalLevel == "4")
+		{
+			$('#level2Designation').show();
+			$('#level3Designation').show();
+			$('#level4Designation').show();
+		}
+		if(approvalLevel == "1")
+		{
+			$('#level2Designation').hide();
+			$('#level3Designation').hide();
+			$('#level4Designation').hide();
+		}
+		$(document).on('click', '#level_2', function () {
+			$('#level_2_designation').children('option:not(:first)').remove();
+			$('#level_3_designation').children('option:not(:first)').remove();
+			$('#level_4_designation').children('option:not(:first)').remove();
+			$('#level_1_designation').children('option:not(:first)').remove();
+			$('#level2Designation').show();
+			$('#level3Designation').hide();
+			$('#level4Designation').hide();
+		});
+
+		$(document).on('click', '#level_3', function () {
+			$('#level_2_designation').children('option:not(:first)').remove();
+			$('#level_3_designation').children('option:not(:first)').remove();
+			$('#level_4_designation').children('option:not(:first)').remove();
+			$('#level_1_designation').children('option:not(:first)').remove();
+			$('#level2Designation').show();
+			$('#level3Designation').show();
+			$('#level4Designation').hide();
+		});
+
+		$(document).on('click', '#level_4', function () {
+			$('#level_2_designation').children('option:not(:first)').remove();
+			$('#level_3_designation').children('option:not(:first)').remove();
+			$('#level_4_designation').children('option:not(:first)').remove();
+			$('#level_1_designation').children('option:not(:first)').remove();
+			$('#level2Designation').show();
+			$('#level3Designation').show();
+			$('#level4Designation').show();
+		});
+
+		$(document).on('click', '#level_1', function () {
+			$('#level_2_designation').children('option:not(:first)').remove();
+			$('#level_3_designation').children('option:not(:first)').remove();
+			$('#level_4_designation').children('option:not(:first)').remove();
+			$('#level_1_designation').children('option:not(:first)').remove();
+			$('#level2Designation').hide();
+			$('#level3Designation').hide();
+			$('#level4Designation').hide();
+		});
+		$(".section_remove option[value='74']").remove();
+	});
+	$(document).on('change', '#level_1_designation', function (e) {
+		var level_1_desig = $('#level_1_designation').val();
+		$.ajax({
+			type: "GET",
+			url: "/get-level-2-designation",
+			success: function (response) {
+				$('#level_2_designation').children('option:not(:first)').remove();
+				for (var i = 0; i < response.designations.length; i++) {
+					$("#level_2_designation").append('<option value="' + response.designations[i].id + '">' + response.designations[i].title + '</option>');
+				}
+				$("#level_2_designation option[value=" + level_1_desig + "]").remove();
+			},
+			error: function (xhr) {
+
+			}
+		});
+	});
+
+	$(document).on('change', '#level_2_designation', function (e) {
+		var level_1_desig = $('#level_1_designation').val();
+		var level_2_desig = $('#level_2_designation').val();
+		$.ajax({
+			type: "GET",
+			url: "/get-level-2-designation",
+			success: function (response) {
+				$('#level_3_designation').children('option:not(:first)').remove();
+				for (var i = 0; i < response.designations.length; i++) {
+					$("#level_3_designation").append('<option value="' + response.designations[i].id + '">' + response.designations[i].title + '</option>');
+				}
+				$("#level_3_designation option[value=" + level_1_desig + "]").remove();
+				$("#level_3_designation option[value=" + level_2_desig + "]").remove();
+			},
+			error: function (xhr) {
+
+			}
+		});
+	});
+
+	$(document).on('change', '#level_3_designation', function (e) {
+		var level_1_desig = $('#level_1_designation').val();
+		var level_2_desig = $('#level_2_designation').val();
+		var level_3_desig = $('#level_3_designation').val();
+		$.ajax({
+			type: "GET",
+			url: "/get-level-2-designation",
+			success: function (response) {
+				$('#level_4_designation').children('option:not(:first)').remove();
+				for (var i = 0; i < response.designations.length; i++) {
+					$("#level_4_designation").append('<option value="' + response.designations[i].id + '">' + response.designations[i].title + '</option>');
+				}
+				$("#level_4_designation option[value=" + level_1_desig + "]").remove();
+				$("#level_4_designation option[value=" + level_2_desig + "]").remove();
+				$("#level_4_designation option[value=" + level_3_desig + "]").remove();
+			},
+			error: function (xhr) {
+
+			}
+		});
+	});
+
+	$(document).ready(function(){
+		$("#btnUpdateFirmApproval").click(function () {
+			$("#frmUpdateFirmApproval").submit();
+		});
+
+		$("#frmUpdateFirmApproval").validate({
+			rules: {
+				level_1_designation: {
+					required: true
+				},
+				level_2_designation: {
+					required: true
+				},
+				level_3_designation: {
+					required: true
+				},
+				level_4_designation: {
+					required: true
+				}
+			},
+			messages: {
+				level_1_designation: {
+					required: "Please select approver designation"
+				},
+				level_2_designation: {
+					required: "Please select approver designation"
+				},
+				level_3_designation: {
+					required: "Please select approver designation"
+				},
+				level_4_designation: {
+					required: "Please select approver designation"
+				}
+			}
+			,
+			submitHandler: function (form) {
+				var level_approval = $('input[name=approval_level]:checked').val();
+				var	approver_level_desig_1 = $("#level_1_designation").val();
+				var	approver_level_desig_2 = $("#level_2_designation").val();
+				var	approver_level_desig_3 = $("#level_3_designation").val();
+				var	approver_level_desig_4 = $("#level_4_designation").val();
+					
+				$.ajax({
+					type: "POST",
+					url: "/update-firm-approval-process",
+					data: {
+						level_approval: level_approval,
+						approver_level_desig_1: approver_level_desig_1 ? approver_level_desig_1 : 0,
+						approver_level_desig_2: approver_level_desig_2 ? approver_level_desig_2 : 0,
+						approver_level_desig_3: approver_level_desig_3 ? approver_level_desig_3 : 0,
+						approver_level_desig_4: approver_level_desig_4 ? approver_level_desig_4 : 0
+					},
+					beforeSend: function (xhr) {
+						xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+						$("#btnUpdateFirmApproval").prop('disabled', true);
+						$("#btnUpdateFirmApproval").html("Loading...");
+					},
+					success: function (response) {
+						if (response.update_firm_approval == true) {
+							$(`<div class="alert alert-success"><strong>Success! </strong>Firm Approval Process Updated Successfully</div>`).insertBefore("#frmUpdateFirmApproval");
+							setTimeout(function () {
+								window.location.href = "/firm-details";
+							}, 2000);
+						}
+						//$("#btnUpdateFirmApproval").prop('disabled', false);
+						//$("#btnUpdateFirmApproval").html("Save &amp; Next");
+					}
+				});
+			}
+		});
+	});
+
+/*==================================Firm Approval Level Process =============================*/
+</script>
+{{/content}}

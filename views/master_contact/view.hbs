@@ -1,0 +1,603 @@
+{{#content "style" mode="prepend"}}
+<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
+<div class="page-wrapper">
+	<div class="content container-fluid">
+		<div class="row">
+			{{#if error_message}}
+			<div class="alert alert-danger">
+				<strong>Error! </strong>{{error_message}}
+			</div>
+			{{/if}}
+			<div class="col-sm-8">
+				<h4 class="page-title"> View Master Contact </h4>
+			</div>
+
+			<div class="col-sm-4">
+				<div class="text-right">
+					<a href="/master_contact/edit/{{contact.id}}" class="btn btn-primary pull-right rounded">
+						<i class="fa fa-pencil"></i> Edit MasterContact</a>
+
+					<a href="/master_contact" class="btn btn-primary pull-right rounded m-r-5">
+						<i class="fa fa-arrow-left"></i>Back</a>
+				</div>
+			</div>
+
+		</div>
+		<form id="contactform" method="POST" action="/master_contact/edit/{{contact.id}}">
+			<input type="hidden" name="_csrf" value="{{csrfToken}}">
+			<input type="hidden" value="{{contact.id}}" id="id" />
+			<input type="hidden" value="{{contact.master_contact_type}}" id="_masyterContact"/>
+
+			<div class="form-inline m-b-15">
+				<div class="form-group m-r-5">
+					<label class="input-group">
+						<span class="input-group-addon">
+							<input type="radio" id="individual_client" name="masterContact_type" value="I" {{#if_eq contact.master_contact_type "I"}}
+							 checked {{/if_eq}} disabled/>
+						</span>
+						<div class="form-control form-control-static">Individual</div>
+						<span class="glyphicon form-control-feedback "></span>
+					</label>
+				</div>
+				<div class="form-group ">
+					<label class="input-group">
+						<span class="input-group-addon">
+							<input type="radio" id="organization_client" name="masterContact_type" value="O" {{#if_eq contact.master_contact_type "O"}}
+							 checked {{/if_eq}} disabled />
+						</span>
+						<div class="form-control form-control-static">Organization</div>
+						<span class="glyphicon form-control-feedback "></span>
+					</label>
+				</div>
+			</div>
+
+			<div class="card-box">
+				<h3 class="card-title">Basic Informations</h3>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="row">
+
+							<div id="org_type" style="display:none;">
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Organisation Name
+											<span class="req-lbl">*</span>
+										</label>
+										<input type="text" class="form-control floating" id="org_name" name="org_name" value="{{contact.organization_name}}" disabled/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Organisation Code
+											<span class="req-lbl">*</span>
+										</label>
+										<input type="text" class="form-control floating" id="org_code" name="org_code" value={{contact.organization_code}} disabled/>
+									</div>
+								</div>
+							</div>
+
+							<div id="indivisual_type">
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">First Name</label>
+										<input type="text" class="form-control floating" id="first_name" name="first_name" value="{{contact.first_name}}" disabled="disabled"
+										/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Last Name</label>
+										<input type="text" class="form-control floating" id="last_name" name="last_name" value="{{contact.last_name}}" disabled="disabled"
+										/>
+									</div>
+								</div>
+								
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Master Contact Code </label>
+										<input type="text" class="form-control floating" id="master_contact_code" name="master_contact_code" value="{{contact.master_contact_code}}"
+										 disabled="disabled" />
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Estimated annual revenue
+											<span class="req-lbl">*</span>
+										</label>
+										<input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue" value="{{contact.estimated_revenue}}"
+										 disabled>
+									</div>
+								</div>
+
+								
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Closing Date<span class="req-lbl">*</span> </label>
+										<div class="cal-icon">
+											<input class="form-control floating datetimepicker" type="text" id="revenueclosingDate" name="revenueclosingDate" value="{{dateFormat contact.revenueclosingDate "DD-MM-YYYY"}}" disabled>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group form-focus select-focus">
+										<label class="control-label">Gender</label>
+										<select class="select form-control floating" id="gender" name="gender" disabled="disabled">
+											<option value="">Select Gender</option>
+											<option value="M" {{#if_eq contact.gender "M"}} selected {{/if_eq}}>Male</option>
+											<option value="F" {{#if_eq contact.gender "F"}} selected {{/if_eq}}>Female</option>
+											<option value="O" {{#if_eq contact.gender "O"}} selected {{/if_eq}}>Others</option>
+
+										</select>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Email Id</label>
+									<input type="text" class="form-control floating" id="email" name="email" value="{{contact.email}}" disabled="disabled" />
+									<span id="uniqueEmail" style="color: red"></span>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Phone No.</label>
+									<input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" value="{{contact.phone_no}}"
+									 disabled="disabled" />
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus select-focus">
+									<label class="control-label">Fax</label>
+									<input type="text" class="form-control floating number_validator" id="fax" name="fax" value="{{contact.fax}}" disabled="disabled"
+									/>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus select-focus">
+									<label class="control-label">Mobile No.</label>
+									<input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" value="{{contact.mobile_no}}"
+									 disabled="disabled" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card-box">
+				<h3 class="card-title">Address</h3>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group form-focus">
+							<label class="control-label">Address Line 1</label>
+							<input type="text" class="form-control floating" id="address1" name="address1" value="{{contact.address1}}" disabled="disabled"
+							/>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group form-focus">
+							<label class="control-label">Address Line 2</label>
+							<input type="text" class="form-control floating" id="address2" name="address2" value="{{contact.address2}}" disabled="disabled"
+							/>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group form-focus">
+							<label class="control-label">Address Line 3</label>
+							<input type="text" class="form-control floating" id="address3" name="address3" value="{{contact.address3}}" disabled="disabled"
+							/>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus select-focus">
+							<label class="control-label">Country</label>
+							<select id="country" name="country" class="select form-control floating" disabled="disabled">
+								{{#each country}}
+								<option value="{{this.id}}">{{this.name}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus select-focus">
+							<label class="control-label">State</label>
+							<select id="state" name="state" class="select form-control floating" disabled="disabled">
+								<option value="">Select State</option>
+								{{#each state}}
+								<option value="{{this.id}}" {{#if_eq this.id ../contact.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus select-focus">
+							<label class="control-label">City</label>
+							<select id="city" name="city" class="select form-control floating" disabled="disabled">
+								<option value="">Select City</option>
+								{{#each city}}
+								<option value="{{this.id}}" {{#if_eq this.id ../contact.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus select-focus">
+							<label class=" control-label">Zipcode Code</label>
+							<select id="zipcode" name="zipcode" class="select form-control floating" disabled="disabled">
+								<option value="">Select Zipcode</option>
+								{{#each zipcode}}
+								<option value="{{this.id}}" {{#if_eq this.id ../contact.zip_code}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group form-focus">
+							<label class="control-label">Address Remarks</label>
+							<textarea class="form-control floating" id="address_remarks" name="address_remarks" rows="5" disabled="disabled">{{contact.address_remarks}}</textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card-box">
+				<h3 class="card-title">Attorney Information</h3>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group form-focus select-focus">
+							<label class="control-label">Attorney
+								<span class="req-lbl">*</span>
+							</label>
+							<select id="designation" name="attorney_id" class="select form-control floating" disabled>
+								{{#if_eq user.role_id "3"}}
+								<option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
+								{{else}}
+								<option value="">Select Attorney</option>
+								{{#each attorney}}
+								<option value="{{this.id}}-{{../contact.attorney_id}}" {{#if_eq this.id ../contact.attorney_id}} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+								{{/each}} {{/if_eq}}
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card-box" id="m_s_contactInformation" style="display:none;">
+				<h3 class="card-title">Contact Information</h3>
+				<div id="masterContactPlus" >
+				{{#each contactDetails}}
+					<div class="contact-information contactDetailsRemove" >
+						<div class="contact-margin">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">First Name
+											<span class="req-lbl">*</span>
+
+										</label>
+										<input type="text" class="form-control floating" id="contactDetailsFirstName" name="contactDetailsFirstName[]" value="{{this.first_name}}" disabled/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Last Name</label>
+										<input type="text" class="form-control floating" id="contactDetailsSecondName" name="contactDetailsSecondName[]" value="{{this.last_name}}" disabled/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus select-focus">
+										<label class="control-label">Gender
+											<span class="req-lbl">*</span>
+
+										</label>
+										<select class="select form-control floating" id="contactDetailsGender" name="contactDetailsGender[]" disabled>
+											<option value="">Select Gender</option>
+											<option value="M" {{#if_eq this.gender "M"}} selected {{/if_eq}}>Male</option>
+											<option value="F"{{#if_eq this.gender "F"}} selected {{/if_eq}} >Female</option>
+											<option value="O" {{#if_eq this.gender "O"}} selected {{/if_eq}} >Others</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Email Id
+											<span class="req-lbl">*</span>
+
+										</label>
+										<input type="text" class="form-control floating" id="contactDetailsEmail" name="contactDetailsEmail[]" value="{{this.email}}" disabled/>
+										<span id="uniqueEmail" style="color: red"></span>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Phone No.
+											<span class="req-lbl">*</span>
+
+										</label>
+										<input type="text" class="form-control floating number_validator" id="contactDetailsPhone_no" name="contactDetailsPhone_no[]"
+										maxlength="50" value={{this.phone_no}} disabled/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Fax</label>
+										<input type="text" class="form-control floating number_validator" id="contactDetailsFax" name="contactDetailsFax[]" maxlength="50" value="{{this.fax}}"
+										disabled/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group form-focus">
+										<label class="control-label">Mobile No.
+											<span class="req-lbl">*</span>
+										</label>
+										<input type="text" class="form-control floating number_validator" id="contactDetailsMobile_no" name="contactDetailsMobile_no[]"
+										maxlength="50" value="{{this.mobile_no}}" disabled/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				{{/each}}
+				</div>
+			</div>
+
+			<div class="card-box">
+				<h3 class="card-title">Other Informations</h3>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Master Contact Company
+								<span class="req-lbl">*</span>
+							</label>
+							<input type="text" class="form-control floating" id="master_contact_comp" name="master_contact_comp" value="{{contact.company_name}}"
+							 disabled="disabled" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Website URL </label>
+							<input type="text" class="form-control floating url_selector" id="website_url" name="website_url" value="{{contact.website_url}}"
+							 disabled="disabled" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Social URL </label>
+							<input type="text" class="form-control floating url_selector" id="social_url" name="social_url" value="{{contact.social_url}}"
+							 disabled="disabled" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">IM</label>
+							<input type="text" class="form-control floating" id="im" name="im" value="{{contact.im}}" disabled="disabled" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Social Security No</label>
+							<input type="text" class="form-control floating number_validator" id="social_sec_no" name="social_sec_no" value="{{contact.social_security_no}}"
+							 disabled="disabled" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Twitter URL</label>
+							<input type="text" class="form-control floating url_selector" id="twitter" name="twitter" value="{{contact.twitter}}" disabled="disabled"
+							/>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Linkedin URL</label>
+							<input type="text" class="form-control floating url_selector" id="linkedin" name="linkedin" value="{{contact.linkedin}}"
+							 disabled="disabled" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Facebook URL</label>
+							<input type="text" class="form-control floating url_selector" id="facebook_url" name="facebook_url" value="{{contact.facebook}}"
+							 disabled="disabled" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Google URL</label>
+							<input type="text" class="form-control floating url_selector" id="google" name="google" value="{{contact.google}}" disabled="disabled"
+							/>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Youtube URL</label>
+							<input type="text" class="form-control floating url_selector" id="youtube" name="youtube" value="{{contact.youtube}}" disabled="disabled"
+							/>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus select-focus">
+							<label class="control-label">Status</label>
+							<select id="status" name="status" class="select form-control floating" disabled="disabled">
+								<option value="NEW TARGET" {{#if_eq contact.status "NEW TARGET"}} selected="selected" {{/if_eq}}>NEW TARGET</option>
+								<option value="CONVERTED" {{#if_eq contact.status "CONVERTED"}} selected="selected" {{/if_eq}}>CONVERTED TO CLIENT</option>
+								<option value="TS-INTERIM" {{#if_eq contact.status "TS-INTERIM"}} selected="selected" {{/if_eq}}>INTERIM - REVIEW IN-PROGRESS</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus select-focus">
+							<label class="control-label">Industry Type</label>
+							<select id="industry_type" name="industry_type" class="select form-control floating" disabled="disabled">
+								<option value="">Select Industry Type</option>
+								{{#each industry_types}}
+								<option value="{{this.id}}" {{#if_eq this.id ../contact.industry_type}} selected="selected" {{/if_eq}}>{{this.industry_name}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group form-focus">
+							<label class="control-label">Remarks </label>
+							<textarea class="form-control floating" id="remarks" name="remarks" rows="5" disabled="disabled">{{contact.remarks}}</textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+{{#content "script" mode="append"}}
+<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="/assets/js/select2.min.js"></script>
+<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function (e) {
+
+		$("#estimated_revenue").inputmask("numeric", {
+			radixPoint: ".",
+			groupSeparator: ",",
+			digits: 2,
+			autoGroup: true,
+			prefix: '$ ',
+			rightAlign: false
+		});
+
+		//hide show type
+		let _msType = $('#_masyterContact').val();
+		if (_msType==='O') {
+			$('#org_type').show();
+			$('#indivisual_type').hide();
+			$('#m_s_contactInformation').show();
+		} else {
+			$('#org_type').hide();
+			$('#indivisual_type').show();
+			$('#m_s_contactInformation').hide();
+		}
+
+		$("#contactform").validate({
+			rules: {
+				first_name: {
+					required: true
+				},
+				last_name: {
+					required: true
+				},
+				email: {
+					required: true,
+					email: true
+				},
+				phone_no: {
+					required: true
+				},
+				mobile_no: {
+					required: true
+				},
+				master_contact_id: {
+					required: true
+				},
+				master_contact_code: {
+					required: true
+				},
+				master_contact_desg: {
+					required: true
+				},
+				master_contact_comp: {
+					required: true
+				},
+				dob: {
+					required: true
+				},
+				gender: {
+					required: true
+				},
+				address1: {
+					required: true
+				},
+				country: {
+					required: true
+				},
+				state: {
+					required: true
+				},
+				city: {
+					required: true
+				},
+				zipcode: {
+					required: true
+				},
+				status: {
+					required: true
+				},
+				industry_type: {
+					required: true
+				}
+			},
+			messages: {
+				first_name: {
+					required: "First name can't be blank"
+				},
+				last_name: {
+					required: "Last name can't be blank"
+				},
+				email: {
+					required: "Email id can't be blank",
+					email: "Enter valid email id"
+				},
+				phone_no: {
+					required: "Phone number can't blank"
+				},
+				mobile_no: {
+					required: "Mobile number can't blank"
+				},
+				master_contact_id: {
+					required: "Master Contact ID can't be blank"
+				},
+				master_contact_code: {
+					required: "Master Contact Code can't be blank"
+				},
+				master_contact_desg: {
+					required: "Master Contact Designation can't be blank"
+				},
+				master_contact_comp: {
+					required: "Master Contact Company can't be blank"
+				},
+				dob: {
+					required: "Must select date of birth"
+				},
+				gender: {
+					required: "Must select gender"
+				},
+				address1: {
+					required: "Must provide address"
+				},
+				country: {
+					required: "Choose your country"
+				},
+				state: {
+					required: "Choose your state"
+				},
+				city: {
+					required: "Choose your city"
+				},
+				zipcode: {
+					required: "Choose your zipcode"
+				},
+				status: {
+					required: "Choose master contact status"
+				},
+				industry_type: {
+					required: "Choose industry type"
+				}
+			}
+		});
+	});
+</script> {{/content}}

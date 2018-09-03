@@ -1,0 +1,744 @@
+{{#content "style" mode="prepend"}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-sweetalert/sweet-alert.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" /> {{/content}}
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="row">
+            {{#if err_message}}
+            <div class="alert alert-danger">
+                <strong>Error! </strong>{{err_message}}
+            </div>
+            {{/if}}
+            <div class="col-sm-8">
+                <h4 class="page-title">Add Attorney</h4>
+            </div>
+        </div>
+
+        <form id="addattorneyform" method="POST" action="/attorneys/add">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            <div class="card-box">
+                <h3 class="card-title">User credentials</h3>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group form-focus">
+                                    <label class="control-label">Email
+                                        <span class="req-lbl">*</span>
+
+                                    </label>
+                                    <input type="text" class="form-control floating" id="mail" name="mail" />
+                                    <span id="uniqueEmail" style="color: red; font-weight:bolder"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-focus">
+                                    <label class="control-label">Password
+                                        <span class="req-lbl">*</span>
+
+                                    </label>
+                                    <input type="password" class="form-control floating" id="pass" name="pass" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-focus">
+                                    <input type="checkbox" name="approver" id="approver" value="1"> Approver
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group form-focus select-focus select-attorney">
+                                    <label class="control-label">Group
+                                        <span class="req-lbl">*</span>
+                                    </label>
+
+                                    <select id="group" name="group" class="form-control floating ">
+                                        <option value="">Select Group</option>
+                                        {{#each group}}
+                                        <option value="{{this.id}}">{{this.name}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group form-focus select-focus select-attorney">
+                                    <label class="control-label">Section
+                                        <span class="req-lbl">*</span>
+
+                                    </label>
+                                    <select id="section" name="section" class="form-control floating ">
+                                        <option value="">Select Section</option>
+                                        {{#each section}}
+                                        <option value="{{this.section.id}}">{{this.section.name}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-focus select-focus select-attorney">
+                                    <label class="control-label">Designation
+                                        <span class="req-lbl">*</span>
+
+                                    </label>
+                                    <select id="designation" name="designation" class=" form-control floating ">
+                                        <option value="">Select Designation</option>
+                                        {{#each designation}}
+                                        <option value="{{this.id}}">{{this.title}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-box">
+                <h3 class="card-title">General Information</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group form-focus">
+                            <label class="control-label">First Name
+                                <span class="req-lbl">*</span>
+                            </label>
+                            <input type="text" class="form-control floating" id="first_name" name="first_name" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-focus">
+                            <label class="control-label">Last Name
+                                <span class="req-lbl">*</span>
+                            </label>
+                            <input type="text" class="form-control floating" id="last_name" name="last_name" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-focus">
+                            <div class="cal-icon">
+                                <label class="control-label">Birth Date</label>
+                                <input class="form-control floating datetimepicker" type="text" id="dob" name="dob">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-focus select-focus select-attorney">
+                            <label class="control-label">Gender</label>
+                            <select class="form-control floating " id="gender" name="gender">
+                                <option value="">Select Gender</option>
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>
+                                <option value="O">Others</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-focus">
+                            <label class="control-label">Attorney ID</label>
+                            <input type="text" class="form-control floating" id="attorney_id" name="attorney_id" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-focus">
+                            <label class="control-label">Attorney Code</label>
+                            <input type="text" class="form-control floating" id="attorney_code" name="attorney_code" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group form-focus select-focus select-attorney">
+                            <label class="control-label">Attorney Type</label>
+                            <select class="form-control floating " id="attorney_type" name="attorney_type">
+                                <option value="">Select Attorney Type</option>
+                                <option value="AT-APPROVED">APPROVED ATTORNEY</option>
+                                <option value="PENDING">ATTORNEY TO BE ASSIGNED</option>
+                                <option value="AT-INTERIM">INTERIM ATTORNEY</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-focus">
+                            <label class="control-label">Mobile No</label>
+                            <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-box">
+                <h3 class="card-title">Education Information</h3>
+                <div class="row" id="educationRow">
+                    <div class="col-md-4">
+                        <div class="form-group form-focus">
+                            <label class="control-label">Degree Type</label>
+                            <input type="text" class="form-control floating" id="degree" name="degree[]" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group form-focus">
+                            <label class="control-label">University</label>
+                            <input type="text" class="form-control floating" id="university" name="university[]" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group form-focus">
+                            <label class="control-label">Year</label>
+                            <input type="text" class="form-control floating" id="year" name="year[]" onkeypress="return isNumber(event)" maxlength="4"
+                                title="Only numbers are allowed" />
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn btn-primary btn-lg" type="button" id="addEducationBtn" title="Add Education"><i
+                                class="fa fa-plus"></i></button>
+                    </div>
+                    <div class="educationAddDiv hide">
+                        <div class="control-group">
+                            <div class="col-md-4">
+                                <div class="form-group form-focus">
+                                    <label class="control-label">Degree Type</label>
+                                    <input type="text" class="form-control floating" name="degree[]" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group form-focus">
+                                    <label class="control-label">University</label>
+                                    <input type="text" class="form-control floating" name="university[]" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group form-focus">
+                                    <label class="control-label">Year</label>
+                                    <input type="text" class="form-control floating" id="year" name="year[]" onkeypress="return isNumber(event)" maxlength="4"
+                                        title="Only numbers are allowed" />
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <button class="btn btn-primary btn-lg removeEducationBtn" type="button" title="Remove">
+                                    <i class="fa fa-close"></i> </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-box">
+                <h3 class="card-title">Employment Information</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group form-focus">
+                            <label class="control-label">Bar Registration</label>
+                            <input type="text" class="form-control floating" id="bar_registration" name="bar_registration" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-focus select-focus select-attorney">
+                            <label class="control-label">Job Type</label>
+                            <select class="form-control floating " id="job_type" name="job_type">
+                                <option value="">Select Job Type</option>
+                                <option value="FULLTIME">FULLTIME</option>
+                                <option value="STERMCON">SHORT TERM CONTRACT</option>
+                                <option value="TEMP">TEMPORARY</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-focus">
+                            <label class="control-label">Bar Practice Date</label>
+                            <div class="cal-icon">
+                                <input class="form-control floating datetimepicker" type="text" id="bar_practice_date" name="bar_practice_date">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-focus">
+                            <label class="control-label">Firm Join Date</label>
+                            <div class="cal-icon">
+                                <input class="form-control floating datetimepicker" type="text" id="firm_join_date" name="firm_join_date">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group form-focus">
+                            <label class="control-label">HourlyCost in Dollars $</label>
+                            <input type="text" class="form-control floating" id="hourly_cost" name="hourly_cost" />
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-focus">
+                            <label class="control-label">Benefit Factor %</label>
+                            <input type="text" class="form-control floating" id="benefit_factor" name="benefit_factor" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group form-focus">
+                            <label class="control-label">Overhead Amount in Dollars $</label>
+                            <input type="text" class="form-control floating" id="overhead_amount" name="overhead_amount" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group form-focus">
+                            <label class="control-label">Billing Opp Cost in Dollars $</label>
+                            <input type="text" class="form-control floating" id="billing_opp_cost" name="billing_opp_cost" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group form-focus select-focus ">
+                            <div class="">
+                                <select class="form-control floating" id="jurisdiction" name="jurisdiction" multiple="multiple">
+                                    {{#each allJurisdiction}}
+                                    <option value="{{this.jurisdiction.id}}">{{this.jurisdiction.name}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group form-focus select-focus ">
+                            <div class="">
+                                <select class="form-control floating" id="practice_area" name="practice_area" multiple="multiple">
+                                    {{#each allPracticeArea}}
+                                    <option value="{{this.practicearea.id}}">{{this.practicearea.name}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="card-box">
+                <h3 class="card-title">Address Details</h3>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group form-focus">
+                            <label class="control-label">Address Line 1
+                                <span class="req-lbl">*</span>
+
+                            </label>
+                            <input type="text" class="form-control floating" id="address" name="address" />
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group form-focus">
+                            <label class="control-label">Address Line 2</label>
+                            <input type="text" class="form-control floating" id="address2" name="address2" />
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group form-focus">
+                            <label class="control-label">Address Line 3</label>
+                            <input type="text" class="form-control floating" id="address3" name="address3" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group form-focus select-focus">
+                            <label class="control-label">Country
+                                <span class="req-lbl">*</span>
+
+                            </label>
+                            <select id="country" name="country" class="form-control floating">
+                                <option value="">Select Country</option>
+                                {{#each country}}
+                                <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-focus select-focus">
+                            <label class="control-label">State
+                                <span class="req-lbl">*</span>
+
+                            </label>
+                            <select id="state" name="state" class="form-control floating">
+                                <option value="">Select State</option>
+                                {{#each state}}
+                                <option value="{{this.id}}">{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-focus select-focus">
+                            <label class="control-label">City
+                                <span class="req-lbl">*</span>
+
+                            </label>
+                            <select id="city" name="city" class="form-control floating">
+                                <option value="">Select City</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-focus select-focus">
+                            <label class="control-label">Zipcode
+                                <span class="req-lbl">*</span>
+
+                            </label>
+                            <select id="zipcode" name="zipcode" class="form-control floating">
+                                <option value="">Select Zipcode</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-focus">
+                            <label class="control-label">Phone No</label>
+                            <input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-focus">
+                            <label class="control-label">Fax</label>
+                            <input type="text" class="form-control floating number_validator" id="fax" name="fax" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-focus">
+                            <label class="control-label">Website URL</label>
+                            <input type="text" class="form-control floating url_selector" id="website_url" name="website_url" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-focus">
+                            <label class="control-label">Social URL</label>
+                            <input type="text" class="form-control floating url_selector" id="social_url" name="social_url" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-box">
+                <h3 class="card-title">Remarks</h3>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group form-focus">
+                            <label class="control-label">Remarks </label>
+                            <textarea class="form-control floating" id="remarks" name="remarks"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center m-t-20">
+                <button class="btn btn-primary btn-lg" type="submit" id="btnAdd">Add Attorney</button>
+                <a href="/attorneys" class="btn btn-primary btn-lg m-l-10">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{{#content "script" mode="append"}}
+<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="/assets/js/select2.min.js"></script>
+<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="/assets/plugins/bootstrap-sweetalert/sweet-alert.min.js"></script>
+<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+
+<script type="text/javascript">
+    $("#addattorneyform").validate({
+        rules: {
+            mail: {
+                required: true,
+                email: true
+            },
+            pass: {
+                required: true
+            },
+            jurisdiction: {
+                required: true
+            },
+            practice_area: {
+                required: true
+            },
+            group: {
+                required: true
+            },
+            section: {
+                required: true
+            },
+            designation: {
+                required: true
+            },
+            first_name: {
+                required: true
+            },
+            zipcode: {
+                required: true
+            },
+            last_name: {
+                required: true
+            },
+
+            address: {
+                required: true
+            },
+
+            state: {
+                required: true
+            },
+            city: {
+                required: true
+            }
+
+        },
+        messages: {
+            mail: {
+                required: "Email Id can't be blank"
+            },
+            pass: {
+                required: "Password can't be blank"
+            },
+            jurisdiction: {
+                required: "jurisdiction can't be blank"
+            },
+            practice_area: {
+                required: "Practice area can't be blank"
+            },
+
+            group: {
+                required: "group  can't be blank"
+            },
+            section: {
+                required: "section  can't be blank"
+            },
+            designation: {
+                required: "designation can't be blank"
+            },
+            first_name: {
+                required: "first_name can't be blank"
+            },
+            last_name: {
+                required: "last_name can't be blank"
+            },
+
+            address: {
+                required: "address  can't be blank"
+            },
+            country: {
+                required: "country  can't be blank"
+            },
+            state: {
+                required: "state  can't be blank"
+            },
+            zipcode: {
+                required: "zipcode can't be blank"
+            },
+            city: {
+                required: "city can't be blank"
+            }
+        }
+    });
+    $('#practice_area').multiselect({
+        nonSelectedText: 'Select Practice Area',
+        enableFiltering: true,
+        includeSelectAllOption: true,
+        buttonWidth: '100%',
+        maxHeight: 400,
+        dropDown: true
+    });
+    $('#jurisdiction').multiselect({
+        nonSelectedText: 'Select Jurisdiction',
+        enableFiltering: true,
+        includeSelectAllOption: true,
+        buttonWidth: '100%',
+        maxHeight: 400,
+        dropDown: true
+    });
+    // add designation ajax and form validation starts
+    $(document).on('click', "#addEducationBtn", function (e) {
+        $("#educationRow").append($(".educationAddDiv").html());
+    });
+    $(document).on('click', ".removeEducationBtn", function (e) {
+        $(this).parents(".control-group").remove();
+    });
+    $(document).ready(function (e) {
+        $(document).on('change', "#designation", function (e) {
+            var designation_id = $(this).val();
+            var section_id = $("#section").val();
+            if (section_id == "" && designation_id == 74) {
+                swal("", "Please select section", "warning");
+                $("#designation").val('').attr("selected", true);
+            }
+            else if (designation_id == 70) {
+                $.ajax({
+                    type: "POST",
+                    url: "/get-firm-user-designation",
+                    data: {
+                        designation_id: designation_id
+                    },
+                    success: function (response) {
+                        if (response.success == false) {
+                            swal("", "A firm cannot have more than one managing partner", "warning");
+                            $("#designation").val('').attr("selected", true);
+
+                        }
+                    },
+                    error: function (xhr) {
+
+                    }
+                });
+            }
+            else if (section_id != "" && designation_id == 74) {
+                $.ajax({
+                    type: "POST",
+                    url: "/get-section-user-designation",
+                    data: {
+                        section_id: section_id,
+                        designation_id: designation_id
+                    },
+                    success: function (response) {
+                        if (response.success == false) {
+                            swal("", "This section already has a section head.", "warning");
+                            $("#designation").val('').attr("selected", true);
+
+                        }
+                    },
+                    error: function (xhr) {
+
+                    }
+                });
+            }
+        });
+        $(document).on('click', "#approver", function (e) {
+            if ($(this).is(":checked")) {
+                $("#designation option").not(':first').remove();
+                $.ajax({
+                    type: "GET",
+                    url: "/get-approval-designation",
+                    success: function (response) {
+                        for (var i = 0; i < response.designations.length; i++) {
+                            $("#designation").append('<option value="' + response.designations[i].id + '">' + response.designations[i].title + '</option>');
+                        }
+                    },
+                    error: function (xhr) {
+
+                    }
+                });
+            }
+            else {
+                $("#designation option").not(':first').remove();
+                $.ajax({
+                    type: "GET",
+                    url: "/get-all-designation",
+                    success: function (response) {
+                        for (var i = 0; i < response.designations.length; i++) {
+                            $("#designation").append('<option value="' + response.designations[i].id + '">' + response.designations[i].title + '</option>');
+                        }
+                    },
+                    error: function (xhr) {
+
+                    }
+                });
+            }
+        });
+
+    });
+</script>
+
+<script>
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+    $(document).ready(function () {
+        $("#hourly_cost").inputmask("numeric", {
+            radixPoint: ".",
+            groupSeparator: ",",
+            digits: 2,
+            autoGroup: true,
+            prefix: '$ ',
+            rightAlign: false
+        });
+        $("#overhead_amount").inputmask("numeric", {
+            radixPoint: ".",
+            groupSeparator: ",",
+            digits: 2,
+            autoGroup: true,
+            prefix: '$ ',
+            rightAlign: false
+        });
+        $("#billing_opp_cost").inputmask("numeric", {
+            radixPoint: ".",
+            groupSeparator: ",",
+            digits: 2,
+            autoGroup: true,
+            prefix: '$ ',
+            rightAlign: false
+        });
+
+
+        $("#benefit_factor").inputmask("numeric", {
+            radixPoint: ".",
+            groupSeparator: ",",
+            digits: 2,
+            autoGroup: true,
+            suffix: '% ',
+            rightAlign: false
+        });
+        $("#mail").keyup(function () {
+            $("div").remove(".validation");
+
+        });
+    });
+
+    /* ================================ Duplicate email checking ajax call ========================*/
+    function validateEmail(email) {
+        var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        if (filter.test(email)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    $(document).on('change', "#mail", function (e) {
+        var email = $(this).val();
+        $("div").remove(".validation");
+        if (email !== '') {
+            $.ajax({
+                type: "POST",
+                url: "/get-duplicate-email-block",
+                data: {
+                    email: email
+                },
+                success: function (response) {
+                    if (response.success == true) {
+                        $("#mail").parent().append("<div class='validation' style='color:red;margin-bottom: 20px;'><i class='fa fa-close iconDuplicateEmail'></i><b> Email Id already exists</b></div>");
+                    }
+                    else {
+                        if (validateEmail(email)) {
+                            $("#mail").parent().append("<div class='validation' style='color:green;margin-bottom: 20px;'><i class='fa fa-check iconDuplicateEmail' style='background-color:#c2f7c6 !important;''></i></div>");
+                        }
+                        else {
+                            $("#mail").parent().append("<div class='validation' style='color:red;margin-bottom: 20px;'><i class='fa fa-close iconDuplicateEmail'></i></div>");
+
+                        }
+                    }
+                },
+                error: function (xhr) {
+                }
+            });
+        }
+    });
+/* ================================ Duplicate email checking ajax call ========================*/
+</script> {{/content}}

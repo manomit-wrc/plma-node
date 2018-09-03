@@ -1,0 +1,398 @@
+{{#content "style" mode="prepend"}}
+<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="pg-header">
+            <div class="row">
+                {{#if success_message}}
+                    <div class="alert alert-success">
+                        <strong>Success! </strong>{{success_message}}
+                    </div>
+                {{/if}}
+                <div class="col-xs-4">
+                    <h4 class="page-title">Industry Type</h4>
+                </div>
+                <div class="col-xs-8 text-right">
+                    <a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_user">
+                        <i class="fa fa-plus"></i> Add Industry Type</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped custom-table datatable industry">
+                        <thead>
+                            <tr>
+                                <th>SL#</th>
+                                <th style="width:30%;">Industry Type Name</th>
+                                <th>Remarks</th>
+                                <th>Created Date &amp; Time</th>
+                                <th class="text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each industry}}
+                            <tr>
+                                <td>{{math @index "+" 1}}</td>
+                                <td><a href="#" data-toggle="modal" data-target="#view_users" data-industry-id="{{this.id}}"
+                                                  data-code="{{this.code}}" data-name="{{this.industry_name}}" data-remarks="{{this.remarks}}"
+                                                  id="view-industry">{{this.industry_name}}</a></td>
+                                <td>{{this.remarks}}</td>
+                                <td>{{dateFormat this.createdAt "DD-MM-YYYY, hh:mm a"}}</td>
+                                <td class="text-right">
+                                  <a href="#" data-toggle="modal" data-target="#view_users" data-industry-id="{{this.id}}"
+                                                  data-code="{{this.code}}" data-name="{{this.industry_name}}" data-remarks="{{this.remarks}}"
+                                                  id="view-industry" class="btn btn-success btn-sm"><i class="fa fa-eye m-r-5"></i></a>
+
+
+
+                                    <a href="#" data-toggle="modal" data-target="#edit_users" data-industry-id="{{this.id}}"
+                                                    data-code="{{this.code}}" data-name="{{this.industry_name}}" data-remarks="{{this.remarks}}"
+                                                    id="edit-industry" class="btn btn-success btn-sm">
+                                                    <i class="fa fa-pencil m-r-5"></i></a>
+                                    <a href="#" data-toggle="modal" data-target="#delete_users" data-industry-id="{{this.id}}"
+                                                    id="delete-industry" class="btn btn-danger btn-sm">
+                                                    <i class="fa fa-trash-o m-r-5"></i></a>
+
+
+
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="add_user" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Industry Type</h4>
+            </div>
+            <div class="modal-body">
+                <form class="m-b-30" name="addIndustry" id="addIndustry" method="POST">
+                    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Industry Type Name
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input class="form-control" type="text" id="name" name="name">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Remarks
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <textarea class="form-control" id="remarks" name="remarks" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m-t-20 text-center">
+                        <button class="btn btn-primary" type="button" id="btnAddIndustry">Create Industry Type</button>
+                        <a href="/industry" class="btn btn-primary m-l-10">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="view_user" class="modal custom-modal fade industry-modal1" role="dialog">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">View Industry Type</h4>
+            </div>
+            <div class="modal-body">
+                <form class="m-b-30">
+                    <div class="row">
+                        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Industry Type Name
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input disabled class="form-control floating" type="text" id="view_name" name="view_name">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Remarks
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <textarea disabled class="form-control floating" id="view_remarks" name="view_remarks" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div id="edit_user" class="modal custom-modal fade industry-modal" role="dialog">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Industry Type</h4>
+            </div>
+            <div class="modal-body">
+                <form class="m-b-30" name="edit_industry" id="edit_industry" method="post">
+                    <div class="row">
+                        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Industry Type Name
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input class="form-control" type="text" id="edit_name" name="edit_name">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Remarks
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <textarea class="form-control" id="edit_remarks" name="edit_remarks" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-t-20 text-center">
+                        <button class="btn btn-primary" id="btnEditIndustry">Edit Industry Type</button>
+                        <a href="/industry" class="btn btn-primary m-l-10">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="delete_users" class="modal custom-modal fade del-industry" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content modal-md">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Industry Type</h4>
+            </div>
+            <form>
+                <div class="modal-body card-box">
+                    <p>are you sure you want to delete this industry?</p>
+                    <div class="m-t-20">
+                        <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                        <button type="submit" class="btn btn-danger delIndustryBtn">Delete</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{#content "script" mode="append"}}
+<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="/assets/js/select2.min.js"></script>
+<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function (e) {
+
+        $("#btnAddIndustry").click(function () {
+            $("#addIndustry").submit();
+        });
+
+        $("#addIndustry").validate({
+            rules: {
+                name: {
+                    required: true
+                },
+                remarks: {
+                    required: true
+                }
+            },
+            messages: {
+                name: {
+                    required: "Industry Type Name can't be blank"
+                },
+                remarks: {
+                    required: "Remarks can't be blank"
+                }
+            },
+            submitHandler: function (form) {
+                var name = $("#name").val(),
+                    remarks = $("#remarks").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/industry/add",
+                    data: {
+                        name: name,
+                        remarks: remarks
+                    },
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+                        $("#btnAddIndustry").prop('disabled', true);
+                        $("#btnAddIndustry").html("Loading...");
+                    },
+                    success: function (response) {
+                        if (response.add_industry == 1) {
+                            $(`<div class="alert alert-success"><strong>Success! </strong>Industry Type Added Successfully</div>`).insertBefore("#addIndustry");
+                            setTimeout(function () {
+                                window.location.href = "/industry";
+                            }, 2000);
+                        }
+                        else if (response.add_industry == 2) {
+                            $(`<div class="alert alert-danger"><strong>Error! </strong>Industry Type Code Already exist</div>`).insertBefore("#addIndustry");
+                            $(".alert").fadeTo(2000, 500).slideUp(500, function () {
+                                $(".alert").remove();
+                            });
+                            $("#btnAddIndustry").prop('disabled', false);
+                            $("#btnAddIndustry").html("Create Industry Type");
+                        }
+                    }
+                });
+            }
+        });
+    });
+
+
+
+
+    $(document).on('click', '#view-industry', function (e) {
+        var industry_id = $(this).data('industry-id');
+        var name = $(this).data('name');
+        var remarks = $(this).data('remarks');
+
+        $("#view_name").val(name);
+        $("#view_remarks").val(remarks);
+
+        localStorage.setItem('industry_id', industry_id);
+
+        $('.industry-modal1').modal("show");
+    });
+    /*=========================Starts Edit industry==========================*/
+
+    $(document).on('click', '#edit-industry', function (e) {
+        var industry_id = $(this).data('industry-id');
+        var name = $(this).data('name');
+        var remarks = $(this).data('remarks');
+
+        $("#edit_name").val(name);
+        $("#edit_remarks").val(remarks);
+
+        localStorage.setItem('industry_id', industry_id);
+
+        $('.industry-modal').modal("show");
+    });
+
+    $(document).ready(function (e) {
+
+        $("#btnEditIndustry").click(function () {
+            $("#edit_industry").submit();
+        });
+
+        $("#edit_industry").validate({
+            rules: {
+                edit_name: {
+                    required: true
+                },
+                edit_remarks: {
+                    required: true
+                }
+            },
+            messages: {
+                edit_name: {
+                    required: "Industry Type Name can't be blank"
+                },
+                edit_remarks: {
+                    required: "Remarks can't be blank"
+                }
+            },
+            submitHandler: function (form) {
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/edit-industry/" + localStorage.getItem("industry_id"),
+                    data: $("#edit_industry").serialize() + "&industry_id=" + localStorage.getItem("industry_id"),
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+                        $("#btnEditIndustry").prop('disabled', true);
+                        $("#btnEditIndustry").html("Loading...");
+                    },
+                    success: function (response) {
+                        if (response.edit_industry == 1) {
+                            $(`<div class="alert alert-success"><strong>Success! </strong>Industry Type Edited Successfully</div>`).insertBefore("#edit_industry");
+                            setTimeout(function () {
+                                window.location.href = "/industry";
+                            }, 2000);
+                        }
+                        else if (response.edit_industry == 2) {
+                            $(`<div class="alert alert-danger"><strong>Error! </strong>Industry Type Code Already exist</div>`).insertBefore("#edit_industry");
+                            $(".alert").fadeTo(2000, 500).slideUp(500, function () {
+                                $(".alert").remove();
+                            });
+                            $("#btnEditIndustry").prop('disabled', false);
+                            $("#btnEditIndustry").html("Edit Industry Type");
+                        }
+                    },
+                    error: function (xhr) {
+
+                    }
+                });
+            }
+        });
+    });
+
+
+
+    /*=========================Ends Edit industry==========================*/
+    /*=========================starts delete industry==========================*/
+
+    $(document).on('click', '#delete-industry', function (e) {
+        var industry_id = $(this).data('industry-id');
+
+        localStorage.setItem('industry_id', industry_id);
+
+        $('.del-industry').modal("show");
+    });
+    $(document).on('click', '.delIndustryBtn', function (e) {
+        $.ajax({
+            type: "POST",
+            url: "/admin/delete-industry/" + localStorage.getItem("industry_id"),
+            data: "&industry_id=" + localStorage.getItem("industry_id"),
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+            },
+            success: function (response) {
+                if (response.del_industry == 1) {
+                    window.location.href = "/industry";
+                }
+            },
+            error: function (xhr) {
+
+            }
+        });
+        e.preventDefault();
+    })
+
+/*=========================Ends delete budget==========================*/
+</script> {{/content}}

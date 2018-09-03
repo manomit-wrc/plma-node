@@ -1,0 +1,1232 @@
+{{#content "style" mode="prepend"}}
+<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+
+ {{/content}}
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="pg-header">
+            <div class="row">
+                {{#if success_message}}
+                    <div class="alert alert-success">
+                        <strong>Success! </strong>{{success_message}}
+                    </div>
+                {{/if}}
+                <div class="col-xs-4">
+                    <h4 class="page-title">Firms</h4>
+                </div>
+                <div class="col-xs-8 text-right">
+                    <a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_firm">
+                        <i class="fa fa-plus"></i> Add Firm
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive firms-table">
+                    <table class="table table-striped custom-table datatable">
+                        <thead>
+                            <tr>
+                                <th style="width:20%;">Firm</th>
+                                <th style="width:20%;">Firm Admin</th>
+                                <th>Email</th>
+                                <th>Created Date</th>
+                                <th class="text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each users}}
+                            <tr data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}" data-email="{{this.email}}" data-firm-title="{{this.firm.title}}" data-firm-address="{{this.firm.address}}" data-mobile-no="{{this.mobile_no}}" data-gender="{{this.gender}}" data-firm-id="{{this.firm.id}}" data-user-id="{{this.id}}" data-approval-level="{{this.firm.approval_level}}" data-level1-desg="{{this.firm.level_1}}" data-level2-desg="{{this.firm.level_2}}" data-level3-desg="{{this.firm.level_3}}" data-level4-desg="{{this.firm.level_4}}" data-group-id="{{this.group_id}}" data-designation-id="{{this.designation_id}}" data-is-attorney="{{this.is_attorney}}">
+                                <td>
+                                    <a href="javascript:void(0)" class="avatar">{{first_letter this.firm.title}}</a>
+                                    <h2>
+                                        <a href="javascript:void(0)" class="view">{{this.firm.title}}</a>
+                                    </h2>
+                                </td>
+                                <td>{{this.first_name}}&nbsp;{{this.last_name}}</td>
+                                <td>{{this.email}}</td>
+                                <td>{{dateFormat this.createdAt "DD-MM-YYYY"}}</td>
+                                <td class="text-right">
+                                    <a href="javascript:void(0)" data-toggle="modal" class="view btn btn-success btn-sm">
+                                        <i class="fa fa-eye m-r-5"></i>
+                                    </a>
+                                    <a href="javascript:void(0)" data-toggle="modal" class="edit btn btn-success btn-sm">
+                                        <i class="fa fa-pencil m-r-5"></i>
+                                    </a>
+                                    <a href="javascript:void(0)" data-toggle="modal" class="delete btn btn-danger btn-sm">
+                                        <i class="fa fa-trash-o m-r-5"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="add_firm" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Firm</h4>
+            </div>
+            <div class="modal-body">
+                <form class="m-b-30" name="frmAddFirm" id="frmAddFirm" method="POST">
+                    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                    <div class="card-box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">General Information</h4>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Firm Name
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input class="form-control" type="text" name="title" id="title">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Address
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <textarea class="form-control" id="address" name="address" rows="5"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Email
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input class="form-control" type="email" id="email" name="email">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Password
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input class="form-control" type="password" id="password" name="password">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-12" style="padding-left: 0;">Is Attorney</label>
+                                    <label>
+                                        <span><input name="is_attorney" id="is_attorney" value="1" type="checkbox"></span> Yes
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Approval Process Information</h4>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="control-label">How many level/s for the approval process ?</label>
+                                <span class="text-danger">*</span>
+                                <div class="form-inline m-b-15">
+                                    <div class="form-group m-r-5">
+                                        <label class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="radio" id="level_1" name="approval_level" value="1" checked />
+                                            </span>
+                                            <div class="form-control form-control-static">1</div>
+                                            <span class="glyphicon form-control-feedback"></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-group m-r-5">
+                                        <label class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="radio" id="level_2" name="approval_level" value="2" />
+                                            </span>
+                                            <div class="form-control form-control-static">2</div>
+                                            <span class="glyphicon form-control-feedback"></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-group m-r-5">
+                                        <label class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="radio" id="level_3" name="approval_level" value="3" />
+                                            </span>
+                                            <div class="form-control form-control-static">3</div>
+                                            <span class="glyphicon form-control-feedback"></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-group m-r-5">
+                                        <label class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="radio" id="level_4" name="approval_level" value="4" />
+                                            </span>
+                                            <div class="form-control form-control-static">4</div>
+                                            <span class="glyphicon form-control-feedback"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Level 1</label>
+                                    <span class="text-danger">*</span>
+                                    <select class="form-control " id="level_1_designation" name="level_1_designation" >
+                                        <option value="">Select Designation</option>
+                                        {{#each designation}}
+                                            <option value="{{this.id}}">{{this.title}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6" id="level2Designation" style="display: none;">
+                                <div class="form-group">
+                                    <label class="control-label">Level 2</label>
+                                    <span class="text-danger">*</span>
+                                    <select class="form-control " id="level_2_designation" name="level_2_designation">
+                                        <option value="">Select Designation</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6" id="level3Designation" style="display: none;">
+                                <div class="form-group">
+                                    <label class="control-label">Level 3</label>
+                                    <span class="text-danger">*</span>
+                                    <select class="form-control " id="level_3_designation" name="level_3_designation">
+                                        <option value="">Select Designation</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6" id="level4Designation" style="display: none;">
+                                <div class="form-group">
+                                    <label class="control-label">Level 4</label>
+                                    <span class="text-danger">*</span>
+                                    <select class="form-control " id="level_4_designation" name="level_4_designation">
+                                        <option value="">Select Designation</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    
+                    <div class="card-box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Contact Person Name</h4>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">First Name</label>
+                                    <span class="text-danger">*</span>
+                                    <input class="form-control" type="text" id="first_name" name="first_name">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Last Name</label>
+                                    <span class="text-danger">*</span>
+                                    <input class="form-control" type="text" id="last_name" name="last_name">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Mobile No.</label>
+                                    <span class="text-danger">*</span>
+                                    <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Gender</label>
+                                    <span class="text-danger">*</span>
+                                    <select class="form-control floating" id="gender" name="gender">
+                                        <option value="">Select Gender</option>
+                                        <option value="M">Male</option>
+                                        <option value="F">Female</option>
+                                        <option value="O">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Group</label>
+                                    <span class="text-danger">*</span>
+                                    <select class="form-control floating" id="group_id" name="group_id">
+                                        <option value="">Select Group</option>
+                                        {{#each group}}
+                                            <option value="{{this.id}}">{{this.name}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Designation</label>
+                                    <span class="text-danger">*</span>
+                                    <select class="form-control floating " id="designation_id" name="designation_id" >
+                                        <option value="">Select Designation</option>
+                                        {{#each designation}}
+                                            <option value="{{this.id}}">{{this.title}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-t-20 text-center">
+                        <button class="btn btn-primary btn-lg" type="button" id="btnAdd">Create Firm</button>
+                        <a href="/firms" class="btn btn-primary btn-lg m-l-10">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="view_firm" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">View Firm</h4>
+            </div>
+            <div class="modal-body">
+                <form class="m-b-30">
+                    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                    <div class="card-box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">General Information</h4>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Firm Name</label>
+                                    <input disabled class="form-control floating" type="text" name="title_view" id="title_view">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Address</label>
+                                    <textarea disabled class="form-control floating" id="address_view" name="address_view" rows="5"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Email</label>
+                                    <input disabled class="form-control floating" type="email" id="email_view" name="email_view">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-12" style="padding-left: 0;">Is Attorney</label>
+                                    <label>
+                                        <span><input disabled name="is_attorney_view" id="is_attorney_view" value="1" type="checkbox"></span> Yes
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-box">
+                       <div class="row">
+                            <div class="col-md-12">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Approval Process Information</h4>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="control-label">How many level/s for the approval process ?</label>
+                                <div class="form-inline m-b-15">
+                                    <div class="form-group m-r-5">
+                                        <label class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="radio" id="level_view_1" name="approval_level_view" value="1" disabled />
+                                            </span>
+                                            <div class="form-control form-control-static">1</div>
+                                            <span class="glyphicon form-control-feedback"></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-group m-r-5">
+                                        <label class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="radio" id="level_view_2" name="approval_level_view" value="2" disabled />
+                                            </span>
+                                            <div class="form-control form-control-static">2</div>
+                                            <span class="glyphicon form-control-feedback"></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-group m-r-5">
+                                        <label class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="radio" id="level_view_3" name="approval_level_view" value="3" disabled />
+                                            </span>
+                                            <div class="form-control form-control-static">3</div>
+                                            <span class="glyphicon form-control-feedback"></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-group m-r-5">
+                                        <label class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="radio" id="level_view_4" name="approval_level_view" value="4" disabled />
+                                            </span>
+                                            <div class="form-control form-control-static">4</div>
+                                            <span class="glyphicon form-control-feedback"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Level 1</label>
+                                    <select disabled class="form-control floating section_remove" id="level_1_designation_view" name="level_1_designation_view">
+                                        <option value="">Select Designation</option>
+                                        {{#each designation}}
+                                            <option value="{{this.id}}">{{this.title}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6" id="level2DesignationView" style="display: none;">
+                                <div class="form-group">
+                                    <label class="control-label">Level 2</label>
+                                    <select disabled class="form-control floating" id="level_2_designation_view" name="level_2_designation_view">
+                                        <option value="">Select Designation</option>
+                                        {{#each designation}}
+                                            <option value="{{this.id}}">{{this.title}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6" id="level3DesignationView" style="display: none;">
+                                <div class="form-group">
+                                    <label class="control-label">Level 3</label>
+                                    <select disabled class="form-control floating" id="level_3_designation_view" name="level_3_designation_view">
+                                        <option value="">Select Designation</option>
+                                        {{#each designation}}
+                                            <option value="{{this.id}}">{{this.title}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6" id="level4DesignationView" style="display: none;">
+                                <div class="form-group">
+                                    <label class="control-label">Level 4</label>
+                                    <select disabled class="form-control floating" id="level_4_designation_view" name="level_4_designation_view">
+                                        <option value="">Select Designation</option>
+                                        {{#each designation}}
+                                            <option value="{{this.id}}">{{this.title}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                       </div> 
+                    </div>
+                    <div class="card-box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Contact person name</h4>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">First Name</label>
+                                    <input disabled class="form-control floating" type="text" id="first_name_view" name="first_name_view">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Last Name</label>
+                                    <input disabled class="form-control floating" type="text" id="last_name_view" name="last_name_view">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Mobile No</label>
+                                    <input type="text" class="form-control floating number_validator" id="mobile_no_view" name="mobile_no_view" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Gender</label>
+                                    <select disabled class="form-control floating" id="gender_view" name="gender_view">
+                                        <option value="">Select Gender</option>
+                                        <option value="M">Male</option>
+                                        <option value="F">Female</option>
+                                        <option value="O">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Group</label>
+                                    <select disabled class="form-control floating" id="group_view" name="group_view">
+                                        <option value="">Select Group</option>
+                                        {{#each group}}
+                                            <option value="{{this.id}}">{{this.name}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Designation</label>
+                                    <select disabled class="form-control floating" id="designation_view" name="designation_view">
+                                        <option value="">Select Designation</option>
+                                        {{#each designation}}
+                                            <option value="{{this.id}}">{{this.title}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="edit_firm" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Firm</h4>
+            </div>
+            <div class="modal-body">
+                <form class="m-b-30" name="frmEditFirm" id="frmEditFirm" method="POST">
+                    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                    <div class="card-box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">General Information</h4>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Firm Name
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input class="form-control" type="text" name="title_edit" id="title_edit">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Address
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <textarea class="form-control" id="address_edit" name="address_edit" rows="5"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Email
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input class="form-control" type="email" id="email_edit" name="email_edit">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-12" style="padding-left: 0;">Is Attorney</label>
+                                    <label>
+                                        <span><input name="is_attorney_edit" id="is_attorney_edit" value="1" type="checkbox"></span> Yes
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Approval Process Information</h4>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="control-label">How many level/s for the approval process ?</label>
+                                <div class="form-inline m-b-15">
+                                    <div class="form-group m-r-5">
+                                        <label class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="radio" id="level_edit_1" name="approval_level_edit" value="1" disabled />
+                                            </span>
+                                            <div class="form-control form-control-static">1</div>
+                                            <span class="glyphicon form-control-feedback"></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-group m-r-5">
+                                        <label class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="radio" id="level_edit_2" name="approval_level_edit" value="2" disabled />
+                                            </span>
+                                            <div class="form-control form-control-static">2</div>
+                                            <span class="glyphicon form-control-feedback"></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-group m-r-5">
+                                        <label class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="radio" id="level_edit_3" name="approval_level_edit" value="3" disabled />
+                                            </span>
+                                            <div class="form-control form-control-static">3</div>
+                                            <span class="glyphicon form-control-feedback"></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-group m-r-5">
+                                        <label class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="radio" id="level_edit_4" name="approval_level_edit" value="4" disabled />
+                                            </span>
+                                            <div class="form-control form-control-static">4</div>
+                                            <span class="glyphicon form-control-feedback"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Level 1</label>
+                                    <select disabled class="form-control floating selectpicker" id="level_1_designation_view" name="level_1_designation_view" data-show-subtext="true" data-live-search="true">
+                                        <option value="">Select Designation</option>
+                                        {{#each designation}}
+                                            <option value="{{this.id}}">{{this.title}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6" id="level2DesignationEdit" style="display: none;">
+                                <div class="form-group">
+                                    <label class="control-label">Level 2</label>
+                                    <select disabled class="form-control floating" id="level_2_designation_edit" name="level_2_designation_edit">
+                                        <option value="">Select Designation</option>
+                                        {{#each designation}}
+                                            <option value="{{this.id}}">{{this.title}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6" id="level3DesignationEdit" style="display: none;">
+                                <div class="form-group">
+                                    <label class="control-label">Level 3</label>
+                                    <select disabled class="form-control floating" id="level_3_designation_edit" name="level_3_designation_edit">
+                                        <option value="">Select Designation</option>
+                                        {{#each designation}}
+                                            <option value="{{this.id}}">{{this.title}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6" id="level4DesignationEdit" style="display: none;">
+                                <div class="form-group">
+                                    <label class="control-label">Level 4</label>
+                                    <select disabled class="form-control floating" id="level_4_designation_edit" name="level_4_designation_edit">
+                                        <option value="">Select Designation</option>
+                                        {{#each designation}}
+                                            <option value="{{this.id}}">{{this.title}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Contact person name</h4>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">First Name
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input class="form-control" type="text" id="first_name_edit" name="first_name_edit">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Last Name
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input class="form-control" type="text" id="last_name_edit" name="last_name_edit">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Mobile No.
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control floating number_validator" id="mobile_no_edit" name="mobile_no_edit">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Gender
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <select class="form-control floating " id="gender_edit" name="gender_edit" >
+                                        <option value="">Select Gender</option>
+                                        <option value="M">Male</option>
+                                        <option value="F">Female</option>
+                                        <option value="O">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Group
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <select class="form-control floating " id="group_edit" name="group_edit" >
+                                        <option value="">Select Group</option>
+                                        {{#each group}}
+                                            <option value="{{this.id}}">{{this.name}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Designation
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <select class="form-control floating " id="designation_edit" name="designation_edit">
+                                        <option value="">Select Designation</option>
+                                        {{#each designation}}
+                                            <option value="{{this.id}}">{{this.title}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-t-20 text-center">
+                        <button class="btn btn-primary btn-lg" type="button" id="btnEdit">Update Firm</button>
+                        <a href="/firms" class="btn btn-primary btn-lg m-l-10">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="delete_firm" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content modal-md">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Firm</h4>
+            </div>
+            <form id="frmFirmDelete">
+                <div class="modal-body card-box">
+                    <p>are you sure you want to delete this firm?</p>
+                    <div class="m-t-20">
+                        <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                        <button type="button" id="btnDelete" class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{#content "script" mode="append"}}
+<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+<script type="text/javascript" src="/assets/js/select2.min.js"></script>
+<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function (e) {
+        $(document).on('click', '#level_2', function() {
+            $('#level2Designation').show();
+            $('#level3Designation').hide();
+            $('#level4Designation').hide();
+        });
+
+        $(document).on('click', '#level_3', function() {
+            $('#level2Designation').show();
+            $('#level3Designation').show();
+            $('#level4Designation').hide();
+        });
+
+        $(document).on('click', '#level_4', function() {
+            $('#level2Designation').show();
+            $('#level3Designation').show();
+            $('#level4Designation').show();
+        });
+
+        $(document).on('click', '#level_1', function() {
+            $('#level2Designation').hide();
+            $('#level3Designation').hide();
+            $('#level4Designation').hide();
+        });
+
+        $(".section_remove option[value='74']").remove();
+
+        $(document).on('change', '#level_1_designation', function (e) {
+            var level_1_desig = $('#level_1_designation').val();
+            $.ajax({
+                type: "GET",
+                url: "/get-level-2-designation",
+                success: function (response) {
+                    $('#level_2_designation').children('option:not(:first)').remove();
+                    for (var i = 0; i < response.designations.length; i++) {
+                        $("#level_2_designation").append('<option value="' + response.designations[i].id + '">' + response.designations[i].title + '</option>');
+                    }
+                    $("#level_2_designation option[value=" + level_1_desig + "]").remove();
+                },
+                error: function (xhr) {
+
+                }
+            });
+        });
+
+        $(document).on('change', '#level_2_designation', function (e) {
+            var level_1_desig = $('#level_1_designation').val();
+            var level_2_desig = $('#level_2_designation').val();
+            $.ajax({
+                type: "GET",
+                url: "/get-level-2-designation",
+                success: function (response) {
+                    $('#level_3_designation').children('option:not(:first)').remove();
+                    for (var i = 0; i < response.designations.length; i++) {
+                        $("#level_3_designation").append('<option value="' + response.designations[i].id + '">' + response.designations[i].title + '</option>');
+                    }
+                    $("#level_3_designation option[value=" + level_1_desig + "]").remove();
+                    $("#level_3_designation option[value=" + level_2_desig + "]").remove();
+                },
+                error: function (xhr) {
+
+                }
+            });
+        });
+
+        $(document).on('change', '#level_3_designation', function (e) {
+            var level_1_desig = $('#level_1_designation').val();
+            var level_2_desig = $('#level_2_designation').val();
+            var level_3_desig = $('#level_3_designation').val();
+            $.ajax({
+                type: "GET",
+                url: "/get-level-2-designation",
+                success: function (response) {
+                    $('#level_4_designation').children('option:not(:first)').remove();
+                    for (var i = 0; i < response.designations.length; i++) {
+                        $("#level_4_designation").append('<option value="' + response.designations[i].id + '">' + response.designations[i].title + '</option>');
+                    }
+                    $("#level_4_designation option[value=" + level_1_desig + "]").remove();
+                    $("#level_4_designation option[value=" + level_2_desig + "]").remove();
+                    $("#level_4_designation option[value=" + level_3_desig + "]").remove();
+                },
+                error: function (xhr) {
+
+                }
+            });
+        });
+        $("#btnAdd").click(function () {
+            $("#frmAddFirm").submit();
+        });
+
+        $("#btnEdit").click(function () {
+            $("#frmEditFirm").submit();
+        });
+
+        $("#frmAddFirm").validate({
+            rules: {
+                title: {
+                    required: true
+                },
+                first_name: {
+                    required: true
+                },
+                last_name: {
+                    required: true
+                },
+                mobile_no: {
+                    required: true
+                },
+                gender: {
+                    required: true
+                },
+                address: {
+                    required: true
+                },
+                level_1_designation: {
+                    required: true
+                },
+                level_2_designation: {
+                    required: true
+                },
+                level_3_designation: {
+                    required: true
+                },
+                level_4_designation: {
+                    required: true
+                },
+                group_id: {
+                    required: true
+                },
+                designation_id: {
+                    required: true
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true
+                }
+            },
+            messages: {
+                title: {
+                    required: "Firm name can't be blank"
+                },
+                first_name: {
+                    required: "First name can't be blank"
+                },
+                last_name: {
+                    required: "Last name can't be blank"
+                },
+                mobile_no: {
+                    required: "Mobile number can't be blank"
+                },
+                gender: {
+                    required: "Gender can't be blank"
+                },
+                address: {
+                    required: "Address can't be blank"
+                },
+                level_1_designation: {
+                    required: "Please select designtaion"
+                },
+                level_2_designation: {
+                    required: "Please select designtaion"
+                },
+                level_3_designation: {
+                    required: "Please select designtaion"
+                },
+                level_4_designation: {
+                    required: "Please select designtaion"
+                },
+                group_id: {
+                    required: "Please select group"
+                },
+                designation_id: {
+                    required: "Please select designtaion"
+                },
+                email: {
+                    required: "Email can't be blank",
+                    email: "Must be valid email"
+                },
+                password: {
+                    required: "Password can't be blank"
+                }
+            },
+            submitHandler: function (form) {
+                var title = $("#title").val(),
+                    address = $("#address").val(),
+                    email = $("#email").val(),
+                    password = $("#password").val(),
+                    first_name = $("#first_name").val(),
+                    last_name = $("#last_name").val(),
+                    mobile_no = $("#mobile_no").val(),
+                    gender = $("#gender").val();
+                group = $("#group_id").val();
+                designation = $("#designation_id").val();
+                is_attorney = $("#is_attorney:checked").val();
+                approval_level = $("input[name=approval_level]:checked").val();
+                level_1 = $("#level_1_designation").val();
+                level_2 = $("#level_2_designation").val();
+                level_3 = $("#level_3_designation").val();
+                level_4 = $("#level_4_designation").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/firms/add",
+                    data: {
+                        title: title,
+                        address: address,
+                        email: email,
+                        password: password,
+                        first_name: first_name,
+                        last_name: last_name,
+                        mobile_no: mobile_no,
+                        gender: gender,
+                        group: group,
+                        designation: designation,
+                        is_attorney: is_attorney,
+                        approval_level: approval_level,
+                        level_1: level_1,
+                        level_2: level_2,
+                        level_3: level_3,
+                        level_4: level_4
+                    },
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+                        $("#btnAdd").prop('disabled', true);
+                        $("#btnAdd").html("Loading...");
+                    },
+                    success: function (response) {
+                        $("#add_firm").animate({ scrollTop: 0 }, 1000);
+                        if (response.success == true) {
+                            $(`<div class="alert alert-success"><strong>Success! </strong>${response.message}</div>`).insertBefore("#frmAddFirm");
+                            setTimeout(function () {
+                                window.location.href = "/firms";
+                            }, 2000);
+                        } else {
+                            $(`<div class="alert alert-danger"><strong>Error! </strong>${response.message}</div>`).insertBefore("#frmAddFirm");
+                            $(".alert").fadeTo(2000, 500).slideUp(500, function () {
+                                $(".alert").remove();
+                            });
+                        }
+                        $("#btnAdd").prop('disabled', false);
+                        $("#btnAdd").html("Create Firm");
+                    }
+                });
+            }
+        });
+
+        $("#frmEditFirm").validate({
+            rules: {
+                title_edit: {
+                    required: true
+                },
+                address_edit: {
+                    required: true
+                },
+                email_edit: {
+                    required: true,
+                    email: true
+                }
+            },
+            messages: {
+                title_edit: {
+                    required: "Firm name can't be blank"
+                },
+                address_edit: {
+                    required: "Address can't be blank"
+                },
+                email_edit: {
+                    required: "Email can't be blank",
+                    email: "Must be valid email"
+                }
+            },
+            submitHandler: function (form) {
+                var title = $("#title_edit").val(),
+                    address = $("#address_edit").val(),
+                    email = $("#email_edit").val(),
+                    password = $("#password_edit").val(),
+                    first_name = $("#first_name_edit").val(),
+                    last_name = $("#last_name_edit").val(),
+                    mobile_no = $("#mobile_no_edit").val(),
+                    gender = $("#gender_edit").val();
+                    group = $("#group_edit").val();
+                    designation = $("#designation_edit").val();
+                is_attorney = $("#is_attorney_edit:checked").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/firms/edit",
+                    data: {
+                        title: title,
+                        address: address,
+                        email: email,
+                        password: password,
+                        first_name: first_name,
+                        last_name: last_name,
+                        mobile_no: mobile_no,
+                        gender: gender,
+                        group: group,
+                        designation: designation,
+                        is_attorney: is_attorney,
+                        firm_id: localStorage.getItem('firm_id'),
+                        user_id: localStorage.getItem('user_id')
+                    },
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+                        $("#btnEdit").prop('disabled', true);
+                        $("#btnEdit").html("Loading...");
+                    },
+                    success: function (response) {
+                        $("#edit_firm").animate({ scrollTop: 0 }, 1000);
+                        if (response.success == true) {
+                            $(`<div class="alert alert-success"><strong>Success! </strong>${response.message}</div>`).insertBefore("#frmEditFirm");
+                            setTimeout(function () {
+                                window.location.href = "/firms";
+                            }, 2000);
+                        } else {
+                            $(`<div class="alert alert-danger"><strong>Error! </strong>${response.message}</div>`).insertBefore("#frmEditFirm");
+                            $(".alert").fadeTo(2000, 500).slideUp(500, function () {
+                                $(".alert").remove();
+                            });
+                        }
+                        $("#btnEdit").prop('disabled', false);
+                        $("#btnEdit").html("Update Firm");
+                    }
+                });
+            }
+        });
+
+        $("#btnDelete").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "/firm/delete",
+                data: {
+                    firm_id: localStorage.getItem('firm_id'),
+                    user_id: localStorage.getItem('user_id')
+                },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+                    $("#btnDelete").prop('disabled', true);
+                    $("#btnDelete").html("Deleting...");
+                },
+                success: function (response) {
+                    if (response.success == true) {
+                        $(`<div class="alert alert-success"><strong>Success! </strong>${response.message}</div>`).insertBefore("#frmFirmDelete");
+                        setTimeout(function () {
+                            window.location.href = "/firms";
+                        }, 2000);
+                    } else {
+                        $(`<div class="alert alert-danger"><strong>Error! </strong>${response.message}</div>`).insertBefore("#frmFirmDelete");
+                        $(".alert").fadeTo(2000, 500).slideUp(500, function () {
+                            $(".alert").remove();
+                        });
+                    }
+                    $("#btnDelete").prop('disabled', false);
+                    $("#btnDelete").html("Delete");
+                }
+            });
+        });
+    });
+
+    // start view
+    $(document).on("click", ".view", function () {
+        $("#first_name_view").val($(this).closest('tr').data('first-name'));
+        $("#last_name_view").val($(this).closest('tr').data('last-name'));
+        $("#email_view").val($(this).closest('tr').data('email'));
+        $("#mobile_no_view").val($(this).closest('tr').data('mobile-no'));
+        $('#gender_view option[value="' + $(this).closest('tr').data('gender') + '"]').attr('selected', true);
+        $('#gender_view').trigger('change');
+        $("input[name=approval_level_view][value=" + $(this).closest('tr').data('approval-level') + "]").attr('checked', true);
+        $("#title_view").val($(this).closest('tr').data('firm-title'));
+        $("#address_view").val($(this).closest('tr').data('firm-address'));
+        $("input[name=is_attorney_view][value=" + $(this).closest('tr').data('is-attorney') + "]").attr('checked', true);
+        $('#level_1_designation_view option[value="' + $(this).closest('tr').data('level1-desg') + '"]').attr('selected', true);
+        $('#level_1_designation_view').trigger('change');
+        if ($(this).closest('tr').data('approval-level') == 2) {
+            $('#level2DesignationView').css('display', 'block');
+            $('#level_2_designation_view option[value="' + $(this).closest('tr').data('level2-desg') + '"]').attr('selected', true);
+            $('#level_2_designation_view').trigger('change');
+        } else if ($(this).closest('tr').data('approval-level') == 3) {
+            $('#level2DesignationView').css('display', 'block');
+            $('#level3DesignationView').css('display', 'block');
+            $('#level_2_designation_view option[value="' + $(this).closest('tr').data('level2-desg') + '"]').attr('selected', true);
+            $('#level_2_designation_view').trigger('change');
+            $('#level_3_designation_view option[value="' + $(this).closest('tr').data('level3-desg') + '"]').attr('selected', true);
+            $('#level_3_designation_view').trigger('change');
+        } else if ($(this).closest('tr').data('approval-level') == 4) {
+            $('#level2DesignationView').css('display', 'block');
+            $('#level3DesignationView').css('display', 'block');
+            $('#level4DesignationView').css('display', 'block');
+            $('#level_2_designation_view option[value="' + $(this).closest('tr').data('level2-desg') + '"]').attr('selected', true);
+            $('#level_2_designation_view').trigger('change');
+            $('#level_3_designation_view option[value="' + $(this).closest('tr').data('level3-desg') + '"]').attr('selected', true);
+            $('#level_3_designation_view').trigger('change');
+            $('#level_4_designation_view option[value="' + $(this).closest('tr').data('level4-desg') + '"]').attr('selected', true);
+            $('#level_4_designation_view').trigger('change');
+        }
+        $('#group_view option[value="' + $(this).closest('tr').data('group-id') + '"]').attr('selected', true);
+        $('#group_view').trigger('change');
+        $('#designation_view option[value="' + $(this).closest('tr').data('designation-id') + '"]').attr('selected', true);
+        $('#designation_view').trigger('change');
+        localStorage.setItem('firm_id', $(this).closest('tr').data('firm-id'));
+        localStorage.setItem('user_id', $(this).closest('tr').data('user-id'));
+        $("#view_firm").modal('show');
+    });
+    // end
+
+    $(document).on("click", ".edit", function () {
+        $("#first_name_edit").val($(this).closest('tr').data('first-name'));
+        $("#last_name_edit").val($(this).closest('tr').data('last-name'));
+        $("#email_edit").val($(this).closest('tr').data('email'));
+        $("#mobile_no_edit").val($(this).closest('tr').data('mobile-no'));
+        $('#gender_edit option[value="' + $(this).closest('tr').data('gender') + '"]').attr('selected', true);
+        $('#gender_edit').trigger('change');
+        $("input[name=approval_level_edit][value=" + $(this).closest('tr').data('approval-level') + "]").attr('checked', true);
+        $("#title_edit").val($(this).closest('tr').data('firm-title'));
+        $("#address_edit").val($(this).closest('tr').data('firm-address'));
+        $("input[name=is_attorney_edit][value=" + $(this).closest('tr').data('is-attorney') + "]").attr('checked', true);
+        $('#level_1_designation_edit option[value="' + $(this).closest('tr').data('level1-desg') + '"]').attr('selected', true);
+        $('#level_1_designation_edit').trigger('change');
+        if ($(this).closest('tr').data('approval-level') == 2) {
+            $('#level2DesignationEdit').css('display', 'block');
+            $('#level_2_designation_edit option[value="' + $(this).closest('tr').data('level2-desg') + '"]').attr('selected', true);
+            $('#level_2_designation_edit').trigger('change');
+        } else if ($(this).closest('tr').data('approval-level') == 3) {
+            $('#level2DesignationEdit').css('display', 'block');
+            $('#level3DesignationEdit').css('display', 'block');
+            $('#level_2_designation_edit option[value="' + $(this).closest('tr').data('level2-desg') + '"]').attr('selected', true);
+            $('#level_2_designation_edit').trigger('change');
+            $('#level_3_designation_edit option[value="' + $(this).closest('tr').data('level3-desg') + '"]').attr('selected', true);
+            $('#level_3_designation_edit').trigger('change');
+        } else if ($(this).closest('tr').data('approval-level') == 4) {
+            $('#level2DesignationEdit').css('display', 'block');
+            $('#level3DesignationEdit').css('display', 'block');
+            $('#level4DesignationEdit').css('display', 'block');
+            $('#level_2_designation_edit option[value="' + $(this).closest('tr').data('level2-desg') + '"]').attr('selected', true);
+            $('#level_2_designation_edit').trigger('change');
+            $('#level_3_designation_edit option[value="' + $(this).closest('tr').data('level3-desg') + '"]').attr('selected', true);
+            $('#level_3_designation_edit').trigger('change');
+            $('#level_4_designation_edit option[value="' + $(this).closest('tr').data('level4-desg') + '"]').attr('selected', true);
+            $('#level_4_designation_edit').trigger('change');
+        }
+        $('#group_edit option[value="' + $(this).closest('tr').data('group-id') + '"]').attr('selected', true);
+        $('#group_edit').trigger('change');
+        $('#designation_edit option[value="' + $(this).closest('tr').data('designation-id') + '"]').attr('selected', true);
+        $('#designation_edit').trigger('change');
+        localStorage.setItem('firm_id', $(this).closest('tr').data('firm-id'));
+        localStorage.setItem('user_id', $(this).closest('tr').data('user-id'));
+        $("#edit_firm").modal('show');
+    });
+
+    $(document).on("click", ".delete", function () {
+        localStorage.setItem('firm_id', $(this).closest('tr').data('firm-id'));
+        localStorage.setItem('user_id', $(this).closest('tr').data('user-id'));
+        $("#delete_firm").modal('show');
+    });
+</script>
+{{/content}}

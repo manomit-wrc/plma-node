@@ -1,0 +1,399 @@
+<div class="header">
+  <div class="header-left">
+    <a href="/dashboard" class="logo">
+      <img src="/assets/img/perform-logo-small.png" class="img-responsive" alt="">
+    </a>
+  </div>
+  <div class="pull-left">
+    <div class="nav-menu">
+      <a href="">
+        <i class="fa fa-bars fa-2x"></i>
+      </a>
+    </div>
+  </div>
+
+  <a id="mobile_btn" class="mobile_btn pull-left" href="#sidebar">
+    <i class="fa fa-bars" aria-hidden="true"></i>
+  </a>
+  <button class="btn btn-primary export">
+    <i class="fa fa-download"></i>
+  </button>
+  <ul class="nav navbar-nav navbar-right user-menu pull-right">
+
+    <li class="role-header">
+      {{#if_eq user.role_id "1"}}
+      <h4>Site Admin</h4>
+      {{/if_eq}} {{#if_eq user.role_id "2"}}
+      <h4>Firm Admin</h4>
+      {{/if_eq}} {{#if_eq user.role_id "3"}}
+      <h4>Attorney</h4>
+      {{/if_eq}} {{#if_eq user.role_id "4"}}
+      <h4>Employee</h4>
+      {{/if_eq}}
+    </li>
+    <li class="dropdown hidden-xs">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="notificationBtn" data-user-id="{{user.approver}}">
+        <i class="fa fa-bell-o"></i>
+        <span class="badge bg-purple pull-right" id="count_noti"></span>
+      </a>
+      <div class="dropdown-menu notifications" id="notificationDiv">
+
+        <div class="topnav-dropdown-header">
+          <span>Notifications</span>
+        </div>
+
+        <div class="drop-scroll" id="notification_div">
+          <ul class="media-list" id="notiMsg">
+          </ul>
+        </div>
+
+        <div class="topnav-dropdown-footer">
+          {{#if_eq user.approver "1"}}
+          <a href="/activity-approvals">View all</a> {{/if_eq}}
+        </div>
+
+      </div>
+    </li>
+
+    <li class="dropdown">
+      <a href="profile.html" class="dropdown-toggle user-link" data-toggle="dropdown" title="{{user.first_name}}">
+        <span class="user-img">
+          <img class="img-circle" src="{{user.avatar}}" width="40" alt="{{user.first_name}}">
+          <span class="status online"></span>
+        </span>
+        <span>{{user.first_name}}</span>
+        <i class="caret"></i>
+      </a>
+      <ul class="dropdown-menu">
+        <li>
+          <a href="/profile">
+            <i class="fa fa-user"></i> My Profile</a>
+        </li>
+        {{#if_eq user.role_id "3"}} {{#if_eq user.actual_role_id "0"}}
+        <li>
+          <a href="/edit-attorney-profile">
+            <i class="fa fa-pencil-square-o"></i> Edit Profile</a>
+        </li>
+        {{else}}
+        <li>
+          <a href="/edit-profile">
+            <i class="fa fa-pencil-square-o"></i> Edit Profile</a>
+        </li>
+        {{/if_eq}} {{else}}
+        <li>
+          <a href="/edit-profile">
+            <i class="fa fa-pencil-square-o"></i> Edit Profile</a>
+        </li>
+        {{/if_eq}} {{#if_eq user.role_id "1"}}
+        <li>
+          <a href="/settings">
+            <i class="fa fa-cog"></i> Settings</a>
+        </li>
+        <li>
+          <a href="javascript:void(0)" data-toggle="modal" data-target="#loginFirm">
+            <i class="fa fa-sign-in"></i> Login as firm admin</a>
+        </li>
+        {{/if_eq}}
+        <li>
+          <a href="/change-password">
+            <i class="fa fa-key"></i> Change Password</a>
+        </li>
+        {{#if_eq user.role_id "2"}} {{#if_eq user.actual_role_id "0"}} {{#if_eq user.is_attorney "1"}}
+        <li>
+          <a href="/change-role">
+            <i class="fa fa-sign-in"></i> Login as Attorney</a>
+        </li>
+        {{/if_eq}} {{/if_eq}} {{#if_eq user.actual_role_id "1"}}
+        <li>
+          <a href="/change-role-site">
+            <i class="fa fa-sign-in"></i> Login as Attorney</a>
+        </li>
+        {{/if_eq}} {{/if_eq}} {{#if_eq user.actual_role_id "2"}}
+        <li>
+          <a href="/change-role-firm">
+            <i class="fa fa-sign-in"></i> Login as firm admin </a>
+        </li>
+        {{/if_eq}} {{#if_eq user.role_id "3"}} {{#if_eq user.actual_role_id "1"}}
+        <li>
+          <a href="/change-role-firm-site">
+            <i class="fa fa-sign-in"></i> Login as firm admin </a>
+        </li>
+        {{/if_eq}} {{/if_eq}} {{#if_eq user.actual_role_id "1"}}
+        <li>
+          <a href="/change-role-firm-site-all">
+            <i class="fa fa-sign-in"></i> Login as site admin </a>
+        </li>
+        {{/if_eq}}
+        <li>
+          <a href="/logout">
+            <i class="fa fa-sign-out"></i> Logout</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <div class="dropdown mobile-user-menu pull-right">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+      <i class="fa fa-ellipsis-v"></i>
+    </a>
+    <ul class="dropdown-menu pull-right">
+      <li>
+        <a href="/profile">
+          <i class="fa fa-user"></i> My Profile</a>
+      </li>
+      {{#if_eq user.role_id "3"}} {{#if_eq user.actual_role_id "0"}}
+      <li>
+        <a href="/edit-attorney-profile">
+          <i class="fa fa-pencil-square-o"></i> Edit Profile</a>
+      </li>
+      {{else}}
+      <li>
+        <a href="/edit-profile">
+          <i class="fa fa-pencil-square-o"></i> Edit Profile</a>
+      </li>
+      {{/if_eq}} {{else}}
+      <li>
+        <a href="/edit-profile">
+          <i class="fa fa-pencil-square-o"></i> Edit Profile</a>
+      </li>
+      {{/if_eq}} {{#if_eq user.role_id "1"}}
+      <li>
+        <a href="/settings">
+          <i class="fa fa-cog"></i> Settings</a>
+      </li>
+      <li>
+        <a href="javascript:void(0)" data-toggle="modal" data-target="#loginFirm">
+          <i class="fa fa-sign-in"></i> Login as firm admin</a>
+      </li>
+      {{/if_eq}}
+      <li>
+        <a href="/change-password">
+          <i class="fa fa-key"></i> Change Password</a>
+      </li>
+      {{#if_eq user.role_id "2"}} {{#if_eq user.actual_role_id "0"}} {{#if_eq user.is_attorney "1"}}
+      <li>
+        <a href="/change-role">
+          <i class="fa fa-sign-in"></i> Login as Attorney</a>
+      </li>
+      {{/if_eq}} {{/if_eq}} {{#if_eq user.actual_role_id "1"}}
+      <li>
+        <a href="/change-role-site">
+          <i class="fa fa-sign-in"></i> Login as Attorney</a>
+      </li>
+      {{/if_eq}} {{/if_eq}} {{#if_eq user.actual_role_id "2"}}
+      <li>
+        <a href="/change-role-firm">
+          <i class="fa fa-sign-in"></i> Login as firm admin </a>
+      </li>
+      {{/if_eq}} {{#if_eq user.role_id "3"}} {{#if_eq user.actual_role_id "1"}}
+      <li>
+        <a href="/change-role-firm-site">
+          <i class="fa fa-sign-in"></i> Login as firm admin </a>
+      </li>
+      {{/if_eq}} {{/if_eq}} {{#if_eq user.actual_role_id "1"}}
+      <li>
+        <a href="/change-role-firm-site-all">
+          <i class="fa fa-sign-in"></i> Login as site admin </a>
+      </li>
+      {{/if_eq}}
+      <li>
+        <a href="/logout">
+          <i class="fa fa-sign-out"></i> Logout</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="modal fade" id="loginFirm" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <strong>Login As Super User</strong>
+        <button type="button" class="close" data-dismiss="modal">×</button>
+      </div>
+      <div class="modal-body">
+        <form name="site_to_firm" id="site_to_firm" method="POST" action="/change-site-to-firm">
+          <label class="control-label">Select Firm</label>
+          <div class="form-group">
+            <select class="form-control floating" id="firm_id" name="firm_id">
+              <option value="">Select Firm</option>
+
+            </select>
+          </div>
+          <div class="form-group">
+            <input type="submit" name="import" value="Submit" class="btn btn-primary rounded" />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer"></div>
+    </div>
+  </div>
+</div>
+
+{{#content "script" mode="append"}}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+
+<script>
+  $(document).ready(function (e) {
+    if({{user.role_id}} == "1")
+    {
+      $.ajax({
+        type: "POST",
+        url: "/get-firm-name",
+        success: function (response) {
+          for (var i = 0; i < response.firms.length; i++) {
+            $("#firm_id").append('<option value="' + response.firms[i].id + '">' + response.firms[i].title + '</option>');
+          }
+        },
+        error: function (xhr) {
+
+        }
+      });
+    }
+
+    $("#site_to_firm").validate({
+      rules: {
+        firm_id: {
+          required: true
+        }
+      },
+      messages: {
+        firm_id: {
+          required: "Please select a firm"
+        }
+      }
+    });
+  });
+
+  $(document).ready(function () {
+    $(".export").click(function () {
+      $(".dt-buttons").toggle(1000);
+    });
+
+    $.ajax({
+      type: "POST",
+      url: "/get-notification",
+      success: function (response) {
+        var approver = $("#notificationBtn").data("user-id");
+        if (approver === 1) {
+          if (response.count != 0) {
+            $("#count_noti").html(response.count);
+          }
+          if (response.approval_noti.length > 0) {
+            for (var j = 0; j < response.approval_noti.length; j++) {
+              var todayTime = new Date(response.approval_noti[j].createDate);
+              month = '' + (todayTime.getMonth() + 1),
+              day = '' + todayTime.getDate(),
+              year = todayTime.getFullYear();
+
+              if (month.length < 2) month = '0' + month;
+              if (day.length < 2) day = '0' + day;
+
+              var creation_date = [month, day, year].join('-');
+
+              var d = new Date(response.approval_noti[j].updateDate),
+                dformat = [d.getMonth() + 1,
+                d.getDate(),
+                d.getFullYear()].join('-') + ' ' +
+                  [d.getHours(),
+                  d.getMinutes(),
+                  d.getSeconds()].join(':');
+
+              var header = response.approval_noti[j].userFirstName;
+
+              var startDate = new Date(response.approval_noti[j].updatedAt);
+              
+              var endDate = new Date();
+              var diffDays = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
+              var diff = (endDate.getTime() - startDate.getTime()) / 1000;
+              var hour = diff / (60 * 60);
+              var minute = diff / 60;
+              var hrs = Math.abs(Math.round(hour));
+              var mins = Math.abs(Math.round(minute));
+              var sec = Math.abs(Math.round(diff));
+              var get_time = "";
+              if(sec < 60){
+                get_time = "Just now";
+              }
+              else if(sec >= 60 && mins < 60 && diffDays == 1){
+                get_time = mins + " mins ago";
+              }
+              else if(sec > 60 && mins >= 60 && diffDays == 1){
+                get_time = hrs + " hours ago";
+              }
+              else if(sec > 60 && mins > 60 && diffDays > 1 && diffDays < 7){
+                get_time = diffDays-1 + " days ago"
+              }
+              else if (sec > 60 && mins > 60 && diffDays >= 7) {
+                get_time = dformat;
+              }
+
+              if (response.approval_noti[j].type=='1') {
+              $("#notiMsg").append('<li class="media notification-message">' +
+                '<a href="/team-activity-approvals/">' +
+                  '<div class="media-left">' +
+                    '<span class="avatar">' +
+                      header.charAt(0) +
+                    '</span>'+
+                  '</div>' +
+                  '<div class="media-body">' +
+                    '<p class="m-0 noti-details">' +
+                      '<span class="noti-title">' +
+                        " You are invited to join " + '<b>' + response.approval_noti[j].name + '</b>' + " from " + response.approval_noti[j].userFirstName + " " + response.approval_noti[j].userLastName + " on " + creation_date +"."+
+                      '</span>' +
+                    '</p>' +
+                    '<p class="m-0">' +
+                      '<span class="notification-time">' +
+                         get_time +
+                      '</span>' +
+                    '</p>' +
+                  '</div>' +
+                '</a>' +
+                '</li>'
+              );
+              } else if (response.approval_noti[j].type=='2') {
+
+                $("#notiMsg").append('<li class="media notification-message">' +
+                '<a href="/approval_details/' + response.approval_noti[j].activity_id + '">' +
+                  '<div class="media-left">' +
+                    '<span class="avatar">' +
+                      header.charAt(0) +
+                    '</span>'+
+                  '</div>' +
+                  '<div class="media-body">' +
+                    '<p class="m-0 noti-details">' +
+                      '<span class="noti-title">' +
+                        " Request for approval for " + '<b>' + response.approval_noti[j].name + '</b>' + " from " + response.approval_noti[j].userFirstName + " " + response.approval_noti[j].userLastName + " on " + creation_date +"."+
+                      '</span>' +
+                    '</p>' +
+                    '<p class="m-0">' +
+                      '<span class="notification-time">' +
+                         get_time +
+                      '</span>' +
+                    '</p>' +
+                  '</div>' +
+                '</a>' +
+                '</li>'
+              );
+
+              }
+              
+            }
+          }
+          else {
+            $("#notification_div").addClass("noti-ntfound");
+            $("#notification_div").html('<i class="fa fa-bell-slash">' + '</i>'+ " " + "Notification not found !");
+          }
+        }
+        else {
+          $("#notification_div").addClass("noti-ntfound");
+          $("#notification_div").html('<i class="fa fa-bell-slash">' + '</i>' + " " + "Notification not found !");
+        }
+      },
+      error: function (xhr) {
+
+      }
+    });
+  });
+</script> {{/content}}

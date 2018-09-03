@@ -1,0 +1,138 @@
+{{#content "style" mode="prepend"}}
+<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="pg-header">
+            <div class="row">
+                {{#if success_message}}
+                <div class="alert alert-success">
+                    <strong>Success! </strong>{{success_message}}
+                </div>
+                {{/if}} {{#if success_edit_message}}
+                <div class="alert alert-success">
+                    <strong>Success! </strong>{{success_edit_message}}
+                </div>
+                {{/if}} {{#if success_del_message}}
+                <div class="alert alert-success">
+                    <strong>Success! </strong>{{success_del_message}}
+                </div>
+                {{/if}}
+                <div class="col-xs-4">
+                    <h4 class="page-title">Tactical Marketing Goals</h4>
+                </div>
+                <div class="col-xs-8 text-right">
+                    <a href="/activity-goal/add" class="btn btn-primary pull-right rounded">
+                        <i class="fa fa-plus"></i> Add Tactical Marketing Goals</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped custom-table datatable activity-goal">
+                        <thead>
+                            <tr>
+                                <th>SL#</th>
+                                <th>Tactical Marketing Goals</th>
+                                <th>Duration</th>
+                                <th>Total Activities</th>
+                                <th>Total Hours</th>
+                                <th>Total Budget</th>
+                                <th class="text-right"  style="width:20%;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each goals}}
+                            <tr>
+                                <td>{{math @index "+" 1}}</td>
+                                <td>
+                                    <a href="/activity-goal/view/{{this.id}}">
+                                        {{this.activity_goal}}
+                                    </a>
+                                </td>
+                               
+                                <td>{{dateFormat this.from_date "DD-MM-YYYY"}} To {{dateFormat this.to_date "DD-MM-YYYY"}}</td>
+                                <td><a href="/activity-goal/view-activity/{{this.id}}">{{get_total_activity this.activities}}</a></td>
+                                <td><a href="/budget-report/activity-goal/{{this.id}}">{{get_activity_goal_hours this.activity_budgets}}</a></td>
+                                <td><a href="/budget-report/activity-goal/{{this.id}}">$ {{get_activity_goal_amounts this.activity_budgets}}</a></td>
+                                <td class="text-right">
+                                    <a href="/budget-report/activity-goal/{{this.id}}" class="btn btn-success btn-sm" id="setUrlItem" title="See Budget Report">
+                                        <i class="fa fa-money"></i>
+                                    </a>
+                                    <a href="/activity-goal/view-activity/{{this.id}}" class="btn btn-success btn-sm" title="See associated activity">
+                                        <i class="fa fa-tasks"></i>
+                                    </a>
+
+                                    <a href="/activity-goal/view/{{this.id}}" class="btn btn-success btn-sm">
+                                        <i class="fa fa-eye m-r-5"></i>
+                                    </a>
+
+                                    <a href="/activity-goal/edit/{{this.id}}" class="btn btn-success btn-sm">
+                                        <i class="fa fa-pencil m-r-5"></i>
+                                    </a>
+                                   
+                                    <a href="javascript:void(0);" data-toggle="modal" data-target="delete_users" data-activitygoal-id="{{this.id}}" id="delete_activitygoal"
+                                        class="btn btn-danger btn-sm target-delete">
+                                        <i class="fa fa-trash-o m-r-5"></i>
+                                    </a>
+                                </td>
+                            </tr>
+
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="delete_user" class="modal custom-modal fade del-activitygoal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content modal-md">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Tactical Marketing Goals</h4>
+            </div>
+            <form>
+                <div class="modal-body card-box">
+                    <p>are you sure you want to delete this Tactical Marketing Goals?</p>
+                    <div class="m-t-20" id="delDiv">
+                        <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{{#content "script" mode="append"}}
+<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+<script type="text/javascript" src="/assets/js/select2.min.js"></script>
+<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+
+<script>
+    $(document).on('click', '#delete_activitygoal', function (e) {
+        var activityGoal_id = $(this).data('activitygoal-id');
+        $("#removeBtnDelete").remove();
+        $("#delete_user").modal('show');
+        $("#delDiv").append('<a href="/activity-goal/delete/' + activityGoal_id + '" class="btn btn-danger" id="removeBtnDelete">' + "Delete" + '</a>');
+    });
+    $(document).on('click', "#setUrlItem", function () {
+        localStorage.removeItem('url');
+        localStorage.setItem("url", window.location.pathname);
+    });
+
+</script> {{/content}}

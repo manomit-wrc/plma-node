@@ -1,0 +1,783 @@
+{{#content "style" mode="prepend"}}
+<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/jquery.tagsinput.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-multiselect.css">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+
+
+{{/content}}
+<div class="page-wrapper">
+	<div class="content container-fluid">
+		<div class="row">
+			{{#if error_message}}
+			<div class="alert alert-danger">
+				<strong>Error! </strong>{{error_message}}
+			</div>
+			{{/if}}
+			<div class="col-sm-8">
+				<h4 class="page-title">Add Client</h4>
+			</div>
+		</div>
+		<form id="clientform" method="POST" action="/client/addClient">
+			<input type="hidden" name="_csrf" value="{{csrfToken}}"> 
+			<div class="form-inline m-b-15">
+				<div class="form-group m-r-5">
+					<label class="input-group">
+						<span class="input-group-addon">
+							<input type="radio" id="individual_client" name="client_type" value="I" checked />
+						</span>
+						<div class="form-control form-control-static">Individual</div>
+						<span class="glyphicon form-control-feedback"></span>
+					</label>
+				</div>
+				<div class="form-group ">
+					<label class="input-group">
+						<span class="input-group-addon">
+							<input type="radio" id="organization_client" name="client_type" value="O" />
+						</span>
+						<div class="form-control form-control-static">Organization</div>
+						<span class="glyphicon form-control-feedback"></span>
+					</label>
+				</div>
+			</div>
+			<div class="card-box">
+				<h3 class="card-title">Basic Information</h3>
+				<div class="row">
+					<div class="col-md-12">
+						<div id="org_type" style="display: none;">
+							<div class="col-md-12">
+								<div class="form-group form-focus">
+									<label class="control-label">Organization Name <span class="req-lbl">*</span> </label>
+									<input type="text" class="form-control floating" id="org_name" name="org_name" />
+								</div>
+							</div>
+
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Organisation Code </label>
+									<input type="text" class="form-control floating" id="org_code" name="org_code" />
+								</div>
+							</div> 
+						</div>
+						<div id="individual_type">
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">First Name <span class="req-lbl">*</span> </label>
+									<input type="text" class="form-control floating" id="client_first_name" name="client_first_name" />
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Last Name <span class="req-lbl">*</span></label>
+									<input type="text" class="form-control floating" id="client_last_name" name="client_last_name" />
+								</div>
+							</div>
+							
+							<div class="col-md-6">
+								<div class="form-inline m-b-15">
+									<div class="form-group m-r-5">
+										<label class="input-group">
+											<span class="input-group-addon">
+												<input type="radio" id="new-add-tag" name="tag_type" value="n" checked />
+											</span>
+											<div class="form-control form-control-static">New Tags</div>
+											<span class="glyphicon form-control-feedback"></span>
+										</label>
+									</div>
+									<div class="form-group ">
+										<label class="input-group">
+											<span class="input-group-addon">
+												<input type="radio" id="existing-tag" name="tag_type" value="e" />
+											</span>
+											<div class="form-control form-control-static">Existing Tags</div>
+											<span class="glyphicon form-control-feedback"></span>
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div id="add-tag-existing-client" style="display: none;">
+									<div class="form-group form-focus select-focus">
+										<select id="select-existing-tags" name="existing_tags" class="form-control floating" multiple="multiple">
+											{{#each tags}}
+											<option value="{{this.id}}">{{this.tags}}</option>
+											{{/each}}
+										</select>
+									</div>
+								</div>
+								<div id="add-tag-client">
+									<div class="form-group form-focus">
+										<label class="control-label">Add New Tags</label>
+										<input type="text" class="form-control floating" id="add-new-tags" name="add_new_tags" />
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Current annual revenue</label>
+									<input class="form-control floating" type="text" id="current_revenue" name="current_revenue">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Estimated annual revenue</label>
+									<input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue">
+								</div>
+							</div>
+
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Closing Date<span class="req-lbl">*</span> </label>
+									<div class="cal-icon">
+										<input class="form-control floating datetimepicker" type="text" id="revenueclosingDate" name="revenueclosingDate">
+									</div>
+								</div>
+							</div>
+							
+							<div class="col-md-3">
+								<div class="form-group form-focus select-focus select-attorney">
+									<label class="control-label">Start Date
+									</label>
+									<select class="form-control floating " id="startMonth" name="startMonth">
+										<option value="">Select Gender</option>
+										<option value="1">January</option>
+										<option value="2">February</option>
+										<option value="3">March</option>
+										<option value="4">April</option>
+										<option value="5">May</option>
+										<option value="6">June</option>
+										<option value="7">July</option>
+										<option value="8">August</option>
+										<option value="9">September</option>
+										<option value="10">October</option>
+										<option value="11">November</option>
+										<option value="12">December</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="col-md-3">
+								<div class="form-group form-focus select-focus select-attorney">
+									<label class="control-label">End Date
+									</label>
+									<select class="form-control floating " id="endMonth" name="endMonth">
+										<option value="">Select Gender</option>
+										<option value="1">January</option>
+										<option value="2">February</option>
+										<option value="3">March</option>
+										<option value="4">April</option>
+										<option value="5">May</option>
+										<option value="6">June</option>
+										<option value="7">July</option>
+										<option value="8">August</option>
+										<option value="9">September</option>
+										<option value="10">October</option>
+										<option value="11">November</option>
+										<option value="12">December</option>
+									</select>
+								</div>
+							</div>
+
+				           <div class="col-md-6">
+								<div class="form-group form-focus select-focus select-attorney">
+									<label class="control-label">Gender <span class="req-lbl">*</span> </label>
+									<select class="form-control floating " id="client_gender" name="client_gender" >
+										<option value="">Select Gender</option>
+										<option value="M">Male</option>
+										<option value="F">Female</option>
+										<option value="O">Others</option>
+
+									</select>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Client Company</label>
+									<input type="text" class="form-control floating" id="client_company" name="client_company" />
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<label class="control-label">Email Id <span class="req-lbl">*</span></label>
+								<input type="text" class="form-control floating" id="email" name="email" />
+								<span id="uniqueEmail" style="color: red"></span>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<label class="control-label">Phone No. <span class="req-lbl">*</span></label>
+								<input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" />
+								<span id="uniquePhone" style="color: red"></span>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<label class="control-label">Mobile No. <span class="req-lbl">*</span></label>
+								<input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" />
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<label class="control-label">Fax</label>
+								<input type="text" class="form-control floating number_validator" id="fax" name="fax" />
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<label class="control-label">Start Date<span class="req-lbl">*</span> </label>
+								<div class="cal-icon">
+									<input class="form-control floating datetimepicker" type="text" id="clientStartDate" name="clientStartDate">
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-group form-focus">
+								<label class="control-label">End Date<span class="req-lbl">*</span> </label>
+								<div class="cal-icon">
+									<input class="form-control floating datetimepicker" type="text" id="clientEndDate" name="clientEndDate">
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="card-box">
+				<h3 class="card-title">Attorney Information</h3>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group form-focus select-focus select-attorney">
+							<label class="control-label">Attorney
+								<span class="req-lbl">*</span>
+							</label>
+							<select id="designation" name="attorney_id" class="form-control floating " >
+								{{#if_eq user.role_id "3"}}
+								<option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
+								{{else}}
+								<option value="">Select Attorney</option>
+								{{#if_eq user.is_attorney "1"}}
+									<option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
+								{{/if_eq}}
+								{{#each attorney}}
+								<option value="{{this.id}}" {{#if_eq this.id ../user.id}} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+								{{/each}} {{/if_eq}}
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card-box">
+				<h3 class="card-title">Address</h3>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group form-focus">
+							<label class="control-label">Address Line 1 <span class="req-lbl">*</span> </label>
+							<input type="text" class="form-control floating" id="address1" name="address1" />
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group form-focus">
+							<label class="control-label">Address Line 2</label>
+							<input type="text" class="form-control floating" id="address2" name="address2" />
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group form-focus">
+							<label class="control-label">Address Line 3</label>
+							<input type="text" class="form-control floating" id="address3" name="address3" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus select-focus">
+							<label class="control-label">Country <span class="req-lbl">*</span> </label>
+							<select id="country" name="country" class="form-control floating">
+								<option value="">Select Country</option>
+								{{#each country}}
+									<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus select-focus">
+							<label class="control-label">State <span class="req-lbl">*</span> </label>
+							<select id="state" name="state" class="form-control floating">
+								<option value="">Select State</option>
+								{{#each state}}
+									<option value="{{this.id}}">{{this.name}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus select-focus">
+							<label class="control-label">City<span class="req-lbl">*</span></label>
+							<select id="city" name="city" class="form-control floating">
+								<option value="">Select City</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus select-focus">
+							<label class="control-label">Zip Code<span class="req-lbl">*</span></label>
+							<select id="zipcode" name="zipcode" class="form-control floating">
+								<option value="">Select Zipcode</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card-box" id="m_s_target" style="display:none;">
+				<h3 class="card-title">Contact Information</h3>
+				<div class="contact-information targetPlus" id="contactInformationPlus">
+					<button class="btn btn-primary btn-lg masterContactDetailsAdd" id="targetPlus" type="button" title="Remove">
+						<i class="fa fa-plus"></i>
+					</button>
+					<div class="contact-margin">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">First Name
+										<span class="req-lbl">*</span>
+
+									</label>
+									<input type="text" class="form-control floating" id="clientDetailsFirstName" name="clientDetailsFirstName[]" />
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Last Name</label>
+									<input type="text" class="form-control floating" id="clientDetailsSecondName" name="clientDetailsSecondName[]" />
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus select-focus">
+									<label class="control-label">Gender
+										<span class="req-lbl">*</span>
+
+									</label>
+									<select class="select form-control floating" id="clientDetailsGender" name="clientDetailsGender[]">
+										<option value="">Select Gender</option>
+										<option value="M">Male</option>
+										<option value="F">Female</option>
+										<option value="O">Others</option>
+
+									</select>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Email Id
+										<span class="req-lbl">*</span>
+
+									</label>
+									<input type="text" class="form-control floating" id="clientDetailsEmail" name="clientDetailsEmail[]" />
+									<span id="uniqueEmail" style="color: red"></span>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Phone No.
+										<span class="req-lbl">*</span>
+
+									</label>
+									<input type="text" class="form-control floating number_validator" id="clientDetailsPhone_no" name="clientDetailsPhone_no[]"
+									 maxlength="50" />
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Fax</label>
+									<input type="text" class="form-control floating number_validator" id="clientDetailsFax" name="clientDetailsFax[]" maxlength="50"
+									/>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group form-focus">
+									<label class="control-label">Mobile No.
+										<span class="req-lbl">*</span>
+									</label>
+									<input type="text" class="form-control floating number_validator" id="clientDetailsMobile_no" name="clientDetailsMobile_no[]"
+									 maxlength="50" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="targetContactClose" style="display:none;">
+					<div class="targetDetailsRemove">
+						<div class="contact-information" id="contactInformatinClose">
+							<button class="btn btn-primary btn-lg masterContactDetailsAdd targetClose" type="button" title="Remove">
+								<i class="fa fa-close"></i>
+							</button>
+							<div class="contact-margin ">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group form-focus">
+											<label class="control-label">First Name
+												<span class="req-lbl">*</span>
+
+											</label>
+											<input type="text" class="form-control floating"  name="clientDetailsFirstName[]" />
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group form-focus">
+											<label class="control-label">Last Name</label>
+											<input type="text" class="form-control floating"  name="clientDetailsSecondName[]" />
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group form-focus select-focus">
+											<label class="control-label">Gender
+												<span class="req-lbl">*</span>
+
+											</label>
+											<select class="form-control floating"  name="clientDetailsGender[]">
+												<option value="">Select Gender</option>
+												<option value="M">Male</option>
+												<option value="F">Female</option>
+												<option value="O">Others</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group form-focus">
+											<label class="control-label">Email Id
+												<span class="req-lbl">*</span>
+
+											</label>
+											<input type="text" class="form-control floating"  name="clientDetailsEmail[]" />
+											<span id="uniqueEmail" style="color: red"></span>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group form-focus">
+											<label class="control-label">Phone No.
+												<span class="req-lbl">*</span>
+
+											</label>
+											<input type="text" class="form-control floating number_validator"  name="clientDetailsPhone_no[]"
+											 maxlength="50" />
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group form-focus">
+											<label class="control-label">Fax</label>
+											<input type="text" class="form-control floating number_validator"  name="clientDetailsFax[]" maxlength="50"
+											/>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group form-focus">
+											<label class="control-label">Mobile No.
+												<span class="req-lbl">*</span>
+											</label>
+											<input type="text" class="form-control floating number_validator"  name="clientDetailsMobile_no[]"
+											maxlength="50" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card-box">
+				<h3 class="card-title">Other Information</h3>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Website</label>
+							<input type="text" class="form-control floating url_selector" id="website" name="website" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">IM</label>
+							<input type="text" class="form-control floating" id="im" name="im" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Company Name</label>
+							<input type="text" class="form-control floating" id="company_name" name="company_name" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Twitter</label>
+							<input type="text" class="form-control floating url_selector" id="twitter" name="twitter" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Linkedin</label>
+							<input type="text" class="form-control floating url_selector" id="linkdn" name="linkdn" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Facebook</label>
+							<input type="text" class="form-control floating url_selector" id="social" name="social" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Youtube</label>
+							<input type="text" class="form-control floating url_selector" id="youtub" name="youtub" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Google</label>
+							<input type="text" class="form-control floating url_selector" id="google" name="google" />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus select-focus select-attorney">
+							<label class="control-label">Association Status</label>
+							<select id="association" name="association" class="form-control floating" >
+								<option value="">Select Association</option>
+								<option value="CONVERTED">CONVERTED</option>
+								<option value="NEW TARGET">NEW TARGET</option>
+								<option value="TS-INTERIM">TS-INTERIM</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus select-focus select-attorney">
+							<label class="control-label">Industry Type <span class="req-lbl">*</span> </label>
+							<select id="industry_type" name="industry_type" class="form-control floating " >
+
+								<option value="">Select Industry Type</option>
+								{{#each industry}}
+									<option value="{{this.id}}">{{this.industry_name}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group form-focus">
+							<label class="control-label">Remarks</label>
+							<textarea class="form-control floating" id="remarks" name="remarks" rows="5"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="text-center m-t-20">
+				<button class="btn btn-primary btn-lg" type="submit">Add Client</button>
+				<a href="/client" class="btn btn-primary btn-lg m-l-10">Cancel</a>
+			</div>
+		</form>
+	</div>
+</div>
+{{#content "script" mode="append"}}
+<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="/assets/js/select2.min.js"></script>
+<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="/assets/js/jquery.tagsinput.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+
+
+<script type="text/javascript">
+	$(document).ready(function (e) {
+		$("#current_revenue").inputmask("numeric", {
+            radixPoint: ".",
+            groupSeparator: ",",
+            digits: 2,
+            autoGroup: true,
+            prefix: '$ ',
+            rightAlign: false
+        });
+
+		$("#estimated_revenue").inputmask("numeric", {
+            radixPoint: ".",
+            groupSeparator: ",",
+            digits: 2,
+            autoGroup: true,
+            prefix: '$ ',
+            rightAlign: false
+        });
+
+		$('#select-existing-tags').multiselect({
+			nonSelectedText: 'Select Existing Tags',
+			includeSelectAllOption: true,
+			buttonWidth: '100%'
+		});
+		
+		$("#clientform").validate({
+			rules: {
+				client_first_name: {
+					required: true
+				},
+				client_last_name: {
+					required: true
+				},
+				org_name: {
+					required: true
+				},
+				/* org_id: {
+					required: true
+				},
+				org_code: {
+					required: true
+				},
+				client_id: {
+					required: true
+				},
+				master_id: {
+					required: true
+				}, */
+				email: {
+					required: true,
+					email: true
+				},
+				client_gender: {
+					required: true
+				},
+				mobile_no: {
+					required: true
+				},
+				phone_no: {
+					required: true
+				},
+				/* client_company: {
+					required: true
+				}, */
+				attorney_id: {
+					required: true
+				},
+				address1: {
+					required: true
+				},
+				country: {
+					required: true
+				},
+				state: {
+					required: true
+				},
+				city: {
+					required: true
+				},
+				zipcode: {
+					required: true
+				},
+				/* industry_type: {
+					required: true
+				} */
+			},
+			messages: {
+				client_first_name: {
+					required: "First name can't be blank"
+				},
+				client_last_name: {
+					required: "Last name can't be blank"
+				},
+				org_name: {
+					required: "Organization name can't be blank"
+				},
+				/* org_id: {
+					required: "Organisation ID can't be blank"
+				},
+				org_code: {
+					required: "Organisation code can't be blank"
+				},
+				client_id: {
+					required: "Client ID can't be blank"
+				},
+				master_id: {
+					required: "Master ID can't be blank"
+				}, */
+				email: {
+					required: "Email ID can't be blank",
+					email: "Enter valid email ID"
+				},
+				client_gender: {
+					required: "Choose your gender"
+				},
+				mobile_no: {
+					required: "Mobile no. can't be blank"
+				},
+				phone_no: {
+					required: "Phone no. can't be blank"
+				},
+				/* client_company: {
+					required: "Company name can't be blank"
+				}, */
+				address1: {
+					required: "Must provide address"
+				},
+				country: {
+					required: "Choose your country"
+				},
+				state: {
+					required: "Choose your state"
+				},
+				city: {
+					required: "Choose your city"
+				},
+				zipcode: {
+					required: "Choose your zipcode"
+				},
+				/* industry_type: {
+					required: "Choose your industry type"
+				} */
+			}
+		});
+
+		// form validation ends
+	});
+	
+	// for individual and organization
+	$(document).on('click', '#individual_client', function () {
+		$('#individual_type').show();
+		$('#org_type').hide();
+		$('#m_s_target').hide();
+	});
+
+	$(document).on('click', '#organization_client', function () {
+		$('#individual_type').hide();
+		$('#org_type').show();
+		$('#m_s_target').show();
+	});
+
+	//contact information 
+	$(document).on('click', '#targetPlus', function () {
+		$('.targetPlus').after($('.targetContactClose').html());
+	});
+
+	$(document).on('click', '.targetClose', function (e) {
+		$(this).parents(".targetDetailsRemove").remove();
+	});
+
+	// show hide for add tag and existing tag
+	$(document).on('click', '#new-add-tag', function () {
+		$('#add-tag-client').show();
+		$('#add-tag-existing-client').hide();
+	});
+
+	$(document).on('click', '#existing-tag', function () {
+		$('#add-tag-existing-client').show();
+		$('#add-tag-client').hide();
+	});
+</script> 
+{{/content}}
