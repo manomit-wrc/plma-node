@@ -116,6 +116,12 @@ router.get('/dashboard', auth,  async(req, res) => {
 /* =================== Client Count Ends ================================*/
 
 /* =================== Referral Count Ends ================================*/
+    Referral.belongsTo(Target, {
+        foreignKey: 'target_id'
+    });
+    Referral.belongsTo(Client, {
+        foreignKey: 'client_id'
+    });
     var referralCondition = {};
     if (req.user.role_id != "1") {
         referralCondition.firm_id = req.user.firm_id;
@@ -125,11 +131,17 @@ router.get('/dashboard', auth,  async(req, res) => {
     }
     var referral = await Referral.findAll({
         where: referralCondition,
+        include: [{
+            model: Target
+        }, {
+            model: Client
+        }],
         order: [
             ['createdAt', 'DESC']
         ]
     });
     var referral_count = referral.length;
+    
 /* =================== Referral Count Ends ================================*/
 
 /* =================== Master Contact Count Ends ================================*/
