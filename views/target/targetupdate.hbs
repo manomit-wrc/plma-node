@@ -58,7 +58,7 @@
 										<input type="text" class="form-control floating" id="org_name" name="org_name" value="{{client.organization_name}}" />
 									</div>
 								</div>
-								
+
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Organisation Code
@@ -104,13 +104,55 @@
 									</div>
 								</div>
 
+								<div class="col-md-3">
+									<div class="form-group form-focus select-focus select-attorney">
+										<label class="control-label">Start Date
+										</label>
+										<select class="form-control floating " id="startMonth" name="startMonth">
+											<option value="">Select Start Date</option>
+											<option value="1" {{#if_eq client.revenue_start_month "1"}} selected {{/if_eq}} >January</option>
+											<option value="2" {{#if_eq client.revenue_start_month "2"}} selected {{/if_eq}} >February</option>
+											<option value="3" {{#if_eq client.revenue_start_month "3"}} selected {{/if_eq}} >March</option>
+											<option value="4" {{#if_eq client.revenue_start_month "4"}} selected {{/if_eq}} >April</option>
+											<option value="5" {{#if_eq client.revenue_start_month "5"}} selected {{/if_eq}} >May</option>
+											<option value="6" {{#if_eq client.revenue_start_month "6"}} selected {{/if_eq}} >June</option>
+											<option value="7" {{#if_eq client.revenue_start_month "7"}} selected {{/if_eq}} >July</option>
+											<option value="8" {{#if_eq client.revenue_start_month "8"}} selected {{/if_eq}} >August</option>
+											<option value="9" {{#if_eq client.revenue_start_month "9"}} selected {{/if_eq}} >September</option>
+											<option value="10" {{#if_eq client.revenue_start_month "10"}} selected {{/if_eq}} >October</option>
+											<option value="11" {{#if_eq client.revenue_start_month "11"}} selected {{/if_eq}} >November</option>
+											<option value="12" {{#if_eq client.revenue_start_month "12"}} selected {{/if_eq}} >December</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="col-md-3">
+									<div class="form-group form-focus select-focus select-attorney">
+										<label class="control-label">End Date
+										</label>
+										<select  {{#if_eq client.target_status ""}} {{/if_eq}} class="form-control floating " id="endMonth" name="endMonth">
+											<option value="">Select End Date</option>
+											<option value="1" {{#if_eq client.revenue_end_month "1"}} selected {{/if_eq}} >January</option>
+											<option value="2" {{#if_eq client.revenue_end_month "2"}} selected {{/if_eq}} >February</option>
+											<option value="3" {{#if_eq client.revenue_end_month "3"}} selected {{/if_eq}} >March</option>
+											<option value="4" {{#if_eq client.revenue_end_month "4"}} selected {{/if_eq}} >April</option>
+											<option value="5" {{#if_eq client.revenue_end_month "5"}} selected {{/if_eq}} >May</option>
+											<option value="6" {{#if_eq client.revenue_end_month "6"}} selected {{/if_eq}} >June</option>
+											<option value="7" {{#if_eq client.revenue_end_month "7"}} selected {{/if_eq}} >July</option>
+											<option value="8" {{#if_eq client.revenue_end_month "8"}} selected {{/if_eq}} >August</option>
+											<option value="9" {{#if_eq client.revenue_end_month "9"}} selected {{/if_eq}} >September</option>
+											<option value="10" {{#if_eq client.revenue_end_month "10"}} selected {{/if_eq}} >October</option>
+											<option value="11" {{#if_eq client.revenue_end_month "11"}} selected {{/if_eq}} >November</option>
+											<option value="12" {{#if_eq client.revenue_end_month "12"}} selected {{/if_eq}} >December</option>
+										</select>
+									</div>
+								</div>
+
 								<div class="col-md-6">
 									<div class="form-group form-focus">
-										<label class="control-label">Closing Date<span class="req-lbl">*</span> </label>
-										<div class="cal-icon">
-											<input class="form-control floating datetimepicker" type="text" id="revenueclosingDate" name="revenueclosingDate" value="{{dateFormat client.revenueclosingDate "
-											 DD-MM-YYYY "}}" >
-										</div>
+										<label class="control-label">Estimated Customer Lifetime Value
+										</label>
+										<input class="form-control floating" type="text" id="estimatedLifetime" name="estimatedLifetime" value="{{client.estimated_lifetime_value}}">
 									</div>
 								</div>
 
@@ -127,7 +169,7 @@
 										<label class="control-label">Start Date<span class="req-lbl">*</span> </label>
 										<div class="cal-icon">
 											<input class="form-control floating datetimepicker" type="text" id="targetStartDate" name="targetStartDate" value="{{dateFormat client.targetStartDate "
-											 DD-MM-YYYY "}}" >
+											 DD-MM-YYYY "}}">
 										</div>
 									</div>
 								</div>
@@ -137,7 +179,7 @@
 										<label class="control-label">End Date<span class="req-lbl">*</span> </label>
 										<div class="cal-icon">
 											<input class="form-control floating datetimepicker" type="text" id="targetEndDate" name="targetEndDate" value="{{dateFormat client.targetEndDate "
-											 DD-MM-YYYY "}}" > 
+											 DD-MM-YYYY "}}">
 										</div>
 									</div>
 								</div>
@@ -147,12 +189,11 @@
 										<label class="control-label">Gender
 											<span class="req-lbl">*</span>
 										</label>
-										<select class="form-control floating " id="gender" name="gender" >
+										<select class="form-control floating " id="gender" name="gender">
 											<option value="">Select Gender</option>
 											<option value="M" {{#if_eq client.gender "M"}} selected {{/if_eq}}>Male</option>
 											<option value="F" {{#if_eq client.gender "F"}} selected {{/if_eq}}>Female</option>
 											<option value="O" {{#if_eq client.gender "O"}} selected {{/if_eq}}>Others</option>
-
 										</select>
 									</div>
 								</div>
@@ -204,14 +245,15 @@
 							<label class="control-label">Attorney
 								<span class="req-lbl">*</span>
 							</label>
-							<select id="attorney_id" name="attorney_id" class="form-control floating " >
+							<select id="attorney_id" name="attorney_id" class="form-control floating ">
 								{{#if_eq user.role_id "3"}}
 								<option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
 								{{else}}
 								<option value="">Select Attorney</option>
 								{{#each attorney}}
 								<option value="{{this.id}}" {{#if_eq this.id ../client.attorney_id}} selected="selected" {{/if_eq}}>{{this.first_name}}
-									{{this.last_name}}</option>
+									{{this.last_name}}
+								</option>
 								{{/each}} {{/if_eq}}
 							</select>
 						</div>
@@ -528,7 +570,7 @@
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus select-attorney">
 							<label class="control-label">Association Status </label>
-							<select id="association" name="association" class="form-control floating " >
+							<select id="association" name="association" class="form-control floating ">
 								<option value="NEW TARGET" {{#if_eq client.association "NEW TARGET"}} selected="selected" {{/if_eq}}>NEW TARGET</option>
 								<option value="CONVERTED" {{#if_eq client.association "CONVERTED"}} selected="selected" {{/if_eq}}>CONVERTED</option>
 								<option value="TS-INTERIM" {{#if_eq client.association "TS-INTERIM"}} selected="selected" {{/if_eq}}>TS-INTERIM</option>
@@ -538,7 +580,7 @@
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus select-attorney">
 							<label class="control-label">Industry Type </label>
-							<select id="industry_type" name="industry_type" class="form-control floating " >
+							<select id="industry_type" name="industry_type" class="form-control floating ">
 								{{#each industry}}
 								<option value="{{this.id}}" {{#if_eq this.id ../client.industry_type}} selected="selected" {{/if_eq}}>{{this.industry_name}}</option>
 								{{/each}}
@@ -586,13 +628,31 @@
 		});
 
 		$("#lifetimeClient").inputmask("numeric", {
-            radixPoint: ".",
-            groupSeparator: ",",
-            digits: 2,
-            autoGroup: true,
-            prefix: '$ ',
-            rightAlign: false
-        });
+			radixPoint: ".",
+			groupSeparator: ",",
+			digits: 2,
+			autoGroup: true,
+			prefix: '$ ',
+			rightAlign: false
+		});
+
+		$("#lifetimeClient").inputmask("numeric", {
+			radixPoint: ".",
+			groupSeparator: ",",
+			digits: 2,
+			autoGroup: true,
+			prefix: '$ ',
+			rightAlign: false
+		});
+
+		$("#estimatedLifetime").inputmask("numeric", {
+			radixPoint: ".",
+			groupSeparator: ",",
+			digits: 2,
+			autoGroup: true,
+			prefix: '$ ',
+			rightAlign: false
+		});
 
 		$("#targetform").validate({
 			rules: {

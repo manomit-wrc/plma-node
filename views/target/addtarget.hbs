@@ -100,7 +100,6 @@
 									</div>
 								</div>
 
-								{{!-- <div class="col-md-6"> --}}
 									<div class="col-md-3">
 										<div class="form-group form-focus select-focus select-attorney">
 											<label class="control-label">Start Date
@@ -145,27 +144,13 @@
 										</div>
 									</div>
 
-									{{!-- <div class="con-md-3">
-										<div class="form-group form-focus select-focus">
-											<label class="control-label">End Date
-											</label>
-											<select class="form-control floating " >
-												<option value="">Select Gender</option>
-												<option value="M">Male</option>
-												<option value="F">Female</option>
-												<option value="O">Other</option>
-											</select>
-										</div>
-									</div> --}}
-{{!-- 
+								<div class="col-md-6">
 									<div class="form-group form-focus">
-										<label class="control-label">Closing Date<span class="req-lbl">*</span> </label>
-										<div class="cal-icon">
-											<input class="form-control floating datetimepicker" type="text" id="revenueclosingDate" name="revenueclosingDate">
-										</div>
-									</div> --}}
-
-								{{!-- </dsiv> --}}
+										<label class="control-label">Estimated Customer Lifetime Value
+										</label>
+										<input class="form-control floating" type="text" id="estimatedLifetime" name="estimatedLifetime">
+									</div>
+								</div>
 
 								<div class="col-md-6">
 									<div class="form-group form-focus">
@@ -174,6 +159,8 @@
 										<input class="form-control floating" type="text" id="lifetimeClient" name="lifetimeClient">
 									</div>
 								</div>
+
+								
 
 								<div class="col-md-6">
 									<div class="form-group form-focus">
@@ -626,6 +613,15 @@
 		});
 
 		$("#lifetimeClient").inputmask("numeric", {
+			radixPoint: ".",
+			groupSeparator: ",",
+			digits: 2,
+			autoGroup: true,
+			prefix: '$ ',
+			rightAlign: false
+		});
+
+		$("#estimatedLifetime").inputmask("numeric", {
 			radixPoint: ".",
 			groupSeparator: ",",
 			digits: 2,
