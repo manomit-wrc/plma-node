@@ -486,13 +486,8 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
                     }
                 });
                 level_type = activity_budget.length > 0 ? activity_budget[0].level_type : level_type;
-                if (editdata[0].target != 'G') {
-                    hour = activity_budget.length > 0 ? ((level_type === 'Individual') ? activity_budget[0].hour / all_activity_client.length : activity_budget[0].hour) : 0;
-                    amount = activity_budget.length > 0 ? ((level_type === 'Individual') ? activity_budget[0].amount / all_activity_client.length : activity_budget[0].amount) : 0;
-                } else {
-                    hour = activity_budget.length > 0 ? activity_budget[0].hour : 0;
-                    amount = activity_budget.length > 0 ? activity_budget[0].amount : 0;
-                }
+                hour = activity_budget.length > 0 ? ((level_type === 'Individual') ? activity_budget[0].hour : activity_budget[0].hour / all_activity_client.length) : '';
+                amount = activity_budget.length > 0 ? ((level_type === 'Individual') ? activity_budget[0].amount : activity_budget[0].amount / all_activity_client.length) : '';
                 const approval_remarks = activity_budget.length > 0 ? activity_budget[0].approver_remarks : '';
                 child_budget_arr.push({
                     "id": child_budget[j].id,
@@ -556,7 +551,6 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
             });
         }
     }
-    console.log(alldata);
     sectionToFirm.belongsTo(Section, {
         foreignKey: 'section_id'
     });
@@ -685,8 +679,8 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
                     }
                 });
                 level_type = activity_budget.length > 0 ? activity_budget[0].level_type : level_type;
-                    hour = activity_budget.length > 0 ? ((level_type === 'Individual') ? activity_budget[0].hour / all_activity_client.length : activity_budget[0].hour) : '';
-                    amount = activity_budget.length > 0 ? ((level_type === 'Individual') ? activity_budget[0].amount / all_activity_client.length : activity_budget[0].amount) : '';
+                hour = activity_budget.length > 0 ? ((level_type === 'Individual') ? activity_budget[0].hour : activity_budget[0].hour / all_activity_client.length) : '';
+                amount = activity_budget.length > 0 ? ((level_type === 'Individual') ? activity_budget[0].amount : activity_budget[0].amount / all_activity_client.length) : '';
                 const approval_remarks = activity_budget.length > 0 ? activity_budget[0].approver_remarks : '';
 
                 child_budget_arr.push({
@@ -762,6 +756,11 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
             model: Section
         }]
     });
+    const originAttrDetails = await User.findOne({
+        where: {
+            id: editdata[0].user_id
+        }
+    });
     res.render('activity/update', {
         layout: 'dashboard',
         csrfToken: req.csrfToken(),
@@ -773,7 +772,7 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
         alltarget_client: alldata,
         editdata: editdata[0],
         firm: firm[0].title,
-        originAttorney: req.user.first_name + " " + req.user.last_name,
+        originAttorney: originAttrDetails.first_name + " " + originAttrDetails.last_name,
         activity_goal: activity_goal,
         budgetArr,
         practice_area: practice_area,
