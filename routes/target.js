@@ -744,12 +744,6 @@ router.post('/target/move-to-client', auth, async(req, res) => {
                 }
             });
 
-            // const testDate = target_data.revenueclosingDate ? target_data.revenueclosingDate.split("-") : '';
-            console.log('testDate',target_data.revenueclosingDate);
-            // console.log('target_data.targetStartDate',target_data.targetStartDate);
-            // console.log('target_data.targetEndDate',target_data.targetEndDate);
-            
-
             await Client.create({
                 first_name: target_data.first_name,
                 last_name: target_data.last_name,
@@ -787,11 +781,8 @@ router.post('/target/move-to-client', auth, async(req, res) => {
                 client_type: target_data.target_type,
                 remarks: target_data.remarks,
                 attorney_id: req.user.id,
-
                 estimated_revenue: target_data.estimated_revenue
                 // revenueclosingDate: target_data.revenueclosingDate,
-                // clientStartDate: target_data.targetStartDate,
-                // clientEndDate: target_data.targetEndDate
 
             });
 

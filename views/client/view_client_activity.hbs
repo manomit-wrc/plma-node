@@ -2,8 +2,7 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
-{{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
 <div class="page-wrapper">
     <div class="content container-fluid">
         <div class="pg-header">
@@ -36,19 +35,18 @@
                             {{#each activity_details}}
                             <tr>
                                 <td>{{math @index "+" 1}}</td>
-                                 <td>
-                                     <a href="/activity/view/{{this.activity.id}}">
-                           {{this.activity.activity_name}}</a>
+                                <td>
+                                    <a href="/activity/view/{{this.activity.id}}">
+                                        {{this.activity.activity_name}}</a>
                                 </td>
 
-                                {{!-- <td>{{this.activity.activity_name}}</td> --}}
                                 <td>{{dateFormat this.activity.activity_from_date "DD-MM-YYYY"}}</td>
                                 <td>{{dateFormat this.activity.activity_to_date "DD-MM-YYYY"}}</td>
                                 <td>{{this.activity.remarks}}</td>
-                                <td> {{#if_eq this.activity.activity_status '0'}} NEW ACTIVITY - CREATED {{/if_eq}} {{#if_eq this.activity.activity_status
-                                    '1'}} PENDING APPROVAL - IN-PROGRESS {{/if_eq}} {{#if_eq this.activity.activity_status
-                                    '2'}} APPROVED - PROCEED {{/if_eq}} {{#if_eq this.activity.activity_status '3'}} NOT
-                                    APPROVED - DISCARD ACTIVITY {{/if_eq}}
+                                <td> {{#if_eq this.activity.activity_status '0'}} NEW ACTIVITY - CREATED {{/if_eq}} {{#if_eq
+                                    this.activity.activity_status '1'}} PENDING APPROVAL - IN-PROGRESS {{/if_eq}} {{#if_eq
+                                    this.activity.activity_status '2'}} APPROVED - PROCEED {{/if_eq}} {{#if_eq this.activity.activity_status
+                                    '3'}} NOT APPROVED - DISCARD ACTIVITY {{/if_eq}}
                                 </td>
                             </tr>
                             {{/each}}
@@ -72,5 +70,4 @@
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
 <script type="text/javascript" src="/assets/js/select2.min.js"></script>
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
-<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
-{{/content}}
+<script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script> {{/content}}
