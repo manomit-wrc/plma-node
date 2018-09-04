@@ -219,11 +219,20 @@ router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res)
                 accptActArr.push(accepted_activity[j].activity_id);
             }
             //whereCondition.user_id = '';
+            var origin_activity = await Activity.findAll({
+                where: {
+                    user_id: req.user.id
+                }
+            });
+            for (var a = 0; a < origin_activity.length; a++) {
+                accptActArr.push(origin_activity[a].id);
+            }
             whereCondition.id = accptActArr;
         } else {
             whereCondition.user_id = req.user.id;
         }
     }
+    console.log(whereCondition);
     var success_message = req.flash('success-message')[0];
     const activity_goal = await ActivityGoal.findAll({
         where: {
