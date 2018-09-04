@@ -484,8 +484,8 @@
                 <thead>
                   <tr>
                     <th>Name</th>
-                    <th>Approval Status</th>
                     <th>Attorney</th>
+                    <th>Approval Status</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -506,10 +506,11 @@
                         <h2> <a href="approval_details/{{this.activity_id}}" style="width:auto">{{this.name}}</a> </h2>
                         {{/if_eq}}
                       </td>
+                      <td>{{this.userFirstName}} {{this.userLastName}} </td>
                       <td>
                         <span class="label label-success-border">Pending</span>
                       </td>
-                      <td>{{this.userFirstName}} {{this.userLastName}} </td>
+                      
                     </tr>
                     {{/each}} 
                 {{/if_eq}}
