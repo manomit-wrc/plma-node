@@ -97,6 +97,7 @@ a:focus {
 	-ms-box-shadow: none;
 	-o-box-shadow: none;
 	height: 40px;
+	background-color: #fff !important;
 }
 
 .form-control:focus {
@@ -6592,13 +6593,13 @@ select.gender {
 				-webkit-appearance: none;
 				background-attachment: scroll !important;
 				background-clip: border-box !important;
-				background-color: rgba(0, 0, 0, 0) !important;
+				/*background-color: rgba(0, 0, 0, 0) !important;*/
 				background-image: url("../img/arrow.png") !important;
 				background-origin: padding-box !important;
 				background-position: right center;
 				background-repeat: no-repeat;
 				background-size: auto auto !important;
-				background-color: #fff !important
+				/*background-color: #fff !important*/
 				outline: none !important;
 			}
 
