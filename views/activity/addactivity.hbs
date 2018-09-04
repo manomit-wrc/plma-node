@@ -189,7 +189,7 @@
                                     <select id="practice_area" name="practice_area" class="form-control floating" >
                                         <option value="">Select Practice Area</option>
                                         {{#each practice_area}}
-                                            <option value="{{this.id}}">{{this.name}}</option>
+                                            <option value="{{this.practicearea.id}}">{{this.practicearea.name}}</option>
                                         {{/each}}
                                     </select>
                                 </div>
@@ -209,9 +209,14 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group form-focus">
-                                    <label class="control-label">Activity Reason <span class="req-lbl">*</span> </label>
-                                    <input class="form-control floating" type="text" id="activity_reason" name="activity_reason">
+                                <div class="form-group form-focus select-focus select-attorney">
+                                    <label class="control-label">Category</label>
+                                    <select class="form-control floating " id="category" name="category">
+                                        <option value="">Select Category</option>
+                                        <option value="content development">Content Development</option>
+                                        <option value="contact management">Contact Management</option>
+                                        <option value="relationship building">Relationship Building</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -258,15 +263,9 @@
                                     <label class="control-label">Activity Details Status</label>
                                     <select class="form-control floatingb " id="budget_status" name="budget_status">
                                         <option value="">Select One</option>
-<<<<<<< HEAD
                                         <option value="delete_team">DELETED ITEM - TO BE SKIPPED</option>
                                         <option value="planned">PLANNED</option>
                                         <option value="unplanned">UNPLANNED</option>
-=======
-                                        <option value="planned">PLANNED</option>
-                                        <option value="unplanned">UNPLANNED</option>
-                                        <option value="delete_team">DELETED ITEM - TO BE SKIPPED</option>
->>>>>>> c8de50c487dd9c9a6fb0753057b591bd3f962ca6
                                     </select>
                                 </div>
                             </div>
@@ -275,15 +274,9 @@
                                     <label class="control-label">Activity Budget Details Status</label>
                                     <select class="form-control floating " id="budget_details_status" name="budget_details_status" >
                                         <option value="">Select One</option>
-<<<<<<< HEAD
                                         <option value="guestimate">GUESTIMATE</option>
                                         <option value="planned">PLANNED BUDGET</option>
                                         <option value="unplanned">UNPLANNED BUDGET</option>
-=======
-                                        <option value="planned">PLANNED BUDGET</option>
-                                        <option value="unplanned">UNPLANNED BUDGET</option>
-                                        <option value="guestimate">GUESTIMATE</option>
->>>>>>> c8de50c487dd9c9a6fb0753057b591bd3f962ca6
                                     </select>
                                 </div>
                             </div>
@@ -625,7 +618,7 @@
                 activity_name: {
                     required: true
                 },
-                activity_reason: {
+                category: {
                     required: true
                 }
             },
@@ -654,7 +647,7 @@
                 activity_name: {
                     required: "Activity name can't be blank"
                 },
-                activity_reason: {
+                category: {
                     required: "Activity reason can't be blank"
                 }
             }
@@ -679,6 +672,7 @@
                 $(".section").hide();
                 $(".strategyGroup").hide();
                 $(".attorney").show();
+                
             } else if ($(this).val() == 'section') {
                 //$('#potiential_revenue').val('0.00');
                 $(".none").hide();

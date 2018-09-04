@@ -227,7 +227,6 @@
       <div class="col-md-6 col-sm-6 col-lg-3">
         <div class="dash-widget clearfix card-box">
           <span class="dash-widget-icon">
-            <!-- <i class="fa fa-users" aria-hidden="true"></i> -->
             <img src="assets/img/referrals.png" alt="referrals">
           </span>
           <div class="dash-widget-info">
@@ -485,8 +484,8 @@
                 <thead>
                   <tr>
                     <th>Name</th>
+                    <th>Attorney</th>
                     <th>Approval Status</th>
-                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -499,15 +498,19 @@
                     {{#each notiFicationDetails}}
                     <tr class="activity_custom_del">
                       <td style="min-width:200px;">
-                        <a href="#" class="avatar">{{first_letter this.name}}</a>
-                      <h2>
-                        <a href="#" style="width:auto">{{this.name}}</a>
-                      </h2>
+                        {{#if_eq this.type "1"}}
+                        <a href="/team-activity-approvals" class="avatar">{{first_letter this.name}}</a>
+                        <h2> <a href="/team-activity-approvals" style="width:auto">{{this.name}}</a> </h2>
+                        {{else}}
+                         <a href="/approval_details/{{this.activity_id}}" class="avatar">{{first_letter this.name}}</a>
+                        <h2> <a href="approval_details/{{this.activity_id}}" style="width:auto">{{this.name}}</a> </h2>
+                        {{/if_eq}}
                       </td>
-                      <td>{{this.email}}</td>
+                      <td>{{this.userFirstName}} {{this.userLastName}} </td>
                       <td>
                         <span class="label label-success-border">Pending</span>
                       </td>
+                      
                     </tr>
                     {{/each}} 
                 {{/if_eq}}
@@ -516,7 +519,7 @@
             </div>
           </div>
           <div class="panel-footer">
-            <a href="/referral" class="text-primary">View all referrals</a>
+            <a href="/activity-approvals" class="text-primary">View all Approval</a>
           </div>
         </div>
       </div>
