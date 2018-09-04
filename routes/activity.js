@@ -855,6 +855,7 @@ router.post('/activity/edit-budget', auth, firmAttrAuth, csrfProtection, async (
 });
 
 router.post('/activity/update/:id', auth, upload.single('activity_attachment'), firmAttrAuth, csrfProtection, async (req, res) => {
+
     var target_user = [];
     var client_user = [];
     var referral_user = [];
@@ -869,7 +870,7 @@ router.post('/activity/update/:id', auth, upload.single('activity_attachment'), 
     const activityBudgetData = await ActivityBudget.findAll({
         where: { 'activity_id': req.body.activity_id }
     });
-    var targetClientLength;
+    var targetClientLength = 1;
     if (activityBudgetData[0].level_type === 'Individual') {
         if (target_user !== undefined) {
             targetClientLength = target_user.length;
