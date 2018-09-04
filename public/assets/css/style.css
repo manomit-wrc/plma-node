@@ -6731,6 +6731,10 @@ select.gender {
 					color: #ff881f;
 				}
 
+				.table-responsive.refe.sourc thead th:nth-child(1) {
+					width: 49%;
+				}
+
 				/*.dropdown-menu.inner.selectpicker {
 					border-bottom: 1px solid #ccc !important;
 					border-left: 1px solid #ccc !important;
