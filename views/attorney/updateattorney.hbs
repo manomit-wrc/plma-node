@@ -147,9 +147,11 @@
                             <label class="control-label">Attorney Type</label>
                             <select class="form-control floating " id="attorney_type" name="attorney_type" >
                                 <option value="">Select Attorney Type</option>
-                                <option value="AT-INTERIM" {{#if_eq edata.0.attorney_details.0.attorney_type "AT-INTERIM"}} selected="selected" {{/if_eq}}>INTERIM ATTORNEY</option>
                                 <option value="AT-APPROVED" {{#if_eq edata.0.attorney_details.0.attorney_type "AT-APPROVED"}} selected="selected" {{/if_eq}}>APPROVED ATTORNEY</option>
                                 <option value="PENDING" {{#if_eq edata.0.attorney_details.0.attorney_type "PENDING"}} selected="selected" {{/if_eq}}>ATTORNEY TO BE ASSIGNED</option>
+                                <option value="AT-INTERIM" {{#if_eq edata.0.attorney_details.0.attorney_type "AT-INTERIM"}} selected="selected" {{/if_eq}}>INTERIM ATTORNEY</option>
+
+
                             </select>
                         </div>
                     </div>

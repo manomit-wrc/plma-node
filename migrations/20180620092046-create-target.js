@@ -96,10 +96,8 @@ module.exports = {
       },
       targetEndDate: {
         type: Sequelize.STRING
-      },
-      lifetimeClientValue: {
-        type: Sequelize.INTEGER
       }
+      
     });
   },
   down: (queryInterface, Sequelize) => {

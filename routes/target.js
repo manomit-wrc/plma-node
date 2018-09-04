@@ -144,8 +144,16 @@ router.get('/target', auth, firmAttrAuth, csrfProtection, async(req, res) => {
 
 router.get('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) => {
     var error_message = req.flash('error-target-message')[0];
-    var designation = await Designation.findAll();
-    var industry = await industry_type.findAll();
+    var designation = await Designation.findAll({
+        order: [
+			['title', 'ASC']
+		],
+    });
+    var industry = await industry_type.findAll({
+        order: [
+			['industry_name', 'ASC']
+		],
+    });
     var country = await Country.findAll();
     const state = await State.findAll({
         where: {
@@ -246,7 +254,6 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
                 estimated_lifetime_value: req.body.estimatedLifetime,
                 targetStartDate: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
                 targetEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
-                lifetimeClientValue: removePhoneMask(req.body.lifetimeClient)
             });
 
             for (let j=0; j< targetDetails.length; j++) {
@@ -308,7 +315,6 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
                 estimated_lifetime_value: removePhoneMask(req.body.estimatedLifetime),
                 targetStartDate: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
                 targetEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
-                lifetimeClientValue: removePhoneMask(req.body.lifetimeClient)
             });
             req.flash('success-message', 'Target Added Successfully');
             res.redirect('/target')
@@ -322,8 +328,16 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
 router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, res) => {
     var error_message = req.flash('error-target-message')[0];
     const target = await Target.findById(req.params['id']);
-    const designation = await Designation.findAll();
-    const industrys = await industry_type.findAll();
+    const designation = await Designation.findAll({
+        order: [
+			['title', 'ASC']
+		],
+    });
+    const industrys = await industry_type.findAll({
+        order: [
+			['industry_name', 'ASC']
+		],
+    });
     const country = await Country.findAll();
     const state = await State.findAll({
         where: {
@@ -519,7 +533,6 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
             revenue_end_month: req.body.endMonth,
             targetStartDate: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
             targetEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
-            lifetimeClientValue: removePhoneMask(req.body.lifetimeClient)
         }, {
             where: {
                 id: req.params['id']

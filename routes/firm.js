@@ -58,9 +58,21 @@ router.get('/firms', csrfProtection, auth, siteAuth, async (req, res) => {
         }]
     });
 
-    const firms = await Firm.findAll({});
-    const designation = await Designation.findAll();
-    const group = await Group.findAll();
+    const firms = await Firm.findAll({
+        order: [
+			['title', 'ASC']
+		],
+    });
+    const designation = await Designation.findAll({
+        order: [
+			['title', 'ASC']
+		],
+    });
+    const group = await Group.findAll({
+        order: [
+			['name', 'ASC']
+		],
+    });
 
     res.render('firms/index', {
         layout: 'dashboard',
@@ -518,9 +530,21 @@ router.get('/firm-details', auth, firmAuth, csrfProtection, async (req, res) => 
             }
         });
     }
-    var section = await Section.findAll();
-    var practice_area = await PracticeArea.findAll();
-    var jurisdiction = await Jurisdiction.findAll();
+    var section = await Section.findAll({
+        order: [
+			['name', 'ASC']
+		],
+    });
+    var practice_area = await PracticeArea.findAll({
+        order: [
+			['name', 'ASC']
+		],
+});
+    var jurisdiction = await Jurisdiction.findAll({
+        order: [
+			['name', 'ASC']
+		],
+    });
 
     var result = JSON.parse(JSON.stringify(firm[0].section_to_firms));
     var arr = [];
@@ -821,3 +845,4 @@ router.post("/edit-office-city-get", auth, firmAuth, async(req, res)=> {
 /*==========================Firm Profile Details Update section=======================*/
 
 module.exports = router;
+

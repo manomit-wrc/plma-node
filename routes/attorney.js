@@ -170,13 +170,20 @@ router.get("/get-all-designation", auth, async (req, res) => {
 
 router.get('/attorneys/addAttorney', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var err_message = req.flash('success-err-message')[0];
-	const designation = await Designation.findAll();
+	const designation = await Designation.findAll({
+		order: [
+			['title', 'ASC'],
+		],
+	});
 	const group = await Group.findAll({
 		order: [
 			['name', 'ASC'],
 		],
 	});
 	sectionToFirm.belongsTo(Section, {
+		order: [
+			['name', 'ASC'],
+		],
 		foreignKey: 'section_id'
 	});
 	PracticeAreaToFirm.belongsTo(PracticeArea, {

@@ -75,15 +75,24 @@ router.get('/dashboard', auth,  async(req, res) => {
             activityCondition.user_id = req.user.id;
         }
     }
-    var activity = await Activity.findAll({
-        where: activityCondition,
-        order: [
-            ['createdAt', 'DESC']
-        ],
-        include: [{
-            model: ActivityGoal
-        }],
-    });
+
+    try {
+        var activity = await Activity.findAll({
+            where: activityCondition,
+            order: [
+                ['createdAt', 'DESC']
+            ],
+            include: [{
+                model: ActivityGoal
+            }],
+        });
+    }
+    catch(error) {
+        console.log(error);
+    }
+    
+
+
     var activity_count = activity.length;
 /* =================== Activity Count Ends ================================*/
 /* =================== Target Count Ends ================================*/

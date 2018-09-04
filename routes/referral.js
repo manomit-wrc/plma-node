@@ -86,10 +86,17 @@ router.get('/referral', auth, firmAttrAuth, csrfProtection, async (req, res) => 
 		}
 	});
 	const client = await Client.findAll({
+		order: [
+			['first_name', 'ASC'],
+		],
 		where: fetchClient
 	});
 
 	const target = await Target.findAll({
+
+		order: [
+			['first_name', 'ASC'],
+		],
 		where: fetchTarget
 	});
 	var whereCondition = {};
@@ -179,7 +186,11 @@ router.get('/referral', auth, firmAttrAuth, csrfProtection, async (req, res) => 
 
 router.get('/referral/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var err_message = req.flash('error-referral-message')[0];
-	var industry = await industry_type.findAll();
+	var industry = await industry_type.findAll({
+		order: [
+			['industry_name', 'ASC'],
+		],
+	});
 	var country = await Country.findAll();
 	var fetchTarget = {};
 	var fetchClient = {};
@@ -196,6 +207,9 @@ router.get('/referral/add', auth, firmAttrAuth, csrfProtection, async (req, res)
 	}
 
 	const attorney = await User.findAll({
+		order: [
+			['first_name', 'ASC'],
+		],
 		where: {
 			role_id: 3,
 			firm_id: req.user.firm_id
@@ -213,6 +227,7 @@ router.get('/referral/add', auth, firmAttrAuth, csrfProtection, async (req, res)
 			['first_name', 'ASC'],
 		],
 
+
 		where:fetchClient
 	});
 
@@ -221,6 +236,7 @@ router.get('/referral/add', auth, firmAttrAuth, csrfProtection, async (req, res)
 		order: [
 			['first_name', 'ASC'],
 		],
+
 
 		where: fetchTarget
 	});
@@ -448,7 +464,11 @@ router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 	var err_message = req.flash('error-referral-message')[0];
 	const referral = await Referral.findById(req.params['id']);
 	const country = await Country.findAll();
-	const industry = await industry_type.findAll();
+	const industry = await industry_type.findAll({
+		order: [
+			['industry_name', 'ASC'],
+		],
+	});
 	const cities = await City.findById(referral.city.toString());
 
 	var fetchTarget = {};
@@ -467,6 +487,9 @@ router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 	}
 
 	const attorney = await User.findAll({
+		order: [
+			['first_name', 'ASC'],
+		],
 		where: {
 			role_id: 3,
 			firm_id: req.user.firm_id
