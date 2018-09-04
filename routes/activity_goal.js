@@ -74,7 +74,6 @@ router.post('/activity-goal/add', auth, firmAttrAuth, csrfProtection, (req, res)
 		user_id: req.user.id,
 		activity_goal: req.body.activity_goal,
 		strategic_goal_id: req.body.strategic_goal,
-		category: req.body.category,
 		from_date: formatFromDate ? formatFromDate[2] + "-" + formatFromDate[1] + "-" + formatFromDate[0] : null,
 		to_date: formatToDate ? formatToDate[2] + "-" + formatToDate[1] + "-" + formatToDate[0] : null,
 		remarks: req.body.remarks
@@ -121,7 +120,6 @@ router.post('/activity-goal/edit/:id', auth, firmAttrAuth, csrfProtection, (req,
 	const formatToDate1 = req.body.to_date ? req.body.to_date.split("-") : '';
 	ActivityGoal.update({
 		activity_goal: req.body.activity_goal,
-		category: req.body.category,
 		strategic_goal_id: req.body.strategic_goal,
 		from_date: formatFromDate1 ? formatFromDate1[2] + "-" + formatFromDate1[1] + "-" + formatFromDate1[0] : null,
 		to_date: formatToDate1 ? formatToDate1[2] + "-" + formatToDate1[1] + "-" + formatToDate1[0] : null,
