@@ -6694,10 +6694,10 @@ select.gender {
 				}
 
 				ul.personal-info.educational-info {
-					    width: 27.3333%;
-					    float: left;
-					    margin-bottom: 20px;
-					    margin-left: 70px;
+					width: 27.3333%;
+					float: left;
+					margin-bottom: 20px;
+					margin-left: 70px;
 				}
 
 				ul.personal-info.educational-info li {
@@ -6717,6 +6717,10 @@ select.gender {
 
 				.btn.btn-default.multiselect-clear-filter {
 					height: 50px;
+				}
+
+				.text-center.gap-col {
+					height: 59px;
 				}
 
 				/*.dropdown-menu.inner.selectpicker {
