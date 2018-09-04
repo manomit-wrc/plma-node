@@ -418,8 +418,9 @@
         </div>
       </div>
     </div>
+
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-6">
         <div class="panel panel-table">
           <div class="panel-heading">
             <h3 class="panel-title">Referral Sources</h3>
@@ -432,9 +433,6 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Referral Sources Type</th>
-                    <th>Mobile</th>
-                    <th>Referred</th>
-                    <th>Referred Name</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -464,18 +462,6 @@
                       <span class="label label-info-border">Organization</span>
                       {{/if_eq}}
                     </td>
-                    <td>{{this.mobile}}</td>
-                    <td>{{#if_eq this.referred_type "C"}}
-                        <span class="label label-info-border">Client</span>
-                        {{else}}
-                        <span class="label label-info-border">Target</span>
-                        {{/if_eq}}
-                    </td>
-                    <td>{{#if_eq this.referred_type "C"}}
-                       <a href="/client/view/{{this.client.id}}">{{this.client.first_name}} {{this.client.last_name}}</a> 
-                      {{else}} 
-                        <a href="/target/view/{{this.target.id}}">{{this.target.first_name}} {{this.target.last_name}}</a> 
-                      {{/if_eq}}</td>
                   </tr>
                   {{/each}} {{/if_eq}}
                 </tbody>
@@ -488,7 +474,56 @@
         </div>
       </div>
       
+      <div class="col-md-6">
+        <div class="panel panel-table">
+          <div class="panel-heading">
+            <h3 class="panel-title">Notifications</h3>
+          </div>
+          <div class="panel-body">
+            <div class="table-responsive refe">
+              <table class="table table-striped custom-table m-b-0">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Approval Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {{#if_eq notiFicationDetails.length "0"}}
+                  <tr>
+                    <td colspan="4" class="text-center">No notification available in table</td>
+                  </tr>
+                  {{else}}
+                  
+                    {{#each notiFicationDetails}}
+                    <tr class="activity_custom_del">
+                      <td style="min-width:200px;">
+                        <a href="#" class="avatar">{{first_letter this.name}}</a>
+                      <h2>
+                        <a href="#" style="width:auto">{{this.name}}</a>
+                      </h2>
+                      </td>
+                      <td>{{this.email}}</td>
+                      <td>
+                        <span class="label label-success-border">Pending</span>
+                      </td>
+                    </tr>
+                    {{/each}} 
+                {{/if_eq}}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="panel-footer">
+            <a href="/referral" class="text-primary">View all referrals</a>
+          </div>
+        </div>
+      </div>
+      
     </div>
+
+
     {{/if_eq}}
   </div>
 </div>
