@@ -232,7 +232,6 @@ router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res)
             whereCondition.user_id = req.user.id;
         }
     }
-    console.log(whereCondition);
     var success_message = req.flash('success-message')[0];
     const activity_goal = await ActivityGoal.findAll({
         where: {

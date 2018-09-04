@@ -222,7 +222,10 @@
                     {{#each practice_area}}
                     <option value="{{this.practicearea.id}}" {{#if_eq this.practicearea.id ../editdata.practice_area}} selected="selected" {{/if_eq}}>{{this.practicearea.name}}</option>
                     {{/each}}
+                    {{#if_eq user.id editdata.user_id}}
+                    {{else}}
                     <option value="{{practicearea.id}}" {{#if_eq practicearea.id editdata.practice_area}} selected {{/if_eq}}>{{practicearea.name}}</option>
+                    {{/if_eq}}
                   </select>
                 </div>
               </div>
@@ -957,6 +960,7 @@
         optionValues.push(this.value);
       }
     });
+    
     $("#addClitnt_t_r_g").click(function () {
             $("#addDetailsForm").submit();
         });
