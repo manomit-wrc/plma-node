@@ -479,6 +479,20 @@ router.post('/client/findPinByCity', auth, firmAttrAuth, csrfProtection, (req, r
 });
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*==========================================Client route starts==============================================*/
 router.get('/client', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var success_message = req.flash('success-message')[0];
@@ -569,11 +583,23 @@ router.get('/client', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 
 router.get('/client/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var error_message = req.flash('error-client-message')[0];
-	const designation = await Designation.findAll();
-	const industry = await Industry.findAll();
+	const designation = await Designation.findAll({
+		order: [
+			['title', 'ASC']
+		],
+	});
+	const industry = await Industry.findAll({
+		order: [
+			['industry_name', 'ASC']
+		],
+	});
 	const country = await Country.findAll();
 	const state = await State.findAll();
-	const tags = await Tag.findAll();
+	const tags = await Tag.findAll({
+		order: [
+			['tags', 'ASC']
+		],
+	});
 
 	const attorney = await user.findAll({
 		order: [
@@ -621,10 +647,22 @@ router.post('/client/multi-delete/', auth, firmAttrAuth, async (req, res) => {
 router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var error_message = req.flash('error-clientEdit-message')[0];
 	const clients = await client.findById(req.params['id']);
-	const designations = await Designation.findAll();
-	const tags = await Tag.findAll();
+	const designations = await Designation.findAll({
+		order: [
+			['title', 'ASC']
+		],
+	});
+	const tags = await Tag.findAll({
+		order: [
+			['tags', 'ASC']
+		],
+	});
 
-	const industrys = await Industry.findAll();
+	const industrys = await Industry.findAll({
+		order: [
+			['industry_name', 'ASC']
+		],
+	});
 	const client_country = await Country.findAll();
 	const attorney = await user.findAll({
 		order: [
@@ -1116,6 +1154,19 @@ router.post('/client/findPinByCity', auth, firmAttrAuth, csrfProtection, (req, r
 
 
 /*==========================================Client route ends==============================================*/
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*==========================================Import csv routes starts=========================================*/
 

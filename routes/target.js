@@ -144,8 +144,16 @@ router.get('/target', auth, firmAttrAuth, csrfProtection, async(req, res) => {
 
 router.get('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) => {
     var error_message = req.flash('error-target-message')[0];
-    var designation = await Designation.findAll();
-    var industry = await industry_type.findAll();
+    var designation = await Designation.findAll({
+        order: [
+			['title', 'ASC']
+		],
+    });
+    var industry = await industry_type.findAll({
+        order: [
+			['industry_name', 'ASC']
+		],
+    });
     var country = await Country.findAll();
     const state = await State.findAll({
         where: {
@@ -322,8 +330,16 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
 router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, res) => {
     var error_message = req.flash('error-target-message')[0];
     const target = await Target.findById(req.params['id']);
-    const designation = await Designation.findAll();
-    const industrys = await industry_type.findAll();
+    const designation = await Designation.findAll({
+        order: [
+			['title', 'ASC']
+		],
+    });
+    const industrys = await industry_type.findAll({
+        order: [
+			['industry_name', 'ASC']
+		],
+    });
     const country = await Country.findAll();
     const state = await State.findAll({
         where: {

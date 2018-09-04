@@ -48,7 +48,11 @@ function removePhoneMask(phone_no) {
 router.get('/master_contact', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var success_message = req.flash('success-message')[0];
 	var success_edit_message = req.flash('success-edit-message')[0];
-	const industryTypes = await industry_type.findAll();
+	const industryTypes = await industry_type.findAll({
+		order: [
+			['industry_name', 'ASC']
+		],
+	});
 	var country = await Country.findAll();
 	const state = await State.findAll({
 		where: {
@@ -142,7 +146,12 @@ router.get('/master_contact', auth, firmAttrAuth, csrfProtection, async (req, re
 
 router.get('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var error_message = req.flash('error-contact-message')[0];
-	var industry_types = await industry_type.findAll();
+	var industry_types = await industry_type.findAll({
+
+		order: [
+			['industry_name', 'ASC']
+		],
+	});
 	var country = await Country.findAll();
 	const state = await State.findAll({
 		where: {
@@ -309,7 +318,12 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 router.get('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var error_message = req.flash('error-contact-message')[0];
 	const contact = await Contact.findById(req.params['id']);
-	const industry_types = await industry_type.findAll();
+	const industry_types = await industry_type.findAll({
+
+		order: [
+			['industry_name', 'ASC']
+		],
+	});
 	const country = await Country.findAll();
 	const state = await State.findAll({
 		where: { country_id: "233" }
