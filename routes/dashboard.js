@@ -30,6 +30,8 @@ const MasterContact = require('../models').master_contact;
 const ActivityBudget = require('../models').activity_budget;
 const ActivityGoal = require('../models').activity_goal;
 const Sequelize = require('sequelize');
+const requestApproval = require('../models').request_approval;
+const activityAttorney = require('../models').activity_attorney;
 const Op = Sequelize.Op;
 
 var csrfProtection = csrf({ cookie: true });
@@ -252,6 +254,102 @@ router.get('/dashboard', auth,  async(req, res) => {
 
     
 /* =================== Ends Chart Section ======================================================*/
+
+
+    //notifications start 09-19-2018
+    var notiFicationDetails = []
+
+     requestApproval.belongsTo(Activity, {
+        foreignKey: 'activity_id'
+    });
+
+    requestApproval.belongsTo(User, {
+        foreignKey: 'approver_id'
+    });
+    
+    const noti = await requestApproval.findAll({
+        where: {
+            'approver_id': req.user.id,
+            'status': '1'
+        },
+        include: [{
+            model: User
+        },
+        {
+            model: Activity
+        }],
+        order: [
+            ['updatedAt', 'DESC']
+        ]
+    });
+
+    activityAttorney.belongsTo(Activity, {
+        foreignKey: 'activity_id'
+    });
+
+    activityAttorney.belongsTo(User, {
+        foreignKey: 'attorney_id'
+    });
+    
+    const teamActivityAttorney = await activityAttorney.findAll({
+        where: {
+            'attorney_id': req.user.id,
+            'status': '0',
+        },
+        include: [{
+            model: User
+        },{
+            model: Activity
+        }],
+    }); 
+
+
+    if (teamActivityAttorney.length>0) {
+        for (let i=0; i< teamActivityAttorney.length; i++) {
+            const userDetails = await User.findOne({
+                where:{
+                    'id':teamActivityAttorney[i].activity.user_id
+                }
+            })
+
+            notiFicationDetails.push({
+                'name': teamActivityAttorney[i].activity.activity_name,
+                'createDate':teamActivityAttorney[i].activity.activity_creation_date,
+                'updateDate': teamActivityAttorney[i].activity.updatedAt,
+                'updatedAt':teamActivityAttorney[i].updatedAt,
+                'activity_id':teamActivityAttorney[i].activity.id,
+                'userFirstName':userDetails.first_name,
+                'userLastName':userDetails.last_name,
+                'type': '1'
+            })
+        }
+    }
+
+    if (noti.length>0) {
+        for (let i=0; i< noti.length; i++) {
+            const userDetails = await User.findOne({
+                where:{
+                    'id':noti[i].activity.user_id
+                }
+            })
+
+            notiFicationDetails.push({
+                'name':noti[i].activity.activity_name,
+                'createDate':noti[i].activity.activity_creation_date,
+                'updateDate': noti[i].activity.updatedAt,
+                'updatedAt':noti[i].updatedAt,
+                'activity_id':noti[i].activity.id,
+                'userFirstName':userDetails.first_name,
+                'userLastName':userDetails.last_name,
+                'type':'2'
+            }) 
+        }
+    }    
+    // console.log('notiFicationDetails',notiFicationDetails);
+    
+    //notifications end 09-19-2018    
+
+
     res.render('dashboard', {
         layout: 'dashboard',
         auth_msg: auth_msg,
@@ -276,8 +374,10 @@ router.get('/dashboard', auth,  async(req, res) => {
         attorney_count,
         attorney,
         total_budget_amount,
-        pieChart
+        pieChart,
+        notiFicationDetails
     });
+
 }).get('/logout', auth, (req, res) => {
     req.logout();
     res.redirect('/');
