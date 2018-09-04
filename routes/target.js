@@ -254,7 +254,6 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
                 estimated_lifetime_value: req.body.estimatedLifetime,
                 targetStartDate: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
                 targetEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
-                lifetimeClientValue: removePhoneMask(req.body.lifetimeClient)
             });
 
             for (let j=0; j< targetDetails.length; j++) {
@@ -316,7 +315,6 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
                 estimated_lifetime_value: removePhoneMask(req.body.estimatedLifetime),
                 targetStartDate: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
                 targetEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
-                lifetimeClientValue: removePhoneMask(req.body.lifetimeClient)
             });
             req.flash('success-message', 'Target Added Successfully');
             res.redirect('/target')
@@ -535,7 +533,6 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
             revenue_end_month: req.body.endMonth,
             targetStartDate: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
             targetEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
-            lifetimeClientValue: removePhoneMask(req.body.lifetimeClient)
         }, {
             where: {
                 id: req.params['id']

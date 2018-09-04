@@ -47,9 +47,8 @@ module.exports = (sequelize, DataTypes) => {
     revenue_end_month:DataTypes.STRING,
     estimated_lifetime_value:DataTypes.STRING,
     targetStartDate:DataTypes.STRING,
-    targetEndDate:DataTypes.STRING,
-    lifetimeClientValue:DataTypes.INTEGER,
-    
+    targetEndDate:DataTypes.STRING
+
   }, {});
   target.associate = function(models) {
     // associations can be defined here
