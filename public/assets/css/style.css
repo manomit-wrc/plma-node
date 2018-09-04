@@ -6723,6 +6723,14 @@ select.gender {
 					height: 59px;
 				}
 
+				.dash-widget-info a:hover {
+					color: #ff881f !important;
+				}
+
+				.user-menu .media-list a:hover .media-body p span {
+					color: #ff881f;
+				}
+
 				/*.dropdown-menu.inner.selectpicker {
 					border-bottom: 1px solid #ccc !important;
 					border-left: 1px solid #ccc !important;
