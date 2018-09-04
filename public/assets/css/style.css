@@ -97,7 +97,7 @@ a:focus {
 	-ms-box-shadow: none;
 	-o-box-shadow: none;
 	height: 40px;
-	background-color: #fff !important;
+	/*background-color: #fff !important;*/
 }
 
 .form-control:focus {
