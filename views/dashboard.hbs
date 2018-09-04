@@ -437,7 +437,7 @@
                 <tbody>
                   {{#if_eq referral_count "0"}}
                   <tr>
-                    <td colspan="4" class="text-center gap-col">No data available in table</td>
+                    <td colspan="3" class="text-center gap-col">No data available in table</td>
                   </tr>
                   {{else}} {{#each referral}}
                   <tr class="activity_custom_del">
@@ -491,7 +491,7 @@
                 <tbody>
                 {{#if_eq notiFicationDetails.length "0"}}
                   <tr>
-                    <td colspan="4" class="text-center">No notification available in table</td>
+                    <td colspan="3" class="text-center">No notification available in table</td>
                   </tr>
                   {{else}}
                   
@@ -508,7 +508,7 @@
                       </td>
                       <td>{{this.userFirstName}} {{this.userLastName}} </td>
                       <td>
-                        <span class="label label-success-border">Pending</span>
+                        <span class="label label-warning-border">Pending</span>
                       </td>
                       
                     </tr>
