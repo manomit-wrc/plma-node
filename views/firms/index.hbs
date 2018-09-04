@@ -4,18 +4,16 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
 
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
-
- {{/content}}
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" /> {{/content}}
 
 <div class="page-wrapper">
     <div class="content container-fluid">
         <div class="pg-header">
             <div class="row">
                 {{#if success_message}}
-                    <div class="alert alert-success">
-                        <strong>Success! </strong>{{success_message}}
-                    </div>
+                <div class="alert alert-success">
+                    <strong>Success! </strong>{{success_message}}
+                </div>
                 {{/if}}
                 <div class="col-xs-4">
                     <h4 class="page-title">Firms</h4>
@@ -42,7 +40,12 @@
                         </thead>
                         <tbody>
                             {{#each users}}
-                            <tr data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}" data-email="{{this.email}}" data-firm-title="{{this.firm.title}}" data-firm-address="{{this.firm.address}}" data-mobile-no="{{this.mobile_no}}" data-gender="{{this.gender}}" data-firm-id="{{this.firm.id}}" data-user-id="{{this.id}}" data-approval-level="{{this.firm.approval_level}}" data-level1-desg="{{this.firm.level_1}}" data-level2-desg="{{this.firm.level_2}}" data-level3-desg="{{this.firm.level_3}}" data-level4-desg="{{this.firm.level_4}}" data-group-id="{{this.group_id}}" data-designation-id="{{this.designation_id}}" data-is-attorney="{{this.is_attorney}}">
+                            <tr data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}" data-email="{{this.email}}" data-firm-title="{{this.firm.title}}"
+                                data-firm-address="{{this.firm.address}}" data-mobile-no="{{this.mobile_no}}" data-gender="{{this.gender}}"
+                                data-firm-id="{{this.firm.id}}" data-user-id="{{this.id}}" data-approval-level="{{this.firm.approval_level}}"
+                                data-level1-desg="{{this.firm.level_1}}" data-level2-desg="{{this.firm.level_2}}" data-level3-desg="{{this.firm.level_3}}"
+                                data-level4-desg="{{this.firm.level_4}}" data-group-id="{{this.group_id}}" data-designation-id="{{this.designation_id}}"
+                                data-is-attorney="{{this.is_attorney}}">
                                 <td>
                                     <a href="javascript:void(0)" class="avatar">{{first_letter this.firm.title}}</a>
                                     <h2>
@@ -126,7 +129,8 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-12" style="padding-left: 0;">Is Attorney</label>
                                     <label>
-                                        <span><input name="is_attorney" id="is_attorney" value="1" type="checkbox"></span> Yes
+                                        <span><input name="is_attorney" id="is_attorney" value="1" type="checkbox"></span>
+                                        Yes
                                     </label>
                                 </div>
                             </div>
@@ -185,10 +189,10 @@
                                 <div class="form-group">
                                     <label class="control-label">Level 1</label>
                                     <span class="text-danger">*</span>
-                                    <select class="form-control " id="level_1_designation" name="level_1_designation" >
+                                    <select class="form-control " id="level_1_designation" name="level_1_designation">
                                         <option value="">Select Designation</option>
                                         {{#each designation}}
-                                            <option value="{{this.id}}">{{this.title}}</option>
+                                        <option value="{{this.id}}">{{this.title}}</option>
                                         {{/each}}
                                     </select>
                                 </div>
@@ -222,9 +226,6 @@
                             </div>
                         </div>
                     </div>
-
-
-                    
                     <div class="card-box">
                         <div class="row">
                             <div class="col-md-12">
@@ -272,7 +273,7 @@
                                     <select class="form-control floating" id="group_id" name="group_id">
                                         <option value="">Select Group</option>
                                         {{#each group}}
-                                            <option value="{{this.id}}">{{this.name}}</option>
+                                        <option value="{{this.id}}">{{this.name}}</option>
                                         {{/each}}
                                     </select>
                                 </div>
@@ -281,10 +282,10 @@
                                 <div class="form-group">
                                     <label class="control-label">Designation</label>
                                     <span class="text-danger">*</span>
-                                    <select class="form-control floating " id="designation_id" name="designation_id" >
+                                    <select class="form-control floating " id="designation_id" name="designation_id">
                                         <option value="">Select Designation</option>
                                         {{#each designation}}
-                                            <option value="{{this.id}}">{{this.title}}</option>
+                                        <option value="{{this.id}}">{{this.title}}</option>
                                         {{/each}}
                                     </select>
                                 </div>
@@ -340,14 +341,15 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-12" style="padding-left: 0;">Is Attorney</label>
                                     <label>
-                                        <span><input disabled name="is_attorney_view" id="is_attorney_view" value="1" type="checkbox"></span> Yes
+                                        <span><input disabled name="is_attorney_view" id="is_attorney_view" value="1" type="checkbox"></span>
+                                        Yes
                                     </label>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="card-box">
-                       <div class="row">
+                        <div class="row">
                             <div class="col-md-12">
                                 <div class="modal-header">
                                     <h4 class="modal-title">Approval Process Information</h4>
@@ -400,7 +402,7 @@
                                     <select disabled class="form-control floating section_remove" id="level_1_designation_view" name="level_1_designation_view">
                                         <option value="">Select Designation</option>
                                         {{#each designation}}
-                                            <option value="{{this.id}}">{{this.title}}</option>
+                                        <option value="{{this.id}}">{{this.title}}</option>
                                         {{/each}}
                                     </select>
                                 </div>
@@ -411,7 +413,7 @@
                                     <select disabled class="form-control floating" id="level_2_designation_view" name="level_2_designation_view">
                                         <option value="">Select Designation</option>
                                         {{#each designation}}
-                                            <option value="{{this.id}}">{{this.title}}</option>
+                                        <option value="{{this.id}}">{{this.title}}</option>
                                         {{/each}}
                                     </select>
                                 </div>
@@ -422,7 +424,7 @@
                                     <select disabled class="form-control floating" id="level_3_designation_view" name="level_3_designation_view">
                                         <option value="">Select Designation</option>
                                         {{#each designation}}
-                                            <option value="{{this.id}}">{{this.title}}</option>
+                                        <option value="{{this.id}}">{{this.title}}</option>
                                         {{/each}}
                                     </select>
                                 </div>
@@ -433,12 +435,12 @@
                                     <select disabled class="form-control floating" id="level_4_designation_view" name="level_4_designation_view">
                                         <option value="">Select Designation</option>
                                         {{#each designation}}
-                                            <option value="{{this.id}}">{{this.title}}</option>
+                                        <option value="{{this.id}}">{{this.title}}</option>
                                         {{/each}}
                                     </select>
                                 </div>
                             </div>
-                       </div> 
+                        </div>
                     </div>
                     <div class="card-box">
                         <div class="row">
@@ -462,7 +464,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Mobile No</label>
-                                    <input type="text" class="form-control floating number_validator" id="mobile_no_view" name="mobile_no_view" readonly>
+                                    <input disabled type="text" class="form-control floating number_validator" id="mobile_no_view" name="mobile_no_view">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -482,7 +484,7 @@
                                     <select disabled class="form-control floating" id="group_view" name="group_view">
                                         <option value="">Select Group</option>
                                         {{#each group}}
-                                            <option value="{{this.id}}">{{this.name}}</option>
+                                        <option value="{{this.id}}">{{this.name}}</option>
                                         {{/each}}
                                     </select>
                                 </div>
@@ -493,7 +495,7 @@
                                     <select disabled class="form-control floating" id="designation_view" name="designation_view">
                                         <option value="">Select Designation</option>
                                         {{#each designation}}
-                                            <option value="{{this.id}}">{{this.title}}</option>
+                                        <option value="{{this.id}}">{{this.title}}</option>
                                         {{/each}}
                                     </select>
                                 </div>
@@ -551,7 +553,8 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-12" style="padding-left: 0;">Is Attorney</label>
                                     <label>
-                                        <span><input name="is_attorney_edit" id="is_attorney_edit" value="1" type="checkbox"></span> Yes
+                                        <span><input name="is_attorney_edit" id="is_attorney_edit" value="1" type="checkbox"></span>
+                                        Yes
                                     </label>
                                 </div>
                             </div>
@@ -608,10 +611,10 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Level 1</label>
-                                    <select disabled class="form-control floating selectpicker" id="level_1_designation_view" name="level_1_designation_view" data-show-subtext="true" data-live-search="true">
+                                    <select disabled class="form-control floating" id="level_1_designation_edit" name="level_1_designation_edit">
                                         <option value="">Select Designation</option>
                                         {{#each designation}}
-                                            <option value="{{this.id}}">{{this.title}}</option>
+                                        <option value="{{this.id}}">{{this.title}}</option>
                                         {{/each}}
                                     </select>
                                 </div>
@@ -622,7 +625,7 @@
                                     <select disabled class="form-control floating" id="level_2_designation_edit" name="level_2_designation_edit">
                                         <option value="">Select Designation</option>
                                         {{#each designation}}
-                                            <option value="{{this.id}}">{{this.title}}</option>
+                                        <option value="{{this.id}}">{{this.title}}</option>
                                         {{/each}}
                                     </select>
                                 </div>
@@ -633,7 +636,7 @@
                                     <select disabled class="form-control floating" id="level_3_designation_edit" name="level_3_designation_edit">
                                         <option value="">Select Designation</option>
                                         {{#each designation}}
-                                            <option value="{{this.id}}">{{this.title}}</option>
+                                        <option value="{{this.id}}">{{this.title}}</option>
                                         {{/each}}
                                     </select>
                                 </div>
@@ -644,7 +647,7 @@
                                     <select disabled class="form-control floating" id="level_4_designation_edit" name="level_4_designation_edit">
                                         <option value="">Select Designation</option>
                                         {{#each designation}}
-                                            <option value="{{this.id}}">{{this.title}}</option>
+                                        <option value="{{this.id}}">{{this.title}}</option>
                                         {{/each}}
                                     </select>
                                 </div>
@@ -687,7 +690,7 @@
                                     <label class="control-label">Gender
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <select class="form-control floating " id="gender_edit" name="gender_edit" >
+                                    <select class="form-control floating " id="gender_edit" name="gender_edit">
                                         <option value="">Select Gender</option>
                                         <option value="M">Male</option>
                                         <option value="F">Female</option>
@@ -700,10 +703,10 @@
                                     <label class="control-label">Group
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <select class="form-control floating " id="group_edit" name="group_edit" >
+                                    <select class="form-control floating " id="group_edit" name="group_edit">
                                         <option value="">Select Group</option>
                                         {{#each group}}
-                                            <option value="{{this.id}}">{{this.name}}</option>
+                                        <option value="{{this.id}}">{{this.name}}</option>
                                         {{/each}}
                                     </select>
                                 </div>
@@ -716,7 +719,7 @@
                                     <select class="form-control floating " id="designation_edit" name="designation_edit">
                                         <option value="">Select Designation</option>
                                         {{#each designation}}
-                                            <option value="{{this.id}}">{{this.title}}</option>
+                                        <option value="{{this.id}}">{{this.title}}</option>
                                         {{/each}}
                                     </select>
                                 </div>
@@ -767,32 +770,28 @@
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
-
-  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
-
-
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 <script type="text/javascript">
-
     $(document).ready(function (e) {
-        $(document).on('click', '#level_2', function() {
+        $(document).on('click', '#level_2', function () {
             $('#level2Designation').show();
             $('#level3Designation').hide();
             $('#level4Designation').hide();
         });
 
-        $(document).on('click', '#level_3', function() {
+        $(document).on('click', '#level_3', function () {
             $('#level2Designation').show();
             $('#level3Designation').show();
             $('#level4Designation').hide();
         });
 
-        $(document).on('click', '#level_4', function() {
+        $(document).on('click', '#level_4', function () {
             $('#level2Designation').show();
             $('#level3Designation').show();
             $('#level4Designation').show();
         });
 
-        $(document).on('click', '#level_1', function() {
+        $(document).on('click', '#level_1', function () {
             $('#level2Designation').hide();
             $('#level3Designation').hide();
             $('#level4Designation').hide();
@@ -1055,8 +1054,8 @@
                     last_name = $("#last_name_edit").val(),
                     mobile_no = $("#mobile_no_edit").val(),
                     gender = $("#gender_edit").val();
-                    group = $("#group_edit").val();
-                    designation = $("#designation_edit").val();
+                group = $("#group_edit").val();
+                designation = $("#designation_edit").val();
                 is_attorney = $("#is_attorney_edit:checked").val();
                 $.ajax({
                     type: "POST",
@@ -1228,5 +1227,4 @@
         localStorage.setItem('user_id', $(this).closest('tr').data('user-id'));
         $("#delete_firm").modal('show');
     });
-</script>
-{{/content}}
+</script> {{/content}}

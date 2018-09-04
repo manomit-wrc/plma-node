@@ -1003,7 +1003,7 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
         userInformation_2_l2 = await User.findOne({
             where: {
                 'designation_id': firmDetails['level_2'],
-                'section_id': 0,
+                // 'section_id': 0,
                 'approver': 1,
                 'firm_id': req.user.firm_id
             }
@@ -1011,7 +1011,7 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
         userInformation_2_l1 = await User.findOne({
             where: {
                 'designation_id': firmDetails['level_1'],
-                'section_id': 0,
+                // 'section_id': 0,
                 'approver': 1,
                 'firm_id': req.user.firm_id
             }
@@ -1020,7 +1020,7 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
             userInformation_2_l2 = await User.findOne({
                 where: {
                     'designation_id': firmDetails['level_2'],
-                    'section_id': req.user['section_id'],
+                    // 'section_id': req.user['section_id'],
                     'approver': 1,
                     'firm_id': req.user.firm_id
                 }
@@ -1030,7 +1030,7 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
             userInformation_2_l1 = await User.findOne({
                 where: {
                     'designation_id': firmDetails['level_1'],
-                    'section_id': req.user['section_id'],
+                    // 'section_id': req.user['section_id'],
                     'approver': 1,
                     'firm_id': req.user.firm_id
                 }
@@ -1072,7 +1072,7 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
         userInformation_3_l3 = await User.findOne({
             where: {
                 'designation_id': firmDetails['level_3'],
-                'section_id': 0,
+                // 'section_id': 0,
                 'approver': 1,
                 'firm_id': req.user.firm_id
             }
@@ -1080,7 +1080,7 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
         userInformation_3_l2 = await User.findOne({
             where: {
                 'designation_id': firmDetails['level_2'],
-                'section_id': 0,
+                // 'section_id': 0,
                 'approver': 1,
                 'firm_id': req.user.firm_id
             }
@@ -1088,7 +1088,7 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
         userInformation_3_l1 = await User.findOne({
             where: {
                 'designation_id': firmDetails['level_1'],
-                'section_id': 0,
+                // 'section_id': 0,
                 'approver': 1,
                 'firm_id': req.user.firm_id
             }
@@ -1097,7 +1097,7 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
             userInformation_3_l3 = await User.findOne({
                 where: {
                     'designation_id': firmDetails['level_3'],
-                    'section_id': req.user['section_id'],
+                    // 'section_id': req.user['section_id'],
                     'approver': 1,
                     'firm_id': req.user.firm_id
                 }
@@ -1107,7 +1107,7 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
             userInformation_3_l2 = await User.findOne({
                 where: {
                     'designation_id': firmDetails['level_2'],
-                    'section_id': req.user['section_id'],
+                    // 'section_id': req.user['section_id'],
                     'approver': 1,
                     'firm_id': req.user.firm_id
                 }
@@ -1117,12 +1117,15 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
             userInformation_3_l1 = await User.findOne({
                 where: {
                     'designation_id': firmDetails['level_1'],
-                    'section_id': req.user['section_id'],
+                    // 'section_id': req.user['section_id'],
                     'approver': 1,
                     'firm_id': req.user.firm_id
                 }
             });
         }
+
+        //  console.log('userInformation_3_l2.id',userInformation_3_l3.id);
+
         if (userInformation_3_l3 !== null) {
             await requestApproval.create({
                 'activity_id': req.params['id'],
@@ -1132,6 +1135,10 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
                 'approve': 0
             });
         }
+
+       
+        
+
         if (userInformation_3_l2 !== null) {
             await requestApproval.create({
                 'activity_id': req.params['id'],
@@ -1168,7 +1175,7 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
         userInformation_4_l4 = await User.findOne({
             where: {
                 'designation_id': firmDetails['level_4'],
-                'section_id': 0,
+                // 'section_id': 0,
                 'approver': 1,
                 'firm_id': req.user.firm_id
             }
@@ -1176,7 +1183,7 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
         userInformation_4_l3 = await User.findOne({
             where: {
                 'designation_id': firmDetails['level_3'],
-                'section_id': 0,
+                // 'section_id': 0,
                 'approver': 1,
                 'firm_id': req.user.firm_id
             }
@@ -1184,7 +1191,7 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
         userInformation_4_l2 = await User.findOne({
             where: {
                 'designation_id': firmDetails['level_2'],
-                'section_id': 0,
+                // 'section_id': 0,
                 'approver': 1,
                 'firm_id': req.user.firm_id
             }
@@ -1192,7 +1199,7 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
         userInformation_4_l1 = await User.findOne({
             where: {
                 'designation_id': firmDetails['level_1'],
-                'section_id': 0,
+                // 'section_id': 0,
                 'approver': 1,
                 'firm_id': req.user.firm_id
             }
@@ -1201,7 +1208,7 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
             userInformation_4_l4 = await User.findOne({
                 where: {
                     'designation_id': firmDetails['level_4'],
-                    'section_id': req.user['section_id'],
+                    // // 'section_id': req.user['section_id'],
                     'approver': 1,
                     'firm_id': req.user.firm_id
                 }
@@ -1211,7 +1218,7 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
             userInformation_4_l3 = await User.findOne({
                 where: {
                     'designation_id': firmDetails['level_3'],
-                    'section_id': req.user['section_id'],
+                    // // 'section_id': req.user['section_id'],
                     'approver': 1,
                     'firm_id': req.user.firm_id
                 }
@@ -1221,7 +1228,7 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
             userInformation_4_l2 = await User.findOne({
                 where: {
                     'designation_id': firmDetails['level_2'],
-                    'section_id': req.user['section_id'],
+                    // // 'section_id': req.user['section_id'],
                     'approver': 1,
                     'firm_id': req.user.firm_id
                 }
@@ -1231,7 +1238,7 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
             userInformation_4_l1 = await User.findOne({
                 where: {
                     'designation_id': firmDetails['level_1'],
-                    'section_id': req.user['section_id'],
+                    // // 'section_id': req.user['section_id'],
                     'approver': 1,
                     'firm_id': req.user.firm_id
                 }
@@ -1291,7 +1298,7 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
         userInformation_1_l1 = await User.findAll({
             where: {
                 'designation_id': firmDetails['level_1'],
-                'section_id': 0,
+                // 'section_id': 0,
                 'approver': 1,
                 'firm_id': req.user.firm_id
             }
@@ -1300,7 +1307,7 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
             userInformation_1_l1 = await User.findOne({
                 where: {
                     'designation_id': firmDetails['level_1'],
-                    'section_id': req.user['section_id'],
+                    // 'section_id': req.user['section_id'],
                     'approver': 1,
                     'firm_id': req.user.firm_id
                 }
