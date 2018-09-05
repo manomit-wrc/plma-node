@@ -18,6 +18,9 @@
   <button class="btn btn-primary export">
     <i class="fa fa-download"></i>
   </button>
+  {{#if_eq user.role_id "1"}}{{else}}
+  <p class="firm_name_header"></p>
+  {{/if_eq}}
   <ul class="nav navbar-nav navbar-right user-menu pull-right">
 
     <li class="role-header">
@@ -236,6 +239,16 @@
 
 <script>
   $(document).ready(function (e) {
+      $.ajax({
+      type: "Get",
+      url: "/get-firmName",
+      success: function (response) {
+        $(".firm_name_header").html(response.firm);
+      },
+      error: function (xhr) {
+
+      }
+    });
     if({{user.role_id}} == "1")
     {
       $.ajax({

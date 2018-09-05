@@ -89,7 +89,7 @@
                 <tbody>
                   {{#if_eq firm_count "0"}}
                   <tr>
-                    <td colspan="4" class="text-center">No data available in table</td>
+                    <td colspan="4" class="text-center gap-col">No data available in table</td>
                   </tr>
                   {{else}} {{#each firm_admins}}
                   <tr class="site_dashboard_custom_del">
@@ -132,7 +132,7 @@
                 <tbody>
                   {{#if_eq employee_count "0"}}
                   <tr>
-                    <td colspan="4" class="text-center">No data available in table</td>
+                    <td colspan="4" class="text-center gap-col">No data available in table</td>
                   </tr>
                   {{else}} {{#each employee}}
                   <tr class="site_dashboard_custom_del">
@@ -278,7 +278,7 @@
                 <tbody>
                   {{#if_eq activity_count "0"}}
                   <tr>
-                    <td colspan="7" class="text-center">No data available in table</td>
+                    <td colspan="7" class="text-center gap-col">No data available in table</td>
                   </tr>
                   {{else}} {{#each activity}}
                   <tr class="activity_custom_del">
@@ -328,7 +328,7 @@
                 <tbody>
                   {{#if_eq client_count "0"}}
                   <tr>
-                    <td colspan="4" class="text-center">No data available in table</td>
+                    <td colspan="4" class="text-center gap-col">No data available in table</td>
                   </tr>
                   {{else}} {{#each client}}
                   <tr class="activity_custom_del">
@@ -381,7 +381,7 @@
                 <tbody>
                   {{#if_eq target_count "0"}}
                   <tr>
-                    <td colspan="4" class="text-center">No data available in table</td>
+                    <td colspan="4" class="text-center gap-col">No data available in table</td>
                   </tr>
                   {{else}} {{#each target}}
                   <tr class="activity_custom_del">
@@ -425,7 +425,7 @@
             <h3 class="panel-title">Referral Sources</h3>
           </div>
           <div class="panel-body">
-            <div class="table-responsive refe">
+            <div class="table-responsive refe sourc">
               <table class="table table-striped custom-table m-b-0">
                 <thead>
                   <tr>
@@ -437,7 +437,7 @@
                 <tbody>
                   {{#if_eq referral_count "0"}}
                   <tr>
-                    <td colspan="4" class="text-center">No data available in table</td>
+                    <td colspan="3" class="text-center gap-col">No data available in table</td>
                   </tr>
                   {{else}} {{#each referral}}
                   <tr class="activity_custom_del">
@@ -484,14 +484,14 @@
                 <thead>
                   <tr>
                     <th>Name</th>
-                    <th>Approval Status</th>
                     <th>Attorney</th>
+                    <th>Approval Status</th>
                   </tr>
                 </thead>
                 <tbody>
                 {{#if_eq notiFicationDetails.length "0"}}
                   <tr>
-                    <td colspan="4" class="text-center">No notification available in table</td>
+                    <td colspan="3" class="text-center">No notification available in table</td>
                   </tr>
                   {{else}}
                   
@@ -506,10 +506,11 @@
                         <h2> <a href="approval_details/{{this.activity_id}}" style="width:auto">{{this.name}}</a> </h2>
                         {{/if_eq}}
                       </td>
-                      <td>
-                        <span class="label label-success-border">Pending</span>
-                      </td>
                       <td>{{this.userFirstName}} {{this.userLastName}} </td>
+                      <td>
+                        <span class="label label-warning-border">Pending</span>
+                      </td>
+                      
                     </tr>
                     {{/each}} 
                 {{/if_eq}}
