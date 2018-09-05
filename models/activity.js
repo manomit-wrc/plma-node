@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     activity_from_date: DataTypes.DATE,
     activity_to_date: DataTypes.DATE,
     activity_name: DataTypes.STRING,
-    activity_reason: DataTypes.STRING,
+    category: DataTypes.STRING,
     budget_status: DataTypes.STRING,
     budget_details_status: DataTypes.STRING,
     target: DataTypes.STRING,
