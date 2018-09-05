@@ -155,6 +155,7 @@ router.get('/referral', auth, firmAttrAuth, csrfProtection, async (req, res) => 
 
 	res.render('referral/index', {
 		layout: 'dashboard',
+		title: 'Referral Sources Listing',
 		success_message,
 		referral,
 		successEdit_message,
@@ -243,6 +244,7 @@ router.get('/referral/add', auth, firmAttrAuth, csrfProtection, async (req, res)
 
 	res.render('referral/add', {
 		layout: 'dashboard',
+		title: 'Add Referral Source',
 		csrfToken: req.csrfToken(),
 		attorney,
 		client,
@@ -445,6 +447,7 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 	});
 	res.render('referral/view', {
 		layout: 'dashboard',
+		title: 'View Referral Source',
 		industry,
 		country,
 		state,
@@ -539,6 +542,7 @@ router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 
 	res.render('referral/edit', {
 		layout: 'dashboard',
+		title: 'Edit Referral Source',
 		industry,
 		country,
 		state,
@@ -872,6 +876,7 @@ router.get("/referral/view-activity/:id", auth, async (req, res) => {
 	});
 	res.render("referral/view_activity", {
 		layout: 'dashboard',
+		title: 'View Activity',
 		activity_details
 	});
 });

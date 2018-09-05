@@ -37,6 +37,7 @@ router.get('/financial-goal', auth, firmAuth, csrfProtection, async (req, res) =
 	}
 	res.render('financial_goal/index', {
 		layout: 'dashboard',
+		title: 'Financial Goal Listing',
 		success_message,
 		financialGoal,
 		success_finan_edit_message,
@@ -59,7 +60,7 @@ router.get('/financial-goal/add', auth, firmAuth, csrfProtection, async (req, re
 		],
 		where: {role_id: 3}
 	});
-	res.render('financial_goal/add', {layout: 'dashboard', csrfToken: req.csrfToken(), year, attorney});
+	res.render('financial_goal/add', {layout: 'dashboard', title: 'Add Financial Goal', csrfToken: req.csrfToken(), year, attorney});
 });
 
 router.post("/financial-goal/add", auth, firmAuth, csrfProtection, async(req,res) => {
@@ -85,7 +86,7 @@ router.get("/financial-goal/view/:id", auth, firmAuth, csrfProtection, async (re
 	const attorney = await User.findAll({
 		where: {role_id: 3}
 	});
-	res.render('financial_goal/view', {layout: 'dashboard', csrfToken: req.csrfToken(), finan_goal: edit_financial_goal, attorney, year});
+	res.render('financial_goal/view', {layout: 'dashboard', title: 'View Financial Goal', csrfToken: req.csrfToken(), finan_goal: edit_financial_goal, attorney, year});
 });
 
 router.get("/financial-goal/edit/:id", auth, firmAuth, csrfProtection, async (req, res) => {
@@ -102,7 +103,7 @@ router.get("/financial-goal/edit/:id", auth, firmAuth, csrfProtection, async (re
 
 		where: {role_id: 3}
 	});
-	res.render('financial_goal/edit', {layout: 'dashboard', csrfToken: req.csrfToken(), finan_goal: edit_financial_goal, attorney, year});
+	res.render('financial_goal/edit', {layout: 'dashboard', title: 'Edit Financial Goal', csrfToken: req.csrfToken(), finan_goal: edit_financial_goal, attorney, year});
 });
 
 router.post("/financial-goal/edit/:id", auth, firmAuth, csrfProtection, async (req, res) => {

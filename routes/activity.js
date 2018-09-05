@@ -151,6 +151,7 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
     }
     res.render('activity/addactivity', {
         layout: 'dashboard',
+        title: 'Add Activity',
         csrfToken: req.csrfToken(),
         firm: firm[0].title,
         section: allSection,
@@ -265,6 +266,7 @@ router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res)
     });
     res.render('activity/activity', {
         layout: 'dashboard',
+        title: 'Activity Listing',
         csrfToken: req.csrfToken(),
         row: activity,
         success_message,
@@ -619,6 +621,7 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
     });
     res.render('activity/view_activity', {
         layout: 'dashboard',
+        title: 'View Activity',
         csrfToken: req.csrfToken(),
         client: client,
         target: target,
@@ -853,6 +856,7 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
     });
     res.render('activity/update', {
         layout: 'dashboard',
+        title: 'Edit Activity',
         csrfToken: req.csrfToken(),
         client: client,
         target: target,

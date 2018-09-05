@@ -150,6 +150,7 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
 
   res.render('activity_budget_report/index', {
     layout: 'dashboard',
+    title: 'Activity Budget Listing',
     activityArr,
     budgetArr,
     activity_goal_grand_total: activity_goal_grand_total.length > 0 ? activity_goal_grand_total[0] : 0,
@@ -318,6 +319,7 @@ router.get('/budget-report/activity-goal/:id', auth, csrfProtection, async (req,
 
   res.render('activity_budget_report/activity_details', {
     layout: 'dashboard',
+    title: 'Activity Details',
     activityArr,
     budgetArr,
     activity_goal,
@@ -404,6 +406,7 @@ router.get('/activity/activity_details_budget/:id', auth, csrfProtection, async 
 
   res.render('activity_budget_report/activity_budget_details', {
     layout: 'dashboard',
+    title: 'Activity Budget Details Listing',
     marketingBudget,
     budgetArr
   });

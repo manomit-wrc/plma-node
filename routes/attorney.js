@@ -89,6 +89,7 @@ router.get('/attorneys', auth, csrfProtection, async (req, res) => {
 
 	res.render('attorney/index', {
 		layout: 'dashboard',
+		title: 'Attorney Listing',
 		success_message,
 		success_edit_message,
 		csrfToken: req.csrfToken(),
@@ -238,6 +239,7 @@ router.get('/attorneys/addAttorney', auth, firmAttrAuth, csrfProtection, async (
 	});
 	res.render('attorney/addattorney', {
 		layout: 'dashboard',
+		title: 'Add Attorney',
 		csrfToken: req.csrfToken(),
 		country: country,
 		state: state,
@@ -730,6 +732,7 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 	
 	res.render('attorney/updateattorney', {
 		layout: 'dashboard',
+		title: 'Edit Attorney',
 		csrfToken: req.csrfToken(),
 		country: country,
 		state: state,
@@ -861,6 +864,7 @@ router.get('/attorneys/viewdata/:id', auth, csrfProtection, async (req, res) => 
 	}
 	res.render('attorney/viewattorney', {
 		layout: 'dashboard',
+		title: 'View Attorney',
 		csrfToken: req.csrfToken(),
 		country: country,
 		state: state,
