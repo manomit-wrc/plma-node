@@ -80,6 +80,7 @@ router.get('/budget', csrfProtection, auth, siteAuth, (req, res) => {
 	}).then(show => {
 		res.render('budget/index', {
 			layout: 'dashboard',
+			title: 'Budget',
 			success_message,
 			csrfToken: req.csrfToken(),
 			budget: show,
@@ -177,8 +178,9 @@ router.get('/designation', csrfProtection, auth, siteAuth, (req, res) => {
 	}).then(show => {
 		res.render('designation/index', {
 			layout: 'dashboard',
-			success_message,
+			title: 'Designation',
 			csrfToken: req.csrfToken(),
+			success_message,
 			designation: show,
 			designation_code: req.query.designation_code ? req.query.designation_code : '',
 			designation_name: req.query.designation_name ? req.query.designation_name : ''
@@ -269,6 +271,7 @@ router.get('/industry', csrfProtection, auth, siteAuth, (req, res) => {
 	}).then(show => {
 		res.render('industry/index', {
 			layout: 'dashboard',
+			title: 'Industry Type',
 			success_message,
 			csrfToken: req.csrfToken(),
 			industry: show,
@@ -376,6 +379,7 @@ router.get('/settings', auth, csrfProtection, async (req, res) => {
 
 	res.render('superadminsetting/settings', {
 		layout: 'dashboard',
+		title: 'Super Admin Setting',
 		csrfToken: req.csrfToken(),
 		sucess_setting_message1,
 		data: settings,
@@ -557,6 +561,7 @@ router.get('/client', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 
 	res.render('client/index', {
 		layout: 'dashboard',
+		title: 'Client Listing',
 		csrfToken: req.csrfToken(),
 		clients: clientDetails,
 		searchName: req.query.searchName ? req.query.searchName : '',
@@ -614,6 +619,7 @@ router.get('/client/add', auth, firmAttrAuth, csrfProtection, async (req, res) =
 
 	res.render('client/addclient', {
 		layout: 'dashboard',
+		title: 'Add Client',
 		csrfToken: req.csrfToken(),
 		tags: tags,
 		country: country,
@@ -714,6 +720,7 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 
 	res.render('client/editclient', {
 		layout: 'dashboard',
+		title: 'Edit Client',
 		csrfToken: req.csrfToken(),
 		tags: tags,
 		designation: designations,
@@ -796,6 +803,7 @@ router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 
 	res.render('client/viewClient', {
 		layout: 'dashboard',
+		title: 'View Client',
 		csrfToken: req.csrfToken(),
 		tags: tags,
 		designation: designations,
@@ -1213,6 +1221,7 @@ router.get('/practice-area', csrfProtection, auth, siteAuth, (req, res) => {
 	}).then(show => {
 		res.render('practice_area/index', {
 			layout: 'dashboard',
+			title: 'Practice Area',
 			success_message,
 			csrfToken: req.csrfToken(),
 			practice_area: show,
@@ -1307,6 +1316,7 @@ router.get('/section', csrfProtection, auth, siteAuth, (req, res) => {
 	}).then(show => {
 		res.render('section/index', {
 			layout: 'dashboard',
+			title: 'Section',
 			success_message,
 			csrfToken: req.csrfToken(),
 			section: show,
@@ -1404,6 +1414,7 @@ router.get('/jurisdiction', csrfProtection, auth, siteAuth, (req, res) => {
 	}).then(show => {
 		res.render('jurisdiction/index', {
 			layout: 'dashboard',
+			title: 'Jurisdiction',
 			success_message,
 			csrfToken: req.csrfToken(),
 			jurisdiction: show,
@@ -1500,6 +1511,7 @@ router.get('/group', csrfProtection, auth, siteAuth, (req, res) => {
 	}).then(show => {
 		res.render('group/index', {
 			layout: 'dashboard',
+			title: 'Group',
 			success_message,
 			csrfToken: req.csrfToken(),
 			group: show,

@@ -43,6 +43,7 @@ router.get('/employees', auth, siteAuth, async (req, res) => {
     });
     res.render('employees/index', {
         layout: 'dashboard',
+        title: 'Employees Listing',
         success_message,
         employee:users,
         success_edit_message,
@@ -57,6 +58,7 @@ router.get('/employees', auth, siteAuth, async (req, res) => {
     const state = await State.findAll({});
     res.render('employees/add', {
         layout: 'dashboard',
+        title: 'Add Employee',
         csrfToken: req.csrfToken(),
         firms,error_message,
         error_message1 ,
@@ -161,6 +163,7 @@ router.get('/employee/edit/:id', csrfProtection, siteAuth, auth, async (req, res
     }
     res.render('employees/edit', {
         layout: 'dashboard',
+        title: 'Edit Employee',
         csrfToken: req.csrfToken(),
         empl: users[0],
         firms,
@@ -259,6 +262,7 @@ router.get('/employee/view/:id', csrfProtection, siteAuth, auth, async (req, res
     }
     res.render('employees/view', {
         layout: 'dashboard',
+        title: 'View Employee',
         csrfToken: req.csrfToken(),
         empl: users[0],
         firms,
@@ -270,9 +274,6 @@ router.get('/employee/view/:id', csrfProtection, siteAuth, auth, async (req, res
         zipcode
     });
 });
-
-
-
 
 router.get('/employee/delete/:id', auth, csrfProtection, async (req, res) => {
     const user_delete = User.destroy({

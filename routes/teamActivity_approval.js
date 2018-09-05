@@ -27,6 +27,7 @@ router.get('/team-activity-approvals', auth, async (req, res) => {
     
     res.render('team_activity_approvals/index', {
         layout: 'dashboard',
+        title: 'Team Activity Listing',
         teamActivityAttorney
     });
 });

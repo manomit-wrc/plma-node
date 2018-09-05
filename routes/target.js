@@ -117,6 +117,7 @@ router.get('/target', auth, firmAttrAuth, csrfProtection, async(req, res) => {
 
     res.render('target/targets', {
         layout: 'dashboard',
+        title: 'Target Listing',
         csrfToken: req.csrfToken(),
         targets: targetDetails,
         searchName: req.query.searchName ? req.query.searchName : '',
@@ -171,6 +172,7 @@ router.get('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =>
     });
     res.render('target/addtarget', {
         layout: 'dashboard',
+        title: 'Add Target',
         csrfToken: req.csrfToken(),
         country: country,
         state: state,
@@ -373,6 +375,7 @@ router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, re
     
     res.render('target/targetupdate', {
         layout: 'dashboard',
+        title: 'Edit Target',
         csrfToken: req.csrfToken(),
         attorney: attorney,
         designation: designation,
@@ -436,6 +439,7 @@ router.get('/target/view/:id', auth, firmAttrAuth, csrfProtection, async(req, re
 
     res.render('target/targetview', {
         layout: 'dashboard',
+        title: 'View Target',
         csrfToken: req.csrfToken(),
         designation: designation,
         industry: industrys,
@@ -834,6 +838,7 @@ router.get("/target/view-activity/:id", auth, async(req, res) => {
     });
     res.render("target/view_activity", {
         layout: 'dashboard',
+        title: 'View Activity',
         activity_details
     });
 });
@@ -853,6 +858,7 @@ router.get("/client/view-activity/:id", auth, async(req, res) => {
     });
     res.render("client/view_client_activity", {
         layout: 'dashboard',
+        title: 'View Client Activity',
         activity_details
     });
 });
@@ -868,6 +874,7 @@ router.get("/target/view-referral/:id", auth, firmAttrAuth, async(req, res) => {
     });
     res.render("target/view_referral", {
         layout: 'dashboard',
+        title: 'View Referral Source',
         referral
     });
 });
@@ -881,6 +888,7 @@ router.get("/client/view-referral/:id", auth, firmAttrAuth, async(req, res) => {
     });
     res.render("client/view_referral", {
         layout: 'dashboard',
+        title: 'View Referral Source',
         referral
     });
 });

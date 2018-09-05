@@ -76,6 +76,7 @@ router.get('/firms', csrfProtection, auth, siteAuth, async (req, res) => {
 
     res.render('firms/index', {
         layout: 'dashboard',
+        title: 'Firms',
         success_message,
         csrfToken: req.csrfToken(),
         users,
@@ -564,7 +565,7 @@ router.get('/firm-details', auth, firmAuth, csrfProtection, async (req, res) => 
         PracticeAreaArr.push(firmPracticeArea[k].practice_area_id);
     }
 
-    res.render('firms/master_settings', { layout: 'dashboard', success_message, csrfToken: req.csrfToken(), office, designation, contact, country, state, city, zipcode, firm: firm[0], firm_city, firm_zipcode, section, practice_area, jurisdiction, arr, jurisdictionArr, PracticeAreaArr });
+    res.render('firms/master_settings', { layout: 'dashboard', title: 'Edit Firm Settings', success_message, csrfToken: req.csrfToken(), office, designation, contact, country, state, city, zipcode, firm: firm[0], firm_city, firm_zipcode, section, practice_area, jurisdiction, arr, jurisdictionArr, PracticeAreaArr });
 });
 
 router.post('/add-office', auth, firmAuth, csrfProtection, (req, res) => {

@@ -18,6 +18,7 @@ router.get("/", csrfProtection, (req, res) => {
     } else {
         res.render('login', {
             layout: 'login',
+            title: 'Login',
             message: msg,
             resetMsg,
             csrfToken: req.csrfToken(),

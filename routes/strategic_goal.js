@@ -30,6 +30,7 @@ router.get("/strategic-marketing-goal", auth, firmAttrAuth, async(req, res)=> {
     
     res.render("strategic_goals/index", {
         layout: 'dashboard',
+        title: 'Strategic Masketing Goals Listing',
         strategic_show,
         success_message,
         success_edit_message,
@@ -40,6 +41,7 @@ router.get("/strategic-marketing-goal", auth, firmAttrAuth, async(req, res)=> {
 router.get("/strategic-marketing-goal/add", auth, firmAttrAuth, csrfProtection, async(req, res)=> {
     res.render("strategic_goals/add", {
         layout: 'dashboard',
+        title: 'Add Strategic Matketing Goal',
         csrfToken: req.csrfToken()
     });
 });
@@ -59,6 +61,7 @@ router.get("/strategic-marketing-goal/edit/:id", auth, firmAttrAuth, csrfProtect
     const strategic_edit = await StrategicGoal.findById(req.params['id']);
     res.render("strategic_goals/edit", {
         layout: 'dashboard',
+        title: 'Edit Strategic Marketing Goal',
         strategic_edit,
         csrfToken: req.csrfToken()
     });
@@ -68,6 +71,7 @@ router.get("/strategic-marketing-goal/view/:id", auth, firmAttrAuth, csrfProtect
     const strategic_view = await StrategicGoal.findById(req.params['id']);
     res.render("strategic_goals/view", {
         layout: 'dashboard',
+        title: 'View Strategic Marketing Goal',
         strategic_view,
         csrfToken: req.csrfToken()
     });
@@ -120,6 +124,7 @@ router.get("/strategic-marketing-goal/view-tactical_goals/:id", auth, firmAttrAu
     });
     res.render("strategic_goals/view_tactical_goal", {
         layout: 'dashboard',
+        title: 'View Tactical Marketing Goal',
         asso_goal,
     });
 });

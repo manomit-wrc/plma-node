@@ -352,6 +352,7 @@ router.get('/dashboard', auth,  async(req, res) => {
 
     res.render('dashboard', {
         layout: 'dashboard',
+        title: 'Dashboard',
         auth_msg: auth_msg,
         changeFirmToAttr,
         changeSite,
@@ -427,6 +428,7 @@ router.get('/profile', auth, async (req, res) => {
         
         res.render('profile', {
             layout: 'dashboard',
+            title: 'Profile',
             country,
             state,
             city,
@@ -465,7 +467,7 @@ router.get('/edit-profile', csrfProtection, auth, async (req, res) => {
     var success_message = req.flash('success-message')[0];
     var error_message = req.flash('error-message')[0];
     
-    res.render('edit-profile', { layout: 'dashboard', csrfToken: req.csrfToken(),success_message, error_message, country, state, city, zipcode });
+    res.render('edit-profile', { layout: 'dashboard', title: 'Edit Profile', csrfToken: req.csrfToken(),success_message, error_message, country, state, city, zipcode });
 
     
 }).post('/edit-profile', auth, profile.single('avatar'), csrfProtection, auth, (req, res) => {
@@ -500,7 +502,7 @@ router.get('/edit-profile', csrfProtection, auth, async (req, res) => {
 
 router.get('/change-password', auth, csrfProtection, (req, res) => {
     var change_pass = req.flash('change-pass')[0];
-    res.render('change_password', { layout: 'dashboard', csrfToken: req.csrfToken(), change_pass:change_pass,});
+    res.render('change_password', { layout: 'dashboard', title: 'Change Password', csrfToken: req.csrfToken(), change_pass:change_pass,});
 });
 router.post('/change-password', auth, csrfProtection, (req, res) => {
     User.findAll({
@@ -732,6 +734,7 @@ router.get("/edit-attorney-profile", auth, csrfProtection, attrAuth, async (req,
      }
     res.render('edit_attr_profile', {
         layout: 'dashboard',
+        title: 'Edit Attorney Profile',
         csrfToken: req.csrfToken(),
         country: country,
         state: state,
