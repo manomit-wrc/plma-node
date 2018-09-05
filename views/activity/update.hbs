@@ -131,9 +131,14 @@
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="form-group form-focus">
-                  <label class="control-label">Activity Reason <span class="req-lbl">*</span> </label>
-                  <input class="form-control floating" type="text" id="activity_reason" name="activity_reason" value="{{editdata.activity_reason}}">
+                <div class="form-group form-focus select-focus select-attorney">
+                  <label class="control-label">Category</label>
+                  <select class="form-control floating " id="category" name="category">
+                    <option value="">Select Category</option>
+                    <option value="content development" {{#if_eq editdata.category "content development"}} selected {{/if_eq}}>Content Development</option>
+                    <option value="contact management" {{#if_eq editdata.category "contact management"}} selected {{/if_eq}}>Contact Management</option>
+                    <option value="relationship building" {{#if_eq editdata.category "relationship building"}} selected {{/if_eq}}>Relationship Building</option>
+                  </select>
                 </div>
               </div>
               <div class="col-md-6">
@@ -215,8 +220,12 @@
                   <select id="practice_area" name="practice_area" class="form-control floating ">
                     <option value="">Select Practice Area</option>
                     {{#each practice_area}}
-                    <option value="{{this.id}}" {{#if_eq this.id ../editdata.practice_area}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                    <option value="{{this.practicearea.id}}" {{#if_eq this.practicearea.id ../editdata.practice_area}} selected="selected" {{/if_eq}}>{{this.practicearea.name}}</option>
                     {{/each}}
+                    {{#if_eq user.id editdata.user_id}}
+                    {{else}}
+                    <option value="{{practicearea.id}}" {{#if_eq practicearea.id editdata.practice_area}} selected {{/if_eq}}>{{practicearea.name}}</option>
+                    {{/if_eq}}
                   </select>
                 </div>
               </div>
@@ -813,7 +822,7 @@
         activity_name: {
           required: true
         },
-        activity_reason: {
+        category: {
           required: true
         },
         budget_status: {
@@ -851,7 +860,7 @@
         activity_name: {
           required: "activity name title can't be blank"
         },
-        activity_reason: {
+        category: {
           required: "activity reason title can't be blank"
         },
         budget_status: {
@@ -943,6 +952,15 @@
 
   
   $(document).ready(function(){
+    var optionValues = [];
+    $('#practice_area option').each(function () {
+      if ($.inArray(this.value, optionValues) > -1) {
+        $(this).remove()
+      } else {
+        optionValues.push(this.value);
+      }
+    });
+    
     $("#addClitnt_t_r_g").click(function () {
             $("#addDetailsForm").submit();
         });

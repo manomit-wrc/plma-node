@@ -6155,6 +6155,17 @@ i.fa.fa-eye.m-r-5 {
 	display: none;
 }
 
+.firm_name_header {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 20px;
+	font-weight: 500;
+}
+
 
 
 /*------------------------------------------------------------------
@@ -6694,10 +6705,10 @@ select.gender {
 				}
 
 				ul.personal-info.educational-info {
-					    width: 27.3333%;
-					    float: left;
-					    margin-bottom: 20px;
-					    margin-left: 70px;
+					width: 27.3333%;
+					float: left;
+					margin-bottom: 20px;
+					margin-left: 70px;
 				}
 
 				ul.personal-info.educational-info li {
@@ -6717,6 +6728,22 @@ select.gender {
 
 				.btn.btn-default.multiselect-clear-filter {
 					height: 50px;
+				}
+
+				.text-center.gap-col {
+					height: 59px;
+				}
+
+				.dash-widget-info a:hover {
+					color: #ff881f !important;
+				}
+
+				.user-menu .media-list a:hover .media-body p span {
+					color: #ff881f;
+				}
+
+				.table-responsive.refe.sourc thead th:nth-child(1) {
+					width: 49%;
 				}
 
 				/*.dropdown-menu.inner.selectpicker {

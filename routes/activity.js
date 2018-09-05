@@ -20,6 +20,7 @@ const Referral = require('../models').referral;
 const multer = require('multer');
 const User = require('../models').user;
 const requestApproval = require('../models').request_approval;
+const AttorneyPracticeArea = require('../models').practice_area_to_attorney;
 var fileName = '';
 
 const Sequelize = require('sequelize');
@@ -94,11 +95,19 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
             'firm_id': req.user.firm_id
         }
     });
-    const practice_area = await PracticeArea.findAll({
-
+    AttorneyPracticeArea.belongsTo(PracticeArea, {
         order: [
-			['name', 'ASC']
-		],
+            ['name', 'ASC'],
+        ],
+        foreignKey: 'practice_area_id'
+    });
+    const practice_area = await AttorneyPracticeArea.findAll({
+        where: {
+            attorney_id: req.user.id
+        },
+        include: [{
+            model: PracticeArea
+        }]
     });
     const target = await Target.findAll({
         order: [
@@ -210,6 +219,14 @@ router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res)
                 accptActArr.push(accepted_activity[j].activity_id);
             }
             //whereCondition.user_id = '';
+            var origin_activity = await Activity.findAll({
+                where: {
+                    user_id: req.user.id
+                }
+            });
+            for (var a = 0; a < origin_activity.length; a++) {
+                accptActArr.push(origin_activity[a].id);
+            }
             whereCondition.id = accptActArr;
         } else {
             whereCondition.user_id = req.user.id;
@@ -346,7 +363,7 @@ router.post('/activity/add', auth, upload.single('activity_attachment'), firmAtt
         'activity_from_date': FromDate ? FromDate[2] + "-" + FromDate[1] + "-" + FromDate[0] : null,
         'activity_to_date': ToDate ? ToDate[2] + "-" + ToDate[1] + "-" + ToDate[0] : null,
         'activity_name': req.body.activity_name,
-        'activity_reason': req.body.activity_reason,
+        'category': req.body.category,
         'budget_status': req.body.budget_status,
         'budget_details_status': req.body.budget_details_status,
         'target': req.body.ref_type,
@@ -428,7 +445,20 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
             'firm_id': req.user.firm_id
         }
     });
-    const practice_area = await PracticeArea.findAll();
+    AttorneyPracticeArea.belongsTo(PracticeArea, {
+        order: [
+            ['name', 'ASC'],
+        ],
+        foreignKey: 'practice_area_id'
+    });
+    const practice_area = await AttorneyPracticeArea.findAll({
+        where: {
+            attorney_id: req.user.id
+        },
+        include: [{
+            model: PracticeArea
+        }]
+    });
     const allAttorney = await User.findAll({
         where: {
             'firm_id': req.user.firm_id,
@@ -473,6 +503,11 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
         include: [{
             model: Activity_to_user_type
         }]
+    });
+    const practicearea = await PracticeArea.findOne({
+        where: {
+            id: editdata[0].practice_area
+        }
     });
     var result = JSON.parse(JSON.stringify(editdata[0].jointactivities));
     var arr = [];
@@ -599,7 +634,8 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
         practice_area: practice_area,
         level_type,
         section: allSection,
-        attorney: allAttorney
+        attorney: allAttorney,
+        practicearea
     });
 });
 
@@ -622,12 +658,19 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
             'firm_id': req.user.firm_id
         }
     });
-    const practice_area = await PracticeArea.findAll({
-
+    AttorneyPracticeArea.belongsTo(PracticeArea, {
         order: [
-			['name', 'ASC']
-		],
-
+            ['name', 'ASC'],
+        ],
+        foreignKey: 'practice_area_id'
+    });
+    const practice_area = await AttorneyPracticeArea.findAll({
+        where: {
+            attorney_id: req.user.id
+        },
+        include: [{
+            model: PracticeArea
+        }]
     });
     const allAttorney = await User.findAll({
         where: {
@@ -687,6 +730,13 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
             model: Activity_to_user_type
         }]
     });
+    
+    const practicearea = await PracticeArea.findOne({
+        where: {
+            id: editdata[0].practice_area
+        } 
+    });
+    
     var result = JSON.parse(JSON.stringify(editdata[0].jointactivities));
     var arr = [];
     for (var i = 0; i < result.length; i++) {
@@ -818,7 +868,8 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
         practice_area: practice_area,
         level_type,
         section: allSection,
-        attorney: allAttorney
+        attorney: allAttorney,
+        practicearea
     });
 });
 
@@ -904,7 +955,7 @@ router.post('/activity/update/:id', auth, upload.single('activity_attachment'), 
         'activity_from_date': FormDate1 ? FormDate1[2] + "-" + FormDate1[1] + "-" + FormDate1[0] : null,
         'activity_to_date': FormDate1 ? ToDate1[2] + "-" + ToDate1[1] + "-" + ToDate1[0] : null,
         'activity_name': req.body.activity_name,
-        'activity_reason': req.body.activity_reason,
+        'category': req.body.category,
         'budget_status': req.body.budget_status,
         'budget_details_status': req.body.budget_details_status,
         'total_budget_hour': req.body.total_hour,
@@ -1401,6 +1452,8 @@ router.post('/activity/adddetails/', auth, async (req, res) => {
 
     
 });
+
+
 
 //====================================END ACTIVITY=============================================================================//
 

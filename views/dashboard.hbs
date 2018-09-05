@@ -89,7 +89,7 @@
                 <tbody>
                   {{#if_eq firm_count "0"}}
                   <tr>
-                    <td colspan="4" class="text-center">No data available in table</td>
+                    <td colspan="4" class="text-center gap-col">No data available in table</td>
                   </tr>
                   {{else}} {{#each firm_admins}}
                   <tr class="site_dashboard_custom_del">
@@ -132,7 +132,7 @@
                 <tbody>
                   {{#if_eq employee_count "0"}}
                   <tr>
-                    <td colspan="4" class="text-center">No data available in table</td>
+                    <td colspan="4" class="text-center gap-col">No data available in table</td>
                   </tr>
                   {{else}} {{#each employee}}
                   <tr class="site_dashboard_custom_del">
@@ -227,7 +227,6 @@
       <div class="col-md-6 col-sm-6 col-lg-3">
         <div class="dash-widget clearfix card-box">
           <span class="dash-widget-icon">
-            <!-- <i class="fa fa-users" aria-hidden="true"></i> -->
             <img src="assets/img/referrals.png" alt="referrals">
           </span>
           <div class="dash-widget-info">
@@ -279,7 +278,7 @@
                 <tbody>
                   {{#if_eq activity_count "0"}}
                   <tr>
-                    <td colspan="7" class="text-center">No data available in table</td>
+                    <td colspan="7" class="text-center gap-col">No data available in table</td>
                   </tr>
                   {{else}} {{#each activity}}
                   <tr class="activity_custom_del">
@@ -329,7 +328,7 @@
                 <tbody>
                   {{#if_eq client_count "0"}}
                   <tr>
-                    <td colspan="4" class="text-center">No data available in table</td>
+                    <td colspan="4" class="text-center gap-col">No data available in table</td>
                   </tr>
                   {{else}} {{#each client}}
                   <tr class="activity_custom_del">
@@ -382,7 +381,7 @@
                 <tbody>
                   {{#if_eq target_count "0"}}
                   <tr>
-                    <td colspan="4" class="text-center">No data available in table</td>
+                    <td colspan="4" class="text-center gap-col">No data available in table</td>
                   </tr>
                   {{else}} {{#each target}}
                   <tr class="activity_custom_del">
@@ -426,7 +425,7 @@
             <h3 class="panel-title">Referral Sources</h3>
           </div>
           <div class="panel-body">
-            <div class="table-responsive refe">
+            <div class="table-responsive refe sourc">
               <table class="table table-striped custom-table m-b-0">
                 <thead>
                   <tr>
@@ -438,7 +437,7 @@
                 <tbody>
                   {{#if_eq referral_count "0"}}
                   <tr>
-                    <td colspan="4" class="text-center">No data available in table</td>
+                    <td colspan="3" class="text-center gap-col">No data available in table</td>
                   </tr>
                   {{else}} {{#each referral}}
                   <tr class="activity_custom_del">
@@ -485,29 +484,33 @@
                 <thead>
                   <tr>
                     <th>Name</th>
+                    <th>Attorney</th>
                     <th>Approval Status</th>
-                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
                 {{#if_eq notiFicationDetails.length "0"}}
                   <tr>
-                    <td colspan="4" class="text-center">No notification available in table</td>
+                    <td colspan="3" class="text-center">No notification available in table</td>
                   </tr>
                   {{else}}
                   
                     {{#each notiFicationDetails}}
                     <tr class="activity_custom_del">
                       <td style="min-width:200px;">
-                        <a href="#" class="avatar">{{first_letter this.name}}</a>
-                      <h2>
-                        <a href="#" style="width:auto">{{this.name}}</a>
-                      </h2>
+                        {{#if_eq this.type "1"}}
+                        <a href="/team-activity-approvals" class="avatar">{{first_letter this.name}}</a>
+                        <h2> <a href="/team-activity-approvals" style="width:auto">{{this.name}}</a> </h2>
+                        {{else}}
+                         <a href="/approval_details/{{this.activity_id}}" class="avatar">{{first_letter this.name}}</a>
+                        <h2> <a href="approval_details/{{this.activity_id}}" style="width:auto">{{this.name}}</a> </h2>
+                        {{/if_eq}}
                       </td>
-                      <td>{{this.email}}</td>
+                      <td>{{this.userFirstName}} {{this.userLastName}} </td>
                       <td>
-                        <span class="label label-success-border">Pending</span>
+                        <span class="label label-warning-border">Pending</span>
                       </td>
+                      
                     </tr>
                     {{/each}} 
                 {{/if_eq}}
@@ -516,7 +519,7 @@
             </div>
           </div>
           <div class="panel-footer">
-            <a href="/referral" class="text-primary">View all referrals</a>
+            <a href="/activity-approvals" class="text-primary">View all Approval</a>
           </div>
         </div>
       </div>
