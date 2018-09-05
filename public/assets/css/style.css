@@ -6166,7 +6166,55 @@ i.fa.fa-eye.m-r-5 {
 	font-weight: 500;
 }
 
+/* TCR View */
+.info-tile .border-divider {
+	border-right: 2px dashed #ccc;
+    padding-left: 40px;
+}
 
+.info  .top-desc img {
+    margin-bottom: 10px;
+}
+
+.info .top-desc h4 {
+	font-size: 20px;
+}
+.info .top-desc h6 {
+	font-size: 14px;
+	color: #b5b5b5;
+}
+.info .top-desc h4,
+.info .top-desc h6
+ {
+    margin: 0;
+}
+
+.info-tile {
+    margin: 40px 0;
+}
+.info-tile p {
+    margin: 0;
+    position: relative;
+    top: 13px;
+    font-size: 14px;
+}
+
+.tcr-view .nav-tabs li.active a {
+	color: #fff !important;
+    background: #ff851a !important;
+    border: 0 !important;
+}
+
+.tcr-view .nav-tabs>li>a {
+	color: #000;
+	background: #dcdcdc;
+	cursor: pointer;
+}
+.tcr-view .tab-box {
+    padding: 20px;
+}
+
+/* ...TCR View */
 
 /*------------------------------------------------------------------
 [39-a.... Custom Styles]
@@ -6289,8 +6337,8 @@ select.gender {
 			margin-bottom: 5px;
 		}
 
-		.budget-modal .slimScrollBar, 
-		#update_budget .slimScrollBar 
+		.budget-modal .slimScrollBar,
+		#update_budget .slimScrollBar
 		{
 			background: #ff9b44 !important;
 			opacity: 1 !important;
@@ -6651,10 +6699,10 @@ select.gender {
 
 				option {
 					filter: hue-rotate(180deg);
-					-webkit-filter: hue-rotate(180deg);	
-					-moz-filter: hue-rotate(180deg);	
+					-webkit-filter: hue-rotate(180deg);
+					-moz-filter: hue-rotate(180deg);
 				}
-				
+
 				.card-box.user-profile label.title {
 					font-weight: normal;
 				}
