@@ -239,7 +239,7 @@ router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res)
         }
     });
     const target = await Target.findAll({
-       
+
         where: {
             'target_type': "I",
             'target_status': '1',
@@ -247,7 +247,7 @@ router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res)
         }
     });
     const client = await Client.findAll({
-       
+
         where: {
             'client_type': "I",
             'attorney_id': req.user.id
@@ -730,13 +730,13 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
             model: Activity_to_user_type
         }]
     });
-    
+
     const practicearea = await PracticeArea.findOne({
         where: {
             id: editdata[0].practice_area
-        } 
+        }
     });
-    
+
     var result = JSON.parse(JSON.stringify(editdata[0].jointactivities));
     var arr = [];
     for (var i = 0; i < result.length; i++) {
@@ -1188,8 +1188,8 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
             });
         }
 
-       
-        
+
+
 
         if (userInformation_3_l2 !== null) {
             await requestApproval.create({
@@ -1450,7 +1450,7 @@ router.post('/activity/adddetails/', auth, async (req, res) => {
         code: 100
     });
 
-    
+
 });
 
 
