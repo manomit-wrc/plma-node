@@ -441,30 +441,30 @@ router.get('/target/view/:id', auth, firmAttrAuth, csrfProtection, async(req, re
         }]
     });
     const designation = await Designation.findAll();
-    const industrys = await industry_type.findAll();
-    const country = await Country.findAll();
+    
+    // const country = await Country.findAll();
     const attorney = await user.findAll({
         where: {
             role_id: 3,
             firm_id: req.user.firm_id
         }
     });
-    const state = await State.findAll({
-        where: {
-            country_id: "233"
-        }
-    });
-    const city = await City.findAll({
-        where: {
-            state_id: target.state.toString()
-        }
-    });
-    const cities = await City.findById(target.city.toString());
-    const zipcode = await Zipcode.findAll({
-        where: {
-            city_name: cities.name
-        }
-    });
+    // const state = await State.findAll({
+    //     where: {
+    //         country_id: "233"
+    //     }
+    // });
+    // const city = await City.findAll({
+    //     where: {
+    //         state_id: target.state.toString()
+    //     }
+    // });
+    // const cities = await City.findById(target.city.toString());
+    // const zipcode = await Zipcode.findAll({
+    //     where: {
+    //         city_name: cities.name
+    //     }
+    // });
 
     const contactDetails = await ContactInformation.findAll({
 		where: {
@@ -483,21 +483,29 @@ router.get('/target/view/:id', auth, firmAttrAuth, csrfProtection, async(req, re
             model: Activity
         }]
     });
-
+    const country = await Country.findById("233");
+    const state = await State.findById(target.state.toString());
+    const city = await City.findById(target.city.toString());
+    const zip = await Zipcode.findById(target.postal_code.toString());
+    const industrys = await industry_type.findById(target.industry_type.toString());
+    console.log(industrys);
+    
+    
     res.render('target/targetview', {
         layout: 'dashboard',
         title: 'View Target',
         csrfToken: req.csrfToken(),
         designation: designation,
-        industry: industrys,
+        industrys,
         client: target,
         country: country,
         state: state,
         city: city,
         attorney: attorney,
-        zipcode: zipcode,
+        zipcode: zip,
         error_message,
         contactDetails,
+        count_activity: activity_details.length,
         activity_details
     });
 });
@@ -791,6 +799,7 @@ router.post('/target/import', auth, upload.single('file_name'), csrfProtection, 
 });
 
 router.post('/target/move-to-client', auth, async(req, res) => {
+    
     var target_ids = req.body.target_id;
     var n = req.body.target_id.length;
     var clientDetails;
@@ -832,7 +841,7 @@ router.post('/target/move-to-client', auth, async(req, res) => {
                 }
             });
 
-            await Client.create({
+            var moveClient = await Client.create({
                 first_name: target_data.first_name,
                 last_name: target_data.last_name,
                 email: target_data.email,
@@ -869,9 +878,15 @@ router.post('/target/move-to-client', auth, async(req, res) => {
                 client_type: target_data.target_type,
                 remarks: target_data.remarks,
                 attorney_id: req.user.id,
-                estimated_revenue: target_data.estimated_revenue
+                life_time_revenue: target_data.estimated_lifetime_value,
+                //revenueclosingDate: target_data.close_date
                 // revenueclosingDate: target_data.revenueclosingDate,
 
+            });
+            await Revenue.create({
+                type: "C",
+                client_id: moveClient.id,
+                start_date: new Date()
             });
 
             await Target.update({
