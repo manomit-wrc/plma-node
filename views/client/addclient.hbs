@@ -115,18 +115,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Current annual revenue</label>
-									<input class="form-control floating" type="text" id="current_revenue" name="current_revenue">
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Estimated annual revenue</label>
-									<input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue">
-								</div>
-							</div>
+							
 
 							<div class="col-md-6">
 								<div class="form-group form-focus">
@@ -134,50 +123,6 @@
 									<div class="cal-icon">
 										<input class="form-control floating datetimepicker" type="text" id="revenueclosingDate" name="revenueclosingDate">
 									</div>
-								</div>
-							</div>
-							
-							<div class="col-md-3">
-								<div class="form-group form-focus select-focus select-attorney">
-									<label class="control-label">Start Date
-									</label>
-									<select class="form-control floating " id="startMonth" name="startMonth">
-										<option value="">Select Start Date</option>
-										<option value="1">January</option>
-										<option value="2">February</option>
-										<option value="3">March</option>
-										<option value="4">April</option>
-										<option value="5">May</option>
-										<option value="6">June</option>
-										<option value="7">July</option>
-										<option value="8">August</option>
-										<option value="9">September</option>
-										<option value="10">October</option>
-										<option value="11">November</option>
-										<option value="12">December</option>
-									</select>
-								</div>
-							</div>
-
-							<div class="col-md-3">
-								<div class="form-group form-focus select-focus select-attorney">
-									<label class="control-label">End Date
-									</label>
-									<select class="form-control floating " id="endMonth" name="endMonth">
-										<option value="">Select End Date</option>
-										<option value="1">January</option>
-										<option value="2">February</option>
-										<option value="3">March</option>
-										<option value="4">April</option>
-										<option value="5">May</option>
-										<option value="6">June</option>
-										<option value="7">July</option>
-										<option value="8">August</option>
-										<option value="9">September</option>
-										<option value="10">October</option>
-										<option value="11">November</option>
-										<option value="12">December</option>
-									</select>
 								</div>
 							</div>
 
@@ -227,28 +172,70 @@
 							</div>
 						</div>
 
-						<div class="col-md-6">
-							<div class="form-group form-focus">
-								<label class="control-label">Start Date<span class="req-lbl">*</span> </label>
-								<div class="cal-icon">
-									<input class="form-control floating datetimepicker" type="text" id="clientStartDate" name="clientStartDate">
-								</div>
-							</div>
-						</div>
-
-						<div class="col-md-6">
-							<div class="form-group form-focus">
-								<label class="control-label">End Date<span class="req-lbl">*</span> </label>
-								<div class="cal-icon">
-									<input class="form-control floating datetimepicker" type="text" id="clientEndDate" name="clientEndDate">
-								</div>
-							</div>
-						</div>
-
 					</div>
 				</div>
 			</div>
-
+			<div class="card-box">
+				<h3 class="card-title">Revenue Information</h3>
+				<div class="row">
+					
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Life Time revenue</label>
+							<input class="form-control floating" type="text" id="life_time_revenue" name="life_time_revenue">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Start Date
+								<span class="req-lbl">*</span>
+							</label>
+							<div class="cal-icon">
+								<input class="form-control floating datetimepicker" type="text" id="clientStartDate" name="clientStartDate">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus select-focus select-attorney">
+							<label class="control-label">Planning Period (Month)
+							</label>
+							<select class="form-control floating " id="endMonth" name="endMonth">
+								<option value="">Select Planning Period </option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">End Date</label>
+							<input class="form-control floating" type="text" id="end_date" name="end_date" disabled>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Estimated Planning Period revenue</label>
+							<input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Current annual revenue</label>
+							<input class="form-control floating" type="text" id="current_revenue" name="current_revenue">
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="card-box">
 				<h3 class="card-title">Attorney Information</h3>
 				<div class="row">
@@ -610,6 +597,14 @@
         });
 
 		$("#estimated_revenue").inputmask("numeric", {
+            radixPoint: ".",
+            groupSeparator: ",",
+            digits: 2,
+            autoGroup: true,
+            prefix: '$ ',
+            rightAlign: false
+        });
+		$("#life_time_revenue").inputmask("numeric", {
             radixPoint: ".",
             groupSeparator: ",",
             digits: 2,
