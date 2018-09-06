@@ -26,6 +26,7 @@ const user = require('../models').user;
 const ContactInformation = require('../models').contact_information;
 const Activity = require('../models').activity;
 const TargetActivity = require('../models').jointactivity;
+const Revenurs = require('../models').revenue;
 var csrfProtection = csrf({
 	cookie: true
 });
@@ -58,7 +59,7 @@ function removePhoneMask(phone_no) {
 	phone_no = phone_no.replace("(", "");
 	phone_no = phone_no.replace(" ", "");
 	phone_no = phone_no.replace("$", "");
-	phone_no = phone_no.replace(",", "");
+	phone_no = phone_no.replace(",","");
 	return phone_no;
 
 }
@@ -933,11 +934,26 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 			} 
 
 
+			//revenues
+            Revenurs.create({
+                type: 'C',
+                target_id: '0',
+                client_id: insertData.id,
+                planning_period: req.body.planning_period,
+                start_date: req.body.clientStartDate,
+                end_date: req.body.end_date,
+                estimated_revenue: removePhoneMask(req.body.estimated_revenue),
+                current_revenue: removePhoneMask(req.body.current_revenue),
+				status: 0,
+				life_time_revenue: req.body.life_time_revenue
+			});
+
+
 			req.flash('success-message', 'Client Added Successfully');
 			res.redirect('/client');
 
 		} else {
-			await client.create({
+			const insertData = await client.create({
 				first_name: req.body.client_first_name,
 				last_name: req.body.client_last_name,
 				email: req.body.email,
@@ -982,6 +998,21 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				revenue_start_month: req.body.startMonth,
             	revenue_end_month: req.body.endMonth
 			});
+
+			//revenues
+            Revenurs.create({
+                type: 'C',
+                target_id: '0',
+                client_id: insertData.id,
+                planning_period: req.body.planning_period,
+                start_date: req.body.clientStartDate,
+                end_date: req.body.end_date,
+                estimated_revenue: removePhoneMask(req.body.estimated_revenue),
+                current_revenue: removePhoneMask(req.body.current_revenue),
+				status: 0,
+				life_time_revenue: req.body.life_time_revenue
+			});
+			
 			req.flash('success-message', 'Client Added Successfully');
 			res.redirect('/client');
 		}
