@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) => {
     end_date: DataTypes.DATE,
     estimated_revenue: DataTypes.STRING,
     current_revenue: DataTypes.STRING,
-    status: DataTypes.INTEGER
+    status: DataTypes.INTEGER,
+    life_time_revenue: DataTypes.STRING
   }, {});
   revenue.associate = function(models) {
     // associations can be defined here

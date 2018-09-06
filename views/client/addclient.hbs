@@ -175,6 +175,7 @@
 					</div>
 				</div>
 			</div>
+
 			<div class="card-box">
 				<h3 class="card-title">Revenue Information</h3>
 				<div class="row">
@@ -199,7 +200,7 @@
 						<div class="form-group form-focus select-focus select-attorney">
 							<label class="control-label">Planning Period (Month)
 							</label>
-							<select class="form-control floating " id="endMonth" name="endMonth">
+							<select class="form-control floating " id="planning_period" name="planning_period">
 								<option value="">Select Planning Period </option>
 								<option value="1">1</option>
 								<option value="2">2</option>
@@ -219,7 +220,7 @@
 					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">End Date</label>
-							<input class="form-control floating" type="text" id="end_date" name="end_date" disabled>
+							<input class="form-control floating" type="text" id="end_date" name="end_date" readonly>
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -236,6 +237,7 @@
 					</div>
 				</div>
 			</div>
+			
 			<div class="card-box">
 				<h3 class="card-title">Attorney Information</h3>
 				<div class="row">
@@ -676,6 +678,24 @@
 				zipcode: {
 					required: true
 				},
+				life_time_revenue: {
+					required:true
+				},
+				clientStartDate: {
+					required: true
+				},
+				planning_period: {
+					required:true
+				},
+				/*end_date: {
+					required: true
+				},*/
+				estimated_revenue: {
+					required: true
+				},
+				current_revenue: {
+					required: true
+				}
 				/* industry_type: {
 					required: true
 				} */
@@ -733,6 +753,24 @@
 				zipcode: {
 					required: "Choose your zipcode"
 				},
+				life_time_revenue: {
+					required: "Life time revenue can't be blank"
+				},
+				clientStartDate: {
+					required: "Client Start Date can't be blank"
+				},
+				planning_period: {
+					required: "Choose your Planning period"
+				},
+				/*end_date: {
+					required: "End date can't be blank"
+				},*/
+				estimated_revenue: {
+					required: "Estimated revenue can't be blank"
+				},
+				current_revenue: {
+					required: "Current revenue can't be blank"
+				},
 				/* industry_type: {
 					required: "Choose your industry type"
 				} */
@@ -774,5 +812,35 @@
 		$('#add-tag-existing-client').show();
 		$('#add-tag-client').hide();
 	});
+
+
+	// revenue information
+	$(document).on("change", "#planning_period", function(){
+		var start_date = $("#clientStartDate").val();
+		var period = $(this).val();
+		if(start_date == ""){
+			alert("1212121212");
+		}
+		else{
+		var start_date_split = start_date.split('-');
+		var month = start_date_split[2] + "," + start_date_split[1] + "," + start_date_split[0];
+		var current_date = new Date(month);
+		var end_date = new Date(current_date.setMonth(current_date.getMonth() + parseInt(period)));
+		var dd = end_date.getDate();
+			var mm = end_date.getMonth() + 1; //January is 0!
+
+			var yyyy = end_date.getFullYear();
+			if (dd < 10) {
+				dd = '0' + dd;
+			}
+			if (mm < 10) {
+				mm = '0' + mm;
+			}
+			var end_date = dd + '-' + mm + '-' + yyyy;
+		}
+		$("#end_date").val(end_date);
+	});
+
+
 </script> 
 {{/content}}
