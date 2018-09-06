@@ -274,7 +274,7 @@
 					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">End Date</label>
-							<input class="form-control floating" type="text" id="end_date" name="end_date" disabled>
+							<input class="form-control floating" type="text" id="end_date" name="end_date" readonly>
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -767,6 +767,15 @@
 				attorney: {
 					required: true
 				},
+				life_time_revenue: {
+					required: true
+				},
+				targetCloseDate: {
+					required: true
+				},
+				targetStartDate: {
+					required: true
+				},
 				estimated_revenue: {
 					required: true
 				}
@@ -842,8 +851,17 @@
 				attorney: {
 					required: "Attorney can't be blank"
 				},
+				life_time_revenue: {
+					required: "Life time revenue can't be blank"
+				},
+				targetCloseDate: {
+					required: "Close date can't be blank"
+				},
+				targetStartDate: {
+					required: "Start date can't be blank"
+				},
 				estimated_revenue: {
-					required: "Estimated can't be blank"
+					required: "Estimated revenue can't be blank"
 				}
 			}
 		});
@@ -876,7 +894,7 @@
 		var start_date = $("#targetStartDate").val();
 		var period = $(this).val();
 		if(start_date == ""){
-			alert("1212121212");
+			swal("","Please Select Start date!","warning");
 		}
 		else{
 		var start_date_split = start_date.split('-');
