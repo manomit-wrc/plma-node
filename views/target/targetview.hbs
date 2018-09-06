@@ -44,8 +44,10 @@
                                         </div>
                                         <div class="col-xs-9">
                                             <p>
-                                                {{client.address1}},{{client.address3}},{{client.address3}},
-                                                <br> {{state.name}}, {{city.name}},
+                                                {{client.address1}},
+                                                {{#if client.address2}}{{client.address2}},{{/if}}
+                                                {{#if client.address3}}{{client.address3}},{{/if}}
+                                                <br> {{city.name}}, {{state.name}},
                                                 <br> {{zipcode.zip}}, {{country.name}}
                                             </p>
                                         </div>
