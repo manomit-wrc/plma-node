@@ -121,7 +121,6 @@ router.get('/target', auth, firmAttrAuth, csrfProtection, async(req, res) => {
             model: Revenue
         }]
     });
-    console.log(targetDetails);
     
     res.render('target/targets', {
         layout: 'dashboard',
@@ -201,7 +200,7 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
 	var fax = req.body.targetDetailsFax;
     var mobile_no = req.body.targetDetailsMobile_no;
 
-    const startDate = req.body.close_date ? req.body.close_date.split("-") : '';
+    const startDate = req.body.targetStartDate ? req.body.targetStartDate.split("-") : '';
     const endDate = req.body.end_date ? req.body.end_date.split("-") : '';
     const targetCloseDate = req.body.targetCloseDate ? req.body.targetCloseDate.split("-") : '';
 
@@ -284,7 +283,7 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
             const revenueaddo = await Revenue.create({
                 type:"T",
                 target_id: insertData.id,
-                planning_period: planning_period,
+                planning_period: req.body.planning_period,
                 start_date: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
                 end_date: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
                 estimated_revenue: removePhoneMask(req.body.estimated_revenue)
@@ -356,8 +355,18 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
 });
 
 router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, res) => {
+    Target.hasMany(Revenue, {
+        foreignKey: 'target_id'
+    });
     var error_message = req.flash('error-target-message')[0];
-    const target = await Target.findById(req.params['id']);
+    const target = await Target.findOne({
+        where: {
+            id: req.params['id']
+        },
+        include: [{
+            model: Revenue
+        }]  
+    });
     const designation = await Designation.findAll({
         order: [
 			['title', 'ASC']
@@ -419,8 +428,18 @@ router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, re
 });
 
 router.get('/target/view/:id', auth, firmAttrAuth, csrfProtection, async(req, res) => {
+    Target.hasMany(Revenue, {
+        foreignKey: 'target_id'
+    });
     var error_message = req.flash('error-target-message')[0];
-    const target = await Target.findById(req.params['id']);
+    const target = await Target.findOne({
+        where: {
+            id: req.params['id']
+        },
+        include: [{
+            model: Revenue
+        }]
+    });
     const designation = await Designation.findAll();
     const industrys = await industry_type.findAll();
     const country = await Country.findAll();
@@ -493,8 +512,9 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
 	var fax = req.body.contactDetailsFax;
     var mobile_no = req.body.contactDetailsMobile_no;
     
-    const startDate = req.body.close_date ? req.body.close_date.split("-") : '';
-    const endDate = req.body.targetEndDate ? req.body.targetEndDate.split("-") : '';
+   const startDate = req.body.targetStartDate ? req.body.targetStartDate.split("-") : '';
+   const endDate = req.body.end_date ? req.body.end_date.split("-") : '';
+   const targetCloseDate = req.body.targetCloseDate ? req.body.targetCloseDate.split("-") : '';
 
 	let length = first_name.length;
 	for (let i=0; i< length; i++) {
@@ -559,17 +579,32 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
             target_id: req.body.target_id,
             target_code: req.body.target_code,
             remarks: req.body.remarks,
-            estimated_revenue: removePhoneMask(req.body.estimated_revenue),
-            estimated_lifetime_value: removePhoneMask(req.body.estimatedLifetime),
-            revenue_start_month: req.body.startMonth,
-            revenue_end_month: req.body.endMonth,
-            close_date: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
-            targetEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
+            estimated_lifetime_value: removePhoneMask(req.body.life_time_revenue),
+            close_date: targetCloseDate ? targetCloseDate[2] + "-" + targetCloseDate[1] + "-" + targetCloseDate[0] : null,
+            // estimated_revenue: removePhoneMask(req.body.estimated_revenue),
+            // estimated_lifetime_value: removePhoneMask(req.body.estimatedLifetime),
+            // revenue_start_month: req.body.startMonth,
+            // revenue_end_month: req.body.endMonth,
+            // close_date: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
+            // targetEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
         }, {
             where: {
                 id: req.params['id']
             }
             
+        });
+
+        const revenueupdate = await Revenue.update({
+            type: "T",
+            planning_period: req.body.planning_period,
+            start_date: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
+            end_date: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
+            estimated_revenue: removePhoneMask(req.body.estimated_revenue)
+        },{
+            where:{
+                target_id: req.params['id']
+            } 
+                
         });
             
         await ContactInformation.destroy({
@@ -600,15 +635,19 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
     }
 });
 
-router.get('/target/delete/:id', auth, firmAttrAuth, (req, res) => {
-    Target.destroy({
+router.get('/target/delete/:id', auth, firmAttrAuth, async(req, res) => {
+    await Target.destroy({
         where: {
-            id: req.params.id
+            id: req.params['id']
         }
-    }).then(resp => {
-        req.flash('success-message', 'Target Deleted Successfully');
-        res.redirect('/target');
     });
+    await Revenue.destroy({
+        where: {
+            target_id: req.params['id']
+        }
+    })
+    req.flash('success-message', 'Target Deleted Successfully');
+    res.redirect('/target');
 });
 
 router.post('/target/multi-delete/', auth, firmAttrAuth, async(req, res) => {
