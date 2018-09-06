@@ -261,6 +261,71 @@
 				</div>
 			</div>
 
+
+			<div class="card-box">
+				<h3 class="card-title">Revenue Information</h3>
+				<div class="row">
+					
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Life Time revenue</label>
+							<input class="form-control floating" type="text" id="life_time_revenue" name="life_time_revenue" value="{{client.life_time_revenue}}">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Start Date
+								<span class="req-lbl">*</span>
+							</label>
+							<div class="cal-icon">
+								<input class="form-control floating datetimepicker" type="text" id="clientStartDate" name="clientStartDate" value="{{dateFormat client.start_date "
+										 DD-MM-YYYY "}}" >
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus select-focus select-attorney">
+							<label class="control-label">Planning Period (Month)
+							</label>
+							<select class="form-control floating " id="planning_period" name="planning_period">
+								<option value="">Select Planning Period </option>
+								<option value="1" {{#if_eq client.planning_period '1'}} selected {{/if_eq}} >1</option>
+								<option value="2" {{#if_eq client.planning_period '2'}} selected {{/if_eq}} >2</option>
+								<option value="3" {{#if_eq client.planning_period '3'}} selected {{/if_eq}} >3</option>
+								<option value="4" {{#if_eq client.planning_period '4'}} selected {{/if_eq}} >4</option>
+								<option value="5" {{#if_eq client.planning_period '5'}} selected {{/if_eq}} >5</option>
+								<option value="6" {{#if_eq client.planning_period '6'}} selected {{/if_eq}} >6</option>
+								<option value="7" {{#if_eq client.planning_period '7'}} selected {{/if_eq}} >7</option>
+								<option value="8" {{#if_eq client.planning_period '8'}} selected {{/if_eq}} >8</option>
+								<option value="9" {{#if_eq client.planning_period '9'}} selected {{/if_eq}} >9</option>
+								<option value="10" {{#if_eq client.planning_period '10'}} selected {{/if_eq}} >10</option>
+								<option value="11" {{#if_eq client.planning_period '11'}} selected {{/if_eq}} >11</option>
+								<option value="12" {{#if_eq client.planning_period '12'}} selected {{/if_eq}} >12</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">End Date</label>
+							<input class="form-control floating" type="text" id="end_date" name="end_date" value="{{dateFormat client.end_date "
+										 DD-MM-YYYY "}}"  readonly>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Estimated Planning Period revenue</label>
+							<input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue" value="{{client.estimated_revenue}}" >
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-focus">
+							<label class="control-label">Current annual revenue</label>
+							<input class="form-control floating" type="text" id="current_revenue" name="current_revenue" value="{{client.current_revenue}}" >
+						</div>
+					</div>
+				</div>
+			</div>
+
 			
 			<div class="card-box">
 				<h3 class="card-title">Attorney Information</h3>
