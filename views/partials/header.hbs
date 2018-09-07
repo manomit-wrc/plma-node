@@ -390,6 +390,30 @@
                 '</li>'
               );
 
+              } else if (response.approval_noti[j].type=='3') {
+                
+                  $("#notiMsg").append('<li class="media notification-message">' +
+                  '<a href="/client/edit/' + response.approval_noti[j].client_id + '">' +
+                    '<div class="media-left">' +
+                      '<span class="avatar">' +
+                        header.charAt(0) +
+                      '</span>'+
+                    '</div>' +
+                    '<div class="media-body">' +
+                      '<p class="m-0 noti-details">' +
+                        '<span class="noti-title">' +
+                          "End planning Period for " + '<b>' + response.approval_noti[j].name + '</b>' +"."+
+                        '</span>' +
+                      '</p>' +
+                      '<p class="m-0">' +
+                        '<span class="notification-time">' +
+                          get_time +
+                        '</span>' +
+                      '</p>' +
+                    '</div>' +
+                  '</a>' +
+                  '</li>'
+                );
               }
               
             }
