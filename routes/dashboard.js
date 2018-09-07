@@ -304,6 +304,9 @@ router.get('/dashboard', auth,  async(req, res) => {
     }); 
 
 
+    
+   
+
     if (teamActivityAttorney.length>0) {
         for (let i=0; i< teamActivityAttorney.length; i++) {
             const userDetails = await User.findOne({
@@ -345,7 +348,7 @@ router.get('/dashboard', auth,  async(req, res) => {
             }) 
         }
     }    
-    // console.log('notiFicationDetails',notiFicationDetails);
+    // console.log('notiFicationDetails',notiFicationDetails.length);
     
     //notifications end 09-19-2018    
 
