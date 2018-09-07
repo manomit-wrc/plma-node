@@ -1,7 +1,8 @@
 {{#content "style" mode="prepend"}}
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
-<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
+{{/content}}
 <div class="page-wrapper">
     <div class="content container-fluid">
         <div class="tcr-view">
@@ -27,7 +28,7 @@
                     <div class="info-tile">
                         <div class="container">
                             <div class="row">
-                                <div class="col-md-3 border-divider">
+                                <div class="col-md-3 col-sm-3 col-xs-3 border-divider">
                                     <div class="row">
                                         <div class="col-xs-3">
                                             <img src="https://cdn3.iconfinder.com/data/icons/black-white-social-media/32/logo_social_media_location-512.png" alt="" height="48"
@@ -42,26 +43,29 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3 border-divider">
+                                <div class="col-md-3 col-sm-3 col-xs-3 border-divider">
                                     <div class="row">
                                         <div class="col-xs-3">
                                             <img src="https://cdn3.iconfinder.com/data/icons/black-white-social-media/32/logo_social_media_phone-2-512.png" alt="" height="48"
                                                 width="48">
                                         </div>
                                         <div class="col-xs-9">
+                                            <span>M:</span>
                                             <p class="number_validator">
                                                 {{client.mobile_no}}
                                             </p>
+                                            <span>P:</span>
                                             <p class="number_validator">
                                                 {{client.phone_no}}
                                             </p>
+                                            <span>C:</span>
                                             <p class="number_validator">
                                                 {{client.fax}}
                                             </p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3 border-divider">
+                                <div class="col-md-3 col-sm-3 col-xs-3 border-divider">
                                     <div class="row">
                                         <div class="col-xs-3">
                                             <img src="https://cdn4.iconfinder.com/data/icons/e-commerce-icon-set/48/Username_2-512.png" alt="" height="48" width="48">
@@ -75,7 +79,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 col-sm-3 col-xs-3">
                                     <div class="row">
                                         <div class="col-xs-3">
                                             <img src="https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_group_work_48px-512.png" alt="" height="48"
@@ -156,7 +160,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="refferedinfo" class="tab-pane fade">
+                            <div id="refferedinfo" class="tab-pane fade revenue">
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-md-12">
@@ -194,7 +198,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="otherinfo" class="tab-pane fade">
+                            <div id="otherinfo" class="tab-pane fade revenue">
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-md-12">
@@ -264,7 +268,6 @@
         </div>
     </div>
 </div>
-
 {{#content "script" mode="append"}}
 <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
@@ -278,12 +281,10 @@
         localStorage.removeItem('url');
         localStorage.setItem("url", window.location.pathname);
     });
-
     $(document).on('click', '#expandBtn', function () {
         $("#expandToggle").toggle();
         $("i", this).toggleClass("fa fa-arrow-up fa fa-arrow-down");
     });
-
     $(".revenue_cost").inputmask("numeric", {
         radixPoint: ".",
         groupSeparator: ",",
@@ -292,7 +293,6 @@
         prefix: '$ ',
         rightAlign: false
     });
-
     $("#estimatedLifetime").inputmask("numeric", {
         radixPoint: ".",
         groupSeparator: ",",
@@ -301,10 +301,8 @@
         prefix: '$ ',
         rightAlign: false
     });
-
     $(document).ready(function (e) {
         // add designation ajax operation and form validation ends
-
         //hide show type
         let _msType = $('#_targetContact').val();
         if (_msType === 'O') {
@@ -317,4 +315,5 @@
             $('#m_s_contactInformation').hide();
         }
     });
-</script> {{/content}}
+</script>
+{{/content}}
