@@ -226,7 +226,7 @@
 			
 					<div class="col-md-6">
 						<div class="form-group form-focus">
-							<label class="control-label">Life Time revenue</label>
+							<label class="control-label">Estimated Customer Lifetime value</label>
 							<input class="form-control floating" type="text" id="life_time_revenue" name="life_time_revenue">
 						</div>
 					</div>
@@ -242,7 +242,7 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus">
-							<label class="control-label">Start Date
+							<label class="control-label">Planning Period Start Date
 								<span class="req-lbl">*</span>
 							</label>
 							<div class="cal-icon">
@@ -252,7 +252,7 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus select-attorney">
-							<label class="control-label">Planning Period (Month)
+							<label class="control-label">Revenue Planning Period (Month)
 							</label>
 							<select class="form-control floating " id="planning_period" name="planning_period">
 								<option value="">Select Planning Period </option>
@@ -273,7 +273,7 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus">
-							<label class="control-label">End Date</label>
+							<label class="control-label">Planning Period End Date</label>
 							<input class="form-control floating" type="text" id="end_date" name="end_date" readonly>
 						</div>
 					</div>
@@ -615,11 +615,10 @@
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus select-attorney">
 							<label class="control-label">Association Status
-								<span class="req-lbl">*</span>
 
 							</label>
 							<select id="association" name="association" class="form-control floating ">
-								<option value=""> Select Association</option>
+								<option value="0"> Select Association</option>
 								<option value="CONVERTED">CONVERTED</option>
 								<option value="NEW TARGET">NEW TARGET</option>
 								<option value="TS-INTERIM">TS-INTERIM</option>
@@ -629,10 +628,9 @@
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus select-attorney">
 							<label class="control-label">Industry Type
-								<span class="req-lbl">*</span>
 							</label>
 							<select id="industry_type" name="industry_type" class="form-control floating ">
-								<option value=""> Select Industry Type</option>
+								<option value="0"> Select Industry Type</option>
 								{{#each industry}}
 								<option value="{{this.id}}">{{this.industry_name}}</option>
 								{{/each}}
@@ -716,9 +714,7 @@
 				target_id: {
 					required: true
 				},
-				target_code: {
-					required: true
-				},
+				
 				email: {
 					required: true,
 					email: true
@@ -761,9 +757,6 @@
 				industry_type: {
 					required: true
 				},
-				company_name: {
-					required: true
-				},
 				attorney: {
 					required: true
 				},
@@ -774,6 +767,9 @@
 					required: true
 				},
 				targetStartDate: {
+					required: true
+				},
+				planning_period: {
 					required: true
 				},
 				estimated_revenue: {
@@ -799,9 +795,7 @@
 				target_id: {
 					required: "Target ID can't be blank"
 				},
-				target_code: {
-					required: "Target Code can't be blank"
-				},
+				
 				email: {
 					required: "Email id can't be blank",
 					email: "Enter valid email id"
@@ -845,9 +839,7 @@
 				industry_type: {
 					required: "industry type can't be blank"
 				},
-				company_name: {
-					required: "company name type can't be blank"
-				},
+				
 				attorney: {
 					required: "Attorney can't be blank"
 				},
@@ -859,6 +851,9 @@
 				},
 				targetStartDate: {
 					required: "Start date can't be blank"
+				},
+				planning_period: {
+					required: "Select planning period"
 				},
 				estimated_revenue: {
 					required: "Estimated revenue can't be blank"
@@ -895,25 +890,33 @@
 		var period = $(this).val();
 		if(start_date == ""){
 			swal("","Please Select Start date!","warning");
+			$(this).val('').attr("selected", true);
 		}
 		else{
-		var start_date_split = start_date.split('-');
-		var month = start_date_split[2] + "," + start_date_split[1] + "," + start_date_split[0];
-		var current_date = new Date(month);
-		var end_date = new Date(current_date.setMonth(current_date.getMonth() + parseInt(period)));
-		var dd = end_date.getDate();
-			var mm = end_date.getMonth() + 1; //January is 0!
+			if($(this).val() == ''){
+				swal("","Please selcet planning period!","warning");
+				$("#end_date").val('');
+			}
+			else
+			{
+				var start_date_split = start_date.split('-');
+				var month = start_date_split[2] + "," + start_date_split[1] + "," + start_date_split[0];
+				var current_date = new Date(month);
+				var end_date = new Date(current_date.setMonth(current_date.getMonth() + parseInt(period)));
+				var dd = end_date.getDate();
+				var mm = end_date.getMonth() + 1; //January is 0!
 
-			var yyyy = end_date.getFullYear();
-			if (dd < 10) {
-				dd = '0' + dd;
+				var yyyy = end_date.getFullYear();
+				if (dd < 10) {
+					dd = '0' + dd;
+				}
+				if (mm < 10) {
+					mm = '0' + mm;
+				}
+				var end_date = dd + '-' + mm + '-' + yyyy;
+				$("#end_date").val(end_date);
 			}
-			if (mm < 10) {
-				mm = '0' + mm;
-			}
-			var end_date = dd + '-' + mm + '-' + yyyy;
 		}
-		$("#end_date").val(end_date);
 	});
 
 </script> {{/content}}
