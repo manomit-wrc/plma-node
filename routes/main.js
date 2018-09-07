@@ -1071,9 +1071,9 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 				"last_name":last_name[i],
 				"gender":gender[i],
 				"email":email[i],
-				"phone_no":removePhoneMask(phone_no[i]),
-				"fax":removePhoneMask(fax[i]),
-				"mobile_no":removePhoneMask(mobile_no[i])
+				"phone_no": phone_no[i] ? removePhoneMask(phone_no[i]) : '',
+				"fax": fax[i] ? removePhoneMask(fax[i]) : '',
+				"mobile_no": mobile_no[i] ? removePhoneMask(mobile_no[i]): ''
 			});
 		}
 	}
