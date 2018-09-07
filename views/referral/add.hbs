@@ -90,7 +90,7 @@
                   <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" />
                 </div>
               </div>
-              <div class="col-md-6">
+              {{!-- <div class="col-md-6">
                 <div class="form-group">
                   <label class="control-label">Refferred: </label>
                   <div class="form-inline m-b-15">
@@ -114,8 +114,8 @@
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-md-6" id="target_list">
+              </div> --}}
+              {{!-- <div class="col-md-6" id="target_list">
                 <div class="form-group form-focus select-attorney">
                   <select id="target_id" name="referred_id_t" class="form-control floating ">
                     <option value="">Select Target</option>
@@ -138,7 +138,7 @@
                     {{/if_eq}} {{/each}}
                   </select>
                 </div>
-              </div>
+              </div> --}}
               <div class="col-md-6">
                 <div class="form-group form-focus select-focus select-attorney">
                   <label class="control-label">Gender
@@ -153,23 +153,23 @@
                   </select>
                 </div>
               </div>
-              <div class="col-md-6">
+              {{!-- <div class="col-md-6">
                 <div class="form-group form-focus">
                   <label class="control-label">Estimated annual revenue
                     <span class="req-lbl">*</span>
                   </label>
                   <input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue">
                 </div>
-              </div>
+              </div> --}}
 
-              <div class="col-md-6">
+              {{!-- <div class="col-md-6">
                 <div class="form-group form-focus">
                   <label class="control-label">Closing Date<span class="req-lbl">*</span> </label>
                   <div class="cal-icon">
                     <input class="form-control floating datetimepicker" type="text" id="revenueclosingDate" name="revenueclosingDate">
                   </div>
                 </div>
-              </div>
+              </div> --}}
 
             </div>
           </div>
@@ -515,10 +515,7 @@
           </div>
           <div class="col-md-6">
             <div class="form-group form-focus select-focus select-attorney">
-              <label class="control-label">Association Status
-                <span class="req-lbl">*</span>
-
-              </label>
+              <label class="control-label">Association Status</label>
               <select id="association" name="association" class="form-control floating " >
                 <option value=""> Select Association</option>
                 <option value="CONVERTED">CONVERTED</option>
@@ -529,11 +526,9 @@
           </div>
           <div class="col-md-6">
             <div class="form-group form-focus select-focus select-attorney">
-              <label class="control-label">Industry Type
-                <span class="req-lbl">*</span>
-              </label>
+              <label class="control-label">Industry Type</label>
               <select id="industry_type" name="industry_type" class="form-control floating" >
-                <option value=""> Select Industry Type</option>
+                <option value="0"> Select Industry Type</option>
                 {{#each industry}}
                 <option value="{{this.id}}">{{this.industry_name}}</option>
                 {{/each}}
@@ -629,12 +624,6 @@
         },
         referred_id_c: {
           required: true
-        },
-        association: {
-          required: true
-        },
-        industry_type: {
-          required: true
         }
       },
       messages: {
@@ -688,12 +677,6 @@
         },
         referred_id_c: {
           required: "Please select client"
-        },
-        association: {
-          required: "association can't be blank"
-        },
-        industry_type: {
-          required: "industry type can't be blank"
         }
       }
     });

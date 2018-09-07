@@ -96,7 +96,7 @@
                 </div>
               </div>
 
-              <div class="col-md-6">
+              {{!-- <div class="col-md-6">
                 <div class="form-group">
                   <label class="control-label">Refferred: </label>
                   <div class="form-inline m-b-15">
@@ -121,9 +121,9 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> --}}
 
-              <div class="col-md-6" id="target_list" {{#if_eq referral.referred_type "C"}} style="display:none;" {{/if_eq}}>
+              {{!-- <div class="col-md-6" id="target_list" {{#if_eq referral.referred_type "C"}} style="display:none;" {{/if_eq}}>
                 <div class="form-group form-focus select-attorney">
                   <select id="target_id" name="referred_id_t" class="form-control floating ">
                     <option value="0" {{#if_eq referral.target_id "0"}} selected {{/if_eq}}>Select Target</option>
@@ -150,7 +150,7 @@
                     {{/if_eq}} {{/each}}
                   </select>
                 </div>
-              </div>
+              </div> --}}
               <div class="col-md-6">
                 <div class="form-group form-focus select-focus select-attorney">
                   <label class="control-label">Gender
@@ -160,19 +160,21 @@
                     <option value="">Select Gender</option>
                     <option value="M" {{#if_eq referral.gender "M"}} selected {{/if_eq}}>Male</option>
                     <option value="F" {{#if_eq referral.gender "F"}} selected {{/if_eq}}>Female</option>
+                    <option value="O" {{#if_eq referral.gender "O"}} selected {{/if_eq}}>Others</option>
+
                   </select>
                 </div>
               </div>
-              <div class="col-md-6">
+              {{!-- <div class="col-md-6">
                 <div class="form-group form-focus">
                   <label class="control-label">Estimated annual revenue
                     <span class="req-lbl">*</span>
                   </label>
                   <input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue" value="{{referral.estimated_revenue}}">
                 </div>
-              </div>
+              </div> --}}
 
-              <div class="col-md-6">
+              {{!-- <div class="col-md-6">
                 <div class="form-group form-focus">
                   <label class="control-label">Closing Date<span class="req-lbl">*</span> </label>
                   <div class="cal-icon">
@@ -180,7 +182,7 @@
                       DD-MM-YYYY "}}">
                   </div>
                 </div>
-              </div>
+              </div> --}}
 
 
             </div>
@@ -465,6 +467,41 @@
         </div>
       </div>
 
+
+<div class="card-box">
+<div class="col-xs-4">
+        <h3 class="card-title">Add Target Client</h3>
+</div>
+      <div class="col-xs-8 text-right">
+                    <a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_user"><i class="fa fa-plus"></i> Add Target Client</a>
+
+
+
+
+      </div>
+
+        <h3 class="card-title"></h3>
+<div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped custom-table datatable">
+                        <thead>
+                            <tr>
+                                <th>SL#</th>
+                                <th>Target Client Name</th>
+                                <th>Type</th>
+                                <th>email</th>
+                                
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+             </div>
+        </div>
+  </div>
+
+
+
       <div class="card-box">
         <h3 class="card-title">Other Information</h3>
         <div class="row">
@@ -538,10 +575,7 @@
           </div>
           <div class="col-md-6">
             <div class="form-group form-focus select-focus select-attorney">
-              <label class="control-label">Association Status
-                <span class="req-lbl">*</span>
-
-              </label>
+              <label class="control-label">Association Status</label>
               <select id="association" name="association" class="form-control floating ">
                 <option value=""> Select Association</option>
                 <option value="CONVERTED" {{#if_eq referral.association "CONVERTED"}} selected {{/if_eq}}>CONVERTED</option>
@@ -552,11 +586,9 @@
           </div>
           <div class="col-md-6">
             <div class="form-group form-focus select-focus select-attorney">
-              <label class="control-label">Industry Type
-                <span class="req-lbl">*</span>
-              </label>
+              <label class="control-label">Industry Type</label>
               <select id="industry_type" name="industry_type" class="form-control floating ">
-                <option value=""> Select Industry Type</option>
+                <option value="0"> Select Industry Type</option>
                 {{#each industry}}
                 <option value="{{this.id}}" {{#if_eq this.id ../referral.industry_type}} selected="selected" {{/if_eq}}>{{this.industry_name}}</option>
                 {{/each}}
@@ -579,6 +611,84 @@
     </form>
   </div>
 </div>
+
+
+
+
+{{!-- /****************** Start Modal ****************************************************/ --}}
+<div id="add_user" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+ <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Select Target Client</h4>
+        </div>
+        <div class="modal-body">
+
+
+        <form class="m-b-30" name="addReffered" id="addReffered" method="POST">
+
+            <div class="col-md-6">
+                <div class="form-group">
+                  <div class="form-inline m-b-15">
+                    <div class="form-group m-r-5">
+                      <label class="input-group">
+                        <span class="input-group-addon">
+                          <input type="radio" id="referral_type" name="ref_type" value="T" checked />
+                        </span>
+                        <div class="form-control form-control-static">Target</div>
+                        <span class="glyphicon form-control-feedback "></span>
+                      </label>
+                    </div>
+                    <div class="form-group ">
+                      <label class="input-group">
+                        <span class="input-group-addon">
+                          <input type="radio" id="organization_type" name="ref_type" value="C" />
+                        </span>
+                        <div class="form-control form-control-static">Client</div>
+                        <span class="glyphicon form-control-feedback "></span>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+              <div class="col-md-6" id="target_list">
+                <div class="form-group form-focus select-attorney">
+                  <select id="target_id" name="referred_id_t" class="form-control floating ">
+                    <option value="">Select Target</option>
+                    {{#each target}} {{#if_eq target_type "I"}}
+                    <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
+                    {{/if_eq}} {{#if_eq target_type "O"}}
+                    <option value="{{this.id}}">{{this.organization_name}}</option>
+                    {{/if_eq}} {{/each}}
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6" id="client_list" style="display:none;">
+                <div class="form-group form-focus select-attorney">
+                  <select id="client_id" name="referred_id_c" class="form-control floating " >
+                    <option value="">Select Client</option>
+                    {{#each client}} {{#if_eq client_type "I"}}
+                    <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
+                    {{/if_eq}} {{#if_eq client_type "O"}}
+                    <option value="{{this.id}}">{{this.organization_name}}</option>
+                    {{/if_eq}} {{/each}}
+                  </select>
+                </div>
+              </div> 
+        </form>
+        
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" type="button" id="btnAddReffered">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+        </div>
+      </div>
+    </div>
+</div>
+
+{{!-- /**********************  End Modal  *********************************/ --}}
+
 {{#content "script" mode="append"}}
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
 <script type="text/javascript" src="/assets/js/select2.min.js"></script>
@@ -652,12 +762,6 @@
         },
         referred_id_c: {
           required: true
-        },
-        association: {
-          required: true
-        },
-        industry_type: {
-          required: true
         }
       },
       messages: {
@@ -711,12 +815,6 @@
         },
         referred_id_c: {
           required: "Please select client"
-        },
-        association: {
-          required: "association can't be blank"
-        },
-        industry_type: {
-          required: "industry type can't be blank"
         }
       }
     });
@@ -759,4 +857,14 @@
     $(this).parents(".contactDetailsRemove").remove();
   });
 
-</script> {{/content}}
+</script>
+
+<script type="text/javascript">
+/**************************** Start Reffered Client Target ********************************************/
+
+
+
+/**************************** End Reffered Client Target ********************************************/
+</script>
+
+ {{/content}}
