@@ -2,7 +2,6 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
-
 <div class="page-wrapper">
     <div class="content container-fluid">
         <div class="tcr-view">
@@ -11,30 +10,22 @@
                     <div class="row">
                         <div class="col-sm-8">
                         </div>
-
                         <div class="col-sm-4">
                             <div class="text-right">
                                 <a href="/target/edit/{{client.id}}" class="btn btn-primary pull-right rounded">
                                     <i class="fa fa-pencil"></i> Edit Target</a>
-                                
                                 <a href="/target" class="btn btn-primary pull-right rounded m-r-5">
-                                    <i class="fa fa-arrow-left"></i>Back</a>
+                                    <i class="fa fa-arrow-left"></i> Back</a>
                             </div>
                         </div>
-
-
                     </div>
                     <div class="text-center top-desc">
                         <img src="https://cdn1.iconfinder.com/data/icons/flat-business-icons/128/user-512.png" alt="" height="100" width="100">
-                        <h4>
-                             {{client.first_name}} {{client.last_name}}
-                        </h4>
+                        <h4>{{client.first_name}} {{client.last_name}}</h4>
                         <h6>{{client.email}}</h6>
                     </div>
-
                     <div class="info-tile">
                         <div class="container">
-
                             <div class="row">
                                 <div class="col-md-3 border-divider">
                                     <div class="row">
@@ -44,9 +35,7 @@
                                         </div>
                                         <div class="col-xs-9">
                                             <p>
-                                                {{client.address1}},
-                                                {{#if client.address2}}{{client.address2}},{{/if}}
-                                                {{#if client.address3}}{{client.address3}},{{/if}}
+                                                {{client.address1}}, {{#if client.address2}}{{client.address2}},{{/if}} {{#if client.address3}}{{client.address3}},{{/if}}
                                                 <br> {{city.name}}, {{state.name}},
                                                 <br> {{zipcode.zip}}, {{country.name}}
                                             </p>
@@ -124,7 +113,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="tab-content  profile-tab-content">
+                        <div class="tab-content profile-tab-content">
                             <div id="activities" class="tab-pane fade in active">
                                 <div class="card-box">
                                     <div class="row">
@@ -151,10 +140,12 @@
                                                             <td>{{dateFormat this.activity.activity_from_date "DD-MM-YYYY"}}</td>
                                                             <td>{{dateFormat this.activity.activity_to_date "DD-MM-YYYY"}}</td>
                                                             <td>{{this.activity.remarks}}</td>
-                                                            <td> {{#if_eq this.activity.activity_status '0'}} NEW ACTIVITY - CREATED {{/if_eq}} {{#if_eq this.activity.activity_status
-                                                                '1'}} PENDING APPROVAL - IN-PROGRESS {{/if_eq}} {{#if_eq this.activity.activity_status '2'}}
-                                                                APPROVED - PROCEED {{/if_eq}} {{#if_eq this.activity.activity_status '3'}} NOT APPROVED - DISCARD
-                                                                ACTIVITY {{/if_eq}}
+                                                            <td> {{#if_eq this.activity.activity_status '0'}} NEW ACTIVITY
+                                                                - CREATED {{/if_eq}} {{#if_eq this.activity.activity_status
+                                                                '1'}} PENDING APPROVAL - IN-PROGRESS {{/if_eq}} {{#if_eq
+                                                                this.activity.activity_status '2'}} APPROVED - PROCEED {{/if_eq}}
+                                                                {{#if_eq this.activity.activity_status '3'}} NOT APPROVED
+                                                                - DISCARD ACTIVITY {{/if_eq}}
                                                             </td>
                                                         </tr>
                                                         {{/each}}
@@ -171,24 +162,24 @@
                                         <div class="col-md-12">
                                             <ul class="personal-info other-info">
                                                 <li>
-                                                    <span class="title">Estimated Customer Lifetime value:</span>
+                                                    <span class="title">Estimated Customer Lifetime Value:</span>
                                                     <span class="text revenue_cost">{{client.estimated_lifetime_value}}</span>
                                                 </li>
                                                 <li>
                                                     <span class="title">Close Date:</span>
-                                                    <span class="text">{{dateFormat client.close_date " DD-MM-YYYY "}}</span>
+                                                    <span class="text">{{dateFormat client.close_date "DD-MM-YYYY"}}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Planning Period Start Date:</span>
+                                                    <span class="text">{{dateFormat client.revenues.0.start_date "DD-MM-YYYY"}}</span>
                                                 </li>
                                                 <li>
                                                     <span class="title">Revenue Planning Period (Month):</span>
                                                     <span class="text">{{client.revenues.0.planning_period}}</span>
                                                 </li>
                                                 <li>
-                                                    <span class="title">Planning Period Start Date:</span>
-                                                    <span class="text">{{dateFormat client.revenues.0.start_date " DD-MM-YYYY "}}</span>
-                                                </li>
-                                                <li>
                                                     <span class="title">Planning Period End Date:</span>
-                                                    <span class="text">{{dateFormat client.revenues.0.end_date " DD-MM-YYYY "}}</span>
+                                                    <span class="text">{{dateFormat client.revenues.0.end_date "DD-MM-YYYY"}}</span>
                                                 </li>
                                                 <li>
                                                     <span class="title">Estimated Planning Period Revenue:</span>
@@ -198,7 +189,6 @@
                                                     <span class="title">Current Revenue:</span>
                                                     <span class="text revenue_cost">{{client.revenues.0.current_revenue}}</span>
                                                 </li>
-                                                
                                             </ul>
                                         </div>
                                     </div>
@@ -209,19 +199,16 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <ul class="personal-info other-info">
-                                                
                                                 <li>
                                                     <span class="title">Gender:</span>
                                                     <span class="text">
-                                                        {{#if_eq client.gender "M"}}
-                                                            Male
-                                                        {{else}}
-                                                            Female
-                                                        {{/if_eq}}
+                                                        {{#if_eq client.gender "M"}} Male {{/if_eq}}
+                                                        {{#if_eq client.gender "F"}} Female {{/if_eq}}
+                                                        {{#if_eq client.gender "O"}} Other {{/if_eq}}
                                                     </span>
                                                 </li>
                                                 <li>
-                                                    <span class="title">Target Company:</span>
+                                                    <span class="title">Company Name:</span>
                                                     <span class="text">{{client.company_name}}</span>
                                                 </li>
                                                 <li>
@@ -231,10 +218,6 @@
                                                 <li>
                                                     <span class="title">Website URL:</span>
                                                     <span class="text">{{client.website_url}}</span>
-                                                </li>
-                                                <li>
-                                                    <span class="title">Social URL:</span>
-                                                    <span class="text">{{client.social_url}}</span>
                                                 </li>
                                                 <li>
                                                     <span class="title">Twitter:</span>
@@ -247,6 +230,10 @@
                                                 <li>
                                                     <span class="title">Google:</span>
                                                     <span class="text">{{client.google}}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Facebook:</span>
+                                                    <span class="text">{{client.social_url}}</span>
                                                 </li>
                                                 <li>
                                                     <span class="title">Youtube:</span>
@@ -273,11 +260,9 @@
                     </div>
                 </div>
             </div>
-
             {{!-- Ends Info Tabs --}}
         </div>
     </div>
-
 </div>
 
 {{#content "script" mode="append"}}
@@ -290,134 +275,46 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 <script type="text/javascript">
     $(document).on('click', "#setUrlItem", function () {
-            localStorage.removeItem('url');
-            localStorage.setItem("url", window.location.pathname);
-        });
+        localStorage.removeItem('url');
+        localStorage.setItem("url", window.location.pathname);
+    });
 
-        $(document).on('click', '#expandBtn', function(){
-            $("#expandToggle").toggle();
-            $("i", this).toggleClass("fa fa-arrow-up fa fa-arrow-down");
-        });
+    $(document).on('click', '#expandBtn', function () {
+        $("#expandToggle").toggle();
+        $("i", this).toggleClass("fa fa-arrow-up fa fa-arrow-down");
+    });
 
-        $(".revenue_cost").inputmask("numeric", {
-			radixPoint: ".",
-			groupSeparator: ",",
-			digits: 2,
-			autoGroup: true,
-			prefix: '$ ',
-			rightAlign: false
-		});
+    $(".revenue_cost").inputmask("numeric", {
+        radixPoint: ".",
+        groupSeparator: ",",
+        digits: 2,
+        autoGroup: true,
+        prefix: '$ ',
+        rightAlign: false
+    });
 
-		$("#estimatedLifetime").inputmask("numeric", {
-			radixPoint: ".",
-			groupSeparator: ",",
-			digits: 2,
-			autoGroup: true,
-			prefix: '$ ',
-			rightAlign: false
-		});
+    $("#estimatedLifetime").inputmask("numeric", {
+        radixPoint: ".",
+        groupSeparator: ",",
+        digits: 2,
+        autoGroup: true,
+        prefix: '$ ',
+        rightAlign: false
+    });
 
     $(document).ready(function (e) {
-        $("#targetform").validate({
-            rules: {
-                edit_target_first_name: {
-                    required: true
-                },
-                edit_target_last_name: {
-                    required: true
-                },
-                org_name: {
-                    required: true
-                },
-                org_id: {
-                    required: true
-                },
-                org_code: {
-                    required: true
-                },
-                email: {
-                    required: true,
-                    email: true
-                },
-                mobile_no: {
-                    required: true
-                },
-                fax: {
-                    required: true
-                },
-                address1: {
-                    required: true
-                },
-                country: {
-                    required: true
-                },
-                state: {
-                    required: true
-                },
-                city: {
-                    required: true
-                },
-                zipcode: {
-                    required: true
-                }
-            },
-            messages: {
-                edit_target_first_name: {
-                    required: "First Name can't be blank"
-                },
-                edit_target_last_name: {
-                    required: "Last name  title can't be blank"
-                },
-                org_name: {
-                    required: "Organisation Name can't be blank"
-                },
-                org_id: {
-                    required: "Organisation ID can't be blank"
-                },
-                org_code: {
-                    required: "Organisation code can't be blank"
-                },
-                email: {
-                    required: "Email id can't be blank",
-                    email: "Enter valid email id"
-                },
-                mobile_no: {
-                    required: "Mobile number can't blank"
-                },
-                fax: {
-                    required: "Fax can't be blank"
-                },
-                address1: {
-                    required: "Must provide address"
-                },
-                country: {
-                    required: "Choose your country"
-                },
-                state: {
-                    required: "Choose your state"
-                },
-                city: {
-                    required: "Choose your city"
-                },
-                zipcode: {
-                    required: "Choose your zipcode"
-                }
-            }
-        });
-
         // add designation ajax operation and form validation ends
 
         //hide show type
-		let _msType = $('#_targetContact').val();
-		if (_msType==='O') {
-			$('#org_type').show();
-			$('#indivisual_type').hide();
-			$('#m_s_contactInformation').show();
-		} else {
-			$('#org_type').hide();
-			$('#indivisual_type').show();
-			$('#m_s_contactInformation').hide();
-		}
-
+        let _msType = $('#_targetContact').val();
+        if (_msType === 'O') {
+            $('#org_type').show();
+            $('#indivisual_type').hide();
+            $('#m_s_contactInformation').show();
+        } else {
+            $('#org_type').hide();
+            $('#indivisual_type').show();
+            $('#m_s_contactInformation').hide();
+        }
     });
 </script> {{/content}}
