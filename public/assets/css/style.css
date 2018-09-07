@@ -7194,6 +7194,34 @@ select.gender {
 					line-height: 60px;
 					position: absolute;
 				}
+
+				.info-tile.address-target .border-divider {
+					border: 0 none;
+					margin-bottom: 15px;
+					
+					
+				}
+
+				.info-tile.address-target .col-md-3 {
+					
+					width: 50%;
+					padding-left: 0;
+				}
+
+				.sidebar-overlay.opened {
+					display: none;
+				}
+
+				.header .header-left + .pull-left {
+					display: none;
+				}
+
+			}
+
+			@media only screen and (max-width: 940px) {
+				.firm_name_header {
+					display: none;
+				}
 			}
 
 			@media only screen and (max-width: 768px) {
@@ -7466,6 +7494,11 @@ select.gender {
 		padding: 8px 5px;
 	}
 
+	.tab-pane.revenue .other-info li {
+		margin-left: 0;
+		width: 100%;
+	}
+
 
 }
 
@@ -7497,6 +7530,14 @@ select.gender {
 
 	.firm-box.tab .nav-tabs li {
 		width: auto;
+	}
+
+	.card-box.tab-box .user-tabs .nav li.col-sm-4 {
+		width: 100%;
+	}
+
+	.info-tile.address-target .col-md-3 {
+		width: 100%;
 	}
 
 }
