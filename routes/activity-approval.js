@@ -33,6 +33,7 @@ router.get('/activity-approvals', auth, async (req, res) => {
     
     res.render('activity-approvals/index', {
         layout: 'dashboard',
+        title: 'Pending Activity Approval Listing',
         activity_approvals: activityRequest
     });
 });
@@ -83,6 +84,7 @@ router.get('/approval_details/:id', auth, async (req, res) => {
 
     res.render('activity-approvals/approval_details', {
         layout: 'dashboard',
+        title: 'View Activity Details for Approval',
         activity_id: aaa,
         budgetArr,
         'tclength': jointActivities.length

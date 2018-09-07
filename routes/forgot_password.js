@@ -29,6 +29,7 @@ router.get('/forgot-password', csrfProtection, (req, res) => {
   var err_message = req.flash('success-err-message')[0];
   var err_captcha_message = req.flash('loginCaptchaMessage')[0];
   res.render('forgot_password', {
+    title: 'Forgot Password',
     layout: 'login',
     err_message,
     err_captcha_message,
@@ -36,14 +37,10 @@ router.get('/forgot-password', csrfProtection, (req, res) => {
   });
 });
 
-
-
 // {{ mail send code}}
 
-
-
 router.post('/forgot', csrfProtection, async (req, res) => {
- var url = req.protocol + '://' + req.get('host');
+  var url = req.protocol + '://' + req.get('host');
   let user_email;
   user_email = await User.findOne({
     where: {
@@ -59,8 +56,7 @@ router.post('/forgot', csrfProtection, async (req, res) => {
     res.redirect('/forgot-password');
 
   } else {
-    
-    
+
     function generatePassword() {
       var length = 8,
         charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
@@ -266,7 +262,7 @@ router.post('/forgot', csrfProtection, async (req, res) => {
                         <tr>
                           <td width="325" height="60" bgcolor="#FF851A" style="text-align:center; display: table;
     margin: 0 auto;">
-                            <a href=`+ url +` align="center" style="display:block; font-family:'Open Sans',Calibri, Arial, sans-serif;; font-size:20px; color:#ffffff; text-align: center; line-height:60px; display:block; text-decoration:none;">Click to sign in</a>
+                            <a href=`+ url + ` align="center" style="display:block; font-family:'Open Sans',Calibri, Arial, sans-serif;; font-size:20px; color:#ffffff; text-align: center; line-height:60px; display:block; text-decoration:none;">Click to sign in</a>
                           </td>
                           <td>&nbsp;</td>
                           <td>&nbsp;</td>
@@ -306,8 +302,8 @@ router.post('/forgot', csrfProtection, async (req, res) => {
         FromEmail: 'malini@wrctpl.com',
         FromName: 'plma.attorneymanagement.com',
         Subject: 'Password Reset',
-        
-			  'Html-part': email_body,
+
+        'Html-part': email_body,
 
         // 'Text-part': 'Your new password is: ' + genPassword,
         Recipients: [{
@@ -319,10 +315,10 @@ router.post('/forgot', csrfProtection, async (req, res) => {
     await User.update({
       password: bCrypt.hashSync(genPassword)
     }, {
-      where: {
-        id: user_email.id
-      }
-    });
+        where: {
+          id: user_email.id
+        }
+      });
 
     req.flash('loginSuccessMessage', 'New password has been sent to your Email. Please check your Email.');
     res.redirect('/');

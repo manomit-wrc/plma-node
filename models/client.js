@@ -41,11 +41,8 @@ module.exports = (sequelize, DataTypes) => {
     client_company: DataTypes.STRING,
     user_id: DataTypes.INTEGER,
     social_security_no: DataTypes.STRING,
-    current_revenue: DataTypes.STRING,
-    estimated_revenue: DataTypes.STRING,
+    life_time_revenue: DataTypes.STRING,
     revenueclosingDate: DataTypes.STRING,
-    clientStartDate: DataTypes.STRING,
-    clientEndDate: DataTypes.STRING,
     revenue_start_month:DataTypes.STRING,
     revenue_end_month:DataTypes.STRING
   }, {});

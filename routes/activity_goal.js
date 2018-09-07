@@ -43,6 +43,7 @@ router.get('/activity-goal', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	}).then(goals => {
 		res.render('activity_goal/index', {
 			layout: 'dashboard',
+			title: 'Tactical Marketing Goals',
 			success_message: success_message,
 			success_edit_message: success_edit_message,
 			success_del_message: success_del_message,
@@ -61,6 +62,7 @@ router.get('/activity-goal/add', auth, firmAttrAuth, csrfProtection, async(req, 
 	})
 	res.render('activity_goal/add', {
 		layout: 'dashboard',
+		title: 'Add Tactical Marketing Goal',
 		csrfToken: req.csrfToken(),
 		stragic_goal
 	});
@@ -92,6 +94,7 @@ router.get('/activity-goal/edit/:id', auth, firmAttrAuth, csrfProtection, async(
 	})
 	res.render('activity_goal/edit', {
 		layout: 'dashboard',
+		title: 'Edit Tactical Marketing Goal',
 		csrfToken: req.csrfToken(),
 		edit_goals,
 		stragic_goal
@@ -108,6 +111,7 @@ router.get('/activity-goal/view/:id', auth, firmAttrAuth, csrfProtection, async(
 	})
 		res.render('activity_goal/view', {
 			layout: 'dashboard',
+			title: 'View Tactical Marketing Goal',
 			csrfToken: req.csrfToken(),
 			edit_goals,
 			stragic_goal
@@ -153,6 +157,7 @@ router.get("/activity-goal/view-activity/:id", auth, firmAttrAuth, async(req, re
 	});
 	res.render('activity_goal/activity_list', {
 		layout: 'dashboard',
+		title: 'View Activity Listing',
 		activity
 	})
 });

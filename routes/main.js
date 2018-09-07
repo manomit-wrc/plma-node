@@ -26,6 +26,7 @@ const user = require('../models').user;
 const ContactInformation = require('../models').contact_information;
 const Activity = require('../models').activity;
 const TargetActivity = require('../models').jointactivity;
+const Revenurs = require('../models').revenue;
 var csrfProtection = csrf({
 	cookie: true
 });
@@ -58,7 +59,7 @@ function removePhoneMask(phone_no) {
 	phone_no = phone_no.replace("(", "");
 	phone_no = phone_no.replace(" ", "");
 	phone_no = phone_no.replace("$", "");
-	phone_no = phone_no.replace(",", "");
+	phone_no = phone_no.replace(",","");
 	return phone_no;
 
 }
@@ -80,6 +81,7 @@ router.get('/budget', csrfProtection, auth, siteAuth, (req, res) => {
 	}).then(show => {
 		res.render('budget/index', {
 			layout: 'dashboard',
+			title: 'Budget',
 			success_message,
 			csrfToken: req.csrfToken(),
 			budget: show,
@@ -177,8 +179,9 @@ router.get('/designation', csrfProtection, auth, siteAuth, (req, res) => {
 	}).then(show => {
 		res.render('designation/index', {
 			layout: 'dashboard',
-			success_message,
+			title: 'Designation',
 			csrfToken: req.csrfToken(),
+			success_message,
 			designation: show,
 			designation_code: req.query.designation_code ? req.query.designation_code : '',
 			designation_name: req.query.designation_name ? req.query.designation_name : ''
@@ -269,6 +272,7 @@ router.get('/industry', csrfProtection, auth, siteAuth, (req, res) => {
 	}).then(show => {
 		res.render('industry/index', {
 			layout: 'dashboard',
+			title: 'Industry Type',
 			success_message,
 			csrfToken: req.csrfToken(),
 			industry: show,
@@ -376,6 +380,7 @@ router.get('/settings', auth, csrfProtection, async (req, res) => {
 
 	res.render('superadminsetting/settings', {
 		layout: 'dashboard',
+		title: 'Super Admin Setting',
 		csrfToken: req.csrfToken(),
 		sucess_setting_message1,
 		data: settings,
@@ -557,6 +562,7 @@ router.get('/client', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 
 	res.render('client/index', {
 		layout: 'dashboard',
+		title: 'Client Listing',
 		csrfToken: req.csrfToken(),
 		clients: clientDetails,
 		searchName: req.query.searchName ? req.query.searchName : '',
@@ -614,6 +620,7 @@ router.get('/client/add', auth, firmAttrAuth, csrfProtection, async (req, res) =
 
 	res.render('client/addclient', {
 		layout: 'dashboard',
+		title: 'Add Client',
 		csrfToken: req.csrfToken(),
 		tags: tags,
 		country: country,
@@ -714,6 +721,7 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 
 	res.render('client/editclient', {
 		layout: 'dashboard',
+		title: 'Edit Client',
 		csrfToken: req.csrfToken(),
 		tags: tags,
 		designation: designations,
@@ -796,6 +804,7 @@ router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 
 	res.render('client/viewClient', {
 		layout: 'dashboard',
+		title: 'View Client',
 		csrfToken: req.csrfToken(),
 		tags: tags,
 		designation: designations,
@@ -925,11 +934,26 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 			} 
 
 
+			//revenues
+            Revenurs.create({
+                type: 'C',
+                target_id: '0',
+                client_id: insertData.id,
+                planning_period: req.body.planning_period,
+                start_date: req.body.clientStartDate,
+                end_date: req.body.end_date,
+                estimated_revenue: removePhoneMask(req.body.estimated_revenue),
+                current_revenue: removePhoneMask(req.body.current_revenue),
+				status: 0,
+				life_time_revenue: req.body.life_time_revenue
+			});
+
+
 			req.flash('success-message', 'Client Added Successfully');
 			res.redirect('/client');
 
 		} else {
-			await client.create({
+			const insertData = await client.create({
 				first_name: req.body.client_first_name,
 				last_name: req.body.client_last_name,
 				email: req.body.email,
@@ -974,6 +998,21 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				revenue_start_month: req.body.startMonth,
             	revenue_end_month: req.body.endMonth
 			});
+
+			//revenues
+            Revenurs.create({
+                type: 'C',
+                target_id: '0',
+                client_id: insertData.id,
+                planning_period: req.body.planning_period,
+                start_date: req.body.clientStartDate,
+                end_date: req.body.end_date,
+                estimated_revenue: removePhoneMask(req.body.estimated_revenue),
+                current_revenue: removePhoneMask(req.body.current_revenue),
+				status: 0,
+				life_time_revenue: req.body.life_time_revenue
+			});
+			
 			req.flash('success-message', 'Client Added Successfully');
 			res.redirect('/client');
 		}
@@ -1213,6 +1252,7 @@ router.get('/practice-area', csrfProtection, auth, siteAuth, (req, res) => {
 	}).then(show => {
 		res.render('practice_area/index', {
 			layout: 'dashboard',
+			title: 'Practice Area',
 			success_message,
 			csrfToken: req.csrfToken(),
 			practice_area: show,
@@ -1307,6 +1347,7 @@ router.get('/section', csrfProtection, auth, siteAuth, (req, res) => {
 	}).then(show => {
 		res.render('section/index', {
 			layout: 'dashboard',
+			title: 'Section',
 			success_message,
 			csrfToken: req.csrfToken(),
 			section: show,
@@ -1404,6 +1445,7 @@ router.get('/jurisdiction', csrfProtection, auth, siteAuth, (req, res) => {
 	}).then(show => {
 		res.render('jurisdiction/index', {
 			layout: 'dashboard',
+			title: 'Jurisdiction',
 			success_message,
 			csrfToken: req.csrfToken(),
 			jurisdiction: show,
@@ -1500,6 +1542,7 @@ router.get('/group', csrfProtection, auth, siteAuth, (req, res) => {
 	}).then(show => {
 		res.render('group/index', {
 			layout: 'dashboard',
+			title: 'Group',
 			success_message,
 			csrfToken: req.csrfToken(),
 			group: show,

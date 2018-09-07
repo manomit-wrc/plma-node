@@ -19,6 +19,7 @@ const Activity = require('../models').activity;
 const TargetActivity = require('../models').jointactivity;
 const Referral = require('../models').referral;
 const ContactInformation = require('../models').contact_information;
+const Revenue = require('../models').revenue;
 var csrfProtection = csrf({
     cookie: true
 });
@@ -54,6 +55,9 @@ function removePhoneMask(phone_no) {
 }
 
 router.get('/target', auth, firmAttrAuth, csrfProtection, async(req, res) => {
+    Target.hasMany(Revenue, {
+        foreignKey: 'target_id'
+    });
     var success_message = req.flash('success-message')[0];
     var success_edit_message = req.flash('success-edit-message')[0];
     var industry = await industry_type.findAll();
@@ -110,13 +114,17 @@ router.get('/target', auth, firmAttrAuth, csrfProtection, async(req, res) => {
     if (req.user.role_id != 2) {
         whereCondition.attorney_id = req.user.id;
     }
-
+    
     const targetDetails = await Target.findAll({
-        where: whereCondition
+        where: whereCondition,
+        include: [{
+            model: Revenue
+        }]
     });
-
+    
     res.render('target/targets', {
         layout: 'dashboard',
+        title: 'Target Listing',
         csrfToken: req.csrfToken(),
         targets: targetDetails,
         searchName: req.query.searchName ? req.query.searchName : '',
@@ -171,6 +179,7 @@ router.get('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =>
     });
     res.render('target/addtarget', {
         layout: 'dashboard',
+        title: 'Add Target',
         csrfToken: req.csrfToken(),
         country: country,
         state: state,
@@ -192,7 +201,8 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
     var mobile_no = req.body.targetDetailsMobile_no;
 
     const startDate = req.body.targetStartDate ? req.body.targetStartDate.split("-") : '';
-    const endDate = req.body.targetEndDate ? req.body.targetEndDate.split("-") : '';
+    const endDate = req.body.end_date ? req.body.end_date.split("-") : '';
+    const targetCloseDate = req.body.targetCloseDate ? req.body.targetCloseDate.split("-") : '';
 
     let length = first_name.length;
 	for (let i=0; i< length; i++) {
@@ -248,12 +258,13 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
                 firm_id: req.user.firm_id,
                 user_id: req.user.id,
                 target_type: req.body.target_type,
-                estimated_revenue: removePhoneMask(req.body.estimated_revenue),
-                revenue_start_month: req.body.startMonth,
-                revenue_end_month: req.body.endMonth,
-                estimated_lifetime_value: req.body.estimatedLifetime,
-                targetStartDate: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
-                targetEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
+                estimated_lifetime_value: removePhoneMask(req.body.life_time_revenue),
+                close_date: targetCloseDate ? targetCloseDate[2] + "-" + targetCloseDate[1] + "-" + targetCloseDate[0] : null,
+                
+                // estimated_revenue: removePhoneMask(req.body.estimated_revenue),
+                // revenue_start_month: req.body.startMonth,
+                // revenue_end_month: req.body.endMonth,
+                // //targetEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
             });
 
             for (let j=0; j< targetDetails.length; j++) {
@@ -269,12 +280,19 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
 					contact_id: insertData.id
 				});
 			} 
-
+            const revenueaddo = await Revenue.create({
+                type:"T",
+                target_id: insertData.id,
+                planning_period: req.body.planning_period,
+                start_date: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
+                end_date: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
+                estimated_revenue: removePhoneMask(req.body.estimated_revenue)
+            });
             req.flash('success-message', 'Target Added Successfully');
             res.redirect('/target')
 
         } else {
-            await Target.create({
+            const indidata = await Target.create({
                 first_name: req.body.first_name,
                 last_name: req.body.last_name,
                 date_of_birth: formatDate ? formatDate[2] + "-" + formatDate[1] + "-" + formatDate[0] : null,
@@ -309,12 +327,23 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
                 firm_id: req.user.firm_id,
                 user_id: req.user.id,
                 target_type: req.body.target_type,
-                estimated_revenue: removePhoneMask(req.body.estimated_revenue),
-                revenue_start_month: req.body.startMonth,
-                revenue_end_month: req.body.endMonth,
-                estimated_lifetime_value: removePhoneMask(req.body.estimatedLifetime),
-                targetStartDate: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
-                targetEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
+                estimated_lifetime_value: req.body.life_time_revenue,
+                close_date: targetCloseDate ? targetCloseDate[2] + "-" + targetCloseDate[1] + "-" + targetCloseDate[0] : null,
+                // estimated_revenue: removePhoneMask(req.body.estimated_revenue),
+                // revenue_start_month: req.body.startMonth,
+                // revenue_end_month: req.body.endMonth,
+                // estimated_lifetime_value: removePhoneMask(req.body.estimatedLifetime),
+                // close_date: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
+                // targetEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
+            });
+
+            const revenueadd = await Revenue.create({
+                type: "T",
+                target_id: indidata.id,
+                planning_period: req.body.planning_period,
+                start_date: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
+                end_date: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
+                estimated_revenue: removePhoneMask(req.body.estimated_revenue)
             });
             req.flash('success-message', 'Target Added Successfully');
             res.redirect('/target')
@@ -326,8 +355,18 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
 });
 
 router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, res) => {
+    Target.hasMany(Revenue, {
+        foreignKey: 'target_id'
+    });
     var error_message = req.flash('error-target-message')[0];
-    const target = await Target.findById(req.params['id']);
+    const target = await Target.findOne({
+        where: {
+            id: req.params['id']
+        },
+        include: [{
+            model: Revenue
+        }]  
+    });
     const designation = await Designation.findAll({
         order: [
 			['title', 'ASC']
@@ -373,6 +412,7 @@ router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, re
     
     res.render('target/targetupdate', {
         layout: 'dashboard',
+        title: 'Edit Target',
         csrfToken: req.csrfToken(),
         attorney: attorney,
         designation: designation,
@@ -388,33 +428,43 @@ router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, re
 });
 
 router.get('/target/view/:id', auth, firmAttrAuth, csrfProtection, async(req, res) => {
+    Target.hasMany(Revenue, {
+        foreignKey: 'target_id'
+    });
     var error_message = req.flash('error-target-message')[0];
-    const target = await Target.findById(req.params['id']);
+    const target = await Target.findOne({
+        where: {
+            id: req.params['id']
+        },
+        include: [{
+            model: Revenue
+        }]
+    });
     const designation = await Designation.findAll();
-    const industrys = await industry_type.findAll();
-    const country = await Country.findAll();
+    
+    // const country = await Country.findAll();
     const attorney = await user.findAll({
         where: {
             role_id: 3,
             firm_id: req.user.firm_id
         }
     });
-    const state = await State.findAll({
-        where: {
-            country_id: "233"
-        }
-    });
-    const city = await City.findAll({
-        where: {
-            state_id: target.state.toString()
-        }
-    });
-    const cities = await City.findById(target.city.toString());
-    const zipcode = await Zipcode.findAll({
-        where: {
-            city_name: cities.name
-        }
-    });
+    // const state = await State.findAll({
+    //     where: {
+    //         country_id: "233"
+    //     }
+    // });
+    // const city = await City.findAll({
+    //     where: {
+    //         state_id: target.state.toString()
+    //     }
+    // });
+    // const cities = await City.findById(target.city.toString());
+    // const zipcode = await Zipcode.findAll({
+    //     where: {
+    //         city_name: cities.name
+    //     }
+    // });
 
     const contactDetails = await ContactInformation.findAll({
 		where: {
@@ -433,20 +483,28 @@ router.get('/target/view/:id', auth, firmAttrAuth, csrfProtection, async(req, re
             model: Activity
         }]
     });
-
+    const country = await Country.findById("233");
+    const state = await State.findById(target.state.toString());
+    const city = await City.findById(target.city.toString());
+    const zip = await Zipcode.findById(target.postal_code.toString());
+    const industrys = await industry_type.findById(target.industry_type.toString());
+    
+    
     res.render('target/targetview', {
         layout: 'dashboard',
+        title: 'View Target',
         csrfToken: req.csrfToken(),
         designation: designation,
-        industry: industrys,
+        industrys,
         client: target,
         country: country,
         state: state,
         city: city,
         attorney: attorney,
-        zipcode: zipcode,
+        zipcode: zip,
         error_message,
         contactDetails,
+        count_activity: activity_details.length,
         activity_details
     });
 });
@@ -461,8 +519,9 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
 	var fax = req.body.contactDetailsFax;
     var mobile_no = req.body.contactDetailsMobile_no;
     
-    const startDate = req.body.targetStartDate ? req.body.targetStartDate.split("-") : '';
-    const endDate = req.body.targetEndDate ? req.body.targetEndDate.split("-") : '';
+   const startDate = req.body.targetStartDate ? req.body.targetStartDate.split("-") : '';
+   const endDate = req.body.end_date ? req.body.end_date.split("-") : '';
+   const targetCloseDate = req.body.targetCloseDate ? req.body.targetCloseDate.split("-") : '';
 
 	let length = first_name.length;
 	for (let i=0; i< length; i++) {
@@ -527,17 +586,32 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
             target_id: req.body.target_id,
             target_code: req.body.target_code,
             remarks: req.body.remarks,
-            estimated_revenue: removePhoneMask(req.body.estimated_revenue),
-            estimated_lifetime_value: removePhoneMask(req.body.estimatedLifetime),
-            revenue_start_month: req.body.startMonth,
-            revenue_end_month: req.body.endMonth,
-            targetStartDate: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
-            targetEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
+            estimated_lifetime_value: removePhoneMask(req.body.life_time_revenue),
+            close_date: targetCloseDate ? targetCloseDate[2] + "-" + targetCloseDate[1] + "-" + targetCloseDate[0] : null,
+            // estimated_revenue: removePhoneMask(req.body.estimated_revenue),
+            // estimated_lifetime_value: removePhoneMask(req.body.estimatedLifetime),
+            // revenue_start_month: req.body.startMonth,
+            // revenue_end_month: req.body.endMonth,
+            // close_date: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
+            // targetEndDate: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
         }, {
             where: {
                 id: req.params['id']
             }
             
+        });
+
+        const revenueupdate = await Revenue.update({
+            type: "T",
+            planning_period: req.body.planning_period,
+            start_date: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
+            end_date: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
+            estimated_revenue: removePhoneMask(req.body.estimated_revenue)
+        },{
+            where:{
+                target_id: req.params['id']
+            } 
+                
         });
             
         await ContactInformation.destroy({
@@ -568,15 +642,19 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
     }
 });
 
-router.get('/target/delete/:id', auth, firmAttrAuth, (req, res) => {
-    Target.destroy({
+router.get('/target/delete/:id', auth, firmAttrAuth, async(req, res) => {
+    await Target.destroy({
         where: {
-            id: req.params.id
+            id: req.params['id']
         }
-    }).then(resp => {
-        req.flash('success-message', 'Target Deleted Successfully');
-        res.redirect('/target');
     });
+    await Revenue.destroy({
+        where: {
+            target_id: req.params['id']
+        }
+    })
+    req.flash('success-message', 'Target Deleted Successfully');
+    res.redirect('/target');
 });
 
 router.post('/target/multi-delete/', auth, firmAttrAuth, async(req, res) => {
@@ -720,6 +798,7 @@ router.post('/target/import', auth, upload.single('file_name'), csrfProtection, 
 });
 
 router.post('/target/move-to-client', auth, async(req, res) => {
+    
     var target_ids = req.body.target_id;
     var n = req.body.target_id.length;
     var clientDetails;
@@ -761,7 +840,7 @@ router.post('/target/move-to-client', auth, async(req, res) => {
                 }
             });
 
-            await Client.create({
+            var moveClient = await Client.create({
                 first_name: target_data.first_name,
                 last_name: target_data.last_name,
                 email: target_data.email,
@@ -798,9 +877,15 @@ router.post('/target/move-to-client', auth, async(req, res) => {
                 client_type: target_data.target_type,
                 remarks: target_data.remarks,
                 attorney_id: req.user.id,
-                estimated_revenue: target_data.estimated_revenue
+                life_time_revenue: target_data.estimated_lifetime_value,
+                //revenueclosingDate: target_data.close_date
                 // revenueclosingDate: target_data.revenueclosingDate,
 
+            });
+            await Revenue.create({
+                type: "C",
+                client_id: moveClient.id,
+                start_date: new Date()
             });
 
             await Target.update({
@@ -834,6 +919,7 @@ router.get("/target/view-activity/:id", auth, async(req, res) => {
     });
     res.render("target/view_activity", {
         layout: 'dashboard',
+        title: 'View Activity',
         activity_details
     });
 });
@@ -853,6 +939,7 @@ router.get("/client/view-activity/:id", auth, async(req, res) => {
     });
     res.render("client/view_client_activity", {
         layout: 'dashboard',
+        title: 'View Client Activity',
         activity_details
     });
 });
@@ -868,6 +955,7 @@ router.get("/target/view-referral/:id", auth, firmAttrAuth, async(req, res) => {
     });
     res.render("target/view_referral", {
         layout: 'dashboard',
+        title: 'View Referral Source',
         referral
     });
 });
@@ -881,6 +969,7 @@ router.get("/client/view-referral/:id", auth, firmAttrAuth, async(req, res) => {
     });
     res.render("client/view_referral", {
         layout: 'dashboard',
+        title: 'View Referral Source',
         referral
     });
 });

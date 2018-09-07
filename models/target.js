@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
     revenue_start_month:DataTypes.STRING,
     revenue_end_month:DataTypes.STRING,
     estimated_lifetime_value:DataTypes.STRING,
-    targetStartDate:DataTypes.STRING,
+    close_date:DataTypes.STRING,
     targetEndDate:DataTypes.STRING
 
   }, {});

@@ -76,19 +76,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      current_revenue: {
-         type: Sequelize.STRING
-      },
-      estimated_revenue: {
+      life_time_revenue: {
          type: Sequelize.STRING
       },
       revenueclosingDate: {
-         type: Sequelize.STRING
-      },
-      clientStartDate: {
-         type: Sequelize.STRING
-      },
-      clientEndDate: {
          type: Sequelize.STRING
       },
       revenue_start_month: {

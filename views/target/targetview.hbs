@@ -2,565 +2,284 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css"> {{/content}}
+
 <div class="page-wrapper">
     <div class="content container-fluid">
-        <div class="row">
-            {{#if error_message}}
-            <div class="alert alert-danger">
-                <strong>Error! </strong>{{error_message}}
-            </div>
-            {{/if}}
-            <div class="col-sm-8">
-                <h4 class="page-title">Target Details</h4>
-            </div>
-            <div class="col-sm-4">
-                <div class="text-right">
-                    <a href="/target/edit/{{client.id}}" class="btn btn-primary pull-right rounded">
-                    <i class="fa fa-pencil"></i> Edit Target</a>
-
-                    <a href="/target" class="btn btn-primary pull-right rounded m-r-5"><i class="fa fa-arrow-left"></i>Back</a>
-                </div>
-            </div>
-        </div>
-        <form id="targetform" method="POST" action="/target/edit/{{client.id}}">
-            <input type="hidden" name="_csrf" value="{{csrfToken}}">
-            <input type="hidden" value="{{client.id}}" id="id" />
-            <input type="hidden" value="{{client.target_type}}" id="_targetContact"/>
-
-            <div class="form-inline m-b-15">
-                <div class="form-group m-r-5">
-                    <label class="input-group">
-                        <span class="input-group-addon">
-                            <input type="radio" id="individual_client" name="client_type" value="I" {{#if_eq client.target_type "I"}} checked {{/if_eq}}
-                                disabled/>
-                        </span>
-                        <div class="form-control form-control-static">Individual</div>
-                        <span class="glyphicon form-control-feedback "></span>
-                    </label>
-                </div>
-                <div class="form-group ">
-                    <label class="input-group">
-                        <span class="input-group-addon">
-                            <input type="radio" id="organization_client" name="client_type" value="O" {{#if_eq client.target_type "O"}} checked {{/if_eq}}
-                                disabled />
-                        </span>
-                        <div class="form-control form-control-static">Organization</div>
-                        <span class="glyphicon form-control-feedback "></span>
-                    </label>
-                </div>
-            </div>
-
-
-
+        <div class="tcr-view">
             <div class="card-box">
-                <h3 class="card-title">Basic Information</h3>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div id="org_type" {{#if_eq client.target_type "I"}} style="display:none;" {{/if_eq}}>
-                                <div class="col-md-12">
-                                    <div class="form-group form-focus">
-                                        <label class="control-label">Organisation Name
-                                            <span class="req-lbl">*</span>
-                                        </label>
-                                        <input type="text" class="form-control floating" id="org_name" name="org_name" value="{{client.organization_name}}" disabled="disabled"
-                                        />
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-6">
-                                    <div class="form-group form-focus">
-                                        <label class="control-label">Organisation Code
-                                            <span class="req-lbl">*</span>
-                                        </label>
-                                        <input type="text" class="form-control floating" id="org_code" name="org_code" value="{{client.organization_code}}" disabled="disabled"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="individual_type" {{#if_eq client.target_type "O"}} style="display:none;" {{/if_eq}}>
-                                <div class="col-md-6">
-                                    <div class="form-group form-focus">
-                                        <label class="control-label">First Name
-                                            <span class="req-lbl">*</span>
-                                        </label>
-                                        <input type="text" class="form-control floating" id="edit_target_first_name" name="edit_target_first_name" value="{{client.first_name}}"
-                                            disabled="disabled" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group form-focus">
-                                        <label class="control-label">Last Name
-                                            <span class="req-lbl">*</span>
-                                        </label>
-                                        <input type="text" class="form-control floating" id="last_name" name="last_name" value="{{client.last_name}}" disabled="disabled"
-                                        />
-                                    </div>
-                                </div>
-                               
-                                <div class="col-md-6">
-                                    <div class="form-group form-focus">
-                                        <label class="control-label">Target Code
-                                            <span class="req-lbl">*</span>
-                                        </label>
-                                        <input type="text" class="form-control floating" id="target_code" name="target_code" value="{{client.target_code}}" disabled="disabled"
-                                        />
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-6">
-									<div class="form-group form-focus">
-										<label class="control-label">Estimated annual revenue
-											<span class="req-lbl">*</span>
-										</label>
-										<input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue" value="$ {{client.estimated_revenue}}" disabled>
-									</div>
-								</div>
+                <div class="info">
+                    <div class="row">
+                        <div class="col-sm-8">
+                        </div>
 
+                        <div class="col-sm-4">
+                            <div class="text-right">
+                                <a href="/target/edit/{{client.id}}" class="btn btn-primary pull-right rounded">
+                                    <i class="fa fa-pencil"></i> Edit Target</a>
+                                
+                                <a href="/target" class="btn btn-primary pull-right rounded m-r-5">
+                                    <i class="fa fa-arrow-left"></i>Back</a>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="text-center top-desc">
+                        <img src="https://cdn1.iconfinder.com/data/icons/flat-business-icons/128/user-512.png" alt="" height="100" width="100">
+                        <h4>
+                             {{client.first_name}} {{client.last_name}}
+                        </h4>
+                        <h6>{{client.email}}</h6>
+                    </div>
+
+                    <div class="info-tile">
+                        <div class="container">
+
+                            <div class="row">
+                                <div class="col-md-3 border-divider">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <img src="https://cdn3.iconfinder.com/data/icons/black-white-social-media/32/logo_social_media_location-512.png" alt="" height="48"
+                                                width="48">
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <p>
+                                                {{client.address1}},
+                                                {{#if client.address2}}{{client.address2}},{{/if}}
+                                                {{#if client.address3}}{{client.address3}},{{/if}}
+                                                <br> {{city.name}}, {{state.name}},
+                                                <br> {{zipcode.zip}}, {{country.name}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 border-divider">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <img src="https://cdn3.iconfinder.com/data/icons/black-white-social-media/32/logo_social_media_phone-2-512.png" alt="" height="48"
+                                                width="48">
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <p class="number_validator">
+                                                {{client.mobile_no}}
+                                            </p>
+                                            <p class="number_validator">
+                                                {{client.phone_no}}
+                                            </p>
+                                            <p class="number_validator">
+                                                {{client.fax}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 border-divider">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <img src="https://cdn4.iconfinder.com/data/icons/e-commerce-icon-set/48/Username_2-512.png" alt="" height="48" width="48">
+                                        </div>
+                                        <div class="col-xs-9">
+                                            {{#if_eq client.target_type "O"}}
+                                                <p>Organization</p>
+                                            {{else}}
+                                                <p>Individual</p>
+                                            {{/if_eq}}
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-md-3">
-									<div class="form-group form-focus select-focus select-attorney">
-										<label class="control-label">Start Date
-										</label>
-										<select class="form-control floating " id="startMonth" name="startMonth" disabled>
-											<option value="">Select Start Date</option>
-											<option value="1" {{#if_eq client.revenue_start_month "1"}} selected {{/if_eq}} >January</option>
-											<option value="2" {{#if_eq client.revenue_start_month "2"}} selected {{/if_eq}} >February</option>
-											<option value="3" {{#if_eq client.revenue_start_month "3"}} selected {{/if_eq}} >March</option>
-											<option value="4" {{#if_eq client.revenue_start_month "4"}} selected {{/if_eq}} >April</option>
-											<option value="5" {{#if_eq client.revenue_start_month "5"}} selected {{/if_eq}} >May</option>
-											<option value="6" {{#if_eq client.revenue_start_month "6"}} selected {{/if_eq}} >June</option>
-											<option value="7" {{#if_eq client.revenue_start_month "7"}} selected {{/if_eq}} >July</option>
-											<option value="8" {{#if_eq client.revenue_start_month "8"}} selected {{/if_eq}} >August</option>
-											<option value="9" {{#if_eq client.revenue_start_month "9"}} selected {{/if_eq}} >September</option>
-											<option value="10" {{#if_eq client.revenue_start_month "10"}} selected {{/if_eq}} >October</option>
-											<option value="11" {{#if_eq client.revenue_start_month "11"}} selected {{/if_eq}} >November</option>
-											<option value="12" {{#if_eq client.revenue_start_month "12"}} selected {{/if_eq}} >December</option>
-										</select>
-									</div>
-								</div>
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <img src="https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_group_work_48px-512.png" alt="" height="48"
+                                                width="48">
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <p>
+                                                Total Activity: {{count_activity}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-								<div class="col-md-3">
-									<div class="form-group form-focus select-focus select-attorney">
-										<label class="control-label">End Date
-										</label>
-										<select  {{#if_eq client.target_status ""}} {{/if_eq}} class="form-control floating " id="endMonth" name="endMonth" disabled>
-											<option value="">Select End Date</option>
-											<option value="1" {{#if_eq client.revenue_end_month "1"}} selected {{/if_eq}} >January</option>
-											<option value="2" {{#if_eq client.revenue_end_month "2"}} selected {{/if_eq}} >February</option>
-											<option value="3" {{#if_eq client.revenue_end_month "3"}} selected {{/if_eq}} >March</option>
-											<option value="4" {{#if_eq client.revenue_end_month "4"}} selected {{/if_eq}} >April</option>
-											<option value="5" {{#if_eq client.revenue_end_month "5"}} selected {{/if_eq}} >May</option>
-											<option value="6" {{#if_eq client.revenue_end_month "6"}} selected {{/if_eq}} >June</option>
-											<option value="7" {{#if_eq client.revenue_end_month "7"}} selected {{/if_eq}} >July</option>
-											<option value="8" {{#if_eq client.revenue_end_month "8"}} selected {{/if_eq}} >August</option>
-											<option value="9" {{#if_eq client.revenue_end_month "9"}} selected {{/if_eq}} >September</option>
-											<option value="10" {{#if_eq client.revenue_end_month "10"}} selected {{/if_eq}} >October</option>
-											<option value="11" {{#if_eq client.revenue_end_month "11"}} selected {{/if_eq}} >November</option>
-											<option value="12" {{#if_eq client.revenue_end_month "12"}} selected {{/if_eq}} >December</option>
-										</select>
-									</div>
-								</div>
-
-								<div class="col-md-6">
-									<div class="form-group form-focus">
-										<label class="control-label">Estimated Customer Lifetime Value
-										</label>
-										<input class="form-control floating" type="text" id="estimatedLifetime" name="estimatedLifetime" value="{{client.estimated_lifetime_value}}" disabled>
-									</div>
-								</div>
-
-								<div class="col-md-6">
-									<div class="form-group form-focus">
-										<label class="control-label">Start Date<span class="req-lbl">*</span> </label>
-										<div class="cal-icon">
-											<input class="form-control floating datetimepicker" type="text" id="targetStartDate" name="targetStartDate" value="{{dateFormat client.targetStartDate "
-											 DD-MM-YYYY "}}" disabled>
-										</div>
-									</div>
-								</div>
-
-								<div class="col-md-6">
-									<div class="form-group form-focus">
-										<label class="control-label">End Date<span class="req-lbl">*</span> </label>
-										<div class="cal-icon">
-											<input class="form-control floating datetimepicker" type="text" id="targetEndDate" name="targetEndDate" value="{{dateFormat client.targetEndDate "
-											 DD-MM-YYYY "}}" disabled> 
-										</div>
-									</div>
-								</div>
-                                
-                                
-                            <div class="col-md-6">
-                                <div class="form-group form-focus">
-                                    <label class="control-label">Email Id
-                                        <span class="req-lbl">*</span>
-                                    </label>
-                                    <input type="text" class="form-control floating" id="email" name="email" value="{{client.email}}" disabled="disabled" />
-                                    <span id="uniqueEmail" style="color: red">
-                                        <span>
+                    </div>
+                </div>
+            </div>
+            {{!-- Starts Info Tabs --}}
+            <div class="card-box tab-box">
+                <div class="row user-tabs">
+                    <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
+                        <ul class="nav nav-tabs tabs nav-tabs-bottom">
+                            <li class="active col-sm-4">
+                                <a data-toggle="tab" href="#activities">Activities</a>
+                            </li>
+                            <li class="col-sm-4">
+                                <a data-toggle="tab" href="#refferedinfo">Revenue Information</a>
+                            </li>
+                            <li class="col-sm-4">
+                                <a data-toggle="tab" href="#otherinfo">Other Information</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="tab-content  profile-tab-content">
+                            <div id="activities" class="tab-pane fade in active">
+                                <div class="card-box">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped custom-table datatable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>SL#</th>
+                                                            <th>Activity Name</th>
+                                                            <th>From Date</th>
+                                                            <th>To Date</th>
+                                                            <th>Remarks</th>
+                                                            <th>Status</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {{#each activity_details}}
+                                                        <tr>
+                                                            <td>{{math @index "+" 1}}</td>
+                                                            <td>
+                                                                <a href="/activity/view/{{this.activity.id}}" id="setUrlItem">{{this.activity.activity_name}}</a>
+                                                            </td>
+                                                            <td>{{dateFormat this.activity.activity_from_date "DD-MM-YYYY"}}</td>
+                                                            <td>{{dateFormat this.activity.activity_to_date "DD-MM-YYYY"}}</td>
+                                                            <td>{{this.activity.remarks}}</td>
+                                                            <td> {{#if_eq this.activity.activity_status '0'}} NEW ACTIVITY - CREATED {{/if_eq}} {{#if_eq this.activity.activity_status
+                                                                '1'}} PENDING APPROVAL - IN-PROGRESS {{/if_eq}} {{#if_eq this.activity.activity_status '2'}}
+                                                                APPROVED - PROCEED {{/if_eq}} {{#if_eq this.activity.activity_status '3'}} NOT APPROVED - DISCARD
+                                                                ACTIVITY {{/if_eq}}
+                                                            </td>
+                                                        </tr>
+                                                        {{/each}}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Gender
-                                        <span class="req-lbl">*</span>
-                                    </label>
-                                    <select class="select form-control floating" id="gender" name="gender" disabled="disabled">
-                                        <option value="">Select Gender</option>
-                                        <option value="M" {{#if_eq client.gender "M"}} selected {{/if_eq}}>Male</option>
-                                        <option value="F" {{#if_eq client.gender "F"}} selected {{/if_eq}}>Female</option>
-                                        <option value="O" {{#if_eq client.gender "O"}} selected {{/if_eq}}>Others</option>
-                            
-                                    </select>
+                            <div id="refferedinfo" class="tab-pane fade">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <ul class="personal-info other-info">
+                                                <li>
+                                                    <span class="title">Life Time Revenue:</span>
+                                                    <span class="text revenue_cost">{{client.estimated_lifetime_value}}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Close Date:</span>
+                                                    <span class="text">{{dateFormat client.close_date " DD-MM-YYYY "}}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Planning Period:</span>
+                                                    <span class="text">{{client.revenues.0.planning_period}}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Start Date:</span>
+                                                    <span class="text">{{dateFormat client.revenues.0.start_date " DD-MM-YYYY "}}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">End Date:</span>
+                                                    <span class="text">{{dateFormat client.revenues.0.end_date " DD-MM-YYYY "}}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Estimated Planning Period Revenue:</span>
+                                                    <span class="text revenue_cost">{{client.revenues.0.estimated_revenue}}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Current Revenue:</span>
+                                                    <span class="text revenue_cost">{{client.revenues.0.current_revenue}}</span>
+                                                </li>
+                                                
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Phone Number
-                                        <span class="req-lbl">*</span>
-                                    </label>
-                                    <input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" value="{{client.phone_no}}"
-                                        disabled="disabled" />
+                            <div id="otherinfo" class="tab-pane fade">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <ul class="personal-info other-info">
+                                                
+                                                <li>
+                                                    <span class="title">Gender:</span>
+                                                    <span class="text">
+                                                        {{#if_eq client.gender "M"}}
+                                                            Male
+                                                        {{else}}
+                                                            Female
+                                                        {{/if_eq}}
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Target Company:</span>
+                                                    <span class="text">{{client.company_name}}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">IM:</span>
+                                                    <span class="text">{{client.im}}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Website URL:</span>
+                                                    <span class="text">{{client.website_url}}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Social URL:</span>
+                                                    <span class="text">{{client.social_url}}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Twitter:</span>
+                                                    <span class="text">{{client.twitter}}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Linkedin:</span>
+                                                    <span class="text">{{client.linkedin}}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Google:</span>
+                                                    <span class="text">{{client.google}}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Youtube:</span>
+                                                    <span class="text">{{client.youtube}}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Association Status:</span>
+                                                    <span class="text">{{client.association}}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Industry Type:</span>
+                                                    <span class="text">{{industrys.industry_name}}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Remarks:</span>
+                                                    <span class="text">{{client.remarks}}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Fax</label>
-                                    <input type="text" class="form-control floating number_validator" id="fax" name="fax" value="{{client.fax}}" disabled="disabled"
-                                    />
-                                </div>
-                            </div>
-                            <div class="col-md-5">
-                                <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Mobile Number
-                                        <span class="req-lbl">*</span>
-                                    </label>
-                                    <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" value="{{client.mobile_no}}"
-                                        disabled="disabled" />
-                                </div>
-                            </div>
-                            <div class="col-md-1">
-                                <button type="button" id="expandBtn" class="btn btn-primary btn-lg" title="View All"><i class="fa fa-arrow-down"></i></button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div id="expandToggle" style="display:none;">
-
-                 <div class="card-box">
-                    <h3 class="card-title">Attorney Information</h3>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group form-focus select-focus">
-                                <label class="control-label">Attorney
-                                    <span class="req-lbl">*</span>
-                                </label>
-                                <select id="attorney" name="attorney" class="select form-control floating" disabled>
-        
-                                    <option value="">Select Attorney</option>
-                                    {{#if_eq user.is_attorney "1"}}
-                                        <option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
-                                    {{/if_eq}}
-
-                                    {{#each attorney}}
-                                    <option value="{{this.id}}" {{#if_eq this.id ../client.attorney_id}} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
-                                    {{/each}}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-box">
-                    <h3 class="card-title">Address</h3>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group form-focus">
-                                <label class="control-label">Address Line 1</label>
-                                <input type="text" class="form-control floating" id="address1" name="address1" value="{{client.address1}}" disabled="disabled"
-                                />
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group form-focus">
-                                <label class="control-label">Address Line 2</label>
-                                <input type="text" class="form-control floating" id="address2" name="address2" value="{{client.address2}}" disabled="disabled"
-                                />
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group form-focus">
-                                <label class="control-label">Address Line 3</label>
-                                <input type="text" class="form-control floating" id="address3" name="address3" value="{{client.address3}}" disabled="disabled"
-                                />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group form-focus select-focus">
-                                <label class="control-label">Country</label>
-                                <select id="country" name="country" class="form-control floating" disabled="disabled">
-                                    {{#each country}}
-                                    <option value="{{this.id}}">{{this.name}}</option>
-                                    {{/each}}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group form-focus select-focus">
-                                <label class="control-label ">State</label>
-                                <select id="state" name="state" class="form-control floating" disabled="disabled">
-                                    <option value="">Select State</option>
-                                    {{#each state}}
-                                    <option value="{{this.id}}" {{#if_eq this.id ../client.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
-                                    {{/each}}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group form-focus select-focus">
-                                <label class="control-label ">City</label>
-                                <select id="city" name="city" class="form-control floating" disabled="disabled">
-                                    <option value="">Select City</option>
-                                    {{#each city}}
-                                    <option value="{{this.id}}" {{#if_eq this.id ../client.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
-                                    {{/each}}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group form-focus select-focus">
-                                <label class=" control-label">Zip Code</label>
-                                <select id="zipcode" name="zipcode" class="form-control floating" disabled="disabled">
-                                    <option value="">Select Zipcode</option>
-                                    {{#each zipcode}}
-                                    <option value="{{this.id}}" {{#if_eq this.id ../client.postal_code}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
-                                    {{/each}}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group form-focus">
-                                <label class="control-label">Address Remarks </label>
-                                <textarea class="form-control floating" id="address_remarks" name="address_remarks" rows="5" disabled="disabled">{{client.address_remarks}}</textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-box" id="m_s_contactInformation" style="display:none;">
-                    <h3 class="card-title">Contact Information</h3>
-                    <div id="masterContactPlus" >
-                    {{#each contactDetails}}
-                        <div class="contact-information contactDetailsRemove" >
-                            <div class="contact-margin">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group form-focus">
-                                            <label class="control-label">First Name
-                                                <span class="req-lbl">*</span>
-
-                                            </label>
-                                            <input type="text" class="form-control floating" id="contactDetailsFirstName" name="contactDetailsFirstName[]" value="{{this.first_name}}" disabled/>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group form-focus">
-                                            <label class="control-label">Last Name</label>
-                                            <input type="text" class="form-control floating" id="contactDetailsSecondName" name="contactDetailsSecondName[]" value="{{this.last_name}}" disabled/>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group form-focus select-focus">
-                                            <label class="control-label">Gender
-                                                <span class="req-lbl">*</span>
-
-                                            </label>
-                                            <select class="select form-control floating" id="contactDetailsGender" name="contactDetailsGender[]" disabled>
-                                                <option value="">Select Gender</option>
-                                                <option value="M" {{#if_eq this.gender "M"}} selected {{/if_eq}}>Male</option>
-                                                <option value="F"{{#if_eq this.gender "F"}} selected {{/if_eq}} >Female</option>
-                                                <option value="O" {{#if_eq this.gender "O"}} selected {{/if_eq}} >Others</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group form-focus">
-                                            <label class="control-label">Email Id
-                                                <span class="req-lbl">*</span>
-
-                                            </label>
-                                            <input type="text" class="form-control floating" id="contactDetailsEmail" name="contactDetailsEmail[]" value="{{this.email}}" disabled/>
-                                            <span id="uniqueEmail" style="color: red"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group form-focus">
-                                            <label class="control-label">Phone No.
-                                                <span class="req-lbl">*</span>
-
-                                            </label>
-                                            <input type="text" class="form-control floating number_validator" id="contactDetailsPhone_no" name="contactDetailsPhone_no[]"
-                                            maxlength="50" value={{this.phone_no}} disabled/>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group form-focus">
-                                            <label class="control-label">Fax</label>
-                                            <input type="text" class="form-control floating number_validator" id="contactDetailsFax" name="contactDetailsFax[]" maxlength="50" value="{{this.fax}}"
-                                            disabled/>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group form-focus">
-                                            <label class="control-label">Mobile No.
-                                                <span class="req-lbl">*</span>
-                                            </label>
-                                            <input type="text" class="form-control floating number_validator" id="contactDetailsMobile_no" name="contactDetailsMobile_no[]"
-                                            maxlength="50" value="{{this.mobile_no}}" disabled/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {{/each}}
-                    </div>
-                </div>
-
-                <div class="card-box">
-                    <h3 class="card-title">Other Information</h3>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group form-focus select-focus">
-                                <label class="control-label">Target Company</label>
-                                <input type="text" class="form-control floating" id="company_name" name="company_name" value="{{client.company_name}}" disabled="disabled"
-                                />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group form-focus">
-                                <label class="control-label">Website URL </label>
-                                <input type="text" class="form-control floating url_selector" id="website_url" name="website_url" value="{{client.website_url}}"
-                                    disabled="disabled" />
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6">
-                            <div class="form-group form-focus">
-                                <label class="control-label">IM</label>
-                                <input type="text" class="form-control floating" id="im" name="im" value="{{client.im}}" disabled="disabled" />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group form-focus select-focus">
-                                <label class="control-label">Twitter</label>
-                                <input type="text" class="form-control floating url_selector" id="twitter" name="twitter" value="{{client.twitter}}" disabled="disabled"
-                                />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group form-focus select-focus">
-                                <label class="control-label">linkedin</label>
-                                <input type="text" class="form-control floating url_selector" id="linkedin" name="linkedin" value="{{client.linkedin}}" disabled="disabled"
-                                />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group form-focus">
-                                <label class="control-label">Facebook</label>
-                                <input type="text" class="form-control floating url_selector" disabled id="social_url" name="social_url" value="{{client.social_url}}"
-                                />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group form-focus select-focus">
-                                <label class="control-label">Google </label>
-                                <input type="text" class="form-control floating url_selector" id="google" name="google" value="{{client.google}}" disabled="disabled"
-                                />
-                            </div>
-                        </div>
-                    <div class="col-md-6">
-                        <div class="form-group form-focus select-focus">
-                            <label class="control-label">Association Status </label>
-                            <select id="association" name="association" class="select form-control" disabled="disabled">
-                                <option value="CONVERTED" {{#if_eq client.association "CONVERTED"}} selected="selected" {{/if_eq}}>CONVERTED</option>
-                                <option value="NEW TARGET" {{#if_eq client.association "NEW TARGET"}} selected="selected" {{/if_eq}}>NEW TARGET</option>
-                                <option value="TS-INTERIM" {{#if_eq client.association "TS-INTERIM"}} selected="selected" {{/if_eq}}>TS-INTERIM</option>
-                            </select>
-                        </div>
-                    </div>
-                        <div class="col-md-6">
-                            <div class="form-group form-focus select-focus">
-                                <label class="control-label">Association Status </label>
-                                <select id="association" name="association" class="select form-control" disabled="disabled">
-                                    <option value="NEW TARGET" {{#if_eq client.association "NEW TARGET"}} selected="selected" {{/if_eq}}>NEW TARGET</option>
-                                    <option value="CONVERTED" {{#if_eq client.association "CONVERTED"}} selected="selected" {{/if_eq}}>CONVERTED</option>
-                                    <option value="TS-INTERIM" {{#if_eq client.association "TS-INTERIM"}} selected="selected" {{/if_eq}}>TS-INTERIM</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group form-focus select-focus">
-                                <label class="control-label">Industry Type </label>
-                                <select id="industry_type" name="industry_type" class="select form-control" disabled="disabled">
-                                    {{#each industry}}
-                                    <option value="{{this.id}}" {{#if_eq this.id ../client.industry_type}} selected="selected" {{/if_eq}}>{{this.industry_name}}</option>
-                                    {{/each}}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group form-focus">
-                                <label class="control-label">Remarks </label>
-                                <textarea class="form-control floating" id="remarks" name="remarks" rows="5" disabled="disabled">{{client.remarks}}</textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </form>
-        <div class="card-box">
-            <h3 class="card-title">View Activity</h3>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="table-responsive">
-                        <table class="table table-striped custom-table datatable">
-                            <thead>
-                                <tr>
-                                    <th>SL#</th>
-                                    <th>Activity Name</th>
-                                    <th>From Date</th>
-                                    <th>To Date</th>
-                                    <th>Remarks</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {{#each activity_details}}
-                                <tr>
-                                    <td>{{math @index "+" 1}}</td>
-                                    <td><a href="/activity/view/{{this.activity.id}}" id="setUrlItem">{{this.activity.activity_name}}</a></td>
-                                    <td>{{dateFormat this.activity.activity_from_date "DD-MM-YYYY"}}</td>
-                                    <td>{{dateFormat this.activity.activity_to_date "DD-MM-YYYY"}}</td>
-                                    <td>{{this.activity.remarks}}</td>
-                                    <td> {{#if_eq this.activity.activity_status '0'}} NEW ACTIVITY - CREATED {{/if_eq}} {{#if_eq this.activity.activity_status
-                                        '1'}} PENDING APPROVAL - IN-PROGRESS {{/if_eq}} {{#if_eq this.activity.activity_status '2'}}
-                                        APPROVED - PROCEED {{/if_eq}} {{#if_eq this.activity.activity_status '3'}} NOT APPROVED - DISCARD
-                                        ACTIVITY {{/if_eq}}
-                                    </td>
-                                </tr>
-                                {{/each}}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+            {{!-- Ends Info Tabs --}}
         </div>
     </div>
+
 </div>
+
 {{#content "script" mode="append"}}
 <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
@@ -580,7 +299,7 @@
             $("i", this).toggleClass("fa fa-arrow-up fa fa-arrow-down");
         });
 
-        $("#lifetimeClient").inputmask("numeric", {
+        $(".revenue_cost").inputmask("numeric", {
 			radixPoint: ".",
 			groupSeparator: ",",
 			digits: 2,

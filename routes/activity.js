@@ -151,6 +151,7 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
     }
     res.render('activity/addactivity', {
         layout: 'dashboard',
+        title: 'Add Activity',
         csrfToken: req.csrfToken(),
         firm: firm[0].title,
         section: allSection,
@@ -239,7 +240,7 @@ router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res)
         }
     });
     const target = await Target.findAll({
-       
+
         where: {
             'target_type': "I",
             'target_status': '1',
@@ -247,7 +248,7 @@ router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res)
         }
     });
     const client = await Client.findAll({
-       
+
         where: {
             'client_type': "I",
             'attorney_id': req.user.id
@@ -265,6 +266,7 @@ router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res)
     });
     res.render('activity/activity', {
         layout: 'dashboard',
+        title: 'Activity Listing',
         csrfToken: req.csrfToken(),
         row: activity,
         success_message,
@@ -619,6 +621,7 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
     });
     res.render('activity/view_activity', {
         layout: 'dashboard',
+        title: 'View Activity',
         csrfToken: req.csrfToken(),
         client: client,
         target: target,
@@ -730,13 +733,13 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
             model: Activity_to_user_type
         }]
     });
-    
+
     const practicearea = await PracticeArea.findOne({
         where: {
             id: editdata[0].practice_area
-        } 
+        }
     });
-    
+
     var result = JSON.parse(JSON.stringify(editdata[0].jointactivities));
     var arr = [];
     for (var i = 0; i < result.length; i++) {
@@ -853,6 +856,7 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
     });
     res.render('activity/update', {
         layout: 'dashboard',
+        title: 'Edit Activity',
         csrfToken: req.csrfToken(),
         client: client,
         target: target,
@@ -1188,8 +1192,8 @@ router.get('/activity/update_approval_request/:id', auth, firmAttrAuth, csrfProt
             });
         }
 
-       
-        
+
+
 
         if (userInformation_3_l2 !== null) {
             await requestApproval.create({
@@ -1450,10 +1454,7 @@ router.post('/activity/adddetails/', auth, async (req, res) => {
         code: 100
     });
 
-    
 });
-
-
 
 //====================================END ACTIVITY=============================================================================//
 
