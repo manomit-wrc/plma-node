@@ -404,8 +404,8 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: {
-        path: "/",
-        maxAge: 18000000000
+        path: "/"
+        //maxAge: 18000000000
     },
     name: "id",
     ttl: (1 * 60 * 60)
