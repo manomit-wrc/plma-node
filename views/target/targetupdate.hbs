@@ -234,7 +234,7 @@
 			
 					<div class="col-md-6">
 						<div class="form-group form-focus">
-							<label class="control-label">Life Time revenue</label>
+							<label class="control-label">Estimated Customer Lifetime value</label>
 							<input class="form-control floating" type="text" id="life_time_revenue" name="life_time_revenue" value="{{client.estimated_lifetime_value}}">
 						</div>
 					</div>
@@ -250,7 +250,7 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus">
-							<label class="control-label">Start Date
+							<label class="control-label">Planning Period Start Date
 								<span class="req-lbl">*</span>
 							</label>
 							<div class="cal-icon">
@@ -260,7 +260,7 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus select-attorney">
-							<label class="control-label">Planning Period (Month)
+							<label class="control-label">Revenue Planning Period (Month)
 							</label>
 							<select class="form-control floating " id="planning_period" name="planning_period">
 								<option value="">Select Planning Period </option>
@@ -281,7 +281,7 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus">
-							<label class="control-label">End Date</label>
+							<label class="control-label">Planning Period End Date</label>
 							<input class="form-control floating datetimepicker" type="text" id="end_date" name="end_date" readonly value="{{dateFormat client.revenues.0.end_date " DD-MM-YYYY "}}">
 						</div>
 					</div>
@@ -636,6 +636,7 @@
 						<div class="form-group form-focus select-focus select-attorney">
 							<label class="control-label">Association Status </label>
 							<select id="association" name="association" class="form-control floating" >
+								<option value="0">Please select association status</option>
 								<option value="CONVERTED" {{#if_eq client.association "CONVERTED"}} selected="selected" {{/if_eq}}>CONVERTED</option>
 								<option value="NEW TARGET" {{#if_eq client.association "NEW TARGET"}} selected="selected" {{/if_eq}}>NEW TARGET</option>
 								<option value="TS-INTERIM" {{#if_eq client.association "TS-INTERIM"}} selected="selected" {{/if_eq}}>TS-INTERIM</option>
@@ -646,6 +647,7 @@
 						<div class="form-group form-focus select-focus select-attorney">
 							<label class="control-label">Industry Type </label>
 							<select id="industry_type" name="industry_type" class="form-control floating ">
+								<option value="0">Please select industry type</option>
 								{{#each industry}}
 								<option value="{{this.id}}" {{#if_eq this.id ../client.industry_type}} selected="selected" {{/if_eq}}>{{this.industry_name}}</option>
 								{{/each}}
@@ -857,23 +859,29 @@
 				swal("", "Please Select Start date!", "warning");
 			}
 			else {
-				var start_date_split = start_date.split('-');
-				var month = start_date_split[2] + "," + start_date_split[1] + "," + start_date_split[0];
-				var current_date = new Date(month);
-				var end_date = new Date(current_date.setMonth(current_date.getMonth() + parseInt(period)));
-				var dd = end_date.getDate();
-				var mm = end_date.getMonth() + 1; //January is 0!
+				if ($(this).val() == '') {
+					swal("", "Please selcet planning period!", "warning");
+					$("#end_date").val('');
+				}
+				else {
+					var start_date_split = start_date.split('-');
+					var month = start_date_split[2] + "," + start_date_split[1] + "," + start_date_split[0];
+					var current_date = new Date(month);
+					var end_date = new Date(current_date.setMonth(current_date.getMonth() + parseInt(period)));
+					var dd = end_date.getDate();
+					var mm = end_date.getMonth() + 1; //January is 0!
 
-				var yyyy = end_date.getFullYear();
-				if (dd < 10) {
-					dd = '0' + dd;
+					var yyyy = end_date.getFullYear();
+					if (dd < 10) {
+						dd = '0' + dd;
+					}
+					if (mm < 10) {
+						mm = '0' + mm;
+					}
+					var end_date = dd + '-' + mm + '-' + yyyy;
+					$("#end_date").val(end_date);
 				}
-				if (mm < 10) {
-					mm = '0' + mm;
-				}
-				var end_date = dd + '-' + mm + '-' + yyyy;
 			}
-			$("#end_date").val(end_date);
 		});
 
 	});

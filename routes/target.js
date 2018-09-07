@@ -488,7 +488,6 @@ router.get('/target/view/:id', auth, firmAttrAuth, csrfProtection, async(req, re
     const city = await City.findById(target.city.toString());
     const zip = await Zipcode.findById(target.postal_code.toString());
     const industrys = await industry_type.findById(target.industry_type.toString());
-    console.log(industrys);
     
     
     res.render('target/targetview', {
