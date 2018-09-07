@@ -6172,8 +6172,10 @@ i.fa.fa-eye.m-r-5 {
 	padding-left: 40px;
 }
 
-.info  .top-desc img {
+.info .top-desc img {
+	height: 70px;
 	margin-bottom: 10px;
+	width: 70px;
 }
 
 .info .top-desc h4 {
@@ -6814,6 +6816,10 @@ select.gender {
 				.tab-pane.revenue li span {
 					margin-right: 0;
 					width: 50% !important;
+				}
+
+				.revenue .other-info li {
+					width: 50%;
 				}
 
 				/*Ends on css 06-09-2018*/
