@@ -6823,6 +6823,60 @@ select.gender {
 				}
 
 				/*Ends on css 06-09-2018*/
+
+
+				/*Starts on css 10-09-2018*/
+
+				.text-center.top-desc {
+					border: 1px solid #ccc;
+					border-radius: 4px;
+					-webkit-border-radius: 4px;
+					-moz-border-radius: 4px;
+					-ms-border-radius: 4px;
+					-o-border-radius: 4px;
+					box-shadow: 0 1px 3px rgba(33, 33, 33, 0.2);
+					-webkit-box-shadow: 0 1px 3px rgba(33, 33, 33, 0.2);
+					-moz-box-shadow: 0 1px 3px rgba(33, 33, 33, 0.2);
+					-ms-box-shadow: 0 1px 3px rgba(33, 33, 33, 0.2);
+					-o-box-shadow: 0 1px 3px rgba(33, 33, 33, 0.2);
+					padding: 65px 0;
+					height: 280px;
+				}
+
+				.address-target .address-panel {
+					border: 1px solid #ccc;
+					border-radius: 4px;
+					-webkit-border-radius: 4px;
+					-moz-border-radius: 4px;
+					-ms-border-radius: 4px;
+					-o-border-radius: 4px;
+					box-shadow: 0 1px 3px rgba(33, 33, 33, 0.2);
+					-webkit-box-shadow: 0 1px 3px rgba(33, 33, 33, 0.2);
+					-moz-box-shadow: 0 1px 3px rgba(33, 33, 33, 0.2);
+					-ms-box-shadow: 0 1px 3px rgba(33, 33, 33, 0.2);
+					-o-box-shadow: 0 1px 3px rgba(33, 33, 33, 0.2);
+					height: 135px;
+					padding: 25px;
+					margin-right: 20px;
+					margin-bottom: 10px;
+				}
+
+				.info-tile.address-target {
+					margin-top: 0;
+				}
+
+				#expandBtn {
+					outline: none;
+				}
+
+				.text-center.top-desc.referral {
+					border: 0 none;
+					box-shadow: none;
+					height: auto;
+					padding: 0;
+				}
+
+				/*Ends on css 10-09-2018*/
 				
 
 
@@ -7078,6 +7132,11 @@ select.gender {
 				.custom-modal .modal-content.modal-lg {
 					width: 90%;
 				}
+
+				.address-target .col-md-4 {
+					margin-right: 10px;
+					width: 48%;
+				}
 			}
 
 			@media (max-width: 1077px) {
@@ -7220,6 +7279,10 @@ select.gender {
 
 				.header .header-left + .pull-left {
 					display: none;
+				}
+
+				.address-target .address-panel {
+					border: 1px solid #ccc !important;
 				}
 
 			}
@@ -7505,7 +7568,46 @@ select.gender {
 		width: 100%;
 	}
 
+	.text-center.top-desc {
+		height: auto;
+		padding: 25px 0;
+	}
 
+	.address-target .col-md-4 {
+		margin-bottom: 0 !important;
+		margin-top: 15px !important;
+		margin: 0 15px 0 15px;
+		width: 45%;
+	}
+
+	.text-center.top-desc {
+		height: auto;
+		margin-top: 15px;
+	}
+}
+
+@media only screen and (max-width: 679px) {
+	.address-target .col-md-4 {
+		margin-left: 0;
+		margin-right: 0;
+		width: 100%;
+	}
+
+	.address-target .address-panel .col-xs-3 {
+		width: 15%;
+	}
+
+	.address-target .address-panel .col-xs-9 {
+		width: 85%;
+	}
+
+	.info-tile.address-target span {
+		width: 5%;
+	}
+
+	.info-tile.address-target p {
+		width: 95%;
+	}
 }
 
 /*Starts Tab Css 18-06-2018*/
@@ -7676,6 +7778,22 @@ select.gender {
 	.ghanta .notifications .drop-scroll {
 		width: auto;
 		}*/
+
+		.address-target .address-panel .col-xs-3 {
+			width: 25%;
+		}
+
+		.address-target .address-panel .col-xs-9 {
+			width: 75%;
+		}
+
+		.info-tile.address-target span {
+			width: 10%;
+		}
+
+		.info-tile.address-target p {
+			width: 85%;
+		}
 
 	}
 
