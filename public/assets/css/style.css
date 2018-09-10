@@ -6866,7 +6866,7 @@ select.gender {
 				}
 
 				#expandBtn {
-					border: 0 none;
+					outline: none;
 				}
 
 				/*Ends on css 10-09-2018*/
