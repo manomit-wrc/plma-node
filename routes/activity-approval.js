@@ -277,7 +277,7 @@ router.post("/get-notification", auth, async (req, res) => {
 
     const dateDetails = new Date();
     for (let i=0; i<allRevenue.length; i++) {
-        if (dateDetails >allRevenue[i].end_date) {
+        if (dateDetails > allRevenue[i].end_date && allRevenue[i].status == 0) {
            let clientDetails =  await Client.findById(allRevenue[i].client_id);
               notiFicationDetails.push({
                 'name': clientDetails.first_name + " " + clientDetails.last_name,
