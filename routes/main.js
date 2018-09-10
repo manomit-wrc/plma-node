@@ -565,8 +565,6 @@ router.get('/client', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 			model: Revenue
 		}]
 	});
-	console.log(clientDetails);
-	
 	res.render('client/index', {
 		layout: 'dashboard',
 		title: 'Client Listing',
