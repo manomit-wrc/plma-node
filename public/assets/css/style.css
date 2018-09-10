@@ -6869,6 +6869,13 @@ select.gender {
 					outline: none;
 				}
 
+				.text-center.top-desc.referral {
+					border: 0 none;
+					box-shadow: none;
+					height: auto;
+					padding: 0;
+				}
+
 				/*Ends on css 10-09-2018*/
 				
 
