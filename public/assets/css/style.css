@@ -6865,6 +6865,10 @@ select.gender {
 					margin-top: 0;
 				}
 
+				#expandBtn {
+					border: 0 none;
+				}
+
 				/*Ends on css 10-09-2018*/
 				
 
