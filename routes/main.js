@@ -562,7 +562,10 @@ router.get('/client', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	const clientDetails = await client.findAll({
 		where: whereCondition,
 		include: [{
-			model: Revenue
+			model: Revenue,
+			where: {
+				status: 0
+			},
 		}]
 	});
 	res.render('client/index', {
@@ -659,19 +662,23 @@ router.post('/client/multi-delete/', auth, firmAttrAuth, async (req, res) => {
 router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var error_message = req.flash('error-clientEdit-message')[0];
 
-	client.hasMany(Revenue, {
-        foreignKey: 'client_id'
-    });
+	// client.hasMany(Revenue, {
+    //     foreignKey: 'client_id'
+    // });
 
 	const clients = await client.findOne({
 		where: { 
 			'id': req.params['id']
-		},
-		include: [{
-			model: Revenue
-		}] 
+		} 
 	});
-
+	const client_revenue = await Revenue.findOne({
+		where: {
+			client_id: req.params['id'],
+			status: 0
+		}
+	});
+	//console.log(client_revenue);
+	
 	// console.log('clients----------------->',clients.revenues[0].current_revenue);
 	
 
@@ -755,7 +762,8 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		zipcode: client_zipcode,
 		error_message,
 		existing_tag: existingTag,
-		contactDetails
+		contactDetails,
+		client_revenue
 	});
 });
 
@@ -774,39 +782,44 @@ router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 			model: Revenue
 		}] 
 	});
+	const country = await Country.findById("233");
+	const state = await State.findById(clients.state.toString());
+	const city = await City.findById(clients.city.toString());
+	const zip = await Zipcode.findById(clients.pin_code.toString());
+	const industrys = await Industry.findById(clients.industry_type.toString());
 
 	const designations = await Designation.findAll();
 	const tags = await Tag.findAll();
-	const industrys = await Industry.findAll();
-	const client_country = await Country.findAll();
+	//const industrys = await Industry.findAll();
+	//const client_country = await Country.findAll();
 	const attorney = await user.findAll({
 		where: {
 			role_id: 3,
 			firm_id: req.user.firm_id
 		}
 	});
-	const client_state = await State.findAll({
-		where: {
-			country_id: "233"
-		}
-	});
-	var client_city = [];
-	var client_zipcode = [];
-	if (clients.state != null) {
-		var client_city = await City.findAll({
-			where: {
-				state_id: clients.state.toString()
-			}
-		});
-	}
-	if (clients.city !== null) {
-		var client_cities = await City.findById(clients.city.toString());
-		var client_zipcode = await Zipcode.findAll({
-			where: {
-				city_name: client_cities.name
-			}
-		});
-	}
+	// const client_state = await State.findAll({
+	// 	where: {
+	// 		country_id: "233"
+	// 	}
+	// });
+	// var client_city = [];
+	// var client_zipcode = [];
+	// if (clients.state != null) {
+	// 	var client_city = await City.findAll({
+	// 		where: {
+	// 			state_id: clients.state.toString()
+	// 		}
+	// 	});
+	// }
+	// if (clients.city !== null) {
+	// 	var client_cities = await City.findById(clients.city.toString());
+	// 	var client_zipcode = await Zipcode.findAll({
+	// 		where: {
+	// 			city_name: client_cities.name
+	// 		}
+	// 	});
+	// }
 
 	var existingTag = clients.tags;
 	if (existingTag !== null) {
@@ -848,14 +861,15 @@ router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		designation: designations,
 		industry: industrys,
 		client: clients,
-		country: client_country,
+		country,
 		attorney: attorney,
-		state: client_state,
-		city: client_city,
-		zipcode: client_zipcode,
+		state,
+		city,
+		zip,
 		error_message,
 		existing_tag: existingTag,
 		contactDetails,
+		count_activity: activity_details.length,
 		activity_details
 	});
 });
@@ -1238,6 +1252,31 @@ router.post('/client/findPinByCity', auth, firmAttrAuth, csrfProtection, (req, r
 	});
 
 
+});
+
+router.post("/client/new-planning-period", auth, async(req, res)=> {
+	const start_new_date = req.body.start_date_new ? req.body.start_date_new.split("-") : '';
+	const end_new_date = req.body.end_date_new ? req.body.end_date_new.split("-") : '';
+
+	var findperiod = await Revenue.update({
+		status: 1
+	},{
+		where: {
+			client_id : req.body.client_id,
+			status: 0
+		}
+	});
+	var new_period = await Revenue.create({
+		type: "C",
+		client_id: req.body.client_id,
+		planning_period: req.body.planning_period_new,
+		start_date: start_new_date ? start_new_date[2] + "-" + start_new_date[1] + "-" + start_new_date[0] : null,
+		end_date: end_new_date ? end_new_date[2] + "-" + end_new_date[1] + "-" + end_new_date[0] : null,
+		estimated_revenue: removePhoneMask(req.body.estimated_revenue_new),
+	});
+	 res.json({
+	 	success: true
+	 });
 });
 
 
