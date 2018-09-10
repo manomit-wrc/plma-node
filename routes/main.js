@@ -500,6 +500,9 @@ router.post('/client/findPinByCity', auth, firmAttrAuth, csrfProtection, (req, r
 
 /*==========================================Client route starts==============================================*/
 router.get('/client', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+	client.hasMany(Revenue, {
+		foreignKey: 'client_id'
+	});
 	var success_message = req.flash('success-message')[0];
 	var success_edit_message = req.flash('success-edit-message')[0];
 	var industry = await Industry.findAll();
@@ -557,9 +560,13 @@ router.get('/client', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	}
 
 	const clientDetails = await client.findAll({
-		where: whereCondition
+		where: whereCondition,
+		include: [{
+			model: Revenue
+		}]
 	});
-
+	console.log(clientDetails);
+	
 	res.render('client/index', {
 		layout: 'dashboard',
 		title: 'Client Listing',
