@@ -1,3 +1,6 @@
+{{#content "style" mode="prepend"}}
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css' />
+{{/content}}
 {{#if_eq user.role_id "1"}}
 <div class="page-wrapper">
   <div class="content container-fluid">
@@ -249,6 +252,22 @@
           <div class="col-sm-6 text-center">
             <div class="card-box">
               <div id='myChart1'></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-sm-6 text-center">
+            <div class="card-box">
+              <div id='calendar'></div>
+            </div>
+          </div>
+          <div class="col-sm-6 text-center">
+            <div class="card-box">
+              <div id='roi'>SPACE FOR ROI CALCULATOR</div>
             </div>
           </div>
         </div>
@@ -541,6 +560,8 @@
         <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
         <script> zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
           ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];</script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js'></script>
         <script>
           $(document).ready(function (e) {
             $.ajax({
@@ -766,6 +787,66 @@
           
             
           });
+
+              $(document).ready(function () {
+                  // page is now ready, initialize the calendar...
+                var randomColor = '#' + ('000000' + Math.floor(Math.random() * 16777215).toString(16)).slice(-6);
+
+                  $('#calendar').fullCalendar({
+                    // put your options and callbacks here
+                    header: {
+                      left: 'prev,next today',
+                      center: 'title',
+                      right: 'month,basicWeek,basicDay'
+                    },
+                    eventMouseover: function (data, event, view) {
+                      tooltip = '<div class="tooltiptopicevent" style="width:auto;height:auto;background:#454545;position:absolute;z-index:10001;padding:10px 10px 10px 10px ;  line-height: 200%; color:#fff;">' + 'Total Budget Hours: ' + ': ' + data.hour + '</br>' + 'Total Budget Cost($): ' + ': $ ' + data.amount + '</div>';
+                      $("body").append(tooltip);
+                      $(this).mouseover(function (e) {
+                        $(this).css('z-index', 10000);
+                        $('.tooltiptopicevent').fadeIn('500');
+                        $('.tooltiptopicevent').fadeTo('10', 1.9);
+                      }).mousemove(function (e) {
+                        $('.tooltiptopicevent').css('top', e.pageY + 10);
+                        $('.tooltiptopicevent').css('left', e.pageX + 20);
+                      });
+
+
+                    },
+                    eventMouseout: function (data, event, view) {
+                      $(this).css('z-index', 8);
+
+                      $('.tooltiptopicevent').remove();
+
+                    },
+                    dayClick: function () {
+                      tooltip.hide()
+                    },
+                    eventResizeStart: function () {
+                      tooltip.hide()
+                    },
+                    eventDragStart: function () {
+                      tooltip.hide()
+                    },
+                    viewDisplay: function () {
+                      tooltip.hide()
+                    },
+                    events: [
+                    {{#each activity}}
+                      {
+                        title: '{{this.activity_name}}',
+                        hour:'{{this.total_budget_hour}}', 
+                        amount: '{{this.total_budget_amount}}',
+                        start :'{{this.activity_from_date}}',
+                        end: new Date('{{this.activity_to_date}}').setDate(new Date('{{this.activity_to_date}}').getDate() + 1),
+                        color: '#ff881f',
+                        allDay: 'false',
+                        url : '/activity/view/{{this.id}}'
+                      },
+                    {{/each}}
+                  ]
+                })
+});
           
 
 </script> {{/content}}

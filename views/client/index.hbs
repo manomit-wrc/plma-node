@@ -48,11 +48,11 @@
 									<input type="checkbox" onClick="checkall(this);" /> SL#
 								</th>
 								<th>Name</th>
-								<th>Client Type</th>
 								<th>Email Id</th>
-								<th>Mobile Number</th>
+								<th>Start Date</th>
+								<th>End Date</th>
 								<th>Estimated Revenue</th>
-								<th>Current Revenue</th>
+								{{!-- <th>Current Revenue</th> --}}
 								<th class="text-right">Action</th>
 							</tr>
 						</thead>
@@ -68,13 +68,13 @@
 										{{/if_eq}}
 									</a>
 								</td>
-								<td>
-									{{#if_eq client_type "O"}} Organization {{/if_eq}} {{#if_eq client_type "I"}} Individual {{/if_eq}}
-								</td>
 								<td>{{this.email}}</td>
-								<td class="number_validator">{{this.mobile_no}}</td>
-								<td>$ {{this.estimated_revenue}}</td>
-								<td>$ {{this.current_revenue}}</td>
+								<td>
+									 {{dateFormat this.revenues.0.start_date "DD-MM-YYYY"}}
+								</td>
+								<td>{{dateFormat this.revenues.0.end_date "DD-MM-YYYY"}}</td>
+								<td>$ {{this.revenues.0.estimated_revenue}}</td>
+								{{!-- <td>$ {{this.current_revenue}}</td> --}}
 								<td class="text-right">
 									<a href="/client/view-referral/{{this.id}}" class="btn btn-success btn-sm" title="See associate referral">
 										<i class="fa fa-user-plus"></i>

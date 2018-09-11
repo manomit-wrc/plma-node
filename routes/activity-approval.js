@@ -8,8 +8,9 @@ const Jointactivities = require('../models').jointactivity;
 const lodash = require("lodash");
 const requestApproval = require('../models').request_approval;
 const activityAttorney = require('../models').activity_attorney;
-
+const Revenue = require('../models').revenue;
 const router = express.Router();
+const Client = require('../models').client;
 
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
@@ -265,7 +266,33 @@ router.post("/get-notification", auth, async (req, res) => {
             }) 
         }
     }
- 
+
+
+    // get notification for plaining periode
+    const allRevenue = await Revenue.findAll({
+        where: {
+            'type':'C'
+        }
+    });
+
+    const dateDetails = new Date();
+    for (let i=0; i<allRevenue.length; i++) {
+        if (dateDetails > allRevenue[i].end_date && allRevenue[i].status == 0) {
+           let clientDetails =  await Client.findById(allRevenue[i].client_id);
+              notiFicationDetails.push({
+                'name': clientDetails.first_name + " " + clientDetails.last_name,
+                'createDate':clientDetails.createdAt,
+                'updateDate': clientDetails.updatedAt,
+                'updatedAt':clientDetails.updatedAt,
+                'client_id':allRevenue[i].client_id,
+                'userFirstName':'userDetails.first_name',
+                'userLastName':'userDetails.last_name',
+                'type': '3'
+            })  
+
+        }
+    }
+
     res.send({
         "success": true,
         "count": notiFicationDetails.length,
