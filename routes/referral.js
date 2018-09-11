@@ -11,10 +11,7 @@ const Firm = require('../models').firm;
 const Client = require('../models').client;
 const Target = require('../models').target;
 const Referral = require('../models').referral;
-
-const Referred_Client_Targets = require('../models').referred_client_targets;
-
-
+const Referred_Client_Targets = require('../models').referred_client_target;
 const Zipcode = require('../models').zipcode;
 const City = require('../models').city;
 const State = require('../models').state;
@@ -22,11 +19,6 @@ const Country = require('../models').country;
 const industry_type = require('../models').industry_type;
 const Activity = require('../models').activity;
 const TargetActivity = require('../models').jointactivity;
-
-
-
-
-
 var fs = require('fs');
 const multer = require('multer');
 var xlsx = require('node-xlsx');
@@ -490,7 +482,7 @@ router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 
 	var fetchTarget = {};
 	var fetchClient = {};
-
+	var referredListArr = [];
 
 	if (req.user.role_id != 2) {
 		fetchTarget.attorney_id = req.user.id;
@@ -516,19 +508,15 @@ router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		order: [
 			['first_name', 'ASC'],
 		],
-
-
 		where: fetchClient
 	});
-	const target = await Target.findAll({
 
+	const target = await Target.findAll({
 		order: [
 			['first_name', 'ASC'],
 		],
-
 		where: fetchTarget
 	});
-
 
 	const state = await State.findAll({
 		where: {
@@ -553,6 +541,38 @@ router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 			'contact_id': req.params['id']
 		}
 	});
+	
+	const referredDetails = await Referred_Client_Targets.findAll({
+		where: {
+			referral_id: req.params['id']
+		}
+	});
+	
+	for(var i = 0; i < referredDetails.length; i++) {
+		if (referredDetails[i].type === 'T') {
+			const targetDetails = await Target.findOne({
+				where: {
+					id: referredDetails[i].target_id
+				}
+			});
+			referredListArr.push({
+				"name": targetDetails.first_name + " " + targetDetails.last_name,
+				"type": 'Target',
+				"email": targetDetails.email
+			});
+		} else if (referredDetails[i].type === 'C') {
+			const clientDetails = await Client.findOne({
+				where: {
+					id: referredDetails[i].client_id
+				}
+			});
+			referredListArr.push({
+				"name": clientDetails.first_name + " " + clientDetails.last_name,
+				"type": 'Client',
+				"email": clientDetails.email
+			});
+		}
+	}
 
 	res.render('referral/edit', {
 		layout: 'dashboard',
@@ -568,7 +588,8 @@ router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		client,
 		target,
 		err_message,
-		contactDetails
+		contactDetails,
+		referredListArr
 	});
 });
 
@@ -895,7 +916,6 @@ router.get("/referral/view-activity/:id", auth, async (req, res) => {
 	});
 });
 
-
 router.post('/referral/multi-delete/', auth, firmAttrAuth, async (req, res) => {
 	var referral_ids = req.body.referral_id;
 	var n = req.body.referral_id.length;
@@ -913,14 +933,28 @@ router.post('/referral/multi-delete/', auth, firmAttrAuth, async (req, res) => {
 	});
 });
 
-
-
-
-
-
-/**************************** Start Reffered Client Target ********************************************/
-
-/**************************** End Reffered Client Target ********************************************/
-
+router.post('/referral/targetclientadd', auth, csrfProtection, async (req, res) => {
+	if (req.body.ref_type === 'T') {
+		await Referred_Client_Targets.create({
+			'type': req.body.ref_type,
+			'target_id': req.body.target_id ? parseInt(req.body.target_id) : 0,
+			'client_id': 0,
+			'referral_id': parseInt(req.body.referral_id),
+			'status': 1
+		});
+	} else if (req.body.ref_type === 'C') {
+		await Referred_Client_Targets.create({
+			'type': req.body.ref_type,
+			'target_id': 0,
+			'client_id': req.body.client_id ? parseInt(req.body.client_id) : 0,
+			'referral_id': parseInt(req.body.referral_id),
+			'status': 1
+		});
+	}
+	res.json({
+		code: "200",
+		message: 'Success'
+	});
+});
 
 module.exports = router;

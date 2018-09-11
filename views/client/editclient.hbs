@@ -258,7 +258,7 @@
 									</div>
 									<div class="col-md-6">
 										<div class="form-group form-focus">
-											<label class="control-label">Current annual revenue</label>
+											<label class="control-label">Actual planning period Revenue</label>
 											<input class="form-control floating old_current_revenue" type="text" id="old_current_revenue_{{this.id}}" name="old_current_revenue" data-rev-id="{{this.id}}" value="{{client_revenue.current_revenue}}">
 										</div>
 									</div>
@@ -319,7 +319,7 @@
 							</div>
 							<div class="col-md-6" id="planningCurrentRevenue" hidden>
 								<div class="form-group form-focus">
-									<label class="control-label">Current annual revenue</label>
+									<label class="control-label">Actual planning period Revenue</label>
 									<input class="form-control floating" type="text" id="current_revenue" name="current_revenue" value="{{client_revenue.current_revenue}}" >
 								</div>
 							</div>
@@ -384,7 +384,7 @@
 									
 									{{!-- <div class="col-md-6">
 										<div class="form-group form-focus">
-											<label class="control-label">Current annual revenue</label>
+											<label class="control-label">Actual planning period Revenue</label>
 											<input class="form-control floating" type="text" id="current_revenue_new" name="current_revenue_new">
 										</div>
 									</div> --}}
@@ -791,14 +791,14 @@
 			rightAlign: false
 		});
 
-		{{!-- $("#current_revenue").inputmask("numeric", {
+		$("#estimated_customer_life_time_value").inputmask("numeric", {
 			radixPoint: ".",
 			groupSeparator: ",",
 			digits: 2,
 			autoGroup: true,
 			prefix: '$ ',
 			rightAlign: false
-		}); --}}
+		});
 
 		$("#life_time_revenue").inputmask("numeric", {
 			radixPoint: ".",
