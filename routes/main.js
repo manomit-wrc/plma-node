@@ -677,7 +677,14 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 			status: 0
 		}
 	});
-	//console.log(client_revenue);
+	const client_old_revenue = await Revenue.findAll({
+		where: {
+			client_id: req.params['id'],
+			status: 1,
+			current_revenue: "0"
+		}
+	});
+	//console.log(client_old_revenue.length);
 	
 	// console.log('clients----------------->',clients.revenues[0].current_revenue);
 	
@@ -763,7 +770,22 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		error_message,
 		existing_tag: existingTag,
 		contactDetails,
-		client_revenue
+		client_revenue,
+		client_old_revenue,
+		count_old_revenue: client_old_revenue.length
+	});
+});
+
+router.post("/add-old-curernt-revenue", auth, async (req, res) => {
+	const add_old_revenue = await Revenue.update({
+		current_revenue: removePhoneMask(req.body.current_revenue)
+	},{
+		where: {
+			id: req.body.revenue_id,
+		}
+	});
+	res.json({
+		success: true
 	});
 });
 
@@ -780,7 +802,12 @@ router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		},
 		include: [{
 			model: Revenue
-		}] 
+		}],
+		order: [
+			[{
+				model: Revenue
+			}, 'id', 'ASC']
+		]
 	});
 	const country = await Country.findById("233");
 	const state = await State.findById(clients.state.toString());
@@ -1194,7 +1221,8 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 			current_revenue: removePhoneMask(req.body.current_revenue),
 		}, {
 			where: {
-				'client_id': req.params['id']
+				'client_id': req.params['id'],
+				'status':0
 			}
 		}); 
 
