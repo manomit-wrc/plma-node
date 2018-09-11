@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
     social_security_no: DataTypes.STRING,
     life_time_revenue: DataTypes.STRING,
     revenueclosingDate: DataTypes.STRING,
-    revenue_start_month:DataTypes.STRING,
+    estimated_customer_life_time_value: DataTypes.STRING,
     revenue_end_month:DataTypes.STRING
   }, {});
   client.associate = function(models) {
