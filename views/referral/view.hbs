@@ -30,9 +30,11 @@
                 <div class="text-center top-desc">
                   <img src="https://cdn1.iconfinder.com/data/icons/flat-business-icons/128/user-512.png" alt="" height="100" width="100">
                   <h4>
-                    Nasiruddin Ahammed
+             <h4>{{referral.first_name}} {{referral.last_name}}</h4>
                   </h4>
-                  <h6>nasir@wrctpl.com</h6>
+
+              <h6>{{referral.email}}</h6>
+
                 </div>
               </div>
               <div class="col-md-9">
@@ -47,8 +49,10 @@
                             width="48">
                           </div>
                           <div class="col-xs-9">
-                            <p>
-                              Box 564, Disneyland<br> USA
+                              <p>
+                                {{referral.address1}}, {{#if referral.address2}}{{referral.address2}},{{/if}} {{#if referral.address3}}{{referral.address3}},{{/if}}
+                                <br> {{city.name}}, {{state.name}},
+                                <br> {{zipcode.zip}}, {{country.name}}
                             </p>
                           </div>
                         </div>
@@ -60,8 +64,17 @@
                             width="48">
                           </div>
                           <div class="col-xs-9">
-                            <p>
-                              123456
+                           <span>M:</span>
+                            <p class="number_validator">
+                                {{referral.mobile}}
+                            </p>
+                            <span>P:</span>
+                            <p class="number_validator">
+                                {{referral.phone_no}}
+                            </p>
+                            <span>F:</span>
+                            <p class="number_validator">
+                                {{referral.fax}}
                             </p>
                           </div>
                         </div>
