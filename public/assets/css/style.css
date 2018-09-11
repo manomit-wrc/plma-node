@@ -6931,6 +6931,21 @@ select.gender {
 				}
 
 				/*Ends on css 10-09-2018*/
+
+				/*Starts on css 11-09-2018*/
+
+				.tcr-view .nav-tabs li.active.revenue a {
+					border: 1px solid #ff9b44 !important;
+				}
+
+				.tcr-view .nav-tabs li.revenue a {
+					border: 1px solid #dcdcdc !important;
+				}
+
+
+				
+
+				/*Ends on css 11-09-2018*/
 				
 
 
