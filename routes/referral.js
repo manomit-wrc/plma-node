@@ -888,7 +888,6 @@ router.get("/referral/view-activity/:id", auth, async (req, res) => {
 	});
 });
 
-
 router.post('/referral/multi-delete/', auth, firmAttrAuth, async (req, res) => {
 	var referral_ids = req.body.referral_id;
 	var n = req.body.referral_id.length;
@@ -906,14 +905,8 @@ router.post('/referral/multi-delete/', auth, firmAttrAuth, async (req, res) => {
 	});
 });
 
-
-
-
-
-
-/**************************** Start Reffered Client Target ********************************************/
-
-/**************************** End Reffered Client Target ********************************************/
-
+router.post('/referral/targetclientadd', auth, csrfProtection, async (req, res) => {
+	console.log(req.body);
+});
 
 module.exports = router;
