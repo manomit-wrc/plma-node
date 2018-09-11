@@ -11,6 +11,10 @@ const Firm = require('../models').firm;
 const Client = require('../models').client;
 const Target = require('../models').target;
 const Referral = require('../models').referral;
+
+const Referred_Client_Targets = require('../models').referred_client_targets;
+
+
 const Zipcode = require('../models').zipcode;
 const City = require('../models').city;
 const State = require('../models').state;
@@ -18,6 +22,11 @@ const Country = require('../models').country;
 const industry_type = require('../models').industry_type;
 const Activity = require('../models').activity;
 const TargetActivity = require('../models').jointactivity;
+
+
+
+
+
 var fs = require('fs');
 const multer = require('multer');
 var xlsx = require('node-xlsx');
@@ -298,14 +307,14 @@ router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async (req, res
 				last_name: req.body.last_name,
 				email: req.body.email,
 				mobile: removePhoneMask(req.body.mobile_no),
-				referred_type: req.body.ref_type,
+				// referred_type: req.body.ref_type,
 				firm_id: req.user.firm_id,
 				user_id: req.user.id,
-				target_id: req.body.referred_id_t ? parseInt(req.body.referred_id_t) : 0,
-				client_id: req.body.referred_id_c ? parseInt(req.body.referred_id_c) : 0,
+				// target_id: req.body.referred_id_t ? parseInt(req.body.referred_id_t) : 0,
+				// client_id: req.body.referred_id_c ? parseInt(req.body.referred_id_c) : 0,
 				remarks: req.body.remarks,
 				gender: req.body.gender,
-				estimated_revenue: removePhoneMask(req.body.estimated_revenue),
+				// estimated_revenue: removePhoneMask(req.body.estimated_revenue),
 				address1: req.body.address1,
 				address2: req.body.address2,
 				address3: req.body.address3,
@@ -335,14 +344,14 @@ router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async (req, res
 				organization_name: req.body.org_name,
 				email: req.body.email,
 				mobile: removePhoneMask(req.body.mobile_no),
-				referred_type: req.body.ref_type,
+				// referred_type: req.body.ref_type,
 				firm_id: req.user.firm_id,
 				user_id: req.user.id,
-				target_id: req.body.referred_id_t ? parseInt(req.body.referred_id_t) : 0,
-				client_id: req.body.referred_id_c ? parseInt(req.body.referred_id_c) : 0,
+				// target_id: req.body.referred_id_t ? parseInt(req.body.referred_id_t) : 0,
+				// client_id: req.body.referred_id_c ? parseInt(req.body.referred_id_c) : 0,
 				remarks: req.body.remarks,
 				gender: req.body.gender,
-				estimated_revenue: removePhoneMask(req.body.estimated_revenue),
+				// estimated_revenue: removePhoneMask(req.body.estimated_revenue),
 				address1: req.body.address1,
 				address2: req.body.address2,
 				address3: req.body.address3,
@@ -388,8 +397,6 @@ router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async (req, res
 		res.redirect('/referral/add');
 	}
 });
-
-
 
 router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	const referral = await Referral.findById(req.params['id']);
@@ -604,9 +611,9 @@ router.post('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req
 			organization_name: req.body.org_name,
 			email: req.body.email,
 			mobile: removePhoneMask(req.body.mobile_no),
-			referred_type: req.body.ref_type,
+			// referred_type: req.body.ref_type,
 			gender: req.body.gender,
-			estimated_revenue: removePhoneMask(req.body.estimated_revenue),
+			// estimated_revenue: removePhoneMask(req.body.estimated_revenue),
 			address1: req.body.address1,
 			address2: req.body.address2,
 			address3: req.body.address3,
@@ -898,6 +905,15 @@ router.post('/referral/multi-delete/', auth, firmAttrAuth, async (req, res) => {
 		message: 'Success'
 	});
 });
+
+
+
+
+
+
+/**************************** Start Reffered Client Target ********************************************/
+
+/**************************** End Reffered Client Target ********************************************/
 
 
 module.exports = router;
