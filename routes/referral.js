@@ -11,6 +11,10 @@ const Firm = require('../models').firm;
 const Client = require('../models').client;
 const Target = require('../models').target;
 const Referral = require('../models').referral;
+
+const Referred_Client_Targets = require('../models').referred_client_targets;
+
+
 const Zipcode = require('../models').zipcode;
 const City = require('../models').city;
 const State = require('../models').state;
@@ -18,6 +22,11 @@ const Country = require('../models').country;
 const industry_type = require('../models').industry_type;
 const Activity = require('../models').activity;
 const TargetActivity = require('../models').jointactivity;
+
+
+
+
+
 var fs = require('fs');
 const multer = require('multer');
 var xlsx = require('node-xlsx');
@@ -388,8 +397,6 @@ router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async (req, res
 		res.redirect('/referral/add');
 	}
 });
-
-
 
 router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	const referral = await Referral.findById(req.params['id']);
@@ -905,8 +912,6 @@ router.post('/referral/multi-delete/', auth, firmAttrAuth, async (req, res) => {
 
 
 /**************************** Start Reffered Client Target ********************************************/
-
-
 
 /**************************** End Reffered Client Target ********************************************/
 

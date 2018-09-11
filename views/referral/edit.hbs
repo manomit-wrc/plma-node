@@ -3,6 +3,8 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
 
+
+
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" /> {{/content}}
 
 <div class="page-wrapper">
@@ -96,61 +98,7 @@
                 </div>
               </div>
 
-              {{!-- <div class="col-md-6">
-                <div class="form-group">
-                  <label class="control-label">Refferred: </label>
-                  <div class="form-inline m-b-15">
-                    <div class="form-group m-r-5">
-                      <label class="input-group">
-                        <span class="input-group-addon">
-                          <input type="radio" id="referral_type" name="ref_type" value="T" {{#if_eq referral.referred_type "T"}} checked {{/if_eq}}
-                          />
-                        </span>
-                        <div class="form-control form-control-static">Target</div>
-                        <span class="glyphicon form-control-feedback "></span>
-                      </label>
-                    </div>
-                    <div class="form-group ">
-                      <label class="input-group">
-                        <span class="input-group-addon">
-                          <input type="radio" id="organization_type" name="ref_type" value="C" {{#if_eq referral.referred_type "C"}} checked {{/if_eq}}/>
-                        </span>
-                        <div class="form-control form-control-static">Client</div>
-                        <span class="glyphicon form-control-feedback "></span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div> --}}
-
-              {{!-- <div class="col-md-6" id="target_list" {{#if_eq referral.referred_type "C"}} style="display:none;" {{/if_eq}}>
-                <div class="form-group form-focus select-attorney">
-                  <select id="target_id" name="referred_id_t" class="form-control floating ">
-                    <option value="0" {{#if_eq referral.target_id "0"}} selected {{/if_eq}}>Select Target</option>
-                    {{#each target}} {{#if_eq target_type "I"}}
-                    <option value="{{this.id}}" {{#if_eq this.id ../referral.target_id}} selected {{/if_eq}}>{{this.first_name}}
-                      {{this.last_name}}
-                    </option>
-                    {{/if_eq}} {{#if_eq target_type "O"}}
-                    <option value="{{this.id}}" {{#if_eq this.id ../referral.target_id}} selected {{/if_eq}}>{{this.organization_name}}</option>
-                    {{/if_eq}} {{/each}}
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-6" id="client_list" {{#if_eq referral.referred_type "T"}} style="display:none;" {{/if_eq}}>
-                <div class="form-group form-focus select-attorney">
-                  <select id="client_id" name="referred_id_c" class="form-control floating ">
-                    <option value="0" {{#if_eq referral.client_id "0"}} selected {{/if_eq}}>Select Client</option>
-                    {{#each client}} {{#if_eq client_type "I"}}
-                    <option value="{{this.id}}" {{#if_eq this.id ../referral.client_id}} selected {{/if_eq}}>{{this.first_name}}
-                      {{this.last_name}}
-                    </option>
-                    {{/if_eq}} {{#if_eq client_type "O"}}
-                    <option value="{{this.id}}" {{#if_eq this.id ../referral.client_id}} selected {{/if_eq}}>{{this.organization_name}}</option>
-                    {{/if_eq}} {{/each}}
-                  </select>
-                </div>
-              </div> --}}
+           
               <div class="col-md-6">
                 <div class="form-group form-focus select-focus select-attorney">
                   <label class="control-label">Gender
@@ -165,24 +113,7 @@
                   </select>
                 </div>
               </div>
-              {{!-- <div class="col-md-6">
-                <div class="form-group form-focus">
-                  <label class="control-label">Estimated annual revenue
-                    <span class="req-lbl">*</span>
-                  </label>
-                  <input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue" value="{{referral.estimated_revenue}}">
-                </div>
-              </div> --}}
-
-              {{!-- <div class="col-md-6">
-                <div class="form-group form-focus">
-                  <label class="control-label">Closing Date<span class="req-lbl">*</span> </label>
-                  <div class="cal-icon">
-                    <input class="form-control floating datetimepicker" type="text" id="revenueclosingDate" name="revenueclosingDate" value="{{dateFormat referral.revenueclosingDate "
-                      DD-MM-YYYY "}}">
-                  </div>
-                </div>
-              </div> --}}
+             
 
 
             </div>
@@ -468,37 +399,67 @@
       </div>
 
 
+
+
+
+
+
+
+{{!-- //****************************** Referrence Target Client ***********************************************************// --}}
+
+
+
+
 <div class="card-box">
-<div class="col-xs-4">
-        <h3 class="card-title">Add Target Client</h3>
-</div>
-      <div class="col-xs-8 text-right">
-                    <a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_user"><i class="fa fa-plus"></i> Add Target Client</a>
-
-
-
-
+      <div class="col-xs-4">
+          <h3 class="card-title">Add Target Client</h3>
       </div>
-
-        <h3 class="card-title"></h3>
-<div class="row">
-            <div class="col-md-12">
-                <div class="table-responsive">
-                    <table class="table table-striped custom-table datatable">
-                        <thead>
-                            <tr>
-                                <th>SL#</th>
-                                <th>Target Client Name</th>
-                                <th>Type</th>
-                                <th>email</th>
-                                
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-             </div>
+        <div class="col-xs-8 text-right">
+          <a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_target_client"><i class="fa fa-plus"></i> Add Target Client</a>
         </div>
-  </div>
+
+        
+    <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+
+
+                        <table class="table table-striped custom-table ">
+                            <thead>
+                              <tr>
+                                  <th>
+                                        <input type="checkbox" onClick="checkall(this);" /> SL#
+                                    </th>
+                                      <th>Target Client Name</th>
+                                      <th>Type</th>
+                                      <th>email</th>
+                                    <th class="text-right" style="width: 18%;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                   
+                                    <td class="text-right">
+                                   
+                                       <a href="javascript:void(0);" data-toggle="modal" data-target="delete_users" data-referral-id="{{this.id}}" id="delete_ref_targetclient"
+                                        class="btn btn-danger btn-sm">
+                                        <i class="fa fa-trash-o m-r-5"></i>
+                                    </a>
+                                      </td>
+                                </tr>
+                          </tbody> 
+                  </table>
+
+
+                </div>
+            </div>
+          </div>
+
+ </div>
+
 
 
 
@@ -615,8 +576,11 @@
 
 
 
+
+
 {{!-- /****************** Start Modal ****************************************************/ --}}
-<div id="add_user" class="modal fade" role="dialog">
+
+<div id="add_target_client" class="modal fade" role="dialog">
     <div class="modal-dialog">
  <div class="modal-content">
         <div class="modal-header">
@@ -625,25 +589,24 @@
         </div>
         <div class="modal-body">
 
-
-        <form class="m-b-30" name="addReffered" id="addReffered" method="POST">
-
+        <form class="m-b-30" name="addReffered" id="addReffered">
+            <input type="hidden" id="xxx" name="referral_id" value="{{referral.id}}">
             <div class="col-md-6">
                 <div class="form-group">
                   <div class="form-inline m-b-15">
                     <div class="form-group m-r-5">
                       <label class="input-group">
                         <span class="input-group-addon">
-                          <input type="radio" id="referral_type" name="ref_type" value="T" checked />
+                          <input type="radio" id="ref_target" name="ref_type" value="T" checked />
                         </span>
                         <div class="form-control form-control-static">Target</div>
                         <span class="glyphicon form-control-feedback "></span>
                       </label>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label class="input-group">
                         <span class="input-group-addon">
-                          <input type="radio" id="organization_type" name="ref_type" value="C" />
+                          <input type="radio" id="ref_client" name="ref_type" value="C" />
                         </span>
                         <div class="form-control form-control-static">Client</div>
                         <span class="glyphicon form-control-feedback "></span>
@@ -653,13 +616,11 @@
               </div> 
               <div class="col-md-6" id="target_list">
                 <div class="form-group form-focus select-attorney">
-                  <select id="target_id" name="referred_id_t" class="form-control floating ">
+                  <select id="target_id" name="referred_id_t" class="form-control floating">
                     <option value="">Select Target</option>
-                    {{#each target}} {{#if_eq target_type "I"}}
+                    {{#each target}} 
                     <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
-                    {{/if_eq}} {{#if_eq target_type "O"}}
-                    <option value="{{this.id}}">{{this.organization_name}}</option>
-                    {{/if_eq}} {{/each}}
+                     {{/each}}
                   </select>
                 </div>
               </div>
@@ -667,11 +628,9 @@
                 <div class="form-group form-focus select-attorney">
                   <select id="client_id" name="referred_id_c" class="form-control floating " >
                     <option value="">Select Client</option>
-                    {{#each client}} {{#if_eq client_type "I"}}
+                    {{#each client}} 
                     <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
-                    {{/if_eq}} {{#if_eq client_type "O"}}
-                    <option value="{{this.id}}">{{this.organization_name}}</option>
-                    {{/if_eq}} {{/each}}
+                    {{/each}}
                   </select>
                 </div>
               </div> 
@@ -696,6 +655,10 @@
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+
+
+
+
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 
@@ -730,12 +693,7 @@
         mobile_no: {
           required: true
         },
-        target_id: {
-          required: true
-        },
-        client_id: {
-          required: true
-        },
+    
         gender: {
           required: true
         },
@@ -756,12 +714,7 @@
         },
         zipcode: {
           required: true
-        },
-        referred_id_t: {
-          required: true
-        },
-        referred_id_c: {
-          required: true
+      
         }
       },
       messages: {
@@ -783,12 +736,7 @@
         mobile_no: {
           required: "Mobile number can't be blank"
         },
-        target_id: {
-          required: "Please select reffered name"
-        },
-        client_id: {
-          required: "Please select reffered name"
-        },
+     
         gender: {
           required: "Please select gender"
         },
@@ -809,12 +757,7 @@
         },
         zipcode: {
           required: "Please Choose your zipcode"
-        },
-        referred_id_t: {
-          required: "Please select target"
-        },
-        referred_id_c: {
-          required: "Please select client"
+        
         }
       }
     });
@@ -860,11 +803,122 @@
 </script>
 
 <script type="text/javascript">
+
+$(document).on('click', '#ref_target', function () {
+    $('#target_list').show();
+    $('#client_list').hide();
+  });
+
+
+  $(document).on('click', '#ref_client', function () {
+    $('#target_list').hide();
+    $('#client_list').show();
+  });
+
 /**************************** Start Reffered Client Target ********************************************/
+
+$(document).ready(function(e) {
+
+    $("#btnAddReffered").click(function() {
+        $("#addReffered").submit();
+    });
+  $("#addReffered").validate({
+        rules: {
+           target_id: {
+          required: true
+        },
+        client_id: {
+          required: true
+        },
+            referred_id_t: {
+                required: true,
+
+            }, 
+            referred_id_c: {
+                required: true
+            }
+        },
+        messages: {
+          target_id: {
+          required: "Please select reffered name"
+        },
+        client_id: {
+          required: "Please select reffered name"
+        },
+            referred_id_t: {
+                required: "Target can't be blank",
+            },
+             referred_id_c: {
+                required: "Client can't be blank"
+            }
+        },
+       
+        submitHandler:function(form) {
+            var target_id = $("#target_id").val(),
+                client_id = $("#client_id").val();
+                ref_target = $('input[name=ref_type]:checked').val();
+                ref_client = $('input[name=ref_type]:checked').val();
+                referral_id = $('#xxx').val();
+
+
+
+
+            $.ajax({
+                type: "POST",
+                url: "/referral/targetclientadd",
+                data: {
+                    target_id: target_id,
+                    client_id: client_id,
+                    ref_type: ref_target,
+                    ref_type: ref_client,
+                    referral_id: referral_id
+
+
+
+                },
+                  beforeSend: function(xhr) {
+                    xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+
+                    $("#btnAddReffered").prop('disabled', true);
+                    $("#btnAddReffered").html("Loading...");
+                },
+
+
+                  success:function(response) {
+                    if(response.add_ref == 1)
+                    {
+                        $(`<div class="alert alert-success"><strong>Success! </strong>Referral Added Successfully</div>`).insertBefore("#addReffered");
+                        setTimeout(function() {
+                            window.location.href="/referral";
+                        }, 2000);
+                    }
+                    else if(response.add_ref == 2){
+                        $(`<div class="alert alert-danger"><strong>Error! </strong>Name Already exist</div>`).insertBefore("#addReffered");
+                        $(".alert").fadeTo(2000, 500).slideUp(500, function(){
+                            $(".alert").remove();
+                        });
+                        $("#btnAddReffered").prop('disabled', false);
+                        $("#btnAddReffered").html("Create Referral");
+                    }
+                }
+
+                
+            });
+           }
+
+
+
+       });  
+    });
+
+
+
 
 
 
 /**************************** End Reffered Client Target ********************************************/
 </script>
+
+
 
  {{/content}}

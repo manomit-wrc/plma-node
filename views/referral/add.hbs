@@ -90,55 +90,7 @@
                   <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" />
                 </div>
               </div>
-              {{!-- <div class="col-md-6">
-                <div class="form-group">
-                  <label class="control-label">Refferred: </label>
-                  <div class="form-inline m-b-15">
-                    <div class="form-group m-r-5">
-                      <label class="input-group">
-                        <span class="input-group-addon">
-                          <input type="radio" id="referral_type" name="ref_type" value="T" checked />
-                        </span>
-                        <div class="form-control form-control-static">Target</div>
-                        <span class="glyphicon form-control-feedback "></span>
-                      </label>
-                    </div>
-                    <div class="form-group ">
-                      <label class="input-group">
-                        <span class="input-group-addon">
-                          <input type="radio" id="organization_type" name="ref_type" value="C" />
-                        </span>
-                        <div class="form-control form-control-static">Client</div>
-                        <span class="glyphicon form-control-feedback "></span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div> --}}
-              {{!-- <div class="col-md-6" id="target_list">
-                <div class="form-group form-focus select-attorney">
-                  <select id="target_id" name="referred_id_t" class="form-control floating ">
-                    <option value="">Select Target</option>
-                    {{#each target}} {{#if_eq target_type "I"}}
-                    <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
-                    {{/if_eq}} {{#if_eq target_type "O"}}
-                    <option value="{{this.id}}">{{this.organization_name}}</option>
-                    {{/if_eq}} {{/each}}
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-6" id="client_list" style="display:none;">
-                <div class="form-group form-focus select-attorney">
-                  <select id="client_id" name="referred_id_c" class="form-control floating " >
-                    <option value="">Select Client</option>
-                    {{#each client}} {{#if_eq client_type "I"}}
-                    <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
-                    {{/if_eq}} {{#if_eq client_type "O"}}
-                    <option value="{{this.id}}">{{this.organization_name}}</option>
-                    {{/if_eq}} {{/each}}
-                  </select>
-                </div>
-              </div> --}}
+            
               <div class="col-md-6">
                 <div class="form-group form-focus select-focus select-attorney">
                   <label class="control-label">Gender
@@ -153,23 +105,7 @@
                   </select>
                 </div>
               </div>
-              {{!-- <div class="col-md-6">
-                <div class="form-group form-focus">
-                  <label class="control-label">Estimated annual revenue
-                    <span class="req-lbl">*</span>
-                  </label>
-                  <input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue">
-                </div>
-              </div> --}}
-
-              {{!-- <div class="col-md-6">
-                <div class="form-group form-focus">
-                  <label class="control-label">Closing Date<span class="req-lbl">*</span> </label>
-                  <div class="cal-icon">
-                    <input class="form-control floating datetimepicker" type="text" id="revenueclosingDate" name="revenueclosingDate">
-                  </div>
-                </div>
-              </div> --}}
+            
 
             </div>
           </div>
