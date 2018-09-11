@@ -417,23 +417,23 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 			attorney_id: req.user.id
 		}
 	});
-	const country = await Country.findAll();
-	const state = await State.findAll({
-		where: {
-			country_id: "233"
-		}
-	});
-	const city = await City.findAll({
-		where: {
-			state_id: referral.state.toString()
-		}
-	});
-	const cities = await City.findById(referral.city.toString());
-	const zipcode = await Zipcode.findAll({
-		where: {
-			city_name: cities.name
-		}
-	});
+	// const country = await Country.findAll();
+	// const state = await State.findAll({
+	// 	where: {
+	// 		country_id: "233"
+	// 	}
+	// });
+	// const city = await City.findAll({
+	// 	where: {
+	// 		state_id: referral.state.toString()
+	// 	}
+	// });
+	// const cities = await City.findById(referral.city.toString());
+	// const zipcode = await Zipcode.findAll({
+	// 	where: {
+	// 		city_name: cities.name
+	// 	}
+	// });
 
 	const contactDetails = await ContactInformation.findAll({
 		where: {
@@ -452,6 +452,13 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 			model: Activity
 		}]
 	});
+
+	const country = await Country.findById("233");
+    const state = await State.findById(referral.state.toString());
+    const city = await City.findById(referral.city.toString());
+    const zipcode = await Zipcode.findById(referral.zipcode.toString());
+	
+
 	res.render('referral/view', {
 		layout: 'dashboard',
 		title: 'View Referral Source',
