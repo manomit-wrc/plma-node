@@ -879,7 +879,6 @@ router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		}]
 	});
 
-
 	res.render('client/viewClient', {
 		layout: 'dashboard',
 		title: 'View Client',
