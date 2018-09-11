@@ -167,47 +167,71 @@
 										</div>
 									</div>
 									<div id="refferedinfo" class="tab-pane fade revenue">
-										<div class="container">
-											<div class="row">
-												<div class="col-md-12">
-													<ul class="personal-info other-info lifetime-revenue">
-														<li>
-															<span class="title">Estimated Customer Lifetime Value:</span>
-															<span class="text revenue_cost">{{client.life_time_revenue}}</span>
-														</li>
-														<li>
-															<span class="title">Close Date:</span>
-															<span class="text">{{dateFormat client.close_date "DD-MM-YYYY"}}</span>
-														</li>
-													</ul>
-													{{#each client.revenues}}
-													<ul class="personal-info other-info client-revenue-info">
-														<li><h4>Planning Period: {{math @index "+" 1}}</h4></li>
-														<li>
-															<span class="title">Planning Period Start Date:</span>
-															<span class="text">{{dateFormat this.start_date "DD-MM-YYYY"}}</span>
-														</li>
-														<li>
-															<span class="title">Revenue Planning Period (Month):</span>
-															<span class="text">{{this.planning_period}}</span>
-														</li>
-														<li>
-															<span class="title">Planning Period End Date:</span>
-															<span class="text">{{dateFormat this.end_date "DD-MM-YYYY"}}</span>
-														</li>
-														<li>
-															<span class="title">Estimated Planning Period Revenue:</span>
-															<span class="text revenue_cost">{{this.estimated_revenue}}</span>
-														</li>
-														<li>
-															<span class="title">Current Revenue:</span>
-															<span class="text revenue_cost">{{this.current_revenue}}</span>
-														</li>
-													</ul>
-													{{/each}}
+										<div class="tabbable">
+											<ul class="nav nav-tabs nav-tabs-top nav-justified m-b-0">
+												<li class="active col-md-6 revenue">
+													<a href="#all_revenue_lists" data-toggle="tab" aria-expanded="true">All planning periods with estimated and actual revenues</a>
+												</li>
+												<li class="col-md-6 revenue">
+													<a href="#all_revenue_lists_yearly" data-toggle="tab" aria-expanded="false">Annual revenue with list of years</a>
+												</li>
+											</ul>
+											<div class="tab-content">
+												<div class="tab-pane active" id="all_revenue_lists">
+													<div class="container">
+														<div class="row">
+															<div class="col-md-12">
+																<ul class="personal-info other-info lifetime-revenue">
+																	<li>
+																		<span class="title">Estimated Customer Lifetime Value:</span>
+																		<span class="text revenue_cost">{{client.estimated_customer_life_time_value}}</span>
+																	</li>
+																	<li>
+																		<span class="title">Life time revenue:</span>
+																		<span class="text revenue_cost">{{client.life_time_revenue}}</span>
+																	</li>
+																	<li>
+																		<span class="title">Close Date:</span>
+																		<span class="text">{{dateFormat client.close_date "DD-MM-YYYY"}}</span>
+																	</li>
+																</ul>
+																{{#each client.revenues}}
+																<ul class="personal-info other-info client-revenue-info">
+																	<li>
+																		<h4>Planning Period: {{math @index "+" 1}}</h4>
+																	</li>
+																	<li>
+																		<span class="title">Planning Period Start Date:</span>
+																		<span class="text">{{dateFormat this.start_date "DD-MM-YYYY"}}</span>
+																	</li>
+																	<li>
+																		<span class="title">Revenue Planning Period (Month):</span>
+																		<span class="text">{{this.planning_period}}</span>
+																	</li>
+																	<li>
+																		<span class="title">Planning Period End Date:</span>
+																		<span class="text">{{dateFormat this.end_date "DD-MM-YYYY"}}</span>
+																	</li>
+																	<li>
+																		<span class="title">Estimated Planning Period Revenue:</span>
+																		<span class="text revenue_cost">{{this.estimated_revenue}}</span>
+																	</li>
+																	<li>
+																		<span class="title">Current Revenue:</span>
+																		<span class="text revenue_cost">{{this.current_revenue}}</span>
+																	</li>
+																</ul>
+																{{/each}}
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="tab-pane" id="all_revenue_lists_yearly">
+													
 												</div>
 											</div>
 										</div>
+										
 									</div>
 									<div id="otherinfo" class="tab-pane fade revenue">
 										<div class="container">
