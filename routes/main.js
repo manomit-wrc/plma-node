@@ -990,7 +990,7 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				remarks: req.body.remarks,
 				life_time_revenue: removePhoneMask(req.body.life_time_revenue),
 				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null,
-				revenue_start_month: req.body.startMonth,
+				estimated_customer_life_time_value: removePhoneMask(req.body.estimated_customer_life_time_value),
             	revenue_end_month: req.body.endMonth
 				   
 			});
@@ -1067,7 +1067,7 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				remarks: req.body.remarks,
 				life_time_revenue: removePhoneMask(req.body.life_time_revenue),
 				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null,
-				revenue_start_month: req.body.startMonth,
+				estimated_customer_life_time_value: removePhoneMask(req.body.estimated_customer_life_time_value),
             	revenue_end_month: req.body.endMonth
 			});
 
@@ -1182,7 +1182,7 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 			website_url: req.body.website,
 			life_time_revenue: removePhoneMask(req.body.life_time_revenue),
 			revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null,
-			revenue_start_month: req.body.startMonth,
+			estimated_customer_life_time_value: removePhoneMask(req.body.estimated_customer_life_time_value),
             revenue_end_month: req.body.endMonth 
 
 		}, {
