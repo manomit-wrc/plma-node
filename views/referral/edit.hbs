@@ -3,6 +3,7 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 {{/content}}
 <div class="page-wrapper">
   <div class="content container-fluid">
@@ -345,8 +346,8 @@
       </div>
       <div class="card-box">
         <div class="col-xs-4">
-          <h3 class="card-title">Add Target Client</h3>
-        </div>
+          <h3 class="card-title">Referred Target / Client</h3>
+          </div>
         <div class="col-xs-8 text-right">
           <a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_target_client"><i class="fa fa-plus"></i>
             Add Target / Client</a>
@@ -354,28 +355,24 @@
         <div class="row">
           <div class="col-md-12">
             <div class="table-responsive">
-              <table class="table table-striped custom-table ">
+              <table class="table table-striped custom-table datatable">
                 <thead>
                   <tr>
-                    <th><input type="checkbox" onClick="checkall(this);" /> SL#</th>
-                    <th>Target Client Name</th>
+                    <th>SL#</th>
+                    <th>Target / Client</th>
                     <th>Type</th>
-                    <th>email</th>
-                    <th class="text-right" style="width: 18%;">Action</th>
+                    <th>Email</th>
                   </tr>
                 </thead>
                 <tbody>
+                  {{#each referredListArr}}
                   <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="text-right">
-                      <a href="javascript:void(0);" data-toggle="modal" data-target="delete_users" data-referral-id="{{this.id}}" id="delete_ref_targetclient"
-                        class="btn btn-danger btn-sm">
-                        <i class="fa fa-trash-o m-r-5"></i>
-                      </a>
-                    </td>
+                    <td>{{math @index "+" 1}}</td>
+                    <td>{{this.name}}</td>
+                    <td>{{this.type}}</td>
+                    <td>{{this.email}}</td>
                   </tr>
+                  {{/each}}
                 </tbody>
               </table>
             </div>
@@ -484,7 +481,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Select Target / Client</h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" style="height: 100px;">
         <form class="m-b-30" name="addReffered" id="addReffered" method="POST">
           <input type="hidden" id="xxx" name="referral_id" value="{{referral.id}}">
           <div class="col-md-6">
@@ -522,7 +519,7 @@
           </div>
           <div class="col-md-6" id="client_list" style="display:none;">
             <div class="form-group form-focus select-attorney">
-              <select id="client_id" name="referred_id_c" class="form-control floating ">
+              <select id="client_id" name="referred_id_c" class="form-control floating">
                 <option value="">Select Client</option>
                 {{#each client}}
                 <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
@@ -542,6 +539,8 @@
 
 {{!-- /********************** End Modal *********************************/ --}}
 {{#content "script" mode="append"}}
+<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
 <script type="text/javascript" src="/assets/js/select2.min.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
@@ -680,7 +679,6 @@
   /**************************** Start Reffered Client Target ********************************************/
 
   $(document).ready(function (e) {
-
     $("#btnAddReffered").click(function () {
       $("#addReffered").submit();
     });
@@ -694,7 +692,6 @@
         },
         referred_id_t: {
           required: true,
-
         },
         referred_id_c: {
           required: true
@@ -702,10 +699,10 @@
       },
       messages: {
         target_id: {
-          required: "Please select reffered name"
+          required: "Please select reffered type"
         },
         client_id: {
-          required: "Please select reffered name"
+          required: "Please select reffered type"
         },
         referred_id_t: {
           required: "Target can't be blank",
@@ -735,19 +732,13 @@
             $("#btnAddReffered").html("Loading...");
           },
           success: function (response) {
-            if (response.add_ref == 1) {
-              $(`<div class="alert alert-success"><strong>Success! </strong>Referral Added Successfully</div>`).insertBefore("#addReffered");
+            if (response.code == 200) {
+              swal("", "Target / Client added successfully", "success");
               setTimeout(function () {
-                window.location.href = "/referral";
+                location.reload();
               }, 2000);
-            }
-            else if (response.add_ref == 2) {
-              $(`<div class="alert alert-danger"><strong>Error! </strong>Name Already exist</div>`).insertBefore("#addReffered");
-              $(".alert").fadeTo(2000, 500).slideUp(500, function () {
-                $(".alert").remove();
-              });
-              $("#btnAddReffered").prop('disabled', false);
-              $("#btnAddReffered").html("Create Referral");
+            } else {
+              swal("", "Please try again", "warning");
             }
           }
         });
