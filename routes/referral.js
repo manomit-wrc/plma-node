@@ -398,7 +398,8 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 			firm_id: req.user.firm_id
 		}
 	});
-	const industry = await industry_type.findAll();
+	 const industry = await industry_type.findAll();
+
 	const client = await Client.findAll({
 		where: {
 			attorney_id: req.user.id
@@ -449,7 +450,8 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
     const state = await State.findById(referral.state.toString());
     const city = await City.findById(referral.city.toString());
     const zipcode = await Zipcode.findById(referral.zipcode.toString());
-	
+	// const industry = await industry_type.findById(referral.industry_type.toString());
+
 
 
 	const referredDetails = await Referred_Client_Targets.findAll({
