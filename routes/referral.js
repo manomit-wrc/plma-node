@@ -435,7 +435,6 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 	TargetActivity.belongsTo(Activity, {
 		foreignKey: 'activity_id'
 	});
-	
 	const activity_details = await TargetActivity.findAll({
 		where: {
 			target_client_type: "R",
@@ -509,6 +508,7 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 
 	});
 });
+
 
 router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var err_message = req.flash('error-referral-message')[0];
@@ -630,8 +630,7 @@ router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		target,
 		err_message,
 		contactDetails,
-		referredListArr,
-		referredDetails
+		referredListArr
 	});
 });
 
