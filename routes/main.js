@@ -483,21 +483,6 @@ router.post('/client/findPinByCity', auth, firmAttrAuth, csrfProtection, (req, r
 	});
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*==========================================Client route starts==============================================*/
 router.get('/client', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	client.hasMany(Revenue, {
@@ -562,10 +547,7 @@ router.get('/client', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	const clientDetails = await client.findAll({
 		where: whereCondition,
 		include: [{
-			model: Revenue,
-			where: {
-				status: 0
-			},
+			model: Revenue
 		}]
 	});
 	res.render('client/index', {
@@ -864,8 +846,6 @@ router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		}
 	});
 
-	
-
 	TargetActivity.belongsTo(Activity, {
 		foreignKey: 'activity_id'
 	});
@@ -878,7 +858,38 @@ router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 			model: Activity
 		}]
 	});
-
+	var total_yearly_revenue = [];
+	var cur_year = new Date().getFullYear();
+	var dest_year = new Date().getFullYear() - 5;
+	for (var j = cur_year; j > dest_year; j--) {
+		const yearly_revenue = await Revenue.findAll({
+			where: {
+				client_id: req.params['id'],
+				status: 1,
+				year: j.toString()
+			}
+		});
+		var revenue = [];
+		for (var y = 0; y < yearly_revenue.length; y++) {
+			revenue.push({
+				est_rev: yearly_revenue[y].estimated_revenue,
+				cur_rev: yearly_revenue[y].current_revenue,
+				cur_year: j
+			});
+		}
+		var est_sum = 0;
+		var cur_sum = 0;
+		for(var r=0; r<revenue.length; r++)
+		{
+			est_sum += parseInt(revenue[r].est_rev);
+			cur_sum += parseInt(revenue[r].cur_rev);
+		}
+		total_yearly_revenue.push({
+			year: j,
+			estimated_revenue: est_sum,
+			current_revenue: cur_sum
+		});
+	}
 	res.render('client/viewClient', {
 		layout: 'dashboard',
 		title: 'View Client',
@@ -896,7 +907,8 @@ router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		existing_tag: existingTag,
 		contactDetails,
 		count_activity: activity_details.length,
-		activity_details
+		activity_details,
+		total_yearly_revenue
 	});
 });
 
@@ -1016,7 +1028,8 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
                 client_id: insertData.id,
                 planning_period: req.body.planning_period,
                 start_date: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
-                end_date: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
+				end_date: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
+				year: endDate ? endDate[2] : null,
                 estimated_revenue: removePhoneMask(req.body.estimated_revenue),
                 current_revenue: removePhoneMask(req.body.current_revenue),
 				status: 0,
@@ -1077,7 +1090,8 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
                 client_id: insertData.id,
                 planning_period: req.body.planning_period,
                 start_date: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
-                end_date: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
+				end_date: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
+				year: endDate ? endDate[2] : null,
                 estimated_revenue: removePhoneMask(req.body.estimated_revenue),
                 current_revenue: removePhoneMask(req.body.current_revenue),
 				status: 0,
@@ -1216,6 +1230,7 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 			planning_period: req.body.planning_period,
 			start_date: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
 			end_date: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
+			year: endDate ? endDate[2] : null,
 			estimated_revenue: removePhoneMask(req.body.estimated_revenue),
 			current_revenue: removePhoneMask(req.body.current_revenue),
 		}, {
@@ -1299,6 +1314,7 @@ router.post("/client/new-planning-period", auth, async(req, res)=> {
 		planning_period: req.body.planning_period_new,
 		start_date: start_new_date ? start_new_date[2] + "-" + start_new_date[1] + "-" + start_new_date[0] : null,
 		end_date: end_new_date ? end_new_date[2] + "-" + end_new_date[1] + "-" + end_new_date[0] : null,
+		year: end_new_date ? end_new_date[2] : null,
 		estimated_revenue: removePhoneMask(req.body.estimated_revenue_new),
 	});
 	 res.json({

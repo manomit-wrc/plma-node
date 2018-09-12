@@ -1025,7 +1025,7 @@ router.get("/get-chart-two-activity-count-value", auth, async(req, res)=> {
             year3.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
             year3_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
         }
-        if (new Date(activity[i].activity_creation_date).getFullYear() == "2024")
+        if (new Date(activity[i].activity_creation_date).getFullYear() == "2020")
         {
             year4.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
             year4_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);

@@ -630,7 +630,8 @@ router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		target,
 		err_message,
 		contactDetails,
-		referredListArr
+		referredListArr,
+		referredDetails
 	});
 });
 
