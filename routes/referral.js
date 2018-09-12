@@ -492,7 +492,7 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 	res.render('referral/view', {
 		layout: 'dashboard',
 		title: 'View Referral Source',
-		industry,
+		industrys,
 		country,
 		state,
 		city,
