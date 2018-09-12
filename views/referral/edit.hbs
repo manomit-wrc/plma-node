@@ -28,8 +28,8 @@
         <div class="form-group m-r-5">
           <label class="input-group">
             <span class="input-group-addon">
-              <input type="radio" id="individual_referral" name="referral_type" value="I" {{#if_eq referral.referral_type "I"}} checked
-                {{/if_eq}} disabled />
+              <input type="radio" id="individual_referral" name="referral_type" value="I"
+                {{#if_eq referral.referral_type "I"}} checked {{/if_eq}} disabled />
             </span>
             <div class="form-control form-control-static">Individual</div>
             <span class="glyphicon form-control-feedback "></span>
@@ -38,8 +38,8 @@
         <div class="form-group ">
           <label class="input-group">
             <span class="input-group-addon">
-              <input type="radio" id="organization_referral" name="referral_type" value="O" {{#if_eq referral.referral_type "O"}} checked
-                {{/if_eq}} disabled />
+              <input type="radio" id="organization_referral" name="referral_type" value="O"
+                {{#if_eq referral.referral_type "O"}} checked {{/if_eq}} disabled />
             </span>
             <div class="form-control form-control-static">Organization</div>
             <span class="glyphicon form-control-feedback "></span>
@@ -76,7 +76,8 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-6" id="org_referral" {{#if_eq referral.referral_type "I"}} style="display: none;" {{/if_eq}}>
+              <div class="col-md-6" id="org_referral" {{#if_eq referral.referral_type "I"}} style="display: none;"
+                {{/if_eq}}>
                 <div class="form-group form-focus">
                   <label class="control-label">Organization Name</label>
                   <input type="text" class="form-control floating" id="org_name" name="org_name" value="{{referral.organization_name}}" />
@@ -91,8 +92,7 @@
               <div class="col-md-6">
                 <div class="form-group form-focus">
                   <label class="control-label">Phone No. <span class="req-lbl">*</span></label>
-                  <input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" value="{{referral.phone_no}}"
-                  />
+                  <input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" value="{{referral.phone_no}}" />
                 </div>
               </div>
               <div class="col-md-6">
@@ -104,8 +104,8 @@
               <div class="col-md-6">
                 <div class="form-group form-focus">
                   <label class="control-label">Mobile No.</label>
-                  <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" value="{{referral.mobile}}"
-                  />
+                  <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no"
+                    value="{{referral.mobile}}" />
                 </div>
               </div>
             </div>
@@ -216,7 +216,8 @@
               <i class="fa fa-plus"></i>
             </button>
             {{else}}
-            <button class="btn btn-primary btn-lg masterContactDetailsAdd contact-Information-Close" type="button" title="Remove">
+            <button class="btn btn-primary btn-lg masterContactDetailsAdd contact-Information-Close" type="button"
+              title="Remove">
               <i class="fa fa-close"></i>
             </button>
             {{/if_eq}}
@@ -225,15 +226,15 @@
                 <div class="col-md-6">
                   <div class="form-group form-focus">
                     <label class="control-label">First Name</label>
-                    <input type="text" class="form-control floating" id="contactDetailsFirstName" name="contactDetailsFirstName[]" value="{{this.first_name}}"
-                    />
+                    <input type="text" class="form-control floating" id="contactDetailsFirstName" name="contactDetailsFirstName[]"
+                      value="{{this.first_name}}" />
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group form-focus">
                     <label class="control-label">Last Name</label>
-                    <input type="text" class="form-control floating" id="contactDetailsSecondName" name="contactDetailsSecondName[]" value="{{this.last_name}}"
-                    />
+                    <input type="text" class="form-control floating" id="contactDetailsSecondName" name="contactDetailsSecondName[]"
+                      value="{{this.last_name}}" />
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -250,8 +251,8 @@
                 <div class="col-md-6">
                   <div class="form-group form-focus">
                     <label class="control-label">Email Id</label>
-                    <input type="text" class="form-control floating" id="contactDetailsEmail" name="contactDetailsEmail[]" value="{{this.email}}"
-                    />
+                    <input type="text" class="form-control floating" id="contactDetailsEmail" name="contactDetailsEmail[]"
+                      value="{{this.email}}" />
                     <span id="uniqueEmail" style="color: red"></span>
                   </div>
                 </div>
@@ -265,8 +266,8 @@
                 <div class="col-md-6">
                   <div class="form-group form-focus">
                     <label class="control-label">Fax</label>
-                    <input type="text" class="form-control floating number_validator" id="contactDetailsFax" name="contactDetailsFax[]" maxlength="50"
-                      value="{{this.fax}}" />
+                    <input type="text" class="form-control floating number_validator" id="contactDetailsFax" name="contactDetailsFax[]"
+                      maxlength="50" value="{{this.fax}}" />
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -284,7 +285,8 @@
         <div class="contactInformationClose" style="display: none;">
           <div class="contactDetailsRemove">
             <div class="contact-information" id="contactInformatinClose">
-              <button class="btn btn-primary btn-lg masterContactDetailsAdd contact-Information-Close" type="button" title="Remove">
+              <button class="btn btn-primary btn-lg masterContactDetailsAdd contact-Information-Close" type="button"
+                title="Remove">
                 <i class="fa fa-close"></i>
               </button>
               <div class="contact-margin">
@@ -322,20 +324,22 @@
                   <div class="col-md-6">
                     <div class="form-group form-focus">
                       <label class="control-label">Phone No.</label>
-                      <input type="text" class="form-control floating number_validator" name="contactDetailsPhone_no[]" maxlength="50" />
+                      <input type="text" class="form-control floating number_validator" name="contactDetailsPhone_no[]"
+                        maxlength="50" />
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group form-focus">
                       <label class="control-label">Fax</label>
-                      <input type="text" class="form-control floating number_validator" name="contactDetailsFax[]" maxlength="50" />
+                      <input type="text" class="form-control floating number_validator" name="contactDetailsFax[]"
+                        maxlength="50" />
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group form-focus">
                       <label class="control-label">Mobile No.</label>
-                      <input type="text" class="form-control floating number_validator" id="contactDetailsMobile_no" name="contactDetailsMobile_no[]"
-                        maxlength="50" />
+                      <input type="text" class="form-control floating number_validator" id="contactDetailsMobile_no"
+                        name="contactDetailsMobile_no[]" maxlength="50" />
                     </div>
                   </div>
                 </div>
@@ -347,7 +351,7 @@
       <div class="card-box">
         <div class="col-xs-4">
           <h3 class="card-title">Referred Target / Client</h3>
-          </div>
+        </div>
         <div class="col-xs-8 text-right">
           <a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_target_client"><i class="fa fa-plus"></i>
             Add Target / Client</a>
@@ -385,15 +389,13 @@
           <div class="col-md-6">
             <div class="form-group form-focus">
               <label class="control-label">Referral Sources Company </label>
-              <input type="text" class="form-control floating" id="company_name" name="company_name" value="{{referral.company_name}}"
-              />
+              <input type="text" class="form-control floating" id="company_name" name="company_name" value="{{referral.company_name}}" />
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group form-focus">
               <label class="control-label">Website URL </label>
-              <input type="text" class="form-control floating url_selector" id="website_url" name="website_url" value="{{referral.website_url}}"
-              />
+              <input type="text" class="form-control floating url_selector" id="website_url" name="website_url" value="{{referral.website_url}}" />
             </div>
           </div>
           <div class="col-md-6">
@@ -411,15 +413,13 @@
           <div class="col-md-6">
             <div class="form-group form-focus">
               <label class="control-label">Linkedin</label>
-              <input type="text" class="form-control floating url_selector" id="linkedin" name="linkedin" value="{{referral.linkedin}}"
-              />
+              <input type="text" class="form-control floating url_selector" id="linkedin" name="linkedin" value="{{referral.linkedin}}" />
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group form-focus">
               <label class="control-label">Facebook</label>
-              <input type="text" class="form-control floating url_selector" id="social_url" name="social_url" value="{{referral.social_url}}"
-              />
+              <input type="text" class="form-control floating url_selector" id="social_url" name="social_url" value="{{referral.social_url}}" />
             </div>
           </div>
           <div class="col-md-6">
@@ -472,8 +472,7 @@
   </div>
 </div>
 
-{{!-- /****************** Start Modal ****************************************************/ --}}
-
+{{!-- /********************** Start Modal *******************************/ --}}
 <div id="add_target_client" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -512,17 +511,19 @@
               <select id="target_id" name="referred_id_t" class="form-control floating">
                 <option value="">Select Target</option>
                 {{#each target}}
-                <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
+                <option value="{{this.id}}" {{#inArrayCustom2 ../referredDetails this.id 'T'}} disabled
+                  {{/inArrayCustom2}}>{{this.first_name}} {{this.last_name}}</option>
                 {{/each}}
               </select>
             </div>
           </div>
-          <div class="col-md-6" id="client_list" style="display:none;">
+          <div class="col-md-6" id="client_list" style="display: none;">
             <div class="form-group form-focus select-attorney">
               <select id="client_id" name="referred_id_c" class="form-control floating">
                 <option value="">Select Client</option>
                 {{#each client}}
-                <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
+                <option value="{{this.id}}" {{#inArrayCustom2 ../referredDetails this.id 'C'}} disabled
+                  {{/inArrayCustom2}}>{{this.first_name}} {{this.last_name}}</option>
                 {{/each}}
               </select>
             </div>
@@ -536,7 +537,6 @@
     </div>
   </div>
 </div>
-
 {{!-- /********************** End Modal *********************************/ --}}
 {{#content "script" mode="append"}}
 <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
