@@ -30,9 +30,11 @@
                 <div class="text-center top-desc">
                   <img src="https://cdn1.iconfinder.com/data/icons/flat-business-icons/128/user-512.png" alt="" height="100" width="100">
                   <h4>
-                    Nasiruddin Ahammed
+             <h4>{{referral.first_name}} {{referral.last_name}}</h4>
                   </h4>
-                  <h6>nasir@wrctpl.com</h6>
+
+              <h6>{{referral.email}}</h6>
+
                 </div>
               </div>
               <div class="col-md-9">
@@ -47,8 +49,10 @@
                             width="48">
                           </div>
                           <div class="col-xs-9">
-                            <p>
-                              Box 564, Disneyland<br> USA
+                              <p>
+                                {{referral.address1}}, {{#if referral.address2}}{{referral.address2}},{{/if}} {{#if referral.address3}}{{referral.address3}},{{/if}}
+                                <br> {{city.name}}, {{state.name}},
+                                <br> {{zipcode.zip}}, {{country.name}}
                             </p>
                           </div>
                         </div>
@@ -60,8 +64,17 @@
                             width="48">
                           </div>
                           <div class="col-xs-9">
-                            <p>
-                              123456
+                           <span>M:</span>
+                            <p class="number_validator">
+                                {{referral.mobile}}
+                            </p>
+                            <span>P:</span>
+                            <p class="number_validator">
+                                {{referral.phone_no}}
+                            </p>
+                            <span>F:</span>
+                            <p class="number_validator">
+                                {{referral.fax}}
                             </p>
                           </div>
                         </div>
@@ -79,7 +92,14 @@
                             <img src="https://cdn4.iconfinder.com/data/icons/e-commerce-icon-set/48/Username_2-512.png" alt="" height="48" width="48">
                           </div>
                           <div class="col-xs-9">
-                            <p>Organization</p>
+
+                    {{#if_eq referral.target_type "O"}}
+                                              <p>Organization</p>
+                                              {{else}}
+                                              <p>Individual</p>
+                                              {{/if_eq}}
+
+
                           </div>
                         </div>
                       </div>
@@ -91,7 +111,7 @@
                           </div>
                           <div class="col-xs-9">
                             <p>
-                              Total Activity
+                              Total Activity: {{count_activity}}
                             </p>
                           </div>
                         </div>
@@ -121,13 +141,146 @@
             <div class="col-lg-12">
               <div class="tab-content  profile-tab-content">
                 <div id="activities" class="tab-pane fade in active">
-                  tab1
-                </div>
+                        <div class="card-box">
+                                  <div class="row">
+                                      <div class="col-md-12">
+                                          <div class="table-responsive">
+                                              <table class="table table-striped custom-table datatable">
+                                                  <thead>
+                                                      <tr>
+                                                          <th>SL#</th>
+                                                          <th>Activity Name</th>
+                                                          <th>From Date</th>
+                                                          <th>To Date</th>
+                                                          <th>Remarks</th>
+                                                          <th>Status</th>
+                                                      </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                      {{#each activity_details}}
+                                                      <tr>
+                                                                    <td>{{math @index "+" 1}}</td>
+                                                                    <td>
+                                                                        <a href="/activity/view/{{this.activity.id}}" id="setUrlItem">{{this.activity.activity_name}}</a>
+                                                                    </td>
+                                                                    <td>{{dateFormat this.activity.activity_from_date "DD-MM-YYYY"}}</td>
+                                                                    <td>{{dateFormat this.activity.activity_to_date "DD-MM-YYYY"}}</td>
+                                                                    <td>{{this.activity.remarks}}</td>
+                                                                    <td> {{#if_eq this.activity.activity_status '0'}} NEW ACTIVITY
+                                                                        - CREATED {{/if_eq}} {{#if_eq this.activity.activity_status
+                                                                        '1'}} PENDING APPROVAL - IN-PROGRESS {{/if_eq}} {{#if_eq
+                                                                        this.activity.activity_status '2'}} APPROVED - PROCEED {{/if_eq}}
+                                                                        {{#if_eq this.activity.activity_status '3'}} NOT APPROVED
+                                                                        - DISCARD ACTIVITY {{/if_eq}}
+                                                                    </td>
+                                                                </tr>
+                                                      {{/each}}
+                                                  </tbody>
+                                              </table>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                     </div>
                 <div id="refferedinfo" class="tab-pane fade">
-                  tab2
-                </div>
+                            <div class="container">
+                                             <div class="row">
+                                                    <div class="col-md-12">
+                                                      <div class="table-responsive">
+                                                        <table class="table table-striped custom-table datatable">
+                                                          <thead>
+                                                            <tr>
+                                                              <th>SL#</th>
+                                                              <th>Target / Client</th>
+                                                              <th>Type</th>
+                                                              <th>Email</th>
+                                                            </tr>
+                                                          </thead>
+                                                          <tbody>
+                                                            {{#each referredListArr}}
+                                                            <tr>
+                                                              <td>{{math @index "+" 1}}</td>
+                                                              <td>{{this.name}}</td>
+                                                              <td>{{this.type}}</td>
+                                                              <td>{{this.email}}</td>
+                                                            </tr>
+                                                            {{/each}}
+                                                          </tbody>
+                                                        </table>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                        </div>     
+                                        
+                                        
+                          </div>
                 <div id="otherinfo" class="tab-pane fade">
-                  tab3
+                  
+
+                   <div class="container">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <ul class="personal-info other-info">
+                                                        <li>
+                                                            <span class="title">Gender:</span>
+                                                            <span class="text">
+                                                                {{#if_eq referral.gender "M"}} Male {{/if_eq}}
+                                                                {{#if_eq referral.gender "F"}} Female {{/if_eq}}
+                                                                {{#if_eq referral.gender "O"}} Other {{/if_eq}}
+                                                            </span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="title">Company Name:</span>
+                                                            <span class="text">{{referral.company_name}}</span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="title">IM:</span>
+                                                            <span class="text">{{referral.im}}</span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="title">Website URL:</span>
+                                                            <span class="text">{{referral.website_url}}</span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="title">Twitter:</span>
+                                                            <span class="text">{{referral.twitter}}</span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="title">Linkedin:</span>
+                                                            <span class="text">{{referral.linkedin}}</span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="title">Google:</span>
+                                                            <span class="text">{{referral.google}}</span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="title">Facebook:</span>
+                                                            <span class="text">{{referral.social_url}}</span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="title">Youtube:</span>
+                                                            <span class="text">{{referral.youtube}}</span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="title">Association Status:</span>
+                                                            <span class="text">{{referral.association}}</span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="title">Industry Type:</span>
+                                                            <span class="text">{{referral.industry_type}}</span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="title">Remarks:</span>
+                                                            <span class="text">{{referral.remarks}}</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                 </div>
               </div>
             </div>

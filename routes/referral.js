@@ -409,23 +409,23 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 			attorney_id: req.user.id
 		}
 	});
-	const country = await Country.findAll();
-	const state = await State.findAll({
-		where: {
-			country_id: "233"
-		}
-	});
-	const city = await City.findAll({
-		where: {
-			state_id: referral.state.toString()
-		}
-	});
-	const cities = await City.findById(referral.city.toString());
-	const zipcode = await Zipcode.findAll({
-		where: {
-			city_name: cities.name
-		}
-	});
+	// const country = await Country.findAll();
+	// const state = await State.findAll({
+	// 	where: {
+	// 		country_id: "233"
+	// 	}
+	// });
+	// const city = await City.findAll({
+	// 	where: {
+	// 		state_id: referral.state.toString()
+	// 	}
+	// });
+	// const cities = await City.findById(referral.city.toString());
+	// const zipcode = await Zipcode.findAll({
+	// 	where: {
+	// 		city_name: cities.name
+	// 	}
+	// });
 
 	const contactDetails = await ContactInformation.findAll({
 		where: {
@@ -435,6 +435,7 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 	TargetActivity.belongsTo(Activity, {
 		foreignKey: 'activity_id'
 	});
+	
 	const activity_details = await TargetActivity.findAll({
 		where: {
 			target_client_type: "R",
@@ -444,6 +445,50 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 			model: Activity
 		}]
 	});
+
+	const country = await Country.findById("233");
+    const state = await State.findById(referral.state.toString());
+    const city = await City.findById(referral.city.toString());
+    const zipcode = await Zipcode.findById(referral.zipcode.toString());
+	
+
+
+	const referredDetails = await Referred_Client_Targets.findAll({
+		where: {
+			referral_id: req.params['id']
+		}
+	});
+	
+	var referredListArr = [];
+
+
+
+	for(var i = 0; i < referredDetails.length; i++) {
+		if (referredDetails[i].type === 'T') {
+			const targetDetails = await Target.findOne({
+				where: {
+					id: referredDetails[i].target_id
+				}
+			});
+			referredListArr.push({
+				"name": targetDetails.first_name + " " + targetDetails.last_name,
+				"type": 'Target',
+				"email": targetDetails.email
+			});
+		} else if (referredDetails[i].type === 'C') {
+			const clientDetails = await Client.findOne({
+				where: {
+					id: referredDetails[i].client_id
+				}
+			});
+			referredListArr.push({
+				"name": clientDetails.first_name + " " + clientDetails.last_name,
+				"type": 'Client',
+				"email": clientDetails.email
+			});
+		}
+	}
+
 	res.render('referral/view', {
 		layout: 'dashboard',
 		title: 'View Referral Source',
@@ -458,7 +503,10 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		client,
 		target,
 		contactDetails,
-		activity_details
+		activity_details,
+		count_activity: activity_details.length,
+		referredListArr
+
 	});
 });
 
@@ -582,9 +630,11 @@ router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		target,
 		err_message,
 		contactDetails,
-		referredListArr
+		referredListArr,
+		referredDetails
 	});
 });
+
 
 router.post('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var contactDetails = [];
@@ -623,6 +673,8 @@ router.post('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req
 		}
 	});
 
+
+	
 	if (edit_data === null) {
 		await Referral.update({
 			referral_type: req.body.referral_type,

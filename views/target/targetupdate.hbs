@@ -2,7 +2,8 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" /> {{/content}}
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+{{/content}}
 <div class="page-wrapper">
 	<div class="content container-fluid">
 		<div class="row">
@@ -23,8 +24,8 @@
 				<div class="form-group m-r-5">
 					<label class="input-group">
 						<span class="input-group-addon">
-							<input type="radio" id="individual_client" name="client_type" value="I" {{#if_eq client.target_type "I"}} checked {{/if_eq}}
-							 disabled />
+							<input type="radio" id="individual_client" name="client_type" value="I" {{#if_eq client.target_type "I"}}
+							 checked {{/if_eq}} disabled />
 						</span>
 						<div class="form-control form-control-static">Individual</div>
 						<span class="glyphicon form-control-feedback"></span>
@@ -33,8 +34,8 @@
 				<div class="form-group ">
 					<label class="input-group">
 						<span class="input-group-addon">
-							<input type="radio" id="organization_client" name="client_type" value="O" {{#if_eq client.target_type "O"}} checked {{/if_eq}}
-							 disabled />
+							<input type="radio" id="organization_client" name="client_type" value="O" {{#if_eq client.target_type "O"}}
+							 checked {{/if_eq}} disabled />
 						</span>
 						<div class="form-control form-control-static">Organization</div>
 						<span class="glyphicon form-control-feedback"></span>
@@ -103,15 +104,13 @@
 							<div class="col-md-6">
 								<div class="form-group form-focus select-focus">
 									<label class="control-label">Phone No. <span class="req-lbl">*</span></label>
-									<input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" value="{{client.phone_no}}"
-									/>
+									<input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" value="{{client.phone_no}}" />
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus select-focus">
 									<label class="control-label">Mobile No. <span class="req-lbl">*</span></label>
-									<input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" value="{{client.mobile_no}}"
-									/>
+									<input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" value="{{client.mobile_no}}" />
 								</div>
 							</div>
 							<div class="col-md-6">
@@ -137,7 +136,8 @@
 						<div class="form-group form-focus">
 							<label class="control-label">Close Date <span class="req-lbl">*</span></label>
 							<div class="cal-icon">
-								<input class="form-control floating datetimepicker" type="text" id="targetCloseDate" name="targetCloseDate" value="{{dateFormat client.close_date "DD-MM-YYYY"}}">
+								<input class="form-control floating datetimepicker" type="text" id="targetCloseDate" name="targetCloseDate"
+								 value="{{dateFormat client.close_date "DD-MM-YYYY"}}">
 							</div>
 						</div>
 					</div>
@@ -145,7 +145,8 @@
 						<div class="form-group form-focus">
 							<label class="control-label">Planning Period Start Date <span class="req-lbl">*</span></label>
 							<div class="cal-icon">
-								<input class="form-control floating datetimepicker" type="text" id="targetStartDate" name="targetStartDate" value="{{dateFormat client.revenue.0.start_date "DD-MM-YYYY"}}">
+								<input class="form-control floating datetimepicker" type="text" id="targetStartDate" name="targetStartDate"
+								 value="{{dateFormat client.revenue.0.start_date "DD-MM-YYYY"}}">
 							</div>
 						</div>
 					</div>
@@ -197,17 +198,17 @@
 							<label class="control-label">Attorney <span class="req-lbl">*</span></label>
 							<select id="attorney_id" name="attorney_id" class="form-control floating ">
 								{{#if_eq user.role_id "3"}}
-									<option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
+								<option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
 								{{else}}
-									<option value="">Select Attorney</option>
-									{{#if_eq user.is_attorney "1"}}
-										<option value="{{user.id}}" {{#if_eq user.id client.attorney_id}} selected="selected" {{/if_eq}}>{{user.first_name}}
-										{{user.last_name}}</option>
-									{{/if_eq}}
-									{{#each attorney}}
-										<option value="{{this.id}}" {{#if_eq this.id ../client.attorney_id}} selected="selected" {{/if_eq}}>{{this.first_name}}
-										{{this.last_name}}</option>
-									{{/each}}
+								<option value="">Select Attorney</option>
+								{{#if_eq user.is_attorney "1"}}
+								<option value="{{user.id}}" {{#if_eq user.id client.attorney_id}} selected="selected" {{/if_eq}}>{{user.first_name}}
+									{{user.last_name}}</option>
+								{{/if_eq}}
+								{{#each attorney}}
+								<option value="{{this.id}}" {{#if_eq this.id ../client.attorney_id}} selected="selected" {{/if_eq}}>{{this.first_name}}
+									{{this.last_name}}</option>
+								{{/each}}
 								{{/if_eq}}
 							</select>
 						</div>
@@ -240,7 +241,7 @@
 							<label class="control-label">Country <span class="req-lbl">*</span></label>
 							<select id="country" name="country" class="form-control floating">
 								{{#each country}}
-									<option value="{{this.id}}">{{this.name}}</option>
+								<option value="{{this.id}}">{{this.name}}</option>
 								{{/each}}
 							</select>
 						</div>
@@ -251,7 +252,7 @@
 							<select id="state" name="state" class="form-control floating">
 								<option value="">Select State</option>
 								{{#each state}}
-									<option value="{{this.id}}" {{#if_eq this.id ../client.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+								<option value="{{this.id}}" {{#if_eq this.id ../client.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
 								{{/each}}
 							</select>
 						</div>
@@ -262,7 +263,7 @@
 							<select id="city" name="city" class="form-control floating">
 								<option value="">Select City</option>
 								{{#each city}}
-									<option value="{{this.id}}" {{#if_eq this.id ../client.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+								<option value="{{this.id}}" {{#if_eq this.id ../client.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
 								{{/each}}
 							</select>
 						</div>
@@ -273,7 +274,7 @@
 							<select id="zipcode" name="zipcode" class="form-control floating">
 								<option value="">Select Zipcode</option>
 								{{#each zipcode}}
-									<option value="{{this.id}}" {{#if_eq this.id ../client.postal_code}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
+								<option value="{{this.id}}" {{#if_eq this.id ../client.postal_code}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
 								{{/each}}
 							</select>
 						</div>
@@ -286,7 +287,6 @@
 					</div>
 				</div>
 			</div>
-
 			<div class="card-box" id="m_s_contactInformation" style="display: none;">
 				<h3 class="card-title">Contact Information</h3>
 				<div id="_contactPlus">
@@ -301,21 +301,20 @@
 							<i class="fa fa-close"></i>
 						</button>
 						{{/if_eq}}
-
 						<div class="contact-margin">
 							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">First Name</label>
-										<input type="text" class="form-control floating" id="contactDetailsFirstName" name="contactDetailsFirstName[]" value="{{this.first_name}}"
-										/>
+										<input type="text" class="form-control floating" id="contactDetailsFirstName" name="contactDetailsFirstName[]"
+										 value="{{this.first_name}}" />
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Last Name</label>
-										<input type="text" class="form-control floating" id="contactDetailsSecondName" name="contactDetailsSecondName[]" value="{{this.last_name}}"
-										/>
+										<input type="text" class="form-control floating" id="contactDetailsSecondName" name="contactDetailsSecondName[]"
+										 value="{{this.last_name}}" />
 									</div>
 								</div>
 								<div class="col-md-6">
@@ -332,8 +331,7 @@
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Email Id</label>
-										<input type="text" class="form-control floating" id="contactDetailsEmail" name="contactDetailsEmail[]" value="{{this.email}}"
-										/>
+										<input type="text" class="form-control floating" id="contactDetailsEmail" name="contactDetailsEmail[]" value="{{this.email}}" />
 										<span id="uniqueEmail" style="color: red"></span>
 									</div>
 								</div>
@@ -347,8 +345,8 @@
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Fax</label>
-										<input type="text" class="form-control floating number_validator" id="contactDetailsFax" name="contactDetailsFax[]" maxlength="50"
-										 value="{{this.fax}}" />
+										<input type="text" class="form-control floating number_validator" id="contactDetailsFax" name="contactDetailsFax[]"
+										 maxlength="50" value="{{this.fax}}" />
 									</div>
 								</div>
 								<div class="col-md-6">
@@ -427,6 +425,39 @@
 				</div>
 			</div>
 			<div class="card-box">
+				<div class="col-xs-4">
+					<h3 class="card-title">Referral Information</h3>
+				</div>
+				<div class="col-xs-8 text-right">
+					<a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_referral"><i class="fa fa-plus"></i>
+						Add Referral</a>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="table-responsive">
+							<table class="table table-striped custom-table datatable">
+								<thead>
+									<tr>
+										<th>SL#</th>
+										<th>Referral Name</th>
+										<th>Email</th>
+									</tr>
+								</thead>
+								<tbody>
+									{{#each referralListArr}}
+									<tr>
+										<td>{{math @index "+" 1}}</td>
+										<td>{{this.name}}</td>
+										<td>{{this.email}}</td>
+									</tr>
+									{{/each}}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card-box">
 				<h3 class="card-title">Other Information</h3>
 				<div class="row">
 					<div class="col-md-6">
@@ -438,8 +469,7 @@
 					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Website URL</label>
-							<input type="text" class="form-control floating url_selector" id="website_url" name="website_url" value="{{client.website_url}}"
-							/>
+							<input type="text" class="form-control floating url_selector" id="website_url" name="website_url" value="{{client.website_url}}" />
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -463,8 +493,7 @@
 					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Facebook</label>
-							<input type="text" class="form-control floating url_selector" id="social_url" name="social_url" value="{{client.social_url}}"
-							/>
+							<input type="text" class="form-control floating url_selector" id="social_url" name="social_url" value="{{client.social_url}}" />
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -516,6 +545,39 @@
 		</form>
 	</div>
 </div>
+
+{{!-- /********************** Start Modal *******************************/ --}}
+<div id="add_referral" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Add Referral</h4>
+			</div>
+			<div class="modal-body" style="height: 100px;">
+				<form name="addRefferal" id="addRefferal" method="POST">
+					<input type="hidden" id="xxx" name="target_id" value="{{client.id}}">
+					<div class="col-md-6 col-md-offset-3" id="referral_list">
+						<div class="form-group form-focus select-attorney">
+							<select id="referral_id" name="referral_id_t" class="form-control floating">
+								<option value="">Select Referral</option>
+								{{#each referral}}
+								<option value="{{this.id}}" {{#inArrayCustom3 ../referralDetails this.id}} disabled {{/inArrayCustom3}}>{{this.first_name}}
+									{{this.last_name}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary" type="button" id="btnAddReffered">Submit</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+{{!-- /********************** End Modal *********************************/ --}}
 {{#content "script" mode="append"}}
 <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
@@ -713,5 +775,52 @@
 			}
 		});
 	});
+
+	$(document).ready(function (e) {
+		$("#btnAddReffered").click(function () {
+			$("#addRefferal").submit();
+		});
+		$("#addRefferal").validate({
+			rules: {
+				referred_id_t: {
+					required: true,
+				}
+			},
+			messages: {
+				referred_id_t: {
+					required: "Referral can't be blank",
+				}
+			},
+
+			submitHandler: function (form) {
+				target_id = $('#xxx').val();
+				referral_id = $('#referral_id').val();
+				$.ajax({
+					type: "POST",
+					url: "/target/referraladd",
+					data: {
+						target_id: target_id,
+						referral_id: referral_id
+					},
+					beforeSend: function (xhr) {
+						xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+						$("#btnAddReffered").prop('disabled', true);
+						$("#btnAddReffered").html("Loading...");
+					},
+					success: function (response) {
+						if (response.code == 200) {
+							swal("", "Referral added successfully", "success");
+							setTimeout(function () {
+								location.reload();
+							}, 2000);
+						} else {
+							swal("", "Please try again", "warning");
+						}
+					}
+				});
+			}
+		});
+	});
+
 </script>
 {{/content}}
