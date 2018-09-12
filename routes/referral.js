@@ -435,6 +435,7 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 	TargetActivity.belongsTo(Activity, {
 		foreignKey: 'activity_id'
 	});
+	
 	const activity_details = await TargetActivity.findAll({
 		where: {
 			target_client_type: "R",
@@ -451,6 +452,43 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
     const zipcode = await Zipcode.findById(referral.zipcode.toString());
 	
 
+
+	const referredDetails = await Referred_Client_Targets.findAll({
+		where: {
+			referral_id: req.params['id']
+		}
+	});
+	
+	var referredListArr = [];
+
+
+
+	for(var i = 0; i < referredDetails.length; i++) {
+		if (referredDetails[i].type === 'T') {
+			const targetDetails = await Target.findOne({
+				where: {
+					id: referredDetails[i].target_id
+				}
+			});
+			referredListArr.push({
+				"name": targetDetails.first_name + " " + targetDetails.last_name,
+				"type": 'Target',
+				"email": targetDetails.email
+			});
+		} else if (referredDetails[i].type === 'C') {
+			const clientDetails = await Client.findOne({
+				where: {
+					id: referredDetails[i].client_id
+				}
+			});
+			referredListArr.push({
+				"name": clientDetails.first_name + " " + clientDetails.last_name,
+				"type": 'Client',
+				"email": clientDetails.email
+			});
+		}
+	}
+
 	res.render('referral/view', {
 		layout: 'dashboard',
 		title: 'View Referral Source',
@@ -465,7 +503,10 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		client,
 		target,
 		contactDetails,
-		activity_details
+		activity_details,
+		count_activity: activity_details.length,
+		referredListArr
+
 	});
 });
 
@@ -593,6 +634,7 @@ router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 	});
 });
 
+
 router.post('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var contactDetails = [];
 	var first_name = req.body.contactDetailsFirstName;
@@ -630,6 +672,8 @@ router.post('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req
 		}
 	});
 
+
+	
 	if (edit_data === null) {
 		await Referral.update({
 			referral_type: req.body.referral_type,
