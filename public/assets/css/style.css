@@ -6218,6 +6218,8 @@ i.fa.fa-eye.m-r-5 {
 
 /* ...TCR View */
 
+
+
 /*------------------------------------------------------------------
 [39-a.... Custom Styles]
 */
@@ -6947,6 +6949,9 @@ select.gender {
 
 				/*Ends on css 11-09-2018*/
 				
+				.yearly-revenue-tbl td:nth-child(1) {
+					width: auto !important;
+				}
 
 
 
