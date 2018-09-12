@@ -227,7 +227,34 @@
 													</div>
 												</div>
 												<div class="tab-pane" id="all_revenue_lists_yearly">
-													
+													<div class="card-box">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="table-responsive">
+																	<table class="table table-striped custom-table datatable">
+																		<thead>
+																			<tr>
+																				<th>Year</th>
+																				<th>Estimated Revenue</th>
+																				<th>Actual Revenue</th>
+																			</tr>
+																		</thead>
+																		<tbody>
+																			{{#each total_yearly_revenue}}
+																				{{#if_eq this.estimated_revenue "0"}}{{else}}
+																					<tr>
+																						<td>{{this.year}}</td>
+																						<td>$ {{this.estimated_revenue}}</td>
+																						<td>$ {{this.current_revenue}}</td>
+																					</tr>
+																				{{/if_eq}}
+																			{{/each}}
+																		</tbody>
+																	</table>
+																</div>
+															</div>
+														</div>
+													</div>
 												</div>
 											</div>
 										</div>
