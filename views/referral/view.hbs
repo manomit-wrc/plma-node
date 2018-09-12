@@ -111,7 +111,7 @@
                           </div>
                           <div class="col-xs-9">
                             <p>
-                              Total Activity: {{activity_id}}
+                              Total Activity: {{count_activity}}
                             </p>
                           </div>
                         </div>
@@ -141,46 +141,79 @@
             <div class="col-lg-12">
               <div class="tab-content  profile-tab-content">
                 <div id="activities" class="tab-pane fade in active">
-
-                                   <div class="card-box">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="table-responsive">
-                                                        <table class="table table-striped custom-table datatable">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>SL#</th>
-                                                                    <th>Activity Name</th>
-                                                                    <th>From Date</th>
-                                                                    <th>To Date</th>
-                                                                    <th>Remarks</th>
-                                                                    <th>Status</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                {{#each activity_details}}
-                                                                <tr>
+                        <div class="card-box">
+                                  <div class="row">
+                                      <div class="col-md-12">
+                                          <div class="table-responsive">
+                                              <table class="table table-striped custom-table datatable">
+                                                  <thead>
+                                                      <tr>
+                                                          <th>SL#</th>
+                                                          <th>Activity Name</th>
+                                                          <th>From Date</th>
+                                                          <th>To Date</th>
+                                                          <th>Remarks</th>
+                                                          <th>Status</th>
+                                                      </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                      {{#each activity_details}}
+                                                      <tr>
                                                                     <td>{{math @index "+" 1}}</td>
                                                                     <td>
-                                                                    <a href=""></a>
+                                                                        <a href="/activity/view/{{this.activity.id}}" id="setUrlItem">{{this.activity.activity_name}}</a>
                                                                     </td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
+                                                                    <td>{{dateFormat this.activity.activity_from_date "DD-MM-YYYY"}}</td>
+                                                                    <td>{{dateFormat this.activity.activity_to_date "DD-MM-YYYY"}}</td>
+                                                                    <td>{{this.activity.remarks}}</td>
+                                                                    <td> {{#if_eq this.activity.activity_status '0'}} NEW ACTIVITY
+                                                                        - CREATED {{/if_eq}} {{#if_eq this.activity.activity_status
+                                                                        '1'}} PENDING APPROVAL - IN-PROGRESS {{/if_eq}} {{#if_eq
+                                                                        this.activity.activity_status '2'}} APPROVED - PROCEED {{/if_eq}}
+                                                                        {{#if_eq this.activity.activity_status '3'}} NOT APPROVED
+                                                                        - DISCARD ACTIVITY {{/if_eq}}
+                                                                    </td>
                                                                 </tr>
-                                                                {{/each}}
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                  
+                                                      {{/each}}
+                                                  </tbody>
+                                              </table>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
                      </div>
                 <div id="refferedinfo" class="tab-pane fade">
-                  tab2
-                </div>
+                            <div class="container">
+                                             <div class="row">
+                                                    <div class="col-md-12">
+                                                      <div class="table-responsive">
+                                                        <table class="table table-striped custom-table datatable">
+                                                          <thead>
+                                                            <tr>
+                                                              <th>SL#</th>
+                                                              <th>Target / Client</th>
+                                                              <th>Type</th>
+                                                              <th>Email</th>
+                                                            </tr>
+                                                          </thead>
+                                                          <tbody>
+                                                            {{#each referredListArr}}
+                                                            <tr>
+                                                              <td>{{math @index "+" 1}}</td>
+                                                              <td>{{this.name}}</td>
+                                                              <td>{{this.type}}</td>
+                                                              <td>{{this.email}}</td>
+                                                            </tr>
+                                                            {{/each}}
+                                                          </tbody>
+                                                        </table>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                        </div>     
+                                        
+                                        
+                          </div>
                 <div id="otherinfo" class="tab-pane fade">
                   
 
