@@ -435,7 +435,7 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 	TargetActivity.belongsTo(Activity, {
 		foreignKey: 'activity_id'
 	});
-	
+
 	const activity_details = await TargetActivity.findAll({
 		where: {
 			target_client_type: "R",
@@ -450,7 +450,7 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
     const state = await State.findById(referral.state.toString());
     const city = await City.findById(referral.city.toString());
     const zipcode = await Zipcode.findById(referral.zipcode.toString());
-	
+
 
 
 	const referredDetails = await Referred_Client_Targets.findAll({
