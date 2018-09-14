@@ -316,7 +316,7 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 			zipcode: req.body.zipcode,
 			new_user_status: 1,
 			mobile_no: removeMobileMask(req.body.mobile_no),
-			dob: Dob ? Dob[2] + "-" + Dob[1] + "-" + Dob[0] : null,
+			dob: Dob ? Dob[2] + "-" + Dob[0] + "-" + Dob[1] : null,
 
 		}).then( async function (resp)  {
 			attrorney_details_id = resp.id;
