@@ -6953,6 +6953,17 @@ select.gender {
 					width: auto !important;
 				}
 
+				.chartYearActivityBtn {
+					position: absolute;
+					bottom: 46px;
+					left: 54px;
+				}
+				.chartMonthActivityBtn {
+					position: absolute;
+					bottom: 46px;
+					left: 54px;
+				}
+
 
 
 
