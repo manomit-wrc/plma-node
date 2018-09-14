@@ -43,8 +43,8 @@
                                 </td>
 
                                 {{!-- <td>{{this.activity_name}}</td> --}}
-                                <td>{{dateFormat this.activity_from_date "DD-MM-YYYY"}}</td>
-                                <td>{{dateFormat this.activity_to_date "DD-MM-YYYY"}}</td>
+                                <td>{{dateFormat this.activity_from_date "MM-DD-YYYY"}}</td>
+                                <td>{{dateFormat this.activity_to_date "MM-DD-YYYY"}}</td>
                                 <td>{{this.remarks}}</td>
                                 <td> {{#if_eq this.activity_status '0'}} <span class="label label-info-border">NEW ACTIVITY - CREATED</span> {{/if_eq}} {{#if_eq this.activity_status
                                     '1'}} <span class="label label-warning-border">PENDING APPROVAL - IN-PROGRESS</span> {{/if_eq}} {{#if_eq this.activity_status
