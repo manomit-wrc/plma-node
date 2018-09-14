@@ -96,7 +96,7 @@ router.post('/employees/add', auth, siteAuth, csrfProtection, async (req, res) =
             country: req.body.country,
             zipcode: req.body.zipcode,
             gender: req.body.gender,
-            dob: formatDate ? formatDate[2]+"-"+formatDate[1]+"-"+formatDate[0] : null,
+            dob: formatDate ? formatDate[2]+"-"+formatDate[0]+"-"+formatDate[1] : null,
             mobile_no: removePhoneMask(req.body.mobile_no),
             status: 1,
             role_id: 4,
@@ -198,7 +198,7 @@ router.post('/employees/edit/:id', auth, csrfProtection, async (req, res) => {
             state: req.body.state,
             country: req.body.country,
             gender: req.body.gender,
-            dob: formatDate1 ? formatDate1[2] + "-" + formatDate1[1] + "-" + formatDate1[0] : null,
+            dob: formatDate1 ? formatDate1[2] + "-" + formatDate1[0] + "-" + formatDate1[1] : null,
             mobile_no: removePhoneMask(req.body.mobile_no)
         }, {
             where: {

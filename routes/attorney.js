@@ -344,8 +344,8 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 				social_url: req.body.social_url,
 				remarks: req.body.remarks,
 				user_id: attrorney_details_id,
-				firm_join_date: Firm_Join_Date ? Firm_Join_Date[2] + "-" + Firm_Join_Date[1] + "-" + Firm_Join_Date[0] : null,
-				bar_practice_date: Bar_Practice_date ? Bar_Practice_date[2] + "-" + Bar_Practice_date[1] + "-" + Bar_Practice_date[0] : null,
+				firm_join_date: Firm_Join_Date ? Firm_Join_Date[2] + "-" + Firm_Join_Date[0] + "-" + Firm_Join_Date[1] : null,
+				bar_practice_date: Bar_Practice_date ? Bar_Practice_date[2] + "-" + Bar_Practice_date[0] + "-" + Bar_Practice_date[1] : null,
 
 			});
 			for (var e = 0; e < education.length; e++) {
@@ -920,7 +920,7 @@ router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async (
 		zipcode: req.body.zipcode,
 		mobile_no: removeMobileMask(req.body.mobile_no),
 		avatar: req.body.fileName,
-		dob: Dob1 ? Dob1[2] + "-" + Dob1[1] + "-" + Dob1[0] : null,
+		dob: Dob1 ? Dob1[2] + "-" + Dob1[0] + "-" + Dob1[1] : null,
 	}, {
 		where: {
 			id: req.params['id']
@@ -951,8 +951,8 @@ router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async (
 		website_url: req.body.website_url,
 		social_url: req.body.social_url,
 		remarks: req.body.remarks,
-		firm_join_date: Firm_Join_Date1 ? Firm_Join_Date1[2] + "-" + Firm_Join_Date1[1] + "-" + Firm_Join_Date1[0] : null,
-		bar_practice_date: Bar_Practice_date1 ? Bar_Practice_date1[2] + "-" + Bar_Practice_date1[1] + "-" + Bar_Practice_date1[0] : null,
+		firm_join_date: Firm_Join_Date1 ? Firm_Join_Date1[2] + "-" + Firm_Join_Date1[0] + "-" + Firm_Join_Date1[1] : null,
+		bar_practice_date: Bar_Practice_date1 ? Bar_Practice_date1[2] + "-" + Bar_Practice_date1[0] + "-" + Bar_Practice_date1[1] : null,
 
 	}, {
 		where: {

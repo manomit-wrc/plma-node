@@ -912,6 +912,9 @@ router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 	});
 });
 
+
+
+
 router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var clientDetails = [];
 	var first_name = req.body.clientDetailsFirstName;
@@ -1000,7 +1003,7 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				website_url: req.body.website,
 				remarks: req.body.remarks,
 				life_time_revenue: removePhoneMask(req.body.life_time_revenue),
-				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null,
+				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[0] + "-" + closingDate[1] : null,
 				estimated_customer_life_time_value: removePhoneMask(req.body.estimated_customer_life_time_value),
             	revenue_end_month: req.body.endMonth
 				   
@@ -1027,9 +1030,8 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
                 target_id: '0',
                 client_id: insertData.id,
                 planning_period: req.body.planning_period,
-                start_date: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
-				end_date: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
-				year: endDate ? endDate[2] : null,
+                start_date: startDate ? startDate[2] + "-" + startDate[0] + "-" + startDate[1] : null,
+                end_date: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
                 estimated_revenue: removePhoneMask(req.body.estimated_revenue),
                 current_revenue: removePhoneMask(req.body.current_revenue),
 				status: 0,
@@ -1078,7 +1080,7 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				website_url: req.body.website,
 				remarks: req.body.remarks,
 				life_time_revenue: removePhoneMask(req.body.life_time_revenue),
-				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null,
+				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[0] + "-" + closingDate[1] : null,
 				estimated_customer_life_time_value: removePhoneMask(req.body.estimated_customer_life_time_value),
             	revenue_end_month: req.body.endMonth
 			});
@@ -1089,9 +1091,8 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
                 target_id: '0',
                 client_id: insertData.id,
                 planning_period: req.body.planning_period,
-                start_date: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
-				end_date: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
-				year: endDate ? endDate[2] : null,
+                start_date: startDate ? startDate[2] + "-" + startDate[0] + "-" + startDate[1] : null,
+                end_date: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
                 estimated_revenue: removePhoneMask(req.body.estimated_revenue),
                 current_revenue: removePhoneMask(req.body.current_revenue),
 				status: 0,
@@ -1194,7 +1195,7 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 			social_url: req.body.social,
 			website_url: req.body.website,
 			life_time_revenue: removePhoneMask(req.body.life_time_revenue),
-			revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null,
+			revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[0] + "-" + closingDate[1] : null,
 			estimated_customer_life_time_value: removePhoneMask(req.body.estimated_customer_life_time_value),
             revenue_end_month: req.body.endMonth 
 
@@ -1230,7 +1231,6 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 			planning_period: req.body.planning_period,
 			start_date: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
 			end_date: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
-			year: endDate ? endDate[2] : null,
 			estimated_revenue: removePhoneMask(req.body.estimated_revenue),
 			current_revenue: removePhoneMask(req.body.current_revenue),
 		}, {
@@ -1247,6 +1247,41 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 		res.redirect('/client/edit/' + req.params['id']);
 	}
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 router.get('/client/delete/:id', auth, firmAttrAuth, async (req, res) => {
 

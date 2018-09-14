@@ -18,7 +18,6 @@ const user = require('../models').user;
 const Activity = require('../models').activity;
 const TargetActivity = require('../models').jointactivity;
 const Referral = require('../models').referral;
-const Referred_Client_Targets = require('../models').referred_client_target;
 const ContactInformation = require('../models').contact_information;
 const Revenue = require('../models').revenue;
 var csrfProtection = csrf({
@@ -405,41 +404,6 @@ router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, re
         }
     });
 
-    var fetchReferral = {};
-    var referralListArr = [];
-
-    if (req.user.role_id != 2) {
-		fetchReferral.attorney_id = req.user.id;
-		fetchReferral.firm_id = req.user.firm_id;
-	} else {
-		fetchReferral.firm_id = req.user.firm_id;
-    }
-    
-    const referral = await Referral.findAll({
-		order: [
-			['first_name', 'ASC'],
-		],
-		where: fetchReferral
-    });
-    
-    const referralDetails = await Referred_Client_Targets.findAll({
-		where: {
-			target_id: req.params['id']
-		}
-	});
-	
-	for (var i = 0; i < referralDetails.length; i++) {
-        const referDetails = await Referral.findOne({
-            where: {
-                id: referralDetails[i].referral_id
-            }
-        });
-        referralListArr.push({
-            "name": referDetails.first_name + " " + referDetails.last_name,
-            "email": referDetails.email
-        });
-	}
-
     const contactDetails = await ContactInformation.findAll({
 		where: {
 			'contact_id': req.params['id']
@@ -459,10 +423,7 @@ router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, re
         city: city,
         zipcode: zipcode,
         error_message,
-        contactDetails,
-        referral,
-        referralListArr,
-        referralDetails
+        contactDetails
     });
 });
 
@@ -576,6 +537,7 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
 			});
 		}
 	}
+
 
     const formatDate = req.body.dob ? req.body.dob.split("-") : '';
     const target_edit_data = await Target.findOne({
@@ -942,7 +904,7 @@ router.post('/target/move-to-client', auth, async(req, res) => {
 });
 
 // Starts all  asssociated activitsies for target and client
-router.get("/target/view-activity/:id", auth, async (req, res) => {
+router.get("/target/view-activity/:id", auth, async(req, res) => {
     TargetActivity.belongsTo(Activity, {
         foreignKey: 'activity_id'
     });
@@ -962,7 +924,7 @@ router.get("/target/view-activity/:id", auth, async (req, res) => {
     });
 });
 
-router.get("/client/view-activity/:id", auth, async (req, res) => {
+router.get("/client/view-activity/:id", auth, async(req, res) => {
     TargetActivity.belongsTo(Activity, {
         foreignKey: 'activity_id'
     });
@@ -984,7 +946,7 @@ router.get("/client/view-activity/:id", auth, async (req, res) => {
 
 // start associate referral 
 
-router.get("/target/view-referral/:id", auth, firmAttrAuth, async (req, res) => {
+router.get("/target/view-referral/:id", auth, firmAttrAuth, async(req, res) => {
     const referral = await Referral.findAll({
         where: {
             referred_type: "T",
@@ -998,7 +960,7 @@ router.get("/target/view-referral/:id", auth, firmAttrAuth, async (req, res) => 
     });
 });
 
-router.get("/client/view-referral/:id", auth, firmAttrAuth, async (req, res) => {
+router.get("/client/view-referral/:id", auth, firmAttrAuth, async(req, res) => {
     const referral = await Referral.findAll({
         where: {
             referred_type: "C",
@@ -1010,20 +972,6 @@ router.get("/client/view-referral/:id", auth, firmAttrAuth, async (req, res) => 
         title: 'View Referral Source',
         referral
     });
-});
-
-router.post("/target/referraladd", auth, csrfProtection, async (req, res) => {
-    await Referred_Client_Targets.create({
-        'type': 'T',
-        'target_id': parseInt(req.body.target_id),
-        'client_id': 0,
-        'referral_id': parseInt(req.body.referral_id),
-        'status': 1
-    });
-    res.json({
-		code: "200",
-		message: 'Success'
-	});
 });
 
 module.exports = router;

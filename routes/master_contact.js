@@ -255,7 +255,7 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 				facebook: req.body.facebook_url,
 				master_contact_type: req.body.masterContact_type,
 				estimated_revenue: removePhoneMask(req.body.estimated_revenue),
-				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null,
+				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[0] + "-" + closingDate[1] : null,
 			});
 		} else {
 			const insertData = await Contact.create({
@@ -291,7 +291,7 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 				attorney_id: req.body.attorney_id,
 				facebook: req.body.facebook_url,
 				master_contact_type: req.body.masterContact_type,
-				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null,
+				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[0] + "-" + closingDate[1] : null,
 			});
 
 			for (let j = 0; j < contactDetails.length; j++) {
@@ -500,7 +500,7 @@ router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, asyn
 				attorney_id: req.body.attorney_id,
 				facebook: req.body.facebook_url,
 				master_contact_type: req.body.masterContact_type,
-				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null,
+				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[0] + "-" + closingDate[1] : null,
 			}, {
 					where: { id: req.params['id'] }
 				});
@@ -541,7 +541,7 @@ router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, asyn
 				attorney_id: req.body.attorney_id,
 				facebook: req.body.facebook_url,
 				master_contact_type: req.body.masterContact_type,
-				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[1] + "-" + closingDate[0] : null,
+				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[0] + "-" + closingDate[1] : null,
 			}, {
 					where: { id: req.params['id'] }
 				});
