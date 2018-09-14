@@ -10,6 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     estimated_revenue: DataTypes.STRING,
     current_revenue: DataTypes.STRING,
     status: DataTypes.INTEGER,
+    user_id: DataTypes.INTEGER,
+    firm_id: DataTypes.INTEGER,
     year: DataTypes.STRING
   }, {});
   revenue.associate = function(models) {

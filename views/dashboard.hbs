@@ -86,7 +86,6 @@
                     <th style="min-width:200px;">Firm Name</th>
                     <th>Firm Admin</th>
                     <th>Email</th>
-                    <th>Mobile</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -104,7 +103,6 @@
                     </td>
                     <td>{{this.first_name}} {{this.last_name}}</td>
                     <td>{{this.email}}</td>
-                    <td>{{this.mobile_no}}</td>
                   </tr>
                   {{/each}} {{/if_eq}}
                 </tbody>
@@ -129,7 +127,6 @@
                     <th style="min-width:200px;">Name</th>
                     <th>Email</th>
                     <th>Mobile</th>
-                    <th>Gender</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -147,9 +144,7 @@
                     </td>
                     <td>{{this.email}}</td>
                     <td>{{this.mobile_no}}</td>
-                    <td>{{#if_eq this.gender "M"}} Male {{/if_eq}} {{#if_eq this.gender "F"}} Female {{/if_eq}} {{#if_eq this.gender
-                      "O"}} Others {{/if_eq}}
-                    </td>
+                    
                   </tr>
                   {{/each}} {{/if_eq}}
                 </tbody>
@@ -241,22 +236,45 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row"> 
       <div class="col-md-12">
         <div class="row">
-          <div class="col-sm-6 text-center">
+          <div class="col-sm-6 text-center" id="monthlyChartDiv">
             <div class="card-box">
               <div id='myChart'></div>
+              <button type="button" class="btn btn-primary btn-sm chartYearActivityBtn">Year</button>
+            </div>
+          </div>
+          <div class="col-sm-6 text-center" style="display:none;" id="yearlyChartDiv">
+            <div class="card-box">
+              <div id='myChart1'></div>
+              <button type="button" class="btn btn-primary btn-sm chartMonthActivityBtn">Month</button>
             </div>
           </div>
           <div class="col-sm-6 text-center">
             <div class="card-box">
-              <div id='myChart1'></div>
+              <div id='myChart2'></div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <!--<div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-sm-12 text-center">
+            <div class="card-box">
+              <div id='myChart2'></div>
+            </div>
+          </div>
+          <div class="col-sm-6 text-center">
+            <div class="card-box">
+              <div id='myChart3'></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
     <div class="row">
       <div class="col-md-12">
         <div class="row">
@@ -785,68 +803,187 @@
               }
             });
           
+
+          /* ================================ Chart 3 ===============================*/
+
+          $.ajax({
+              type: "GET",
+              url: "/get-chart-estimated-revenue-count-value",
+              success: function (response) {
+                var myConfig = {
+                  type: "area",
+                  utc: true,
+                  plotarea: {
+                    /*Add an adjust-layout attribute for automatic margin adjustment*/
+                    adjustLayout: true
+                  },
+
+                  scaleX: {
+                    label: {  /*Add a scale title with a label object*/
+                      text: "Month",
+                    },
+                    /*Add your scale labels with a labels array*/
+                    labels: ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
+                  },
+                  scaleY: {
+                    "progression": "log",
+                    "log-base": 10,
+                    "thousands-separator": ",",
+                    label: {
+                      text: "Total Estimated revenue"
+                    }
+                  },
+                  guide: {
+                    lineStyle: 'dotted'
+                  },
+                  "scale": {
+                    "size-factor": 1
+                  },
+                  series: [
+                    {
+                      values: response.total_client,
+                      text: 'Total Clients',
+                      "line-color": "#a5a5a5",
+                      "background-color": "#fffffff",
+                      "marker": {
+                        "background-color": "#a5a5a5",
+                        "size": 6,
+                        "borderColor": "black",
+                        "borderWidth": 1
+                      },
+                      "hover-marker": {
+                        "background-color": "#a5a5a5",
+                        "size": 8,
+                        "borderColor": "black",
+                        "borderWidth": 1
+                      }
+                    },
+                    {
+                      "values": response.total_target,
+                      text: 'Total Targets',
+                      "line-color": "#50a069",
+                      "background-color": "#50a069",
+                      "marker": {
+                        "background-color": "#50a069",
+                        "size": 6,
+                        "borderColor": "black",
+                        "borderWidth": 1
+                      },
+                      "hover-marker": {
+                        "background-color": "#50a069",
+                        "size": 8,
+                        "borderColor": "black",
+                        "borderWidth": 1
+                      }
+                    },
+                    {
+                      values: response.total_estimated_revuenue,
+                      "tooltip": {
+                        "text": "$ %vt"
+                      },
+                      text: 'Total Estimated Revenue ($)',
+                      "line-color": "#ffa500",
+                      "background-color": "#ff881f",
+                      "marker": {
+                        "background-color": "#ffa500",
+                        "size": 6,
+                        "borderColor": "black",
+                        "borderWidth": 1
+                      },
+                      "hover-marker": {
+                        "background-color": "#ffa500",
+                        "size": 8,
+                        "borderColor": "black",
+                        "borderWidth": 1
+                      }
+                    }
+                  ]
+                };
+
+                zingchart.render({
+                  id: 'myChart2',
+                  data: myConfig,
+                  height: 250,
+                  width: '100%'
+                });
+              },
+              error: function (xhr) {
+
+              }
+            });
             
           });
 
-              $(document).ready(function () {
-                  // page is now ready, initialize the calendar...
-                var randomColor = '#' + ('000000' + Math.floor(Math.random() * 16777215).toString(16)).slice(-6);
+          $(document).ready(function () {
+              // page is now ready, initialize the calendar...
+            var randomColor = '#' + ('000000' + Math.floor(Math.random() * 16777215).toString(16)).slice(-6);
 
-                  $('#calendar').fullCalendar({
-                    // put your options and callbacks here
-                    header: {
-                      left: 'prev,next today',
-                      center: 'title',
-                      right: 'month,basicWeek,basicDay'
-                    },
-                    eventMouseover: function (data, event, view) {
-                      tooltip = '<div class="tooltiptopicevent" style="width:auto;height:auto;background:#454545;position:absolute;z-index:10001;padding:10px 10px 10px 10px ;  line-height: 200%; color:#fff;">' + 'Total Budget Hours: ' + ': ' + data.hour + '</br>' + 'Total Budget Cost($): ' + ': $ ' + data.amount + '</div>';
-                      $("body").append(tooltip);
-                      $(this).mouseover(function (e) {
-                        $(this).css('z-index', 10000);
-                        $('.tooltiptopicevent').fadeIn('500');
-                        $('.tooltiptopicevent').fadeTo('10', 1.9);
-                      }).mousemove(function (e) {
-                        $('.tooltiptopicevent').css('top', e.pageY + 10);
-                        $('.tooltiptopicevent').css('left', e.pageX + 20);
-                      });
+              $('#calendar').fullCalendar({
+                // put your options and callbacks here
+                header: {
+                  left: 'prev,next today',
+                  center: 'title',
+                  right: 'month,basicWeek,basicDay'
+                },
+                eventMouseover: function (data, event, view) {
+                  tooltip = '<div class="tooltiptopicevent" style="width:auto;height:auto;background:#454545;position:absolute;z-index:10001;padding:10px 10px 10px 10px ;  line-height: 200%; color:#fff;">' + 'Total Budget Hours: ' + ': ' + data.hour + '</br>' + 'Total Budget Cost($): ' + ': $ ' + data.amount + '</div>';
+                  $("body").append(tooltip);
+                  $(this).mouseover(function (e) {
+                    $(this).css('z-index', 10000);
+                    $('.tooltiptopicevent').fadeIn('500');
+                    $('.tooltiptopicevent').fadeTo('10', 1.9);
+                  }).mousemove(function (e) {
+                    $('.tooltiptopicevent').css('top', e.pageY + 10);
+                    $('.tooltiptopicevent').css('left', e.pageX + 20);
+                  });
 
 
-                    },
-                    eventMouseout: function (data, event, view) {
-                      $(this).css('z-index', 8);
+                },
+                eventMouseout: function (data, event, view) {
+                  $(this).css('z-index', 8);
 
-                      $('.tooltiptopicevent').remove();
+                  $('.tooltiptopicevent').remove();
 
-                    },
-                    dayClick: function () {
-                      tooltip.hide()
-                    },
-                    eventResizeStart: function () {
-                      tooltip.hide()
-                    },
-                    eventDragStart: function () {
-                      tooltip.hide()
-                    },
-                    viewDisplay: function () {
-                      tooltip.hide()
-                    },
-                    events: [
-                    {{#each activity}}
-                      {
-                        title: '{{this.activity_name}}',
-                        hour:'{{this.total_budget_hour}}', 
-                        amount: '{{this.total_budget_amount}}',
-                        start :'{{this.activity_from_date}}',
-                        end: new Date('{{this.activity_to_date}}').setDate(new Date('{{this.activity_to_date}}').getDate() + 1),
-                        color: '#ff881f',
-                        allDay: 'false',
-                        url : '/activity/view/{{this.id}}'
-                      },
-                    {{/each}}
-                  ]
-                })
-});
+                },
+                dayClick: function () {
+                  tooltip.hide()
+                },
+                eventResizeStart: function () {
+                  tooltip.hide()
+                },
+                eventDragStart: function () {
+                  tooltip.hide()
+                },
+                viewDisplay: function () {
+                  tooltip.hide()
+                },
+                events: [
+                {{#each activity}}
+                  {
+                    title: '{{this.activity_name}}',
+                    hour:'{{this.total_budget_hour}}', 
+                    amount: '{{this.total_budget_amount}}',
+                    start :'{{this.activity_from_date}}',
+                    end: new Date('{{this.activity_to_date}}').setDate(new Date('{{this.activity_to_date}}').getDate() + 1),
+                    color: '#ff881f',
+                    allDay: 'false',
+                    url : '/activity/view/{{this.id}}'
+                  },
+                {{/each}}
+              ]
+            })
+          });
+
+          $(document).on("click", ".chartYearActivityBtn", function(){
+            $("#monthlyChartDiv").hide();
+            $("#yearlyChartDiv").show();
+          });
+          $(document).on("click", ".chartMonthActivityBtn", function(){
+            $("#monthlyChartDiv").show();
+            $("#yearlyChartDiv").hide();
+          });
+
           
+      
 
 </script> {{/content}}
