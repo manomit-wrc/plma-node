@@ -6953,6 +6953,11 @@ select.gender {
 					width: auto !important;
 				}
 
+				.fc-scroller.fc-day-grid-container {
+					overflow: hidden !important;
+					height: auto !important;
+				}
+
 				.chartYearActivityBtn {
 					position: absolute;
 					bottom: 46px;
