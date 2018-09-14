@@ -1031,8 +1031,10 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				end_date: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
 				year: endDate ? endDate[2] : null,
                 estimated_revenue: removePhoneMask(req.body.estimated_revenue),
-                current_revenue: removePhoneMask(req.body.current_revenue),
+                //current_revenue: removePhoneMask(req.body.current_revenue),
 				status: 0,
+				user_id: req.user.id,
+				firm_id: req.user.firm_id
 			});
 
 
@@ -1093,8 +1095,10 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				end_date: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
 				year: endDate ? endDate[2] : null,
                 estimated_revenue: removePhoneMask(req.body.estimated_revenue),
-                current_revenue: removePhoneMask(req.body.current_revenue),
+                //current_revenue: removePhoneMask(req.body.current_revenue),
 				status: 0,
+				user_id: req.user.id,
+				firm_id: req.user.firm_id
 			});
 			
 			req.flash('success-message', 'Client Added Successfully');
@@ -1226,18 +1230,23 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 		
 
 		//revenues
-		await Revenue.update({
+		await Revenue.destroy({
+			where: {
+				'client_id': req.params['id'],
+				'status': 0
+			}
+		});
+		await Revenue.create({
+			type: "C",
+			client_id: req.params['id'],
 			planning_period: req.body.planning_period,
 			start_date: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
 			end_date: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
 			year: endDate ? endDate[2] : null,
 			estimated_revenue: removePhoneMask(req.body.estimated_revenue),
-			current_revenue: removePhoneMask(req.body.current_revenue),
-		}, {
-			where: {
-				'client_id': req.params['id'],
-				'status':0
-			}
+			//current_revenue: removePhoneMask(req.body.current_revenue),
+			user_id: req.user.id,
+			firm_id: req.user.firm_id
 		}); 
 
 		req.flash('success-edit-message', 'Client Updated Successfully');
@@ -1316,6 +1325,8 @@ router.post("/client/new-planning-period", auth, async(req, res)=> {
 		end_date: end_new_date ? end_new_date[2] + "-" + end_new_date[1] + "-" + end_new_date[0] : null,
 		year: end_new_date ? end_new_date[2] : null,
 		estimated_revenue: removePhoneMask(req.body.estimated_revenue_new),
+		user_id: req.user.id,
+		firm_id: req.user.firm_id
 	});
 	 res.json({
 	 	success: true

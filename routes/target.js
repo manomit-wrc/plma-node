@@ -287,7 +287,9 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
                 planning_period: req.body.planning_period,
                 start_date: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
                 end_date: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
-                estimated_revenue: removePhoneMask(req.body.estimated_revenue)
+                estimated_revenue: removePhoneMask(req.body.estimated_revenue),
+                user_id:req.user.id,
+                firm_id: req.user.firm_id
             });
             req.flash('success-message', 'Target Added Successfully');
             res.redirect('/target')
@@ -344,7 +346,9 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
                 planning_period: req.body.planning_period,
                 start_date: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
                 end_date: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
-                estimated_revenue: removePhoneMask(req.body.estimated_revenue)
+                estimated_revenue: removePhoneMask(req.body.estimated_revenue),
+                user_id: req.user.id,
+                firm_id: req.user.firm_id
             });
             req.flash('success-message', 'Target Added Successfully');
             res.redirect('/target')

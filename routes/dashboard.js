@@ -32,6 +32,7 @@ const ActivityGoal = require('../models').activity_goal;
 const Sequelize = require('sequelize');
 const requestApproval = require('../models').request_approval;
 const activityAttorney = require('../models').activity_attorney;
+const Revenue = require('../models').revenue;
 const Op = Sequelize.Op;
 
 var csrfProtection = csrf({ cookie: true });
@@ -907,62 +908,62 @@ router.get("/get-chart-activity-count-value", auth, async(req, res)=> {
     });
     for(var i=0; i<activity.length; i++)
     {
-        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "January")
+        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "January" && new Date(activity[i].activity_creation_date).getFullYear() == new Date().getFullYear())
         {
             jan.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
             jan_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
         }
-        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "February")
+        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "February" && new Date(activity[i].activity_creation_date).getFullYear() == new Date().getFullYear())
         {
             feb.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
             feb_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
         }
-        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "March")
+        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "March" && new Date(activity[i].activity_creation_date).getFullYear() == new Date().getFullYear())
         {
             mar.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
             mar_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
         }
-        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "April")
+        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "April" && new Date(activity[i].activity_creation_date).getFullYear() == new Date().getFullYear())
         {
             apr.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
             apr_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
         }
-        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "May")
+        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "May" && new Date(activity[i].activity_creation_date).getFullYear() == new Date().getFullYear())
         {
             may.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
             may_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
         }
-        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "June")
+        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "June" && new Date(activity[i].activity_creation_date).getFullYear() == new Date().getFullYear())
         {
             jun.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
             jun_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
         }
-        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "July")
+        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "July" && new Date(activity[i].activity_creation_date).getFullYear() == new Date().getFullYear())
         {
             jul.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
             jul_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
         }
-        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "August")
+        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "August" && new Date(activity[i].activity_creation_date).getFullYear() == new Date().getFullYear())
         {
             aug.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
             aug_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
         }
-        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "September")
+        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "September" && new Date(activity[i].activity_creation_date).getFullYear() == new Date().getFullYear())
         {
             sep.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
             sep_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
         }
-        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "October")
+        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "October" && new Date(activity[i].activity_creation_date).getFullYear() == new Date().getFullYear())
         {
             oct.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
             oct_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
         }
-        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "November")
+        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "November" && new Date(activity[i].activity_creation_date).getFullYear() == new Date().getFullYear())
         {
             nov.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
             nov_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
         }
-        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "December")
+        if (monthNames[new Date(activity[i].activity_creation_date).getMonth()] == "December" && new Date(activity[i].activity_creation_date).getFullYear() == new Date().getFullYear())
         {
             dec.push(activity[i].total_budget_amount !== null ? parseInt(activity[i].total_budget_amount) : 0);
             dec_hour.push(activity[i].total_budget_hour !== null ? parseInt(activity[i].total_budget_hour) : 0);
@@ -1064,6 +1065,202 @@ router.get("/get-chart-two-activity-count-value", auth, async(req, res)=> {
     
 });
 
+router.get("/get-chart-estimated-revenue-count-value", auth, async(req, res)=> {
+    var revenueCondition = {};
+    if (req.user.role_id != "1") {
+        revenueCondition.firm_id = req.user.firm_id;
+        if (req.user.role_id != "2") {
+            revenueCondition.user_id = req.user.id;
+        }
+    }
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+    var jan_client = [];
+    var feb_client = [];
+    var mar_client = [];
+    var apr_client = [];
+    var may_client = [];
+    var jun_client = [];
+    var jul_client = [];
+    var aug_client = [];
+    var sep_client = [];
+    var oct_client = [];
+    var nov_client = [];
+    var dec_client = [];
+    var jan_target = [];
+    var feb_target = [];
+    var mar_target = [];
+    var apr_target = [];
+    var may_target = [];
+    var jun_target = [];
+    var jul_target = [];
+    var aug_target = [];
+    var sep_target = [];
+    var oct_target = [];
+    var nov_target = [];
+    var dec_target = [];
+    var jan_estimated_revenue = [];
+    var feb_estimated_revenue = [];
+    var mar_estimated_revenue = [];
+    var apr_estimated_revenue = [];
+    var may_estimated_revenue = [];
+    var jun_estimated_revenue = [];
+    var jul_estimated_revenue = [];
+    var aug_estimated_revenue = [];
+    var sep_estimated_revenue = [];
+    var oct_estimated_revenue = [];
+    var nov_estimated_revenue = [];
+    var dec_estimated_revenue = [];
+    const revenue = await Revenue.findAll({
+        where: revenueCondition
+    });
+    for(var i=0; i<revenue.length; i++)
+    {
+        if (monthNames[new Date(revenue[i].end_date).getMonth()] == "January" && new Date(revenue[i].end_date).getFullYear() == new Date().getFullYear()) {
+            jan_estimated_revenue.push(parseInt(revenue[i].estimated_revenue))
+            if (revenue[i].type == "C")
+            {
+                jan_client.push(revenue[i].client_id);
+            }
+            if (revenue[i].type == "T")
+            {
+                jan_target.push(revenue[i].target_id);
+            }
+        }
+        if (monthNames[new Date(revenue[i].end_date).getMonth()] == "February" && new Date(revenue[i].end_date).getFullYear() == new Date().getFullYear()) {
+            feb_estimated_revenue.push(parseInt(revenue[i].estimated_revenue))
+            if (revenue[i].type == "C")
+            {
+                feb_client.push(revenue[i].client_id);
+            }
+            if (revenue[i].type == "T")
+            {
+                feb_target.push(revenue[i].target_id);
+            }
+        }
+        if (monthNames[new Date(revenue[i].end_date).getMonth()] == "March" && new Date(revenue[i].end_date).getFullYear() == new Date().getFullYear()) {
+            mar_estimated_revenue.push(parseInt(revenue[i].estimated_revenue))
+            if (revenue[i].type == "C")
+            {
+                mar_client.push(revenue[i].client_id);
+            }
+            if (revenue[i].type == "T")
+            {
+                mar_target.push(revenue[i].target_id);
+            }
+        }
+        if (monthNames[new Date(revenue[i].end_date).getMonth()] == "April" && new Date(revenue[i].end_date).getFullYear() == new Date().getFullYear()) {
+            apr_estimated_revenue.push(parseInt(revenue[i].estimated_revenue))
+            if (revenue[i].type == "C")
+            {
+                apr_client.push(revenue[i].client_id);
+            }
+            if (revenue[i].type == "T")
+            {
+                apr_target.push(revenue[i].target_id);
+            }
+        }
+        if (monthNames[new Date(revenue[i].end_date).getMonth()] == "May" && new Date(revenue[i].end_date).getFullYear() == new Date().getFullYear()) {
+            may_estimated_revenue.push(parseInt(revenue[i].estimated_revenue))
+            if (revenue[i].type == "C")
+            {
+                may_client.push(revenue[i].client_id);
+            }
+            if (revenue[i].type == "T")
+            {
+                may_target.push(revenue[i].target_id);
+            }
+        }
+        if (monthNames[new Date(revenue[i].end_date).getMonth()] == "June" && new Date(revenue[i].end_date).getFullYear() == new Date().getFullYear()) {
+            jun_estimated_revenue.push(parseInt(revenue[i].estimated_revenue))
+            if (revenue[i].type == "C")
+            {
+                jun_client.push(revenue[i].client_id);
+            }
+            if (revenue[i].type == "T")
+            {
+                jun_target.push(revenue[i].target_id);
+            }
+        }
+        if (monthNames[new Date(revenue[i].end_date).getMonth()] == "July" && new Date(revenue[i].end_date).getFullYear() == new Date().getFullYear()) {
+            jul_estimated_revenue.push(parseInt(revenue[i].estimated_revenue))
+            if (revenue[i].type == "C")
+            {
+                jul_client.push(revenue[i].client_id);
+            }
+            if (revenue[i].type == "T")
+            {
+                jul_target.push(revenue[i].target_id);
+            }
+        }
+        if (monthNames[new Date(revenue[i].end_date).getMonth()] == "August" && new Date(revenue[i].end_date).getFullYear() == new Date().getFullYear()) {
+            aug_estimated_revenue.push(parseInt(revenue[i].estimated_revenue))
+            if (revenue[i].type == "C")
+            {
+                aug_client.push(revenue[i].client_id);
+            }
+            if (revenue[i].type == "T")
+            {
+                aug_target.push(revenue[i].target_id);
+            }
+        }
+        if (monthNames[new Date(revenue[i].end_date).getMonth()] == "September" && new Date(revenue[i].end_date).getFullYear() == new Date().getFullYear()) {
+            sep_estimated_revenue.push(parseInt(revenue[i].estimated_revenue))
+            if (revenue[i].type == "C")
+            {
+                sep_client.push(revenue[i].client_id);
+            }
+            if (revenue[i].type == "T")
+            {
+                sep_target.push(revenue[i].target_id);
+            }
+        }
+        if (monthNames[new Date(revenue[i].end_date).getMonth()] == "October" && new Date(revenue[i].end_date).getFullYear() == new Date().getFullYear()) {
+            oct_estimated_revenue.push(parseInt(revenue[i].estimated_revenue))
+            if (revenue[i].type == "C")
+            {
+                oct_client.push(revenue[i].client_id);
+            }
+            if (revenue[i].type == "T")
+            {
+                oct_target.push(revenue[i].target_id);
+            }
+        }
+        if (monthNames[new Date(revenue[i].end_date).getMonth()] == "November" && new Date(revenue[i].end_date).getFullYear() == new Date().getFullYear()) {
+            nov_estimated_revenue.push(parseInt(revenue[i].estimated_revenue))
+            if (revenue[i].type == "C")
+            {
+                nov_client.push(revenue[i].client_id);
+            }
+            if (revenue[i].type == "T")
+            {
+                nov_target.push(revenue[i].target_id);
+            }
+        }
+        if (monthNames[new Date(revenue[i].end_date).getMonth()] == "December" && new Date(revenue[i].end_date).getFullYear() == new Date().getFullYear()) {
+            dec_estimated_revenue.push(parseInt(revenue[i].estimated_revenue))
+            if (revenue[i].type == "C")
+            {
+                dec_client.push(revenue[i].client_id);
+            }
+            if (revenue[i].type == "T")
+            {
+                dec_target.push(revenue[i].target_id);
+            }
+        }
+    }
+    var tot_client = [jan_client.length, feb_client.length, mar_client.length, apr_client.length, may_client.length, jun_client.length, jul_client.length, aug_client.length, sep_client.length, oct_client.length, nov_client.length, dec_client.length];
+    var tot_target = [jan_target.length, feb_target.length, mar_target.length, apr_target.length, may_target.length, jun_target.length, jul_target.length, aug_target.length, sep_target.length, oct_target.length, nov_target.length, dec_target.length];
+    var tot_estimated_revenue = [jan_estimated_revenue.reduce((a, b) => a + b, 0), feb_estimated_revenue.reduce((a, b) => a + b, 0), mar_estimated_revenue.reduce((a, b) => a + b, 0), apr_estimated_revenue.reduce((a, b) => a + b, 0), may_estimated_revenue.reduce((a, b) => a + b, 0), jun_estimated_revenue.reduce((a, b) => a + b, 0), jul_estimated_revenue.reduce((a, b) => a + b, 0), aug_estimated_revenue.reduce((a, b) => a + b, 0), sep_estimated_revenue.reduce((a, b) => a + b, 0), oct_estimated_revenue.reduce((a, b) => a + b, 0), nov_estimated_revenue.reduce((a, b) => a + b, 0), dec_estimated_revenue.reduce((a, b) => a + b, 0)];
+    
+    res.send({
+        success: true,
+        total_client: tot_client,
+        total_target: tot_target,
+        total_estimated_revuenue: tot_estimated_revenue
+    });
+});
 
 router.post("/change-password-new-user", auth, async (req, res) => {
     const chngPass = await User.update({
