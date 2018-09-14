@@ -1031,7 +1031,7 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
                 client_id: insertData.id,
                 planning_period: req.body.planning_period,
                 start_date: startDate ? startDate[2] + "-" + startDate[0] + "-" + startDate[1] : null,
-                end_date: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
+                end_date: endDate ? endDate[2] + "-" + endDate[0] + "-" + endDate[1] : null,
                 estimated_revenue: removePhoneMask(req.body.estimated_revenue),
                 //current_revenue: removePhoneMask(req.body.current_revenue),
 				status: 0,
@@ -1073,7 +1073,7 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				fax: removePhoneMask(req.body.fax),
 				client_type: req.body.client_type,
 				IM: req.body.im,
-				date_of_birth: formatDate ? formatDate[2] + "-" + formatDate[1] + "-" + formatDate[0] : null,
+				date_of_birth: formatDate ? formatDate[2] + "-" + formatDate[0] + "-" + formatDate[1] : null,
 				gender: req.body.client_gender,
 				client_id: req.body.client_id,
 				social_url: req.body.social,
@@ -1094,7 +1094,7 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
                 client_id: insertData.id,
                 planning_period: req.body.planning_period,
                 start_date: startDate ? startDate[2] + "-" + startDate[0] + "-" + startDate[1] : null,
-                end_date: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
+                end_date: endDate ? endDate[2] + "-" + endDate[0] + "-" + endDate[1] : null,
                 estimated_revenue: removePhoneMask(req.body.estimated_revenue),
                 //current_revenue: removePhoneMask(req.body.current_revenue),
 				status: 0,
@@ -1190,7 +1190,7 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 			firm_id: req.user.firm_id,
 			fax: removePhoneMask(req.body.fax),
 			IM: req.body.im,
-			date_of_birth: formatDate ? formatDate[2] + "-" + formatDate[1] + "-" + formatDate[0] : null,
+			date_of_birth: formatDate ? formatDate[2] + "-" + formatDate[0] + "-" + formatDate[1] : null,
 			gender: req.body.client_gender,
 			client_id: req.body.client_id,
 			master_id: req.body.master_id,
@@ -1241,8 +1241,8 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 			type: "C",
 			client_id: req.params['id'],
 			planning_period: req.body.planning_period,
-			start_date: startDate ? startDate[2] + "-" + startDate[1] + "-" + startDate[0] : null,
-			end_date: endDate ? endDate[2] + "-" + endDate[1] + "-" + endDate[0] : null,
+			start_date: startDate ? startDate[2] + "-" + startDate[0] + "-" + startDate[1] : null,
+			end_date: endDate ? endDate[2] + "-" + endDate[0] + "-" + endDate[1] : null,
 			estimated_revenue: removePhoneMask(req.body.estimated_revenue),
 			//current_revenue: removePhoneMask(req.body.current_revenue),
 			user_id: req.user.id,
@@ -1256,41 +1256,6 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 		res.redirect('/client/edit/' + req.params['id']);
 	}
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 router.get('/client/delete/:id', auth, firmAttrAuth, async (req, res) => {
 
@@ -1356,8 +1321,8 @@ router.post("/client/new-planning-period", auth, async(req, res)=> {
 		type: "C",
 		client_id: req.body.client_id,
 		planning_period: req.body.planning_period_new,
-		start_date: start_new_date ? start_new_date[2] + "-" + start_new_date[1] + "-" + start_new_date[0] : null,
-		end_date: end_new_date ? end_new_date[2] + "-" + end_new_date[1] + "-" + end_new_date[0] : null,
+		start_date: start_new_date ? start_new_date[2] + "-" + start_new_date[0] + "-" + start_new_date[1] : null,
+		end_date: end_new_date ? end_new_date[2] + "-" + end_new_date[0] + "-" + end_new_date[1] : null,
 		year: end_new_date ? end_new_date[2] : null,
 		estimated_revenue: removePhoneMask(req.body.estimated_revenue_new),
 		user_id: req.user.id,

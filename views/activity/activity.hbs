@@ -51,8 +51,8 @@
                 '1'}} {{/if_eq}}>
                 <td>{{math @index "+" 1}}</td>
                 <td><a href="/activity/view/{{this.id}}">{{this.activity_name}}</a></td>
-                <td>{{dateFormat this.activity_from_date "DD-MM-YYYY"}}</td>
-                <td>{{dateFormat this.activity_to_date "DD-MM-YYYY"}}</td>
+                <td>{{dateFormat this.activity_from_date "MM-DD-YYYY"}}</td>
+                <td>{{dateFormat this.activity_to_date "MM-DD-YYYY"}}</td>
                 <td>$ {{this.total_budget_amount}}</td>
                 <td>{{this.remarks}}</td>
                 <td>

@@ -790,7 +790,7 @@
 		}
 		else{
 		var start_date_split = start_date.split('-');
-		var month = start_date_split[2] + "," + start_date_split[1] + "," + start_date_split[0];
+		var month = start_date_split[2] + "," + start_date_split[0] + "," + start_date_split[1];
 		var current_date = new Date(month);
 		var end_date = new Date(current_date.setMonth(current_date.getMonth() + parseInt(period)));
 		var dd = end_date.getDate();
@@ -803,7 +803,7 @@
 			if (mm < 10) {
 				mm = '0' + mm;
 			}
-			var end_date = dd + '-' + mm + '-' + yyyy;
+			var end_date = mm + '-' + dd + '-' + yyyy;
 		}
 		$("#end_date").val(end_date);
 	});

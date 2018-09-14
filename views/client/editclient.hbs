@@ -217,7 +217,7 @@
 											</label>
 											<div class="cal-icon">
 												<input class="form-control floating datetimepicker" type="text" value="{{dateFormat this.start_date "
-												 DD-MM-YYYY "}}" disabled>
+												 MM-DD-YYYY "}}" data-date-format="MM-DD-YYYY" disabled>
 											</div>
 										</div>
 									</div>
@@ -247,7 +247,7 @@
 										<div class="form-group form-focus">
 											<label class="control-label">End Date</label>
 											<input class="form-control floating datetimepicker" type="text" value="{{dateFormat this.end_date "
-											 DD-MM-YYYY "}}" readonly>
+											 MM-DD-YYYY "}}" data-date-format="MM-DD-YYYY" readonly>
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -279,7 +279,7 @@
 									</label>
 									<div class="cal-icon">
 										<input class="form-control floating datetimepicker" type="text" id="clientStartDate" name="clientStartDate" value="{{dateFormat client_revenue.start_date "
-												DD-MM-YYYY "}}" >
+												MM-DD-YYYY "}}" data-date-format="MM-DD-YYYY" >
 									</div>
 								</div>
 							</div>
@@ -308,7 +308,7 @@
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">End Date</label>
-									<input class="form-control floating datetimepicker" type="text" id="end_date" name="end_date" value="{{dateFormat client_revenue.end_date "DD-MM-YYYY "}}"  readonly>
+									<input class="form-control floating datetimepicker" type="text" id="end_date" name="end_date" value="{{dateFormat client_revenue.end_date "MM-DD-YYYY "}}" data-date-format="MM-DD-YYYY"  readonly>
 								</div>
 							</div>
 							<div class="col-md-6">
@@ -371,7 +371,7 @@
 									<div class="col-md-6">
 										<div class="form-group form-focus">
 											<label class="control-label">End Date</label>
-											<input class="form-control floating datetimepicker" type="text" id="end_date_new" name="end_date_new"   readonly>
+											<input class="form-control floating ||||" type="text" id="end_date_new" name="end_date_new"   readonly>
 										</div>
 									</div>
 
@@ -988,7 +988,7 @@
 		$(document).on('click', '#revenuePlus', function () {
 		$('.revenuePlus').after($('.planingRevenueClose').html());
 		$("#clientStartDate_new").datetimepicker({
-			 format: 'DD-MM-YYYY'
+			 format: 'MM-DD-YYYY'
 		});
 		$("#estimated_revenue_new").inputmask("numeric", {
 				radixPoint: ".",
@@ -1028,7 +1028,7 @@
 					$("#end_date_new").val('');
 				} else {
 					var start_date_split = start_date.split('-');
-					var month = start_date_split[2] + "," + start_date_split[1] + "," + start_date_split[0];
+					var month = start_date_split[2] + "," + start_date_split[0] + "," + start_date_split[1];
 					var current_date = new Date(month);
 					var end_date = new Date(current_date.setMonth(current_date.getMonth() + parseInt(period)));
 					var dd = end_date.getDate();
@@ -1040,7 +1040,7 @@
 					if (mm < 10) {
 						mm = '0' + mm;
 					}
-					var end_date = dd + '-' + mm + '-' + yyyy;
+					var end_date = mm + '-' + dd + '-' + yyyy;
 					$("#end_date_new").val(end_date);
 				}
 			}
@@ -1055,7 +1055,7 @@
 		}
 		else{
 		var start_date_split = start_date.split('-');
-		var month = start_date_split[2] + "," + start_date_split[1] + "," + start_date_split[0];
+		var month = start_date_split[2] + "," + start_date_split[0] + "," + start_date_split[1];
 		var current_date = new Date(month);
 		var end_date = new Date(current_date.setMonth(current_date.getMonth() + parseInt(period)));
 		var dd = end_date.getDate();
@@ -1068,7 +1068,7 @@
 			if (mm < 10) {
 				mm = '0' + mm;
 			}
-			var end_date = dd + '-' + mm + '-' + yyyy;
+			var end_date = mm + '-' + dd + '-' + yyyy;
 		}
 		$("#end_date").val(end_date);
 	});

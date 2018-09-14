@@ -486,7 +486,7 @@ router.get('/edit-profile', csrfProtection, auth, async (req, res) => {
         gender: req.body.gender,
         address: req.body.address,
         mobile_no: removePhoneMask(req.body.mobile_no),
-        dob: formatDate ? formatDate[2]+"-"+formatDate[1]+"-"+formatDate[0] : null,
+        dob: formatDate ? formatDate[2]+"-"+formatDate[0]+"-"+formatDate[1] : null,
         avatar: (req.file === undefined) ? req.user.avatar : `/profile/${req.file.filename}`
     }, {
         where: {
@@ -792,7 +792,7 @@ router.post("/edit-attorney-profile", auth, profile.single('avatar'), csrfProtec
         section_id: parseInt(req.body.section),
         designation_id: parseInt(req.body.designation),
         mobile_no: removePhoneMask(req.body.mobile_no),
-        dob: formatDate ? formatDate[2]+"-"+formatDate[1]+"-"+formatDate[0] : null,
+        dob: formatDate ? formatDate[2]+"-"+formatDate[0]+"-"+formatDate[1] : null,
         avatar: (req.file === undefined) ? req.user.avatar : `/profile/${req.file.filename}`
     }, {
         where: {
@@ -824,8 +824,8 @@ router.post("/edit-attorney-profile", auth, profile.single('avatar'), csrfProtec
         website_url: req.body.website_url,
         social_url: req.body.social_url,
         remarks: req.body.remarks,
-        firm_join_date: Firm_Join_Date1 ? Firm_Join_Date1[2] + "-" + Firm_Join_Date1[1] + "-" + Firm_Join_Date1[0] : null,
-        bar_practice_date: Bar_Practice_date1 ? Bar_Practice_date1[2] + "-" + Bar_Practice_date1[1] + "-" + Bar_Practice_date1[0] : null,
+        firm_join_date: Firm_Join_Date1 ? Firm_Join_Date1[2] + "-" + Firm_Join_Date1[0] + "-" + Firm_Join_Date1[1] : null,
+        bar_practice_date: Bar_Practice_date1 ? Bar_Practice_date1[2] + "-" + Bar_Practice_date1[0] + "-" + Bar_Practice_date1[1] : null,
 
     },{
         where: {

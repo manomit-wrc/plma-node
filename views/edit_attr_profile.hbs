@@ -57,7 +57,7 @@
                                     <div class="form-group form-focus">
                                         <label class="control-label">Birth Date</label>
                                         <div class="cal-icon">
-                                            <input class="form-control floating datetimepicker" type="text" id="dob" name="dob" value="{{dateFormat user.dob " DD-MM-YYYY
+                                            <input class="form-control floating datetimepicker" type="text" id="dob" name="dob" data-date-format="MM-DD-YYYY" value="{{dateFormat user.dob " MM-DD-YYYY
                                                 "}}">
                                         </div>
                                     </div>
@@ -348,7 +348,7 @@
                             <div class="form-group form-focus">
                                 <label class="control-label">Bar Practice Date</label>
                                 <div class="cal-icon">
-                                    <input class="form-control floating datetimepicker" type="text" id="bar_practice_date" name="bar_practice_date" value="{{dateFormat edata.attorney_details.0.bar_practice_date "DD-MM-YYYY"}}">
+                                    <input class="form-control floating datetimepicker" type="text" id="bar_practice_date" name="bar_practice_date" value="{{dateFormat edata.attorney_details.0.bar_practice_date "MM-DD-YYYY"}}" data-date-format="MM-DD-YYYY">
                                 </div>
                             </div>
                         </div>
@@ -356,7 +356,7 @@
                             <div class="form-group form-focus">
                                 <label class="control-label">Firm Join Date</label>
                                 <div class="cal-icon">
-                                    <input class="form-control floating datetimepicker" type="text" id="firm_join_date" name="firm_join_date" value="{{dateFormat edata.attorney_details.0.firm_join_date "DD-MM-YYYY"}}">
+                                    <input class="form-control floating datetimepicker" type="text" id="firm_join_date" name="firm_join_date" value="{{dateFormat edata.attorney_details.0.firm_join_date "MM-DD-YYYY"}}" data-date-format="MM-DD-YYYY">
                                 </div>
                             </div>
                         </div>

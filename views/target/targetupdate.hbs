@@ -137,7 +137,7 @@
 						<div class="form-group form-focus">
 							<label class="control-label">Close Date <span class="req-lbl">*</span></label>
 							<div class="cal-icon">
-								<input class="form-control floating datetimepicker" type="text" id="targetCloseDate" name="targetCloseDate" value="{{dateFormat client.close_date "DD-MM-YYYY"}}">
+								<input class="form-control floating datetimepicker" type="text" id="targetCloseDate" name="targetCloseDate" value="{{dateFormat client.close_date "MM-DD-YYYY"}}" data-date-format="MM-DD-YYYY">
 							</div>
 						</div>
 					</div>
@@ -145,7 +145,7 @@
 						<div class="form-group form-focus">
 							<label class="control-label">Planning Period Start Date <span class="req-lbl">*</span></label>
 							<div class="cal-icon">
-								<input class="form-control floating datetimepicker" type="text" id="targetStartDate" name="targetStartDate" value="{{dateFormat client.revenue.0.start_date "DD-MM-YYYY"}}">
+								<input class="form-control floating datetimepicker" type="text" id="targetStartDate" name="targetStartDate" value="{{dateFormat client.revenues.0.start_date "MM-DD-YYYY"}}" data-date-format="MM-DD-YYYY">
 							</div>
 						</div>
 					</div>
@@ -172,7 +172,7 @@
 					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Planning Period End Date</label>
-							<input class="form-control floating datetimepicker" type="text" id="end_date" name="end_date" readonly value="{{dateFormat client.revenues.0.end_date "DD-MM-YYYY"}}">
+							<input class="form-control floating datetimepicker" type="text" id="end_date" name="end_date" readonly value="{{dateFormat client.revenues.0.end_date "MM-DD-YYYY"}}">
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -695,7 +695,7 @@
 					$("#end_date").val('');
 				} else {
 					var start_date_split = start_date.split('-');
-					var month = start_date_split[2] + "," + start_date_split[1] + "," + start_date_split[0];
+					var month = start_date_split[2] + "," + start_date_split[0] + "," + start_date_split[1];
 					var current_date = new Date(month);
 					var end_date = new Date(current_date.setMonth(current_date.getMonth() + parseInt(period)));
 					var dd = end_date.getDate();
@@ -707,7 +707,7 @@
 					if (mm < 10) {
 						mm = '0' + mm;
 					}
-					var end_date = dd + '-' + mm + '-' + yyyy;
+					var end_date = mm + '-' + dd + '-' + yyyy;
 					$("#end_date").val(end_date);
 				}
 			}
