@@ -161,7 +161,7 @@ const hbs = exphbs.create({
             var x = 0;
             const hour = lodash.filter(obj, arr => arr.activity_goal_id === value)
             if (hour.length > 0) {
-                const total_hour = lodash.map(hour, arr => x + parseInt(arr.hour));
+                const total_hour = lodash.map(hour, arr => x + parseFloat(arr.hour));
                 return total_hour[0];
             } else {
                 return "-";
@@ -171,7 +171,7 @@ const hbs = exphbs.create({
             var x = 0;
             const amount = lodash.filter(obj, arr => arr.activity_goal_id === value)
             if (amount.length > 0) {
-                const total_amount = lodash.map(amount, arr => x + parseInt(arr.amount));
+                const total_amount = lodash.map(amount, arr => x + parseFloat(arr.amount));
                 return total_amount[0];
             } else {
                 return "-";
@@ -180,7 +180,7 @@ const hbs = exphbs.create({
         get_activity_budget_hour: function (value, obj) {
             const hour = lodash.filter(obj, arr => arr.activity_id === value)
             if (hour.length > 0) {
-                const total_hour = lodash.map(hour, arr => parseInt(arr.hour));
+                const total_hour = lodash.map(hour, arr => parseFloat(arr.hour));
                 return total_hour[0];
             } else {
                 return "-";
@@ -189,7 +189,7 @@ const hbs = exphbs.create({
         get_activity_budget_amount: function (value, obj) {
             const amount = lodash.filter(obj, arr => arr.activity_id === value)
             if (amount.length > 0) {
-                const total_amount = lodash.map(amount, arr => parseInt(arr.amount));
+                const total_amount = lodash.map(amount, arr => parseFloat(arr.amount));
                 return total_amount[0];
             } else {
                 return "-";
@@ -198,7 +198,7 @@ const hbs = exphbs.create({
         get_activity_budget_hour_indi: function (count, value, obj) {
             const hour = lodash.filter(obj, arr => arr.activity_id === value)
             if (hour.length > 0) {
-                const total_hour = lodash.map(hour, arr => parseInt(arr.hour));
+                const total_hour = lodash.map(hour, arr => parseFloat(arr.hour));
                 return (total_hour[0] * count).toFixed(2);
             } else {
                 return "-";
@@ -207,7 +207,7 @@ const hbs = exphbs.create({
         get_activity_budget_amount_indi: function (count, value, obj) {
             const amount = lodash.filter(obj, arr => arr.activity_id === value)
             if (amount.length > 0) {
-                const total_amount = lodash.map(amount, arr => parseInt(arr.amount));
+                const total_amount = lodash.map(amount, arr => parseFloat(arr.amount));
                 return (total_amount[0] * count).toFixed(2);
             } else {
                 return "-";
@@ -216,7 +216,7 @@ const hbs = exphbs.create({
         get_activity_budget_hour_equal: function (count, value, obj) {
             const hour = lodash.filter(obj, arr => arr.activity_id === value)
             if (hour.length > 0) {
-                const total_hour = lodash.map(hour, arr => parseInt(arr.hour));
+                const total_hour = lodash.map(hour, arr => parseFloat(arr.hour));
                 return (total_hour[0] / count).toFixed(2);
             } else {
                 return "-";
@@ -225,7 +225,7 @@ const hbs = exphbs.create({
         get_activity_budget_amount_equal: function (count, value, obj) {
             const amount = lodash.filter(obj, arr => arr.activity_id === value)
             if (amount.length > 0) {
-                const total_amount = lodash.map(amount, arr => parseInt(arr.amount));
+                const total_amount = lodash.map(amount, arr => parseFloat(arr.amount));
                 return (total_amount[0] / count).toFixed(2);
             } else {
                 return "-";
@@ -238,9 +238,9 @@ const hbs = exphbs.create({
             const parent_details = lodash.filter(array, arr => arr.parent_id === parent_id);
             for (var i = 0; i < parent_details.length; i++) {
                 const filter_data = lodash.filter(parent_details[i].budget_display, arr => arr.activity_id === activity_id);
-                const total = lodash.map(filter_data, arr => parseInt(sum) + parseInt(arr.hour));
-                const temp = total.length > 0 ? parseInt(total[0]) : 0;
-                total_hour += parseInt(temp);
+                const total = lodash.map(filter_data, arr => parseFloat(sum) + parseFloat(arr.hour));
+                const temp = total.length > 0 ? parseFloat(total[0]) : 0;
+                total_hour += parseFloat(temp);
             }
             return total_hour
         },
@@ -250,9 +250,9 @@ const hbs = exphbs.create({
             const parent_details = lodash.filter(array, arr => arr.parent_id === parent_id);
             for (var i = 0; i < parent_details.length; i++) {
                 const filter_data = lodash.filter(parent_details[i].budget_display, arr => arr.activity_goal_id === goal_id);
-                const total = lodash.map(filter_data, arr => parseInt(sum) + parseInt(arr.hour));
-                const temp = total.length > 0 ? parseInt(total[0]) : 0;
-                total_hour += parseInt(temp);
+                const total = lodash.map(filter_data, arr => parseFloat(sum) + parseFloat(arr.hour));
+                const temp = total.length > 0 ? parseFloat(total[0]) : 0;
+                total_hour += parseFloat(temp);
             }
             return total_hour
         },
@@ -263,9 +263,9 @@ const hbs = exphbs.create({
             for (var i = 0; i < parent_details.length; i++) {
 
                 const filter_data = lodash.filter(parent_details[i].budget_display, arr => arr.activity_id === activity_id);
-                const total = lodash.map(filter_data, arr => parseInt(sum) + parseInt(arr.amount));
-                const temp = total.length > 0 ? parseInt(total[0]) : 0;
-                total_hour += parseInt(temp);
+                const total = lodash.map(filter_data, arr => parseFloat(sum) + parseFloat(arr.amount));
+                const temp = total.length > 0 ? parseFloat(total[0]) : 0;
+                total_hour += parseFloat(temp);
             }
             return total_hour
         },
@@ -276,9 +276,9 @@ const hbs = exphbs.create({
             for (var i = 0; i < parent_details.length; i++) {
 
                 const filter_data = lodash.filter(parent_details[i].budget_display, arr => arr.activity_goal_id === goal_id);
-                const total = lodash.map(filter_data, arr => parseInt(sum) + parseInt(arr.amount));
-                const temp = total.length > 0 ? parseInt(total[0]) : 0;
-                total_hour += parseInt(temp);
+                const total = lodash.map(filter_data, arr => parseFloat(sum) + parseFloat(arr.amount));
+                const temp = total.length > 0 ? parseFloat(total[0]) : 0;
+                total_hour += parseFloat(temp);
             }
             return total_hour
         },
@@ -287,9 +287,9 @@ const hbs = exphbs.create({
             var total_budget_hour = 0;
             const hours = lodash.filter(array, arr => arr.parent_id === parent_id);
             if (hours.length > 0) {
-                const total_hour = lodash.map(hours, arr => (arr.budget_sum.length > 0 ? x + parseInt(arr.budget_sum[0].hour) : 0));
+                const total_hour = lodash.map(hours, arr => (arr.budget_sum.length > 0 ? x + parseFloat(arr.budget_sum[0].hour) : 0));
                 for (var i = 0; i < total_hour.length; i++) {
-                    total_budget_hour += parseInt(total_hour[i]);
+                    total_budget_hour += parseFloat(total_hour[i]);
                 }
                 return total_budget_hour;
             } else {
@@ -301,9 +301,9 @@ const hbs = exphbs.create({
             var total_budget_amount = 0;
             const amounts = lodash.filter(array, arr => arr.parent_id === parent_id);
             if (amounts.length > 0) {
-                const total_amount = lodash.map(amounts, arr => (arr.budget_sum.length > 0 ? x + parseInt(arr.budget_sum[0].amount) : 0));
+                const total_amount = lodash.map(amounts, arr => (arr.budget_sum.length > 0 ? x + parseFloat(arr.budget_sum[0].amount) : 0));
                 for (var i = 0; i < total_amount.length; i++) {
-                    total_budget_amount += parseInt(total_amount[i]);
+                    total_budget_amount += parseFloat(total_amount[i]);
                 }
                 return total_budget_amount;
             } else {

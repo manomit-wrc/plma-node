@@ -14,8 +14,10 @@
       </div>
       <div class="col-sm-4">
         <div class="text-right">
+           {{#if_eq editdata.activity_type "team"}}
           <a href="#" class="btn btn-primary pull-right rounded" data-toggle="modal" data-target="#addDetails">
             <i class="fa fa-plus-circle"></i> Add Client/Traget/Referral/General</a>
+            {{/if_eq}}
           {{!-- <button class="btn btn-primary rounded advancedFilter" data-toggle="modal" data-target="#add_user">
             <i class="fa fa-filter"></i> Filter</button> --}}
         </div>
@@ -27,6 +29,8 @@
       <input type="hidden" name="total_hour" id="total_hour" value="{{editdata.total_budget_hour}}">
       <input type="hidden" name="total_amount" id="total_amount" value="{{editdata.total_budget_amount}}">
       <input type="hidden" id="activityTypeDetails" value="{{editdata.target}}">
+      <input type="hidden" name="existingtclen" value="{{existingtclen}}">
+      <input type="hidden" id="budget_update" name="budget_update" value="0">
       <div class="card-box">
         <h3 class="card-title">Client / Target Information</h3>
         <div class="row">
@@ -287,9 +291,9 @@
                   <label class="control-label">Activity Details Status</label>
                   <select class="form-control floatingb " id="budget_status" name="budget_status">
                     <option value="">Select One</option>
-                    <option value="planned" {{#if_eq editdata.budget_details_status "planned"}} selected="selected" {{/if_eq}}>PLANNED</option>
-                    <option value="unplanned" {{#if_eq editdata.budget_details_status "unplanned"}} selected="selected" {{/if_eq}}>UNPLANNED</option>
-                    <option value="delete_team" {{#if_eq editdata.budget_details_status "delete_team"}} selected="selected" {{/if_eq}}>DELETED
+                    <option value="planned" {{#if_eq editdata.budget_status "planned"}} selected="selected" {{/if_eq}}>PLANNED</option>
+                    <option value="unplanned" {{#if_eq editdata.budget_status "unplanned"}} selected="selected" {{/if_eq}}>UNPLANNED</option>
+                    <option value="delete_team" {{#if_eq editdata.budget_status "delete_team"}} selected="selected" {{/if_eq}}>DELETED
                       ITEM - TO BE SKIPPED</option>
                   </select>
                 </div>
@@ -738,9 +742,10 @@
       },
       success: function (response) {
         if (response.success == true) {
+          $("#budget_update").val('1');
           $(`<div class="alert alert-success" id="budger_update_success"><strong>Success! </strong>Budget Updated Successfully</div>`).insertBefore("#btnEditActivityBudget");
           // $("#budger_update_success").attr('disabled', true);
-          window.location.reload();
+          //window.location.reload();
           setTimeout(function () {
             $('#budger_update_success').hide();
             $("#update_budget").modal('hide');

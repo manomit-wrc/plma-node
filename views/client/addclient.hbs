@@ -234,12 +234,12 @@
 							<input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue">
 						</div>
 					</div>
-					<div class="col-md-6">
+					{{!-- <div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Actual planning period Revenue</label>
 							<input class="form-control floating" type="text" id="current_revenue" name="current_revenue">
 						</div>
-					</div>
+					</div> --}}
 				</div>
 			</div>
 			
@@ -602,6 +602,14 @@
             prefix: '$ ',
             rightAlign: false
         });
+		$("#estimated_customer_life_time_value").inputmask("numeric", {
+            radixPoint: ".",
+            groupSeparator: ",",
+            digits: 2,
+            autoGroup: true,
+            prefix: '$ ',
+            rightAlign: false
+        });
 
 		$("#estimated_revenue").inputmask("numeric", {
             radixPoint: ".",
@@ -682,9 +690,6 @@
 				
 				estimated_revenue: {
 					required: true
-				},
-				current_revenue: {
-					required: true
 				}
 				
 			},
@@ -737,10 +742,7 @@
 				},
 				estimated_revenue: {
 					required: "Estimated revenue can't be blank"
-				},
-				current_revenue: {
-					required: "Current revenue can't be blank"
-				},
+				}
 			}
 		});
 		

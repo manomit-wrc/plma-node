@@ -1276,11 +1276,11 @@ router.post("/change-password-new-user", auth, async (req, res) => {
     });
 });
 
-// router.get("/get-firmName", auth, async(req, res)=> {
-//     const firm = await Firm.findById(req.user.firm_id);
-//     res.send({
-//         firm: firm.title
-//     });
-// });
+router.get("/get-firmName", auth, async(req, res)=> {
+    const firm = await Firm.findById(req.user.firm_id);
+    res.send({
+        firm: firm.title
+    });
+});
 
 module.exports = router;

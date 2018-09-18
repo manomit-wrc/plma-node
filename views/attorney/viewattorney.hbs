@@ -53,7 +53,7 @@
                   <select  id="section" name="section" disabled class="form-control floating">
                     <option value="">Select Section</option>
                     {{#each section}}
-                    <option value="{{this.id}}" {{#if_eq this.id ../edata.0.attorney_details.0.section}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                    <option value="{{this.section.id}}" {{#if_eq this.section.id ../edata.0.section_id}} selected="selected" {{/if_eq}}>{{this.section.name}}</option>
                     {{/each}}
                   </select>
                 </div>

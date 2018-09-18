@@ -543,8 +543,8 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
                     }
                 });
                 level_type = activity_budget.length > 0 ? activity_budget[0].level_type : level_type;
-                hour = activity_budget.length > 0 ? ((level_type === 'Individual') ? activity_budget[0].hour : activity_budget[0].hour / all_activity_client.length) : '';
-                amount = activity_budget.length > 0 ? ((level_type === 'Individual') ? activity_budget[0].amount : activity_budget[0].amount / all_activity_client.length) : '';
+                hour = activity_budget.length > 0 ? ((level_type === 'Individual') ? activity_budget[0].hour / all_activity_client.length : activity_budget[0].hour/ all_activity_client.length) : '';
+                amount = activity_budget.length > 0 ? ((level_type === 'Individual') ? activity_budget[0].amount / all_activity_client.length : activity_budget[0].amount/ all_activity_client.length) : '';
                 const approval_remarks = activity_budget.length > 0 ? activity_budget[0].approver_remarks : '';
                 child_budget_arr.push({
                     "id": child_budget[j].id,
@@ -740,6 +740,12 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
         }
     });
 
+    const existingtclen = await Activity_to_user_type.findAll({
+        where: {
+            activity_id: req.params['id']
+        }
+    });
+
     var result = JSON.parse(JSON.stringify(editdata[0].jointactivities));
     var arr = [];
     for (var i = 0; i < result.length; i++) {
@@ -772,8 +778,8 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
                     }
                 });
                 level_type = activity_budget.length > 0 ? activity_budget[0].level_type : level_type;
-                hour = activity_budget.length > 0 ? ((level_type === 'Individual') ? activity_budget[0].hour : activity_budget[0].hour / all_activity_client.length) : '';
-                amount = activity_budget.length > 0 ? ((level_type === 'Individual') ? activity_budget[0].amount : activity_budget[0].amount / all_activity_client.length) : '';
+                hour = activity_budget.length > 0 ? ((level_type === 'Individual') ? activity_budget[0].hour / all_activity_client.length : activity_budget[0].hour / all_activity_client.length) : '';
+                amount = activity_budget.length > 0 ? ((level_type === 'Individual') ? activity_budget[0].amount / all_activity_client.length : activity_budget[0].amount / all_activity_client.length) : '';
                 const approval_remarks = activity_budget.length > 0 ? activity_budget[0].approver_remarks : '';
 
                 child_budget_arr.push({
@@ -873,7 +879,8 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
         level_type,
         section: allSection,
         attorney: allAttorney,
-        practicearea
+        practicearea,
+        existingtclen: existingtclen.length
     });
 });
 
@@ -910,7 +917,6 @@ router.post('/activity/edit-budget', auth, firmAttrAuth, csrfProtection, async (
 });
 
 router.post('/activity/update/:id', auth, upload.single('activity_attachment'), firmAttrAuth, csrfProtection, async (req, res) => {
-
     var target_user = [];
     var client_user = [];
     var referral_user = [];
@@ -926,16 +932,18 @@ router.post('/activity/update/:id', auth, upload.single('activity_attachment'), 
         where: { 'activity_id': req.body.activity_id }
     });
     var targetClientLength = 1;
-    if (activityBudgetData[0].level_type === 'Individual') {
-        if (target_user !== undefined) {
-            targetClientLength = target_user.length;
-        }
-        if (client_user !== undefined) {
-            targetClientLength = client_user.length;
-        }
-        if (referral_user !== undefined) {
-            targetClientLength = referral_user.length;
-        }
+    if (target_user !== undefined) {
+        targetClientLength = target_user.length;
+    }
+    if (client_user !== undefined) {
+        targetClientLength = client_user.length;
+    }
+    if (referral_user !== undefined) {
+        targetClientLength = referral_user.length;
+    }
+    var tot_EsumH = 0;
+    var tot_EsumA = 0;
+    if (req.body.budget_update == '1') {
         for (var b = 0; b < activityBudgetData.length; b++) {
             var totalHour = targetClientLength * activityBudgetData[b].hour;
             var totalAmount = targetClientLength * activityBudgetData[b].amount;
@@ -948,8 +956,30 @@ router.post('/activity/update/:id', auth, upload.single('activity_attachment'), 
                     'budget_id': activityBudgetData[b].budget_id
                 }
             });
+            tot_EsumH += parseInt(totalHour);
+            tot_EsumA += parseInt(totalAmount);
+        }
+    } else {
+        if (activityBudgetData[0].level_type === 'Individual') {
+            var existing_len = req.body.existingtclen;
+            for (var b = 0; b < activityBudgetData.length; b++) {
+                var indi_hour = activityBudgetData[b].hour / existing_len;
+                var indi_amount = activityBudgetData[b].amount / existing_len;
+                var totalHour = targetClientLength * indi_hour;
+                var totalAmount = targetClientLength * indi_amount;
+                await ActivityBudget.update({
+                    'hour': totalHour,
+                    'amount': totalAmount
+                }, {
+                    where: {
+                        'activity_id': req.body.activity_id,
+                        'budget_id': activityBudgetData[b].budget_id
+                    }
+                });
+            }
         }
     }
+    
     await Activity.update({
         'activity_type': req.body.activity_type,
         'activity_goal_id': req.body.activity_goal,
@@ -974,6 +1004,18 @@ router.post('/activity/update/:id', auth, upload.single('activity_attachment'), 
             'id': req.params['id']
         }
     });
+    if (req.body.budget_update == '1') {
+        if (activityBudgetData[0].level_type !== 'Individual') {
+            await Activity.update({
+                total_budget_hour: tot_EsumH,
+                total_budget_amount: tot_EsumA
+            }, {
+                where: {
+                    'id': req.params['id']
+                }
+            });
+        }
+    }
     await Activity_to_user_type.destroy({
         where: {
             'activity_id': req.params['id']
