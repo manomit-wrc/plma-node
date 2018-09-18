@@ -723,7 +723,7 @@
 						<div class="form-group form-focus select-focus select-attorney">
 							<label class="control-label">Association Status :</label>
 							<select id="association" name="association" class="form-control floating " >
-								<option value="">Select Association</option>
+								<option value="0">Select Association</option>
 								<option value="CONVERTED" {{#if_eq client.association_type "CONVERTED"}} selected="selected" {{/if_eq}}>CONVERTED</option>
 								<option value="NEW TARGET" {{#if_eq client.association_type "NEW TARGET"}} selected="selected" {{/if_eq}}>NEW TARGET</option>
 								<option value="TS-INTERIM" {{#if_eq client.association_type "TS-INTERIM"}} selected="selected" {{/if_eq}}>TS-INTERIM</option>
@@ -734,7 +734,7 @@
 						<div class="form-group form-focus select-focus select-attorney">
 							<label class="control-label">Industry Type :</label>
 							<select id="industry_type" name="industry_type" class="form-control floating " >
-								<option value="">Select Industry Type</option>
+								<option value="0">Select Industry Type</option>
 								{{#each industry}}
 								<option value="{{this.id}}" {{#if_eq this.id ../client.industry_type}} selected="selected" {{/if_eq}}>{{this.industry_name}}</option>
 								{{/each}}

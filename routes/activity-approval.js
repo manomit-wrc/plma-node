@@ -271,7 +271,8 @@ router.post("/get-notification", auth, async (req, res) => {
     // get notification for plaining periode
     const allRevenue = await Revenue.findAll({
         where: {
-            'type':'C'
+            'type':'C',
+            'user_id': req.user.id
         }
     });
 

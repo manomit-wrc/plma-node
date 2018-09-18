@@ -543,7 +543,7 @@
 						<div class="form-group form-focus select-focus select-attorney">
 							<label class="control-label">Association Status</label>
 							<select id="association" name="association" class="form-control floating" >
-								<option value="">Select Association</option>
+								<option value="0">Select Association</option>
 								<option value="CONVERTED">CONVERTED</option>
 								<option value="NEW TARGET">NEW TARGET</option>
 								<option value="TS-INTERIM">TS-INTERIM</option>
@@ -555,7 +555,7 @@
 							<label class="control-label">Industry Type <span class="req-lbl">*</span> </label>
 							<select id="industry_type" name="industry_type" class="form-control floating " >
 
-								<option value="">Select Industry Type</option>
+								<option value="0">Select Industry Type</option>
 								{{#each industry}}
 									<option value="{{this.id}}">{{this.industry_name}}</option>
 								{{/each}}

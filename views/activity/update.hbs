@@ -423,13 +423,13 @@
                           <div class="col-md-2">
                             <div class="form-group">
                               <input class="form-control budget_hour edit_budget_hour number_budget" type="text" data-budgets-id="{{this.id}}" id="edit_budget_hour"
-                                name="edit_budget_hour" placeholder="Hours" value="{{this.hour}}">
+                                name="edit_budget_hour" placeholder="Hours" value="{{round_up this.hour}}">
                             </div>
                           </div>
                           <div class="col-md-2">
                             <div class="form-group">
                               <input class="form-control budget_amount edit_budget_amount number_budget" type="text" id="edit_budget_amount" name="edit_budget_amount"
-                                placeholder="Dollars($)" value="{{this.amount}}">
+                                placeholder="Dollars($)" value="{{round_up this.amount}}">
                               <input type="hidden" name="edit_budget_remarks" id="edit_budget_remarks" class="edit_budget_remarks" value="{{this.remarks}}">
                             </div>
                           </div>
