@@ -459,9 +459,6 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 	});
 	
 	var referredListArr = [];
-
-
-
 	for(var i = 0; i < referredDetails.length; i++) {
 		if (referredDetails[i].type === 'T') {
 			const targetDetails = await Target.findOne({
@@ -630,6 +627,7 @@ router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		target,
 		err_message,
 		contactDetails,
+		referredDetails,
 		referredListArr
 	});
 });

@@ -426,12 +426,47 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="card-box">
+				<div class="col-xs-4">
+					<h3 class="card-title">Referral Information</h3>
+				</div>
+				<div class="col-xs-8 text-right">
+					<a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_referral"><i class="fa fa-plus"></i>
+						Add Referral</a>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="table-responsive">
+							<table class="table table-striped custom-table datatable">
+								<thead>
+									<tr>
+										<th>SL#</th>
+										<th>Referral Name</th>
+										<th>Email</th>
+									</tr>
+								</thead>
+								<tbody>
+									{{#each referralListArr}}
+									<tr>
+										<td>{{math @index "+" 1}}</td>
+										<td>{{this.name}}</td>
+										<td>{{this.email}}</td>
+									</tr>
+									{{/each}}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<div class="card-box">
 				<h3 class="card-title">Other Information</h3>
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group form-focus">
-							<label class="control-label">Target Company</label>
+							<label class="control-label">Company Name</label>
 							<input type="text" class="form-control floating" id="company_name" name="company_name" value="{{client.company_name}}" />
 						</div>
 					</div>
@@ -516,6 +551,38 @@
 		</form>
 	</div>
 </div>
+{{!-- /********************** Start Modal *******************************/ --}}
+<div id="add_referral" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Add Referral</h4>
+			</div>
+			<div class="modal-body" style="height: 100px;">
+				<form name="addRefferal" id="addRefferal" method="POST">
+					<input type="hidden" id="xxx" name="target_id" value="{{client.id}}">
+					<div class="col-md-6 col-md-offset-3" id="referral_list">
+						<div class="form-group form-focus select-attorney">
+							<select id="referral_id" name="referral_id_t" class="form-control floating">
+								<option value="">Select Referral</option>
+								{{#each referral}}
+								<option value="{{this.id}}" {{#inArrayCustom3 ../referralDetails this.id}} disabled {{/inArrayCustom3}}>{{this.first_name}}
+									{{this.last_name}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary" type="button" id="btnAddReffered">Submit</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+{{!-- /********************** End Modal *********************************/ --}}
 {{#content "script" mode="append"}}
 <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
@@ -527,6 +594,48 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function (e) {
+		$("#btnAddReffered").click(function () {
+			$("#addRefferal").submit();
+		});
+		$("#addRefferal").validate({
+			rules: {
+				referred_id_t: {
+					required: true,
+				}
+			},
+			messages: {
+				referred_id_t: {
+					required: "Referral can't be blank",
+				}
+			},
+			submitHandler: function (form) {
+				target_id = $('#xxx').val();
+				referral_id = $('#referral_id').val();
+				$.ajax({
+					type: "POST",
+					url: "/target/referraladd",
+					data: {
+						target_id: target_id,
+						referral_id: referral_id
+					},
+					beforeSend: function (xhr) {
+						xhr.setRequestHeader('X-CSRF-Token', "{{csrfToken}}");
+						$("#btnAddReffered").prop('disabled', true);
+						$("#btnAddReffered").html("Loading...");
+					},
+					success: function (response) {
+						if (response.code == 200) {
+							swal("", "Referral added successfully", "success");
+							setTimeout(function () {
+								location.reload();
+							}, 2000);
+						} else {
+							swal("", "Please try again", "warning");
+						}
+					}
+				});
+			}
+		});
 		$("#attorney_id").trigger('change');
 		$("#estimated_revenue").inputmask("numeric", {
 			radixPoint: ".",
