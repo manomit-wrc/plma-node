@@ -452,8 +452,6 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
     const zipcode = await Zipcode.findById(referral.zipcode.toString());
     const industry = await industry_type.findById(referral.industry_type.toString());
 
-
-
 	const referredDetails = await Referred_Client_Targets.findAll({
 		where: {
 			referral_id: req.params['id']
@@ -461,9 +459,6 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 	});
 	
 	var referredListArr = [];
-
-
-
 	for(var i = 0; i < referredDetails.length; i++) {
 		if (referredDetails[i].type === 'T') {
 			const targetDetails = await Target.findOne({
@@ -632,6 +627,7 @@ router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		target,
 		err_message,
 		contactDetails,
+		referredDetails,
 		referredListArr
 	});
 });

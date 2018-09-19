@@ -27,6 +27,8 @@ const ContactInformation = require('../models').contact_information;
 const Activity = require('../models').activity;
 const TargetActivity = require('../models').jointactivity;
 const Revenue = require('../models').revenue;
+const Referral = require('../models').referral;
+const Referred_Client_Targets = require('../models').referred_client_target;
 var csrfProtection = csrf({
 	cookie: true
 });
@@ -730,6 +732,40 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		existingTag.push(Number(existing_tag[i]));
 	}
 
+	var fetchReferral = {};
+    var referralListArr = [];
+    if (req.user.role_id != 2) {
+		fetchReferral.attorney_id = req.user.id;
+		fetchReferral.firm_id = req.user.firm_id;
+	} else {
+		fetchReferral.firm_id = req.user.firm_id;
+    }
+    
+    const referral = await Referral.findAll({
+		order: [
+			['first_name', 'ASC'],
+		],
+		where: fetchReferral
+    });
+    
+    const referralDetails = await Referred_Client_Targets.findAll({
+		where: {
+			client_id: req.params['id']
+		}
+	});
+	
+	for (var i = 0; i < referralDetails.length; i++) {
+        const referDetails = await Referral.findOne({
+            where: {
+                id: referralDetails[i].referral_id
+            }
+        });
+        referralListArr.push({
+            "name": referDetails.first_name + " " + referDetails.last_name,
+            "email": referDetails.email
+        });
+	}
+
 	const contactDetails = await ContactInformation.findAll({
 		where: {
 			'contact_id': req.params['id']
@@ -752,9 +788,26 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		error_message,
 		existing_tag: existingTag,
 		contactDetails,
+		referral,
+        referralListArr,
+        referralDetails,
 		client_revenue,
 		client_old_revenue,
 		count_old_revenue: client_old_revenue.length
+	});
+});
+
+router.post("/client/referraladd", auth, csrfProtection, async (req, res) => {
+    await Referred_Client_Targets.create({
+        'type': 'C',
+        'target_id': 0,
+        'client_id': parseInt(req.body.client_id),
+        'referral_id': parseInt(req.body.referral_id),
+        'status': 1
+    });
+    res.json({
+		code: "200",
+		message: 'Success'
 	});
 });
 

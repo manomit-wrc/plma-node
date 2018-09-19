@@ -20,6 +20,7 @@ const TargetActivity = require('../models').jointactivity;
 const Referral = require('../models').referral;
 const ContactInformation = require('../models').contact_information;
 const Revenue = require('../models').revenue;
+const Referred_Client_Targets = require('../models').referred_client_target;
 var csrfProtection = csrf({
     cookie: true
 });
@@ -408,6 +409,40 @@ router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, re
         }
     });
 
+    var fetchReferral = {};
+    var referralListArr = [];
+    if (req.user.role_id != 2) {
+		fetchReferral.attorney_id = req.user.id;
+		fetchReferral.firm_id = req.user.firm_id;
+	} else {
+		fetchReferral.firm_id = req.user.firm_id;
+    }
+    
+    const referral = await Referral.findAll({
+		order: [
+			['first_name', 'ASC'],
+		],
+		where: fetchReferral
+    });
+    
+    const referralDetails = await Referred_Client_Targets.findAll({
+		where: {
+			target_id: req.params['id']
+		}
+	});
+	
+	for (var i = 0; i < referralDetails.length; i++) {
+        const referDetails = await Referral.findOne({
+            where: {
+                id: referralDetails[i].referral_id
+            }
+        });
+        referralListArr.push({
+            "name": referDetails.first_name + " " + referDetails.last_name,
+            "email": referDetails.email
+        });
+	}
+
     const contactDetails = await ContactInformation.findAll({
 		where: {
 			'contact_id': req.params['id']
@@ -427,7 +462,10 @@ router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, re
         city: city,
         zipcode: zipcode,
         error_message,
-        contactDetails
+        contactDetails,
+        referral,
+        referralListArr,
+        referralDetails
     });
 });
 
@@ -492,7 +530,6 @@ router.get('/target/view/:id', auth, firmAttrAuth, csrfProtection, async(req, re
     const city = await City.findById(target.city.toString());
     const zip = await Zipcode.findById(target.postal_code.toString());
     const industrys = await industry_type.findById(target.industry_type.toString());
-    
     
     res.render('target/targetview', {
         layout: 'dashboard',
@@ -976,6 +1013,20 @@ router.get("/client/view-referral/:id", auth, firmAttrAuth, async(req, res) => {
         title: 'View Referral Source',
         referral
     });
+});
+
+router.post("/target/referraladd", auth, csrfProtection, async (req, res) => {
+    await Referred_Client_Targets.create({
+        'type': 'T',
+        'target_id': parseInt(req.body.target_id),
+        'client_id': 0,
+        'referral_id': parseInt(req.body.referral_id),
+        'status': 1
+    });
+    res.json({
+		code: "200",
+		message: 'Success'
+	});
 });
 
 module.exports = router;
