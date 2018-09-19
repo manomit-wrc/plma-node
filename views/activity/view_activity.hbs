@@ -10,11 +10,13 @@
         <h4 class="page-title">View Activity</h4>
       </div>
       <div class="right">
-        {{#if (or (eq editdata.activity_status "0")(eq editdata.activity_status "3"))}}
-        <a href="/activity/edit/{{editdata.id}}" class="btn btn-primary pull-right rounded"><i class="fa fa-edit"></i> Edit
-          Activity
-        </a>
-        {{/if}}
+        {{#if_eq req.user.role_id "2"}}{{else}}
+          {{#if (or (eq editdata.activity_status "0")(eq editdata.activity_status "3"))}}
+          <a href="/activity/edit/{{editdata.id}}" class="btn btn-primary pull-right rounded"><i class="fa fa-edit"></i> Edit
+            Activity
+          </a>
+          {{/if}}
+        {{/if_eq}}
         <a href="javascript:history.back()" class="btn btn-primary pull-right rounded m-r-5"><i class="fa fa-arrow-left"></i>
           Back</a>
       </div>
