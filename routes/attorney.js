@@ -97,7 +97,6 @@ router.get('/attorneys', auth, csrfProtection, async (req, res) => {
 	});
 });
 
-
 router.post("/get-firm-user-designation", auth, async (req, res) => {
 	const get_desig = await User.findAll({
 		where: {
@@ -253,7 +252,6 @@ router.get('/attorneys/addAttorney', auth, firmAttrAuth, csrfProtection, async (
 		allJurisdiction
 	});
 });
-
 
 router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var practice_area = req.body.practice_area;
