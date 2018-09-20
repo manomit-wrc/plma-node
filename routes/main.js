@@ -357,8 +357,48 @@ router.post('/admin/delete-industry/:id', auth, siteAuth, csrfProtection, (req, 
 //======================================{{{{{{settings}}}}}}==========================================
 
 
+router.get('/settings', auth, csrfProtection, async (req, res) => {
 
-	
+	var sucess_setting_message1 = req.flash('setting-message1')[0];
+
+	let zipcodes;
+	let cities;
+	const country = await Country.findAll({});
+	const state = await State.findAll({});
+	// console.log(state);
+    // return false;
+	// const settings = await setting.findById(1);
+	 const settings = await setting.findAll();
+	 
+	 if (settings != ''){
+		cities = await City.findAll({
+			where: {
+				state_id: settings[0].state
+			}
+		});
+		if (settings[0].city) {
+			const current_city = await City.findById(parseInt(settings[0].city));
+
+			zipcodes = await Zipcode.findAll({
+				where: {
+					city_name: current_city.name
+				}
+			});
+		}
+	}
+
+	res.render('superadminsetting/settings', {
+		layout: 'dashboard',
+		title: 'Super Admin Setting',
+		csrfToken: req.csrfToken(),
+		sucess_setting_message1,
+		data: settings ? settings[0] : '',
+		country: country,
+		state: state,
+		cities,
+		zipcodes
+	});
+});
 
 //insert
 router.post('/settings/insert', auth, csrfProtection, (req, res) => {
