@@ -369,7 +369,8 @@ router.get('/settings', auth, csrfProtection, async (req, res) => {
     // return false;
 	// const settings = await setting.findById(1);
 	 const settings = await setting.findAll();
-	 if (settings){
+	 
+	 if (settings != ''){
 		cities = await City.findAll({
 			where: {
 				state_id: settings[0].state
