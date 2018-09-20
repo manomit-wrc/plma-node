@@ -362,25 +362,28 @@ router.get('/settings', auth, csrfProtection, async (req, res) => {
 	var sucess_setting_message1 = req.flash('setting-message1')[0];
 
 	let zipcodes;
+	let cities;
 	const country = await Country.findAll({});
 	const state = await State.findAll({});
 	// console.log(state);
     // return false;
 	// const settings = await setting.findById(1);
-	 const settings = await setting.findById(6);
-	const cities = await City.findAll({
-		where: {
-			state_id: settings.state
-		}
-	});
-	if (settings.city) {
-		const current_city = await City.findById(parseInt(settings.city));
-
-		zipcodes = await Zipcode.findAll({
+	 const settings = await setting.findAll();
+	 if (settings){
+		cities = await City.findAll({
 			where: {
-				city_name: current_city.name
+				state_id: settings[0].state
 			}
 		});
+		if (settings[0].city) {
+			const current_city = await City.findById(parseInt(settings[0].city));
+
+			zipcodes = await Zipcode.findAll({
+				where: {
+					city_name: current_city.name
+				}
+			});
+		}
 	}
 
 	res.render('superadminsetting/settings', {
@@ -388,7 +391,7 @@ router.get('/settings', auth, csrfProtection, async (req, res) => {
 		title: 'Super Admin Setting',
 		csrfToken: req.csrfToken(),
 		sucess_setting_message1,
-		data: settings,
+		data: settings ? settings[0] : '',
 		country: country,
 		state: state,
 		cities,
