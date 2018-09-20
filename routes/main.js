@@ -354,44 +354,11 @@ router.post('/admin/delete-industry/:id', auth, siteAuth, csrfProtection, (req, 
 
 /*========================================End industry========================================*/
 
-//============================================={{{{{{settings}}}}}}==========================================
+//======================================{{{{{{settings}}}}}}==========================================
 
 
-router.get('/settings', auth, csrfProtection, async (req, res) => {
 
-	var sucess_setting_message1 = req.flash('setting-message1')[0];
-
-	let zipcodes;
-	const country = await Country.findAll({});
-	const state = await State.findAll({});
-	const settings = await setting;
-	const cities = await City.findAll({
-		where: {
-			state_id: settings.state
-		}
-	});
-	if (settings.city) {
-		const current_city = await City.findById(parseInt(settings.city));
-
-		zipcodes = await Zipcode.findAll({
-			where: {
-				city_name: current_city.name
-			}
-		});
-	}
-
-	res.render('superadminsetting/settings', {
-		layout: 'dashboard',
-		title: 'Super Admin Setting',
-		csrfToken: req.csrfToken(),
-		sucess_setting_message1,
-		data: settings,
-		country: country,
-		state: state,
-		cities,
-		zipcodes
-	});
-});
+	
 
 //insert
 router.post('/settings/insert', auth, csrfProtection, (req, res) => {
@@ -455,36 +422,35 @@ router.post('/settings/insert', auth, csrfProtection, (req, res) => {
 });
 
 
-
 //============================
 
 
-router.post('/client/findCityByState', auth, firmAttrAuth, csrfProtection, (req, res) => {
+// router.post('/client/findCityByState', auth, firmAttrAuth, csrfProtection, (req, res) => {
 
-	City.findAll({
-		where: {
-			state: req.body.state
-		}
-	}).then(city => {
-		res.json({
-			city: city
-		});
-	});
-});
+// 	City.findAll({
+// 		where: {
+// 			state: req.body.state
+// 		}
+// 	}).then(city => {
+// 		res.json({
+// 			city: city
+// 		});
+// 	});
+// });
 
-router.post('/client/findPinByCity', auth, firmAttrAuth, csrfProtection, (req, res) => {
-	city.findById(req.body.city_id).then(row => {
-		Zipcode.findAll({
-			where: {
-				city_name: row.name
-			}
-		}).then(pin => {
-			res.json({
-				pin: pin
-			});
-		});
-	});
-});
+// router.post('/client/findPinByCity', auth, firmAttrAuth, csrfProtection, (req, res) => {
+// 	city.findById(req.body.city_id).then(row => {
+// 		Zipcode.findAll({
+// 			where: {
+// 				city_name: row.name
+// 			}
+// 		}).then(pin => {
+// 			res.json({
+// 				pin: pin
+// 			});
+// 		});
+// 	});
+// });
 
 /*==========================================Client route starts==============================================*/
 router.get('/client', auth, firmAttrAuth, csrfProtection, async (req, res) => {
