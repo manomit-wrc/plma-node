@@ -363,12 +363,16 @@ router.get('/settings', auth, csrfProtection, async (req, res) => {
 
 	let zipcodes;
 	const country = await Country.findAll({});
+
+
+	
 	const state = await State.findAll({});
 	// console.log(state);
     // return false;
 	// const settings = await setting.findById(1);
-	 const settings = await setting.findById(6);
-	const cities = await City.findAll({
+    // const settings = await setting.findById(9);
+		const settings = await setting;
+	   const cities = await City.findAll({
 		where: {
 			state_id: settings.state
 		}
@@ -461,32 +465,32 @@ router.post('/settings/insert', auth, csrfProtection, (req, res) => {
 //============================
 
 
-router.post('/client/findCityByState', auth, firmAttrAuth, csrfProtection, (req, res) => {
+// router.post('/client/findCityByState', auth, firmAttrAuth, csrfProtection, (req, res) => {
 
-	City.findAll({
-		where: {
-			state: req.body.state
-		}
-	}).then(city => {
-		res.json({
-			city: city
-		});
-	});
-});
+// 	City.findAll({
+// 		where: {
+// 			state: req.body.state
+// 		}
+// 	}).then(city => {
+// 		res.json({
+// 			city: city
+// 		});
+// 	});
+// });
 
-router.post('/client/findPinByCity', auth, firmAttrAuth, csrfProtection, (req, res) => {
-	city.findById(req.body.city_id).then(row => {
-		Zipcode.findAll({
-			where: {
-				city_name: row.name
-			}
-		}).then(pin => {
-			res.json({
-				pin: pin
-			});
-		});
-	});
-});
+// router.post('/client/findPinByCity', auth, firmAttrAuth, csrfProtection, (req, res) => {
+// 	city.findById(req.body.city_id).then(row => {
+// 		Zipcode.findAll({
+// 			where: {
+// 				city_name: row.name
+// 			}
+// 		}).then(pin => {
+// 			res.json({
+// 				pin: pin
+// 			});
+// 		});
+// 	});
+// });
 
 /*==========================================Client route starts==============================================*/
 router.get('/client', auth, firmAttrAuth, csrfProtection, async (req, res) => {
