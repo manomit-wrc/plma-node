@@ -364,7 +364,10 @@ router.get('/settings', auth, csrfProtection, async (req, res) => {
 	let zipcodes;
 	const country = await Country.findAll({});
 	const state = await State.findAll({});
-	const settings = await setting.findById(1);
+	// console.log(state);
+    // return false;
+	// const settings = await setting.findById(1);
+	 const settings = await setting.findById(6);
 	const cities = await City.findAll({
 		where: {
 			state_id: settings.state
