@@ -115,14 +115,14 @@ router.get('/target', auth, firmAttrAuth, csrfProtection, async(req, res) => {
     if (req.user.role_id != 2) {
         whereCondition.attorney_id = req.user.id;
     }
-    
+
     const targetDetails = await Target.findAll({
         where: whereCondition,
         include: [{
             model: Revenue
         }]
     });
-    
+
     res.render('target/targets', {
         layout: 'dashboard',
         title: 'Target Listing',
@@ -261,7 +261,7 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
                 target_type: req.body.target_type,
                 estimated_lifetime_value: removePhoneMask(req.body.life_time_revenue),
                 close_date: targetCloseDate ? targetCloseDate[2] + "-" + targetCloseDate[0] + "-" + targetCloseDate[1] : null,
-                
+
                 // estimated_revenue: removePhoneMask(req.body.estimated_revenue),
                 // revenue_start_month: req.body.startMonth,
                 // revenue_end_month: req.body.endMonth,
@@ -280,7 +280,7 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
 					type: 'M',
 					contact_id: insertData.id
 				});
-			} 
+			}
             const revenueaddo = await Revenue.create({
                 type:"T",
                 target_id: insertData.id,
@@ -370,7 +370,7 @@ router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, re
         },
         include: [{
             model: Revenue
-        }]  
+        }]
     });
     const designation = await Designation.findAll({
         order: [
@@ -417,20 +417,20 @@ router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, re
 	} else {
 		fetchReferral.firm_id = req.user.firm_id;
     }
-    
+
     const referral = await Referral.findAll({
 		order: [
 			['first_name', 'ASC'],
 		],
 		where: fetchReferral
     });
-    
+
     const referralDetails = await Referred_Client_Targets.findAll({
 		where: {
 			target_id: req.params['id']
 		}
 	});
-	
+
 	for (var i = 0; i < referralDetails.length; i++) {
         const referDetails = await Referral.findOne({
             where: {
@@ -448,7 +448,7 @@ router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, re
 			'contact_id': req.params['id']
 		}
     });
-    
+
     res.render('target/targetupdate', {
         layout: 'dashboard',
         title: 'Edit Target',
@@ -483,7 +483,7 @@ router.get('/target/view/:id', auth, firmAttrAuth, csrfProtection, async(req, re
         }]
     });
     const designation = await Designation.findAll();
-    
+
     // const country = await Country.findAll();
     const attorney = await user.findAll({
         where: {
@@ -530,7 +530,7 @@ router.get('/target/view/:id', auth, firmAttrAuth, csrfProtection, async(req, re
     const city = await City.findById(target.city.toString());
     const zip = await Zipcode.findById(target.postal_code.toString());
     const industrys = await industry_type.findById(target.industry_type.toString());
-    
+
     res.render('target/targetview', {
         layout: 'dashboard',
         title: 'View Target',
@@ -559,7 +559,7 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
 	var phone_no = req.body.contactDetailsPhone_no;
 	var fax = req.body.contactDetailsFax;
     var mobile_no = req.body.contactDetailsMobile_no;
-    
+
    const startDate = req.body.targetStartDate ? req.body.targetStartDate.split("-") : '';
    const endDate = req.body.end_date ? req.body.end_date.split("-") : '';
    const targetCloseDate = req.body.targetCloseDate ? req.body.targetCloseDate.split("-") : '';
@@ -589,7 +589,7 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
             }
         }
     });
-    
+
     if (target_edit_data === null) {
         await Target.update({
             organization_name: req.body.org_name,
@@ -639,7 +639,7 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
             where: {
                 id: req.params['id']
             }
-            
+
         });
 
         const revenueupdate = await Revenue.update({
@@ -651,10 +651,10 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
         },{
             where:{
                 target_id: req.params['id']
-            } 
-                
+            }
+
         });
-            
+
         await ContactInformation.destroy({
 			where: {
 				contact_id: req.params['id']
@@ -673,7 +673,7 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
                 type: 'M',
                 contact_id: req.params['id']
             });
-        } 
+        }
 
         req.flash('success-message', 'Target Updated Successfully');
         res.redirect('/target');
@@ -839,7 +839,7 @@ router.post('/target/import', auth, upload.single('file_name'), csrfProtection, 
 });
 
 router.post('/target/move-to-client', auth, async(req, res) => {
-    
+
     var target_ids = req.body.target_id;
     var n = req.body.target_id.length;
     var clientDetails;
@@ -985,7 +985,7 @@ router.get("/client/view-activity/:id", auth, async(req, res) => {
     });
 });
 
-// start associate referral 
+// start associate referral
 
 router.get("/target/view-referral/:id", auth, firmAttrAuth, async(req, res) => {
     const referral = await Referral.findAll({

@@ -94,7 +94,7 @@ const hbs = exphbs.create({
         },
 
         inArray: function (array, value, block) {
-            
+
             if (array.indexOf(value) !== -1) {
                 return block.fn(this);
             } else {
@@ -470,7 +470,7 @@ app.use(strategic_goal);
 app.use(function (req, res, next) {
     if (req.accepts('html')) {
         res.render('error', {
-            
+
             url: req.url
         });
         return;

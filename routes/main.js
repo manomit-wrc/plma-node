@@ -95,7 +95,7 @@ router.get('/budget', csrfProtection, auth, siteAuth, (req, res) => {
 
 router.post('/budget/add', auth, siteAuth, csrfProtection, (req, res) => {
 	budget.findAndCountAll({
-		
+
 		where: {
 			name: req.body.name
 		}
@@ -369,7 +369,7 @@ router.get('/settings', auth, csrfProtection, async (req, res) => {
     // return false;
 	// const settings = await setting.findById(1);
 	 const settings = await setting.findAll();
-	 
+
 	 if (settings != ''){
 		cities = await City.findAll({
 			where: {
@@ -465,32 +465,32 @@ router.post('/settings/insert', auth, csrfProtection, (req, res) => {
 //============================
 
 
-// router.post('/client/findCityByState', auth, firmAttrAuth, csrfProtection, (req, res) => {
+router.post('/client/findCityByState', auth, firmAttrAuth, csrfProtection, (req, res) => {
 
-// 	City.findAll({
-// 		where: {
-// 			state: req.body.state
-// 		}
-// 	}).then(city => {
-// 		res.json({
-// 			city: city
-// 		});
-// 	});
-// });
+	City.findAll({
+		where: {
+			state: req.body.state
+		}
+	}).then(city => {
+		res.json({
+			city: city
+		});
+	});
+});
 
-// router.post('/client/findPinByCity', auth, firmAttrAuth, csrfProtection, (req, res) => {
-// 	city.findById(req.body.city_id).then(row => {
-// 		Zipcode.findAll({
-// 			where: {
-// 				city_name: row.name
-// 			}
-// 		}).then(pin => {
-// 			res.json({
-// 				pin: pin
-// 			});
-// 		});
-// 	});
-// });
+router.post('/client/findPinByCity', auth, firmAttrAuth, csrfProtection, (req, res) => {
+	city.findById(req.body.city_id).then(row => {
+		Zipcode.findAll({
+			where: {
+				city_name: row.name
+			}
+		}).then(pin => {
+			res.json({
+				pin: pin
+			});
+		});
+	});
+});
 
 /*==========================================Client route starts==============================================*/
 router.get('/client', auth, firmAttrAuth, csrfProtection, async (req, res) => {
@@ -658,9 +658,9 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
     // });
 
 	const clients = await client.findOne({
-		where: { 
+		where: {
 			'id': req.params['id']
-		} 
+		}
 	});
 	const client_revenue = await Revenue.findOne({
 		where: {
@@ -676,9 +676,9 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 		}
 	});
 	//console.log(client_old_revenue.length);
-	
+
 	// console.log('clients----------------->',clients.revenues[0].current_revenue);
-	
+
 
 	const designations = await Designation.findAll({
 		order: [
@@ -747,20 +747,20 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 	} else {
 		fetchReferral.firm_id = req.user.firm_id;
     }
-    
+
     const referral = await Referral.findAll({
 		order: [
 			['first_name', 'ASC'],
 		],
 		where: fetchReferral
     });
-    
+
     const referralDetails = await Referred_Client_Targets.findAll({
 		where: {
 			client_id: req.params['id']
 		}
 	});
-	
+
 	for (var i = 0; i < referralDetails.length; i++) {
         const referDetails = await Referral.findOne({
             where: {
@@ -833,13 +833,13 @@ router.post("/add-old-curernt-revenue", auth, async (req, res) => {
 
 router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var error_message = req.flash('error-clientEdit-message')[0];
-	
+
 	client.hasMany(Revenue, {
         foreignKey: 'client_id'
     });
 
 	const clients = await client.findOne({
-		where: { 
+		where: {
 			'id': req.params['id']
 		},
 		include: [{
@@ -1066,7 +1066,7 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[0] + "-" + closingDate[1] : null,
 				estimated_customer_life_time_value: removePhoneMask(req.body.estimated_customer_life_time_value),
             	revenue_end_month: req.body.endMonth
-				   
+
 			});
 
 			for (let j=0; j< clientDetails.length; j++) {
@@ -1081,7 +1081,7 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 					type: 'M',
 					contact_id: insertData.id
 				});
-			} 
+			}
 
 
 			//revenues
@@ -1163,7 +1163,7 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				user_id: req.user.id,
 				firm_id: req.user.firm_id
 			});
-			
+
 			req.flash('success-message', 'Client Added Successfully');
 			res.redirect('/client');
 		}
@@ -1188,7 +1188,7 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 	const startDate = req.body.clientStartDate ? req.body.clientStartDate.split("-") : '';
 	const endDate = req.body.end_date ? req.body.end_date.split("-") : '';
 
-	
+
 	let length = first_name.length;
 	for (let i=0; i< length; i++) {
 		if (first_name[i]!=="") {
@@ -1263,7 +1263,7 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 			life_time_revenue: removePhoneMask(req.body.life_time_revenue),
 			revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[0] + "-" + closingDate[1] : null,
 			estimated_customer_life_time_value: removePhoneMask(req.body.estimated_customer_life_time_value),
-            revenue_end_month: req.body.endMonth 
+            revenue_end_month: req.body.endMonth
 
 		}, {
 			where: {
@@ -1289,8 +1289,8 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
                 type: 'M',
                 contact_id: req.params['id']
             });
-		} 
-		
+		}
+
 
 		//revenues
 		await Revenue.destroy({
@@ -1310,7 +1310,7 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 			//current_revenue: removePhoneMask(req.body.current_revenue),
 			user_id: req.user.id,
 			firm_id: req.user.firm_id
-		}); 
+		});
 
 		req.flash('success-edit-message', 'Client Updated Successfully');
 		res.redirect('/client')
