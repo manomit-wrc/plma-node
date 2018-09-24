@@ -1955,7 +1955,6 @@ router.post('/client/upload-excel', auth, upload_client_excel.single('client_xls
 });
 
 /*============================Ends Import Client Excel Data =====================================*/
-<<<<<<< HEAD
 
 
 // router.get('/fetch_zip_city', auth,  async (req, res) => {
@@ -1976,6 +1975,3 @@ router.post('/client/upload-excel', auth, upload_client_excel.single('client_xls
 // 	res.redirect('/dashboard');
 // });
 module.exports = router;
-=======
-module.exports = router;
->>>>>>> a9cd311c7272749af3b78605a4da85f1439776a0
