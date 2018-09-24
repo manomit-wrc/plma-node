@@ -65,6 +65,9 @@
 									</div>
 								</div>
 							</div>
+
+
+
 							<div id="indivisual_type">
 								<div class="col-md-6">
 									<div class="form-group form-focus">
@@ -281,7 +284,6 @@
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">First Name
-											<span class="req-lbl">*</span>
 
 										</label>
 										<input type="text" class="form-control floating" id="contactDetailsFirstName" name="contactDetailsFirstName[]" />
@@ -296,7 +298,6 @@
 								<div class="col-md-6">
 									<div class="form-group form-focus select-focus">
 										<label class="control-label">Gender
-											<span class="req-lbl">*</span>
 
 										</label>
 										<select class="select form-control floating" id="contactDetailsGender" name="contactDetailsGender[]">
@@ -321,7 +322,6 @@
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Phone No.
-											<span class="req-lbl">*</span>
 
 										</label>
 										<input type="text" class="form-control floating number_validator" id="contactDetailsPhone_no" name="contactDetailsPhone_no[]"
@@ -603,6 +603,26 @@
 					status: {
 						required: true
 					},
+
+
+attorney_id:{
+	required:true
+},
+revenueclosingDate:{
+	required:true
+},
+estimated_revenue:{
+	required:true
+},
+org_name:{
+	required:true
+},
+org_code:{
+	required:true
+},
+
+
+
 					industry_type: {
 						required: true
 					}
@@ -611,6 +631,26 @@
 					first_name: {
 						required: "First name can't be blank"
 					},
+
+
+attorney_id: {
+	required: "Attorney Id can't be blank"
+},
+
+revenueclosingDate: {
+	required: "Revenue Closing Date can't be blank"
+},
+estimated_revenue: {
+	required: "Estimated Revenue can't be blank"
+},
+org_name: {
+	required: "Organization Name can't be blank"
+},
+org_code: {
+	required: "Organization Code can't be blank"
+},
+
+
 					last_name: {
 						required: "Last name can't be blank"
 					},
