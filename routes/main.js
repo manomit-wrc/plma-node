@@ -29,6 +29,7 @@ const TargetActivity = require('../models').jointactivity;
 const Revenue = require('../models').revenue;
 const Referral = require('../models').referral;
 const Referred_Client_Targets = require('../models').referred_client_target;
+const PlmaCountryFetch = require('../models').plma_all_country;
 var csrfProtection = csrf({
 	cookie: true
 });
@@ -1954,4 +1955,23 @@ router.post('/client/upload-excel', auth, upload_client_excel.single('client_xls
 });
 
 /*============================Ends Import Client Excel Data =====================================*/
+
+
+// router.get('/fetch_zip_city', auth,  async (req, res) => {
+// 	var xxx = xlsx.parse(fs.readFileSync('./public/zip_plma.xlsx'));
+// 	var importedDataC = JSON.stringify(convertToJSON(xxx[0].data));
+// 	var excelAllCSC = JSON.parse(importedDataC);
+// 	console.log(excelAllCSC.length);
+// 	for (var i = 0; i < excelAllCSC.length; i++) {
+// 		await Zipcode.create({
+// 			zip: excelAllCSC[i].zip,
+// 			city_name: excelAllCSC[i].city_name,
+// 			lat: excelAllCSC[i].lat,
+// 			lng: excelAllCSC[i].long
+// 		});
+// 	}
+// 	console.log("===================end============================");
+	
+// 	res.redirect('/dashboard');
+// });
 module.exports = router;
