@@ -54,7 +54,7 @@ router.get('/attorneys', auth, csrfProtection, async (req, res) => {
 	var success_message = req.flash('success-attorney-message')[0];
 	var success_edit_message = req.flash('success-edit-attorney-message')[0];
 	var attar_information = [];
-	
+
 	User.hasMany(Attorney_Details, {
 		foreignKey: 'user_id'
 	});
@@ -253,6 +253,9 @@ router.get('/attorneys/addAttorney', auth, firmAttrAuth, csrfProtection, async (
 	});
 });
 
+
+
+
 router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var practice_area = req.body.practice_area;
 	var jurisdiction = req.body.jurisdiction;
@@ -370,7 +373,7 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 			}
 		});
 		var url = req.protocol + '://' + req.get('host');
-		var email_body = 
+		var email_body =
 		`<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -575,7 +578,7 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
                         </tr>
                       </table>
 
-                      <p style="font-family: 'Open Sans','Helvetica Neue', 'Helvetica',Calibri, Arial, sans-serif; font-size:14px; line-height:26px; margin-top: 20px;">Warm Regards,<br> Perform Law!</p>  
+                      <p style="font-family: 'Open Sans','Helvetica Neue', 'Helvetica',Calibri, Arial, sans-serif; font-size:14px; line-height:26px; margin-top: 20px;">Warm Regards,<br> Perform Law!</p>
                       </td>
                     </tr>
                   </table>
@@ -587,7 +590,7 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 
               </td>
             </tr>
-            
+
           </table>
           <!-- /content -->
         </td>
@@ -675,7 +678,7 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 			model: Jurisdiction
 		}]
 	});
-	
+
 	const industry_type = await Industry_type.findAll({
 		order: [
 			['industry_name', 'ASC'],
@@ -727,7 +730,7 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 	for (var j = 0; j < result_jurisdiction.length; j++) {
 	jurisdiction_arr.push(result_jurisdiction[j].jurisdiction_id);
 	}
-	
+
 	res.render('attorney/updateattorney', {
 		layout: 'dashboard',
 		title: 'Edit Attorney',

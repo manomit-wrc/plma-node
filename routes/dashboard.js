@@ -93,7 +93,7 @@ router.get('/dashboard', auth,  async(req, res) => {
     catch(error) {
         console.log(error);
     }
-    
+
 
 
     var activity_count = activity.length;
@@ -160,7 +160,7 @@ router.get('/dashboard', auth,  async(req, res) => {
         ]
     });
     var referral_count = referral.length;
-    
+
 /* =================== Referral Count Ends ================================*/
 
 /* =================== Master Contact Count Ends ================================*/
@@ -172,7 +172,7 @@ router.get('/dashboard', auth,  async(req, res) => {
             masterContatcCondition.attorney_id = req.user.id;
         }
     }
-    
+
     var master_contact = await MasterContact.findAll({
         where: masterContatcCondition,
         order: [
@@ -183,8 +183,8 @@ router.get('/dashboard', auth,  async(req, res) => {
 
 /* =================== Firm Count Starts =============================================== */
     var firm = await Firm.findAll();
-    var firm_count = firm.length; 
-    
+    var firm_count = firm.length;
+
     User.belongsTo(Firm, {
         foreignKey: 'firm_id'
     });
@@ -207,7 +207,7 @@ router.get('/dashboard', auth,  async(req, res) => {
             role_id: "4"
         }
     });
-    var employee_count = employee.length;     
+    var employee_count = employee.length;
 /* =================== Employee Count Ends =============================================== */
 
 /* =================== Attorney Count Starts =============================================== */
@@ -216,7 +216,7 @@ router.get('/dashboard', auth,  async(req, res) => {
             role_id: "3"
         }
     });
-    var attorney_count = attorney.length;     
+    var attorney_count = attorney.length;
 /* =================== Attorney Count Ends =============================================== */
 
 /* =================== Total Budgets Count Starts =============================================== */
@@ -253,7 +253,7 @@ router.get('/dashboard', auth,  async(req, res) => {
         b:45
     })
 
-    
+
 /* =================== Ends Chart Section ======================================================*/
 
 
@@ -267,7 +267,7 @@ router.get('/dashboard', auth,  async(req, res) => {
     requestApproval.belongsTo(User, {
         foreignKey: 'approver_id'
     });
-    
+
     const noti = await requestApproval.findAll({
         where: {
             'approver_id': req.user.id,
@@ -291,7 +291,7 @@ router.get('/dashboard', auth,  async(req, res) => {
     activityAttorney.belongsTo(User, {
         foreignKey: 'attorney_id'
     });
-    
+
     const teamActivityAttorney = await activityAttorney.findAll({
         where: {
             'attorney_id': req.user.id,
@@ -302,11 +302,11 @@ router.get('/dashboard', auth,  async(req, res) => {
         },{
             model: Activity
         }],
-    }); 
+    });
 
 
-    
-   
+
+
 
     if (teamActivityAttorney.length>0) {
         for (let i=0; i< teamActivityAttorney.length; i++) {
@@ -346,12 +346,12 @@ router.get('/dashboard', auth,  async(req, res) => {
                 'userFirstName':userDetails.first_name,
                 'userLastName':userDetails.last_name,
                 'type':'2'
-            }) 
+            })
         }
-    }    
+    }
     // console.log('notiFicationDetails',notiFicationDetails.length);
-    
-    //notifications end 09-19-2018    
+
+    //notifications end 09-19-2018
 
 
     res.render('dashboard', {
@@ -429,7 +429,7 @@ router.get('/profile', auth, async (req, res) => {
                 user_id: req.user.id
             }
         })
-        
+
         res.render('profile', {
             layout: 'dashboard',
             title: 'Profile',
@@ -460,20 +460,20 @@ router.get('/edit-profile', csrfProtection, auth, async (req, res) => {
 
     if(req.user.city != null) {
         const cities = await City.findById(req.user.city);
-        
+
         zipcode = await Zipcode.findAll({
             where: {
                 city_name: cities.name
             }
         });
-        
+
     }
     var success_message = req.flash('success-message')[0];
     var error_message = req.flash('error-message')[0];
-    
+
     res.render('edit-profile', { layout: 'dashboard', title: 'Edit Profile', csrfToken: req.csrfToken(),success_message, error_message, country, state, city, zipcode });
 
-    
+
 }).post('/edit-profile', auth, profile.single('avatar'), csrfProtection, auth, (req, res) => {
     const formatDate = req.body.dob ? req.body.dob.split("-") : '';
     User.update({
@@ -585,7 +585,7 @@ router.post('/change-site-to-firm', auth, async(req, res) =>{
     const change_role = await User.update({
         actual_role_id: actual_role,
         role_id: 2,
-        firm_id: req.body.firm_id 
+        firm_id: req.body.firm_id
     }, {
         where: {
             id: req.user.id
@@ -1055,14 +1055,14 @@ router.get("/get-chart-two-activity-count-value", auth, async(req, res)=> {
     var tot_activity = [year1.length, year2.length, year3.length, year4.length, year5.length, year6.length, year7.length, year8.length];
     var tot_amount = [year1.reduce((a, b) => a + b, 0), year2.reduce((a, b) => a + b, 0), year3.reduce((a, b) => a + b, 0), year4.reduce((a, b) => a + b, 0), year5.reduce((a, b) => a + b, 0), year6.reduce((a, b) => a + b, 0), year7.reduce((a, b) => a + b, 0), year8.reduce((a, b) => a + b, 0)];
     var tot_hour = [year1_hour.reduce((a, b) => a + b, 0), year2_hour.reduce((a, b) => a + b, 0), year3_hour.reduce((a, b) => a + b, 0), year4_hour.reduce((a, b) => a + b, 0), year5_hour.reduce((a, b) => a + b, 0), year6_hour.reduce((a, b) => a + b, 0), year7_hour.reduce((a, b) => a + b, 0), year8_hour.reduce((a, b) => a + b, 0)];
-    
+
     res.send({
         success: true,
         total_activity: tot_activity,
         total_amount: tot_amount,
         total_hour: tot_hour
     });
-    
+
 });
 
 router.get("/get-chart-estimated-revenue-count-value", auth, async(req, res)=> {
@@ -1253,7 +1253,7 @@ router.get("/get-chart-estimated-revenue-count-value", auth, async(req, res)=> {
     var tot_client = [jan_client.length, feb_client.length, mar_client.length, apr_client.length, may_client.length, jun_client.length, jul_client.length, aug_client.length, sep_client.length, oct_client.length, nov_client.length, dec_client.length];
     var tot_target = [jan_target.length, feb_target.length, mar_target.length, apr_target.length, may_target.length, jun_target.length, jul_target.length, aug_target.length, sep_target.length, oct_target.length, nov_target.length, dec_target.length];
     var tot_estimated_revenue = [jan_estimated_revenue.reduce((a, b) => a + b, 0), feb_estimated_revenue.reduce((a, b) => a + b, 0), mar_estimated_revenue.reduce((a, b) => a + b, 0), apr_estimated_revenue.reduce((a, b) => a + b, 0), may_estimated_revenue.reduce((a, b) => a + b, 0), jun_estimated_revenue.reduce((a, b) => a + b, 0), jul_estimated_revenue.reduce((a, b) => a + b, 0), aug_estimated_revenue.reduce((a, b) => a + b, 0), sep_estimated_revenue.reduce((a, b) => a + b, 0), oct_estimated_revenue.reduce((a, b) => a + b, 0), nov_estimated_revenue.reduce((a, b) => a + b, 0), dec_estimated_revenue.reduce((a, b) => a + b, 0)];
-    
+
     res.send({
         success: true,
         total_client: tot_client,
