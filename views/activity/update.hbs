@@ -223,12 +223,18 @@
                   <label class="control-label">Practice Area Type <span class="req-lbl">*</span> </label>
                   <select id="practice_area" name="practice_area" class="form-control floating ">
                     <option value="">Select Practice Area</option>
-                    {{#each practice_area}}
-                    <option value="{{this.practicearea.id}}" {{#if_eq this.practicearea.id ../editdata.practice_area}} selected="selected" {{/if_eq}}>{{this.practicearea.name}}</option>
-                    {{/each}}
-                    {{#if_eq user.id editdata.user_id}}
+                     {{#if_eq user.actual_role_id "2"}} 
+                      {{#each practice_area_firm}}
+                        <option value="{{this.practicearea.id}}" {{#if_eq this.practicearea.id ../editdata.practice_area}} selected="selected" {{/if_eq}}>{{this.practicearea.name}}</option>
+                      {{/each}} 
                     {{else}}
-                    <option value="{{practicearea.id}}" {{#if_eq practicearea.id editdata.practice_area}} selected {{/if_eq}}>{{practicearea.name}}</option>
+                      {{#each practice_area}}
+                      <option value="{{this.practicearea.id}}" {{#if_eq this.practicearea.id ../editdata.practice_area}} selected="selected" {{/if_eq}}>{{this.practicearea.name}}</option>
+                      {{/each}}
+                      {{#if_eq user.id editdata.user_id}}
+                      {{else}}
+                      <option value="{{practicearea.id}}" {{#if_eq practicearea.id editdata.practice_area}} selected {{/if_eq}}>{{practicearea.name}}</option>
+                      {{/if_eq}}
                     {{/if_eq}}
                   </select>
                 </div>

@@ -21,6 +21,7 @@ const multer = require('multer');
 const User = require('../models').user;
 const requestApproval = require('../models').request_approval;
 const AttorneyPracticeArea = require('../models').practice_area_to_attorney;
+const AttorneyFirmPracticeArea = require('../models').practice_area_to_firms;
 var fileName = '';
 
 const Sequelize = require('sequelize');
@@ -101,9 +102,23 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
         ],
         foreignKey: 'practice_area_id'
     });
+    AttorneyFirmPracticeArea.belongsTo(PracticeArea, {
+        order: [
+            ['name', 'ASC'],
+        ],
+        foreignKey: 'practice_area_id'
+    });
     const practice_area = await AttorneyPracticeArea.findAll({
         where: {
             attorney_id: req.user.id
+        },
+        include: [{
+            model: PracticeArea
+        }]
+    });
+    const practice_area_firm = await AttorneyFirmPracticeArea.findAll({
+        where: {
+            firm_id: req.user.firm_id
         },
         include: [{
             model: PracticeArea
@@ -160,6 +175,7 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
         success_message,
         activity_goal: activity_goal,
         practice_area: practice_area,
+        practice_area_firm,
         client: client,
         target: target,
         referral,
@@ -667,9 +683,23 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
         ],
         foreignKey: 'practice_area_id'
     });
+    AttorneyFirmPracticeArea.belongsTo(PracticeArea, {
+        order: [
+            ['name', 'ASC'],
+        ],
+        foreignKey: 'practice_area_id'
+    });
     const practice_area = await AttorneyPracticeArea.findAll({
         where: {
             attorney_id: req.user.id
+        },
+        include: [{
+            model: PracticeArea
+        }]
+    });
+    const practice_area_firm = await AttorneyFirmPracticeArea.findAll({
+        where: {
+            firm_id: req.user.firm_id
         },
         include: [{
             model: PracticeArea
@@ -876,6 +906,7 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
         activity_goal: activity_goal,
         budgetArr,
         practice_area: practice_area,
+        practice_area_firm,
         level_type,
         section: allSection,
         attorney: allAttorney,
