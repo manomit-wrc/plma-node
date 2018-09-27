@@ -290,8 +290,8 @@ router.post('/firms/add', auth, siteAuth, csrfProtection, async (req, res) => {
                   <tr>
                     <td class="content-message" style="font-family:'Calibri',OpenSans-Light, Arial, sans-serif; color: #595959;">
                       <p style = "font-size: 30px; margin-bottom: 15px; margin-top: 10px; text-decoration: underline;" > Welcome to Perform Law ` + req.body.first_name + `! </p>
-                      <p style = "font-size: 18px;" > A very special welcome to you ` + req.body.first_name + `, thank you
-                      for joining perform law as a Firm Admin! </p>
+                      <p style = "font-size: 18px;" > A very special welcome to you ` + req.body.first_name + `, Thank you
+                      for joining PerformLaw Management Application as a Firm Admin! < /p>
                       <p style="font-size: 18px; font-family: &quot;OpenSans-Light&quot;,Calibri,Arial,sans-serif; text-align: center;">
                         Your Username is - <span style = "color:#FF851A; font-weight: bold;"> ` + req.body.email + ` </span>
                       </p>
@@ -365,6 +365,8 @@ router.post('/firms/add', auth, siteAuth, csrfProtection, async (req, res) => {
         const firm_data = await Firm.create({
             title: req.body.title,
             address: req.body.address,
+            address1: req.body.address1,
+            address2: req.body.address2,
             approval_level: req.body.approval_level,
             level_1 : req.body.level_1 ? req.body.level_1 : 0,
             level_2 : req.body.level_2 ? req.body.level_2 : 0,
@@ -427,7 +429,9 @@ router.post('/firms/edit', auth, siteAuth, csrfProtection, async (req, res) => {
     if (user_data === null) {
         await Firm.update({
             title: req.body.title,
-            address: req.body.address
+            address: req.body.address,
+            address1: req.body.address1,
+            address2: req.body.address2,
         }, {
             where :{
 				id : req.body.firm_id

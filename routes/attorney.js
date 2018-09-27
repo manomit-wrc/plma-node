@@ -556,8 +556,8 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
                   <tr>
                     <td class="content-message" style="font-family:'Calibri',OpenSans-Light, Arial, sans-serif; color: #595959;">
                       <p style = "font-size: 30px; margin-bottom: 15px; margin-top: 10px; text-decoration: underline;" > Welcome to performlaw `+ req.body.first_name +`! </p>
-                      <p style = "font-size: 18px;" > A very special welcome to you `+ req.body.first_name +`, thank you
-                      for joining perform law law as an Attorney! </p>
+                      <p style = "font-size: 18px;" > A very special welcome to you `+ req.body.first_name +`, Thank you
+                      for joining PerformLaw Management Application as an Attorney! < /p>
                       <p style="font-size: 18px; font-family: &quot;OpenSans-Light&quot;,Calibri,Arial,sans-serif; text-align: center;">
                         Your Username is - <span style = "color:#FF851A; font-weight: bold;"> ` + req.body.mail +` </span>
                       </p>

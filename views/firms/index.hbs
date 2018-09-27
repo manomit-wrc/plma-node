@@ -41,7 +41,7 @@
                         <tbody>
                             {{#each users}}
                             <tr data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}" data-email="{{this.email}}" data-firm-title="{{this.firm.title}}"
-                                data-firm-address="{{this.firm.address}}" data-mobile-no="{{this.mobile_no}}" data-gender="{{this.gender}}"
+                                data-firm-address="{{this.firm.address}}" data-firm-address1="{{this.firm.address1}}" data-firm-address2="{{this.firm.address2}}" data-mobile-no="{{this.mobile_no}}" data-gender="{{this.gender}}"
                                 data-firm-id="{{this.firm.id}}" data-user-id="{{this.id}}" data-approval-level="{{this.firm.approval_level}}"
                                 data-level1-desg="{{this.firm.level_1}}" data-level2-desg="{{this.firm.level_2}}" data-level3-desg="{{this.firm.level_3}}"
                                 data-level4-desg="{{this.firm.level_4}}" data-group-id="{{this.group_id}}" data-designation-id="{{this.designation_id}}"
@@ -959,7 +959,7 @@
             },
             submitHandler: function (form) {
                 var title = $("#title").val(),
-                    address = $("#address").val(),
+                    address = $("#address").val().split("\n"),
                     email = $("#email").val(),
                     password = $("#password").val(),
                     first_name = $("#first_name").val(),
@@ -979,7 +979,9 @@
                     url: "/firms/add",
                     data: {
                         title: title,
-                        address: address,
+                        address: address[0],
+                        address1: address[1],
+                        address2: address[2],
                         email: email,
                         password: password,
                         first_name: first_name,
@@ -1047,7 +1049,7 @@
             },
             submitHandler: function (form) {
                 var title = $("#title_edit").val(),
-                    address = $("#address_edit").val(),
+                    address = $("#address_edit").val().split("\n"),
                     email = $("#email_edit").val(),
                     password = $("#password_edit").val(),
                     first_name = $("#first_name_edit").val(),
@@ -1062,7 +1064,9 @@
                     url: "/firms/edit",
                     data: {
                         title: title,
-                        address: address,
+                        address: address[0],
+                        address1: address[1],
+                        address2: address[2],
                         email: email,
                         password: password,
                         first_name: first_name,
@@ -1134,6 +1138,10 @@
 
     // start view
     $(document).on("click", ".view", function () {
+        var address_firm = $(this).closest('tr').data('firm-address');
+        var address_firm1 = $(this).closest('tr').data('firm-address1');
+        var address_firm2 = $(this).closest('tr').data('firm-address2');
+        var faddress = address_firm + '\n' + address_firm1 + '\n' + address_firm2;
         $("#first_name_view").val($(this).closest('tr').data('first-name'));
         $("#last_name_view").val($(this).closest('tr').data('last-name'));
         $("#email_view").val($(this).closest('tr').data('email'));
@@ -1142,7 +1150,7 @@
         $('#gender_view').trigger('change');
         $("input[name=approval_level_view][value=" + $(this).closest('tr').data('approval-level') + "]").attr('checked', true);
         $("#title_view").val($(this).closest('tr').data('firm-title'));
-        $("#address_view").val($(this).closest('tr').data('firm-address'));
+        $("#address_view").val(faddress);
         $("input[name=is_attorney_view][value=" + $(this).closest('tr').data('is-attorney') + "]").attr('checked', true);
         $('#level_1_designation_view option[value="' + $(this).closest('tr').data('level1-desg') + '"]').attr('selected', true);
         $('#level_1_designation_view').trigger('change');
@@ -1179,6 +1187,10 @@
     // end
 
     $(document).on("click", ".edit", function () {
+        var address_firm = $(this).closest('tr').data('firm-address');
+        var address_firm1 = $(this).closest('tr').data('firm-address1');
+        var address_firm2 = $(this).closest('tr').data('firm-address2');
+        var faddress = address_firm +'\n'+ address_firm1 +'\n'+ address_firm2;
         $("#first_name_edit").val($(this).closest('tr').data('first-name'));
         $("#last_name_edit").val($(this).closest('tr').data('last-name'));
         $("#email_edit").val($(this).closest('tr').data('email'));
@@ -1187,7 +1199,7 @@
         $('#gender_edit').trigger('change');
         $("input[name=approval_level_edit][value=" + $(this).closest('tr').data('approval-level') + "]").attr('checked', true);
         $("#title_edit").val($(this).closest('tr').data('firm-title'));
-        $("#address_edit").val($(this).closest('tr').data('firm-address'));
+        $("#address_edit").val(faddress);
         $("input[name=is_attorney_edit][value=" + $(this).closest('tr').data('is-attorney') + "]").attr('checked', true);
         $('#level_1_designation_edit option[value="' + $(this).closest('tr').data('level1-desg') + '"]').attr('selected', true);
         $('#level_1_designation_edit').trigger('change');

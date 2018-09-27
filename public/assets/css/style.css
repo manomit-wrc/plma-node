@@ -6220,6 +6220,13 @@ i.fa.fa-eye.m-r-5 {
 
 
 
+@media screen and (max-width: 480px) {
+	.role-header h4 {
+		display: none !important;
+	}
+}
+
+
 /*------------------------------------------------------------------
 [39-a.... Custom Styles]
 */
@@ -6620,7 +6627,7 @@ select.gender {
 		}
 
 		.custom-table.mast thead th:nth-child(1) {
-			width: 6% !important;
+			width: 8% !important;
 		}
 
 		/* .custom-table tr.odd td:nth-child(5) a, .custom-table tr.even td:nth-child(5) a {
@@ -7566,7 +7573,12 @@ select.gender {
 	}
 
 	.navbar-nav .open .dropdown-menu {
-		left: -26px;
+		left: -40px;
+	}
+	
+	
+	.navbar-nav .open .dropdown-menu li a { 
+		padding: 5px 15px 5px 15px;
 	}
 
 	.dataTables_wrapper .dataTables_filter {
@@ -7913,3 +7925,5 @@ select.gender {
 			margin-right: 5px;
 		}
 	}
+
+
