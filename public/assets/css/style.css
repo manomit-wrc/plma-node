@@ -6220,6 +6220,49 @@ i.fa.fa-eye.m-r-5 {
 
 
 
+/* Table Fixed Layout  */
+
+.common-tbl-fixed {
+	table-layout: fixed;
+}
+
+.common-tbl-fixed  .common-tbl-fixed-row {
+    margin-right: 0;
+    margin-left: 0;
+    width: 100%;
+    overflow: hidden;
+    clear: both;
+}
+
+.common-tbl-fixed  .common-tbl-fixed-row td.col-md-4 {
+	width: 33% !important;
+    display: block;
+    float: left !important;
+}
+
+.common-tbl-fixed  .common-tbl-fixed-row td.col-md-4 .div_left {
+	margin: 0;
+}
+
+.common-tbl-fixed .common-tbl-fixed-row .col-md-8 {
+    width: 67% !important;
+    float: left !important;
+    display: block;
+}
+
+.common-tbl-fixed .persist-header td a {
+    width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+	display: inline-block;
+	text-align: center;
+	margin: 0 auto;
+}
+
+/*... Table Fixed Layout  */
+
+
 @media screen and (max-width: 480px) {
 	.role-header h4 {
 		display: none !important;
@@ -6952,10 +6995,10 @@ select.gender {
 				}
 
 
-				
+
 
 				/*Ends on css 11-09-2018*/
-				
+
 				.yearly-revenue-tbl td:nth-child(1) {
 					width: auto !important;
 				}
@@ -7360,12 +7403,12 @@ select.gender {
 				.info-tile.address-target .border-divider {
 					border: 0 none;
 					margin-bottom: 15px;
-					
-					
+
+
 				}
 
 				.info-tile.address-target .col-md-3 {
-					
+
 					width: 50%;
 					padding-left: 0;
 				}
@@ -7575,9 +7618,9 @@ select.gender {
 	.navbar-nav .open .dropdown-menu {
 		left: -40px;
 	}
-	
-	
-	.navbar-nav .open .dropdown-menu li a { 
+
+
+	.navbar-nav .open .dropdown-menu li a {
 		padding: 5px 15px 5px 15px;
 	}
 

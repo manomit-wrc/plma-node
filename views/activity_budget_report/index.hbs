@@ -16,8 +16,8 @@
             </div>
             {{#if_eq this.success 1}}
             <div id="mytable1">
-                <table width="100%">
-                    <tr class="row">
+                <table width="100%" class="common-tbl-fixed">
+                    <tr class="row common-tbl-fixed-row">
                         <td  class="col-md-4"><div>
                             <div class="div_left table-responsive">
                                 <table width="100%" class="table table-bordered">
@@ -136,7 +136,7 @@
                         </div></td>
                         <td class="col-md-8"><div >
                             <div class="div_right table-responsive">
-                                <table class="table mytable" style="margin-top: 9px;">
+                                <table class="table mytable">
                                     <tbody>
                                         <tr>
                                             <td>
@@ -296,7 +296,7 @@
     //         $(".sidebar").removeClass("sidebar-hide");
     //     }
     // });
-    
+
     $("#exportExcelBtn").click(function (e) {
         window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('#mytable1').html()));
         e.preventDefault();
