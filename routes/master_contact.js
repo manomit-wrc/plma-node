@@ -254,7 +254,7 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 				attorney_id: req.body.attorney_id,
 				facebook: req.body.facebook_url,
 				master_contact_type: req.body.masterContact_type,
-				estimated_revenue: removePhoneMask(req.body.estimated_revenue),
+				// estimated_revenue: removePhoneMask(req.body.estimated_revenue),
 				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[0] + "-" + closingDate[1] : null,
 			});
 		} else {
@@ -736,7 +736,7 @@ router.post('/master_contact/move-to-target/', auth, async (req, res) => {
 			user_id: contact_data.user_id,
 			remarks: contact_data.remarks,
 			firm_id: req.user.firm_id,
-			estimated_revenue: '0',
+			// estimated_revenue: '0',
 			attorney_id: req.user.id
 		});
 

@@ -52,7 +52,7 @@
 								</div>
 								<div class="col-md-6">
 									<div class="form-group form-focus">
-										<label class="control-label">Organisation Code <span class="req-lbl">*</span></label>
+										<label class="control-label">Organisation Code </label>
 										<input type="text" class="form-control floating" id="org_code" name="org_code" />
 									</div>
 								</div>
@@ -78,7 +78,7 @@
 								</div>
 								<div class="col-md-6">
 									<div class="form-group form-focus select-focus select-attorney">
-										<label class="control-label">Gender <span class="req-lbl">*</span></label>
+										<label class="control-label">Gender </label>
 										<select class="form-control floating" id="gender" name="gender">
 											<option value="">Select Gender</option>
 											<option value="M">Male</option>
@@ -97,7 +97,7 @@
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus">
-									<label class="control-label">Phone No.<span class="req-lbl">*</span></label>
+									<label class="control-label">Phone No.</label>
 									<input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" />
 								</div>
 							</div>
@@ -109,7 +109,7 @@
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-focus">
-									<label class="control-label">Mobile No. <span class="req-lbl">*</span></label>
+									<label class="control-label">Mobile No. </label>
 									<input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" />
 								</div>
 							</div>
@@ -128,7 +128,7 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus">
-							<label class="control-label">Close Date <span class="req-lbl">*</span></label>
+							<label class="control-label">Close Date </label>
 							<div class="cal-icon">
 								<input class="form-control floating datetimepicker" type="text" id="targetCloseDate" name="targetCloseDate" data-date-format="MM-DD-YYYY">
 							</div>
@@ -136,7 +136,7 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus">
-							<label class="control-label">Planning Period Start Date <span class="req-lbl">*</span></label>
+							<label class="control-label">Planning Period Start Date</label>
 							<div class="cal-icon">
 								<input class="form-control floating datetimepicker" type="text" id="targetStartDate" name="targetStartDate" data-date-format="MM-DD-YYYY">
 							</div>
@@ -144,7 +144,7 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus select-attorney">
-							<label class="control-label">Revenue Planning Period (Month) <span class="req-lbl">*</span></label>
+							<label class="control-label">Revenue Planning Period (Month) </label>
 							<select class="form-control floating" id="planning_period" name="planning_period">
 								<option value="">Select Planning Period</option>
 								<option value="1">1</option>
@@ -187,7 +187,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="form-group form-focus select-focus select-attorney">
-							<label class="control-label">Attorney <span class="req-lbl">*</span></label>
+							<label class="control-label">Attorney </label>
 							<select id="designation" name="attorney_id" class="form-control floating">
 								{{#if_eq user.role_id "3"}}
 									<option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
@@ -549,31 +549,8 @@
 				},
 				zipcode: {
 					required: true
-				},
-				gender: {
-					required: true
-				},
-				phone_no: {
-					required: true
-				},
-				attorney: {
-					required: true
-				},
-				life_time_revenue: {
-					required: true
-				},
-				targetCloseDate: {
-					required: true
-				},
-				targetStartDate: {
-					required: true
-				},
-				planning_period: {
-					required: true
-				},
-				estimated_revenue: {
-					required: true
 				}
+				
 			},
 			messages: {
 				first_name: {
@@ -603,31 +580,8 @@
 				},
 				zipcode: {
 					required: "Choose your zipcode"
-				},
-				gender: {
-					required: "Choose your gender"
-				},
-				phone_no: {
-					required: "Phone No. can't be blank"
-				},
-				attorney: {
-					required: "Choose any attorney"
-				},
-				life_time_revenue: {
-					required: "Life Time Revenue can't be blank"
-				},
-				targetCloseDate: {
-					required: "Close Date can't be blank"
-				},
-				targetStartDate: {
-					required: "Start Date can't be blank"
-				},
-				planning_period: {
-					required: "Choose Planning Period"
-				},
-				estimated_revenue: {
-					required: "Estimated Revenue can't be blank"
 				}
+				
 			}
 		});
 		// add designation ajax operation and form validation ends

@@ -89,25 +89,17 @@
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Master Contact Code
-											<span class="req-lbl">*</span>
 
 										</label>
 										<input type="text" class="form-control floating" id="master_contact_code" name="master_contact_code" maxlength="50" />
 									</div>
 								</div>
 
-								<div class="col-md-6">
-									<div class="form-group form-focus">
-										<label class="control-label">Estimated annual revenue
-											<span class="req-lbl">*</span>
-										</label>
-										<input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue" maxlength="50">
-									</div>
-								</div>
+							 
 
 								<div class="col-md-6">
 									<div class="form-group form-focus">
-										<label class="control-label">Closing Date<span class="req-lbl">*</span> </label>
+										<label class="control-label">Closing Date </label>
 										<div class="cal-icon">
 											<input class="form-control floating datetimepicker" type="text" id="revenueclosingDate" name="revenueclosingDate" data-date-format="MM-DD-YYYY">
 										</div>
@@ -118,7 +110,6 @@
 								<div class="col-md-6">
 									<div class="form-group form-focus select-focus select-attorney">
 										<label class="control-label">Gender
-											<span class="req-lbl">*</span>
 
 										</label>
 										<select class="form-control floating " id="gender" name="gender" >
@@ -144,7 +135,6 @@
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Phone No.
-											<span class="req-lbl">*</span>
 
 										</label>
 										<input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" maxlength="50" />
@@ -159,7 +149,6 @@
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Mobile No.
-											<span class="req-lbl">*</span>
 
 										</label>
 										<input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" maxlength="50" />
@@ -257,7 +246,6 @@
 						<div class="col-md-12">
 							<div class="form-group form-focus select-focus select-attorney">
 								<label class="control-label">Attorney
-									<span class="req-lbl">*</span>
 								</label>
 								<select id="designation" name="attorney_id" class="form-control floating ">
 									{{#if_eq user.role_id "3"}}
@@ -338,7 +326,6 @@
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Mobile No.
-											<span class="req-lbl">*</span>
 										</label>
 										<input type="text" class="form-control floating number_validator" id="contactDetailsMobile_no" name="contactDetailsMobile_no[]"
 										 maxlength="50" />
@@ -374,7 +361,6 @@
 										<div class="col-md-6">
 											<div class="form-group form-focus select-focus">
 												<label class="control-label">Gender
-													<span class="req-lbl">*</span>
 
 												</label>
 												<select class="form-control floating" name="contactDetailsGender[]">
@@ -398,7 +384,6 @@
 										<div class="col-md-6">
 											<div class="form-group form-focus">
 												<label class="control-label">Phone No.
-													<span class="req-lbl">*</span>
 
 												</label>
 												<input type="text" class="form-control floating number_validator" name="contactDetailsPhone_no[]" maxlength="50" />
@@ -413,7 +398,6 @@
 										<div class="col-md-6">
 											<div class="form-group form-focus">
 												<label class="control-label">Mobile No.
-													<span class="req-lbl">*</span>
 												</label>
 												<input type="text" class="form-control floating number_validator" id="contactDetailsMobile_no" name="contactDetailsMobile_no[]"
 												 maxlength="50" />
@@ -432,7 +416,6 @@
 						<div class="col-md-6">
 							<div class="form-group form-focus">
 								<label class="control-label">Master Contact Company
-									<span class="req-lbl">*</span>
 
 								</label>
 								<input type="text" class="form-control floating" id="master_contact_comp" name="master_contact_comp" />
@@ -496,7 +479,6 @@
 						<div class="col-md-6">
 							<div class="form-group form-focus select-focus select-attorney">
 								<label class="control-label">Industry Type
-									<span class="req-lbl">*</span>
 
 								</label>
 								<select id="industry_type" name="industry_type" class="form-control floating " >
@@ -561,30 +543,7 @@
 						required: true,
 						email: true
 					},
-					phone_no: {
-						required: true
-					},
-					mobile_no: {
-						required: true
-					},
-					master_contact_id: {
-						required: true
-					},
-					master_contact_code: {
-						required: true
-					},
-					master_contact_desg: {
-						required: true
-					},
-					master_contact_comp: {
-						required: true
-					},
-					dob: {
-						required: true
-					},
-					gender: {
-						required: true
-					},
+				
 					address1: {
 						required: true
 					},
@@ -599,56 +558,12 @@
 					},
 					zipcode: {
 						required: true
-					},
-					status: {
-						required: true
-					},
-
-
-attorney_id:{
-	required:true
-},
-revenueclosingDate:{
-	required:true
-},
-estimated_revenue:{
-	required:true
-},
-org_name:{
-	required:true
-},
-org_code:{
-	required:true
-},
-
-
-
-					industry_type: {
-						required: true
 					}
 				},
 				messages: {
 					first_name: {
 						required: "First name can't be blank"
 					},
-
-
-attorney_id: {
-	required: "Attorney Id can't be blank"
-},
-
-revenueclosingDate: {
-	required: "Revenue Closing Date can't be blank"
-},
-estimated_revenue: {
-	required: "Estimated Revenue can't be blank"
-},
-org_name: {
-	required: "Organization Name can't be blank"
-},
-org_code: {
-	required: "Organization Code can't be blank"
-},
 
 
 					last_name: {
@@ -658,30 +573,7 @@ org_code: {
 						required: "Email id can't be blank",
 						email: "Enter valid email id"
 					},
-					phone_no: {
-						required: "Phone number can't blank"
-					},
-					mobile_no: {
-						required: "Mobile number can't blank"
-					},
-					master_contact_id: {
-						required: "Master Contact ID can't be blank"
-					},
-					master_contact_code: {
-						required: "Master Contact Code can't be blank"
-					},
-					master_contact_desg: {
-						required: "Master Contact Designation can't be blank"
-					},
-					master_contact_comp: {
-						required: "Master Contact Company can't be blank"
-					},
-					dob: {
-						required: "Must select date of birth"
-					},
-					gender: {
-						required: "Must select gender"
-					},
+				
 					address1: {
 						required: "Must provide address"
 					},
@@ -696,13 +588,8 @@ org_code: {
 					},
 					zipcode: {
 						required: "Choose your zipcode"
-					},
-					status: {
-						required: "Choose master contact status"
-					},
-					industry_type: {
-						required: "Choose industry type"
 					}
+				
 				}
 			});
 		});

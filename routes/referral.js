@@ -127,18 +127,30 @@ router.get('/referral', auth, firmAttrAuth, csrfProtection, async (req, res) => 
 	}
 	if (req.query.state) {
 		var city = await City.findAll({
+		
+			// order: [sequelize.fn('max', sequelize.col('city'))],			
+			// order: sequelize.col('city'),
+
+			// order: [
+			// 	['city', 'ASC'],
+			// ],
+			// order: [sequelize.literal('max(city) ASE')],
+			
 			where: {
 				state_id: req.query.state
-			}
+			},
+
 		});
 		whereCondition.state = req.query.state;
 	}
 	if (req.query.city) {
 		const cities = await City.findById(req.query.city);
 		var zipcode = await Zipcode.findAll({
+
 			where: {
 				city_name: cities.name
-			}
+			},
+		
 		});
 		whereCondition.city = req.query.city;
 	}
@@ -256,6 +268,27 @@ router.get('/referral/add', auth, firmAttrAuth, csrfProtection, async (req, res)
 		err_message,
 	});
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var clientDetails = [];

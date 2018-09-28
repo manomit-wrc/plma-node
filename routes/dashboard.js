@@ -149,6 +149,11 @@ router.get('/dashboard', auth,  async(req, res) => {
         }
     }
     var referral = await Referral.findAll({
+        
+        order: [
+            ['city', 'ASC'],
+        ],
+
         where: referralCondition,
         include: [{
             model: Target
@@ -157,7 +162,8 @@ router.get('/dashboard', auth,  async(req, res) => {
         }],
         order: [
             ['createdAt', 'DESC']
-        ]
+        ],
+      
     });
     var referral_count = referral.length;
 
@@ -452,6 +458,8 @@ router.get('/edit-profile', csrfProtection, auth, async (req, res) => {
     var zipcode = [];
     if(req.user.state != null) {
         city = await City.findAll({
+
+            
             where: {
                 state_id: req.user.state.toString()
             }
@@ -538,11 +546,13 @@ router.post('/change-password', auth, csrfProtection, (req, res) => {
 
 router.post('/firm-profiles/get-city', auth, (req, res) =>{
     City.findAll({
+   
         where: { state_id : req.body.state_id}
     }).then(result => {
         res.send({get_city:result});
     });
 });
+
 router.post('/firm-profiles/get-zipcode', auth, (req, res) =>{
     Zipcode.findAll({
         where: { city_name : req.body.city_name}
