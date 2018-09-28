@@ -521,7 +521,7 @@
 			rightAlign: false
 		});
 		$("#targetform").validate({
-			rules: {
+		rules: {
 				first_name: {
 					required: true
 				},
@@ -549,8 +549,31 @@
 				},
 				zipcode: {
 					required: true
+				},
+				gender: {
+					required: true
+				},
+				phone_no: {
+					required: true
+				},
+				attorney: {
+					required: true
+				},
+				life_time_revenue: {
+					required: true
+				},
+				targetCloseDate: {
+					required: true
+				},
+				targetStartDate: {
+					required: true
+				},
+				planning_period: {
+					required: true
+				},
+				estimated_revenue: {
+					required: true
 				}
-				
 			},
 			messages: {
 				first_name: {
@@ -580,12 +603,35 @@
 				},
 				zipcode: {
 					required: "Choose your zipcode"
+				},
+				gender: {
+					required: "Choose your gender"
+				},
+				phone_no: {
+					required: "Phone No. can't be blank"
+				},
+				attorney: {
+					required: "Choose any attorney"
+				},
+				life_time_revenue: {
+					required: "Life Time Revenue can't be blank"
+				},
+				targetCloseDate: {
+					required: "Close Date can't be blank"
+				},
+				targetStartDate: {
+					required: "Start Date can't be blank"
+				},
+				planning_period: {
+					required: "Choose Planning Period"
+				},
+				estimated_revenue: {
+					required: "Estimated Revenue can't be blank"
 				}
-				
 			}
 		});
+		});
 		// add designation ajax operation and form validation ends
-	});
 	$(document).on('click', '#individual_target', function () {
 		$('#individual_type').show();
 		$('#org_type').hide();
