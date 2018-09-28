@@ -26,8 +26,8 @@ module.exports = (sequelize, DataTypes) => {
     website_url: DataTypes.STRING,
     social_url: DataTypes.STRING,
     remarks: DataTypes.TEXT,
-    user_id: DataTypes.INTEGER
-    // firm_id: DataTypes.INTEGER
+    user_id: DataTypes.INTEGER,
+    office_id: DataTypes.INTEGER
 
   }, {});
   attorney_details.associate = function(models) {

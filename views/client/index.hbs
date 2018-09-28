@@ -41,7 +41,7 @@
 					{{/if_eq}}
 					<button class="btn btn-primary rounded advancedFilter" data-toggle="modal" data-target="#add_filter">
 						<i class="fa fa-filter"></i> Filter</button>
-					<table class="table table-striped custom-table datatable client sect">
+					<table class="table table-striped custom-table  client sect display" id="clienttable">
 						<thead>
 							<tr>
 								<th>
@@ -49,8 +49,7 @@
 								</th>
 								<th>Name</th>
 								<th>Email Id</th>
-								<th>Start Date</th>
-								<th>End Date</th>
+								<th>Current Revenue Planning Period</th>
 								<th>Estimated Revenue</th>
 								{{!-- <th>Current Revenue</th> --}}
 								<th class="text-right">Action</th>
@@ -70,9 +69,8 @@
 								</td>
 								<td>{{this.email}}</td>
 								<td>
-									 {{dateFormat this.revenues.0.start_date "MM-DD-YYYY"}}
+									 {{dateFormat this.revenues.0.start_date "MM-DD-YYYY"}} - {{dateFormat this.revenues.0.end_date "MM-DD-YYYY"}}
 								</td>
-								<td>{{dateFormat this.revenues.0.end_date "MM-DD-YYYY"}}</td>
 								<td>$ {{this.revenues.0.estimated_revenue}}</td>
 								{{!-- <td>$ {{this.current_revenue}}</td> --}}
 								<td class="text-right">
@@ -97,6 +95,13 @@
 							</tr>
 							{{/each}}
 						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="3"></td>
+								<td><b>Total Esstimated Revenue</b></td>
+								<td colspan="2" id="sum_tot"></td>
+							</tr>
+						</tfoot>
 					</table>
 				</div>
 			</div>
@@ -112,7 +117,7 @@
 			</div>
 			<form>
 				<div class="modal-body card-box">
-					<p>are you sure you want to delete this client?</p>
+					<p>Are you sure you want to delete this client?</p>
 					<div class="m-t-20" id="delDiv">
 						<a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
 						{{!--
@@ -386,8 +391,7 @@
 			checkboxes[i].checked = source.checked;
 		}
 	}
-
-
+	  
 	$('.client-delete').on('click', function (e) {
 		var client_id = [];
 		$('input[name="client_check_id"]:checked').each(function () {
@@ -399,7 +403,7 @@
 
 			swal({
                 title: "",
-                text: "are you sure you want to delete this client?",
+                text: "Are you sure you want to delete this client?",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonClass: "btn-danger",
@@ -435,6 +439,48 @@
 		$("#removeBtnDelete").remove();
 		$("#delete_user").modal('show');
 		$("#delDiv").append('<a href="/client/delete/' + client_id + '" class="btn btn-danger" id="removeBtnDelete">' + "Delete" + '</a>');
+	});
+	$(document).ready(function(){
+		$('#clienttable').DataTable({
+			"footerCallback": function (row, data, start, end, display) {
+				var api = this.api(), data;
+
+				// Remove the formatting to get integer data for summation
+				var intVal = function (i) {
+					return typeof i === 'string' ?
+						i.replace(/[\$,]/g, '') * 1 :
+						typeof i === 'number' ?
+							i : 0;
+				};
+
+				// Total over all pages
+				var total = api
+					.column(4)
+					.data()
+					.reduce(function (a, b) {
+						return intVal(a) + intVal(b);
+					}, 0);
+
+				// Total over this page
+				var pageTotal = api
+					.column(4, { page: 'current' })
+					.data()
+					.reduce(function (a, b) {
+						return intVal(a) + intVal(b);
+					}, 0);
+
+				// Update footer
+				$(api.column(4).footer()).html(
+					'<b>$ ' + pageTotal + '</b>'
+				);
+			},
+			"searching": true,
+			"dom": 'lBfrtip',
+			"paging": true,
+			"buttons": [
+				'csv', 'excel', 'pdf', 'print'
+			]
+		});
 	});
 
 

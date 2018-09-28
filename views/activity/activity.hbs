@@ -213,7 +213,7 @@
                     <span class="input-group-addon">
                       <input type="radio" id="referral_type" name="ref_type" value="R" {{#if_eq refer_type "R"}} checked {{/if_eq}} />
                     </span>
-                    <div class="form-control form-control-static">Referral</div>
+                    <div class="form-control form-control-static">Referral Sources</div>
                     <span class="glyphicon form-control-feedback"></span>
                   </label>
                 </div>
@@ -263,7 +263,7 @@
             <div class="col-md-6" id="referral_list" {{#if_eq refer_type "R"}} style="display: block;" {{else}} style="display: none;"
               {{/if_eq}}>
               <div class="form-group">
-                <label class="control-label">Referral List
+                <label class="control-label">Referral Sources List
                   <span class="text-danger">*</span>
                 </label>
                 <select id="referral_id" name="referral_user" class="form-control">

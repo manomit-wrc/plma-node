@@ -149,12 +149,6 @@
                 readonly/>
             </div>
           </div> --}}
-          <div class="col-md-6">
-            <div class="form-group form-focus">
-              <label class="control-label">Mobile No</label>
-              <input type="text" disabled class="form-control floating" id="mobile_no" name="mobile_no" value="{{edata.0.mobile_no}}" />
-            </div>
-          </div>
         </div>
       </div>
       <div class="card-box">
@@ -200,12 +194,11 @@
           </div>
           <div class="col-md-6">
             <div class="form-group form-focus select-focus">
-              <label class="control-label">Job Type</label>
+              <label class="control-label">Compensation Type</label>
               <select disabled class="form-control floating" id="job_type" name="job_type">
-                <option value="">Select Job Type</option>
-                <option value="FULLTIME" {{#if_eq edata.0.attorney_details.0.job_type "FULLTIME"}} selected="selected" {{/if_eq}}>FULLTIME</option>
-                <option value="STERMCON" {{#if_eq edata.0.attorney_details.0.job_type "STERMCON"}} selected="selected" {{/if_eq}}>SHORT TERM CONTRACT</option>
-                <option value="TEMP" {{#if_eq edata.0.attorney_details.0.job_type "TEMP"}} selected="selected" {{/if_eq}}>TEMPORARY</option>
+                <option value="">Select Compensation Type</option>
+                <option value="FULLTIME" {{#if_eq edata.0.attorney_details.0.job_type "FULLTIME"}} selected="selected" {{/if_eq}}>Salary</option>
+                <option value="STERMCON" {{#if_eq edata.0.attorney_details.0.job_type "STERMCON"}} selected="selected" {{/if_eq}}>Hourly</option>
               </select>
             </div>
           </div>
@@ -289,6 +282,18 @@
         <div class="row">
           <div class="col-md-12">
             <div class="form-group form-focus">
+              <label class="control-label">Office address
+              </label>
+              <select id="office" name="office" class="form-control floating" disabled>
+                <option value="0">Firm address</option>
+                {{#each office}}
+                <option value="{{this.id}}" {{#if_eq this.id ../edata.0.attorney_details.0.office_id}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group form-focus">
               <label class="control-label">Address Line 1</label>
               <input type="text" disabled class="form-control floating" id="address" name="address" value="{{edata.0.address}}" />
             </div>
@@ -352,6 +357,12 @@
               </select>
             </div>
           </div>
+          <div class="col-md-6">
+            <div class="form-group form-focus">
+              <label class="control-label">Mobile No</label>
+              <input type="text" disabled class="form-control floating number_validator" id="mobile_no" name="mobile_no" value="{{edata.0.mobile_no}}" />
+            </div>
+          </div>
 
           
 
@@ -379,20 +390,9 @@
           </div>
           <div class="col-md-6">
             <div class="form-group form-focus">
-              <label class="control-label">Social URL</label>
+              <label class="control-label">LinkedIn URL</label>
               <input type="text" disabled class="form-control floating" id="social_url" name="social_url" value="{{edata.0.attorney_details.0.social_url}}"
                 />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card-box">
-        <h3 class="card-title">Remarks</h3>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-group form-focus">
-              <label class="control-label">Remarks </label>
-              <textarea disabled class="form-control floating" id="remarks" name="remarks" rows="5">{{edata.0.attorney_details.0.remarks}}</textarea>
             </div>
           </div>
         </div>

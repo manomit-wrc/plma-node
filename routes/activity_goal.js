@@ -25,7 +25,14 @@ router.get('/activity-goal', auth, firmAttrAuth, csrfProtection, (req, res) => {
 	if (formatToDate2) {
 		whereGoals.to_date = formatToDate2[2] + "-" + formatToDate2[1] + "-" + formatToDate2[0];
 	}
-	whereGoals.firm_id = req.user.firm_id;
+	if (req.user.role_id == 2) {
+		whereGoals.firm_id = req.user.firm_id;
+	}
+	else
+	{
+		whereGoals.firm_id = req.user.firm_id;
+		whereGoals.user_id = req.user.id;
+	}
 	ActivityGoal.belongsTo(Firm, { foreignKey: 'firm_id' });
 	ActivityGoal.hasMany(ActivityBudget, { foreignKey: 'activity_goal_id' });
 	ActivityGoal.hasMany(Activity, {
@@ -57,7 +64,8 @@ router.get('/activity-goal', auth, firmAttrAuth, csrfProtection, (req, res) => {
 router.get('/activity-goal/add', auth, firmAttrAuth, csrfProtection, async(req, res) => {
 	const stragic_goal = await StrategicGoal.findAll({
 		where:{
-			firm_id: req.user.firm_id
+			firm_id: req.user.firm_id,
+			user_id: req.user.id
 		}
 	})
 	res.render('activity_goal/add', {

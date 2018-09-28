@@ -20,6 +20,7 @@ const sectionToFirm = require('../models').section_to_firms;
 const PracticeAreaToFirm = require('../models').practice_area_to_firms;
 const PracticeAreaToAttr = require('../models').practice_area_to_attorney;
 const Education = require('../models').education;
+const Office = require('../models').office;
 var csrfProtection = csrf({
 	cookie: true
 });
@@ -236,6 +237,11 @@ router.get('/attorneys/addAttorney', auth, firmAttrAuth, csrfProtection, async (
 			country_id: "233"
 		}
 	});
+	const office = await Office.findAll({
+		where: {
+			firm_id: req.user.firm_id
+		}
+	})
 	res.render('attorney/addattorney', {
 		layout: 'dashboard',
 		title: 'Add Attorney',
@@ -249,7 +255,8 @@ router.get('/attorneys/addAttorney', auth, firmAttrAuth, csrfProtection, async (
 		industry_type: industry_type,
 		err_message,
 		allPracticeArea,
-		allJurisdiction
+		allJurisdiction,
+		office
 	});
 });
 
@@ -345,6 +352,7 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 				social_url: req.body.social_url,
 				remarks: req.body.remarks,
 				user_id: attrorney_details_id,
+				office_id: req.body.office,
 				firm_join_date: Firm_Join_Date ? Firm_Join_Date[2] + "-" + Firm_Join_Date[0] + "-" + Firm_Join_Date[1] : null,
 				bar_practice_date: Bar_Practice_date ? Bar_Practice_date[2] + "-" + Bar_Practice_date[0] + "-" + Bar_Practice_date[1] : null,
 
@@ -730,6 +738,11 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 	for (var j = 0; j < result_jurisdiction.length; j++) {
 	jurisdiction_arr.push(result_jurisdiction[j].jurisdiction_id);
 	}
+	const office = await Office.findAll({
+		where: {
+			firm_id: req.user.firm_id
+		}
+	})
 
 	res.render('attorney/updateattorney', {
 		layout: 'dashboard',
@@ -747,7 +760,8 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 		allPracticeArea,
 		allJurisdiction,
 		arr,
-		jurisdiction_arr
+		jurisdiction_arr,
+		office
 	});
 });
 
@@ -863,6 +877,11 @@ router.get('/attorneys/viewdata/:id', auth, csrfProtection, async (req, res) => 
 	for (var i = 0; i < result_jurisdiction.length; i++) {
 		jurisdiction_arr.push(result_jurisdiction[i].jurisdiction_id);
 	}
+	const office = await Office.findAll({
+		where: {
+			firm_id: req.user.firm_id
+		}
+	})
 	res.render('attorney/viewattorney', {
 		layout: 'dashboard',
 		title: 'View Attorney',
@@ -879,7 +898,8 @@ router.get('/attorneys/viewdata/:id', auth, csrfProtection, async (req, res) => 
 		allPracticeArea,
 		allJurisdiction,
 		jurisdiction_arr,
-		arr
+		arr,
+		office
 	});
 });
 
@@ -952,6 +972,7 @@ router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async (
 		website_url: req.body.website_url,
 		social_url: req.body.social_url,
 		remarks: req.body.remarks,
+		office_id:req.body.office,
 		firm_join_date: Firm_Join_Date1 ? Firm_Join_Date1[2] + "-" + Firm_Join_Date1[0] + "-" + Firm_Join_Date1[1] : null,
 		bar_practice_date: Bar_Practice_date1 ? Bar_Practice_date1[2] + "-" + Bar_Practice_date1[0] + "-" + Bar_Practice_date1[1] : null,
 
@@ -1021,6 +1042,103 @@ router.post("/get-duplicate-email-block", auth, async(req, res) => {
 		});
 	}
 
+});
+
+router.get("/get-firm-address", auth, async(req, res)=>{
+	var firms = await Firm.findOne({
+		where: {
+			id: req.user.firm_id
+		}
+	});
+	var state_id = firms.state;
+	var city_id = firms.city;
+	var city = [];
+	var zipcode = [];
+	if (state_id != null) {
+		city = await City.findAll({
+			where: {
+				state_id: state_id.toString()
+			}
+		});
+	}
+	if (city_id != null) {
+		const cities = await City.findById(city_id.toString());
+		zipcode = await Zipcode.findAll({
+			where: {
+				city_name: cities.name
+			}
+		});
+	}
+	res.json({
+		success: true,
+		firm: firms,
+		city: city,
+		zipcode:zipcode
+	});
+});
+router.post("/get-firm-office-address", auth, async(req, res)=> {
+	if(req.body.office_id == "0")
+	{
+		var firms = await Firm.findOne({
+			where: {
+				id: req.user.firm_id
+			}
+		});
+		var state_id = firms.state;
+		var city_id = firms.city;
+		var city = [];
+		var zipcode = [];
+		if (state_id != null) {
+			city = await City.findAll({
+				where: {
+					state_id: state_id.toString()
+				}
+			});
+		}
+		if (city_id != null) {
+			const cities = await City.findById(city_id.toString());
+			zipcode = await Zipcode.findAll({
+				where: {
+					city_name: cities.name
+				}
+			});
+		}
+		res.json({
+			success: 1,
+			firm: firms,
+			city: city,
+			zipcode: zipcode
+		});
+	}
+	else
+	{
+		var office = await Office.findById(req.body.office_id);
+		var state_id = office.state;
+		var city_id = office.city;
+		var city = [];
+		var zipcode = [];
+		if (state_id != null) {
+			city = await City.findAll({
+				where: {
+					state_id: state_id.toString()
+				}
+			});
+		}
+		if (city_id != null) {
+			const cities = await City.findById(city_id.toString());
+			zipcode = await Zipcode.findAll({
+				where: {
+					city_name: cities.name
+				}
+			});
+		}
+		res.json({
+			success: 2,
+			office: office,
+			city: city,
+			zipcode: zipcode
+		});
+	}
 });
 
 module.exports = router;

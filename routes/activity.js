@@ -93,7 +93,8 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 			['activity_goal', 'ASC']
 		],
         where: {
-            'firm_id': req.user.firm_id
+            'firm_id': req.user.firm_id,
+            'user_id': req.user.id
         }
     });
     AttorneyPracticeArea.belongsTo(PracticeArea, {
@@ -460,7 +461,8 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
     const activity_goal = await ActivityGoal.findAll({
 
         where: {
-            'firm_id': req.user.firm_id
+            'firm_id': req.user.firm_id,
+            'user_id': req.user.id
         }
     });
     AttorneyPracticeArea.belongsTo(PracticeArea, {
@@ -674,7 +676,8 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 			['activity_goal', 'ASC']
 		],
         where: {
-            'firm_id': req.user.firm_id
+            'firm_id': req.user.firm_id,
+            'user_id': req.user.id
         }
     });
     AttorneyPracticeArea.belongsTo(PracticeArea, {
