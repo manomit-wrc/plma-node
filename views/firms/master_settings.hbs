@@ -21,23 +21,23 @@
 					<div class="tab firm-box" role="tabpanel">
 						<!-- Nav tabs -->
 						<ul class="nav nav-tabs" role="tablist">
-							<li role="presentation" class="active">
+							<li role="presentation" class="active" id="tab1">
 								<a href="#Section1" aria-controls="home" role="tab" data-toggle="tab">
 								<i class="fa fa-address-card-o"></i>Basic</a>
 							</li>
-							<li role="presentation">
+							<li role="presentation" id="tab2">
 								<a href="#SectionFirm" aria-controls="profile" role="tab" data-toggle="tab">
 								<i class="fa fa-list"></i>Firm Details</a>
 							</li>
-							<li role="presentation">
+							<li role="presentation" id="tab3">
 								<a href="#SectionApprove" aria-controls="profile" role="tab" data-toggle="tab">
 									<i class="fa fa-check"></i>Approval Process</a>
 							</li>
-							<li role="presentation">
+							<li role="presentation" id="tab4">
 								<a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">
 								<i class="fa fa-building"></i>Offices</a>
 							</li>
-							<li role="presentation">
+							<li role="presentation" id="tab5">
 								<a href="#Section3" aria-controls="messages" role="tab" data-toggle="tab">
 								<i class="fa fa-address-book-o"></i>Contacts</a>
 							</li>
@@ -365,7 +365,7 @@
 														<th>SL#</th>
 														<th>Firm Name</th>
 														<th>Office Name</th>
-														<th>Mobile No.</th>
+														<th>Phone No.</th>
 														<th>Address</th>
 														<th>Created Date</th>
 														<th class="text-right">Action</th>
@@ -424,7 +424,7 @@
 														<th>Office Name</th>
 														<th>Designation</th>
 														<th>Email</th>
-														<th>Mobile No.</th>
+														<th>|</th>
 														<th>Created Date</th>
 														<th class="text-right">Action</th>
 													</tr>
@@ -491,7 +491,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label class="control-label">Mobile No.
+								<label class="control-label">Phone No.
 									<span class="text-danger">*</span>
 								</label>
 								<input class="form-control number_validator" type="text" name="mobile_no" id="mobile_no">
@@ -536,6 +536,7 @@
 								<label class="control-label">City
 									<span class="text-danger">*</span>
 								</label>
+								<img class="loadingImgCityAjax m-r-10" style="display:none" src="/assets/img/loading.gif" height="15" width="15" alt="">
 								<select class="select form-control floating" id="city" name="city">
 									<option value="">Select City</option>
 								</select>
@@ -546,6 +547,7 @@
 								<label class="control-label">Zipcode
 									<span class="text-danger">*</span>
 								</label>
+								<img class="loadingImgZipAjax m-r-10" style="display:none" src="/assets/img/loading.gif" height="15" width="15" alt="">
 								<select class="select form-control floating" id="zipcode" name="zipcode">
 									<option value="">Select Zipcode</option>
 								</select>
@@ -581,7 +583,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label class="control-label">Mobile No.
+								<label class="control-label">Phone No.
 									<span class="text-danger">*</span>
 								</label>
 								<input disabled class="form-control floating" type="text" name="view_office_mobile_no" id="view_office_mobile_no">
@@ -670,7 +672,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label class="control-label">Mobile No.
+								<label class="control-label">Phone No.
 									<span class="text-danger">*</span>
 								</label>
 								<input class="form-control floating number_validator" type="text" name="edit_office_mobile_no" id="edit_office_mobile_no">
@@ -715,6 +717,7 @@
 								<label class="control-label">City
 									<span class="text-danger">*</span>
 								</label>
+								<img class="loadingImgCityAjax m-r-10" style="display:none" src="/assets/img/loading.gif" height="15" width="15" alt="">
 								<select class=" form-control floating" id="edit_office_city" name="edit_office_city">
 									<option value="">Select City</option>
 									
@@ -726,6 +729,7 @@
 								<label class="control-label">Zipcode
 									<span class="text-danger">*</span>
 								</label>
+								<img class="loadingImgZipAjax m-r-10" style="display:none" src="/assets/img/loading.gif" height="15" width="15" alt="">
 								<select class=" form-control floating" id="edit_office_zipcode" name="edit_office_zipcode">
 									<option value="">Select Zipcode</option>
 									
@@ -869,6 +873,7 @@
 								<label class="control-label">City
 									<span class="req-lbl">*</span>
 								</label>
+								<img class="loadingImgCityAjax m-r-10" style="display:none" src="/assets/img/loading.gif" height="15" width="15" alt="">
 								<select class="form-control floating" id="contact_city" name="contact_city">
 									<option value="">Select City</option>
 								</select>
@@ -879,6 +884,7 @@
 								<label class="control-label">Zipcode
 									<span class="req-lbl">*</span>
 								</label>
+								<img class="loadingImgZipAjax m-r-10" style="display:none" src="/assets/img/loading.gif" height="15" width="15" alt="">
 								<select class="form-control floating" id="contact_zipcode" name="contact_zipcode">
 									<option value="">Select Zipcode</option>
 								</select>
@@ -1128,6 +1134,7 @@
 								<label class="control-label">City
 									<span class="req-lbl">*</span>
 								</label>
+								<img class="loadingImgCityAjax m-r-10" style="display:none" src="/assets/img/loading.gif" height="15" width="15" alt="">
 								<select class=" form-control floating" id="edit_contact_city" name="edit_contact_city">
 									<option value="">Select City</option>
 									
@@ -1139,6 +1146,7 @@
 								<label class="control-label">Zipcode
 									<span class="req-lbl">*</span>
 								</label>
+								<img class="loadingImgZipAjax m-r-10" style="display:none" src="/assets/img/loading.gif" height="15" width="15" alt="">
 								<select class=" form-control floating" id="edit_contact_zipcode" name="edit_contact_zipcode">
 									<option value="">Select Zipcode</option>
 									
@@ -1886,7 +1894,11 @@
 	                data: {
 	                    state_id: state_id
 	                },
+					beforeSend: function (xhr) {
+						$(".loadingImgCityAjax").show();
+					},
 	                success: function(response) {
+						$(".loadingImgCityAjax").hide();
 	                    for (var i = 0; i < response.get_city.length; i++) {
 	                        $("#edit_office_city").append('<option value="' + response.get_city[i].id + '">' + response.get_city[i].name + '</option>');
 	                    }
@@ -1908,7 +1920,11 @@
 	                data: {
 	                    city_name: city_name
 	                },
+					beforeSend: function (xhr) {
+						$(".loadingImgZipAjax").show();
+					},
 	                success: function(response) {
+						$(".loadingImgZipAjax").hide();
 	                    for (var i = 0; i < response.zipcode.length; i++) {
 	                        $("#edit_office_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
 	                    }
@@ -1934,7 +1950,11 @@
 	                data: {
 	                    state_id: state_id
 	                },
+					beforeSend: function (xhr) {
+						$(".loadingImgCityAjax").show();
+					},
 	                success: function(response) {
+						$(".loadingImgCityAjax").hide();
 	                    for (var i = 0; i < response.get_city.length; i++) {
 	                        $("#edit_contact_city").append('<option value="' + response.get_city[i].id + '">' + response.get_city[i].name + '</option>');
 	                    }
@@ -1956,7 +1976,11 @@
 	                data: {
 	                    city_name: city_name
 	                },
+					beforeSend: function (xhr) {
+						$(".loadingImgZipAjax").show();
+					},
 	                success: function(response) {
+						$(".loadingImgZipAjax").hide();
 	                    for (var i = 0; i < response.zipcode.length; i++) {
 	                        // console.log(response.zipcode[i]);
 	                        $("#edit_contact_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
@@ -1983,7 +2007,11 @@
 	                data: {
 	                    state_id: state_id
 	                },
+					beforeSend: function (xhr) {
+						$(".loadingImgCityAjax").show();
+					},
 	                success: function(response) {
+						$(".loadingImgCityAjax").hide();
 	                    for (var i = 0; i < response.get_city.length; i++) {
 	                        $("#contact_city").append('<option value="' + response.get_city[i].id + '">' + response.get_city[i].name + '</option>');
 	                    }
@@ -2005,7 +2033,11 @@
 	                data: {
 	                    city_name: city_name
 	                },
+					beforeSend: function (xhr) {
+						$(".loadingImgZipAjax").show();
+					},
 	                success: function(response) {
+						$(".loadingImgZipAjax").hide();
 	                    for (var i = 0; i < response.zipcode.length; i++) {
 	                        // console.log(response.zipcode[i]);
 	                        $("#contact_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
@@ -2122,13 +2154,13 @@
 	                address3 = $("#address3").val(),
 	                phone_no = $("#phone_no").val(),
 	                city = $("#firm_city").val();
-	            state = $("#firm_state").val();
-	            country = $("#firm_country").val();
-	            zipcode = $("#firm_zipcode").val();
-	            fax = $("#fax").val();
-	            mobile_no = $("#firm_mobile").val();
-	            web_url = $("#web_url").val();
-	            social_url = $("#social_url").val();
+					state = $("#firm_state").val();
+					country = $("#firm_country").val();
+					zipcode = $("#firm_zipcode").val();
+					fax = $("#fax").val();
+					mobile_no = $("#firm_mobile").val();
+					web_url = $("#web_url").val();
+					social_url = $("#social_url").val();
 	            $.ajax({
 	                type: "POST",
 	                url: "/update-own-firm",
@@ -2153,10 +2185,16 @@
 	                },
 	                success: function(response) {
 	                    if (response.update_firm == true) {
-	                        $(`<div class="alert alert-success"><strong>Success! </strong>Firm Updated Successfully</div>`).insertBefore("#frmUpdateFirm");
-	                        setTimeout(function() {
-	                            window.location.href = "/firm-details";
-	                        }, 2000);
+							swal({
+								title: "Success!",
+								text: "Firm Updated Successfully!",
+								type: "success"
+							}, function () {
+								$("#tab1").removeClass("active");
+								$("#Section1").removeClass("in active");
+								$("#tab2").addClass("active");
+								$("#SectionFirm").addClass("in active");
+							});
 	                    }
 						$("#btnUpdateFirm").prop('disabled', false);
                         $("#btnUpdateFirm").html("Save &amp; Next");
@@ -2240,13 +2278,19 @@
 	                },
 	                success: function(response) {
 	                    if (response.update_firm_details == true) {
-	                        $(`<div class="alert alert-success"><strong>Success! </strong>Firm Details Updated Successfully</div>`).insertBefore("#frmUpdateFirmDetails");
-	                        setTimeout(function() {
-	                            window.location.href = "/firm-details";
-	                        }, 2000);
+							swal({
+								title: "Success!",
+								text: "Firm Details Updated Successfully",
+								type: "success"
+							}, function () {
+								$("#tab2").removeClass("active");
+								$("#SectionFirm").removeClass("in active");
+								$("#tab3").addClass("active");
+								$("#SectionApprove").addClass("in active");
+							});
 	                    }
-						$("#btnUpdateFirm").prop('disabled', false);
-                        $("#btnUpdateFirm").html("Save &amp; Next");
+						$("#btnUpdateFirmDetails").prop('disabled', false);
+                        $("#btnUpdateFirmDetails").html("Save &amp; Next");
 	                }
 	            });
 	        }
@@ -2474,13 +2518,19 @@
 					},
 					success: function (response) {
 						if (response.update_firm_approval == true) {
-							$(`<div class="alert alert-success"><strong>Success! </strong>Firm Approval Process Updated Successfully</div>`).insertBefore("#frmUpdateFirmApproval");
-							setTimeout(function () {
-								window.location.href = "/firm-details";
-							}, 2000);
+							swal({
+								title: "Success!",
+								text: "Firm Approval Process Updated Successfully",
+								type: "success"
+							}, function () {
+								$("#tab3").removeClass("active");
+								$("#SectionApprove").removeClass("in active");
+								$("#tab4").addClass("active");
+								$("#Section2").addClass("in active");
+							});
 						}
-						//$("#btnUpdateFirmApproval").prop('disabled', false);
-						//$("#btnUpdateFirmApproval").html("Save &amp; Next");
+						$("#btnUpdateFirmApproval").prop('disabled', false);
+						$("#btnUpdateFirmApproval").html("Save &amp; Next");
 					}
 				});
 			}

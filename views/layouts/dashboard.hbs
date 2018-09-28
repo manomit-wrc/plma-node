@@ -121,8 +121,11 @@
             type: "POST",
             url: "/firm-profiles/get-city",
             data: { state_id: state_id },
+            beforeSend: function (xhr) {
+             $(".loadingImgCityAjax").show();
+            },
             success: function (response) {
-
+              $(".loadingImgCityAjax").hide();
               for (var i = 0; i < response.get_city.length; i++) {
                 $("#city").append('<option value="' + response.get_city[i].id + '">' + response.get_city[i].name + '</option>');
            
@@ -164,7 +167,11 @@
             type: "POST",
             url: "/firm-profiles/get-zipcode",
             data: { city_name: city_name },
+            beforeSend: function (xhr) {
+              $(".loadingImgZipAjax").show();
+            },
             success: function (response) {
+              $(".loadingImgZipAjax").hide();
               for (var i = 0; i < response.zipcode.length; i++) {
                 // console.log(response.zipcode[i]);
                 $("#zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');

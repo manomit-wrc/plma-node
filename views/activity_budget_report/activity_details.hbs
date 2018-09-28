@@ -29,8 +29,8 @@
             <input type="hidden" id="activity_target_length" value={{activity_target_client.length}}>
         </div>
         <div id="mytable1">
-            <table width="100%">
-                <tr class="row">
+             <table width="100%" class="common-tbl-fixed">
+                  <tr class="row common-tbl-fixed-row">
                     <td class="col-md-4"><div>
                         <div class="div_left table-responsive">
                             <table width="100%" class="table table-bordered">
@@ -149,7 +149,7 @@
                     </div></td>
                     <td class="col-md-8"><div>
                         <div class="div_right table-responsive">
-                            <table class="table" style="margin-top: 9px;">
+                            <table class="table">
                                 <tbody>
                                     <tr>
                                         <td>
@@ -176,7 +176,7 @@
                                                                         </td>
                                                                     </tr>
                                                                 </thead>
-                    
+
                                                                 <tbody>
                                                                     {{#each this.budget_list}}
                                                                     <tr>
@@ -207,7 +207,7 @@
                                                                                                     <tr>
                                                                                                         <td width="50%" style="border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; text-align: center; vertical-align: middle;">
                                                                                                             {{get_activity_budget_hour ../../this.activity_id this.budget_display}}
-                    
+
                                                                                                         </td>
                                                                                                         <td width="50%" style="border-bottom: 1px solid #ddd; text-align: center; vertical-align: middle;">
                                                                                                             {{get_activity_budget_amount ../../this.activity_id this.budget_display}}
@@ -273,8 +273,8 @@
                         </div>
                     </div></td>
                 </tr>
-            </table> 
-        </div>       
+            </table>
+        </div>
     </div>
 </div>
 
