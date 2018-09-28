@@ -102,6 +102,9 @@
 
 
     $(document).ready(function () {
+
+
+
       $(".number_validator").inputmask("mask", {
         "mask": "(999) 999-9999"
       });
@@ -119,13 +122,36 @@
             url: "/firm-profiles/get-city",
             data: { state_id: state_id },
             success: function (response) {
+
               for (var i = 0; i < response.get_city.length; i++) {
                 $("#city").append('<option value="' + response.get_city[i].id + '">' + response.get_city[i].name + '</option>');
+           
               }
+
+
+
+              var options = $('#city option');
+              var arr = options.map(function(_, o) {
+                  return {
+                      t: $(o).text(),
+                      v: o.value
+                  };
+              }).get();
+              arr.sort(function(o1, o2) {
+                  return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0;
+              });
+              options.each(function(i, o) {
+                  console.log(i);
+                  o.value = arr[i].v;
+                  $(o).text(arr[i].t);
+              });
             },
             error: function (xhr) {
 
             }
+
+
+            
           });
         }
       });
@@ -298,6 +324,8 @@
       $(".loader").fadeOut("slow");
     });
   </script>
+
+
 </body>
 
 </html>
