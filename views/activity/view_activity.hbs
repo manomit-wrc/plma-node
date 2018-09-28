@@ -59,7 +59,7 @@
                       <input type="radio" id="referral_type" name="ref_type" value="R" {{#if_eq editdata.target "R"}} checked {{/if_eq}} disabled
                       />
                     </span>
-                    <div class="form-control form-control-static">Referral</div>
+                    <div class="form-control form-control-static">Referral Sources</div>
                     <span class="glyphicon form-control-feedback"></span>
                   </label>
                 </div>
@@ -321,7 +321,7 @@
                       <tr>
                         <td>{{this.attorney_name}}</td>
                         <td> {{#if_eq this.relation 'C'}} Client {{/if_eq}} {{#if_eq this.relation 'T'}} Target {{/if_eq}}
-                          {{#if_eq this.relation 'R'}} Referral {{/if_eq}} {{#if_eq this.relation 'G'}} General {{/if_eq}}</td>
+                          {{#if_eq this.relation 'R'}} Referral Sources {{/if_eq}} {{#if_eq this.relation 'G'}} General {{/if_eq}}</td>
                         <td>{{ this.company_name }}</td>
                         <td>
                           <a href="#" id="budgetUpdate" data-toggle="modal" data-target="#update_budget">$ {{this.total_cost}}</a>

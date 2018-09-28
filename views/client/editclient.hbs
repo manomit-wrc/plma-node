@@ -666,11 +666,11 @@
 
 			<div class="card-box">
 				<div class="col-xs-4">
-					<h3 class="card-title">Referral Information</h3>
+					<h3 class="card-title">Referral Sources Information</h3>
 				</div>
 				<div class="col-xs-8 text-right">
 					<a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_referral"><i class="fa fa-plus"></i>
-						Add Referral</a>
+						Add Referral Sources</a>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
@@ -679,7 +679,7 @@
 								<thead>
 									<tr>
 										<th>SL#</th>
-										<th>Referral Name</th>
+										<th>Referral Sources Name</th>
 										<th>Email</th>
 									</tr>
 								</thead>
@@ -797,7 +797,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">Add Referral</h4>
+				<h4 class="modal-title">Add Referral Sources</h4>
 			</div>
 			<div class="modal-body" style="height: 100px;">
 				<form name="addRefferal" id="addRefferal" method="POST">
@@ -805,7 +805,7 @@
 					<div class="col-md-6 col-md-offset-3" id="referral_list">
 						<div class="form-group form-focus select-attorney">
 							<select id="referral_id" name="referral_id_c" class="form-control floating">
-								<option value="">Select Referral</option>
+								<option value="">Select Referral Sources</option>
 								{{#each referral}}
 								<option value="{{this.id}}" {{#inArrayCustom3 ../referralDetails this.id}} disabled {{/inArrayCustom3}}>{{this.first_name}}
 									{{this.last_name}}</option>

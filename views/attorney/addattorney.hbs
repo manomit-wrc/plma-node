@@ -163,12 +163,6 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group form-focus">
-                            <label class="control-label">Mobile No</label>
-                            <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" />
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="card-box">
@@ -237,12 +231,11 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus select-attorney">
-                            <label class="control-label">Job Type</label>
+                            <label class="control-label">Compensation Type</label>
                             <select class="form-control floating " id="job_type" name="job_type">
-                                <option value="">Select Job Type</option>
-                                <option value="FULLTIME">FULLTIME</option>
-                                <option value="STERMCON">SHORT TERM CONTRACT</option>
-                                <option value="TEMP">TEMPORARY</option>
+                                <option value="">Select Compensation Type</option>
+                                <option value="FULLTIME">Salary</option>
+                                <option value="STERMCON">Hourly</option>
                             </select>
                         </div>
                     </div>
@@ -322,9 +315,20 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group form-focus">
+                            <label class="control-label">Office address
+                            </label>
+                            <select id="office" name="office" class="form-control floating">
+                                <option value="0">Select Office address</option>
+                                {{#each office}}
+                                    <option value="{{this.id}}">{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group form-focus">
                             <label class="control-label">Address Line 1
                                 <span class="req-lbl">*</span>
-
                             </label>
                             <input type="text" class="form-control floating" id="address" name="address" />
                         </div>
@@ -395,6 +399,12 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-focus">
+                            <label class="control-label">Mobile No</label>
+                            <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-focus">
                             <label class="control-label">Phone No</label>
                             <input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" />
                         </div>
@@ -413,19 +423,8 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-focus">
-                            <label class="control-label">Social URL</label>
+                            <label class="control-label">LinkedIn URL</label>
                             <input type="text" class="form-control floating url_selector" id="social_url" name="social_url" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card-box">
-                <h3 class="card-title">Remarks</h3>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group form-focus">
-                            <label class="control-label">Remarks </label>
-                            <textarea class="form-control floating" id="remarks" name="remarks"></textarea>
                         </div>
                     </div>
                 </div>
@@ -741,4 +740,83 @@
         }
     });
 /* ================================ Duplicate email checking ajax call ========================*/
+/* ================================ Starts Autofill firm Address ======================================*/
+
+    $(document).ready(function(){
+        $.ajax({
+            type: "GET",
+            url: "/get-firm-address",
+            success: function (response) {
+                if(response.success == true)
+                {
+                    for (var i = 0; i < response.city.length; i++) {
+                        $("#city").append('<option value="' + response.city[i].id + '">' + response.city[i].name + '</option>');
+                    }
+                    for (var j = 0; j < response.zipcode.length; j++) {
+                        $("#zipcode").append('<option value="' + response.zipcode[j].id + '">' + response.zipcode[j].zip + '</option>');
+                    }
+                    var firm = response.firm;
+                    $("#address").val(firm.address);
+                    $("#address2").val(firm.address1);
+                    $("#address3").val(firm.address2);
+                    $("#state").val(firm.state);
+                    $("#city").val(firm.city);
+                    $("#zipcode").val(firm.zipcode);
+                }
+            },
+            error: function (xhr) {
+            }
+        });
+    });
+    $(document).on('change',"#office", function(){
+        var office_id = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: "/get-firm-office-address",
+            data: {
+                office_id: office_id
+            },
+            success: function (response) {
+                if (response.success == 1) {
+                    $("#city").find('option').not(':first').remove();
+                    $("#zipcode").find('option').not(':first').remove();
+                    for (var i = 0; i < response.city.length; i++) {
+                        $("#city").append('<option value="' + response.city[i].id + '">' + response.city[i].name + '</option>');
+                    }
+                    for (var j = 0; j < response.zipcode.length; j++) {
+                        $("#zipcode").append('<option value="' + response.zipcode[j].id + '">' + response.zipcode[j].zip + '</option>');
+                    }
+                    var firm = response.firm;
+                    $("#address").val(firm.address);
+                    $("#address2").val(firm.address1);
+                    $("#address3").val(firm.address2);
+                    $("#state").val(firm.state);
+                    $("#city").val(firm.city);
+                    $("#zipcode").val(firm.zipcode);
+                }
+                else if(response.success == 2)
+                {
+                    $("#city").find('option').not(':first').remove();
+                    $("#zipcode").find('option').not(':first').remove();
+                    for (var i = 0; i < response.city.length; i++) {
+                        $("#city").append('<option value="' + response.city[i].id + '">' + response.city[i].name + '</option>');
+                    }
+                    for (var j = 0; j < response.zipcode.length; j++) {
+                        $("#zipcode").append('<option value="' + response.zipcode[j].id + '">' + response.zipcode[j].zip + '</option>');
+                    }
+                    var office = response.office;
+                    $("#address").val(office.address);
+                    $("#address2").val(office.address1);
+                    $("#address3").val(office.address2);
+                    $("#state").val(office.state);
+                    $("#city").val(office.city);
+                    $("#zipcode").val(office.zipcode);
+                }
+            },
+            error: function (xhr) {
+            }
+        });
+    });
+
+/* ================================ Ends Autofill firm Address ======================================*/
 </script> {{/content}}

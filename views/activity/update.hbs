@@ -16,7 +16,7 @@
         <div class="text-right">
            {{#if_eq editdata.activity_type "team"}}
           <a href="#" class="btn btn-primary pull-right rounded" data-toggle="modal" data-target="#addDetails">
-            <i class="fa fa-plus-circle"></i> Add Client/Traget/Referral/General</a>
+            <i class="fa fa-plus-circle"></i> Add Client/Traget/Referral Sources/General</a>
             {{/if_eq}}
           {{!-- <button class="btn btn-primary rounded advancedFilter" data-toggle="modal" data-target="#add_user">
             <i class="fa fa-filter"></i> Filter</button> --}}
@@ -60,7 +60,7 @@
                     <span class="input-group-addon">
                       <input type="radio" id="referral_type" name="ref_type" value="R" {{#if_eq editdata.target "R"}} checked {{/if_eq}} />
                     </span>
-                    <div class="form-control form-control-static">Referral</div>
+                    <div class="form-control form-control-static">Referral Sources</div>
                     <span class="glyphicon form-control-feedback"></span>
                   </label>
                 </div>
@@ -352,7 +352,7 @@
                       <tr>
                         <td>{{this.attorney_name}}</td>
                         <td> {{#if_eq this.relation 'C'}} Client {{/if_eq}} {{#if_eq this.relation 'T'}} Target {{/if_eq}}
-                          {{#if_eq this.relation 'R'}} Referral {{/if_eq}} {{#if_eq this.relation 'G'}} General {{/if_eq}}</td>
+                          {{#if_eq this.relation 'R'}} Referral Sources {{/if_eq}} {{#if_eq this.relation 'G'}} General {{/if_eq}}</td>
                         <td>{{ this.company_name }}</td>
                         <td>
                           <a href="#" id="budgetUpdate" data-toggle="modal" data-target="#update_budget">$ {{this.total_cost}}</a>
@@ -495,7 +495,7 @@
     <div class="modal-content modal-lg">
       <form name="addDetailsForm" id="addDetailsForm">
         <div class="modal-header">
-          <h4 class="modal-title"> Add Attorney Budget Per Client/Target/Referral/General </h4>
+          <h4 class="modal-title"> Add Attorney Budget Per Client/Target/Referral Sources/General </h4>
         </div>
         <div class="modal-body">
           <div class="row">
@@ -542,7 +542,7 @@
                       <span class="input-group-addon">
                         <input type="radio" id="addReferral_type" name="_ref_type" class="all_type" value="R" />
                       </span>
-                      <div class="form-control form-control-static">Referral</div>
+                      <div class="form-control form-control-static">Referral Sources</div>
                       <span class="glyphicon form-control-feedback"></span>
                     </label>
                   </div>
@@ -602,7 +602,7 @@
             <div class="col-md-12" id="_referral_list" {{#if_eq refer_type "R"}} style="display: block;" {{else}} style="display: none;"
               {{/if_eq}}>
               <div class="form-group form-inline general">
-                <label class="control-label col-md-2">Referral List </label>
+                <label class="control-label col-md-2">Referral Sources List </label>
                 <div class="col-md-10">
                   <select id="_referral_id" name="_referral_user" class="form-control">
                     <option value="">Please Select One</option>

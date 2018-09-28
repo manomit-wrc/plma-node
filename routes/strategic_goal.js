@@ -19,10 +19,15 @@ router.get("/strategic-marketing-goal", auth, firmAttrAuth, async(req, res)=> {
     StrategicGoal.hasMany(ActivityGoal, {
         foreignKey: 'strategic_goal_id'
     });
+    var whereGoals = {};
+    if (req.user.role_id == 2) {
+        whereGoals.firm_id = req.user.firm_id;
+    } else {
+        whereGoals.firm_id = req.user.firm_id;
+        whereGoals.user_id = req.user.id;
+    }
     const strategic_show = await StrategicGoal.findAll({
-        where: {
-            firm_id: req.user.firm_id
-        },
+        where: whereGoals,
         include: [{
             model: ActivityGoal
         }]
