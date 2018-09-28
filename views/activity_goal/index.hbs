@@ -54,7 +54,13 @@
                                     </a>
                                 </td>
                                
-                                <td>{{dateFormat this.from_date "MM-DD-YYYY"}} To {{dateFormat this.to_date "MM-DD-YYYY"}}</td>
+                                <td>
+                                    {{#if this.from_date}}
+                                    {{dateFormat this.from_date "MM-DD-YYYY"}} To {{dateFormat this.to_date "MM-DD-YYYY"}}
+                                    {{else}}
+                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;—
+                                     {{/if}} 
+                                </td>
                                 <td><a href="/activity-goal/view-activity/{{this.id}}">{{get_total_activity this.activities}}</a></td>
                                 <td><a href="/budget-report/activity-goal/{{this.id}}">{{get_activity_goal_hours this.activity_budgets}}</a></td>
                                 <td><a href="/budget-report/activity-goal/{{this.id}}">$ {{get_activity_goal_amounts this.activity_budgets}}</a></td>
