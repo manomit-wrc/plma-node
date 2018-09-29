@@ -85,7 +85,7 @@
 										<input type="text" class="form-control floating" id="last_name" name="last_name" maxlength="50" />
 									</div>
 								</div>
-
+{{!-- 
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Master Contact Code
@@ -105,22 +105,9 @@
 										</div>
 									</div>
 								</div>
+ --}}
 
-
-								<div class="col-md-6">
-									<div class="form-group form-focus select-focus select-attorney">
-										<label class="control-label">Gender
-
-										</label>
-										<select class="form-control floating " id="gender" name="gender" >
-											<option value="">Select Gender</option>
-											<option value="M">Male</option>
-											<option value="F">Female</option>
-											<option value="O">Others</option>
-
-										</select>
-									</div>
-								</div>
+							
 
 								<div class="col-md-6">
 									<div class="form-group form-focus">
@@ -140,12 +127,7 @@
 										<input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" maxlength="50" />
 									</div>
 								</div>
-								<div class="col-md-6">
-									<div class="form-group form-focus">
-										<label class="control-label">Fax</label>
-										<input type="text" class="form-control floating number_validator" id="fax" name="fax" maxlength="50" />
-									</div>
-								</div>
+								
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Mobile No.
@@ -245,7 +227,7 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group form-focus select-focus select-attorney">
-								<label class="control-label">Attorney
+								<label class="control-label">Attorney	<span class="req-lbl">*</span>
 								</label>
 								<select id="designation" name="attorney_id" class="form-control floating ">
 									{{#if_eq user.role_id "3"}}
@@ -283,20 +265,7 @@
 										<input type="text" class="form-control floating" id="contactDetailsSecondName" name="contactDetailsSecondName[]" />
 									</div>
 								</div>
-								<div class="col-md-6">
-									<div class="form-group form-focus select-focus">
-										<label class="control-label">Gender
-
-										</label>
-										<select class="select form-control floating" id="contactDetailsGender" name="contactDetailsGender[]">
-											<option value="">Select Gender</option>
-											<option value="M">Male</option>
-											<option value="F">Female</option>
-											<option value="O">Others</option>
-
-										</select>
-									</div>
-								</div>
+							
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Email Id
@@ -316,13 +285,7 @@
 										 maxlength="50" />
 									</div>
 								</div>
-								<div class="col-md-6">
-									<div class="form-group form-focus">
-										<label class="control-label">Fax</label>
-										<input type="text" class="form-control floating number_validator" id="contactDetailsFax" name="contactDetailsFax[]" maxlength="50"
-										/>
-									</div>
-								</div>
+								
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Mobile No.
@@ -358,19 +321,7 @@
 												<input type="text" class="form-control floating" name="contactDetailsSecondName[]" />
 											</div>
 										</div>
-										<div class="col-md-6">
-											<div class="form-group form-focus select-focus">
-												<label class="control-label">Gender
-
-												</label>
-												<select class="form-control floating" name="contactDetailsGender[]">
-													<option value="">Select Gender</option>
-													<option value="M">Male</option>
-													<option value="F">Female</option>
-													<option value="O">Others</option>
-												</select>
-											</div>
-										</div>
+									
 										<div class="col-md-6">
 											<div class="form-group form-focus">
 												<label class="control-label">Email Id
@@ -389,12 +340,7 @@
 												<input type="text" class="form-control floating number_validator" name="contactDetailsPhone_no[]" maxlength="50" />
 											</div>
 										</div>
-										<div class="col-md-6">
-											<div class="form-group form-focus">
-												<label class="control-label">Fax</label>
-												<input type="text" class="form-control floating number_validator" name="contactDetailsFax[]" maxlength="50" />
-											</div>
-										</div>
+										
 										<div class="col-md-6">
 											<div class="form-group form-focus">
 												<label class="control-label">Mobile No.
@@ -466,16 +412,7 @@
 								<input type="text" class="form-control floating url_selector" id="youtube" name="youtube" />
 							</div>
 						</div>
-						<div class="col-md-6">
-							<div class="form-group form-focus select-focus select-attorney">
-								<label class="control-label">Master Contact Status</label>
-								<select id="status" name="status" class="form-control floating " >
-									<option value="CONVERTED">CONVERTED TO CLIENT</option>
-									<option value="NEW TARGET">NEW TARGET</option>
-									<option value="TS-INTERIM">INTERIM - REVIEW IN-PROGRESS</option>
-								</select>
-							</div>
-						</div>
+						
 						<div class="col-md-6">
 							<div class="form-group form-focus select-focus select-attorney">
 								<label class="control-label">Industry Type
@@ -547,6 +484,9 @@
 					address1: {
 						required: true
 					},
+					attorney_id: {
+						required: true
+					},
 					country: {
 						required: true
 					},
@@ -564,7 +504,9 @@
 					first_name: {
 						required: "First name can't be blank"
 					},
-
+	            attorney_id: {
+						required: "Attorney Id can't be blank"
+					},
 
 					last_name: {
 						required: "Last name can't be blank"

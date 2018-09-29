@@ -104,19 +104,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="form-group form-focus select-focus">
-              <label class="control-label">Gender</label>
-              <select disabled class="form-control floating" id="gender" name="gender">
-                <option value="">Select Gender</option>
-                <option value="M" {{#if_eq edata.0.gender "M"}} selected {{/if_eq}}>Male</option>
-                <option value="F" {{#if_eq edata.0.gender "F"}} selected {{/if_eq}}>Female</option>
-                <option value="0" {{#if_eq edata.0.gender "0"}} selected {{/if_eq}}>Others</option>
-
-              </select>
-
-            </div>
-          </div>
+        
           <div class="col-md-6">
             <div class="form-group form-focus">
               <label class="control-label">Attorney ID</label>
@@ -131,17 +119,7 @@
                 readonly/>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="form-group form-focus select-focus">
-              <label class="control-label">Attorney Type</label>
-              <select disabled class="form-control floating" id="attorney_type" name="attorney_type">
-                <option value="">Select Attorney Type</option>
-                <option value="AT-INTERIM" {{#if_eq edata.0.attorney_details.0.attorney_type "AT-INTERIM"}} selected="selected" {{/if_eq}}>INTERIM ATTORNEY</option>
-                <option value="AT-APPROVED" {{#if_eq edata.0.attorney_details.0.attorney_type "AT-APPROVED"}} selected="selected" {{/if_eq}}>APPROVED ATTORNEY</option>
-                <option value="PENDING" {{#if_eq edata.0.attorney_details.0.attorney_type "PENDING"}} selected="selected" {{/if_eq}}>ATTORNEY TO BE ASSIGNED</option>
-              </select>
-            </div>
-          </div>
+       
           {{!-- <div class="col-md-6">
             <div class="form-group form-focus">
               <label class="control-label">Education</label>
@@ -375,12 +353,6 @@
             </div>
           </div>
 
-          <div class="col-md-6">
-            <div class="form-group form-focus">
-              <label class="control-label">Fax</label>
-              <input type="text" class="form-control floating number_validator" id="fax" name="fax" value="{{edata.0.attorney_details.0.fax}}" readonly/>
-            </div>
-          </div>
           <div class="col-md-6">
             <div class="form-group form-focus">
               <label class="control-label">Website URL</label>

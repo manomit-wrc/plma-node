@@ -64,18 +64,7 @@
                     <input type="text" class="form-control floating" id="last_name" name="last_name" value="{{referral.last_name}}" />
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <div class="form-group form-focus select-focus select-attorney">
-                    <label class="control-label">Gender <span class="req-lbl">*</span></label>
-                    <select class="form-control floating" id="gender" name="gender">
-                      <option value="">Select Gender</option>
-                      <option value="M" {{#if_eq referral.gender "M"}} selected {{/if_eq}}>Male</option>
-                      <option value="F" {{#if_eq referral.gender "F"}} selected {{/if_eq}}>Female</option>
-                      <option value="O" {{#if_eq referral.gender "O"}} selected {{/if_eq}}>Others</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
+               
               <div class="col-md-6" id="org_referral" {{#if_eq referral.referral_type "I"}} style="display: none;"
                 {{/if_eq}}>
                 <div class="form-group form-focus">
@@ -95,12 +84,7 @@
                   <input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" value="{{referral.phone_no}}" />
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="form-group form-focus">
-                  <label class="control-label">Fax</label>
-                  <input type="text" class="form-control floating number_validator" id="fax" name="fax" value="{{referral.fax}}" />
-                </div>
-              </div>
+     
               <div class="col-md-6">
                 <div class="form-group form-focus">
                   <label class="control-label">Mobile No.</label>
@@ -237,17 +221,7 @@
                       value="{{this.last_name}}" />
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <div class="form-group form-focus select-focus">
-                    <label class="control-label">Gender</label>
-                    <select class="select form-control floating" id="contactDetailsGender" name="contactDetailsGender[]">
-                      <option value="">Select Gender</option>
-                      <option value="M" {{#if_eq this.gender "M"}} selected {{/if_eq}}>Male</option>
-                      <option value="F" {{#if_eq this.gender "F"}} selected {{/if_eq}}>Female</option>
-                      <option value="O" {{#if_eq this.gender "O"}} selected {{/if_eq}}>Others</option>
-                    </select>
-                  </div>
-                </div>
+                
                 <div class="col-md-6">
                   <div class="form-group form-focus">
                     <label class="control-label">Email Id</label>
@@ -263,13 +237,7 @@
                       maxlength="50" value={{this.phone_no}} />
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <div class="form-group form-focus">
-                    <label class="control-label">Fax</label>
-                    <input type="text" class="form-control floating number_validator" id="contactDetailsFax" name="contactDetailsFax[]"
-                      maxlength="50" value="{{this.fax}}" />
-                  </div>
-                </div>
+               
                 <div class="col-md-6">
                   <div class="form-group form-focus">
                     <label class="control-label">Mobile No.</label>
@@ -303,17 +271,7 @@
                       <input type="text" class="form-control floating" name="contactDetailsSecondName[]" />
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="form-group form-focus select-focus">
-                      <label class="control-label">Gender</label>
-                      <select class="form-control floating" name="contactDetailsGender[]">
-                        <option value="">Select Gender</option>
-                        <option value="M">Male</option>
-                        <option value="F">Female</option>
-                        <option value="O">Others</option>
-                      </select>
-                    </div>
-                  </div>
+                 
                   <div class="col-md-6">
                     <div class="form-group form-focus">
                       <label class="control-label">Email Id</label>
@@ -328,13 +286,7 @@
                         maxlength="50" />
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="form-group form-focus">
-                      <label class="control-label">Fax</label>
-                      <input type="text" class="form-control floating number_validator" name="contactDetailsFax[]"
-                        maxlength="50" />
-                    </div>
-                  </div>
+                  
                   <div class="col-md-6">
                     <div class="form-group form-focus">
                       <label class="control-label">Mobile No.</label>
@@ -439,17 +391,7 @@
               <input type="text" class="form-control floating url_selector" id="youtube" name="youtube" value="{{referral.youtube}}" />
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="form-group form-focus select-focus select-attorney">
-              <label class="control-label">Association Status</label>
-              <select id="association" name="association" class="form-control floating">
-                <option value="0"> Select Association</option>
-                <option value="CONVERTED" {{#if_eq referral.association "CONVERTED"}} selected {{/if_eq}}>CONVERTED</option>
-                <option value="NEW TARGET" {{#if_eq referral.association "NEW TARGET"}} selected {{/if_eq}}>NEW TARGET</option>
-                <option value="TS-INTERIM" {{#if_eq referral.association "TS-INTERIM"}} selected {{/if_eq}}>TS-INTERIM</option>
-              </select>
-            </div>
-          </div>
+         
           <div class="col-md-6">
             <div class="form-group form-focus select-focus select-attorney">
               <label class="control-label">Industry Type</label>
@@ -583,9 +525,7 @@
         mobile_no: {
           required: true
         },
-        gender: {
-          required: true
-        },
+   
         estimated_revenue: {
           required: true
         },
@@ -625,9 +565,7 @@
         mobile_no: {
           required: "Mobile number can't be blank"
         },
-        gender: {
-          required: "Please select gender"
-        },
+    
         estimated_revenue: {
           required: "Estimated revenue can't be blank"
         },

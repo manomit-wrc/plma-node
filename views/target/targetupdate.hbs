@@ -79,18 +79,7 @@
 										<input type="text" class="form-control floating" id="target_code" name="target_code" value="{{client.target_code}}" />
 									</div>
 								</div>
-								<div class="col-md-6">
-									<div class="form-group form-focus select-focus select-attorney">
-										<label class="control-label">Gender <span class="req-lbl">*</span></label>
-										<select class="form-control floating" id="gender" name="gender">
-											<option value="">Select Gender</option>
-											<option value="M" {{#if_eq client.gender "M"}} selected {{/if_eq}}>Male</option>
-											<option value="F" {{#if_eq client.gender "F"}} selected {{/if_eq}}>Female</option>
-											<option value="O" {{#if_eq client.gender "O"}} selected {{/if_eq}}>Others</option>
-										</select>
-									</div>
-								</div>
-							</div>
+								
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Email Id
@@ -114,12 +103,7 @@
 									/>
 								</div>
 							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus select-focus">
-									<label class="control-label">Fax</label>
-									<input type="text" class="form-control floating number_validator" id="fax" name="fax" value="{{client.fax}}" />
-								</div>
-							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -181,12 +165,7 @@
 							<input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue" value="{{client.revenues.0.estimated_revenue}}">
 						</div>
 					</div>
-					{{!-- <div class="col-md-6">
-						<div class="form-group form-focus">
-							<label class="control-label">Current Annual Revenue</label>
-							<input class="form-control floating" type="text" id="current_revenue" name="current_revenue" value="{{client.revenues.0.current_revenue}}">
-						</div>
-					</div> --}}
+				
 				</div>
 			</div>
 			<div class="card-box">
@@ -318,17 +297,7 @@
 										/>
 									</div>
 								</div>
-								<div class="col-md-6">
-									<div class="form-group form-focus select-focus">
-										<label class="control-label">Gender</label>
-										<select class="form-control floating" id="contactDetailsGender" name="contactDetailsGender[]">
-											<option value="">Select Gender</option>
-											<option value="M" {{#if_eq this.gender "M"}} selected {{/if_eq}}>Male</option>
-											<option value="F" {{#if_eq this.gender "F"}} selected {{/if_eq}}>Female</option>
-											<option value="O" {{#if_eq this.gender "O"}} selected {{/if_eq}}>Others</option>
-										</select>
-									</div>
-								</div>
+								
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Email Id</label>
@@ -344,13 +313,7 @@
 										 maxlength="50" value={{this.phone_no}} />
 									</div>
 								</div>
-								<div class="col-md-6">
-									<div class="form-group form-focus">
-										<label class="control-label">Fax</label>
-										<input type="text" class="form-control floating number_validator" id="contactDetailsFax" name="contactDetailsFax[]" maxlength="50"
-										 value="{{this.fax}}" />
-									</div>
-								</div>
+								
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Mobile No.</label>
@@ -383,17 +346,7 @@
 											<input type="text" class="form-control floating" name="contactDetailsSecondName[]" />
 										</div>
 									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus select-focus">
-											<label class="control-label">Gender</label>
-											<select class="form-control floating" name="contactDetailsGender[]">
-												<option value="">Select Gender</option>
-												<option value="M">Male</option>
-												<option value="F">Female</option>
-												<option value="O">Others</option>
-											</select>
-										</div>
-									</div>
+									
 									<div class="col-md-6">
 										<div class="form-group form-focus">
 											<label class="control-label">Email Id</label>
@@ -407,12 +360,7 @@
 											<input type="text" class="form-control floating number_validator" name="contactDetailsPhone_no[]" maxlength="50" />
 										</div>
 									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus">
-											<label class="control-label">Fax</label>
-											<input type="text" class="form-control floating number_validator" name="contactDetailsFax[]" maxlength="50" />
-										</div>
-									</div>
+									
 									<div class="col-md-6">
 										<div class="form-group form-focus">
 											<label class="control-label">Mobile No.</label>
@@ -514,17 +462,7 @@
 							<input type="text" class="form-control floating url_selector" id="youtube" name="youtube" value="{{client.youtube}}" />
 						</div>
 					</div>
-					<div class="col-md-6">
-						<div class="form-group form-focus select-focus select-attorney">
-							<label class="control-label">Association Status</label>
-							<select id="association" name="association" class="form-control floating">
-								<option value="0">Select Association Status</option>
-								<option value="CONVERTED" {{#if_eq client.association "CONVERTED"}} selected="selected" {{/if_eq}}>CONVERTED</option>
-								<option value="NEW TARGET" {{#if_eq client.association "NEW TARGET"}} selected="selected" {{/if_eq}}>NEW TARGET</option>
-								<option value="TS-INTERIM" {{#if_eq client.association "TS-INTERIM"}} selected="selected" {{/if_eq}}>TS-INTERIM</option>
-							</select>
-						</div>
-					</div>
+				
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus select-attorney">
 							<label class="control-label">Industry Type</label>
@@ -687,9 +625,7 @@
 					required: true,
 					email: true
 				},
-				gender: {
-					required: true
-				},
+			
 				phone_no: {
 					required: true
 				},
@@ -720,6 +656,10 @@
 				planning_period: {
 					required: true
 				},
+            	attorney_id: {
+					required: true
+				},
+				
 				estimated_revenue: {
 					required: true
 				}
@@ -727,6 +667,9 @@
 			messages: {
 				first_name: {
 					required: "First Name can't be blank"
+				},
+				attorney_id: {
+					required: "Attorney Id can't be blank"
 				},
 				last_name: {
 					required: "Last Name can't be blank"
@@ -741,9 +684,7 @@
 				phone_no: {
 					required: "Phone No. can't be blank"
 				},
-				gender: {
-					required: "Choose your gender"
-				},
+	
 				address1: {
 					required: "Address1 can't be blank"
 				},

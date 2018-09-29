@@ -193,11 +193,11 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 	var gender = req.body.contactDetailsGender;
 	var email = req.body.contactDetailsEmail;
 	var phone_no = req.body.contactDetailsPhone_no;
-	var fax = req.body.contactDetailsFax;
 	var mobile_no = req.body.contactDetailsMobile_no;
 
-	const closingDate = req.body.revenueclosingDate ? req.body.revenueclosingDate.split("-") : '';
-
+	// const closingDate = req.body.revenueclosingDate ? req.body.revenueclosingDate.split("-") : '';
+	// console.log(req.body);
+	
 	let length = first_name.length;
 	for (let i = 0; i < length; i++) {
 		if (first_name[i] !== "") {
@@ -207,7 +207,6 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 				"gender": gender[i],
 				"email": email[i],
 				"phone_no": removePhoneMask(phone_no[i]),
-				"fax": removePhoneMask(fax[i]),
 				"mobile_no": removePhoneMask(mobile_no[i])
 			});
 		}
@@ -226,7 +225,6 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 				last_name: req.body.last_name,
 				email: req.body.email,
 				phone_no: removePhoneMask(req.body.phone_no),
-				fax: removePhoneMask(req.body.fax),
 				mobile_no: removePhoneMask(req.body.mobile_no),
 				master_contact_id: req.body.master_contact_id,
 				master_contact_code: req.body.master_contact_code,
@@ -255,7 +253,7 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 				facebook: req.body.facebook_url,
 				master_contact_type: req.body.masterContact_type,
 				// estimated_revenue: removePhoneMask(req.body.estimated_revenue),
-				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[0] + "-" + closingDate[1] : null,
+				//revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[0] + "-" + closingDate[1] : null,
 			});
 		} else {
 			const insertData = await Contact.create({
@@ -263,10 +261,9 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 				organization_code: req.body.org_code,
 				email: req.body.email,
 				phone_no: removePhoneMask(req.body.phone_no),
-				fax: removePhoneMask(req.body.fax),
 				mobile_no: removePhoneMask(req.body.mobile_no),
 				master_contact_id: req.body.master_contact_id,
-				master_contact_code: req.body.master_contact_code,
+				//master_contact_code: req.body.master_contact_code,
 				company_name: req.body.master_contact_comp,
 				gender: req.body.gender,
 				address1: req.body.address1,
@@ -291,7 +288,7 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 				attorney_id: req.body.attorney_id,
 				facebook: req.body.facebook_url,
 				master_contact_type: req.body.masterContact_type,
-				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[0] + "-" + closingDate[1] : null,
+				//revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[0] + "-" + closingDate[1] : null,
 			});
 
 			for (let j = 0; j < contactDetails.length; j++) {
@@ -302,7 +299,6 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 					email: contactDetails[j].email,
 					mobile_no: contactDetails[j].mobile_no,
 					phone_no: contactDetails[j].phone_no,
-					fax: contactDetails[j].fax,
 					type: 'M',
 					contact_id: insertData.id
 				});
@@ -444,7 +440,6 @@ router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, asyn
 	var gender = req.body.contactDetailsGender;
 	var email = req.body.contactDetailsEmail;
 	var phone_no = req.body.contactDetailsPhone_no;
-	var fax = req.body.contactDetailsFax;
 	var mobile_no = req.body.contactDetailsMobile_no;
 
 	const closingDate = req.body.revenueclosingDate ? req.body.revenueclosingDate.split("-") : '';
@@ -458,7 +453,6 @@ router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, asyn
 				"gender": gender[i],
 				"email": email[i],
 				"phone_no": removePhoneMask(phone_no[i]),
-				"fax": removePhoneMask(fax[i]),
 				"mobile_no": removePhoneMask(mobile_no[i])
 			});
 		}
@@ -471,7 +465,6 @@ router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, asyn
 				last_name: req.body.last_name,
 				email: req.body.email,
 				phone_no: removePhoneMask(req.body.phone_no),
-				fax: removePhoneMask(req.body.fax),
 				mobile_no: removePhoneMask(req.body.mobile_no),
 				master_contact_code: req.body.master_contact_code,
 				master_designation: req.body.master_contact_desg,
@@ -511,7 +504,6 @@ router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, asyn
 				organization_code: req.body.org_code,
 				email: req.body.email,
 				phone_no: removePhoneMask(req.body.phone_no),
-				fax: removePhoneMask(req.body.fax),
 				mobile_no: removePhoneMask(req.body.mobile_no),
 				master_contact_id: req.body.master_contact_id,
 				master_contact_code: req.body.master_contact_code,
@@ -560,7 +552,6 @@ router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, asyn
 					email: contactDetails[j].email,
 					mobile_no: contactDetails[j].mobile_no,
 					phone_no: contactDetails[j].phone_no,
-					fax: contactDetails[j].fax,
 					type: 'M',
 					contact_id: req.params['id']
 				});
@@ -663,7 +654,6 @@ router.post('/master_contact/import', auth, upload.single('file_name'), csrfProt
 					last_name: excelContact[i].last_name,
 					email: excelContact[i].email,
 					phone_no: excelContact[i].phone,
-					fax: excelContact[i].fax,
 					mobile_no: excelContact[i].mobile,
 					master_contact_id: excelContact[i].master_contact_id,
 					master_contact_code: excelContact[i].master_contact_code,
@@ -714,7 +704,6 @@ router.post('/master_contact/move-to-target/', auth, async (req, res) => {
 			last_name: contact_data.last_name,
 			email: contact_data.email,
 			mobile_no: contact_data.mobile_no,
-			fax: contact_data.fax,
 			date_of_birth: contact_data.date_of_birth,
 			gender: contact_data.gender,
 			address_1: contact_data.address1,

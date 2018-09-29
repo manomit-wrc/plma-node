@@ -99,7 +99,7 @@
             </div>
             <form>
                 <div class="modal-body card-box">
-                    <p>do you want to delete this master contact ?</p>
+                    <p>Please select at least one contact</p>
                     <div class="m-t-20" id="delDiv">
                         <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
                     </div>
@@ -200,19 +200,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="control-label">Association Status
-                                </label>
-                                <select class="select form-control" id="association" name="association">
-                                    <option value="">Select Association</option>
-                                    <option value="NEW TARGET" {{#if_eq association "NEW TARGET"}} selected="selected" {{/if_eq}}>NEW
-                                        TARGET</option>
-                                    <option value="CONVERTED" {{#if_eq association "CONVERTED"}} selected="selected" {{/if_eq}}>CONVERTED</option>
-                                    <option value="TS-INTERIM" {{#if_eq association "TS-INTERIM"}} selected="selected" {{/if_eq}}>TS-INTERIM</option>
-                                </select>
-                            </div>
-                        </div>
+                       
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Country
@@ -303,7 +291,7 @@
         });
 
         if (contact_ids.length == 0) {
-            swal("", "Please select master contact!", "warning");
+            swal("", "Please select at least one contact!", "warning");
         } else {
             //$('#move_to_target_2').modal('show');
             swal({

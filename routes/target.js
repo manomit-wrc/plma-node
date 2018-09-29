@@ -198,7 +198,6 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
 	var gender = req.body.targetDetailsGender;
 	var email = req.body.targetDetailsEmail;
 	var phone_no = req.body.targetDetailsPhone_no;
-	var fax = req.body.targetDetailsFax;
     var mobile_no = req.body.targetDetailsMobile_no;
 
     const startDate = req.body.targetStartDate ? req.body.targetStartDate.split("-") : '';
@@ -214,7 +213,6 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
 				"gender":gender[i],
 				"email":email[i],
 				"phone_no":removePhoneMask(phone_no[i]),
-				"fax":removePhoneMask(fax[i]),
 				"mobile_no":removePhoneMask(mobile_no[i])
 			});
 		}
@@ -234,7 +232,6 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
                 organization_code: req.body.org_code,
                 email: req.body.email,
                 phone_no: removePhoneMask(req.body.phone_no),
-                fax: removePhoneMask(req.body.fax),
                 mobile_no: removePhoneMask(req.body.mobile_no),
                 address1: req.body.address1,
                 address2: req.body.address2,
@@ -276,7 +273,6 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
 					email: targetDetails[j].email,
 					mobile_no: targetDetails[j].mobile_no,
 					phone_no: targetDetails[j].phone_no,
-					fax: targetDetails[j].fax,
 					type: 'M',
 					contact_id: insertData.id
 				});
@@ -305,7 +301,6 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
                 designation_id: req.body.designation,
                 email: req.body.email,
                 phone_no: removePhoneMask(req.body.phone_no),
-                fax: removePhoneMask(req.body.fax),
                 mobile_no: removePhoneMask(req.body.mobile_no),
                 address1: req.body.address1,
                 address2: req.body.address2,
@@ -557,7 +552,6 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
 	var gender = req.body.contactDetailsGender;
 	var email = req.body.contactDetailsEmail;
 	var phone_no = req.body.contactDetailsPhone_no;
-	var fax = req.body.contactDetailsFax;
     var mobile_no = req.body.contactDetailsMobile_no;
 
    const startDate = req.body.targetStartDate ? req.body.targetStartDate.split("-") : '';
@@ -573,7 +567,6 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
 				"gender":gender[i],
 				"email":email[i],
 				"phone_no":removePhoneMask(phone_no[i]),
-				"fax":removePhoneMask(fax[i]),
 				"mobile_no":removePhoneMask(mobile_no[i])
 			});
 		}
@@ -600,7 +593,6 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
             email: req.body.email,
             phone_no: removePhoneMask(req.body.phone_no),
             mobile_no: removePhoneMask(req.body.mobile_no),
-            fax: removePhoneMask(req.body.fax),
             address1: req.body.address1,
             address2: req.body.address2,
             address3: req.body.address3,
@@ -669,7 +661,6 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
                 email: contactDetails[j].email,
                 mobile_no: contactDetails[j].mobile_no,
                 phone_no: contactDetails[j].phone_no,
-                fax: contactDetails[j].fax,
                 type: 'M',
                 contact_id: req.params['id']
             });
@@ -782,7 +773,6 @@ router.post('/target/import', auth, upload.single('file_name'), csrfProtection, 
                     organization_code: excelTarget[i].organisation_code,
                     email: excelTarget[i].email,
                     mobile_no: excelTarget[i].mobile,
-                    fax: excelTarget[i].fax,
                     address1: excelTarget[i].address1,
                     address2: excelTarget[i].address2,
                     address3: excelTarget[i].address3,
@@ -811,7 +801,6 @@ router.post('/target/import', auth, upload.single('file_name'), csrfProtection, 
                     gender: excelTarget[i].gender,
                     email: excelTarget[i].email,
                     mobile_no: excelTarget[i].mobile,
-                    fax: excelTarget[i].fax,
                     address1: excelTarget[i].address1,
                     address2: excelTarget[i].address2,
                     address3: excelTarget[i].address3,
@@ -886,7 +875,6 @@ router.post('/target/move-to-client', auth, async(req, res) => {
                 last_name: target_data.last_name,
                 email: target_data.email,
                 mobile_no: target_data.mobile_no,
-                fax: target_data.fax,
                 address1: target_data.address1,
                 address2: target_data.address2,
                 address3: target_data.address3,

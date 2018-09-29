@@ -41,7 +41,7 @@
                         <tbody>
                             {{#each users}}
                             <tr data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}" data-email="{{this.email}}" data-firm-title="{{this.firm.title}}"
-                                data-firm-address="{{this.firm.address}}" data-firm-address1="{{this.firm.address1}}" data-firm-address2="{{this.firm.address2}}" data-mobile-no="{{this.mobile_no}}" data-gender="{{this.gender}}"
+                                data-firm-address="{{this.firm.address}}" data-firm-address1="{{this.firm.address1}}" data-firm-address2="{{this.firm.address2}}" data-mobile-no="{{this.mobile_no}}"
                                 data-firm-id="{{this.firm.id}}" data-user-id="{{this.id}}" data-approval-level="{{this.firm.approval_level}}"
                                 data-level1-desg="{{this.firm.level_1}}" data-level2-desg="{{this.firm.level_2}}" data-level3-desg="{{this.firm.level_3}}"
                                 data-level4-desg="{{this.firm.level_4}}" data-group-id="{{this.group_id}}" data-designation-id="{{this.designation_id}}"
@@ -254,18 +254,7 @@
                                     <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no">
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label">Gender</label>
-                                    <span class="text-danger">*</span>
-                                    <select class="form-control floating" id="gender" name="gender">
-                                        <option value="">Select Gender</option>
-                                        <option value="M">Male</option>
-                                        <option value="F">Female</option>
-                                        <option value="O">Other</option>
-                                    </select>
-                                </div>
-                            </div>
+                           
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Group</label>
@@ -467,17 +456,7 @@
                                     <input disabled type="text" class="form-control floating number_validator" id="mobile_no_view" name="mobile_no_view">
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label">Gender</label>
-                                    <select disabled class="form-control floating" id="gender_view" name="gender_view">
-                                        <option value="">Select Gender</option>
-                                        <option value="M">Male</option>
-                                        <option value="F">Female</option>
-                                        <option value="O">Other</option>
-                                    </select>
-                                </div>
-                            </div>
+                            
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Group</label>
@@ -685,19 +664,7 @@
                                     <input type="text" class="form-control floating number_validator" id="mobile_no_edit" name="mobile_no_edit">
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label">Gender
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <select class="form-control floating " id="gender_edit" name="gender_edit">
-                                        <option value="">Select Gender</option>
-                                        <option value="M">Male</option>
-                                        <option value="F">Female</option>
-                                        <option value="O">Other</option>
-                                    </select>
-                                </div>
-                            </div>
+                           
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Group
@@ -744,7 +711,7 @@
             </div>
             <form id="frmFirmDelete">
                 <div class="modal-body card-box">
-                    <p>Are you sure you want to delete this firm?</p>
+                    <p>Please select at least one contact</p>
                     <div class="m-t-20">
                         <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
                         <button type="button" id="btnDelete" class="btn btn-danger">Delete</button>
@@ -880,9 +847,7 @@
                 mobile_no: {
                     required: true
                 },
-                gender: {
-                    required: true
-                },
+              
                 address: {
                     required: true
                 },
@@ -925,9 +890,7 @@
                 mobile_no: {
                     required: "Mobile number can't be blank"
                 },
-                gender: {
-                    required: "Gender can't be blank"
-                },
+             
                 address: {
                     required: "Address can't be blank"
                 },
@@ -965,7 +928,6 @@
                     first_name = $("#first_name").val(),
                     last_name = $("#last_name").val(),
                     mobile_no = $("#mobile_no").val(),
-                    gender = $("#gender").val();
                 group = $("#group_id").val();
                 designation = $("#designation_id").val();
                 is_attorney = $("#is_attorney:checked").val();
@@ -987,7 +949,6 @@
                         first_name: first_name,
                         last_name: last_name,
                         mobile_no: mobile_no,
-                        gender: gender,
                         group: group,
                         designation: designation,
                         is_attorney: is_attorney,
@@ -1055,7 +1016,6 @@
                     first_name = $("#first_name_edit").val(),
                     last_name = $("#last_name_edit").val(),
                     mobile_no = $("#mobile_no_edit").val(),
-                    gender = $("#gender_edit").val();
                 group = $("#group_edit").val();
                 designation = $("#designation_edit").val();
                 is_attorney = $("#is_attorney_edit:checked").val();
@@ -1072,7 +1032,6 @@
                         first_name: first_name,
                         last_name: last_name,
                         mobile_no: mobile_no,
-                        gender: gender,
                         group: group,
                         designation: designation,
                         is_attorney: is_attorney,
@@ -1146,8 +1105,6 @@
         $("#last_name_view").val($(this).closest('tr').data('last-name'));
         $("#email_view").val($(this).closest('tr').data('email'));
         $("#mobile_no_view").val($(this).closest('tr').data('mobile-no'));
-        $('#gender_view option[value="' + $(this).closest('tr').data('gender') + '"]').attr('selected', true);
-        $('#gender_view').trigger('change');
         $("input[name=approval_level_view][value=" + $(this).closest('tr').data('approval-level') + "]").attr('checked', true);
         $("#title_view").val($(this).closest('tr').data('firm-title'));
         $("#address_view").val(faddress);
@@ -1195,8 +1152,6 @@
         $("#last_name_edit").val($(this).closest('tr').data('last-name'));
         $("#email_edit").val($(this).closest('tr').data('email'));
         $("#mobile_no_edit").val($(this).closest('tr').data('mobile-no'));
-        $('#gender_edit option[value="' + $(this).closest('tr').data('gender') + '"]').attr('selected', true);
-        $('#gender_edit').trigger('change');
         $("input[name=approval_level_edit][value=" + $(this).closest('tr').data('approval-level') + "]").attr('checked', true);
         $("#title_edit").val($(this).closest('tr').data('firm-title'));
         $("#address_edit").val(faddress);

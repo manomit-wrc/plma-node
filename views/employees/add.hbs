@@ -63,24 +63,14 @@
 
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">Date of Birth</label>
+                                    <label class="control-label">Date of Birth<span class="text-danger">*</span></label>
                                     <div class="cal-icon">
                                         <input class="form-control floating datetimepicker" type="text" id="dob" name="dob"  data-date-format="MM-DD-YYYY">
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="form-group form-focus select-focus select-attorney">
-                                    <label class="control-label">Gender</label>
-                                    <select class="form-control floating " id="gender" name="gender" >
-                                        <option value="">Select Gender</option>
-                                        <option value="M">Male</option>
-                                        <option value="F">Female</option>
-                                        <option value="O">Other</option>
-                                    </select>
-                                </div>
-                            </div>
+                       
                         </div>
 
                     </div>
@@ -91,14 +81,14 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group form-focus">
-                            <label class="control-label">Mobile No.</label>
+                            <label class="control-label">Mobile No.<span class="text-danger">*</span></label>
                             <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no"/>
                         </div>
                     </div>
 
                     <div class="col-md-12">
                         <div class="form-group form-focus">
-                            <label class="control-label">Address</label>
+                            <label class="control-label">Address<span class="text-danger">*</span></label>
                             <input type="text" class="form-control floating" id="address" name="address" />
                         </div>
                     </div>
@@ -117,7 +107,7 @@
 
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
-                            <label class="control-label">State</label>
+                            <label class="control-label">State<span class="text-danger">*</span></label>
                             <select class="form-control floating" id="state" name="state">
                                 <option value="">Select State</option>
                                 {{#each state}}
@@ -129,7 +119,7 @@
 
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
-                            <label class="control-label">City</label>
+                            <label class="control-label">City<span class="text-danger">*</span></label>
                             <select class="form-control floating" id="city" name="city">
                                 <option value="">Select City</option>
                             </select>
@@ -138,7 +128,7 @@
 
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
-                            <label class="control-label">Zip Code</label>
+                            <label class="control-label">Zip Code<span class="text-danger">*</span></label>
                             <select class="form-control floating" id="zipcode" name="zipcode">
                                 <option value="">Select Zipcode</option>
                             </select>
@@ -147,7 +137,7 @@
 
                     <div class="col-md-12">
                         <div class="form-group form-focus select-focus select-attorney">
-                            <label class="control-label">Firm Name</label>
+                            <label class="control-label">Firm Name<span class="text-danger">*</span></label>
                             <select class="form-control floating " id="firm_id" name="firm_id">
                                 {{#each firms}}
                                     <option value="{{this.id}}">{{this.title}}</option>
@@ -197,7 +187,26 @@
                     required: true,
                     email: true
                 },
-                password: {
+             
+                 password: {
+                    required: true
+                },
+                 dob: {
+                    required: true
+                },
+                 state: {
+                    required: true
+                },
+                 city: {
+                    required: true
+                },
+                 zipcode: {
+                    required: true
+                },
+                  mobile_no: {
+                    required: true
+                },
+                  address: {
                     required: true
                 },
                 firm_id: {
@@ -207,6 +216,24 @@
             messages: {
                 first_name: {
                     required: "First name can't be blank"
+                },
+                 mobile_no: {
+                    required: "Mobile number can't be blank"
+                },
+                 address: {
+                    required: "Address can't be blank"
+                },
+                 zipcode: {
+                    required: "Zipcode can't be blank"
+                },
+                 city: {
+                    required: "City can't be blank"
+                },
+                 state: {
+                    required: "State can't be blank"
+                },
+                 dob: {
+                    required: "Date of Birth can't be blank"
                 },
                 last_name: {
                     required: "Last name can't be blank"

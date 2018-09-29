@@ -297,7 +297,6 @@ router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async (req, res
 	var gender = req.body.clientDetailsGender;
 	var email = req.body.clientDetailsEmail;
 	var phone_no = req.body.clientDetailsPhone_no;
-	var fax = req.body.clientDetailsFax;
 	var mobile_no = req.body.clientDetailsMobile_no;
 
 	const closingDate = req.body.revenueclosingDate ? req.body.revenueclosingDate.split("-") : '';
@@ -311,7 +310,6 @@ router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async (req, res
 				"gender": gender[i],
 				"email": email[i],
 				"phone_no": removePhoneMask(phone_no[i]),
-				"fax": removePhoneMask(fax[i]),
 				"mobile_no": removePhoneMask(mobile_no[i])
 			});
 		}
@@ -350,7 +348,6 @@ router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async (req, res
 				address_remarks: req.body.address_remarks,
 				company_name: req.body.company_name,
 				website_url: req.body.website_url,
-				fax: removePhoneMask(req.body.fax),
 				phone_no: removePhoneMask(req.body.phone_no),
 				im: req.body.im,
 				twitter: req.body.twitter,
@@ -387,7 +384,6 @@ router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async (req, res
 				address_remarks: req.body.address_remarks,
 				company_name: req.body.company_name,
 				website_url: req.body.website_url,
-				fax: removePhoneMask(req.body.fax),
 				phone_no: removePhoneMask(req.body.phone_no),
 				im: req.body.im,
 				twitter: req.body.twitter,
@@ -408,7 +404,6 @@ router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async (req, res
 					email: clientDetails[j].email,
 					mobile_no: clientDetails[j].mobile_no,
 					phone_no: clientDetails[j].phone_no,
-					fax: clientDetails[j].fax,
 					type: 'M',
 					contact_id: insertData.id
 				});
@@ -673,7 +668,6 @@ router.post('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req
 	var gender = req.body.contactDetailsGender;
 	var email = req.body.contactDetailsEmail;
 	var phone_no = req.body.contactDetailsPhone_no;
-	var fax = req.body.contactDetailsFax;
 	var mobile_no = req.body.contactDetailsMobile_no;
 
 	const closingDate = req.body.revenueclosingDate ? req.body.revenueclosingDate.split("-") : '';
@@ -687,7 +681,6 @@ router.post('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req
 				"gender": gender[i],
 				"email": email[i],
 				"phone_no": removePhoneMask(phone_no[i]),
-				"fax": removePhoneMask(fax[i]),
 				"mobile_no": removePhoneMask(mobile_no[i])
 			});
 		}
@@ -727,7 +720,6 @@ router.post('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req
 			address_remarks: req.body.address_remarks,
 			company_name: req.body.company_name,
 			website_url: req.body.website_url,
-			fax: removePhoneMask(req.body.fax),
 			phone_no: removePhoneMask(req.body.phone_no),
 			im: req.body.im,
 			twitter: req.body.twitter,
@@ -759,7 +751,6 @@ router.post('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req
 				email: contactDetails[j].email,
 				mobile_no: contactDetails[j].mobile_no,
 				phone_no: contactDetails[j].phone_no,
-				fax: contactDetails[j].fax,
 				type: 'M',
 				contact_id: req.params['id']
 			});
