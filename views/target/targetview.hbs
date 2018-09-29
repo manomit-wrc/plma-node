@@ -65,10 +65,7 @@
                                                     <p class="number_validator">
                                                         {{client.phone_no}}
                                                     </p>
-                                                    <span>F:</span>
-                                                    <p class="number_validator">
-                                                        {{client.fax}}
-                                                    </p>
+                                                   
                                                 </div>
                                             </div>
                                         </div>
@@ -223,14 +220,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <ul class="personal-info other-info">
-                                                <li>
-                                                    <span class="title">Gender:</span>
-                                                    <span class="text">
-                                                        {{#if_eq client.gender "M"}} Male {{/if_eq}}
-                                                        {{#if_eq client.gender "F"}} Female {{/if_eq}}
-                                                        {{#if_eq client.gender "O"}} Other {{/if_eq}}
-                                                    </span>
-                                                </li>
+                                                
                                                 <li>
                                                     <span class="title">Company Name:</span>
                                                     <span class="text">{{client.company_name}}</span>
@@ -263,10 +253,7 @@
                                                     <span class="title">Youtube:</span>
                                                     <span class="text"><a href="{{client.youtube}}" target="_blank">{{client.youtube}}</a></span>
                                                 </li>
-                                                <li>
-                                                    <span class="title">Association Status:</span>
-                                                    <span class="text">{{client.association}}</span>
-                                                </li>
+                                               
                                                 <li>
                                                     <span class="title">Industry Type:</span>
                                                     <span class="text">{{industrys.industry_name}}</span>

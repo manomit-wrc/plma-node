@@ -113,19 +113,7 @@
 									</div>
 								</div>
 
-								<div class="col-md-6">
-									<div class="form-group form-focus select-focus select-attorney">
-										<label class="control-label">Gender
-										</label>
-										<select class="form-control floating " id="gender" name="gender" >
-											<option value="">Select Gender</option>
-											<option value="M" {{#if_eq contact.gender "M"}} selected {{/if_eq}}>Male</option>
-											<option value="F" {{#if_eq contact.gender "F"}} selected {{/if_eq}}>Female</option>
-											<option value="O" {{#if_eq contact.gender "O"}} selected {{/if_eq}}>Others</option>
-										</select>
-									</div>
-								</div>
-
+							
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Email Id
@@ -147,15 +135,7 @@
 									</div>
 								</div>
 
-								<div class="col-md-6">
-									<div class="form-group form-focus select-focus">
-										<label class="control-label">Fax
-
-										</label>
-										<input type="text" class="form-control floating number_validator" id="fax" name="fax" maxlength="20" value="{{contact.fax}}"
-										/>
-									</div>
-								</div>
+								
 
 								<div class="col-md-6">
 									<div class="form-group form-focus select-focus">
@@ -266,8 +246,7 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group form-focus select-focus select-attorney">
-								<label class="control-label">Attorney
-								</label>
+								<label class="control-label">Attorney	<span class="req-lbl">*</span></label>
 								<select id="designation" name="attorney_id" class="form-control floating " >
 									{{#if_eq user.role_id "3"}}
 									<option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
@@ -318,20 +297,7 @@
 											/>
 										</div>
 									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus select-focus">
-											<label class="control-label">Gender
-												<span class="req-lbl">*</span>
-
-											</label>
-											<select class="select form-control floating" id="contactDetailsGender" name="contactDetailsGender[]">
-												<option value="">Select Gender</option>
-												<option value="M" {{#if_eq this.gender "M"}} selected {{/if_eq}}>Male</option>
-												<option value="F" {{#if_eq this.gender "F"}} selected {{/if_eq}}>Female</option>
-												<option value="O" {{#if_eq this.gender "O"}} selected {{/if_eq}}>Others</option>
-											</select>
-										</div>
-									</div>
+								
 									<div class="col-md-6">
 										<div class="form-group form-focus">
 											<label class="control-label">Email Id
@@ -352,13 +318,7 @@
 											 maxlength="50" value={{this.phone_no}} />
 										</div>
 									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus">
-											<label class="control-label">Fax</label>
-											<input type="text" class="form-control floating number_validator" id="contactDetailsFax" name="contactDetailsFax[]" maxlength="50"
-											 value="{{this.fax}}" />
-										</div>
-									</div>
+								
 									<div class="col-md-6">
 										<div class="form-group form-focus">
 											<label class="control-label">Mobile No.
@@ -395,19 +355,7 @@
 												<input type="text" class="form-control floating" name="contactDetailsSecondName[]" />
 											</div>
 										</div>
-										<div class="col-md-6">
-											<div class="form-group form-focus select-focus">
-												<label class="control-label">Gender
-
-												</label>
-												<select class="form-control floating" name="contactDetailsGender[]">
-													<option value="">Select Gender</option>
-													<option value="M">Male</option>
-													<option value="F">Female</option>
-													<option value="O">Others</option>
-												</select>
-											</div>
-										</div>
+										
 										<div class="col-md-6">
 											<div class="form-group form-focus">
 												<label class="control-label">Email Id
@@ -426,12 +374,7 @@
 												<input type="text" class="form-control floating number_validator" name="contactDetailsPhone_no[]" maxlength="50" />
 											</div>
 										</div>
-										<div class="col-md-6">
-											<div class="form-group form-focus">
-												<label class="control-label">Fax</label>
-												<input type="text" class="form-control floating number_validator" name="contactDetailsFax[]" maxlength="50" />
-											</div>
-										</div>
+										
 										<div class="col-md-6">
 											<div class="form-group form-focus">
 												<label class="control-label">Mobile No.
@@ -505,17 +448,7 @@
 								<input type="text" class="form-control floating url_selector" id="youtube" name="youtube" value="{{contact.youtube}}" />
 							</div>
 						</div>
-						<div class="col-md-6">
-							<div class="form-group form-focus select-focus select-attorney">
-								<label class="control-label">Status</label>
-								<select id="status" name="status" class="form-control floating " >
-									<option value="NEW TARGET" {{#if_eq contact.status "NEW TARGET"}} selected="selected" {{/if_eq}}>NEW TARGET</option>
-									<option value="CONVERTED" {{#if_eq contact.status "CONVERTED"}} selected="selected" {{/if_eq}}>CONVERTED TO CLIENT</option>
-									<option value="TS-INTERIM" {{#if_eq contact.status "TS-INTERIM"}} selected="selected" {{/if_eq}}>INTERIM - REVIEW
-										IN-PROGRESS</option>
-								</select>
-							</div>
-						</div>
+						
 						<div class="col-md-6">
 							<div class="form-group form-focus select-focus select-attorney">
 								<label class="control-label">Industry Type
@@ -616,6 +549,9 @@
 					city: {
 						required: true
 					},
+						attorney_id: {
+						required: true
+					},
 					zipcode: {
 						required: true
 				
@@ -624,6 +560,9 @@
 				messages: {
 					first_name: {
 						required: "First name can't be blank"
+					},
+						attorney_id: {
+						required: "Attornet Id can't be blank"
 					},
 					last_name: {
 						required: "Last name can't be blank"

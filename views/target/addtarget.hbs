@@ -76,18 +76,7 @@
 										<input type="text" class="form-control floating" id="target_code" name="target_code" />
 									</div>
 								</div>
-								<div class="col-md-6">
-									<div class="form-group form-focus select-focus select-attorney">
-										<label class="control-label">Gender </label>
-										<select class="form-control floating" id="gender" name="gender">
-											<option value="">Select Gender</option>
-											<option value="M">Male</option>
-											<option value="F">Female</option>
-											<option value="O">Other</option>
-										</select>
-									</div>
-								</div>
-							</div>
+							
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Email Id <span class="req-lbl">*</span></label>
@@ -101,12 +90,7 @@
 									<input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" />
 								</div>
 							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Fax</label>
-									<input type="text" class="form-control floating number_validator" id="fax" name="fax" />
-								</div>
-							</div>
+						
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Mobile No. </label>
@@ -174,12 +158,7 @@
 							<input class="form-control floating" type="text" id="estimated_revenue" name="estimated_revenue">
 						</div>
 					</div>
-					{{!-- <div class="col-md-6">
-						<div class="form-group form-focus">
-							<label class="control-label">Current Annual Revenue</label>
-							<input class="form-control floating" type="text" id="current_revenue" name="current_revenue">
-						</div>
-					</div> --}}
+				
 				</div>
 			</div>
 			<div class="card-box">
@@ -293,17 +272,7 @@
 									<input type="text" class="form-control floating" id="targetDetailsSecondName" name="targetDetailsSecondName[]" />
 								</div>
 							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus select-focus">
-									<label class="control-label">Gender</label>
-									<select class="select form-control floating" id="targetDetailsGender" name="targetDetailsGender[]">
-										<option value="">Select Gender</option>
-										<option value="M">Male</option>
-										<option value="F">Female</option>
-										<option value="O">Others</option>
-									</select>
-								</div>
-							</div>
+							
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Email Id</label>
@@ -318,13 +287,7 @@
 									 maxlength="50" />
 								</div>
 							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Fax</label>
-									<input type="text" class="form-control floating number_validator" id="targetDetailsFax" name="targetDetailsFax[]" maxlength="50"
-									/>
-								</div>
-							</div>
+						
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Mobile No.</label>
@@ -355,17 +318,7 @@
 											<input type="text" class="form-control floating" name="targetDetailsSecondName[]" />
 										</div>
 									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus select-focus">
-											<label class="control-label">Gender</label>
-											<select class="form-control floating" name="targetDetailsGender[]">
-												<option value="">Select Gender</option>
-												<option value="M">Male</option>
-												<option value="F">Female</option>
-												<option value="O">Others</option>
-											</select>
-										</div>
-									</div>
+								
 									<div class="col-md-6">
 										<div class="form-group form-focus">
 											<label class="control-label">Email Id</label>
@@ -379,12 +332,7 @@
 											<input type="text" class="form-control floating number_validator" name="targetDetailsPhone_no[]" maxlength="50" />
 										</div>
 									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus">
-											<label class="control-label">Fax</label>
-											<input type="text" class="form-control floating number_validator" name="targetDetailsFax[]" maxlength="50" />
-										</div>
-									</div>
+								
 									<div class="col-md-6">
 										<div class="form-group form-focus">
 											<label class="control-label">Mobile No.</label>
@@ -448,17 +396,7 @@
 							<input type="text" class="form-control floating url_selector" id="youtube" name="youtube" />
 						</div>
 					</div>
-					<div class="col-md-6">
-						<div class="form-group form-focus select-focus select-attorney">
-							<label class="control-label">Association Status</label>
-							<select id="association" name="association" class="form-control floating ">
-								<option value="0">Select Association Status</option>
-								<option value="CONVERTED">CONVERTED</option>
-								<option value="NEW TARGET">NEW TARGET</option>
-								<option value="TS-INTERIM">TS-INTERIM</option>
-							</select>
-						</div>
-					</div>
+					
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus select-attorney">
 							<label class="control-label">Industry Type</label>
@@ -567,6 +505,9 @@
 				planning_period: {
 					required: true
 				},
+					attorney_id: {
+					required: true
+				},
 				estimated_revenue: {
 					required: true
 				}
@@ -574,6 +515,9 @@
 			messages: {
 				first_name: {
 					required: "First Name can't be blank"
+				},
+					attorney_id: {
+					required: "Attorney Idcan't be blank"
 				},
 				last_name: {
 					required: "Last Name can't be blank"

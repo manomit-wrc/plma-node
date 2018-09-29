@@ -122,19 +122,7 @@
 									</div>
 								</div>
 
-								<div class="col-md-6">
-									<div class="form-group form-focus select-focus">
-										<label class="control-label">Gender</label>
-										<select class="select form-control floating" id="gender" name="gender" disabled="disabled">
-											<option value="">Select Gender</option>
-											<option value="M" {{#if_eq contact.gender "M"}} selected {{/if_eq}}>Male</option>
-											<option value="F" {{#if_eq contact.gender "F"}} selected {{/if_eq}}>Female</option>
-											<option value="O" {{#if_eq contact.gender "O"}} selected {{/if_eq}}>Others</option>
-
-										</select>
-									</div>
-								</div>
-							</div>
+								
 
 							<div class="col-md-6">
 								<div class="form-group form-focus">
@@ -150,13 +138,7 @@
 									 disabled="disabled" />
 								</div>
 							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus select-focus">
-									<label class="control-label">Fax</label>
-									<input type="text" class="form-control floating number_validator" id="fax" name="fax" value="{{contact.fax}}" disabled="disabled"
-									/>
-								</div>
-							</div>
+							
 							<div class="col-md-6">
 								<div class="form-group form-focus select-focus">
 									<label class="control-label">Mobile No.</label>
@@ -288,20 +270,7 @@
 										<input type="text" class="form-control floating" id="contactDetailsSecondName" name="contactDetailsSecondName[]" value="{{this.last_name}}" disabled/>
 									</div>
 								</div>
-								<div class="col-md-6">
-									<div class="form-group form-focus select-focus">
-										<label class="control-label">Gender
-											<span class="req-lbl">*</span>
-
-										</label>
-										<select class="select form-control floating" id="contactDetailsGender" name="contactDetailsGender[]" disabled>
-											<option value="">Select Gender</option>
-											<option value="M" {{#if_eq this.gender "M"}} selected {{/if_eq}}>Male</option>
-											<option value="F"{{#if_eq this.gender "F"}} selected {{/if_eq}} >Female</option>
-											<option value="O" {{#if_eq this.gender "O"}} selected {{/if_eq}} >Others</option>
-										</select>
-									</div>
-								</div>
+								
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Email Id
@@ -322,13 +291,7 @@
 										maxlength="50" value={{this.phone_no}} disabled/>
 									</div>
 								</div>
-								<div class="col-md-6">
-									<div class="form-group form-focus">
-										<label class="control-label">Fax</label>
-										<input type="text" class="form-control floating number_validator" id="contactDetailsFax" name="contactDetailsFax[]" maxlength="50" value="{{this.fax}}"
-										disabled/>
-									</div>
-								</div>
+								
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Mobile No.
@@ -419,16 +382,7 @@
 							/>
 						</div>
 					</div>
-					<div class="col-md-6">
-						<div class="form-group form-focus select-focus">
-							<label class="control-label">Status</label>
-							<select id="status" name="status" class="select form-control floating" disabled="disabled">
-								<option value="NEW TARGET" {{#if_eq contact.status "NEW TARGET"}} selected="selected" {{/if_eq}}>NEW TARGET</option>
-								<option value="CONVERTED" {{#if_eq contact.status "CONVERTED"}} selected="selected" {{/if_eq}}>CONVERTED TO CLIENT</option>
-								<option value="TS-INTERIM" {{#if_eq contact.status "TS-INTERIM"}} selected="selected" {{/if_eq}}>INTERIM - REVIEW IN-PROGRESS</option>
-							</select>
-						</div>
-					</div>
+					
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Industry Type</label>
@@ -516,9 +470,7 @@
 				dob: {
 					required: true
 				},
-				gender: {
-					required: true
-				},
+				
 				address1: {
 					required: true
 				},
@@ -534,9 +486,7 @@
 				zipcode: {
 					required: true
 				},
-				status: {
-					required: true
-				},
+			
 				industry_type: {
 					required: true
 				}
@@ -573,9 +523,7 @@
 				dob: {
 					required: "Must select date of birth"
 				},
-				gender: {
-					required: "Must select gender"
-				},
+			
 				address1: {
 					required: "Must provide address"
 				},
@@ -591,9 +539,7 @@
 				zipcode: {
 					required: "Choose your zipcode"
 				},
-				status: {
-					required: "Choose master contact status"
-				},
+			
 				industry_type: {
 					required: "Choose industry type"
 				}

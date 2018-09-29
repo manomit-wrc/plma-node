@@ -983,7 +983,6 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 	var gender = req.body.clientDetailsGender;
 	var email = req.body.clientDetailsEmail;
 	var phone_no = req.body.clientDetailsPhone_no;
-	var fax = req.body.clientDetailsFax;
 	var mobile_no = req.body.clientDetailsMobile_no;
 
 	const closingDate = req.body.revenueclosingDate ? req.body.revenueclosingDate.split("-") : '';
@@ -999,7 +998,6 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				"gender":gender[i],
 				"email":email[i],
 				"phone_no":removePhoneMask(phone_no[i]),
-				"fax":removePhoneMask(fax[i]),
 				"mobile_no":removePhoneMask(mobile_no[i])
 			});
 		}
@@ -1057,7 +1055,6 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				industry_type: req.body.industry_type,
 				firm_id: req.user.firm_id,
 				user_id: req.user.id,
-				fax: removePhoneMask(req.body.fax),
 				client_type: req.body.client_type,
 				IM: req.body.im,
 				social_url: req.body.social,
@@ -1078,7 +1075,6 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 					email: clientDetails[j].email,
 					mobile_no: clientDetails[j].mobile_no,
 					phone_no: clientDetails[j].phone_no,
-					fax: clientDetails[j].fax,
 					type: 'M',
 					contact_id: insertData.id
 				});
@@ -1132,7 +1128,6 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				industry_type: req.body.industry_type,
 				firm_id: req.user.firm_id,
 				user_id: req.user.id,
-				fax: removePhoneMask(req.body.fax),
 				client_type: req.body.client_type,
 				IM: req.body.im,
 				date_of_birth: formatDate ? formatDate[2] + "-" + formatDate[0] + "-" + formatDate[1] : null,
@@ -1182,7 +1177,6 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 	var gender = req.body.contactDetailsGender;
 	var email = req.body.contactDetailsEmail;
 	var phone_no = req.body.contactDetailsPhone_no;
-	var fax = req.body.contactDetailsFax;
 	var mobile_no = req.body.contactDetailsMobile_no;
 
 	const closingDate = req.body.revenueclosingDate ? req.body.revenueclosingDate.split("-") : '';
@@ -1199,7 +1193,6 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 				"gender":gender[i],
 				"email":email[i],
 				"phone_no": phone_no[i] ? removePhoneMask(phone_no[i]) : '',
-				"fax": fax[i] ? removePhoneMask(fax[i]) : '',
 				"mobile_no": mobile_no[i] ? removePhoneMask(mobile_no[i]): ''
 			});
 		}
@@ -1251,7 +1244,6 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 			association_type: req.body.association,
 			industry_type: req.body.industry_type,
 			firm_id: req.user.firm_id,
-			fax: removePhoneMask(req.body.fax),
 			IM: req.body.im,
 			date_of_birth: formatDate ? formatDate[2] + "-" + formatDate[0] + "-" + formatDate[1] : null,
 			gender: req.body.client_gender,
@@ -1286,7 +1278,6 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
                 email: contactDetails[j].email,
                 mobile_no: contactDetails[j].mobile_no,
                 phone_no: contactDetails[j].phone_no,
-                fax: contactDetails[j].fax,
                 type: 'M',
                 contact_id: req.params['id']
             });
@@ -1904,7 +1895,6 @@ router.post('/client/upload-excel', auth, upload_client_excel.single('client_xls
 					company_name: excelClient[i].company_name,
 					firm_id: req.user.firm_id,
 					user_id: req.user.id,
-					fax: excelClient[i].fax,
 					twitter: `http://${excelClient[i].twitter}`,
 					linkdn: `http://${excelClient[i].linkdn}`,
 					facebook: `http://${excelClient[i].facebook}`,
@@ -1929,7 +1919,6 @@ router.post('/client/upload-excel', auth, upload_client_excel.single('client_xls
 					company_name: excelClient[i].company_name,
 					firm_id: req.user.firm_id,
 					user_id: req.user.id,
-					fax: excelClient[i].fax,
 					twitter: `http://${excelClient[i].twitter}`,
 					linkdn: `http://${excelClient[i].linkdn}`,
 					facebook: `http://${excelClient[i].facebook}`,

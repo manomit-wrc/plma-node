@@ -347,7 +347,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-12">
         <div class="panel panel-table">
           <div class="panel-heading">
             <h3 class="panel-title">Clients</h3>
@@ -359,6 +359,10 @@
                   <tr>
                     <th style="min-width:200px;">Name</th>
                     <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Address</th>
+                    <th>Estimated Customer Lifetime Value</th>
+                   
                     <th>Client Type</th>
                   </tr>
                 </thead>
@@ -383,6 +387,12 @@
                       {{/if_eq}}
                     </td>
                     <td>{{this.email}}</td>
+                    <td>{{this.phone_no}}</td>
+                    <td>{{this.address1}}</td>
+                    <td>{{this.estimated_customer_life_time_value}}</td>
+                 
+
+
                     <td>{{#if_eq client_type "I"}}
                       <span class="label label-success-border">Individual</span>
                       {{else}}
@@ -400,7 +410,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-12">
         <div class="panel panel-table">
           <div class="panel-heading">
             <h3 class="panel-title">Targets</h3>
@@ -412,6 +422,9 @@
                   <tr>
                     <th style="min-width:200px;">Name</th>
                     <th>Email</th>
+                    <th>Phone No</th>
+                    <th>Address</th>
+                    <th>Estimated Customer Lifetime Value</th>
                     <th>Target Type</th>
                   </tr>
                 </thead>
@@ -435,7 +448,13 @@
                       </h2>
                       {{/if_eq}}
                     </td>
+
+
                     <td>{{this.email}}</td>
+                    <td>{{this.phone_no}}</td>
+                    <td>{{this.address1}}</td>
+                    <td>{{this.estimated_lifetime_value}}</td>
+
                     <td>{{#if_eq target_type "I"}}
                       <span class="label label-success-border">Individual</span>
                       {{else}}
@@ -456,7 +475,7 @@
     </div>
 
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-12">
         <div class="panel panel-table">
           <div class="panel-heading">
             <h3 class="panel-title">Referral Sources</h3>
@@ -468,7 +487,9 @@
                   <tr>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Referral Sources Type</th>
+                    <th>Phone No</th>
+                    <th>Address</th>
+                   
                   </tr>
                 </thead>
                 <tbody>
@@ -492,6 +513,10 @@
                       {{/if_eq}}
                     </td>
                     <td>{{this.email}}</td>
+                    <td>{{this.phone_no}}</td>
+                    <td>{{this.address1}}</td>
+
+                    
                     <td>{{#if_eq referral_type "I"}}
                       <span class="label label-success-border">Individual</span>
                       {{else}}

@@ -132,18 +132,7 @@
 								</div>
 							</div>
 
-							<div class="col-md-6">
-								<div class="form-group form-focus select-focus select-attorney">
-									<label class="control-label">Gender<span class="req-lbl">*</span></label>
-									<select class="form-control floating " id="client_gender" name="client_gender" >
-										<option value="">Select Gender</option>
-										<option value="M" {{#if_eq client.gender "M"}} selected {{/if_eq}}>Male</option>
-										<option value="F" {{#if_eq client.gender "F"}} selected {{/if_eq}}>Female</option>
-										<option value="O" {{#if_eq client.gender "O"}} selected {{/if_eq}}>Others</option>
-
-									</select>
-								</div>
-							</div>
+							
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Client Company</label>
@@ -174,12 +163,7 @@
 								/>
 							</div>
 						</div>
-						<div class="col-md-6">
-							<div class="form-group form-focus select-focus">
-								<label class="control-label">Fax</label>
-								<input type="text" class="form-control floating number_validator" id="fax" name="fax" value="{{client.fax}}" />
-							</div>
-						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -530,20 +514,7 @@
 										/>
 									</div>
 								</div>
-								<div class="col-md-6">
-									<div class="form-group form-focus select-focus">
-										<label class="control-label">Gender
-											<span class="req-lbl">*</span>
-
-										</label>
-										<select class="select form-control floating" id="contactDetailsGender" name="contactDetailsGender[]">
-											<option value="">Select Gender</option>
-											<option value="M" {{#if_eq this.gender "M"}} selected {{/if_eq}}>Male</option>
-											<option value="F" {{#if_eq this.gender "F"}} selected {{/if_eq}}>Female</option>
-											<option value="O" {{#if_eq this.gender "O"}} selected {{/if_eq}}>Others</option>
-										</select>
-									</div>
-								</div>
+					
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Email Id
@@ -565,13 +536,7 @@
 										 maxlength="50" value={{this.phone_no}} />
 									</div>
 								</div>
-								<div class="col-md-6">
-									<div class="form-group form-focus">
-										<label class="control-label">Fax</label>
-										<input type="text" class="form-control floating number_validator" id="contactDetailsFax" name="contactDetailsFax[]" maxlength="50"
-										 value="{{this.fax}}" />
-									</div>
-								</div>
+								
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Mobile No.
@@ -609,20 +574,7 @@
 											<input type="text" class="form-control floating" name="contactDetailsSecondName[]" />
 										</div>
 									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus select-focus">
-											<label class="control-label">Gender
-												<span class="req-lbl">*</span>
-
-											</label>
-											<select class="form-control floating" name="contactDetailsGender[]">
-												<option value="">Select Gender</option>
-												<option value="M">Male</option>
-												<option value="F">Female</option>
-												<option value="O">Others</option>
-											</select>
-										</div>
-									</div>
+									
 									<div class="col-md-6">
 										<div class="form-group form-focus">
 											<label class="control-label">Email Id
@@ -642,12 +594,7 @@
 											<input type="text" class="form-control floating number_validator" name="contactDetailsPhone_no[]" maxlength="50" />
 										</div>
 									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus">
-											<label class="control-label">Fax</label>
-											<input type="text" class="form-control floating number_validator" name="contactDetailsFax[]" maxlength="50" />
-										</div>
-									</div>
+								
 									<div class="col-md-6">
 										<div class="form-group form-focus">
 											<label class="control-label">Mobile No.
@@ -753,17 +700,7 @@
 							<input type="text" class="form-control floating url_selector" id="google" name="google" value="{{client.google}}" />
 						</div>
 					</div>
-					<div class="col-md-6">
-						<div class="form-group form-focus select-focus select-attorney">
-							<label class="control-label">Association Status</label>
-							<select id="association" name="association" class="form-control floating " >
-								<option value="0">Select Association</option>
-								<option value="CONVERTED" {{#if_eq client.association_type "CONVERTED"}} selected="selected" {{/if_eq}}>CONVERTED</option>
-								<option value="NEW TARGET" {{#if_eq client.association_type "NEW TARGET"}} selected="selected" {{/if_eq}}>NEW TARGET</option>
-								<option value="TS-INTERIM" {{#if_eq client.association_type "TS-INTERIM"}} selected="selected" {{/if_eq}}>TS-INTERIM</option>
-							</select>
-						</div>
-					</div>
+					
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus select-attorney">
 							<label class="control-label">Industry Type</label>
