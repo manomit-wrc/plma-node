@@ -40,16 +40,18 @@
                            </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group form-focus select-focus select-attorney">
-                                <label class="control-label">Strategic Goals</label>
-                                <select class="form-control floating " id="strategic_goal" name="strategic_goal" >
-                                    <option value="">Select Strategic Goals</option>
-                                    {{#each stragic_goal}}
+                            <div class="form-group form-focus select-focus ">
+                                <div class="">
+                                    <select class="form-control floating" id="strategic_goal" name="strategic_goal" multiple="multiple">
+                                        {{#each stragic_goal}}
                                         <option value="{{this.id}}">{{this.name}}</option>
-                                    {{/each}}
-                                </select>
+                                        {{/each}}
+                                    </select>
+                                </div>
                             </div>
                         </div>
+
+                        
                         
                         <div class="col-md-6">
                             <div class="form-group form-focus">
@@ -109,7 +111,14 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-            
+            $('#strategic_goal').multiselect({
+                nonSelectedText: 'Select Strategic Goal',
+                enableFiltering: true,
+                includeSelectAllOption: true,
+                buttonWidth: '100%',
+                maxHeight: 400,
+                dropDown: true
+            });
             $("#frmAddActivityGoal").validate({
                 ignore: [],
                 rules: {

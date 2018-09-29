@@ -880,7 +880,6 @@ router.post('/target/move-to-client', auth, async(req, res) => {
                     id: target_ids[i]
                 }
             });
-
             var moveClient = await Client.create({
                 first_name: target_data.first_name,
                 last_name: target_data.last_name,
@@ -889,7 +888,7 @@ router.post('/target/move-to-client', auth, async(req, res) => {
                 fax: target_data.fax,
                 address1: target_data.address1,
                 address2: target_data.address2,
-                address3: target_data.address3,
+                address_line_3: target_data.address3,
                 country: target_data.country,
                 state: target_data.state,
                 city: target_data.city,
@@ -918,11 +917,34 @@ router.post('/target/move-to-client', auth, async(req, res) => {
                 client_type: target_data.target_type,
                 remarks: target_data.remarks,
                 attorney_id: req.user.id,
-                life_time_revenue: target_data.estimated_lifetime_value,
+                estimated_customer_life_time_value: target_data.estimated_lifetime_value,
                 //revenueclosingDate: target_data.close_date
                 // revenueclosingDate: target_data.revenueclosingDate,
 
             });
+            var refT = await Referred_Client_Targets.findOne({
+                where: {
+                    type: "T",
+                    target_id: target_ids[i]
+                }
+            });
+            if (refT !== '') {
+                await Referred_Client_Targets.update({
+                    status: 0
+                },{
+                    where: {
+                        type: "T",
+                        target_id: target_ids[i]
+                    }
+                });
+                await Referred_Client_Targets.create({
+                    type: "C",
+                    target_id: 0,
+                    client_id: moveClient.id,
+                    referral_id: refT.referral_id,
+                    status:1
+                });
+            }
             await Revenue.create({
                 type: "C",
                 client_id: moveClient.id,

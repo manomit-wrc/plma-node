@@ -13,6 +13,8 @@ const Country = require('../models').country;
 const industry_type = require('../models').industry_type;
 const Contact = require('../models').master_contact;
 const Target = require('../models').target;
+const Client = require('../models').client;
+const Referral = require('../models').referral;
 const user = require('../models').user;
 const ContactInformation = require('../models').contact_information;
 const router = express.Router();
@@ -738,6 +740,56 @@ router.post('/master_contact/move-to-target/', auth, async (req, res) => {
 			firm_id: req.user.firm_id,
 			// estimated_revenue: '0',
 			attorney_id: req.user.id
+		});
+
+		await Contact.update({
+			contact_status: 0
+		}, {
+				where: {
+					id: contact_ids[i]
+				}
+			});
+	}
+	res.json({
+		code: "200",
+		message: 'Success'
+	});
+});
+router.post('/master_contact/move-to-referral/', auth, async (req, res) => {
+	var contact_ids = req.body.contact_id;
+	var n = req.body.contact_id.length;
+
+	for (i = 0; i < n; i++) {
+		var contact_data = await Contact.findOne({
+			where: {
+				id: contact_ids[i]
+			}
+		});
+		await Referral.create({
+			first_name: contact_data.first_name,
+			last_name: contact_data.last_name,
+			email: contact_data.email,
+			mobile: contact_data.mobile_no,
+			fax: contact_data.fax,
+			date_of_birth: contact_data.date_of_birth,
+			gender: contact_data.gender,
+			address1: contact_data.address1,
+			address2: contact_data.address2,
+			address3: contact_data.address3,
+			country: contact_data.country,
+			state: contact_data.state,
+			city: contact_data.city,
+			zipcode: contact_data.zip_code,
+			im: contact_data.im,
+			referral_type: 'I',
+			twitter: contact_data.twitter,
+			linkedin: contact_data.linkedin,
+			google: contact_data.google,
+			youtube: contact_data.youtube,
+			//firm_id: contact_data.firm_id,
+			attorney_id: contact_data.user_id,
+			remarks: contact_data.remarks,
+			firm_id: req.user.firm_id,
 		});
 
 		await Contact.update({

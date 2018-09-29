@@ -32,6 +32,7 @@ router.get('/team-activity-approvals', auth, async (req, res) => {
     });
 });
 
+
 router.get('/tempActivity/approvalRequest/', auth, async (req, res) => {
 
     const activityId = req.query['activity_id'];

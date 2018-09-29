@@ -33,7 +33,7 @@
                             {{#each teamActivityAttorney}}
                             <tr>
                                 <td>{{math @index "+" 1}}</td>
-                                <td>{{this.activity.activity_name}} </td>
+                                <td><a href="/activity-send-request/{{this.activity.id}}">{{this.activity.activity_name}} </a> </td>
                                 <td>{{#if_eq this.status "0"}}<span class="label label-warning-border">Pending</span>{{/if_eq}} {{#if_eq this.status "1"}} <span class="label label-success-border">Approve</span> {{/if_eq}} {{#if_eq this.status "2"}} <span class="label label-danger-border">Reject</span> {{/if_eq}} </td>
                                 <td class="text-right"><button type="button" class="btn btn-success btn-sm requestApproval" id="requestApproval" data-activity-request-id={{this.activity_id}} ><i class="fa fa-check-circle" aria-hidden="true"></i></button> 
                                 <button type="button" class="btn btn-danger btn-sm requestReject" id="requestReject"  data-activity-request-id={{this.activity_id}} ><i class="fa fa-times-circle" aria-hidden="true"></i></button></td>

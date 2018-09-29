@@ -82,13 +82,23 @@ router.get('/approval_details/:id', auth, async (req, res) => {
         }
     }
     var aaa = req.params['id'];
-
+    var act_remark = await ActivityBudget.findOne({
+            where: {
+                activity_id: req.params['id'],
+                approver_remarks: {
+                    [Op.ne]: ''
+                }
+            }
+        });
+        
+        
     res.render('activity-approvals/approval_details', {
         layout: 'dashboard',
         title: 'View Activity Details for Approval',
         activity_id: aaa,
         budgetArr,
-        'tclength': jointActivities.length
+        'tclength': jointActivities.length,
+        act_remark: act_remark ? act_remark.approver_remarks: "",
     });
 
 });

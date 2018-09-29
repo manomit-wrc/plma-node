@@ -230,21 +230,42 @@
               <div class="col-md-6">
                 <div class="form-group form-focus select-focus"></div>
               </div>
-              <div class="col-md-6">
-                <div class="form-group form-focus select-focus">
-                  <label class="control-label">From Date</label>
+              <div class="col-md-2" id="oneDay_ActivityEvent">
+                <button class="btn btn-primary btn-lg" type="button" id="oneDayActivityEvent" style="display:none;" disabled>One Day Event</button>
+              </div>
+              <div class="col-md-2" id="SomeDay_ActivityEvent">
+                <button class="btn btn-primary btn-lg" type="button" id="SomeDayActivityEvent" style="display:none;" disabled>Some Day Event</button>
+              </div>
+              <div class="col-md-9" id="activity_dateO" style="display:none;">
+                <div class="form-group form-focus">
+                  <label class="control-label"> Date
+                    <span class="req-lbl">*</span>
+                  </label>
                   <div class="cal-icon">
-                    <input class="form-control floating datetimepicker" type="text" id="activity_from_date" name="activity_from_date" value="{{dateFormat editdata.activity_from_date "
-                      MM-DD-YYYY "}}" data-date-format="MM-DD-YYYY" disabled>
+                    <input class="form-control floating datetimepicker" disabled type="text" id="activity_date" name="activity_date" value="{{dateFormat editdata.activity_date "
+                      MM-DD-YYYY "}}" data-date-format="MM-DD-YYYY">
                   </div>
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="form-group form-focus select-focus">
-                  <label class="control-label">To Date</label>
+              <div class="col-md-5 fromDate" style="display:none;">
+                <div class="form-group form-focus">
+                  <label class="control-label">From Date
+                    <span class="req-lbl">*</span>
+                  </label>
                   <div class="cal-icon">
-                    <input class="form-control floating datetimepicker" type="text" id="activity_to_date" name="activity_to_date" value="{{dateFormat editdata.activity_to_date "
-                      MM-DD-YYYY "}}" data-date-format="MM-DD-YYYY" disabled>
+                    <input class="form-control floating datetimepicker" disabled type="text" id="activity_from_date" name="activity_from_date" value="{{dateFormat editdata.activity_from_date "
+                      MM-DD-YYYY "}}" data-date-format="MM-DD-YYYY">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-5 toDate" style="display:none;">
+                <div class="form-group form-focus">
+                  <label class="control-label">To Date
+                    <span class="req-lbl">*</span>
+                  </label>
+                  <div class="cal-icon">
+                    <input class="form-control floating datetimepicker" disabled type="text" id="activity_to_date" name="activity_to_date" value="{{dateFormat editdata.activity_to_date "
+                      MM-DD-YYYY "}}" data-date-format="MM-DD-YYYY">
                   </div>
                 </div>
               </div>
@@ -489,6 +510,46 @@
 
 
   $(document).ready(function (e) {
+    var frmDate = $("#acvtFrmDate").val();
+    var toDate = $("#acvtToDate").val();
+    if (frmDate == toDate) {
+      $("#activity_dateO").show();
+      $("#SomeDay_ActivityEvent").show();
+      $("#SomeDayActivityEvent").show();
+      $("#activity_from_date").val('');
+      $("#activity_to_date").val('');
+      $(".fromDate").hide();
+      $(".toDate").hide();
+      $("#oneDay_ActivityEvent").hide();
+    }
+    else {
+      $("#activity_dateO").hide();
+      $("#SomeDay_ActivityEvent").hide();
+      $("#activity_date").val('');
+      $(".fromDate").show();
+      $(".toDate").show();
+      $("#oneDay_ActivityEvent").show();
+      $("#oneDayActivityEvent").show();
+    }
+    $(document).on("click", "#oneDayActivityEvent", function () {
+      $("#activity_dateO").show();
+      $("#SomeDay_ActivityEvent").show();
+      $("#SomeDayActivityEvent").show();
+      $("#activity_from_date").val('');
+      $("#activity_to_date").val('');
+      $(".fromDate").hide();
+      $(".toDate").hide();
+      $("#oneDay_ActivityEvent").hide();
+    });
+    $(document).on("click", "#SomeDayActivityEvent", function () {
+      $("#activity_dateO").hide();
+      $("#SomeDay_ActivityEvent").hide();
+      $("#activity_date").val('');
+      $(".fromDate").show();
+      $(".toDate").show();
+      $("#oneDay_ActivityEvent").show();
+      $("#oneDayActivityEvent").show();
+    });
     // budget hour count total 
     var optionValues = [];
     $('#practice_area option').each(function () {

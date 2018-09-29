@@ -594,6 +594,21 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function (e) {
+		$("#life_time_revenue").keydown(function (e) {
+			// Allow: backspace, delete, tab, escape, enter and .
+			if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
+				// Allow: Ctrl+A, Command+A
+				(e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+				// Allow: home, end, left, right, down, up
+				(e.keyCode >= 35 && e.keyCode <= 40)) {
+				// let it happen, don't do anything
+				return;
+			}
+			// Ensure that it is a number and stop the keypress
+			if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+				e.preventDefault();
+			}
+		});
 		$("#btnAddReffered").click(function () {
 			$("#addRefferal").submit();
 		});
@@ -687,12 +702,7 @@
 					required: true,
 					email: true
 				},
-				gender: {
-					required: true
-				},
-				phone_no: {
-					required: true
-				},
+				
 				address1: {
 					required: true
 				},
@@ -708,12 +718,7 @@
 				zipcode: {
 					required: true
 				},
-				life_time_revenue: {
-					required: true
-				},
-				targetCloseDate: {
-					required: true
-				},
+				
 				targetStartDate: {
 					required: true
 				},
@@ -738,12 +743,7 @@
 					required: "Email Id can't be blank",
 					email: "Enter valid email id"
 				},
-				phone_no: {
-					required: "Phone No. can't be blank"
-				},
-				gender: {
-					required: "Choose your gender"
-				},
+				
 				address1: {
 					required: "Address1 can't be blank"
 				},
@@ -759,12 +759,7 @@
 				zipcode: {
 					required: "Choose your zipcode"
 				},
-				life_time_revenue: {
-					required: "Life Time Revenue can't be blank"
-				},
-				targetCloseDate: {
-					required: "Close Date can't be blank"
-				},
+				
 				targetStartDate: {
 					required: "Start Date can't be blank"
 				},

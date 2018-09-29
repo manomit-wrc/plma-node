@@ -341,109 +341,203 @@ router.post('/activity/add', auth, upload.single('activity_attachment'), firmAtt
     referral_user = req.body.referral_user;
     attorney_user = req.body.attorney_user;
     const CreationDate = req.body.activity_creation_date ? req.body.activity_creation_date.split("-") : '';
-    const FromDate = req.body.activity_from_date ? req.body.activity_from_date.split("-") : '';
-    const ToDate = req.body.activity_to_date ? req.body.activity_to_date.split("-") : '';
-    const activityBudgetData = await ActivityBudget.findAll({
-        where: {
-            'activity_id': req.body.activity_id
-        }
-    })
-    var targetClientLength = 1;
-    if (activityBudgetData[0].level_type === 'Individual') {
-        if (target_user !== undefined) {
-            targetClientLength = target_user.length;
-        }
-        if (client_user !== undefined) {
-            targetClientLength = client_user.length;
-        }
-        if (referral_user !== undefined) {
-            targetClientLength = referral_user.length;
-        }
-        for (var b = 0; b < activityBudgetData.length; b++) {
-            var totalHour = targetClientLength * activityBudgetData[b].hour;
-            var totalAmount = targetClientLength * activityBudgetData[b].amount;
-            await ActivityBudget.update({
-                'hour': totalHour,
-                'amount': totalAmount
-            }, {
-                where: {
-                    'activity_id': req.body.activity_id,
-                    'budget_id': activityBudgetData[b].budget_id
-                }
-            });
-        }
+    var FromDate = '';
+    var ToDate = '';
+
+    if (req.body.activity_from_date && req.body.activity_to_date)
+    {
+        FromDate = req.body.activity_from_date ? req.body.activity_from_date.split("-") : '';
+        ToDate = req.body.activity_to_date ? req.body.activity_to_date.split("-") : '';
     }
-    await Activity.update({
-        'activity_type': req.body.activity_type,
-        'activity_goal_id': req.body.activity_goal,
-        'practice_area': req.body.practice_area,
-        'remarks': req.body.remarks,
-        'activity_creation_date': CreationDate ? CreationDate[2] + "-" + CreationDate[0] + "-" + CreationDate[1] : null,
-        'activity_from_date': FromDate ? FromDate[2] + "-" + FromDate[0] + "-" + FromDate[1] : null,
-        'activity_to_date': ToDate ? ToDate[2] + "-" + ToDate[0] + "-" + ToDate[1] : null,
-        'activity_name': req.body.activity_name,
-        'category': req.body.category,
-        'budget_status': req.body.budget_status,
-        'budget_details_status': req.body.budget_details_status,
-        'target': req.body.ref_type,
-        'user_id': req.user.id,
-        'firm_id': req.user.firm_id,
-        'total_budget_hour': req.body.total_hour,
-        'total_budget_amount': req.body.total_amount,
-        'section_id': req.body.section,
-        's_group_id': req.body.strategy_group,
-        'attachment_field': fileName,
-        'activity_update': 'new'
-    }, {
-        where: {
-            'id': req.body.activity_id
-        }
-    });
-    if (req.body.ref_type == "T") {
-        for (var i = 0; i < target_user.length; i++) {
-            await Activity_to_user_type.create({
-                'activity_id': req.body.activity_id,
-                'target_client_type': req.body.ref_type,
-                'type': target_user[i],
-                'attorney_id': req.user.id
-            });
-        }
-    } else if (req.body.ref_type == 'C') {
-        for (var j = 0; j < client_user.length; j++) {
-            await Activity_to_user_type.create({
-                'activity_id': req.body.activity_id,
-                'target_client_type': req.body.ref_type,
-                'type': client_user[j],
-                'attorney_id': req.user.id
-            });
-        }
-    } else if (req.body.ref_type == 'R') {
-        for (var r = 0; r < referral_user.length; r++) {
-            await Activity_to_user_type.create({
-                'activity_id': req.body.activity_id,
-                'target_client_type': req.body.ref_type,
-                'type': referral_user[r],
-                'attorney_id': req.user.id
-            });
-        }
-    } else if (req.body.ref_type == 'G') {
-        await Activity_to_user_type.create({
-            'activity_id': req.body.activity_id,
-            'target_client_type': req.body.ref_type,
-            'type': '0',
-            'attorney_id': req.user.id
-        });
+    else if (req.body.activity_date)
+    {
+        FromDate = req.body.activity_date ? req.body.activity_date.split("-") : '';
+        ToDate = req.body.activity_date ? req.body.activity_date.split("-") : '';
     }
-    if (req.body.activity_type === 'team') {
-        if (attorney_user !== undefined) {
-            for (var a = 0; a < attorney_user.length; a++) {
-                await Activity_attorney.create({
-                    'activity_id': req.body.activity_id,
-                    'attorney_id': attorney_user[a],
-                    'status': '0'
+    if (req.body.status_bud == "1") 
+    {
+        const activityBudgetData = await ActivityBudget.findAll({
+            where: {
+                'activity_id': req.body.activity_id
+            }
+        })
+        var targetClientLength = 1;
+        if (activityBudgetData[0].level_type === 'Individual') {
+            if (target_user !== undefined) {
+                targetClientLength = target_user.length;
+            }
+            if (client_user !== undefined) {
+                targetClientLength = client_user.length;
+            }
+            if (referral_user !== undefined) {
+                targetClientLength = referral_user.length;
+            }
+            for (var b = 0; b < activityBudgetData.length; b++) {
+                var totalHour = targetClientLength * activityBudgetData[b].hour;
+                var totalAmount = targetClientLength * activityBudgetData[b].amount;
+                await ActivityBudget.update({
+                    'hour': totalHour,
+                    'amount': totalAmount
+                }, {
+                    where: {
+                        'activity_id': req.body.activity_id,
+                        'budget_id': activityBudgetData[b].budget_id
+                    }
                 });
             }
         }
+    
+        await Activity.update({
+            'activity_type': req.body.activity_type,
+            'activity_goal_id': req.body.activity_goal,
+            'practice_area': req.body.practice_area,
+            'remarks': req.body.remarks,
+            'activity_creation_date': CreationDate ? CreationDate[2] + "-" + CreationDate[0] + "-" + CreationDate[1] : null,
+            'activity_from_date': FromDate ? FromDate[2] + "-" + FromDate[0] + "-" + FromDate[1] : null,
+            'activity_to_date': ToDate ? ToDate[2] + "-" + ToDate[0] + "-" + ToDate[1] : null,
+            'activity_name': req.body.activity_name,
+            'category': req.body.category,
+            'budget_status': req.body.budget_status,
+            'budget_details_status': req.body.budget_details_status,
+            'target': req.body.ref_type,
+            'user_id': req.user.id,
+            'firm_id': req.user.firm_id,
+            'total_budget_hour': req.body.total_hour,
+            'total_budget_amount': req.body.total_amount,
+            'section_id': req.body.section,
+            's_group_id': req.body.strategy_group,
+            'attachment_field': fileName,
+            'activity_update': 'new'
+        }, {
+            where: {
+                'id': req.body.activity_id
+            }
+        });
+        if (req.body.ref_type == "T") {
+            for (var i = 0; i < target_user.length; i++) {
+                await Activity_to_user_type.create({
+                    'activity_id': req.body.activity_id,
+                    'target_client_type': req.body.ref_type,
+                    'type': target_user[i],
+                    'attorney_id': req.user.id
+                });
+            }
+        } else if (req.body.ref_type == 'C') {
+            for (var j = 0; j < client_user.length; j++) {
+                await Activity_to_user_type.create({
+                    'activity_id': req.body.activity_id,
+                    'target_client_type': req.body.ref_type,
+                    'type': client_user[j],
+                    'attorney_id': req.user.id
+                });
+            }
+        } else if (req.body.ref_type == 'R') {
+            for (var r = 0; r < referral_user.length; r++) {
+                await Activity_to_user_type.create({
+                    'activity_id': req.body.activity_id,
+                    'target_client_type': req.body.ref_type,
+                    'type': referral_user[r],
+                    'attorney_id': req.user.id
+                });
+            }
+        } else if (req.body.ref_type == 'G') {
+            await Activity_to_user_type.create({
+                'activity_id': req.body.activity_id,
+                'target_client_type': req.body.ref_type,
+                'type': '0',
+                'attorney_id': req.user.id
+            });
+        }
+        if (req.body.activity_type === 'team') {
+            if (attorney_user !== undefined) {
+                for (var a = 0; a < attorney_user.length; a++) {
+                    await Activity_attorney.create({
+                        'activity_id': req.body.activity_id,
+                        'attorney_id': attorney_user[a],
+                        'status': '0'
+                    });
+                }
+            }
+        }
+    }
+    else
+    {
+       var activitys = await Activity.create({
+           'activity_type': req.body.activity_type,
+           'activity_goal_id': req.body.activity_goal,
+           'practice_area': req.body.practice_area,
+           'remarks': req.body.remarks,
+           'activity_creation_date': CreationDate ? CreationDate[2] + "-" + CreationDate[0] + "-" + CreationDate[1] : null,
+           'activity_from_date': FromDate ? FromDate[2] + "-" + FromDate[0] + "-" + FromDate[1] : null,
+           'activity_to_date': ToDate ? ToDate[2] + "-" + ToDate[0] + "-" + ToDate[1] : null,
+           'activity_name': req.body.activity_name,
+           'category': req.body.category,
+           'budget_status': req.body.budget_status,
+           'budget_details_status': req.body.budget_details_status,
+           'target': req.body.ref_type,
+           'user_id': req.user.id,
+           'firm_id': req.user.firm_id,
+           'total_budget_hour':0,
+           'total_budget_amount': 0,
+           'section_id': req.body.section,
+           's_group_id': req.body.strategy_group,
+           'attachment_field': fileName,
+           'activity_update': 'new'
+       });
+       if (req.body.ref_type == "T") {
+           for (var i = 0; i < target_user.length; i++) {
+               await Activity_to_user_type.create({
+                   'activity_id': activitys.id,
+                   'target_client_type': req.body.ref_type,
+                   'type': target_user[i],
+                   'attorney_id': req.user.id
+               });
+           }
+       } else if (req.body.ref_type == 'C') {
+           for (var j = 0; j < client_user.length; j++) {
+               await Activity_to_user_type.create({
+                   'activity_id': activitys.id,
+                   'target_client_type': req.body.ref_type,
+                   'type': client_user[j],
+                   'attorney_id': req.user.id
+               });
+           }
+       } else if (req.body.ref_type == 'R') {
+           for (var r = 0; r < referral_user.length; r++) {
+               await Activity_to_user_type.create({
+                   'activity_id': activitys.id,
+                   'target_client_type': req.body.ref_type,
+                   'type': referral_user[r],
+                   'attorney_id': req.user.id
+               });
+           }
+       } else if (req.body.ref_type == 'G') {
+           await Activity_to_user_type.create({
+               'activity_id': activitys.id,
+               'target_client_type': req.body.ref_type,
+               'type': '0',
+               'attorney_id': req.user.id
+           });
+       }
+       if (req.body.activity_type === 'team') {
+           if (attorney_user !== undefined) {
+               for (var a = 0; a < attorney_user.length; a++) {
+                   await Activity_attorney.create({
+                       'activity_id': activitys.id,
+                       'attorney_id': attorney_user[a],
+                       'status': '0'
+                   });
+               }
+           }
+       }
+       await ActivityBudget.create({
+           activity_id: activitys.id,
+           activity_goal_id: req.body.activity_goal,
+           level_type: "Individual",
+           budget_id: 26,
+           hour: 0,
+           amount: 0,
+       });
     }
     req.flash('success-activity-message', 'Activity Created Successfully');
     res.redirect('/activitypage');
@@ -960,8 +1054,17 @@ router.post('/activity/update/:id', auth, upload.single('activity_attachment'), 
     referral_user = req.body.referral_user;
     attorney_user = req.body.attorney_user;
     const CreationDate1 = req.body.activity_creation_date ? req.body.activity_creation_date.split("-") : '';
-    const FormDate1 = req.body.activity_from_date ? req.body.activity_from_date.split("-") : '';
-    const ToDate1 = req.body.activity_to_date ? req.body.activity_to_date.split("-") : '';
+    
+    var FormDate1 = '';
+    var ToDate1 = '';
+
+    if (req.body.activity_from_date && req.body.activity_to_date) {
+        FormDate1 = req.body.activity_from_date ? req.body.activity_from_date.split("-") : '';
+        ToDate1 = req.body.activity_to_date ? req.body.activity_to_date.split("-") : '';
+    } else if (req.body.activity_date) {
+        FormDate1 = req.body.activity_date ? req.body.activity_date.split("-") : '';
+        ToDate1 = req.body.activity_date ? req.body.activity_date.split("-") : '';
+    }
     const activityBudgetData = await ActivityBudget.findAll({
         where: { 'activity_id': req.body.activity_id }
     });
@@ -1530,6 +1633,217 @@ router.post('/activity/adddetails/', auth, async (req, res) => {
         code: 100
     });
 
+});
+
+router.get('/activity-send-request/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+    Activity.hasMany(Activity_to_user_type, {
+        foreignKey: 'activity_id'
+    });
+    const firm = await Firm.findAll({
+        where: {
+            'id': req.user.firm_id
+        }
+    });
+    const activity_goal = await ActivityGoal.findAll({
+
+        where: {
+            'firm_id': req.user.firm_id,
+            'user_id': req.user.id
+        }
+    });
+    AttorneyPracticeArea.belongsTo(PracticeArea, {
+        order: [
+            ['name', 'ASC'],
+        ],
+        foreignKey: 'practice_area_id'
+    });
+    const practice_area = await AttorneyPracticeArea.findAll({
+        where: {
+            attorney_id: req.user.id
+        },
+        include: [{
+            model: PracticeArea
+        }]
+    });
+    const allAttorney = await User.findAll({
+        where: {
+            'firm_id': req.user.firm_id,
+            'role_id': 3,
+            'id': {
+                [Op.ne]: req.user.id
+            }
+        }
+    });
+    const selected_attr = await Activity_attorney.findAll({
+        where: {
+            'activity_id': req.params['id']
+        }
+    });
+    var attr_arr = [];
+    for (var i = 0; i < selected_attr.length; i++) {
+        attr_arr.push(parseInt(selected_attr[i].attorney_id));
+    }
+    const target = await Target.findAll({
+        where: {
+            'target_type': "I",
+            'target_status': '1',
+            'attorney_id': req.user.id
+        }
+    });
+    const client = await Client.findAll({
+        where: {
+            'client_type': "I",
+            'attorney_id': req.user.id
+        }
+    });
+    const referral = await Referral.findAll({
+        where: {
+            'referral_type': 'I',
+            'attorney_id': req.user.id
+        }
+    });
+    const editdata = await Activity.findAll({
+        where: {
+            'id': req.params['id']
+        },
+        include: [{
+            model: Activity_to_user_type
+        }]
+    });
+    const practicearea = await PracticeArea.findOne({
+        where: {
+            id: editdata[0].practice_area
+        }
+    });
+    var result = JSON.parse(JSON.stringify(editdata[0].jointactivities));
+    var arr = [];
+    for (var i = 0; i < result.length; i++) {
+        //arr.push(parseInt(result[i].type));
+        arr.push({
+            'id': parseInt(result[i].type),
+            'type': result[i].target_client_type
+        });
+    }
+    const budgetList = await Budget.findAll({});
+    var budgetArr = [];
+    var level_type = '';
+    var all_activity_client = await Activity_to_user_type.findAll({
+        where: {
+            'activity_id': editdata[0].id
+        }
+    });
+    for (var i = 0; i < budgetList.length; i++) {
+        if (budgetList[i].parent_id === 0) {
+            var hour = 0;
+            var amount = 0;
+            const parent_name = budgetList[i].name;
+            const child_budget = lodash.filter(budgetList, arr => arr.parent_id === budgetList[i].id);
+            var child_budget_arr = [];
+            for (var j = 0; j < child_budget.length; j++) {
+                const activity_budget = await ActivityBudget.findAll({
+                    where: {
+                        'budget_id': child_budget[j].id,
+                        'activity_id': req.params['id']
+                    }
+                });
+                level_type = activity_budget.length > 0 ? activity_budget[0].level_type : level_type;
+                hour = activity_budget.length > 0 ? ((level_type === 'Individual') ? activity_budget[0].hour / all_activity_client.length : activity_budget[0].hour / all_activity_client.length) : '';
+                amount = activity_budget.length > 0 ? ((level_type === 'Individual') ? activity_budget[0].amount / all_activity_client.length : activity_budget[0].amount / all_activity_client.length) : '';
+                const approval_remarks = activity_budget.length > 0 ? activity_budget[0].approver_remarks : '';
+                child_budget_arr.push({
+                    "id": child_budget[j].id,
+                    "name": child_budget[j].name,
+                    "hour": hour,
+                    "amount": amount,
+                    "remarks": approval_remarks
+                });
+            }
+            budgetArr.push({
+                "parent_name": parent_name,
+                "child_budget": child_budget_arr
+            });
+        }
+    }
+    var alldata = [];
+    var target_client_list;
+    const activity_budget = await ActivityBudget.findOne({
+        where: {
+            'activity_id': req.params['id']
+        }
+    });
+    for (let i = 0; i < all_activity_client.length; i++) {
+        const userDetails = await User.findOne({
+            where: {
+                'id': all_activity_client[i].attorney_id
+            }
+        });
+        if (all_activity_client[i].target_client_type == 'C') {
+            target_client_list = await Client.findAll({
+                where: {
+                    'id': all_activity_client[i].type
+                }
+            });
+        } else if (all_activity_client[i].target_client_type == 'T') {
+            target_client_list = await Target.findAll({
+                where: {
+                    'id': all_activity_client[i].type
+                }
+            });
+        } else if (all_activity_client[i].target_client_type == 'R') {
+            target_client_list = await Referral.findAll({
+                where: {
+                    'id': all_activity_client[i].type
+                }
+            });
+        }
+        if (all_activity_client[i].target_client_type !== 'G') {
+            alldata.push({
+                'attorney_name': userDetails.first_name + " " + userDetails.last_name,
+                'company_name': target_client_list.length > 0 ? (target_client_list[0].first_name + " " + target_client_list[0].last_name) : "",
+                'relation': all_activity_client[i].target_client_type,
+                'total_cost': activity_budget.level_type == 'Individual' ? editdata[0].total_budget_amount : parseFloat(editdata[0].total_budget_amount / all_activity_client.length)
+            });
+        } else {
+            alldata.push({
+                'attorney_name': userDetails.first_name + " " + userDetails.last_name,
+                'company_name': 'In-House',
+                'relation': all_activity_client[i].target_client_type,
+                'total_cost': activity_budget.level_type == 'Individual' ? editdata[0].total_budget_amount : parseFloat(editdata[0].total_budget_amount / all_activity_client.length)
+            });
+        }
+    }
+    sectionToFirm.belongsTo(Section, {
+        foreignKey: 'section_id'
+    });
+    const allSection = await sectionToFirm.findAll({
+        where: {
+            'firm_id': req.user.firm_id
+        },
+        include: [{
+            model: Section
+        }]
+    });
+    res.render('team_activity_approvals/view', {
+        layout: 'dashboard',
+        title: 'View Activity',
+        csrfToken: req.csrfToken(),
+        client: client,
+        target: target,
+        referral,
+        arr,
+        alltarget_client: alldata,
+        editdata: editdata[0],
+        firm: firm[0].title,
+        originAttorney: req.user.first_name + " " + req.user.last_name,
+        activity_goal: activity_goal,
+        budgetArr,
+        attr_arr,
+        practice_area: practice_area,
+        level_type,
+        section: allSection,
+        attorney: allAttorney,
+        practicearea
+    });
 });
 
 //====================================END ACTIVITY=============================================================================//

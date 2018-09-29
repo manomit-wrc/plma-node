@@ -6,6 +6,7 @@ const StrategicGoal = require('../models').strategic_goal;
 const Firm = require('../models').firm;
 const Activity = require('../models').activity;
 const ActivityBudget = require('../models').activity_budget;
+const ActivityGoalToStrategicGoal = require('../models').strategic_goal_to_activity_goal;
 const csrf = require('csurf');
 var csrfProtection = csrf({
     cookie: true
@@ -19,6 +20,9 @@ router.get("/strategic-marketing-goal", auth, firmAttrAuth, async(req, res)=> {
     StrategicGoal.hasMany(ActivityGoal, {
         foreignKey: 'strategic_goal_id'
     });
+    StrategicGoal.hasMany(ActivityGoalToStrategicGoal, {
+        foreignKey: 'strategic_goal_id'
+    });
     var whereGoals = {};
     if (req.user.role_id == 2) {
         whereGoals.firm_id = req.user.firm_id;
@@ -30,6 +34,9 @@ router.get("/strategic-marketing-goal", auth, firmAttrAuth, async(req, res)=> {
         where: whereGoals,
         include: [{
             model: ActivityGoal
+        },
+        {
+            model: ActivityGoalToStrategicGoal
         }]
     });
     
@@ -106,25 +113,16 @@ router.get("/strategic-marketing-goal/delete/:id", auth, firmAttrAuth, async(req
 });
 
 router.get("/strategic-marketing-goal/view-tactical_goals/:id", auth, firmAttrAuth, async(req, res)=> {
-    ActivityGoal.belongsTo(Firm, {
-        foreignKey: 'firm_id'
-    });
-    ActivityGoal.hasMany(ActivityBudget, {
+   
+    ActivityGoalToStrategicGoal.belongsTo(ActivityGoal, {
         foreignKey: 'activity_goal_id'
     });
-    ActivityGoal.hasMany(Activity, {
-        foreignKey: 'activity_goal_id'
-    });
-    const asso_goal = await ActivityGoal.findAll({
+    const asso_goal = await ActivityGoalToStrategicGoal.findAll({
         where: {
             strategic_goal_id: req.params['id']
         },
         include: [{
-            model: Firm
-        }, {
-            model: Activity
-        }, {
-            model: ActivityBudget
+            model: ActivityGoal
         }]
     });
     res.render("strategic_goals/view_tactical_goal", {

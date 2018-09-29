@@ -51,15 +51,16 @@
                                                         <input class="form-control budget_amount edit_budget_amount number_budget" type="text" id="edit_budget_amount" name="edit_budget_amount"
                                                             placeholder="Dollars($)" value="{{#if_eq this.level_type 'I'}} {{marketing_budget_amount this.amount ../../this.tclength}} {{else}} {{this.amount}} {{/if_eq}}"
                                                             disabled>
+                                                        <input type="hidden" data-budget_id="{{this.id}}" data-remarks="{{this.remarks}}" data-activity_id="{{../../activity_id}}" id="remarksactapp"> 
                                                     </div>
                                                 </div>
                                                 {{#if_eq this.hour ""}} {{else}}
-                                                <div class="col-md-2">
+                                                {{!-- <div class="col-md-2">
                                                     <div class="form-group">
                                                         <input type="button" class="btn btn-info" data-budget_id="{{this.id}}" data-remarks="{{this.remarks}}" data-activity_id="{{../../activity_id}}"
                                                             id="remarks_btn" value="Remarks">
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                                 {{/if_eq}}
                                             </div>
                                         </div>
@@ -96,6 +97,11 @@
                                                 <span class="form-control" id="amountDetails"></span>
                                             </div>
                                         </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <button class="btn btn-info btn-lg" type="button" id="remarksActivity">Remarks</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -103,6 +109,8 @@
                                 {{!-- <button class="btn btn-primary btn-lg" type="button" id="btnEditActivityBudget">Update</button> --}}
                                 <button class="btn btn-primary btn-lg" data-activity_id="{{activity_id}}" data-status_id="2" type="button" id="btnApproveActivityBudget">Approve</button>
                                 <button class="btn btn-primary btn-lg" data-activity_id="{{activity_id}}" data-status_id="3" type="button" id="btnRejectActivityBudget">Reject</button>
+                                <button class="btn btn-primary btn-lg" type="button" id="btnCancelActivityBudget">Cancel</button>
+                                
                             </div>
                         </div>
                     </div>
@@ -126,7 +134,7 @@
                 <div class="form-group">
                     <input type="hidden" id="activity_id" />
                     <input type="hidden" id="budget_id" />
-                    <textarea class="form-control floating" id="approver_remarks" name="approver_remarks" rows="5"></textarea>
+                    <textarea class="form-control floating" id="approver_remarks" name="approver_remarks" rows="5">{{act_remark}}</textarea>
                 </div>
                 <div class="form-group text-right">
                     <input type="button" value="Submit" class="btn btn-info approval_remark_details" />
@@ -155,17 +163,23 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>ACTIVITY
 
 <script type="text/javascript">
+    $(document).on("click", "#btnCancelActivityBudget", function(e){
+        window.location.href="/activity-approvals";
+    })
 
-    $(document).on('click', '#remarks_btn', function (e) {
+    /*$(document).on('click', '#remarks_btn', function (e) {
         $('#activity_id').val($(this).data('activity_id'));
         $('#budget_id').val($(this).data('budget_id'));
         $('#approver_remarks').val($(this).data('remarks'));
         $('#update_budget').modal('show');
+    });*/
+    $(document).on('click', '#remarksActivity', function (e) {
+        $('#update_budget').modal('show');
     });
 
     $(document).on('click', '.approval_remark_details', function (e) {
-        var budget_id = $('#budget_id').val();
-        var activity_id = $('#activity_id').val();
+        var budget_id = $('#remarksactapp').data("budget_id");
+        var activity_id = $('#remarksactapp').data('activity_id');
         var approver_remarks = $('#approver_remarks').val();
         $.ajax({
             type: 'POST',

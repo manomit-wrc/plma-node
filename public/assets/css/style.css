@@ -6269,6 +6269,12 @@ i.fa.fa-eye.m-r-5 {
 	}
 }
 
+.radioError label#ref_type-error {
+	position: absolute;
+	bottom: -25px;
+	left: 5px;
+}
+
 
 /*------------------------------------------------------------------
 [39-a.... Custom Styles]

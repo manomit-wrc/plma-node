@@ -504,13 +504,20 @@
 			prefix: '$ ',
 			rightAlign: false
 		});
-		$("#life_time_revenue").inputmask("numeric", {
-			radixPoint: ".",
-			groupSeparator: ",",
-			digits: 2,
-			autoGroup: true,
-			prefix: '$ ',
-			rightAlign: false
+		$("#life_time_revenue").keydown(function (e) {
+			// Allow: backspace, delete, tab, escape, enter and .
+			if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
+				// Allow: Ctrl+A, Command+A
+				(e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+				// Allow: home, end, left, right, down, up
+				(e.keyCode >= 35 && e.keyCode <= 40)) {
+				// let it happen, don't do anything
+				return;
+			}
+			// Ensure that it is a number and stop the keypress
+			if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+				e.preventDefault();
+			}
 		});
 		$("#current_revenue").inputmask("numeric", {
 			radixPoint: ".",
@@ -550,21 +557,10 @@
 				zipcode: {
 					required: true
 				},
-				gender: {
-					required: true
-				},
-				phone_no: {
-					required: true
-				},
 				attorney: {
 					required: true
 				},
-				life_time_revenue: {
-					required: true
-				},
-				targetCloseDate: {
-					required: true
-				},
+				
 				targetStartDate: {
 					required: true
 				},
@@ -604,20 +600,9 @@
 				zipcode: {
 					required: "Choose your zipcode"
 				},
-				gender: {
-					required: "Choose your gender"
-				},
-				phone_no: {
-					required: "Phone No. can't be blank"
-				},
+				
 				attorney: {
 					required: "Choose any attorney"
-				},
-				life_time_revenue: {
-					required: "Life Time Revenue can't be blank"
-				},
-				targetCloseDate: {
-					required: "Close Date can't be blank"
 				},
 				targetStartDate: {
 					required: "Start Date can't be blank"
