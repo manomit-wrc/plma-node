@@ -127,6 +127,9 @@ router.get('/referral', auth, firmAttrAuth, csrfProtection, async (req, res) => 
 	}
 	if (req.query.state) {
 		var city = await City.findAll({
+			order: [
+				['name', 'ASC'],
+			],
 		
 			// order: [sequelize.fn('max', sequelize.col('city'))],			
 			// order: sequelize.col('city'),
@@ -592,6 +595,9 @@ router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 	});
 
 	const city = await City.findAll({
+		order: [
+			['name', 'ASC'],
+		],
 		where: {
 			state_id: referral.state.toString()
 		}

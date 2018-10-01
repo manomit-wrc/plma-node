@@ -82,6 +82,9 @@ router.get('/master_contact', auth, firmAttrAuth, csrfProtection, async (req, re
 	}
 	if (req.query.state) {
 		var city = await City.findAll({
+			order: [
+				['name', 'ASC'],
+			],
 			where: {
 				state_id: req.query.state
 			}
@@ -329,6 +332,9 @@ router.get('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, async
 		where: { country_id: "233" }
 	});
 	const city = await City.findAll({
+		order: [
+			['name', 'ASC'],
+		],
 		where: {
 			state_id: contact.state.toString()
 		}

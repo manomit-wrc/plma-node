@@ -130,10 +130,7 @@
                 $("#city").append('<option value="' + response.get_city[i].id + '">' + response.get_city[i].name + '</option>');
            
               }
-
-
-
-              var options = $('#city option');
+              var options = $('#city option:not(:first)');
               var arr = options.map(function(_, o) {
                   return {
                       t: $(o).text(),
@@ -144,7 +141,7 @@
                   return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0;
               });
               options.each(function(i, o) {
-                  console.log(i);
+                  //console.log(i);
                   o.value = arr[i].v;
                   $(o).text(arr[i].t);
               });

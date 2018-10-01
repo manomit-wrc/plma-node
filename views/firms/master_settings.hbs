@@ -108,6 +108,7 @@
 													<label class="control-label">City
 														<span class="text-danger">*</span>
 													</label>
+													<img class="loadingImgCityAjax m-r-10" style="display:none" src="/assets/img/loading.gif" height="15" width="15" alt="">
 													<select class="form-control" id="firm_city" name="firm_city">
 														<option value="">Select City</option>
 														{{#each firm_city}}
@@ -1390,6 +1391,21 @@
 				for (var i = 0; i < response.city.length; i++) {
 					$("#edit_office_city").append('<option value="' + response.city[i].id + '">' + response.city[i].name + '</option>');
 				}
+				var options = $('#edit_office_city option:not(:first)');
+				var arr = options.map(function (_, o) {
+					return {
+						t: $(o).text(),
+						v: o.value
+					};
+				}).get();
+				arr.sort(function (o1, o2) {
+					return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0;
+				});
+				options.each(function (i, o) {
+					//console.log(i);
+					o.value = arr[i].v;
+					$(o).text(arr[i].t);
+				});
 				$('#edit_office_zipcode').children('option:not(:first)').remove();
 				for (var i = 0; i < response.zipcode.length; i++) {
 					$("#edit_office_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
@@ -1671,6 +1687,21 @@
 				for (var i = 0; i < response.city.length; i++) {
 					$("#edit_contact_city").append('<option value="' + response.city[i].id + '">' + response.city[i].name + '</option>');
 				}
+				var options = $('#edit_contact_city option:not(:first)');
+				var arr = options.map(function (_, o) {
+					return {
+						t: $(o).text(),
+						v: o.value
+					};
+				}).get();
+				arr.sort(function (o1, o2) {
+					return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0;
+				});
+				options.each(function (i, o) {
+					//console.log(i);
+					o.value = arr[i].v;
+					$(o).text(arr[i].t);
+				});
 				$('#edit_contact_zipcode').children('option:not(:first)').remove();
 				for (var i = 0; i < response.zipcode.length; i++) {
 					$("#edit_contact_zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
@@ -1902,6 +1933,21 @@
 	                    for (var i = 0; i < response.get_city.length; i++) {
 	                        $("#edit_office_city").append('<option value="' + response.get_city[i].id + '">' + response.get_city[i].name + '</option>');
 	                    }
+						var options = $('#edit_office_city option:not(:first)');
+						var arr = options.map(function (_, o) {
+							return {
+								t: $(o).text(),
+								v: o.value
+							};
+						}).get();
+						arr.sort(function (o1, o2) {
+							return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0;
+						});
+						options.each(function (i, o) {
+							//console.log(i);
+							o.value = arr[i].v;
+							$(o).text(arr[i].t);
+						});
 	                },
 	                error: function(xhr) {
 
@@ -1958,6 +2004,21 @@
 	                    for (var i = 0; i < response.get_city.length; i++) {
 	                        $("#edit_contact_city").append('<option value="' + response.get_city[i].id + '">' + response.get_city[i].name + '</option>');
 	                    }
+						var options = $('#edit_contact_city option:not(:first)');
+						var arr = options.map(function (_, o) {
+							return {
+								t: $(o).text(),
+								v: o.value
+							};
+						}).get();
+						arr.sort(function (o1, o2) {
+							return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0;
+						});
+						options.each(function (i, o) {
+							//console.log(i);
+							o.value = arr[i].v;
+							$(o).text(arr[i].t);
+						});
 	                },
 	                error: function(xhr) {
 
@@ -1997,6 +2058,7 @@
 	/*========================Edit Contact state country fetch===========================*/
 
 	$(document).ready(function() {
+		
 	    $("#contact_state").change(function(e) {
 	        var state_id = $(this).val();
 	        $("#contact_city").find('option').not(':first').remove();
@@ -2015,6 +2077,21 @@
 	                    for (var i = 0; i < response.get_city.length; i++) {
 	                        $("#contact_city").append('<option value="' + response.get_city[i].id + '">' + response.get_city[i].name + '</option>');
 	                    }
+						var options = $('#contact_city option:not(:first)');
+						var arr = options.map(function (_, o) {
+							return {
+								t: $(o).text(),
+								v: o.value
+							};
+						}).get();
+						arr.sort(function (o1, o2) {
+							return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0;
+						});
+						options.each(function (i, o) {
+							//console.log(i);
+							o.value = arr[i].v;
+							$(o).text(arr[i].t);
+						});
 	                },
 	                error: function(xhr) {
 
@@ -2062,10 +2139,29 @@
 	                data: {
 	                    state_id: state_id
 	                },
+					beforeSend: function (xhr) {
+						$(".loadingImgCityAjax").show();
+					},	
 	                success: function(response) {
+						$(".loadingImgCityAjax").hide();	
 	                    for (var i = 0; i < response.get_city.length; i++) {
 	                        $("#firm_city").append('<option value="' + response.get_city[i].id + '">' + response.get_city[i].name + '</option>');
 	                    }
+						var options = $('#firm_city option:not(:first)');
+						var arr = options.map(function (_, o) {
+							return {
+								t: $(o).text(),
+								v: o.value
+							};
+						}).get();
+						arr.sort(function (o1, o2) {
+							return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0;
+						});
+						options.each(function (i, o) {
+							//console.log(i);
+							o.value = arr[i].v;
+							$(o).text(arr[i].t);
+						});
 	                },
 	                error: function(xhr) {
 

@@ -373,6 +373,9 @@ router.get('/settings', auth, csrfProtection, async (req, res) => {
 
 	 if (settings != ''){
 		cities = await City.findAll({
+			order: [
+				['name', 'ASC'],
+			],
 			where: {
 				state_id: settings[0].state
 			}
@@ -718,6 +721,9 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 	var client_zipcode = [];
 	if (clients.state != null) {
 		var client_city = await City.findAll({
+			order: [
+				['name', 'ASC'],
+			],
 			where: {
 				state_id: clients.state.toString()
 			}

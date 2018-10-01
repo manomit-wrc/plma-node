@@ -458,8 +458,9 @@ router.get('/edit-profile', csrfProtection, auth, async (req, res) => {
     var zipcode = [];
     if(req.user.state != null) {
         city = await City.findAll({
-
-            
+            order: [
+                ['name', 'ASC'],
+            ],
             where: {
                 state_id: req.user.state.toString()
             }
@@ -723,6 +724,9 @@ router.get("/edit-attorney-profile", auth, csrfProtection, attrAuth, async (req,
     var zipcode = [];
     if (state_id != null) {
         city = await City.findAll({
+            order: [
+                ['name', 'ASC'],
+            ],
             where: {
                 state_id: state_id.toString()
             }

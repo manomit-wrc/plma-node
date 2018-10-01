@@ -92,6 +92,9 @@ router.get('/target', auth, firmAttrAuth, csrfProtection, async(req, res) => {
     }
     if (req.query.state) {
         var city = await City.findAll({
+            order: [
+                ['name', 'ASC'],
+            ],
             where: {
                 state_id: req.query.state
             }
@@ -384,6 +387,9 @@ router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, re
         }
     });
     const city = await City.findAll({
+        order: [
+            ['name', 'ASC'],
+        ],
         where: {
             state_id: target.state.toString()
         }

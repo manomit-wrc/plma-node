@@ -300,8 +300,7 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 	if (attorney_data != null) {
 		req.flash('success-err-message', 'Email ID already exists');
 		res.redirect('/attorneys/addAttorney');
-	}
-	else {
+	} else {
 		await User.create({
 			first_name: req.body.first_name,
 			last_name: req.body.last_name,
@@ -326,7 +325,7 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 			mobile_no: removeMobileMask(req.body.mobile_no),
 			dob: Dob ? Dob[2] + "-" + Dob[0] + "-" + Dob[1] : null,
 
-		}).then( async function (resp)  {
+		}).then(async function (resp) {
 			attrorney_details_id = resp.id;
 
 			await Attorney_Details.create({
@@ -381,7 +380,7 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 		});
 		var url = req.protocol + '://' + req.get('host');
 		var email_body =
-		`<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+			`<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
@@ -562,14 +561,14 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
                   </tr>
                   <tr>
                     <td class="content-message" style="font-family:'Calibri',OpenSans-Light, Arial, sans-serif; color: #595959;">
-                      <p style = "font-size: 30px; margin-bottom: 15px; margin-top: 10px; text-decoration: underline;" > Welcome to performlaw `+ req.body.first_name +`! </p>
-                      <p style = "font-size: 18px;" > A very special welcome to you `+ req.body.first_name +`, Thank you
-                      for joining PerformLaw Management Application as an Attorney! < /p>
+                      <p style = "font-size: 30px; margin-bottom: 15px; margin-top: 10px; text-decoration: underline;" > Welcome to performlaw ` + req.body.first_name + `! </p>
+                      <p style = "font-size: 18px;" > A very special welcome to you ` + req.body.first_name + `, Thank you
+                      for joining PerformLaw Management Application as an Attorney! </p>
                       <p style="font-size: 18px; font-family: &quot;OpenSans-Light&quot;,Calibri,Arial,sans-serif; text-align: center;">
-                        Your Username is - <span style = "color:#FF851A; font-weight: bold;"> ` + req.body.mail +` </span>
+                        Your Username is - <span style = "color:#FF851A; font-weight: bold;"> ` + req.body.mail + ` </span>
                       </p>
                       <p style="font-size: 18px; font-family: &quot;OpenSans-Light&quot;,Calibri,Arial,sans-serif; text-align: center;">
-                        Your Password is - <span style="color:#FF851A; font-weight: bold;">` + req.body.pass +`</span>
+                        Your Password is - <span style="color:#FF851A; font-weight: bold;">` + req.body.pass + `</span>
                       </p>
                       <p style="font-size: 18px;">Please keep it secret, keep it safe!</p>
 
@@ -578,7 +577,7 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
                         <tr>
                           <td width="325" height="60" bgcolor="#FF851A" style="text-align:center; display: table;
     margin: 0 auto;">
-                            <a href=`+ url +` align="center" style="display:block; font-family:'Open Sans',Calibri, Arial, sans-serif;; font-size:20px; color:#ffffff; text-align: center; line-height:60px; display:block; text-decoration:none;">Click to sign in</a>
+                            <a href=` + url + ` align="center" style="display:block; font-family:'Open Sans',Calibri, Arial, sans-serif;; font-size:20px; color:#ffffff; text-align: center; line-height:60px; display:block; text-decoration:none;">Click to sign in</a>
                           </td>
                           <td>&nbsp;</td>
                           <td>&nbsp;</td>
@@ -714,6 +713,9 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 	var zipcode = [];
 	if (state_id != null) {
 		city = await City.findAll({
+			order: [
+				['name', 'ASC'],
+			],
 			where: {
 				state_id: state_id.toString()
 			}
@@ -730,12 +732,12 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 	var result = JSON.parse(JSON.stringify(edata[0].practice_area_to_attorneys));
 	var arr = [];
 	for (var i = 0; i < result.length; i++) {
-	arr.push(result[i].practice_area_id);
+		arr.push(result[i].practice_area_id);
 	}
 	var result_jurisdiction = JSON.parse(JSON.stringify(edata[0].jurisdiction_to_attorneys));
 	var jurisdiction_arr = [];
 	for (var j = 0; j < result_jurisdiction.length; j++) {
-	jurisdiction_arr.push(result_jurisdiction[j].jurisdiction_id);
+		jurisdiction_arr.push(result_jurisdiction[j].jurisdiction_id);
 	}
 	const office = await Office.findAll({
 		where: {
@@ -970,7 +972,7 @@ router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async (
 		website_url: req.body.website_url,
 		social_url: req.body.social_url,
 		remarks: req.body.remarks,
-		office_id:req.body.office,
+		office_id: req.body.office,
 		firm_join_date: Firm_Join_Date1 ? Firm_Join_Date1[2] + "-" + Firm_Join_Date1[0] + "-" + Firm_Join_Date1[1] : null,
 		bar_practice_date: Bar_Practice_date1 ? Bar_Practice_date1[2] + "-" + Bar_Practice_date1[0] + "-" + Bar_Practice_date1[1] : null,
 
@@ -1022,19 +1024,17 @@ router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async (
 	res.redirect('/attorneys');
 });
 
-router.post("/get-duplicate-email-block", auth, async(req, res) => {
+router.post("/get-duplicate-email-block", auth, async (req, res) => {
 	const attr_email = await User.findOne({
 		where: {
 			email: req.body.email
 		}
 	});
-	if (attr_email !== null){
+	if (attr_email !== null) {
 		res.json({
 			success: true
 		});
-	}
-	else
-	{
+	} else {
 		res.json({
 			success: false
 		});
@@ -1042,7 +1042,7 @@ router.post("/get-duplicate-email-block", auth, async(req, res) => {
 
 });
 
-router.get("/get-firm-address", auth, async(req, res)=>{
+router.get("/get-firm-address", auth, async (req, res) => {
 	var firms = await Firm.findOne({
 		where: {
 			id: req.user.firm_id
@@ -1071,12 +1071,11 @@ router.get("/get-firm-address", auth, async(req, res)=>{
 		success: true,
 		firm: firms,
 		city: city,
-		zipcode:zipcode
+		zipcode: zipcode
 	});
 });
-router.post("/get-firm-office-address", auth, async(req, res)=> {
-	if(req.body.office_id == "0")
-	{
+router.post("/get-firm-office-address", auth, async (req, res) => {
+	if (req.body.office_id == "0") {
 		var firms = await Firm.findOne({
 			where: {
 				id: req.user.firm_id
@@ -1107,9 +1106,7 @@ router.post("/get-firm-office-address", auth, async(req, res)=> {
 			city: city,
 			zipcode: zipcode
 		});
-	}
-	else
-	{
+	} else {
 		var office = await Office.findById(req.body.office_id);
 		var state_id = office.state;
 		var city_id = office.city;
