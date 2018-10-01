@@ -115,7 +115,7 @@
             </div>
             <form>
                 <div class="modal-body card-box">
-                    <p>Please select at least one contact</p>
+                    <p>are you sure you want to delete this referral?</p>
                     <div class="m-t-20" id="delDiv">
                         <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
                         {{!--
@@ -423,7 +423,7 @@
             referral_id.push(this.value);
         });
         if (referral_id.length == 0) {
-            swal("", "Please select one or more referral!", "warning");
+            swal("", "Please select at least one referral!", "warning");
         } else {
 
             swal({
