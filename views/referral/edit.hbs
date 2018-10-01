@@ -3,13 +3,18 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
-<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
-{{/content}}
+<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css"> {{/content}}
 <div class="page-wrapper">
   <div class="content container-fluid">
     <div class="row">
       <div class="col-sm-8">
         <h4 class="page-title">Edit Referral Sources</h4>
+      </div>
+      <div class="col-sm-4">
+        <div class="text-right">
+          <a href="/referral" class="btn btn-primary pull-right rounded m-r-5">
+            <i class="fa fa-arrow-left"></i> Back</a>
+        </div>
       </div>
     </div>
     {{#if err_message}}
@@ -28,8 +33,8 @@
         <div class="form-group m-r-5">
           <label class="input-group">
             <span class="input-group-addon">
-              <input type="radio" id="individual_referral" name="referral_type" value="I"
-                {{#if_eq referral.referral_type "I"}} checked {{/if_eq}} disabled />
+              <input type="radio" id="individual_referral" name="referral_type" value="I" {{#if_eq referral.referral_type "I"}} checked
+                {{/if_eq}} disabled />
             </span>
             <div class="form-control form-control-static">Individual</div>
             <span class="glyphicon form-control-feedback "></span>
@@ -38,8 +43,8 @@
         <div class="form-group ">
           <label class="input-group">
             <span class="input-group-addon">
-              <input type="radio" id="organization_referral" name="referral_type" value="O"
-                {{#if_eq referral.referral_type "O"}} checked {{/if_eq}} disabled />
+              <input type="radio" id="organization_referral" name="referral_type" value="O" {{#if_eq referral.referral_type "O"}} checked
+                {{/if_eq}} disabled />
             </span>
             <div class="form-control form-control-static">Organization</div>
             <span class="glyphicon form-control-feedback "></span>
@@ -54,19 +59,35 @@
               <div id="indi_referral" {{#if_eq referral.referral_type "O"}} style="display: none;" {{/if_eq}}>
                 <div class="col-md-6">
                   <div class="form-group form-focus">
-                    <label class="control-label">First Name<span class="req-lbl">*</span></label>
+                    <label class="control-label">First Name
+                      <span class="req-lbl">*</span>
+                    </label>
                     <input type="text" class="form-control floating" id="first_name" name="first_name" value="{{referral.first_name}}" />
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group form-focus">
-                    <label class="control-label">Last Name <span class="req-lbl">*</span></label>
+                    <label class="control-label">Last Name
+                      <span class="req-lbl">*</span>
+                    </label>
                     <input type="text" class="form-control floating" id="last_name" name="last_name" value="{{referral.last_name}}" />
                   </div>
                 </div>
-               
-              <div class="col-md-6" id="org_referral" {{#if_eq referral.referral_type "I"}} style="display: none;"
-                {{/if_eq}}>
+                <div class="col-md-6">
+                  <div class="form-group form-focus select-focus select-attorney">
+                    <label class="control-label">Gender
+                      <span class="req-lbl">*</span>
+                    </label>
+                    <select class="form-control floating" id="gender" name="gender">
+                      <option value="">Select Gender</option>
+                      <option value="M" {{#if_eq referral.gender "M"}} selected {{/if_eq}}>Male</option>
+                      <option value="F" {{#if_eq referral.gender "F"}} selected {{/if_eq}}>Female</option>
+                      <option value="O" {{#if_eq referral.gender "O"}} selected {{/if_eq}}>Others</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6" id="org_referral" {{#if_eq referral.referral_type "I"}} style="display: none;" {{/if_eq}}>
                 <div class="form-group form-focus">
                   <label class="control-label">Organization Name</label>
                   <input type="text" class="form-control floating" id="org_name" name="org_name" value="{{referral.organization_name}}" />
@@ -74,22 +95,32 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group form-focus">
-                  <label class="control-label">Email Id <span class="req-lbl">*</span></label>
+                  <label class="control-label">Email Id
+                    <span class="req-lbl">*</span>
+                  </label>
                   <input type="text" class="form-control floating" id="email" name="email" value="{{referral.email}}" />
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group form-focus">
-                  <label class="control-label">Phone No.</label>
-                  <input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" value="{{referral.phone_no}}" />
+                  <label class="control-label">Phone No.
+                    <span class="req-lbl">*</span>
+                  </label>
+                  <input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" value="{{referral.phone_no}}"
+                  />
                 </div>
               </div>
-     
+              <div class="col-md-6">
+                <div class="form-group form-focus">
+                  <label class="control-label">Fax</label>
+                  <input type="text" class="form-control floating number_validator" id="fax" name="fax" value="{{referral.fax}}" />
+                </div>
+              </div>
               <div class="col-md-6">
                 <div class="form-group form-focus">
                   <label class="control-label">Mobile No.</label>
-                  <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no"
-                    value="{{referral.mobile}}" />
+                  <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" value="{{referral.mobile}}"
+                  />
                 </div>
               </div>
             </div>
@@ -101,13 +132,14 @@
         <div class="row">
           <div class="col-md-12">
             <div class="form-group form-focus select-focus select-attorney">
-              <label class="control-label">Attorney Name <span class="req-lbl">*</span></label>
+              <label class="control-label">Attorney Name
+                <span class="req-lbl">*</span>
+              </label>
               <select id="attr_id" name="attr_id" class="form-control floating ">
                 {{#if_eq user.role_id "2"}}
                 <option value="">Select Attorney</option>
                 {{#each attorney}}
-                <option value="{{this.id}}" {{#if_eq this.id ../referral.attorney_id }} selected="selected" {{/if_eq}}>{{this.first_name}}
-                  {{this.last_name}}
+                <option value="{{this.id}}" {{#if_eq this.id ../referral.attorney_id }} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}
                 </option>
                 {{/each}} {{else}}
                 <option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
@@ -122,7 +154,9 @@
         <div class="row">
           <div class="col-md-12">
             <div class="form-group form-focus">
-              <label class="control-label">Address Line 1 </label>
+              <label class="control-label">Address Line 1
+                <span class="req-lbl">*</span>
+              </label>
               <input type="text" class="form-control floating" id="address1" name="address1" value="{{referral.address1}}" />
             </div>
           </div>
@@ -140,17 +174,22 @@
           </div>
           <div class="col-md-6">
             <div class="form-group form-focus select-focus">
-              <label class="control-label">Country </label>
+              <label class="control-label">Country
+                <span class="req-lbl">*</span>
+              </label>
               <select id="country" name="country" class="select form-control floating">
                 <option value="0">Select Country</option>
                 {{#each country}}
-                <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.nam
+                <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
+                {{/each}}
               </select>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group form-focus select-focus">
-              <label class="control-label">State </label>
+              <label class="control-label">State
+                <span class="req-lbl">*</span>
+              </label>
               <select id="state" name="state" class="select form-control floating">
                 <option value="0">Select State</option>
                 {{#each state}}
@@ -160,8 +199,11 @@
             </div>
           </div>
           <div class="col-md-6">
+            <img class="loadingImgCityAjax m-r-10" style="display:none" src="/assets/img/loading.gif" height="15" width="15" alt="">
             <div class="form-group form-focus select-focus">
-              <label class="control-label">City </label>
+              <label class="control-label">City
+                <span class="req-lbl">*</span>
+              </label>
               <select id="city" name="city" class="select form-control floating">
                 <option value="0">Select City</option>
                 {{#each city}}
@@ -171,8 +213,11 @@
             </div>
           </div>
           <div class="col-md-6">
+            <img class="loadingImgZipAjax m-r-10" style="display:none" src="/assets/img/loading.gif" height="15" width="15" alt="">
             <div class="form-group form-focus select-focus">
-              <label class="control-label">Zip Code </label>
+              <label class="control-label">Zip Code
+                <span class="req-lbl">*</span>
+              </label>
               <select id="zipcode" name="zipcode" class="select form-control floating">
                 <option value="0">Select Zipcode</option>
                 {{#each zipcode}}
@@ -199,8 +244,7 @@
               <i class="fa fa-plus"></i>
             </button>
             {{else}}
-            <button class="btn btn-primary btn-lg masterContactDetailsAdd contact-Information-Close" type="button"
-              title="Remove">
+            <button class="btn btn-primary btn-lg masterContactDetailsAdd contact-Information-Close" type="button" title="Remove">
               <i class="fa fa-close"></i>
             </button>
             {{/if_eq}}
@@ -209,23 +253,33 @@
                 <div class="col-md-6">
                   <div class="form-group form-focus">
                     <label class="control-label">First Name</label>
-                    <input type="text" class="form-control floating" id="contactDetailsFirstName" name="contactDetailsFirstName[]"
-                      value="{{this.first_name}}" />
+                    <input type="text" class="form-control floating" id="contactDetailsFirstName" name="contactDetailsFirstName[]" value="{{this.first_name}}"
+                    />
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group form-focus">
                     <label class="control-label">Last Name</label>
-                    <input type="text" class="form-control floating" id="contactDetailsSecondName" name="contactDetailsSecondName[]"
-                      value="{{this.last_name}}" />
+                    <input type="text" class="form-control floating" id="contactDetailsSecondName" name="contactDetailsSecondName[]" value="{{this.last_name}}"
+                    />
                   </div>
                 </div>
-                
+                <div class="col-md-6">
+                  <div class="form-group form-focus select-focus">
+                    <label class="control-label">Gender</label>
+                    <select class="select form-control floating" id="contactDetailsGender" name="contactDetailsGender[]">
+                      <option value="">Select Gender</option>
+                      <option value="M" {{#if_eq this.gender "M"}} selected {{/if_eq}}>Male</option>
+                      <option value="F" {{#if_eq this.gender "F"}} selected {{/if_eq}}>Female</option>
+                      <option value="O" {{#if_eq this.gender "O"}} selected {{/if_eq}}>Others</option>
+                    </select>
+                  </div>
+                </div>
                 <div class="col-md-6">
                   <div class="form-group form-focus">
                     <label class="control-label">Email Id</label>
-                    <input type="text" class="form-control floating" id="contactDetailsEmail" name="contactDetailsEmail[]"
-                      value="{{this.email}}" />
+                    <input type="text" class="form-control floating" id="contactDetailsEmail" name="contactDetailsEmail[]" value="{{this.email}}"
+                    />
                     <span id="uniqueEmail" style="color: red"></span>
                   </div>
                 </div>
@@ -236,7 +290,13 @@
                       maxlength="50" value={{this.phone_no}} />
                   </div>
                 </div>
-               
+                <div class="col-md-6">
+                  <div class="form-group form-focus">
+                    <label class="control-label">Fax</label>
+                    <input type="text" class="form-control floating number_validator" id="contactDetailsFax" name="contactDetailsFax[]" maxlength="50"
+                      value="{{this.fax}}" />
+                  </div>
+                </div>
                 <div class="col-md-6">
                   <div class="form-group form-focus">
                     <label class="control-label">Mobile No.</label>
@@ -252,8 +312,7 @@
         <div class="contactInformationClose" style="display: none;">
           <div class="contactDetailsRemove">
             <div class="contact-information" id="contactInformatinClose">
-              <button class="btn btn-primary btn-lg masterContactDetailsAdd contact-Information-Close" type="button"
-                title="Remove">
+              <button class="btn btn-primary btn-lg masterContactDetailsAdd contact-Information-Close" type="button" title="Remove">
                 <i class="fa fa-close"></i>
               </button>
               <div class="contact-margin">
@@ -270,7 +329,17 @@
                       <input type="text" class="form-control floating" name="contactDetailsSecondName[]" />
                     </div>
                   </div>
-                 
+                  <div class="col-md-6">
+                    <div class="form-group form-focus select-focus">
+                      <label class="control-label">Gender</label>
+                      <select class="form-control floating" name="contactDetailsGender[]">
+                        <option value="">Select Gender</option>
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+                        <option value="O">Others</option>
+                      </select>
+                    </div>
+                  </div>
                   <div class="col-md-6">
                     <div class="form-group form-focus">
                       <label class="control-label">Email Id</label>
@@ -281,16 +350,20 @@
                   <div class="col-md-6">
                     <div class="form-group form-focus">
                       <label class="control-label">Phone No.</label>
-                      <input type="text" class="form-control floating number_validator" name="contactDetailsPhone_no[]"
-                        maxlength="50" />
+                      <input type="text" class="form-control floating number_validator" name="contactDetailsPhone_no[]" maxlength="50" />
                     </div>
                   </div>
-                  
+                  <div class="col-md-6">
+                    <div class="form-group form-focus">
+                      <label class="control-label">Fax</label>
+                      <input type="text" class="form-control floating number_validator" name="contactDetailsFax[]" maxlength="50" />
+                    </div>
+                  </div>
                   <div class="col-md-6">
                     <div class="form-group form-focus">
                       <label class="control-label">Mobile No.</label>
-                      <input type="text" class="form-control floating number_validator" id="contactDetailsMobile_no"
-                        name="contactDetailsMobile_no[]" maxlength="50" />
+                      <input type="text" class="form-control floating number_validator" id="contactDetailsMobile_no" name="contactDetailsMobile_no[]"
+                        maxlength="50" />
                     </div>
                   </div>
                 </div>
@@ -304,7 +377,8 @@
           <h3 class="card-title">Referred Target / Client</h3>
         </div>
         <div class="col-xs-8 text-right">
-          <a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_target_client"><i class="fa fa-plus"></i>
+          <a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_target_client">
+            <i class="fa fa-plus"></i>
             Add Target / Client</a>
         </div>
 
@@ -337,7 +411,7 @@
         </div>
 
 
-        
+
       </div>
       <div class="card-box">
         <h3 class="card-title">Other Information</h3>
@@ -345,13 +419,15 @@
           <div class="col-md-6">
             <div class="form-group form-focus">
               <label class="control-label">Company Name </label>
-              <input type="text" class="form-control floating" id="company_name" name="company_name" value="{{referral.company_name}}" />
+              <input type="text" class="form-control floating" id="company_name" name="company_name" value="{{referral.company_name}}"
+              />
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group form-focus">
               <label class="control-label">Website URL </label>
-              <input type="text" class="form-control floating url_selector" id="website_url" name="website_url" value="{{referral.website_url}}" />
+              <input type="text" class="form-control floating url_selector" id="website_url" name="website_url" value="{{referral.website_url}}"
+              />
             </div>
           </div>
           <div class="col-md-6">
@@ -369,13 +445,15 @@
           <div class="col-md-6">
             <div class="form-group form-focus">
               <label class="control-label">Linkedin</label>
-              <input type="text" class="form-control floating url_selector" id="linkedin" name="linkedin" value="{{referral.linkedin}}" />
+              <input type="text" class="form-control floating url_selector" id="linkedin" name="linkedin" value="{{referral.linkedin}}"
+              />
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group form-focus">
               <label class="control-label">Facebook</label>
-              <input type="text" class="form-control floating url_selector" id="social_url" name="social_url" value="{{referral.social_url}}" />
+              <input type="text" class="form-control floating url_selector" id="social_url" name="social_url" value="{{referral.social_url}}"
+              />
             </div>
           </div>
           <div class="col-md-6">
@@ -390,7 +468,17 @@
               <input type="text" class="form-control floating url_selector" id="youtube" name="youtube" value="{{referral.youtube}}" />
             </div>
           </div>
-         
+          <div class="col-md-6">
+            <div class="form-group form-focus select-focus select-attorney">
+              <label class="control-label">Association Status</label>
+              <select id="association" name="association" class="form-control floating">
+                <option value="0"> Select Association</option>
+                <option value="CONVERTED" {{#if_eq referral.association "CONVERTED"}} selected {{/if_eq}}>CONVERTED</option>
+                <option value="NEW TARGET" {{#if_eq referral.association "NEW TARGET"}} selected {{/if_eq}}>NEW TARGET</option>
+                <option value="TS-INTERIM" {{#if_eq referral.association "TS-INTERIM"}} selected {{/if_eq}}>TS-INTERIM</option>
+              </select>
+            </div>
+          </div>
           <div class="col-md-6">
             <div class="form-group form-focus select-focus select-attorney">
               <label class="control-label">Industry Type</label>
@@ -457,8 +545,7 @@
               <select id="target_id" name="referred_id_t" class="form-control floating">
                 <option value="">Select Target</option>
                 {{#each target}}
-                <option value="{{this.id}}" {{#inArrayCustom2 ../referredDetails this.id 'T'}} disabled
-                  {{/inArrayCustom2}}>{{this.first_name}} {{this.last_name}}</option>
+                <option value="{{this.id}}" {{#inArrayCustom2 ../referredDetails this.id 'T'}} disabled {{/inArrayCustom2}}>{{this.first_name}} {{this.last_name}}</option>
                 {{/each}}
               </select>
             </div>
@@ -468,8 +555,7 @@
               <select id="client_id" name="referred_id_c" class="form-control floating">
                 <option value="">Select Client</option>
                 {{#each client}}
-                <option value="{{this.id}}" {{#inArrayCustom2 ../referredDetails this.id 'C'}} disabled
-                  {{/inArrayCustom2}}>{{this.first_name}} {{this.last_name}}</option>
+                <option value="{{this.id}}" {{#inArrayCustom2 ../referredDetails this.id 'C'}} disabled {{/inArrayCustom2}}>{{this.first_name}} {{this.last_name}}</option>
                 {{/each}}
               </select>
             </div>
@@ -483,8 +569,7 @@
     </div>
   </div>
 </div>
-{{!-- /********************** End Modal *********************************/ --}}
-{{#content "script" mode="append"}}
+{{!-- /********************** End Modal *********************************/ --}} {{#content "script" mode="append"}}
 <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
@@ -505,7 +590,7 @@
       rightAlign: false
     });
     $("#frmEditReferral").validate({
-       rules: {
+      rules: {
         attr_id: {
           required: true
         },
@@ -519,17 +604,6 @@
           required: true
         },
         email: {
-          required: true
-        },
-      
-        target_id: {
-          required: true
-        },
-        client_id: {
-          required: true
-        },
-    
-        estimated_revenue: {
           required: true
         }
       },
@@ -548,18 +622,6 @@
         },
         email: {
           required: "Email ID can't be blank"
-        },
-     
-        target_id: {
-          required: "Please select reffered name"
-        },
-        client_id: {
-          required: "Please select reffered name"
-        },
-       
-     
-        estimated_revenue: {
-          required: "Estimated revenue can't be blank"
         }
       }
     });
@@ -666,5 +728,4 @@
     });
   });
 /**************************** End Reffered Client Target ********************************************/
-</script>
-{{/content}}
+</script> {{/content}}

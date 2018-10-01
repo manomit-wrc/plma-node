@@ -11,6 +11,12 @@
       <div class="col-sm-8">
         <h4 class="page-title">Add Referral Sources</h4>
       </div>
+      <div class="col-sm-4">
+        <div class="text-right">
+          <a href="/referral" class="btn btn-primary pull-right rounded m-r-5">
+            <i class="fa fa-arrow-left"></i> Back</a>
+        </div>
+      </div>
     </div>
     {{#if err_message}}
     <div class="alert alert-danger">
@@ -168,6 +174,7 @@
             </div>
           </div>
           <div class="col-md-6">
+            <img class="loadingImgCityAjax m-r-10" style="display:none" src="/assets/img/loading.gif" height="15" width="15" alt="">
             <div class="form-group form-focus select-focus">
               <label class="control-label">City
               </label>
@@ -178,6 +185,7 @@
             </div>
           </div>
           <div class="col-md-6">
+            <img class="loadingImgZipAjax m-r-10" style="display:none" src="/assets/img/loading.gif" height="15" width="15" alt="">
             <div class="form-group form-focus select-focus">
               <label class="control-label">Zip Code
               </label>

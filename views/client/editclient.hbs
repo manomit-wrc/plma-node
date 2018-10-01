@@ -17,6 +17,12 @@
 			<div class="col-sm-8">
 				<h4 class="page-title">Edit Client</h4>
 			</div>
+			<div class="col-sm-4">
+				<div class="text-right">
+					<a href="/client" class="btn btn-primary pull-right rounded m-r-5">
+						<i class="fa fa-arrow-left"></i> Back</a>
+				</div>
+			</div>
 		</div>
 		<form id="clientform" method="POST" action="/client/editClient/{{client.id}}">
 			<input type="hidden" name="_csrf" value="{{csrfToken}}">
@@ -454,6 +460,7 @@
 						</div>
 					</div>
 					<div class="col-md-6">
+						<img class="loadingImgCityAjax m-r-10" style="display:none" src="/assets/img/loading.gif" height="15" width="15" alt="">
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">City <span class="req-lbl">*</span> </label>
 							<select id="city" name="city" class="form-control floating">
@@ -465,6 +472,7 @@
 						</div>
 					</div>
 					<div class="col-md-6">
+						<img class="loadingImgZipAjax m-r-10" style="display:none" src="/assets/img/loading.gif" height="15" width="15" alt="">
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Zip Code <span class="req-lbl">*</span> </label>
 							<select id="zipcode" name="zipcode" class="form-control floating">

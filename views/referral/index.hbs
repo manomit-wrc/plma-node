@@ -75,7 +75,12 @@
                                 <td>
                                     {{this.email}}
                                 </td>
-                                <td class="number_validator">{{this.mobile}}</td>
+                                <td {{#if this.mobile}} class="number_validator" {{/if}}>{{#if this.mobile}}
+                                        {{this.mobile}}
+                                    {{else}}
+                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; —
+                                    {{/if}}    
+                                </td>
                                 <td class="text-right">
                                     <a href="/referral/view-activity/{{this.id}}" class="btn btn-success btn-sm" title="See associated activity">
                                         <i class="fa fa-tasks"></i>

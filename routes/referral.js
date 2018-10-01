@@ -547,7 +547,7 @@ router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 			['industry_name', 'ASC'],
 		],
 	});
-	const cities = await City.findById(referral.city.toString());
+	
 
 	var fetchTarget = {};
 	var fetchClient = {};
@@ -601,12 +601,15 @@ router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 			state_id: referral.state.toString()
 		}
 	});
-
-	const zipcode = await Zipcode.findAll({
-		where: {
-			city_name: cities.name
-		}
-	});
+	if (referral.city != "0")
+	{
+		const cities = await City.findById(referral.city.toString());
+		var zipcode = await Zipcode.findAll({
+			where: {
+				city_name: cities.name
+			}
+		});
+	}
 
 	const contactDetails = await ContactInformation.findAll({
 		where: {
