@@ -272,27 +272,6 @@ router.get('/referral/add', auth, firmAttrAuth, csrfProtection, async (req, res)
 	});
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var clientDetails = [];
 	var first_name = req.body.clientDetailsFirstName;

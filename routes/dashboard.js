@@ -33,6 +33,7 @@ const Sequelize = require('sequelize');
 const requestApproval = require('../models').request_approval;
 const activityAttorney = require('../models').activity_attorney;
 const Revenue = require('../models').revenue;
+const Referred_Client_Targets = require('../models').referred_client_target;
 const Op = Sequelize.Op;
 
 var csrfProtection = csrf({ cookie: true });
@@ -99,7 +100,9 @@ router.get('/dashboard', auth,  async(req, res) => {
     var activity_count = activity.length;
 /* =================== Activity Count Ends ================================*/
 /* =================== Target Count Ends ================================*/
-
+    Target.hasMany(Revenue, {
+        foreignKey: 'target_id'
+    });
     var targetCondition = {};
     targetCondition.target_status = 1;
     if (req.user.role_id != "1") {
@@ -110,6 +113,9 @@ router.get('/dashboard', auth,  async(req, res) => {
     }
     var target = await Target.findAll({
         where: targetCondition,
+        include: [{
+            model: Revenue
+        }],
         order: [
             ['createdAt', 'DESC']
         ]
@@ -118,6 +124,9 @@ router.get('/dashboard', auth,  async(req, res) => {
 /* =================== Target Count Ends ================================*/
 
 /* =================== Client Count Ends ================================*/
+    Client.hasMany(Revenue, {
+        foreignKey: 'client_id'
+    });
     var clientCondition = {};
     if (req.user.role_id != "1") {
         clientCondition.firm_id = req.user.firm_id;
@@ -127,6 +136,9 @@ router.get('/dashboard', auth,  async(req, res) => {
     }
     var client = await Client.findAll({
         where: clientCondition,
+        include: [{
+            model: Revenue
+        }],
         order: [
             ['createdAt', 'DESC']
         ]
@@ -135,12 +147,10 @@ router.get('/dashboard', auth,  async(req, res) => {
 /* =================== Client Count Ends ================================*/
 
 /* =================== Referral Count Ends ================================*/
-    Referral.belongsTo(Target, {
-        foreignKey: 'target_id'
+    Referral.hasMany(Referred_Client_Targets, {
+        foreignKey: 'referral_id'
     });
-    Referral.belongsTo(Client, {
-        foreignKey: 'client_id'
-    });
+    
     var referralCondition = {};
     if (req.user.role_id != "1") {
         referralCondition.firm_id = req.user.firm_id;
@@ -149,22 +159,16 @@ router.get('/dashboard', auth,  async(req, res) => {
         }
     }
     var referral = await Referral.findAll({
-        
-        order: [
-            ['city', 'ASC'],
-        ],
-
         where: referralCondition,
         include: [{
-            model: Target
-        }, {
-            model: Client
+            model: Referred_Client_Targets
         }],
         order: [
             ['createdAt', 'DESC']
         ],
       
     });
+    
     var referral_count = referral.length;
 
 /* =================== Referral Count Ends ================================*/

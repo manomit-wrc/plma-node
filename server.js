@@ -385,6 +385,9 @@ const hbs = exphbs.create({
         get_activity_goal_total: function (array) {
             return array.length;
         },
+        get_referred_TC_info: function (array) {
+            return array.length;
+        },
         round_up: function(value)
         {
             return value !== '' ? value.toFixed(2) : '';
