@@ -485,8 +485,7 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 	
 	const referredDetails = await Referred_Client_Targets.findAll({
 		where: {
-			referral_id: req.params['id'],
-			status: 1
+			referral_id: req.params['id']
 		}
 	});
 	
@@ -495,7 +494,7 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 		if (referredDetails[i].type === 'T') {
 			const targetDetails = await Target.findOne({
 				where: {
-					id: referredDetails[i].target_id,
+					id: referredDetails[i].target_id
 				}
 			});
 			referredListArr.push({
@@ -617,8 +616,7 @@ router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 	
 	const referredDetails = await Referred_Client_Targets.findAll({
 		where: {
-			referral_id: req.params['id'],
-			status: 1
+			referral_id: req.params['id']
 		}
 	});
 	
@@ -627,7 +625,6 @@ router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 			const targetDetails = await Target.findOne({
 				where: {
 					id: referredDetails[i].target_id
-					
 				}
 			});
 			referredListArr.push({
