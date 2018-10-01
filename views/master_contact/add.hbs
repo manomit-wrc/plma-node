@@ -184,7 +184,7 @@
 
 								</label>
 								<select id="state" name="state" class="select form-control floating">
-									<option value="">Select State</option>
+									<option value="0">Select State</option>
 									{{#each state}}
 									<option value="{{this.id}}">{{this.name}}</option>
 									{{/each}}
@@ -198,7 +198,7 @@
 
 								</label>
 								<select id="city" name="city" class="select form-control floating">
-									<option value="">Select City</option>
+									<option value="0">Select City</option>
 								</select>
 							</div>
 						</div>
@@ -209,7 +209,7 @@
 
 								</label>
 								<select id="zipcode" name="zipcode" class="select form-control floating">
-									<option value="">Select Zipcode</option>
+									<option value="0">Select Zipcode</option>
 								</select>
 							</div>
 						</div>
@@ -480,25 +480,10 @@
 						required: true,
 						email: true
 					},
-				
-					address1: {
-						required: true
-					},
 					attorney_id: {
 						required: true
 					},
-					country: {
-						required: true
-					},
-					state: {
-						required: true
-					},
-					city: {
-						required: true
-					},
-					zipcode: {
-						required: true
-					}
+					
 				},
 				messages: {
 					first_name: {
@@ -515,22 +500,6 @@
 						required: "Email id can't be blank",
 						email: "Enter valid email id"
 					},
-				
-					address1: {
-						required: "Must provide address"
-					},
-					country: {
-						required: "Choose your country"
-					},
-					state: {
-						required: "Choose your state"
-					},
-					city: {
-						required: "Choose your city"
-					},
-					zipcode: {
-						required: "Choose your zipcode"
-					}
 				
 				}
 			});

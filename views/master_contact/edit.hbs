@@ -18,6 +18,12 @@
 			<div class="col-sm-8">
 				<h4 class="page-title">Edit Master Contact</h4>
 			</div>
+			<div class="col-sm-4">
+				<div class="text-right">
+					<a href="/master_contact" class="btn btn-primary pull-right rounded m-r-5">
+						<i class="fa fa-arrow-left"></i> Back</a>
+				</div>
+			</div>
 		</div>
 		<form id="contactform" method="POST" action="/master_contact/edit/{{contact.id}}">
 			<input type="hidden" name="_csrf" value="{{csrfToken}}">
@@ -195,7 +201,7 @@
 
 								</label>
 								<select id="state" name="state" class="select form-control floating">
-									<option value="">Select State</option>
+									<option value="0">Select State</option>
 									{{#each state}}
 									<option value="{{this.id}}" {{#if_eq this.id ../contact.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
 									{{/each}}
@@ -209,7 +215,7 @@
 
 								</label>
 								<select id="city" name="city" class="select form-control floating">
-									<option value="">Select City</option>
+									<option value="0">Select City</option>
 									{{#each city}}
 									<option value="{{this.id}}" {{#if_eq this.id ../contact.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
 									{{/each}}
@@ -223,7 +229,7 @@
 
 								</label>
 								<select id="zipcode" name="zipcode" class="select form-control floating">
-									<option value="">Select Zipcode</option>
+									<option value="0">Select Zipcode</option>
 									{{#each zipcode}}
 									<option value="{{this.id}}" {{#if_eq this.id ../contact.zip_code}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
 									{{/each}}
@@ -536,25 +542,8 @@
 						required: true,
 						email: true
 					},
-					
-					address1: {
-						required: true
-					},
-					country: {
-						required: true
-					},
-					state: {
-						required: true
-					},
-					city: {
-						required: true
-					},
 						attorney_id: {
 						required: true
-					},
-					zipcode: {
-						required: true
-				
 					}
 				},
 				messages: {
@@ -571,22 +560,6 @@
 						required: "Email id can't be blank",
 						email: "Enter valid email id"
 					},
-				
-					address1: {
-						required: "Must provide address"
-					},
-					country: {
-						required: "Choose your country"
-					},
-					state: {
-						required: "Choose your state"
-					},
-					city: {
-						required: "Choose your city"
-					},
-					zipcode: {
-						required: "Choose your zipcode"
-					}
 				}
 			});
 		});

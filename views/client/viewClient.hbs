@@ -195,7 +195,7 @@
 															</li>
 															<li>
 																<span class="title">Close Date:</span>
-																<span class="text">{{dateFormat client.close_date "MM-DD-YYYY"}}</span>
+																<span class="text">{{#if client.revenueclosingDate}}{{dateFormat client.revenueclosingDate "MM-DD-YYYY"}}{{/if}}</span>
 															</li>
 														</ul>
 														{{#each client.revenues}}
@@ -205,7 +205,7 @@
 															</li>
 															<li>
 																<span class="title">Planning Period Start Date:</span>
-																<span class="text">{{dateFormat this.start_date "MM-DD-YYYY"}}</span>
+																<span class="text">{{#if this.start_date}}{{dateFormat this.start_date "MM-DD-YYYY"}} {{/if}}</span>
 															</li>
 															<li>
 																<span class="title">Revenue Planning Period (Month):</span>
@@ -213,11 +213,11 @@
 															</li>
 															<li>
 																<span class="title">Planning Period End Date:</span>
-																<span class="text">{{dateFormat this.end_date "MM-DD-YYYY"}}</span>
+																<span class="text">{{#if this.end_date}}{{dateFormat this.end_date "MM-DD-YYYY"}} {{/if}}</span>
 															</li>
 															<li>
 																<span class="title">Estimated Planning Period Revenue:</span>
-																<span class="text revenue_cost">{{this.estimated_revenue}}</span>
+																<span class="text revenue_cost">{{#if this.estimated_revenue}}{{this.estimated_revenue}}{{else}}$ 0{{/if}}</span>
 															</li>
 															<li>
 																<span class="title">Actual Planning Period Revenue:</span>

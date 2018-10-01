@@ -186,12 +186,12 @@
                                                 </li>
                                                 <li>
                                                     <span class="title">Close Date:</span>
-                                                    <span class="text">{{dateFormat client.close_date "MM-DD-YYYY"}}</span>
+                                                    <span class="text">{{#if client.close_date}} {{dateFormat client.close_date "MM-DD-YYYY"}} {{/if}}</span>
                                                 </li>
                                                 <li>
                                                     <span class="title">Planning Period Start Date:</span>
-                                                    <span class="text">{{dateFormat client.revenues.0.start_date
-                                                        "MM-DD-YYYY"}}</span>
+                                                    <span class="text">{{#if client.revenues.0.start_date}} {{dateFormat client.revenues.0.start_date
+                                                        "MM-DD-YYYY"}} {{/if}}</span>
                                                 </li>
                                                 <li>
                                                     <span class="title">Revenue Planning Period (Month):</span>
@@ -199,8 +199,8 @@
                                                 </li>
                                                 <li>
                                                     <span class="title">Planning Period End Date:</span>
-                                                    <span class="text">{{dateFormat client.revenues.0.end_date
-                                                        "MM-DD-YYYY"}}</span>
+                                                    <span class="text">{{#if client.revenues.0.end_date}}{{dateFormat client.revenues.0.end_date
+                                                        "MM-DD-YYYY"}} {{/if}}</span>
                                                 </li>
                                                 <li>
                                                     <span class="title">Estimated Planning Period Revenue:</span>

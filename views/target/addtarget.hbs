@@ -15,6 +15,12 @@
 			<div class="col-sm-8">
 				<h4 class="page-title">Add Target</h4>
 			</div>
+			<div class="col-sm-4">
+				<div class="text-right">
+					<a href="/target" class="btn btn-primary pull-right rounded m-r-5">
+						<i class="fa fa-arrow-left"></i> Back</a>
+				</div>
+			</div>
 		</div>
 		<form id="targetform" method="POST" action="/target/add">
 			<input type="hidden" name="_csrf" value="{{csrfToken}}">
@@ -130,7 +136,7 @@
 						<div class="form-group form-focus select-focus select-attorney">
 							<label class="control-label">Revenue Planning Period (Month) </label>
 							<select class="form-control floating" id="planning_period" name="planning_period">
-								<option value="">Select Planning Period</option>
+								<option value="0">Select Planning Period</option>
 								<option value="1">1</option>
 								<option value="2">2</option>
 								<option value="3">3</option>
@@ -209,7 +215,7 @@
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Country <span class="req-lbl">*</span></label>
 							<select id="country" name="country" class="form-control floating">
-								<option value="">Select Country</option>
+								<option value="0">Select Country</option>
 								{{#each country}}
 								<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
 								{{/each}}
@@ -220,7 +226,7 @@
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">State <span class="req-lbl">*</span></label>
 							<select id="state" name="state" class="form-control floating">
-								<option value="">Select State</option>
+								<option value="0">Select State</option>
 								{{#each state}}
 								<option value="{{this.id}}">{{this.name}}</option>
 								{{/each}}
@@ -231,7 +237,7 @@
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">City <span class="req-lbl">*</span></label>
 							<select id="city" name="city" class="form-control floating">
-								<option value="">Select City</option>
+								<option value="0">Select City</option>
 
 							</select>
 						</div>
@@ -240,7 +246,7 @@
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Zip Code <span class="req-lbl">*</span></label>
 							<select id="zipcode" name="zipcode" class="form-control floating">
-								<option value="">Select Zipcode</option>
+								<option value="0">Select Zipcode</option>
 							</select>
 						</div>
 					</div>
@@ -480,35 +486,7 @@
 					required: true,
 					email: true
 				},
-				address1: {
-					required: true
-				},
-				country: {
-					required: true
-				},
-				state: {
-					required: true
-				},
-				city: {
-					required: true
-				},
-				zipcode: {
-					required: true
-				},
-				attorney: {
-					required: true
-				},
-				
-				targetStartDate: {
-					required: true
-				},
-				planning_period: {
-					required: true
-				},
-					attorney_id: {
-					required: true
-				},
-				estimated_revenue: {
+				attorney_id: {
 					required: true
 				}
 			},
@@ -517,7 +495,7 @@
 					required: "First Name can't be blank"
 				},
 					attorney_id: {
-					required: "Attorney Idcan't be blank"
+					required: "Choose any attorney"
 				},
 				last_name: {
 					required: "Last Name can't be blank"
@@ -528,34 +506,6 @@
 				email: {
 					required: "Email id can't be blank",
 					email: "Enter valid email id"
-				},
-				address1: {
-					required: "Address1 can't be blank"
-				},
-				country: {
-					required: "Choose your country"
-				},
-				state: {
-					required: "Choose your state"
-				},
-				city: {
-					required: "Choose your city"
-				},
-				zipcode: {
-					required: "Choose your zipcode"
-				},
-				
-				attorney: {
-					required: "Choose any attorney"
-				},
-				targetStartDate: {
-					required: "Start Date can't be blank"
-				},
-				planning_period: {
-					required: "Choose Planning Period"
-				},
-				estimated_revenue: {
-					required: "Estimated Revenue can't be blank"
 				}
 			}
 		});
@@ -584,6 +534,7 @@
 		if (start_date == "") {
 			swal("","Please Select Start date!","warning");
 			$(this).val('').attr("selected", true);
+			$("#end_date").val('');
 		} else {
 			if ($(this).val() == '') {
 				swal("","Please selcet planning period!","warning");

@@ -339,12 +339,14 @@ router.get('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, async
 			state_id: contact.state.toString()
 		}
 	});
-	const cities = await City.findById(contact.city.toString());
-	const zipcode = await Zipcode.findAll({
-		where: {
-			city_name: cities.name
-		}
-	});
+	if (contact.city != "0"){
+		const cities = await City.findById(contact.city.toString());
+		var zipcode = await Zipcode.findAll({
+			where: {
+				city_name: cities.name
+			}
+		});
+	}
 
 	const attorney = await user.findAll({
 		order: [
@@ -393,12 +395,14 @@ router.get('/master_contact/view/:id', auth, firmAttrAuth, csrfProtection, async
 			state_id: contact.state.toString()
 		}
 	});
-	const cities = await City.findById(contact.city.toString());
-	const zipcode = await Zipcode.findAll({
-		where: {
-			city_name: cities.name
-		}
-	});
+	if (contact.city != "0") {
+		const cities = await City.findById(contact.city.toString());
+		var zipcode = await Zipcode.findAll({
+			where: {
+				city_name: cities.name
+			}
+		});
+	}
 
 	const attorney = await user.findAll({
 		where: {

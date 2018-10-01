@@ -394,12 +394,14 @@ router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, re
             state_id: target.state.toString()
         }
     });
-    const cities = await City.findById(target.city.toString());
-    const zipcode = await Zipcode.findAll({
-        where: {
-            city_name: cities.name
-        }
-    });
+    if (target.city != "0") {
+        const cities = await City.findById(target.city.toString());
+        var zipcode = await Zipcode.findAll({
+            where: {
+                city_name: cities.name
+            }
+        });
+    }
     const attorney = await user.findAll({
         order: [
 			['first_name', 'ASC'],
@@ -922,7 +924,7 @@ router.post('/target/move-to-client', auth, async(req, res) => {
                     target_id: target_ids[i]
                 }
             });
-            if (refT !== '') {
+            if (refT !== null) {
                 await Referred_Client_Targets.update({
                     status: 0
                 },{

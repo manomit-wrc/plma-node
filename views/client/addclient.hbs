@@ -190,7 +190,7 @@
 							<label class="control-label">Planning Period (Month)
 							</label>
 							<select class="form-control floating " id="planning_period" name="planning_period">
-								<option value="">Select Planning Period </option>
+								<option value="0">Select Planning Period </option>
 								<option value="1">1</option>
 								<option value="2">2</option>
 								<option value="3">3</option>
@@ -277,7 +277,7 @@
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Country <span class="req-lbl">*</span> </label>
 							<select id="country" name="country" class="form-control floating">
-								<option value="">Select Country</option>
+								<option value="0">Select Country</option>
 								{{#each country}}
 									<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
 								{{/each}}
@@ -288,7 +288,7 @@
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">State <span class="req-lbl">*</span> </label>
 							<select id="state" name="state" class="form-control floating">
-								<option value="">Select State</option>
+								<option value="0">Select State</option>
 								{{#each state}}
 									<option value="{{this.id}}">{{this.name}}</option>
 								{{/each}}
@@ -299,7 +299,7 @@
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">City<span class="req-lbl">*</span></label>
 							<select id="city" name="city" class="form-control floating">
-								<option value="">Select City</option>
+								<option value="0">Select City</option>
 							</select>
 						</div>
 					</div>
@@ -307,7 +307,7 @@
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Zip Code<span class="req-lbl">*</span></label>
 							<select id="zipcode" name="zipcode" class="form-control floating">
-								<option value="">Select Zipcode</option>
+								<option value="0">Select Zipcode</option>
 							</select>
 						</div>
 					</div>
@@ -594,33 +594,7 @@
 				
 				attorney_id: {
 					required: true
-				},
-				address1: {
-					required: true
-				},
-				country: {
-					required: true
-				},
-				state: {
-					required: true
-				},
-				city: {
-					required: true
-				},
-				zipcode: {
-					required: true
-				},
-				clientStartDate: {
-					required: true
-				},
-				planning_period: {
-					required:true
-				},
-				
-				estimated_revenue: {
-					required: true
 				}
-				
 			},
 			messages: {
 				client_first_name: {
@@ -636,29 +610,8 @@
 					required: "Email ID can't be blank",
 					email: "Enter valid email ID"
 				},
-				address1: {
-					required: "Must provide address"
-				},
-				country: {
-					required: "Choose your country"
-				},
-				state: {
-					required: "Choose your state"
-				},
-				city: {
-					required: "Choose your city"
-				},
-				zipcode: {
-					required: "Choose your zipcode"
-				},
-				clientStartDate: {
-					required: "Client Start Date can't be blank"
-				},
-				planning_period: {
-					required: "Choose your Planning period"
-				},
-				estimated_revenue: {
-					required: "Estimated revenue can't be blank"
+				attorney_id: {
+					required: "Select any attorney"
 				}
 			}
 		});
@@ -705,24 +658,31 @@
 		var start_date = $("#clientStartDate").val();
 		var period = $(this).val();
 		if(start_date == ""){
-			alert("1212121212");
+			swal("", "Please Select Start date!", "warning");
+			$(this).val('0').attr("selected", true);
+			$("#end_date").val('');
 		}
 		else{
-		var start_date_split = start_date.split('-');
-		var month = start_date_split[2] + "," + start_date_split[0] + "," + start_date_split[1];
-		var current_date = new Date(month);
-		var end_date = new Date(current_date.setMonth(current_date.getMonth() + parseInt(period)));
-		var dd = end_date.getDate();
-			var mm = end_date.getMonth() + 1; //January is 0!
+			if ($(this).val() == '0') {
+				swal("", "Please selcet planning period!", "warning");
+				$("#end_date").val('');
+			} else {
+				var start_date_split = start_date.split('-');
+				var month = start_date_split[2] + "," + start_date_split[0] + "," + start_date_split[1];
+				var current_date = new Date(month);
+				var end_date = new Date(current_date.setMonth(current_date.getMonth() + parseInt(period)));
+				var dd = end_date.getDate();
+				var mm = end_date.getMonth() + 1; //January is 0!
 
-			var yyyy = end_date.getFullYear();
-			if (dd < 10) {
-				dd = '0' + dd;
+				var yyyy = end_date.getFullYear();
+				if (dd < 10) {
+					dd = '0' + dd;
+				}
+				if (mm < 10) {
+					mm = '0' + mm;
+				}
+				var end_date = mm + '-' + dd + '-' + yyyy;
 			}
-			if (mm < 10) {
-				mm = '0' + mm;
-			}
-			var end_date = mm + '-' + dd + '-' + yyyy;
 		}
 		$("#end_date").val(end_date);
 	});

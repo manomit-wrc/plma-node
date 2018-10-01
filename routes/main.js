@@ -719,7 +719,7 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 	});
 	var client_city = [];
 	var client_zipcode = [];
-	if (clients.state != null) {
+	if (clients.state != "0") {
 		var client_city = await City.findAll({
 			order: [
 				['name', 'ASC'],
@@ -729,7 +729,7 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 			}
 		});
 	}
-	if (clients.city !== null) {
+	if (clients.city != "0") {
 		var client_cities = await City.findById(clients.city.toString());
 		var client_zipcode = await Zipcode.findAll({
 			where: {

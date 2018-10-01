@@ -14,6 +14,12 @@
 			<div class="col-sm-8">
 				<h4 class="page-title">Edit Target</h4>
 			</div>
+			<div class="col-sm-4">
+				<div class="text-right">
+					<a href="/target" class="btn btn-primary pull-right rounded m-r-5">
+						<i class="fa fa-arrow-left"></i> Back</a>
+				</div>
+			</div>
 		</div>
 		<form id="targetform" method="POST" action="/target/edit/{{client.id}}">
 			<input type="hidden" name="_csrf" value="{{csrfToken}}">
@@ -137,7 +143,7 @@
 						<div class="form-group form-focus select-focus select-attorney">
 							<label class="control-label">Revenue Planning Period (Month) <span class="req-lbl">*</span></label>
 							<select class="form-control floating" id="planning_period" name="planning_period">
-								<option value="">Select Planning Period </option>
+								<option value="0">Select Planning Period </option>
 								<option value="1" {{#if_eq client.revenues.0.planning_period "1"}} selected {{/if_eq}}>1</option>
 								<option value="2" {{#if_eq client.revenues.0.planning_period "2"}} selected {{/if_eq}}>2</option>
 								<option value="3" {{#if_eq client.revenues.0.planning_period "3"}} selected {{/if_eq}}>3</option>
@@ -228,7 +234,7 @@
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">State <span class="req-lbl">*</span></label>
 							<select id="state" name="state" class="form-control floating">
-								<option value="">Select State</option>
+								<option value="0">Select State</option>
 								{{#each state}}
 									<option value="{{this.id}}" {{#if_eq this.id ../client.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
 								{{/each}}
@@ -239,7 +245,7 @@
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">City <span class="req-lbl">*</span></label>
 							<select id="city" name="city" class="form-control floating">
-								<option value="">Select City</option>
+								<option value="0">Select City</option>
 								{{#each city}}
 									<option value="{{this.id}}" {{#if_eq this.id ../client.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
 								{{/each}}
@@ -250,7 +256,7 @@
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Zip Code <span class="req-lbl">*</span></label>
 							<select id="zipcode" name="zipcode" class="form-control floating">
-								<option value="">Select Zipcode</option>
+								<option value="0">Select Zipcode</option>
 								{{#each zipcode}}
 									<option value="{{this.id}}" {{#if_eq this.id ../client.postal_code}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
 								{{/each}}
@@ -639,36 +645,6 @@
 				email: {
 					required: true,
 					email: true
-				},
-				
-				address1: {
-					required: true
-				},
-				country: {
-					required: true
-				},
-				state: {
-					required: true
-				},
-				city: {
-					required: true
-				},
-				zipcode: {
-					required: true
-				},
-				
-				targetStartDate: {
-					required: true
-				},
-				planning_period: {
-					required: true
-				},
-            	attorney_id: {
-					required: true
-				},
-				
-				estimated_revenue: {
-					required: true
 				}
 			},
 			messages: {
@@ -687,35 +663,6 @@
 				email: {
 					required: "Email Id can't be blank",
 					email: "Enter valid email id"
-				},
-				
-				address1: {
-					required: "Address1 can't be blank"
-				},
-				country: {
-					required: "Choose your country"
-				},
-				state: {
-					required: "Choose your state"
-				},
-				city: {
-					required: "Choose your city"
-				},
-				zipcode: {
-					required: "Choose your zipcode"
-				},
-				
-				targetStartDate: {
-					required: "Start Date can't be blank"
-				},
-				planning_period: {
-					required: "Choose Planning Period"
-				},
-				planning_period: {
-					required: "Please select planning period"
-				},
-				estimated_revenue: {
-					required: "Estimated Revenue can't be blank"
 				}
 			}
 		});
@@ -738,6 +685,7 @@
 			var period = $(this).val();
 			if (start_date == "") {
 				swal("", "Please Select Start date!", "warning");
+				$("#end_date").val('');
 			} else {
 				if ($(this).val() == '') {
 					swal("", "Please selcet planning period!", "warning");
