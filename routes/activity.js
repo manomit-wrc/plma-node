@@ -921,6 +921,9 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
         }
     }
     var alldata = [];
+    var Cdata;
+    var tdata;
+    var Rdata;
     var target_client_list;
     const activity_budget = await ActivityBudget.findOne({
         where: {
@@ -968,6 +971,24 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
             });
         }
     }
+    var block_RCT= await Activity_to_user_type.findAll({
+        where: {
+            'activity_id': editdata[0].id,
+            'attorney_id': req.user.id
+        }
+    });
+   for (var q = 0; q < block_RCT.length;q++)
+   {
+        if (block_RCT[q].target_client_type == 'C') {
+            Cdata = block_RCT[q].type;
+        } else if (block_RCT[q].target_client_type == 'T') {
+            tdata=block_RCT[q].type;
+        } else if (block_RCT[q].target_client_type == 'R') {
+            Rdata=block_RCT[q].type;
+        }
+   }
+
+   
     sectionToFirm.belongsTo(Section, {
         foreignKey: 'section_id'
     });
@@ -1005,7 +1026,10 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
         section: allSection,
         attorney: allAttorney,
         practicearea,
-        existingtclen: existingtclen.length
+        existingtclen: existingtclen.length,
+        Cdata,
+        tdata,
+        Rdata
     });
 });
 

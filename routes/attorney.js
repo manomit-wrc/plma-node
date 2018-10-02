@@ -59,6 +59,9 @@ router.get('/attorneys', auth, csrfProtection, async (req, res) => {
 	User.hasMany(Attorney_Details, {
 		foreignKey: 'user_id'
 	});
+	User.belongsTo(Designation, {
+		foreignKey: 'designation_id'
+	});
 
 	const attr = await User.findAll({
 		where: {
@@ -67,26 +70,30 @@ router.get('/attorneys', auth, csrfProtection, async (req, res) => {
 		},
 		include: [{
 			model: Attorney_Details
+		},
+		{
+			model: Designation
 		}]
 	});
 
+	//console.log(attr[0].designation);
+	
 
+	// for (var i = 0; i < attr.length; i++) {
+	// 	var name = attr[i].first_name + " " + attr[i].last_name;
+	// 	var email = attr[i].email;
+	// 	var mobile_no = attr[i].mobile_no;
+	// 	var id = attr[i].id;
+	// 	var attr_type = attr[i].attorney_details.length > 0 ? (attr[i].attorney_details[0].attorney_type !== '' ? attr[i].attorney_details[0].attorney_type : 'N/A') : 'N/A';
 
-	for (var i = 0; i < attr.length; i++) {
-		var name = attr[i].first_name + " " + attr[i].last_name;
-		var email = attr[i].email;
-		var mobile_no = attr[i].mobile_no;
-		var id = attr[i].id;
-		var attr_type = attr[i].attorney_details.length > 0 ? (attr[i].attorney_details[0].attorney_type !== '' ? attr[i].attorney_details[0].attorney_type : 'N/A') : 'N/A';
-
-		attar_information.push({
-			name: name,
-			email: email,
-			mobile_no: mobile_no,
-			id: id,
-			attr_type: attr_type,
-		})
-	}
+	// 	attar_information.push({
+	// 		name: name,
+	// 		email: email,
+	// 		mobile_no: mobile_no,
+	// 		id: id,
+	// 		attr_type: attr_type,
+	// 	})
+	// }
 
 	res.render('attorney/index', {
 		layout: 'dashboard',
@@ -94,7 +101,7 @@ router.get('/attorneys', auth, csrfProtection, async (req, res) => {
 		success_message,
 		success_edit_message,
 		csrfToken: req.csrfToken(),
-		row: attar_information
+		row: attr
 	});
 });
 
