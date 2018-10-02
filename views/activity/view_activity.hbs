@@ -26,96 +26,100 @@
       <input type="hidden" name="activity_id" id="activity_id" value="{{editdata.id}}">
       <input type="hidden" name="total_hour" id="total_hour">
       <input type="hidden" name="total_amount" id="total_amount">
+      <input type="hidden" id="acvtFrmDate" value="{{dateFormat editdata.activity_from_date " MM-DD-YYYY "}}">
+      <input type="hidden" id="acvtToDate" value="{{dateFormat editdata.activity_to_date " MM-DD-YYYY "}}">
       <input type="hidden" id="activityTypeDetails" value={{editdata.target}}>
-      <div class="card-box">
-        <h3 class="card-title">Client / Target Information</h3>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="row">
-              <div class="form-inline m-b-15 col-md-6">
-                <div class="form-group">
-                  <label class="input-group">
-                    <span class="input-group-addon">
-                      <input type="radio" id="target_type" name="ref_type" value="T" {{#if_eq editdata.target "T"}} checked {{/if_eq}} disabled
-                      />
-                    </span>
-                    <div class="form-control form-control-static">Target</div>
-                    <span class="glyphicon form-control-feedback"></span>
-                  </label>
+       {{#if_eq user.id editdata.user_id}}
+        <div class="card-box">
+          <h3 class="card-title">Client / Target Information</h3>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="form-inline m-b-15 col-md-6">
+                  <div class="form-group">
+                    <label class="input-group">
+                      <span class="input-group-addon">
+                        <input type="radio" id="target_type" name="ref_type" value="T" {{#if_eq editdata.target "T"}} checked {{/if_eq}} disabled
+                        />
+                      </span>
+                      <div class="form-control form-control-static">Target</div>
+                      <span class="glyphicon form-control-feedback"></span>
+                    </label>
+                  </div>
+                  <div class="form-group">
+                    <label class="input-group">
+                      <span class="input-group-addon">
+                        <input type="radio" id="organization_type" name="ref_type" value="C" {{#if_eq editdata.target "C"}} checked {{/if_eq}} disabled
+                        />
+                      </span>
+                      <div class="form-control form-control-static">Client</div>
+                      <span class="glyphicon form-control-feedback"></span>
+                    </label>
+                  </div>
+                  <div class="form-group">
+                    <label class="input-group">
+                      <span class="input-group-addon">
+                        <input type="radio" id="referral_type" name="ref_type" value="R" {{#if_eq editdata.target "R"}} checked {{/if_eq}} disabled
+                        />
+                      </span>
+                      <div class="form-control form-control-static">Referral Sources</div>
+                      <span class="glyphicon form-control-feedback"></span>
+                    </label>
+                  </div>
+                  <div class="form-group">
+                    <label class="input-group">
+                      <span class="input-group-addon">
+                        <input type="radio" id="general_type" name="ref_type" value="G" {{#if_eq editdata.target "G"}} checked {{/if_eq}} disabled
+                        />
+                      </span>
+                      <div class="form-control form-control-static">General</div>
+                      <span class="glyphicon form-control-feedback"></span>
+                    </label>
+                  </div>
                 </div>
-                <div class="form-group">
-                  <label class="input-group">
-                    <span class="input-group-addon">
-                      <input type="radio" id="organization_type" name="ref_type" value="C" {{#if_eq editdata.target "C"}} checked {{/if_eq}} disabled
-                      />
-                    </span>
-                    <div class="form-control form-control-static">Client</div>
-                    <span class="glyphicon form-control-feedback"></span>
-                  </label>
+                <div class="col-md-6">
+                  <div class="form-group form-focus select-focus" id="target_list" {{#if_eq editdata.target "T"}} style="display: block;" {{else}}
+                    style="display: none;" {{/if_eq}}>
+                    <select id="target_id" name="target_user[]" class="form-control floating" multiple="multiple" disabled>
+                      {{#each target}}
+                      <option value="{{this.id}}" {{#inArrayCustom ../arr this.id "T"}} selected="selected" {{/inArrayCustom}}>{{this.first_name}}
+                        {{this.last_name}}
+                      </option>
+                      {{/each}}
+                    </select>
+                  </div>
                 </div>
-                <div class="form-group">
-                  <label class="input-group">
-                    <span class="input-group-addon">
-                      <input type="radio" id="referral_type" name="ref_type" value="R" {{#if_eq editdata.target "R"}} checked {{/if_eq}} disabled
-                      />
-                    </span>
-                    <div class="form-control form-control-static">Referral Sources</div>
-                    <span class="glyphicon form-control-feedback"></span>
-                  </label>
+                <div class="col-md-6" id="client_list" {{#if_eq editdata.target "C"}} style="display: block;" {{else}} style="display: none;"
+                  {{/if_eq}}>
+                  <div class="form-group form-focus select-focus">
+                    <select id="client_id" name="client_user[]" class="form-control floating" multiple="multiple" disabled>
+                      {{#each client}}
+                      <option value="{{this.id}}" {{#inArrayCustom ../arr this.id "C"}} selected="selected" {{/inArrayCustom}}>{{this.first_name}}
+                        {{this.last_name}}
+                      </option>
+                      {{/each}}
+                    </select>
+                  </div>
                 </div>
-                <div class="form-group">
-                  <label class="input-group">
-                    <span class="input-group-addon">
-                      <input type="radio" id="general_type" name="ref_type" value="G" {{#if_eq editdata.target "G"}} checked {{/if_eq}} disabled
-                      />
-                    </span>
-                    <div class="form-control form-control-static">General</div>
-                    <span class="glyphicon form-control-feedback"></span>
-                  </label>
+                <div class="col-md-6" id="referral_list" {{#if_eq editdata.target "R"}} style="display: block;" {{else}} style="display: none;"
+                  {{/if_eq}}>
+                  <div class="form-group form-focus select-focus">
+                    <select id="referral_id" name="referral_user[]" class="form-control floating" multiple="multiple" disabled>
+                      {{#each referral}}
+                      <option value="{{this.id}}" {{#inArrayCustom ../arr this.id "R"}} selected="selected" {{/inArrayCustom}}>{{this.first_name}}
+                        {{this.last_name}}
+                      </option>
+                      {{/each}}
+                    </select>
+                  </div>
                 </div>
+                <div class="col-md-6" id="general_list" {{#if_eq editdata.target "G"}} style="display: block;" {{else}} style="display: none;"
+                  {{/if_eq}}></div>
               </div>
-              <div class="col-md-6">
-                <div class="form-group form-focus select-focus" id="target_list" {{#if_eq editdata.target "T"}} style="display: block;" {{else}}
-                  style="display: none;" {{/if_eq}}>
-                  <select id="target_id" name="target_user[]" class="form-control floating" multiple="multiple" disabled>
-                    {{#each target}}
-                    <option value="{{this.id}}" {{#inArrayCustom ../arr this.id "T"}} selected="selected" {{/inArrayCustom}}>{{this.first_name}}
-                      {{this.last_name}}
-                    </option>
-                    {{/each}}
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-6" id="client_list" {{#if_eq editdata.target "C"}} style="display: block;" {{else}} style="display: none;"
-                {{/if_eq}}>
-                <div class="form-group form-focus select-focus">
-                  <select id="client_id" name="client_user[]" class="form-control floating" multiple="multiple" disabled>
-                    {{#each client}}
-                    <option value="{{this.id}}" {{#inArrayCustom ../arr this.id "C"}} selected="selected" {{/inArrayCustom}}>{{this.first_name}}
-                      {{this.last_name}}
-                    </option>
-                    {{/each}}
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-6" id="referral_list" {{#if_eq editdata.target "R"}} style="display: block;" {{else}} style="display: none;"
-                {{/if_eq}}>
-                <div class="form-group form-focus select-focus">
-                  <select id="referral_id" name="referral_user[]" class="form-control floating" multiple="multiple" disabled>
-                    {{#each referral}}
-                    <option value="{{this.id}}" {{#inArrayCustom ../arr this.id "R"}} selected="selected" {{/inArrayCustom}}>{{this.first_name}}
-                      {{this.last_name}}
-                    </option>
-                    {{/each}}
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-6" id="general_list" {{#if_eq editdata.target "G"}} style="display: block;" {{else}} style="display: none;"
-                {{/if_eq}}></div>
             </div>
           </div>
         </div>
-      </div>
+      {{/if_eq}}
       <div class="card-box">
         <h3 class="card-title">Basic Information</h3>
         <div class="row">
@@ -211,11 +215,20 @@
                   <label class="control-label">Practice Area Type</label>
                   <select id="practice_area" name="practice_area" class="form-control floating" disabled>
                     <option value="">Select Practice Area</option>
-                    {{#each practice_area}}
-                    <option value="{{this.practicearea.id}}" {{#if_eq this.practicearea.id ../editdata.practice_area}} selected="selected" {{/if_eq}}>{{this.practicearea.name}}</option>
-                    {{/each}}
-                    <option value="{{practicearea.id}}" {{#if_eq practicearea.id editdata.practice_area}} selected {{/if_eq}}>{{practicearea.name}}</option>
-                  </select>
+                    {{#if_eq user.actual_role_id "2"}} 
+                      {{#each practice_area_firm}}
+                        <option value="{{this.practicearea.id}}" {{#if_eq this.practicearea.id ../editdata.practice_area}} selected="selected" {{/if_eq}}>{{this.practicearea.name}}</option>
+                      {{/each}} 
+                    {{else}}
+                      {{#each practice_area}}
+                      <option value="{{this.practicearea.id}}" {{#if_eq this.practicearea.id ../editdata.practice_area}} selected="selected" {{/if_eq}}>{{this.practicearea.name}}</option>
+                      {{/each}}
+                      {{#if_eq user.id editdata.user_id}}
+                      {{else}}
+                      <option value="{{practicearea.id}}" {{#if_eq practicearea.id editdata.practice_area}} selected {{/if_eq}}>{{practicearea.name}}</option>
+                      {{/if_eq}}
+                    {{/if_eq}}
+                    </select>
                 </div>
               </div>
               <div class="col-md-6">

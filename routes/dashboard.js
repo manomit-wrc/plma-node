@@ -75,8 +75,34 @@ router.get('/dashboard', auth,  async(req, res) => {
     var activityCondition = {};
     if(req.user.role_id != "1"){
         activityCondition.firm_id = req.user.firm_id;
-        if(req.user.role_id != "2"){
-            activityCondition.user_id = req.user.id;
+        if (req.user.role_id == 2) {
+            activityCondition.firm_id = req.user.firm_id;
+        } else {
+            activityCondition.firm_id = req.user.firm_id;
+            const accepted_activity = await activityAttorney.findAll({
+                where: {
+                    'attorney_id': req.user.id,
+                    'status': '1'
+                }
+            });
+            var accptActArr = [];
+            if (accepted_activity.length > 0) {
+                for (var j = 0; j < accepted_activity.length; j++) {
+                    accptActArr.push(accepted_activity[j].activity_id);
+                }
+                //activityCondition.user_id = '';
+                var origin_activity = await Activity.findAll({
+                    where: {
+                        user_id: req.user.id
+                    }
+                });
+                for (var a = 0; a < origin_activity.length; a++) {
+                    accptActArr.push(origin_activity[a].id);
+                }
+                activityCondition.id = accptActArr;
+            } else {
+                activityCondition.user_id = req.user.id;
+            }
         }
     }
 
@@ -94,10 +120,8 @@ router.get('/dashboard', auth,  async(req, res) => {
     catch(error) {
         console.log(error);
     }
-
-
-
     var activity_count = activity.length;
+    
 /* =================== Activity Count Ends ================================*/
 /* =================== Target Count Ends ================================*/
     Target.hasMany(Revenue, {
@@ -890,8 +914,34 @@ router.get("/get-chart-activity-count-value", auth, async(req, res)=> {
     var activityCondition = {};
     if (req.user.role_id != "1") {
         activityCondition.firm_id = req.user.firm_id;
-        if (req.user.role_id != "2") {
-            activityCondition.user_id = req.user.id;
+        if (req.user.role_id == 2) {
+            activityCondition.firm_id = req.user.firm_id;
+        } else {
+            activityCondition.firm_id = req.user.firm_id;
+            const accepted_activity = await activityAttorney.findAll({
+                where: {
+                    'attorney_id': req.user.id,
+                    'status': '1'
+                }
+            });
+            var accptActArr = [];
+            if (accepted_activity.length > 0) {
+                for (var j = 0; j < accepted_activity.length; j++) {
+                    accptActArr.push(accepted_activity[j].activity_id);
+                }
+                //activityCondition.user_id = '';
+                var origin_activity = await Activity.findAll({
+                    where: {
+                        user_id: req.user.id
+                    }
+                });
+                for (var a = 0; a < origin_activity.length; a++) {
+                    accptActArr.push(origin_activity[a].id);
+                }
+                activityCondition.id = accptActArr;
+            } else {
+                activityCondition.user_id = req.user.id;
+            }
         }
     }
     const monthNames = ["January", "February", "March", "April", "May", "June",
@@ -1003,8 +1053,34 @@ router.get("/get-chart-two-activity-count-value", auth, async(req, res)=> {
     var activityCondition = {};
     if (req.user.role_id != "1") {
         activityCondition.firm_id = req.user.firm_id;
-        if (req.user.role_id != "2") {
-            activityCondition.user_id = req.user.id;
+        if (req.user.role_id == 2) {
+            activityCondition.firm_id = req.user.firm_id;
+        } else {
+            activityCondition.firm_id = req.user.firm_id;
+            const accepted_activity = await activityAttorney.findAll({
+                where: {
+                    'attorney_id': req.user.id,
+                    'status': '1'
+                }
+            });
+            var accptActArr = [];
+            if (accepted_activity.length > 0) {
+                for (var j = 0; j < accepted_activity.length; j++) {
+                    accptActArr.push(accepted_activity[j].activity_id);
+                }
+                //activityCondition.user_id = '';
+                var origin_activity = await Activity.findAll({
+                    where: {
+                        user_id: req.user.id
+                    }
+                });
+                for (var a = 0; a < origin_activity.length; a++) {
+                    accptActArr.push(origin_activity[a].id);
+                }
+                activityCondition.id = accptActArr;
+            } else {
+                activityCondition.user_id = req.user.id;
+            }
         }
     }
     var year1 = [];

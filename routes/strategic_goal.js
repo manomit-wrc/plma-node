@@ -24,12 +24,7 @@ router.get("/strategic-marketing-goal", auth, firmAttrAuth, async(req, res)=> {
         foreignKey: 'strategic_goal_id'
     });
     var whereGoals = {};
-    if (req.user.role_id == 2) {
-        whereGoals.firm_id = req.user.firm_id;
-    } else {
-        whereGoals.firm_id = req.user.firm_id;
-        whereGoals.user_id = req.user.id;
-    }
+    whereGoals.firm_id = req.user.firm_id;
     const strategic_show = await StrategicGoal.findAll({
         where: whereGoals,
         include: [{

@@ -9,15 +9,21 @@
 <div class="page-wrapper">
   <div class="content container-fluid">
     <div class="row">
-      <div class="col-sm-8">
+      <div class="col-sm-4">
         <h4 class="page-title">Edit Activity</h4>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-8">
         <div class="text-right">
+          {{#if_eq editdata.target "G"}}{{else}}
+             {{#if_eq user.id editdata.user_id}}{{else}}
            {{#if_eq editdata.activity_type "team"}}
           <a href="#" class="btn btn-primary pull-right rounded" data-toggle="modal" data-target="#addDetails">
             <i class="fa fa-plus-circle"></i> Add Client/Traget/Referral Sources/General</a>
             {{/if_eq}}
+            {{/if_eq}}
+            {{/if_eq}}
+            <a href="/activitypage" class="btn btn-primary pull-right rounded m-r-5">
+              <i class="fa fa-arrow-left"></i> Back</a>
           {{!-- <button class="btn btn-primary rounded advancedFilter" data-toggle="modal" data-target="#add_user">
             <i class="fa fa-filter"></i> Filter</button> --}}
         </div>
@@ -33,86 +39,88 @@
       <input type="hidden" id="budget_update" name="budget_update" value="0">
       <input type="hidden" id="acvtFrmDate" value="{{dateFormat editdata.activity_from_date " MM-DD-YYYY "}}">
       <input type="hidden" id="acvtToDate" value="{{dateFormat editdata.activity_to_date " MM-DD-YYYY "}}">
-      <div class="card-box">
-        <h3 class="card-title">Client / Target Information</h3>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="row">
-              <div class="form-inline m-b-15 col-md-6">
-                <div class="form-group">
-                  <label class="input-group">
-                    <span class="input-group-addon">
-                      <input type="radio" id="target_type" name="ref_type" value="T" {{#if_eq editdata.target "T"}} checked {{/if_eq}} />
-                    </span>
-                    <div class="form-control form-control-static">Target</div>
-                    <span class="glyphicon form-control-feedback"></span>
-                  </label>
+       {{#if_eq user.id editdata.user_id}}
+        <div class="card-box">
+          <h3 class="card-title">Client / Target Information</h3>
+          <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                  <div class="form-inline m-b-15 col-md-6">
+                    <div class="form-group">
+                      <label class="input-group">
+                        <span class="input-group-addon">
+                          <input type="radio" id="target_type" name="ref_type" value="T" {{#if_eq editdata.target "T"}} checked {{/if_eq}} />
+                        </span>
+                        <div class="form-control form-control-static">Target</div>
+                        <span class="glyphicon form-control-feedback"></span>
+                      </label>
+                    </div>
+                    <div class="form-group">
+                      <label class="input-group">
+                        <span class="input-group-addon">
+                          <input type="radio" id="client_type" name="ref_type" value="C" {{#if_eq editdata.target "C"}} checked {{/if_eq}} />
+                        </span>
+                        <div class="form-control form-control-static">Client</div>
+                        <span class="glyphicon form-control-feedback"></span>
+                      </label>
+                    </div>
+                    <div class="form-group">
+                      <label class="input-group">
+                        <span class="input-group-addon">
+                          <input type="radio" id="referral_type" name="ref_type" value="R" {{#if_eq editdata.target "R"}} checked {{/if_eq}} />
+                        </span>
+                        <div class="form-control form-control-static">Referral Sources</div>
+                        <span class="glyphicon form-control-feedback"></span>
+                      </label>
+                    </div>
+                    <div class="form-group">
+                      <label class="input-group">
+                        <span class="input-group-addon">
+                          <input type="radio" id="general_type" name="ref_type" value="G" {{#if_eq editdata.target "G"}} checked {{/if_eq}} />
+                        </span>
+                        <div class="form-control form-control-static">General</div>
+                        <span class="glyphicon form-control-feedback"></span>
+                      </label>
+                    </div>
+                  </div>
+                  <!-------------------------------------------------------->
+                  <div class="col-md-6" id="target_list" {{#if_eq editdata.target "T"}} style="display: block;" {{else}} style="display: none;"
+                    {{/if_eq}}>
+                    <select id="target_id" name="target_user[]" class=" form-control floating" multiple="multiple">
+                      {{#each target}}
+                      <option value="{{this.id}}" {{#inArrayCustom ../arr this.id "T"}} selected="selected" {{/inArrayCustom}}>{{this.first_name}}
+                        {{this.last_name}}
+                      </option>
+                      {{/each}}
+                    </select>
+                  </div>
+                  <div class="col-md-6" id="client_list" {{#if_eq editdata.target "C"}} style="display: block;" {{else}} style="display: none;"
+                    {{/if_eq}}>
+                    <select id="client_id" name="client_user[]" class=" form-control floating" multiple="multiple">
+                      {{#each client}}
+                      <option value="{{this.id}}" {{#inArrayCustom ../arr this.id "C"}} selected="selected" {{/inArrayCustom}}>{{this.first_name}}
+                        {{this.last_name}}
+                      </option>
+                      {{/each}}
+                    </select>
+                  </div>
+                  <div class="col-md-6" id="referral_list" {{#if_eq editdata.target "R"}} style="display: block;" {{else}} style="display: none;"
+                    {{/if_eq}}>
+                    <select id="referral_id" name="referral_user[]" class=" form-control floating" multiple="multiple">
+                      {{#each referral}}
+                      <option value="{{this.id}}" {{#inArrayCustom ../arr this.id "R"}} selected="selected" {{/inArrayCustom}}>{{this.first_name}}
+                        {{this.last_name}}
+                      </option>
+                      {{/each}}
+                    </select>
+                  </div>
+                  <div class="col-md-6" id="general_list" {{#if_eq editdata.target "G"}} style="display: block;" {{else}} style="display: none;"
+                    {{/if_eq}}></div>
                 </div>
-                <div class="form-group">
-                  <label class="input-group">
-                    <span class="input-group-addon">
-                      <input type="radio" id="client_type" name="ref_type" value="C" {{#if_eq editdata.target "C"}} checked {{/if_eq}} />
-                    </span>
-                    <div class="form-control form-control-static">Client</div>
-                    <span class="glyphicon form-control-feedback"></span>
-                  </label>
-                </div>
-                <div class="form-group">
-                  <label class="input-group">
-                    <span class="input-group-addon">
-                      <input type="radio" id="referral_type" name="ref_type" value="R" {{#if_eq editdata.target "R"}} checked {{/if_eq}} />
-                    </span>
-                    <div class="form-control form-control-static">Referral Sources</div>
-                    <span class="glyphicon form-control-feedback"></span>
-                  </label>
-                </div>
-                <div class="form-group">
-                  <label class="input-group">
-                    <span class="input-group-addon">
-                      <input type="radio" id="general_type" name="ref_type" value="G" {{#if_eq editdata.target "G"}} checked {{/if_eq}} />
-                    </span>
-                    <div class="form-control form-control-static">General</div>
-                    <span class="glyphicon form-control-feedback"></span>
-                  </label>
-                </div>
-              </div>
-              <!-------------------------------------------------------->
-              <div class="col-md-6" id="target_list" {{#if_eq editdata.target "T"}} style="display: block;" {{else}} style="display: none;"
-                {{/if_eq}}>
-                <select id="target_id" name="target_user[]" class=" form-control floating" multiple="multiple">
-                  {{#each target}}
-                  <option value="{{this.id}}" {{#inArrayCustom ../arr this.id "T"}} selected="selected" {{/inArrayCustom}}>{{this.first_name}}
-                    {{this.last_name}}
-                  </option>
-                  {{/each}}
-                </select>
-              </div>
-              <div class="col-md-6" id="client_list" {{#if_eq editdata.target "C"}} style="display: block;" {{else}} style="display: none;"
-                {{/if_eq}}>
-                <select id="client_id" name="client_user[]" class=" form-control floating" multiple="multiple">
-                  {{#each client}}
-                  <option value="{{this.id}}" {{#inArrayCustom ../arr this.id "C"}} selected="selected" {{/inArrayCustom}}>{{this.first_name}}
-                    {{this.last_name}}
-                  </option>
-                  {{/each}}
-                </select>
-              </div>
-              <div class="col-md-6" id="referral_list" {{#if_eq editdata.target "R"}} style="display: block;" {{else}} style="display: none;"
-                {{/if_eq}}>
-                <select id="referral_id" name="referral_user[]" class=" form-control floating" multiple="multiple">
-                  {{#each referral}}
-                  <option value="{{this.id}}" {{#inArrayCustom ../arr this.id "R"}} selected="selected" {{/inArrayCustom}}>{{this.first_name}}
-                    {{this.last_name}}
-                  </option>
-                  {{/each}}
-                </select>
-              </div>
-              <div class="col-md-6" id="general_list" {{#if_eq editdata.target "G"}} style="display: block;" {{else}} style="display: none;"
-                {{/if_eq}}></div>
             </div>
           </div>
         </div>
-      </div>
+      {{/if_eq}}
       <div class="card-box">
         <h3 class="card-title">Basic Information</h3>
         <div class="row">

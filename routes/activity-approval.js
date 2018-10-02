@@ -242,7 +242,7 @@ router.post("/get-notification", auth, async (req, res) => {
                     'id':teamActivityAttorney[i].activity.user_id
                 }
             })
-
+            
             notiFicationDetails.push({
                 'name': teamActivityAttorney[i].activity.activity_name,
                 'createDate':teamActivityAttorney[i].activity.activity_creation_date,
@@ -255,7 +255,7 @@ router.post("/get-notification", auth, async (req, res) => {
             })
         }
     }
-
+    
     if (noti.length>0) {
         for (let i=0; i< noti.length; i++) {
             const userDetails = await User.findOne({
