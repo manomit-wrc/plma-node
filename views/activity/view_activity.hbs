@@ -120,6 +120,22 @@
           </div>
         </div>
       {{/if_eq}}
+       {{#if_eq editdata.activity_type "team"}}
+      <div class="card-box">
+          <h3 class="card-title">All Involved Attorneys</h3>
+          <div class="row">
+            <div class="col-md-12">
+                <ul>
+                 {{#each invluser}}
+                  <li class="col-md-4">
+                    <span class="text" style="font-size: 15px; text-transform: capitalize;">{{this.first_name}} {{this.last_name}}</span>
+                  </li>
+                {{/each}}
+                </ul>
+            </div>
+          </div>
+      </div>
+      {{/if_eq}}
       <div class="card-box">
         <h3 class="card-title">Basic Information</h3>
         <div class="row">

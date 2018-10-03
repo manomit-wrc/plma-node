@@ -42,7 +42,7 @@
                 <th>From Date</th>
                 <th>To Date</th>
                 <th>Total Budget Costs</th>
-                <th>Remarks</th>
+                <th>Activity Type</th>
                 <th>Status</th>
                 <th class="text-right">Action</th>
               </tr>
@@ -59,7 +59,11 @@
                     <td>{{dateFormat this.activity_from_date "MM-DD-YYYY"}}</td>
                     <td>{{dateFormat this.activity_to_date "MM-DD-YYYY"}}</td>
                     <td>$ {{this.total_budget_amount}}</td>
-                    <td>{{this.remarks}}</td>
+                    <td>
+                      {{#if_eq this.activity_type "individual"}}INDIVIDUAL{{/if_eq}}
+                      {{#if_eq this.activity_type "strategic_group"}}STRATEGIC{{/if_eq}}
+                      {{#if_eq this.activity_type "team"}}TEAM{{/if_eq}}
+                    </td>
                     <td>
                       <input type="hidden" name="_csrf" value="{{csrfToken}}">
                       <input type="hidden" name="activity_id" id="activity_id" value="{{this.id}}"> {{#if_eq this.activity_status '0'}}
@@ -85,7 +89,8 @@
                     <td>{{dateFormat this.activity_from_date "MM-DD-YYYY"}}</td>
                     <td>{{dateFormat this.activity_to_date "MM-DD-YYYY"}}</td>
                     <td>$ {{this.total_budget_amount}}</td>
-                    <td>{{this.remarks}}</td>
+                    <td>{{#if_eq this.activity_type "individual"}}INDIVIDUAL{{/if_eq}} {{#if_eq this.activity_type "strategic_group"}}STRATEGIC{{/if_eq}}
+                    {{#if_eq this.activity_type "team"}}TEAM{{/if_eq}}</td>
                     <td>
                       <input type="hidden" name="_csrf" value="{{csrfToken}}">
                       <input type="hidden" name="activity_id" id="activity_id" value="{{this.id}}"> {{#if_eq this.activity_status '0'}}
@@ -97,7 +102,7 @@
                     </td>
                       <td class="text-right">
                         {{#if (or (eq this.activity_status "0")(and (eq this.activity_status "3")(eq this.activity_update "update"))) }}
-                        <a href="javascript:void(0);" class="btn btn-success btn-sm approval_request_sent" id="approval_request_sent" title="Request for Approval" data-target-request-id="{{this.id}}">
+                        <a href="javascript:void(0);" class="btn btn-success btn-sm approval_request_sent" id="approval_request_sent" title="Request for Approval" data-activity-type="{{this.activity_type}}" data-target-request-id="{{this.id}}">
                           <i class="fa fa-check" aria-hidden="true"></i>
                         </a>
                         {{/if}}
@@ -362,31 +367,78 @@
   
   $(document).on('click', '.approval_request_sent', function (e) {
     var activity_id = $(this).data("target-request-id");
-    swal({
-      title: "Are you sure?",
-      text: "You want to send this activity for approval?",
-      type: "warning",
-      showCancelButton: true,
-      confirmButtonClass: "btn-danger",
-      confirmButtonText: "Yes",
-      closeOnConfirm: false
-    }, function () {
+    var activity_type = $(this).data("activity-type");
+    if(activity_type == "team")
+    {
       $.ajax({
         type: "GET",
-        url: "/activity/update_approval_request/" + activity_id,
+        url: "/team-invition-approval-system/" + activity_id,
         success: function (response) {
           if (response.success == true) {
-            swal({
-              title: "Nice!",
-              text: "Approval sent successfully",
-              type: "success"
-            }, function () {
-              window.location.reload();
-            });
+            if(response.attr_count == "0")
+            {
+              swal({
+                title: "Are you sure?",
+                text: "You want to send this activity for approval?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Yes",
+                closeOnConfirm: false
+              }, function () {
+                $.ajax({
+                  type: "GET",
+                  url: "/activity/update_approval_request/" + activity_id,
+                  success: function (response) {
+                    if (response.success == true) {
+                      swal({
+                        title: "Nice!",
+                        text: "Approval sent successfully",
+                        type: "success"
+                      }, function () {
+                        window.location.reload();
+                      });
+                    }
+                  }
+                });
+              });
+            }
+            else
+            {
+              swal("Please Wait","No response from other team members!","warning");
+            }
           }
         }
       });
-    });
+    }
+    else
+    {
+      swal({
+        title: "Are you sure?",
+        text: "You want to send this activity for approval?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes",
+        closeOnConfirm: false
+      }, function () {
+        $.ajax({
+          type: "GET",
+          url: "/activity/update_approval_request/" + activity_id,
+          success: function (response) {
+            if (response.success == true) {
+              swal({
+                title: "Nice!",
+                text: "Approval sent successfully",
+                type: "success"
+              }, function () {
+                window.location.reload();
+              });
+            }
+          }
+        });
+      });
+    }
   });
 
   $(document).on('click', "#setUrlItem", function () {

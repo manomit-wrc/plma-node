@@ -571,8 +571,8 @@
             if ($(this).val() !== "") {
                 var budgetId = $(this).data("budget-id");
                 var amount = $(".budget_amount")[index].value;
-                totalAmount += parseInt(amount);
-                totalHour += parseInt($(this).val());
+                totalAmount += parseFloat(amount);
+                totalHour += parseFloat($(this).val());
                 budgetArray.push({
                     budget_id: budgetId,
                     budget_hour: $(this).val(),

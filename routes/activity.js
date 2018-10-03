@@ -729,6 +729,24 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
             model: Section
         }]
     });
+    var involvedattr = [];
+    involvedattr.push(editdata[0].user_id);
+    var accepted_activity = await Activity_attorney.findAll({
+        where: {
+            'activity_id': req.params['id'],
+            'status': '1'
+        }
+    });
+    for (var v = 0; v < accepted_activity.length;v++)
+    {
+        involvedattr.push(accepted_activity[v].attorney_id);
+    }
+    const invluser = await User.findAll({
+        where:{
+            id: involvedattr
+        }
+    });
+
     res.render('activity/view_activity', {
         layout: 'dashboard',
         title: 'View Activity',
@@ -748,7 +766,8 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
         level_type,
         section: allSection,
         attorney: allAttorney,
-        practicearea
+        practicearea,
+        invluser
     });
 });
 
@@ -1074,6 +1093,8 @@ router.post('/activity/update/:id', auth, upload.single('activity_attachment'), 
     client_user = req.body.client_user;
     referral_user = req.body.referral_user;
     attorney_user = req.body.attorney_user;
+
+    
     const CreationDate1 = req.body.activity_creation_date ? req.body.activity_creation_date.split("-") : '';
     
     var FormDate1 = '';
@@ -1886,6 +1907,19 @@ router.get('/activity-send-request/:id', auth, firmAttrAuth, csrfProtection, asy
         section: allSection,
         attorney: allAttorney,
         practicearea
+    });
+});
+
+router.get("/team-invition-approval-system/:id", auth, async(req, res)=> {
+    var accepted_activity = await Activity_attorney.findAll({
+        where: {
+            'activity_id': req.params['id'],
+            'status': '0'
+        }
+    });
+    res.json({
+        success: true,
+        attr_count: accepted_activity.length
     });
 });
 
