@@ -130,15 +130,15 @@ router.get('/referral', auth, firmAttrAuth, csrfProtection, async (req, res) => 
 			order: [
 				['name', 'ASC'],
 			],
-		
-			// order: [sequelize.fn('max', sequelize.col('city'))],			
+
+			// order: [sequelize.fn('max', sequelize.col('city'))],
 			// order: sequelize.col('city'),
 
 			// order: [
 			// 	['city', 'ASC'],
 			// ],
 			// order: [sequelize.literal('max(city) ASE')],
-			
+
 			where: {
 				state_id: req.query.state
 			},
@@ -153,7 +153,7 @@ router.get('/referral', auth, firmAttrAuth, csrfProtection, async (req, res) => 
 			where: {
 				city_name: cities.name
 			},
-		
+
 		});
 		whereCondition.city = req.query.city;
 	}
@@ -461,13 +461,13 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
     const city = await City.findById(referral.city.toString());
     const zipcode = await Zipcode.findById(referral.zipcode.toString());
     const industry = await industry_type.findById(referral.industry_type.toString());
-	
+
 	const referredDetails = await Referred_Client_Targets.findAll({
 		where: {
 			referral_id: req.params['id']
 		}
 	});
-	
+
 	var referredListArr = [];
 	for(var i = 0; i < referredDetails.length; i++) {
 		if (referredDetails[i].type === 'T') {
@@ -526,7 +526,7 @@ router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 			['industry_name', 'ASC'],
 		],
 	});
-	
+
 
 	var fetchTarget = {};
 	var fetchClient = {};
@@ -595,13 +595,13 @@ router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 			'contact_id': req.params['id']
 		}
 	});
-	
+
 	const referredDetails = await Referred_Client_Targets.findAll({
 		where: {
 			referral_id: req.params['id']
 		}
 	});
-	
+
 	for(var i = 0; i < referredDetails.length; i++) {
 		if (referredDetails[i].type === 'T') {
 			const targetDetails = await Target.findOne({
@@ -685,7 +685,7 @@ router.post('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req
 	});
 
 
-	
+
 	if (edit_data === null) {
 		await Referral.update({
 			referral_type: req.body.referral_type,

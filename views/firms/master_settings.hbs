@@ -387,15 +387,21 @@
 														<td>{{this.address}}</td>
 														<td>{{dateFormat this.createdAt "DD-MM-YYYY"}}</td>
 														<td class="text-right">
-															<a href="#" data-toggle="modal" data-target="#view_offices" data-office-id="{{this.id}}" data-name="{{this.name}}" data-address="{{this.address}}" data-city="{{this.city}}" data-state="{{this.state}}" data-country="{{this.country}}" data-zipcode="{{this.zipcode}}" data-mobile="{{this.mobile}}" data-firm-id="{{this.firm_id}}" id="view-office-detail" class="btn btn-success btn-sm">
+															<span data-toggle="modal" data-target="#view_offices">
+															<a href="#"  data-office-id="{{this.id}}" data-name="{{this.name}}" data-address="{{this.address}}" data-city="{{this.city}}" data-state="{{this.state}}" data-country="{{this.country}}" data-zipcode="{{this.zipcode}}" data-mobile="{{this.mobile}}" data-firm-id="{{this.firm_id}}" id="view-office-detail" class="btn btn-success btn-sm"data-toggle="tooltip" data-placement="bottom" title="view">
 																<i class="fa fa-eye m-r-5"></i>
 															</a>
-															<a href="#" data-toggle="modal" data-target="#edit_offices" data-office-id="{{this.id}}" data-name="{{this.name}}" data-address="{{this.address}}" data-city="{{this.city}}" data-state="{{this.state}}" data-country="{{this.country}}" data-zipcode="{{this.zipcode}}" data-mobile="{{this.mobile}}" data-firm-id="{{this.firm_id}}" id="edit-office-detail" class="btn btn-success btn-sm">
+															</span>
+															<span data-toggle="modal" data-target="#edit_offices">
+															<a href="#"  data-office-id="{{this.id}}" data-name="{{this.name}}" data-address="{{this.address}}" data-city="{{this.city}}" data-state="{{this.state}}" data-country="{{this.country}}" data-zipcode="{{this.zipcode}}" data-mobile="{{this.mobile}}" data-firm-id="{{this.firm_id}}" id="edit-office-detail" class="btn btn-success btn-sm"data-toggle="tooltip" data-placement="bottom" title="edit">
 																<i class="fa fa-pencil m-r-5"></i>
 															</a>
-															<a href="#" data-toggle="modal" data-target="#delete_offices" data-office-id="{{this.id}}" id="delete-office-details" class="btn btn-danger btn-sm">
+															</span>
+															<span data-toggle="modal" data-target="#delete_offices">
+															<a href="#"  data-office-id="{{this.id}}" id="delete-office-details" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="delete">
 																<i class="fa fa-trash-o m-r-5"></i>
 															</a>
+															</span>
 														</td>
 													</tr>
 													{{/each}}
@@ -445,15 +451,21 @@
 														<td class="number_validator">{{this.mobile}}</td>
 														<td>{{dateFormat this.createdAt "DD-MM-YYYY"}}</td>
 														<td class="text-right">
-															<a href="#" data-toggle="modal" data-target="#view_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}" data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}" data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}" data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}" data-contact-zipcode="{{this.zipcode}}" id="view-office-contact" class="btn btn-success btn-sm">
+															<span data-toggle="modal" data-target="#view_contacts">
+															<a href="#"  data-toggle="tooltip" data-placement="bottom" title="View"  data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}" data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}" data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}" data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}" data-contact-zipcode="{{this.zipcode}}" id="view-office-contact" class="btn btn-success btn-sm">
 																<i class="fa fa-eye m-r-5"></i>
 															</a>
-															<a href="#" data-toggle="modal" data-target="#edit_contacts" data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}" data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}" data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}" data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}" data-contact-zipcode="{{this.zipcode}}" id="edit-office-contact" class="edit btn btn-success btn-sm">
+															</span>
+															<span  data-toggle="modal" data-target="#edit_contacts">
+															<a href="#" data-toggle="tooltip" data-placement="bottom" title="edit"  data-contact-id="{{this.id}}" data-contact-office-id="{{this.office_id}}" data-designation-id="{{this.designation_id}}" data-first-name="{{this.first_name}}" data-last-name="{{this.last_name}}" data-email="{{this.email}}" data-contact-mobile="{{this.mobile}}" data-contact-address="{{this.address}}" data-contact-city="{{this.city}}" data-contact-state="{{this.state}}" data-contact-country="{{this.country}}" data-contact-zipcode="{{this.zipcode}}" id="edit-office-contact" class="edit btn btn-success btn-sm">
 																<i class="fa fa-pencil m-r-5"></i>
 															</a>
-															<a href="#" data-toggle="modal" data-target="#delete_contacts" data-contact-id="{{this.id}}" id="delete-office-contact-details" class="edit btn btn-danger btn-sm">
+															</span>
+															<span data-toggle="modal" data-target="#delete_contacts">
+															<a href="#"  data-toggle="tooltip" data-placement="bottom" title="delete"  data-contact-id="{{this.id}}" id="delete-office-contact-details" class="edit btn btn-danger btn-sm">
 																<i class="fa fa-trash-o m-r-5"></i>
 															</a>
+															</span>
 														</td>
 													</tr>
 													{{/each}}

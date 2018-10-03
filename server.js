@@ -46,6 +46,9 @@ const allowCrossDomain = function (req, res, next) {
 app.use(allowCrossDomain);
 require('./config/passport')(passport);
 
+
+
+/////////////////////////////
 const hbs = exphbs.create({
     extname: '.hbs',
     helpers: {

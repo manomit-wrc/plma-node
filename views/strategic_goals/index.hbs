@@ -54,21 +54,22 @@
                                 <td>{{this.description}}</td>
                                 <td><a href="/strategic-marketing-goal/view-tactical_goals/{{this.id}}">{{get_activity_goal_total this.strategic_goal_to_activity_goals}}</a></td>
                                 <td class="text-right">
-                                    <a href="/strategic-marketing-goal/view-tactical_goals/{{this.id}}" class="btn btn-success btn-sm" title="See associated Tactical Marketing Goals">
+                                    <a href="/strategic-marketing-goal/view-tactical_goals/{{this.id}}" class="btn btn-success btn-sm"  data-toggle="tooltip" data-placement="bottom" title="See associated Tactical Marketing Goals">
                                         <i class="fa fa-tasks"></i>
                                     </a>
-                                    <a href="/strategic-marketing-goal/view/{{this.id}}" class="btn btn-success btn-sm">
+                                    <a href="/strategic-marketing-goal/view/{{this.id}}" data-toggle="tooltip" data-placement="bottom" title="view" class="btn btn-success btn-sm">
                                         <i class="fa fa-eye m-r-5"></i>
                                     </a>
 
-                                    <a href="/strategic-marketing-goal/edit/{{this.id}}" class="btn btn-success btn-sm">
+                                    <a href="/strategic-marketing-goal/edit/{{this.id}}" data-toggle="tooltip" data-placement="bottom" title="edit" class="btn btn-success btn-sm">
                                         <i class="fa fa-pencil m-r-5"></i>
                                     </a>
-
-                                    <a href="javascript:void(0);" data-toggle="modal" data-target="delete_users" data-activitygoal-id="{{this.id}}" id="delete_activitygoal"
+                                 <span data-toggle="modal" data-target="delete_users" >
+                                    <a href="javascript:void(0);"  data-toggle="tooltip" data-placement="bottom" title="delete" data-activitygoal-id="{{this.id}}" id="delete_activitygoal"
                                         class="btn btn-danger btn-sm target-delete">
                                         <i class="fa fa-trash-o m-r-5"></i>
                                     </a>
+                                    </span>
                                 </td>
                             </tr>
 

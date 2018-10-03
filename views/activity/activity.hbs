@@ -102,20 +102,22 @@
                     </td>
                       <td class="text-right">
                         {{#if (or (eq this.activity_status "0")(and (eq this.activity_status "3")(eq this.activity_update "update"))) }}
-                        <a href="javascript:void(0);" class="btn btn-success btn-sm approval_request_sent" id="approval_request_sent" title="Request for Approval" data-activity-type="{{this.activity_type}}" data-target-request-id="{{this.id}}">
+                        <a href="javascript:void(0);" class="btn btn-success btn-sm approval_request_sent" data-toggle="tooltip" data-placement="bottom" id="approval_request_sent" title="Request for Approval" data-activity-type="{{this.activity_type}}" data-target-request-id="{{this.id}}">
                           <i class="fa fa-check" aria-hidden="true"></i>
                         </a>
                         {{/if}}
-                        <a href="/activity/view/{{this.id}}" class="btn btn-success btn-sm" id="setUrlItem">
+                        <a href="/activity/view/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="view" id="setUrlItem">
                           <i class="fa fa-eye m-r-5"></i>
                         </a>
                         {{#if (or (eq this.activity_status "0")(eq this.activity_status "3"))}}
-                        <a href="/activity/edit/{{this.id}}" class="btn btn-success btn-sm">
+                        <a href="/activity/edit/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="edit">
                           <i class="fa fa-pencil m-r-5"></i>
                         </a>
-                        <a href="javascript:void(0);" data-toggle="modal" data-target="delete_users" data-activity-id="{{this.id}}" id="delete_activity" class="btn btn-danger btn-sm target-delete">
+                        <span data-toggle="modal" data-target="delete_users" >
+                        <a href="javascript:void(0);" data-activity-id="{{this.id}}" id="delete_activity" class="btn btn-danger btn-sm target-delete" data-toggle="tooltip" data-placement="bottom" title="delete" >
                           <i class="fa fa-trash-o m-r-5"></i>
                         </a>
+                        </span>
                         {{/if}}
                       </td>
                   </tr>

@@ -82,21 +82,22 @@
                                     {{/if}}    
                                 </td>
                                 <td class="text-right">
-                                    <a href="/referral/view-activity/{{this.id}}" class="btn btn-success btn-sm" title="See associated activity">
+                                    <a href="/referral/view-activity/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom"  title="See associated activity">
                                         <i class="fa fa-tasks"></i>
                                     </a>
-                                    <a href="/referral/view/{{this.id}}" class="btn btn-success btn-sm">
+                                    <a href="/referral/view/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="view">
                                         <i class="fa fa-eye m-r-5"></i>
                                     </a>
 
-                                    <a href="/referral/edit/{{this.id}}" class="btn btn-success btn-sm">
+                                    <a href="/referral/edit/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="edit">
                                         <i class="fa fa-pencil m-r-5"></i>
                                     </a>
-
-                                    <a href="javascript:void(0);" data-toggle="modal" data-target="delete_users" data-referral-id="{{this.id}}" id="delete_referral"
-                                        class="btn btn-danger btn-sm">
+                                 <span  data-toggle="modal" data-target="delete_users" >
+                                    <a href="javascript:void(0);"data-referral-id="{{this.id}}" id="delete_referral"
+                                        class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="delete">
                                         <i class="fa fa-trash-o m-r-5"></i>
                                     </a>
+                                    </span>
                                 </td>
                             </tr>
                              {{/each}}

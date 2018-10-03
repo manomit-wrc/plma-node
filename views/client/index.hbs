@@ -85,20 +85,21 @@
 									{{!-- <a href="/client/view-referral/{{this.id}}" class="btn btn-success btn-sm" title="See associate referral">
 										<i class="fa fa-user-plus"></i>
 									</a> --}}
-									<a href="/client/view-activity/{{this.id}}" class="btn btn-success btn-sm" title="See associated activity">
+									<a href="/client/view-activity/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom"  title="See associated activity">
 										<i class="fa fa-tasks"></i>
 									</a>
-									<a href="/client/view/{{this.id}}" class="btn btn-success btn-sm">
+									<a href="/client/view/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="view">
 										<i class="fa fa-eye m-r-5"></i>
 									</a>
-									<a href="/client/edit/{{this.id}}" class="btn btn-success btn-sm">
+									<a href="/client/edit/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="edit">
 										<i class="fa fa-pencil m-r-5"></i>
 									</a>
-
-									<a href="javascript:void(0)" data-toggle="modal" data-target="delete_users" data-client-id="{{this.id}}" id="delete_client"
-									 class="btn btn-danger btn-sm">
+<span  data-toggle="modal" data-target="delete_users" >
+									<a href="javascript:void(0)"data-client-id="{{this.id}}" id="delete_client"
+									 class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="delete">
 										<i class="fa fa-trash-o m-r-5"></i>
 									</a>
+									</span>
 								</td>
 							</tr>
 							{{/each}}

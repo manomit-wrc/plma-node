@@ -61,17 +61,18 @@
                                 <td>{{this.year_goal_percentage}}</td>
                                 <td>{{this.remarks}}</td>
                                 <td class="text-right">
-                                  <a href="/financial-goal/view/{{this.id}}" class="btn btn-success btn-sm">
+                                  <a href="/financial-goal/view/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="view">
                                     <i class="fa fa-eye m-r-5"></i>
                                   </a>
 
-                                    <a href="/financial-goal/edit/{{this.id}}" class="btn btn-success btn-sm">
+                                    <a href="/financial-goal/edit/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="edit">
                                         <i class="fa fa-pencil m-r-5"></i>
                                     </a>
-                                   <a href="javascript:void(0);" data-toggle="modal" data-target="delete_users" data-financialgoal-id="{{this.id}}" id="delete_financialgoal" class="btn btn-danger btn-sm">
+                                    <span  data-toggle="modal" data-target="delete_users" >
+                                   <a href="javascript:void(0);"data-financialgoal-id="{{this.id}}" id="delete_financialgoal" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="delete">
                                         <i class="fa fa-trash-o m-r-5"></i>
                                     </a>
-
+                                    </span>
 
                                     {{!-- <a href="javascript:void(0);" data-toggle="modal" data-target="#{{this.id}}" class="btn btn-danger btn-sm">
                                         <i class="fa fa-trash-o m-r-5"></i>
