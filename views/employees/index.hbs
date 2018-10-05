@@ -51,15 +51,15 @@
                                 <td  class="number_validator">{{this.mobile_no}}</td>
                                 <td>{{dateFormat this.createdAt "DD-MM-YYYY"}}</td>
                                 <td class="text-right">
-                                  <a href="/employee/view/{{this.id}}" class="btn btn-success btn-sm"  data-toggle="tooltip" data-placement="bottom" title="view">
+                                  <a href="/employee/view/{{this.id}}" class="btn btn-success btn-sm"  data-toggle="tooltip" data-placement="bottom" title="View">
                                     <i class="fa fa-eye m-r-5"></i>
                                   </a>
 
-                                    <a href="/employee/edit/{{this.id}}" class="btn btn-success btn-sm"  data-toggle="tooltip" data-placement="bottom" title="edit">
+                                    <a href="/employee/edit/{{this.id}}" class="btn btn-success btn-sm"  data-toggle="tooltip" data-placement="bottom" title="Edit">
                                         <i class="fa fa-pencil m-r-5"></i>
                                     </a>
                                     <span  data-toggle="modal">
-                                     <a href="javascript:void(0)" data-target="delete_users" data-employee-id="{{this.id}}" id="delete_employee" class="btn btn-danger btn-sm"  data-toggle="tooltip" data-placement="bottom" title="delete">
+                                     <a href="javascript:void(0)" data-target="delete_users" data-employee-id="{{this.id}}" id="delete_employee" class="btn btn-danger btn-sm"  data-toggle="tooltip" data-placement="bottom" title="Delete">
                                         <i class="fa fa-trash-o m-r-5"></i>
                                     </a>
                                     </span>
