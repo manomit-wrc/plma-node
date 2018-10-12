@@ -126,9 +126,16 @@
           <div class="row">
             <div class="col-md-12">
                 <ul>
+                  <li class="col-md-4">
+                    <span class="text" style="font-size: 15px; text-transform: capitalize;">{{orgnattr.first_name}} {{orgnattr.last_name}}</span>
+                    <span class="label label-info-border">Origin Attorney</span>
+                  </li>
                  {{#each invluser}}
                   <li class="col-md-4">
                     <span class="text" style="font-size: 15px; text-transform: capitalize;">{{this.first_name}} {{this.last_name}}</span>
+                     {{#if '0'}} {{#inArrayCustom1 ../attr_arr this.id '0'}} <span class="label label-warning-border">Pending</span> {{/inArrayCustom1}} {{/if}}{{#if '1'}} {{#inArrayCustom1
+                    ../attr_arr this.id '1'}} <span class="label label-success-border">Accepted</span> {{/inArrayCustom1}} {{/if}} {{#if '2'}} {{#inArrayCustom1 ../attr_arr this.id
+                    '2'}} <span class="label label-danger-border">Rejected</span> {{/inArrayCustom1}} {{/if}}
                   </li>
                 {{/each}}
                 </ul>
@@ -206,10 +213,11 @@
                 {{else}} style="display: none; margin-bottom: 23px; margin-top: 8px;" {{/if_eq}}>
                 <div class="form-group select-focus">
                   {{!-- <label class="control-label">Attorney <span class="req-lbl">*</span> </label> --}}
-                  <select class="form-control floating" id="attorney_user" name="attorney_user[]" multiple="multiple" disabled>
+                  <select class="form-control floating" id="attorney_user" name="attorney_user[]" multiple="multiple">
                     {{!-- <option value="0">Select Attorney</option> --}} {{#each attorney}}
-                    <option value="{{this.id}}" {{#inArray ../attr_arr this.id}} selected="selected" {{/inArray}}>{{this.first_name}}
-                      {{this.last_name}}
+                    <option value="{{this.id}}" disabled {{#if '0'}} {{#inArrayCustom1 ../attr_arr this.id '0'}} selected="selected" {{/inArrayCustom1}}
+                      {{/if}} {{#if '1'}} {{#inArrayCustom1 ../attr_arr this.id '1'}} selected="selected" {{/inArrayCustom1}} {{/if}}
+                      {{#if '2'}} {{#inArrayCustom1 ../attr_arr this.id '2'}} selected="selected" {{/inArrayCustom1}} {{/if}}>{{this.first_name}} {{this.last_name}}
                     </option>
                     {{/each}}
                   </select>

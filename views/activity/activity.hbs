@@ -377,7 +377,7 @@
         url: "/team-invition-approval-system/" + activity_id,
         success: function (response) {
           if (response.success == true) {
-            if(response.attr_count == "0")
+            if(response.attr_count == "0" && response.rej_attr_count == "0")
             {
               swal({
                 title: "Are you sure?",
@@ -405,9 +405,13 @@
                 });
               });
             }
-            else
+            else if(response.attr_count != "0")
             {
               swal("Please Wait","No response from other team members!","warning");
+            }
+            else if(response.rej_attr_count != "0")
+            {
+              swal("Rejected!","Activity rejected from other team members, Please edit activity and resubmit.","warning");
             }
           }
         }

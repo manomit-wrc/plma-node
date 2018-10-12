@@ -103,7 +103,12 @@
 
     $(document).ready(function () {
 
-
+      $("textarea").focusin(function () {
+        $(this).siblings(".control-label").hide();
+      });
+      $("textarea").focusout(function () {
+        $(this).siblings(".control-label").show();
+      });
 
       $(".number_validator").inputmask("mask", {
         "mask": "(999) 999-9999"
