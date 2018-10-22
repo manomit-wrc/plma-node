@@ -436,14 +436,7 @@ router.get('/master_contact/view/:id', auth, firmAttrAuth, csrfProtection, async
 
 router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	const formatDate = req.body.dob ? req.body.dob.split("-") : '';
-	const contact_edit_data = await Contact.findOne({
-		where: {
-			email: req.body.email,
-			id: {
-				[Op.ne]: req.params['id']
-			}
-		}
-	});
+	
 
 
 	var contactDetails = [];
@@ -470,7 +463,7 @@ router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, asyn
 		}
 	}
 
-	if (contact_edit_data === null) {
+	
 		if (req.body.masterContact_type === "I") {
 			await Contact.update({
 				first_name: req.body.first_name,
@@ -572,10 +565,7 @@ router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, asyn
 		}
 		req.flash('success-message', 'Master Contact Updated Successfully');
 		res.redirect('/master_contact')
-	} else {
-		req.flash('error-contact-message', 'Email already taken.');
-		res.redirect('/master_contact/edit/' + req.params['id']);
-	}
+	 
 });
 
 router.get('/master_contact/delete/:id', auth, firmAttrAuth, (req, res) => {

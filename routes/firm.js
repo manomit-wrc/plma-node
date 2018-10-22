@@ -78,6 +78,8 @@ router.get('/firms', csrfProtection, auth, siteAuth, async (req, res) => {
             ['name', 'ASC']
         ],
     });
+    const country = await Country.findAll();
+    const state = await State.findAll();
 
     res.render('firms/index', {
         layout: 'dashboard',
@@ -88,6 +90,8 @@ router.get('/firms', csrfProtection, auth, siteAuth, async (req, res) => {
         designation,
         firms,
         group,
+        country,
+        state,
         search_email: req.query ? req.query.search_email : '',
         search_firm: req.query ? req.query.search_firm : ''
     });
@@ -368,6 +372,10 @@ router.post('/firms/add', auth, siteAuth, csrfProtection, async (req, res) => {
             address: req.body.address,
             address1: req.body.address1,
             address2: req.body.address2,
+            country: req.body.country,
+            state: req.body.state,
+            city: req.body.city,
+            zipcode: req.body.zipcode,
             approval_level: req.body.approval_level,
             level_1: req.body.level_1 ? req.body.level_1 : 0,
             level_2: req.body.level_2 ? req.body.level_2 : 0,
@@ -398,7 +406,12 @@ router.post('/firms/add', auth, siteAuth, csrfProtection, async (req, res) => {
                 designation_id: req.body.designation,
                 gender: req.body.gender,
                 role_id: 2,
-                firm_id: firm_data.id
+                firm_id: firm_data.id,
+                address: req.body.address_user,
+                country: req.body.country,
+                state: req.body.state,
+                city: req.body.city,
+                zipcode: req.body.zipcode
             });
             res.json({
                 success: true,
@@ -433,6 +446,10 @@ router.post('/firms/edit', auth, siteAuth, csrfProtection, async (req, res) => {
             address: req.body.address,
             address1: req.body.address1,
             address2: req.body.address2,
+            country: req.body.country,
+            state: req.body.state,
+            city: req.body.city,
+            zipcode: req.body.zipcode
         }, {
             where: {
                 id: req.body.firm_id
@@ -448,7 +465,12 @@ router.post('/firms/edit', auth, siteAuth, csrfProtection, async (req, res) => {
             gender: req.body.gender,
             is_attorney: req.body.is_attorney ? req.body.is_attorney : 0,
             group_id: req.body.group,
-            designation_id: req.body.designation
+            designation_id: req.body.designation,
+            address: req.body.address_user,
+            country: req.body.country,
+            state: req.body.state,
+            city: req.body.city,
+            zipcode: req.body.zipcode
         }, {
             where: {
                 id: req.body.user_id
@@ -954,7 +976,7 @@ router.post('/update-firm-approval-process', auth, firmAuth, csrfProtection, (re
     });
 });
 
-router.post("/edit-office-city-get", auth, firmAuth, async (req, res) => {
+router.post("/edit-office-city-get", auth,  async (req, res) => {
     const city = await City.findAll({
         where: {
             state_id: req.body.office_state

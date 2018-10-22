@@ -587,7 +587,10 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
     });
     var attr_arr = [];
     for (var i = 0; i < selected_attr.length; i++) {
-        attr_arr.push(parseInt(selected_attr[i].attorney_id));
+        attr_arr.push({
+            'id': parseInt(selected_attr[i].attorney_id),
+            'status': selected_attr[i].status
+        });
     }
     const target = await Target.findAll({
         where: {
@@ -730,11 +733,10 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
         }]
     });
     var involvedattr = [];
-    involvedattr.push(editdata[0].user_id);
+    //involvedattr.push(editdata[0].user_id);
     var accepted_activity = await Activity_attorney.findAll({
         where: {
             'activity_id': req.params['id'],
-            'status': '1'
         }
     });
     for (var v = 0; v < accepted_activity.length;v++)
@@ -746,6 +748,7 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
             id: involvedattr
         }
     });
+    const orgnattr = await User.findById(editdata[0].user_id);
 
     res.render('activity/view_activity', {
         layout: 'dashboard',
@@ -767,7 +770,8 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
         section: allSection,
         attorney: allAttorney,
         practicearea,
-        invluser
+        invluser,
+        orgnattr
     });
 });
 
@@ -1264,6 +1268,12 @@ router.post('/activity/update/:id', auth, upload.single('activity_attachment'), 
     
         
         if (req.body.activity_type === 'team') {
+            await Activity_attorney.destroy({
+                where:{
+                    'activity_id': req.body.activity_id,
+                    'status': '2'
+                }
+            });
             if (attorney_user !== undefined) {
                 for (var a = 0; a < attorney_user.length; a++) {
                     await Activity_attorney.create({
@@ -1917,9 +1927,16 @@ router.get("/team-invition-approval-system/:id", auth, async(req, res)=> {
             'status': '0'
         }
     });
+    var rejected_activity = await Activity_attorney.findAll({
+        where: {
+            'activity_id': req.params['id'],
+            'status': '2'
+        }
+    });
     res.json({
         success: true,
-        attr_count: accepted_activity.length
+        attr_count: accepted_activity.length,
+        rej_attr_count: rejected_activity.length
     });
 });
 

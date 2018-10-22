@@ -106,15 +106,15 @@
                           <i class="fa fa-check" aria-hidden="true"></i>
                         </a>
                         {{/if}}
-                        <a href="/activity/view/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="view" id="setUrlItem">
+                        <a href="/activity/view/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="View" id="setUrlItem">
                           <i class="fa fa-eye m-r-5"></i>
                         </a>
                         {{#if (or (eq this.activity_status "0")(eq this.activity_status "3"))}}
-                        <a href="/activity/edit/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="edit">
+                        <a href="/activity/edit/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit">
                           <i class="fa fa-pencil m-r-5"></i>
                         </a>
                         <span data-toggle="modal" data-target="delete_users" >
-                        <a href="javascript:void(0);" data-activity-id="{{this.id}}" id="delete_activity" class="btn btn-danger btn-sm target-delete" data-toggle="tooltip" data-placement="bottom" title="delete" >
+                        <a href="javascript:void(0);" data-activity-id="{{this.id}}" id="delete_activity" class="btn btn-danger btn-sm target-delete" data-toggle="tooltip" data-placement="bottom" title="Delete" >
                           <i class="fa fa-trash-o m-r-5"></i>
                         </a>
                         </span>
@@ -377,7 +377,7 @@
         url: "/team-invition-approval-system/" + activity_id,
         success: function (response) {
           if (response.success == true) {
-            if(response.attr_count == "0")
+            if(response.attr_count == "0" && response.rej_attr_count == "0")
             {
               swal({
                 title: "Are you sure?",
@@ -405,9 +405,13 @@
                 });
               });
             }
-            else
+            else if(response.attr_count != "0")
             {
               swal("Please Wait","No response from other team members!","warning");
+            }
+            else if(response.rej_attr_count != "0")
+            {
+              swal("Rejected!","Activity rejected from other team members, Please edit activity and resubmit.","warning");
             }
           }
         }

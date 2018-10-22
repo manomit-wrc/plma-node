@@ -41,7 +41,7 @@
                   <select  id="group" name="group" disabled class="form-control floating">
                     <option value="">Select Group</option>
                     {{#each group}}
-                    <option value="{{this.id}}" {{#if_eq this.id ../edata.0.attorney_details.0.group}} selected="selected" {{/if_eq}}>{{this.name}} </option>
+                    <option value="{{this.id}}" {{#if_eq this.id ../edata.0.group_id}} selected="selected" {{/if_eq}}>{{this.name}} </option>
                     {{/each}}
                   </select>
                 </div>
@@ -65,7 +65,7 @@
                   <select  id="designation" name="designation" disabled class="form-control floating">
                     <option value="">Select Designation</option>
                     {{#each designation}}
-                    <option value="{{this.id}}" {{#if_eq this.id ../edata.0.attorney_details.0.designation}} selected="selected" {{/if_eq}}>{{this.title}}</option>
+                    <option value="{{this.id}}" {{#if_eq this.id ../edata.0.designation_id}} selected="selected" {{/if_eq}}>{{this.title}}</option>
                     {{/each}}
                   </select>
                 </div>

@@ -62,12 +62,21 @@ router.get('/attorneys', auth, csrfProtection, async (req, res) => {
 	User.belongsTo(Designation, {
 		foreignKey: 'designation_id'
 	});
+	var attrCondition = {};
+	if(req.user.is_attorney == "1")
+	{
+		attrCondition.role_id = [3, 2],
+		attrCondition.firm_id = req.user.firm_id
+	}
+	else
+	{
+		attrCondition.role_id = 3,
+		attrCondition.firm_id = req.user.firm_id
+		
+	}
 
 	const attr = await User.findAll({
-		where: {
-			role_id: 3,
-			firm_id: req.user.firm_id
-		},
+		where: attrCondition,
 		include: [{
 			model: Attorney_Details
 		},

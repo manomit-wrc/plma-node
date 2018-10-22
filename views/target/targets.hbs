@@ -71,7 +71,7 @@
                                         {{/if_eq}}
                                     </a>
                                 </td>
-                                <td>{{this.email}}</td>
+                                <td>{{#if this.email}} {{this.email}} {{else}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; — {{/if}}</td>
                                 <td>
                                     {{#if this.revenues.0.start_date}}
                                         {{dateFormat this.revenues.0.start_date "MM-DD-YYYY"}} - {{dateFormat this.revenues.0.end_date "MM-DD-YYYY"}}
@@ -93,15 +93,15 @@
                                     <a href="/target/view-activity/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="See associated activity">
                                         <i class="fa fa-tasks"></i>
                                     </a>
-                                    <a href="/target/view/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="view">
+                                    <a href="/target/view/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="View">
                                         <i class="fa fa-eye m-r-5"></i>
                                     </a>
-                                    <a href="/target/edit/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="edit">
+                                    <a href="/target/edit/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit">
                                         <i class="fa fa-pencil m-r-5"></i>
                                     </a>
                                      <span data-toggle="modal" data-target="delete_users">
                                     <a href="javascript:void(0)" 
-                                        data-target-id="{{this.id}}" id="delete_target" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="delete">
+                                        data-target-id="{{this.id}}" id="delete_target" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete">
                                         <i class="fa fa-trash-o m-r-5"></i>
                                     </a>
                                     </span>

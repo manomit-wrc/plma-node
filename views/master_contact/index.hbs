@@ -73,7 +73,7 @@
                                 <a href="/master_contact/view/{{this.id}}">{{#if organization_name}} {{this.organization_name}} {{else}} {{this.first_name}} {{this.last_name}}
                                     {{/if}} </a>
                             </td>
-                            <td>{{this.email}}</td>
+                            <td>{{#if this.email}} {{this.email}} {{else}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; — {{/if}}</td>
                             <td {{#if this.mobile_no}} class="number_validator" {{/if}}>
                                 {{#if this.mobile_no}} {{this.mobile_no}} {{else}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; — {{/if}}
                             </td>
@@ -84,15 +84,15 @@
                                 {{#if this.status}} {{this.status}} {{else}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; — {{/if}}
                             </td>
                             <td class="text-right">
-                                <a href="/master_contact/view/{{this.id}}" class="btn btn-success btn-sm"  data-toggle="tooltip" data-placement="bottom" title="view">
+                                <a href="/master_contact/view/{{this.id}}" class="btn btn-success btn-sm"  data-toggle="tooltip" data-placement="bottom" title="View">
                                     <i class="fa fa-eye m-r-5"></i>
                                 </a>
-                                <a href="/master_contact/edit/{{this.id}}" class="btn btn-success btn-sm"  data-toggle="tooltip" data-placement="bottom" title="edit">
+                                <a href="/master_contact/edit/{{this.id}}" class="btn btn-success btn-sm"  data-toggle="tooltip" data-placement="bottom" title="Edit">
                                     <i class="fa fa-pencil m-r-5"></i>
                                 </a>
                                <span  data-toggle="modal" data-target="delete_users" >
                                 <a href="javascript:void(0)"data-mastercontact-id="{{this.id}}" id="delete_mastercontact"
-                                    class="btn btn-danger btn-sm"  data-toggle="tooltip" data-placement="bottom" title="delete">
+                                    class="btn btn-danger btn-sm"  data-toggle="tooltip" data-placement="bottom" title="Delete">
                                     <i class="fa fa-trash-o m-r-5"></i>
                                 </a>
                                 </span>

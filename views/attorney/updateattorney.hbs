@@ -531,7 +531,7 @@
                 swal("", "Please select section", "warning");
                 $("#designation").val('').attr("selected", true);
             }
-            else if (designation_id == 70) {
+            /*else if (designation_id == 70) {
                 $.ajax({
                     type: "POST",
                     url: "/get-firm-user-designation",
@@ -549,7 +549,7 @@
 
                     }
                 });
-            }
+            }*/
             else if (section_id != "" && designation_id == 74) {
                 $.ajax({
                     type: "POST",
@@ -662,7 +662,7 @@
             includeSelectAllOption: true,
             buttonWidth: '100%',
             maxHeight: 400,
-            dropUp: true
+            dropDown: true
         });
     $('#jurisdiction').multiselect({
             nonSelectedText: 'Select Jurisdiction',
@@ -670,7 +670,7 @@
             includeSelectAllOption: true,
             buttonWidth: '100%',
             maxHeight: 400,
-            dropUp: true
+            dropDown: true
         });
     $(document).ready(function () {
         $("#hourly_cost").inputmask("numeric", {
