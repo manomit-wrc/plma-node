@@ -77,7 +77,7 @@ router.get('/attorneys', auth, csrfProtection, async (req, res) => {
 	});
 
 	//console.log(attr[0].designation);
-	
+
 
 	// for (var i = 0; i < attr.length; i++) {
 	// 	var name = attr[i].first_name + " " + attr[i].last_name;
@@ -772,6 +772,19 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 		office
 	});
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 router.get('/attorneys/viewdata/:id', auth, csrfProtection, async (req, res) => {

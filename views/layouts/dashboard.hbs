@@ -80,7 +80,7 @@
   <script src="/assets/input-mask/jquery.inputmask.bundle.min.js" type="text/javascript"></script>
 
   <script type="text/javascript">
-    
+
        $("#show_password").mousedown(function () {
          $(this).removeClass("fa fa-eye");
          $(this).addClass("fa fa-eye-slash");
@@ -90,7 +90,7 @@
           $(this).addClass("fa fa-eye");
           $("#new_password").prop('type', 'password');
         }).mouseout(function () {
-          $(this).removeClass("fa fa-eye-slash"); 
+          $(this).removeClass("fa fa-eye-slash");
           $(this).addClass("fa fa-eye");
           $("#new_password").prop('type', 'password');
         });
@@ -128,7 +128,7 @@
               $(".loadingImgCityAjax").hide();
               for (var i = 0; i < response.get_city.length; i++) {
                 $("#city").append('<option value="' + response.get_city[i].id + '">' + response.get_city[i].name + '</option>');
-           
+
               }
               var options = $('#city option:not(:first)');
               var arr = options.map(function(_, o) {
@@ -151,7 +151,7 @@
             }
 
 
-            
+
           });
         }
       });
@@ -192,7 +192,7 @@
         $("i", this).toggleClass("fa fa-bars fa fa-times");
       });
     });
-  </script> 
+  </script>
   {{/block}}
   <a href="#" class="scrollup btn btn-primary">
     <i class="fa fa-long-arrow-up"></i>

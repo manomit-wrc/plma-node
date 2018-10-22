@@ -107,10 +107,6 @@ router.post('/firms/add', auth, siteAuth, csrfProtection, async (req, res) => {
         }
     });
 
-
-
-
-
     if (user_data == null) {
         var url = req.protocol + '://' + req.get('host');
         var email_body = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -317,7 +313,7 @@ router.post('/firms/add', auth, siteAuth, csrfProtection, async (req, res) => {
                         </tr>
                       </table>
 
-                      <p style="font-family: 'Open Sans','Helvetica Neue', 'Helvetica',Calibri, Arial, sans-serif; font-size:14px; line-height:26px; margin-top: 20px;">Warm Regards,<br> Perform Law!</p>  
+                      <p style="font-family: 'Open Sans','Helvetica Neue', 'Helvetica',Calibri, Arial, sans-serif; font-size:14px; line-height:26px; margin-top: 20px;">Warm Regards,<br> Perform Law!</p>
                       </td>
                     </tr>
                   </table>
@@ -329,7 +325,7 @@ router.post('/firms/add', auth, siteAuth, csrfProtection, async (req, res) => {
 
               </td>
             </tr>
-            
+
           </table>
           <!-- /content -->
         </td>
