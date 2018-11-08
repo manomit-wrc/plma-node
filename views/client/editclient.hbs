@@ -128,7 +128,7 @@
 								</div>
 							</div>
 
-							<div class="col-md-6">
+							{{!-- <div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Closing Date<span class="req-lbl">*</span> </label>
 									<div class="cal-icon">
@@ -136,7 +136,7 @@
 										 MM-DD-YYYY "}}" data-date-format="MM-DD-YYYY">
 									</div>
 								</div>
-							</div>
+							</div> --}}
 
 							
 							<div class="col-md-6">
@@ -845,22 +845,31 @@
 			rightAlign: false
 		});
 
-		$("#estimated_customer_life_time_value").keydown(function (e) {
+		//$("#estimated_customer_life_time_value").keydown(function (e) {
 			// Allow: backspace, delete, tab, escape, enter and .
-			if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
+	//		if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
 				// Allow: Ctrl+A, Command+A
-				(e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+			//	(e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
 				// Allow: home, end, left, right, down, up
-				(e.keyCode >= 35 && e.keyCode <= 40)) {
+			//	(e.keyCode >= 35 && e.keyCode <= 40)) {
 				// let it happen, don't do anything
-				return;
-			}
+			//	return;
+		//	}
 			// Ensure that it is a number and stop the keypress
-			if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-				e.preventDefault();
-			}
-		});
+		//	if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+			//	e.preventDefault();
+		//	}
+		//});
 
+$("#estimated_customer_life_time_value").inputmask("numeric", {
+			radixPoint: ".",
+			groupSeparator: ",",
+			digits: 2,
+			autoGroup: true,
+			prefix: '$ ',
+			rightAlign: false
+		});
+		
 		$("#life_time_revenue").inputmask("numeric", {
 			radixPoint: ".",
 			groupSeparator: ",",

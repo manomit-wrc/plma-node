@@ -654,6 +654,27 @@ router.post('/client/multi-delete/', auth, firmAttrAuth, async (req, res) => {
 	});
 });
 
+
+
+router.post("/get-duplicate-email-block", auth, async (req, res) => {
+	const attr_email = await client.findOne({
+		where: {
+			email: req.body.email
+		}
+	});
+	if (attr_email !== null) {
+		res.json({
+			success: true
+		});
+	} else {
+		res.json({
+			success: false
+		});
+	}
+
+});
+
+
 router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var error_message = req.flash('error-clientEdit-message')[0];
 

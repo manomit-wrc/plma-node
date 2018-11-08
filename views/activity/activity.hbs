@@ -102,7 +102,7 @@
                     </td>
                       <td class="text-right">
                         {{#if (or (eq this.activity_status "0")(and (eq this.activity_status "3")(eq this.activity_update "update"))) }}
-                        <a href="javascript:void(0);" class="btn btn-success btn-sm approval_request_sent" data-toggle="tooltip" data-placement="bottom" id="approval_request_sent" title="Request for Approval" data-activity-type="{{this.activity_type}}" data-target-request-id="{{this.id}}">
+                        <a href="javascript:void(0);" class="btn btn-success btn-sm approval_request_sent" data-toggle="tooltip" data-placement="bottom" id="approval_request_sent" title="Request for Approval" data-activity-type="{{this.activity_type}}" data-target-request-id="{{this.id}}" data-activity-name="{{this.activity_name}}">
                           <i class="fa fa-check" aria-hidden="true"></i>
                         </a>
                         {{/if}}
@@ -370,6 +370,7 @@
   $(document).on('click', '.approval_request_sent', function (e) {
     var activity_id = $(this).data("target-request-id");
     var activity_type = $(this).data("activity-type");
+    var activity_name = $(this).data("activity-name");
     if(activity_type == "team")
     {
       $.ajax({
@@ -430,7 +431,7 @@
       }, function () {
         $.ajax({
           type: "GET",
-          url: "/activity/update_approval_request/" + activity_id,
+          url: "/activity/update_approval_request/" + activity_id + "/" + activity_name,
           success: function (response) {
             if (response.success == true) {
               swal({

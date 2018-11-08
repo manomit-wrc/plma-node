@@ -342,47 +342,47 @@ router.get('/dashboard', auth,  async(req, res) => {
 
 
 
-    if (teamActivityAttorney.length>0) {
-        for (let i=0; i< teamActivityAttorney.length; i++) {
-            const userDetails = await User.findOne({
-                where:{
-                    'id':teamActivityAttorney[i].activity.user_id
-                }
-            })
+    // if (teamActivityAttorney.length>0) {
+    //     for (let i=0; i< teamActivityAttorney.length; i++) {
+    //         const userDetails = await User.findOne({
+    //             where:{
+    //                 'id':teamActivityAttorney[i].activity.user_id
+    //             }
+    //         })
 
-            notiFicationDetails.push({
-                'name': teamActivityAttorney[i].activity.activity_name,
-                'createDate':teamActivityAttorney[i].activity.activity_creation_date,
-                'updateDate': teamActivityAttorney[i].activity.updatedAt,
-                'updatedAt':teamActivityAttorney[i].updatedAt,
-                'activity_id':teamActivityAttorney[i].activity.id,
-                'userFirstName':userDetails.first_name,
-                'userLastName':userDetails.last_name,
-                'type': '1'
-            })
-        }
-    }
+    //         notiFicationDetails.push({
+    //             'name': teamActivityAttorney[i].activity.activity_name,
+    //             'createDate':teamActivityAttorney[i].activity.activity_creation_date,
+    //             'updateDate': teamActivityAttorney[i].activity.updatedAt,
+    //             'updatedAt':teamActivityAttorney[i].updatedAt,
+    //             'activity_id':teamActivityAttorney[i].activity.id,
+    //             'userFirstName':userDetails.first_name,
+    //             'userLastName':userDetails.last_name,
+    //             'type': '1'
+    //         })
+    //     }
+    // }
 
-    if (noti.length>0) {
-        for (let i=0; i< noti.length; i++) {
-            const userDetails = await User.findOne({
-                where:{
-                    'id':noti[i].activity.user_id
-                }
-            })
+    // if (noti.length>0) {
+    //     for (let i=0; i< noti.length; i++) {
+    //         const userDetails = await User.findOne({
+    //             where:{
+    //                 'id':noti[i].activity.user_id
+    //             }
+    //         })
 
-            notiFicationDetails.push({
-                'name':noti[i].activity.activity_name,
-                'createDate':noti[i].activity.activity_creation_date,
-                'updateDate': noti[i].activity.updatedAt,
-                'updatedAt':noti[i].updatedAt,
-                'activity_id':noti[i].activity.id,
-                'userFirstName':userDetails.first_name,
-                'userLastName':userDetails.last_name,
-                'type':'2'
-            })
-        }
-    }
+    //         notiFicationDetails.push({
+    //             'name':noti[i].activity.activity_name,
+    //             'createDate':noti[i].activity.activity_creation_date,
+    //             'updateDate': noti[i].activity.updatedAt,
+    //             'updatedAt':noti[i].updatedAt,
+    //             'activity_id':noti[i].activity.id,
+    //             'userFirstName':userDetails.first_name,
+    //             'userLastName':userDetails.last_name,
+    //             'type':'2'
+    //         })
+    //     }
+    // }
     // console.log('notiFicationDetails',notiFicationDetails.length);
 
     //notifications end 09-19-2018

@@ -288,9 +288,106 @@
     });
 
     $.ajax({
+        type: "GET",
+        url: "/get_notification-details",
+        success: function (response) {
+          if (response.count != 0) {
+            $("#count_noti").html(response.count);
+          }
+          if (response.noti.length > 0) {
+            for (var j = 0; j < response.noti.length; j++) {
+                //console.log(response.noti[j]);
+                var todayTime = new Date(response.noti[j].createdAt);
+                month = '' + (todayTime.getMonth() + 1),
+                day = '' + todayTime.getDate(),
+                year = todayTime.getFullYear();
+
+                if (month.length < 2) month = '0' + month;
+                if (day.length < 2) day = '0' + day;
+
+                var creation_date = [month, day, year].join('-');
+
+                var d = new Date(response.noti[j].createdAt),
+                  dformat = [d.getMonth() + 1,
+                  d.getDate(),
+                  d.getFullYear()].join('-') + ' ' +
+                    [d.getHours(),
+                    d.getMinutes(),
+                    d.getSeconds()].join(':');
+
+                var header = "n";
+
+                var startDate = new Date(response.noti[j].createdAt);
+                
+                var endDate = new Date();
+                var diffDays = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
+                var diff = (endDate.getTime() - startDate.getTime()) / 1000;
+                var hour = diff / (60 * 60);
+                var minute = diff / 60;
+                var hrs = Math.abs(Math.round(hour));
+                var mins = Math.abs(Math.round(minute));
+                var sec = Math.abs(Math.round(diff));
+                var get_time = "";
+                if(sec < 60){
+                  get_time = "Just now";
+                }
+                else if(sec >= 60 && mins < 60 && diffDays == 1){
+                  get_time = mins + " mins ago";
+                }
+                else if(sec > 60 && mins >= 60 && diffDays == 1){
+                  get_time = hrs + " hours ago";
+                }
+                else if(sec > 60 && mins > 60 && diffDays > 1 && diffDays < 7){
+                  get_time = diffDays-1 + " days ago"
+                }
+                else if (sec > 60 && mins > 60 && diffDays >= 7) {
+                  get_time = dformat;
+                }
+                $("#notiMsg").append('<li class="media notification-message read_status" data-noti-id = "'+response.noti[j].id+'">' +
+                  '<a href="javascript:void(0)">' +
+                    '<div class="media-left">' +
+                      '<span class="avatar">' +
+                        header.charAt(0) +
+                      '</span>'+
+                    '</div>' +
+                    '<div class="media-body">' +
+                      '<p class="m-0 noti-details">' +
+                        '<span class="noti-title">' +
+                          response.noti[j].notification_details + " on " + creation_date +"."+
+                        '</span>' +
+                      '</p>' +
+                      '<p class="m-0">' +
+                        '<span class="notification-time">' +
+                          get_time +
+                        '</span>' +
+                      '</p>' +
+                    '</div>' +
+                  '</a>' +
+                  '</li>'
+                );
+                if(response.noti[j].status === 0 )
+                {
+                  $(".notification-message").css({"background-color": "#ffdfd4"});
+                }
+            }
+          }
+          else {
+             $("#notification_div").addClass("noti-ntfound");
+             $("#notification_div").html('<i class="fa fa-bell-slash">' + '</i>'+ " " + "Notification not found !");
+          }
+        },
+        error: function (xhr) {
+
+        }
+      });
+
+
+
+    /*$.ajax({
       type: "POST",
       url: "/get-notification",
       success: function (response) {
+        console.log(response);
         var approver = $("#notificationBtn").data("user-id");
         if (approver === 1) {
           if (response.count != 0) {
@@ -422,8 +519,8 @@
             }
           }
           else {
-            $("#notification_div").addClass("noti-ntfound");
-            $("#notification_div").html('<i class="fa fa-bell-slash">' + '</i>'+ " " + "Notification not found !");
+             $("#notification_div").addClass("noti-ntfound");
+             $("#notification_div").html('<i class="fa fa-bell-slash">' + '</i>'+ " " + "Notification not found !");
           }
         }
         else {
@@ -434,6 +531,25 @@
       error: function (xhr) {
 
       }
-    });
+    });*/
   });
+
+  $(document).on('click', ".read_status", function(){
+    var noti_id = $(this).data("noti-id");
+    $.ajax({
+        type: "POST",
+        url: "/change-read-status",
+        data: {
+          noti_id: noti_id
+        },
+        success: function (response) {
+          if(response.success == true){
+            window.location.reload(); 
+          }
+        },
+        error: function (xhr) {
+
+        }
+      });
+  })
 </script> {{/content}}

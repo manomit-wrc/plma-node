@@ -267,6 +267,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus ">
                             <div class="">
+                                <label class="control-label"><span class="req-lbl">*</span></label>
                                 <select class="form-control floating" id="jurisdiction" name="jurisdiction" multiple="multiple">
                                     {{#each allJurisdiction}}
                                     <option value="{{this.jurisdiction.id}}">{{this.jurisdiction.name}}</option>
@@ -279,6 +280,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus ">
                             <div class="">
+                                <label class="control-label"><span class="req-lbl">*</span></label>
                                 <select class="form-control floating" id="practice_area" name="practice_area" multiple="multiple">
                                     {{#each allPracticeArea}}
                                     <option value="{{this.practicearea.id}}">{{this.practicearea.name}}</option>

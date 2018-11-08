@@ -1011,4 +1011,25 @@ router.post('/referral/targetclientadd', auth, csrfProtection, async (req, res) 
 	});
 });
 
+
+
+
+router.post("/get-duplicate-email-block", auth, async (req, res) => {
+	const attr_email = await Referral.findOne({
+		where: {
+			email: req.body.email
+		}
+	});
+	if (attr_email !== null) {
+		res.json({
+			success: true
+		});
+	} else {
+		res.json({
+			success: false
+		});
+	}
+
+});
+
 module.exports = router;

@@ -15,6 +15,7 @@ const Contact = require('../models').master_contact;
 const Target = require('../models').target;
 const Client = require('../models').client;
 const Referral = require('../models').referral;
+const Revenue = require('../models').revenue;
 const user = require('../models').user;
 const ContactInformation = require('../models').contact_information;
 const router = express.Router();
@@ -701,15 +702,22 @@ router.post('/master_contact/move-to-target/', auth, async (req, res) => {
 				id: contact_ids[i]
 			}
 		});
-		await Target.create({
+		const target_data = await Target.create({
 			first_name: contact_data.first_name,
 			last_name: contact_data.last_name,
 			email: contact_data.email,
 			mobile_no: contact_data.mobile_no,
+
+			website_url: contact_data.website_url,
+			facebbok: contact_data.social_url,
+			linkedin: contact_data.linkedin,
+			address_remarks: contact_data.address_remarks,
+
+			phone_no: contact_data.phone_no,
 			date_of_birth: contact_data.date_of_birth,
 			gender: contact_data.gender,
-			address_1: contact_data.address1,
-			address_2: contact_data.address2,
+			address1: contact_data.address1,
+			address2: contact_data.address2,
 			address3: contact_data.address3,
 			country: contact_data.country,
 			state: contact_data.state,
@@ -737,7 +745,14 @@ router.post('/master_contact/move-to-target/', auth, async (req, res) => {
 				where: {
 					id: contact_ids[i]
 				}
+								
 			});
+
+			await Revenue.create({
+				target_id: target_data.id,
+				'type': 'T'
+
+			})	
 	}
 	res.json({
 		code: "200",
@@ -776,7 +791,8 @@ router.post('/master_contact/move-to-referral/', auth, async (req, res) => {
 			google: contact_data.google,
 			youtube: contact_data.youtube,
 			//firm_id: contact_data.firm_id,
-			attorney_id: contact_data.user_id,
+
+			attorney_id: req.contact_data.user_id,
 			remarks: contact_data.remarks,
 			firm_id: req.user.firm_id,
 		});
@@ -794,5 +810,30 @@ router.post('/master_contact/move-to-referral/', auth, async (req, res) => {
 		message: 'Success'
 	});
 });
+
+
+
+
+
+
+
+router.post("/get-duplicate-email-block", auth, async (req, res) => {
+	const attr_email = await ContactInformation.findOne({
+		where: {
+			email: req.body.email
+		}
+	});
+	if (attr_email !== null) {
+		res.json({
+			success: true
+		});
+	} else {
+		res.json({
+			success: false
+		});
+	}
+
+});
+
 
 module.exports = router;

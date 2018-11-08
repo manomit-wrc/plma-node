@@ -123,14 +123,14 @@
 							</div>
 							
 
-							<div class="col-md-6">
+							{{!-- <div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Closing Date<span class="req-lbl">*</span> </label>
 									<div class="cal-icon">
 										<input class="form-control floating datetimepicker" type="text" id="revenueclosingDate" name="revenueclosingDate" data-date-format="MM-DD-YYYY">
 									</div>
 								</div>
-							</div>
+							</div> --}}
 
 				          
 							<div class="col-md-6">
@@ -545,21 +545,21 @@
             prefix: '$ ',
             rightAlign: false
         });
-		$("#estimated_customer_life_time_value").keydown(function (e) {
+		//$("#estimated_customer_life_time_value").keydown(function (e) {
 			// Allow: backspace, delete, tab, escape, enter and .
-			if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
+//if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
 				// Allow: Ctrl+A, Command+A
-				(e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+			//	(e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
 				// Allow: home, end, left, right, down, up
-				(e.keyCode >= 35 && e.keyCode <= 40)) {
+			//	(e.keyCode >= 35 && e.keyCode <= 40)) {
 				// let it happen, don't do anything
-				return;
-			}
+			//	return;
+		//	}
 			// Ensure that it is a number and stop the keypress
-			if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-				e.preventDefault();
-			}
-		});
+			//if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+			//	e.preventDefault();
+		//	}
+		//});
 		$("#estimated_revenue").inputmask("numeric", {
             radixPoint: ".",
             groupSeparator: ",",
@@ -568,7 +568,8 @@
             prefix: '$ ',
             rightAlign: false
         });
-		$("#life_time_revenue").inputmask("numeric", {
+		
+	$("#estimated_customer_life_time_value").inputmask("numeric", {
             radixPoint: ".",
             groupSeparator: ",",
             digits: 2,
@@ -576,6 +577,17 @@
             prefix: '$ ',
             rightAlign: false
         });
+
+$("#life_time_revenue").inputmask("numeric", {
+            radixPoint: ".",
+            groupSeparator: ",",
+            digits: 2,
+            autoGroup: true,
+            prefix: '$ ',
+            rightAlign: false
+        });
+
+	
 
 		$('#select-existing-tags').multiselect({
 			nonSelectedText: 'Select Existing Tags',
@@ -688,4 +700,56 @@
 
 
 </script> 
+
+
+<script>
+ $(document).ready(function () {
+	   $("#email").keyup(function () {
+            $("div").remove(".validation");
+
+        });
+ });
+
+function validateEmail(email) {
+        var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        if (filter.test(email)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+	    $(document).on('change', "#email", function (e) {
+        var mail = $(this).val();
+        $("div").remove(".validation");
+        if (mail !== '') {
+            $.ajax({
+                type: "POST",
+                url: "/get-duplicate-email-block",
+                data: {
+                    mail: mail
+                },
+                success: function (response) {
+
+                    if (response.success == true) {
+                        $("#email").parent().append("<div class='validation' style='color:red;margin-bottom: 20px;'><i class='fa fa-close iconDuplicateEmail'></i><b> Email Id already exists</b></div>");
+                    }
+                    else {
+                        if (validateEmail(mail)) {
+                            $("#email").parent().append("<div class='validation' style='color:green;margin-bottom: 20px;'><i class='fa fa-check iconDuplicateEmail' style='background-color:#c2f7c6 !important;''></i></div>");
+                        }
+                        else {
+                            $("#email").parent().append("<div class='validation' style='color:red;margin-bottom: 20px;'><i class='fa fa-close iconDuplicateEmail'></i></div>");
+
+                        }
+                    }
+                },
+                error: function (xhr) {
+                }
+            });
+        }
+    });
+
+</script>
 {{/content}}

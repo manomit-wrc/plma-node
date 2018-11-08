@@ -152,7 +152,7 @@
                             </div>
                             <div class="col-md-6 strategyGroup" style="display: none;">
                                 <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Strategy Group <span class="req-lbl">*</span> </label>
+                                    <label class="control-label">Strategy Group  </label>
                                     <select class="form-control floating" id="strategyGroup" name="strategy_group">
                                         <option value="0">Select Strategy Group</option>
                                         <option value="1">NEED TO DISCUSS</option>
@@ -187,7 +187,7 @@
                                 <div class="form-group form-focus select-focus select-attorney">
                                     <label class="control-label">Practice Area Type <span class="req-lbl">*</span> </label>
                                     <select id="practice_area" name="practice_area" class="form-control floating" >
-                                        <option value="">Select Practice Area</option>
+                                        <option value="">Select Practice Area </option>
                                         {{#if_eq user.actual_role_id "2"}}
                                             {{#each practice_area_firm}}
                                                 <option value="{{this.practicearea.id}}">{{this.practicearea.name}}</option>
@@ -433,6 +433,7 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 
 
+
 <script type="text/javascript">
     $(document).on("click","#oneDayActivityEvent", function(){
         $("#activity_dateO").show();
@@ -615,6 +616,8 @@
     // add designation ajax and form validation starts
     $(document).ready(function (e) {
         $(".number_budget").keydown(function (e) {
+
+            
             // Allow: backspace, delete, tab, escape, enter and .
             if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
                 // Allow: Ctrl+A, Command+A
@@ -624,6 +627,11 @@
                 // let it happen, don't do anything
                 return;
             }
+
+ if(data.indexOf('.') > -1){
+}
+
+
             // Ensure that it is a number and stop the keypress
             if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
                 e.preventDefault();
@@ -661,9 +669,6 @@
                 },
                 activity_name: {
                     required: true
-                },
-                category: {
-                    required: true
                 }
             },
             messages: {
@@ -696,9 +701,6 @@
                 },
                 activity_name: {
                     required: "Activity name can't be blank"
-                },
-                category: {
-                    required: "Activity reason can't be blank"
                 }
             }
         });

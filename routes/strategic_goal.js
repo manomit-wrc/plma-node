@@ -14,6 +14,7 @@ var csrfProtection = csrf({
 const router = express.Router();
 
 router.get("/strategic-marketing-goal", auth, firmAttrAuth, async(req, res)=> {
+    
     var success_message = req.flash('success-strategicGoal-message')[0];
     var success_edit_message = req.flash('success-strategicEditGoal-message')[0];
     var success_Del_message = req.flash('success-strategicDelGoal-message')[0];
@@ -35,7 +36,9 @@ router.get("/strategic-marketing-goal", auth, firmAttrAuth, async(req, res)=> {
         }]
     });
     
+    
     res.render("strategic_goals/index", {
+       
         layout: 'dashboard',
         title: 'Strategic Masketing Goals Listing',
         strategic_show,

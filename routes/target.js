@@ -154,6 +154,26 @@ router.get('/target', auth, firmAttrAuth, csrfProtection, async(req, res) => {
 
 });
 
+
+router.post("/get-duplicate-email-block", auth, async (req, res) => {
+	const attr_email = await Target.findOne({
+		where: {
+			email: req.body.email
+		}
+	});
+	if (attr_email !== null) {
+		res.json({
+			success: true
+		});
+	} else {
+		res.json({
+			success: false
+		});
+	}
+
+});
+
+
 router.get('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) => {
     var error_message = req.flash('error-target-message')[0];
     var designation = await Designation.findAll({
@@ -613,7 +633,7 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
             company_name: req.body.company_name,
             attorney_id: req.body.attorney,
             website_url: req.body.website_url,
-            social_url: req.body.social_url,
+            facebook: req.body.social_url,
             twitter: req.body.twitter,
             linkedin: req.body.linkedin,
             youtube: req.body.youtube,
@@ -896,8 +916,16 @@ router.post('/target/move-to-client', auth, async(req, res) => {
                 industry_type: target_data.industry_type,
                 company_name: target_data.company_name,
                 twitter: target_data.twitter,
-                linkedin: target_data.linkedin,
-                youtube: target_data.youtube,
+                linkdn: target_data.linkedin,
+                youtub: target_data.youtube,
+
+                social: target_data.social,
+                website_url: target_data.website_url,
+                social: target_data.social,
+                phone_no: target_data.phone_no,
+
+
+
                 google: target_data.google,
                 client_id: target_data.target_id,
                 master_id: target_data.target_code,
@@ -912,12 +940,18 @@ router.post('/target/move-to-client', auth, async(req, res) => {
                 user_id: target_data.user_id,
                 client_type: target_data.target_type,
                 remarks: target_data.remarks,
-                attorney_id: req.user.id,
-                estimated_customer_life_time_value: target_data.estimated_lifetime_value,
+                attorney_id: target_data.attorney_id,
+
+                // attorney_id: req.user.id,
+                estimated_customer_life_time_value: target_data.life_time_revenue,
                 //revenueclosingDate: target_data.close_date
                 // revenueclosingDate: target_data.revenueclosingDate,
 
             });
+
+
+
+
             var refT = await Referred_Client_Targets.findOne({
                 where: {
                     type: "T",
@@ -954,6 +988,10 @@ router.post('/target/move-to-client', auth, async(req, res) => {
                     id: target_ids[i]
                 }
             });
+
+        
+
+
         }
         res.json({
             code: "200",

@@ -11,6 +11,7 @@ const activityAttorney = require('../models').activity_attorney;
 const Revenue = require('../models').revenue;
 const router = express.Router();
 const Client = require('../models').client;
+const notificationTable = require('../models').notificationTable;
 
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
@@ -150,6 +151,7 @@ router.post('/update_activity_approve_reject', auth, async (req, res) => {
                 'activity_id': req.body.activity_id
             }
         })
+
     
         const _activityApprovals = await requestApproval.findOne({
             attributes: [
@@ -170,6 +172,14 @@ router.post('/update_activity_approve_reject', auth, async (req, res) => {
                     'approver_status': _activityApprovals.get('max_approver_status')
                 }
             });
+             await notificationTable.update({
+                approve_id: 1
+            },{
+                where: {
+                    activity_type_id: req.user.id,
+                    activity_id: req.body.activity_id
+                }
+            });
         } else {
             await Activity.update({
                 activity_status: req.body.status
@@ -186,129 +196,164 @@ router.post('/update_activity_approve_reject', auth, async (req, res) => {
     })
 });
 
-router.post("/get-notification", auth, async (req, res) => {
+// router.post("/get-notification", auth, async (req, res) => {
 
-    var notiFicationDetails = []
+//     var notiFicationDetails = []
 
-     requestApproval.belongsTo(Activity, {
-        foreignKey: 'activity_id'
-    });
+//      requestApproval.belongsTo(Activity, {
+//         foreignKey: 'activity_id'
+//     });
 
-    requestApproval.belongsTo(User, {
-        foreignKey: 'approver_id'
-    });
+//     requestApproval.belongsTo(User, {
+//         foreignKey: 'approver_id'
+//     });
     
-    const noti = await requestApproval.findAll({
-        where: {
-            'approver_id': req.user.id,
-            'status': '1'
-        },
-        include: [{
-            model: User
-        },
-        {
-            model: Activity
-        }],
-        order: [
-            ['updatedAt', 'DESC']
-        ]
-    });
+//     const noti = await requestApproval.findAll({
+//         where: {
+//             'approver_id': req.user.id,
+//             'status': '1'
+//         },
+//         include: [{
+//             model: User
+//         },
+//         {
+//             model: Activity
+//         }],
+//         order: [
+//             ['updatedAt', 'DESC']
+//         ]
+//     });
 
-    activityAttorney.belongsTo(Activity, {
-        foreignKey: 'activity_id'
-    });
+//     activityAttorney.belongsTo(Activity, {
+//         foreignKey: 'activity_id'
+//     });
 
-    activityAttorney.belongsTo(User, {
-        foreignKey: 'attorney_id'
-    });
+//     activityAttorney.belongsTo(User, {
+//         foreignKey: 'attorney_id'
+//     });
     
-    const teamActivityAttorney = await activityAttorney.findAll({
-        where: {
-            'attorney_id': req.user.id,
-            'status': '0',
-        },
-        include: [{
-            model: User
-        },{
-            model: Activity
-        }],
-    }); 
+//     const teamActivityAttorney = await activityAttorney.findAll({
+//         where: {
+//             'attorney_id': req.user.id,
+//             'status': '0',
+//         },
+//         include: [{
+//             model: User
+//         },{
+//             model: Activity
+//         }],
+//     }); 
 
 
-    if (teamActivityAttorney.length>0) {
-        for (let i=0; i< teamActivityAttorney.length; i++) {
-            const userDetails = await User.findOne({
-                where:{
-                    'id':teamActivityAttorney[i].activity.user_id
-                }
-            })
+//     if (teamActivityAttorney.length>0) {
+//         for (let i=0; i< teamActivityAttorney.length; i++) {
+//             const userDetails = await User.findOne({
+//                 where:{
+//                     'id':teamActivityAttorney[i].activity.user_id
+//                 }
+//             })
             
-            notiFicationDetails.push({
-                'name': teamActivityAttorney[i].activity.activity_name,
-                'createDate':teamActivityAttorney[i].activity.activity_creation_date,
-                'updateDate': teamActivityAttorney[i].activity.updatedAt,
-                'updatedAt':teamActivityAttorney[i].updatedAt,
-                'activity_id':teamActivityAttorney[i].activity.id,
-                'userFirstName':userDetails.first_name,
-                'userLastName':userDetails.last_name,
-                'type': '1'
-            })
-        }
-    }
+//             notiFicationDetails.push({
+//                 'name': teamActivityAttorney[i].activity.activity_name,
+//                 'createDate':teamActivityAttorney[i].activity.activity_creation_date,
+//                 'updateDate': teamActivityAttorney[i].activity.updatedAt,
+//                 'updatedAt':teamActivityAttorney[i].updatedAt,
+//                 'activity_id':teamActivityAttorney[i].activity.id,
+//                 'userFirstName':userDetails.first_name,
+//                 'userLastName':userDetails.last_name,
+//                 'type': '1'
+//             })
+//         }
+//     }
     
-    if (noti.length>0) {
-        for (let i=0; i< noti.length; i++) {
-            const userDetails = await User.findOne({
-                where:{
-                    'id':noti[i].activity.user_id
-                }
-            })
+//     if (noti.length>0) {
+//         for (let i=0; i< noti.length; i++) {
+//             const userDetails = await User.findOne({
+//                 where:{
+//                     'id':noti[i].activity.user_id
+//                 }
+//             })
 
-            notiFicationDetails.push({
-                'name':noti[i].activity.activity_name,
-                'createDate':noti[i].activity.activity_creation_date,
-                'updateDate': noti[i].activity.updatedAt,
-                'updatedAt':noti[i].updatedAt,
-                'activity_id':noti[i].activity.id,
-                'userFirstName':userDetails.first_name,
-                'userLastName':userDetails.last_name,
-                'type':'2'
-            }) 
-        }
-    }
+//             notiFicationDetails.push({
+//                 'name':noti[i].activity.activity_name,
+//                 'createDate':noti[i].activity.activity_creation_date,
+//                 'updateDate': noti[i].activity.updatedAt,
+//                 'updatedAt':noti[i].updatedAt,
+//                 'activity_id':noti[i].activity.id,
+//                 'userFirstName':userDetails.first_name,
+//                 'userLastName':userDetails.last_name,
+//                 'type':'2'
+//             }) 
+//         }
+//     }
 
 
-    // get notification for plaining periode
-    const allRevenue = await Revenue.findAll({
+//     // get notification for plaining periode
+//     const allRevenue = await Revenue.findAll({
+//         where: {
+//             'type':'C',
+//             'user_id': req.user.id
+//         }
+//     });
+
+//     const dateDetails = new Date();
+//     for (let i=0; i<allRevenue.length; i++) {
+//         if (dateDetails > allRevenue[i].end_date && allRevenue[i].status == 0) {
+//            let clientDetails =  await Client.findById(allRevenue[i].client_id);
+//             //   notiFicationDetails.push({
+//             //     'name': clientDetails.first_name + " " + clientDetails.last_name,
+//             //     'createDate':clientDetails.createdAt,
+//             //     'updateDate': clientDetails.updatedAt,
+//             //     'updatedAt':clientDetails.updatedAt,
+//             //     'client_id':allRevenue[i].client_id,
+//             //     'userFirstName':'userDetails.first_name',
+//             //     'userLastName':'userDetails.last_name',
+//             //     'type': '3'
+//             // })  
+
+//         }
+//     }
+
+//     res.send({
+//         "success": true,
+//         "count": notiFicationDetails.length,
+//         "approval_noti": notiFicationDetails
+//     });
+// });
+
+router.get("/get_notification-details", auth, async(req, res)=> {
+    const noti = await notificationTable.findAll({
         where: {
-            'type':'C',
-            'user_id': req.user.id
+            activity_type_id: req.user.id,
+            approve_id: 1
         }
     });
-
-    const dateDetails = new Date();
-    for (let i=0; i<allRevenue.length; i++) {
-        if (dateDetails > allRevenue[i].end_date && allRevenue[i].status == 0) {
-           let clientDetails =  await Client.findById(allRevenue[i].client_id);
-              notiFicationDetails.push({
-                'name': clientDetails.first_name + " " + clientDetails.last_name,
-                'createDate':clientDetails.createdAt,
-                'updateDate': clientDetails.updatedAt,
-                'updatedAt':clientDetails.updatedAt,
-                'client_id':allRevenue[i].client_id,
-                'userFirstName':'userDetails.first_name',
-                'userLastName':'userDetails.last_name',
-                'type': '3'
-            })  
-
+    const noti_count = await notificationTable.findAll({
+        where: {
+            activity_type_id: req.user.id,
+            status: 0,
+            approve_id: 1
         }
-    }
+    });
+    //console.log(noti_count.length);
 
     res.send({
-        "success": true,
-        "count": notiFicationDetails.length,
-        "approval_noti": notiFicationDetails
+        count: noti_count.length,
+        noti: noti
+    })
+});
+
+router.post("/change-read-status", auth, async(req, res)=> {
+    const noti_update = await notificationTable.update({
+        status: 1
+    },{
+        where: {
+            id: req.body.noti_id
+        }
     });
+    res.send({
+        success: true
+    })
 });
 
 module.exports = router;
