@@ -101,11 +101,13 @@
                       <span class="label label-success-border">APPROVED - PROCEED</span> {{/if_eq}}
                     </td>
                       <td class="text-right">
-                        {{#if (or (eq this.activity_status "0")(and (eq this.activity_status "3")(eq this.activity_update "update"))) }}
-                        <a href="javascript:void(0);" class="btn btn-success btn-sm approval_request_sent" data-toggle="tooltip" data-placement="bottom" id="approval_request_sent" title="Request for Approval" data-activity-type="{{this.activity_type}}" data-target-request-id="{{this.id}}" data-activity-name="{{this.activity_name}}">
-                          <i class="fa fa-check" aria-hidden="true"></i>
-                        </a>
-                        {{/if}}
+                        {{#if_eq this.user_id ../user.id}}
+                          {{#if (or (eq this.activity_status "0")(and (eq this.activity_status "3")(eq this.activity_update "update"))) }}
+                          <a href="javascript:void(0);" class="btn btn-success btn-sm approval_request_sent" data-toggle="tooltip" data-placement="bottom" id="approval_request_sent" title="Request for Approval" data-activity-type="{{this.activity_type}}" data-target-request-id="{{this.id}}" data-activity-name="{{this.activity_name}}">
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                          </a>
+                          {{/if}}   
+                        {{/if_eq}}
                         <a href="/activity/view/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="View" id="setUrlItem">
                           <i class="fa fa-eye m-r-5"></i>
                         </a>

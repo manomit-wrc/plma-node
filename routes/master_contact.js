@@ -817,8 +817,8 @@ router.post('/master_contact/move-to-referral/', auth, async (req, res) => {
 
 
 
-router.post("/get-duplicate-email-block", auth, async (req, res) => {
-	const attr_email = await ContactInformation.findOne({
+router.post("/get-duplicate-email-block-mcontact", auth, async (req, res) => {
+	const attr_email = await Contact.findOne({
 		where: {
 			email: req.body.email
 		}

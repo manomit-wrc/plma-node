@@ -1014,10 +1014,10 @@ router.post('/referral/targetclientadd', auth, csrfProtection, async (req, res) 
 
 
 
-router.post("/get-duplicate-email-block", auth, async (req, res) => {
+router.post("/get-duplicate-email-block-referral", auth, async (req, res) => {
 	const attr_email = await Referral.findOne({
 		where: {
-			email: req.body.email
+			email: req.body.mail
 		}
 	});
 	if (attr_email !== null) {

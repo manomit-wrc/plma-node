@@ -862,7 +862,7 @@ router.post("/edit-attorney-profile", auth, profile.single('avatar'), csrfProtec
         address3: req.body.address3,
         e_mail: req.body.e_mail,
         phone_no: removePhoneMask(req.body.phone_no),
-        fax: removePhoneMask(req.body.fax),
+        //fax: removePhoneMask(req.body.fax),
         website_url: req.body.website_url,
         social_url: req.body.social_url,
         remarks: req.body.remarks,

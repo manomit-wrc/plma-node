@@ -26,6 +26,7 @@
                                 <th>SL#</th>
                                 <th>Activity Name</th>
                                 <th>Approval Status</th>
+                                <th>Date of Approved/Rejected</th>
                                 <th class="text-right" >Action</th>
                             </tr>
                         </thead>
@@ -34,10 +35,22 @@
                             <tr>
                                 <td>{{math @index "+" 1}}</td>
                                 <td>{{this.activity.activity_name}}</td>
-                                <td><span class="label label-warning-border">Pending</span></td>
+                                <td>
+                                    {{#if_eq this.approve "0"}}<span class="label label-warning-border">Pending</span>{{/if_eq}}
+                                    {{#if_eq this.approve "1"}}<span class="label label-success-border">Approved</span>{{/if_eq}}
+                                    {{#if_eq this.approve "2"}}<span class="label label-danger-border">Rejected</span>{{/if_eq}}
+                                </td>
+                                <td>
+                                     {{#if_eq this.approve "0"}}
+                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; —
+                                     {{else}}
+                                        {{dateFormat this.updatedAt "MM-DD-YYYY"}}</td>
+                                    {{/if_eq}}
                                 <td class="text-right">
-                                    <a href="/approval_details/{{this.activity.id}}" id="budgetUpdate" class="btn btn-success btn-sm" ><i class="fa fa-eye m-r-5"></i> View
-                                    </a>
+                                     {{#if_eq this.approve "0"}}
+                                        <a href="/approval_details/{{this.activity.id}}" id="budgetUpdate" class="btn btn-success btn-sm" ><i class="fa fa-eye m-r-5"></i> View
+                                        </a>
+                                    {{/if_eq}}
                                 </td>
                             </tr>
                             {{/each}}

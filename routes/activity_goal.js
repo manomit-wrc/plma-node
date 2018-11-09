@@ -27,6 +27,9 @@ router.get('/activity-goal', auth, firmAttrAuth, csrfProtection, (req, res) => {
 		whereGoals.to_date = formatToDate2[2] + "-" + formatToDate2[1] + "-" + formatToDate2[0];
 	}
 	whereGoals.firm_id = req.user.firm_id;
+	if (req.user.role_id != 2) {
+		whereGoals.user_id = req.user.id;
+	}
 	ActivityGoal.belongsTo(Firm, { foreignKey: 'firm_id' });
 	ActivityGoal.hasMany(ActivityBudget, { foreignKey: 'activity_goal_id' });
 	ActivityGoal.hasMany(Activity, {
@@ -58,7 +61,8 @@ router.get('/activity-goal', auth, firmAttrAuth, csrfProtection, (req, res) => {
 router.get('/activity-goal/add', auth, firmAttrAuth, csrfProtection, async(req, res) => {
 	const stragic_goal = await StrategicGoal.findAll({
 		where:{
-			firm_id: req.user.firm_id
+			firm_id: req.user.firm_id,
+			user_id: req.user.id
 		}
 	})
 	res.render('activity_goal/add', {
@@ -71,7 +75,6 @@ router.get('/activity-goal/add', auth, firmAttrAuth, csrfProtection, async(req, 
 
 router.post('/activity-goal/add', auth, firmAttrAuth, csrfProtection, async(req, res) => {
 	var strategic_goal = req.body.strategic_goal;
-	
 	const formatFromDate = req.body.from_date ? req.body.from_date.split("-") : '';
 	const formatToDate = req.body.to_date ? req.body.to_date.split("-") : '';
 	var activity_goal_id = await ActivityGoal.create({
@@ -98,7 +101,8 @@ router.get('/activity-goal/edit/:id', auth, firmAttrAuth, csrfProtection, async(
 	const edit_goals = await ActivityGoal.findById(req.params['id']);
 	const stragic_goal = await StrategicGoal.findAll({
 		where: {
-			firm_id: req.user.firm_id
+			firm_id: req.user.firm_id,
+			user_id: req.user.id
 		}
 	});
 	var strategicGoal = await ActivityGoalToStrategicGoal.findAll({
@@ -111,7 +115,6 @@ router.get('/activity-goal/edit/:id', auth, firmAttrAuth, csrfProtection, async(
 	{
 		strategicGoalArr.push(strategicGoal[i].strategic_goal_id);
 	}
-	
 	res.render('activity_goal/edit', {
 		layout: 'dashboard',
 		title: 'Edit Tactical Marketing Goal',
@@ -127,10 +130,11 @@ router.get('/activity-goal/view/:id', auth, firmAttrAuth, csrfProtection, async(
 	const edit_goals = await ActivityGoal.findById(req.params['id']);
 	const stragic_goal = await StrategicGoal.findAll({
 		where: {
-			firm_id: req.user.firm_id
+			firm_id: req.user.firm_id,
+			user_id: req.user.id
 		}
 	});
-	var strategicGoal = await ActivityGoalTo({
+	var strategicGoal = await ActivityGoalToStrategicGoal.findAll({
 		where: {
 			activity_goal_id: req.params['id']
 		}

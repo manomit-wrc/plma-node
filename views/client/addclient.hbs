@@ -726,7 +726,7 @@ function validateEmail(email) {
         if (mail !== '') {
             $.ajax({
                 type: "POST",
-                url: "/get-duplicate-email-block",
+                url: "/get-duplicate-email-block-client",
                 data: {
                     mail: mail
                 },

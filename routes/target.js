@@ -155,7 +155,7 @@ router.get('/target', auth, firmAttrAuth, csrfProtection, async(req, res) => {
 });
 
 
-router.post("/get-duplicate-email-block", auth, async (req, res) => {
+router.post("/get-duplicate-email-block-target", auth, async (req, res) => {
 	const attr_email = await Target.findOne({
 		where: {
 			email: req.body.email

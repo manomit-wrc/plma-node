@@ -42,7 +42,7 @@
                         <div class="col-md-6">
                             <div class="form-group form-focus select-focus ">
                                 <div class="">
-                                    <select class="form-control floating" id="strategic_goal" name="strategic_goal" multiple="multiple">
+                                    <select class="form-control floating" id="strategic_goal" name="strategic_goal[]" multiple="multiple">
                                         {{#each stragic_goal}}
                                         <option value="{{this.id}}">{{this.name}}</option>
                                         {{/each}}

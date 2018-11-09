@@ -1,6 +1,8 @@
 const express = require('express');
 const auth = require('../middlewares/auth');
 const Activity = require('../models').activity;
+const ActivityGoal = require('../models').activity_goal;
+const PracticeArea = require('../models').practicearea;
 const Budget = require('../models').budget;
 const User = require('../models').user;
 const ActivityBudget = require('../models').activity_budget;
@@ -25,8 +27,7 @@ router.get('/activity-approvals', auth, async (req, res) => {
     const activityRequest = await requestApproval.findAll({
         where: {
             'approver_id': req.user.id,
-            'status': '1',
-            'approve': '0'
+            'status': '1'
         },
         include: [{
             model: Activity
@@ -92,14 +93,22 @@ router.get('/approval_details/:id', auth, async (req, res) => {
             }
         });
         
-        
+    const activity = await Activity.findById(req.params['id']);
+    const originAttr = await User.findById(activity.user_id);
+    const activity_goal = await ActivityGoal.findById(activity.activity_goal_id);
+    const practice_area = await PracticeArea.findById(activity.practice_area);
+    //console.log(originAttr.first_name);
     res.render('activity-approvals/approval_details', {
         layout: 'dashboard',
         title: 'View Activity Details for Approval',
         activity_id: aaa,
         budgetArr,
+        activity,
         'tclength': jointActivities.length,
         act_remark: act_remark ? act_remark.approver_remarks: "",
+        activity_goal: activity_goal.activity_goal,
+        practice_area: practice_area.name,
+        origin_attr: originAttr.first_name + " " + originAttr.last_name
     });
 
 });
@@ -326,7 +335,10 @@ router.get("/get_notification-details", auth, async(req, res)=> {
         where: {
             activity_type_id: req.user.id,
             approve_id: 1
-        }
+        },
+        order: [
+            ['id', 'DESC']
+        ],
     });
     const noti_count = await notificationTable.findAll({
         where: {

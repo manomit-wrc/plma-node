@@ -546,7 +546,7 @@ function validateEmail(email) {
         if (email !== '') {
             $.ajax({
                 type: "POST",
-                url: "/get-duplicate-email-block",
+                url: "/get-duplicate-email-block-mcontact",
                 data: {
                     email: email
                 },

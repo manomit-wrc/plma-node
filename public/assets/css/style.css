@@ -6276,6 +6276,23 @@ i.fa.fa-eye.m-r-5 {
 }
 
 
+.apporval-sent .apprv-item {
+	-webkit-box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.5);
+	-ms-box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.5);
+	-o-box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.5);
+	box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.5);
+	padding: 10px;
+	margin-bottom: 20px;
+	text-align: center;
+	background: #f5f5f5;
+}
+
+.apprv-item p {
+	text-transform: uppercase;
+}
+
+
 /*------------------------------------------------------------------
 [39-a.... Custom Styles]
 */
@@ -7429,6 +7446,10 @@ select.gender {
 
 				.address-target .address-panel {
 					border: 1px solid #ccc !important;
+				}
+
+				.apporval-sent .apprv-item {
+					height: auto !important;
 				}
 
 			}

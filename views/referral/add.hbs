@@ -555,7 +555,7 @@ function validateEmail(mail) {
         if (mail !== '') {
             $.ajax({
                 type: "POST",
-                url: "/get-duplicate-email-block",
+                url: "/get-duplicate-email-block-referral",
                 data: {
                     mail: mail
                 },

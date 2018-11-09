@@ -26,6 +26,9 @@ router.get("/strategic-marketing-goal", auth, firmAttrAuth, async(req, res)=> {
     });
     var whereGoals = {};
     whereGoals.firm_id = req.user.firm_id;
+    if (req.user.role_id != 2) {
+        whereGoals.user_id = req.user.id;
+    }
     const strategic_show = await StrategicGoal.findAll({
         where: whereGoals,
         include: [{

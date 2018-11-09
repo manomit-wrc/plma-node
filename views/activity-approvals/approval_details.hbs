@@ -18,7 +18,87 @@
                 </div>
             </div>
         </div>
-
+        <div class="card-box apporval-sent">
+            <div class="text-center">
+                <h4 class="m-b-20 text-uppercase">
+                    <strong>{{activity.activity_name}}</strong>
+                </h4>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="apprv-item">
+                        <h5 class="m-t-10">
+                            <strong>
+                                Activity Goal
+                            </strong>
+                        </h5>
+                        <p>
+                            {{activity_goal}}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="apprv-item">
+                        <h5 class="m-t-10">
+                            <strong>
+                                Activity Time Period
+                            </strong>
+                        </h5>
+                        <p id="activity_date_period" data-from-date="{{dateFormat activity.activity_from_date "MM-DD-YYYY"}}" data-to-date="{{dateFormat activity.activity_to_date "MM-DD-YYYY"}}">
+                            {{!-- {{dateFormat activity.activity_from_date "MM-DD-YYYY"}} - {{dateFormat activity.activity_to_date "MM-DD-YYYY"}} --}}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="apprv-item">
+                        <h5 class="m-t-10">
+                            <strong>
+                                Origin Attorney
+                            </strong>
+                        </h5>
+                        <p>
+                            {{origin_attr}}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="apprv-item">
+                        <h5 class="m-t-10">
+                            <strong>
+                                Activity Type
+                            </strong>
+                        </h5>
+                        <p>
+                             {{activity.activity_type}}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="apprv-item">
+                        <h5 class="m-t-10">
+                            <strong>
+                                Practice Area
+                            </strong>
+                        </h5>
+                        <p>
+                            {{practice_area}}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="apprv-item">
+                        <h5 class="m-t-10">
+                            <strong>
+                               Activity Category
+                            </strong>
+                        </h5>
+                        <p>
+                            {{activity.category}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
         <form class="m-b-10" name="editActivityBudgetFrm" id="editActivityBudgetFrm">
             <div class="card-box">
                 <div class="modal-body">
@@ -51,17 +131,17 @@
                                                         <input class="form-control budget_amount edit_budget_amount number_budget" type="text" id="edit_budget_amount" name="edit_budget_amount"
                                                             placeholder="Dollars($)" value="{{#if_eq this.level_type 'I'}} {{marketing_budget_amount this.amount ../../this.tclength}} {{else}} {{this.amount}} {{/if_eq}}"
                                                             disabled>
-                                                        <input type="hidden" data-budget_id="{{this.id}}" data-remarks="{{this.remarks}}" data-activity_id="{{../../activity_id}}" id="remarksactapp"> 
+                                                        <input type="hidden" data-budget_id="{{this.id}}" data-remarks="{{this.remarks}}" data-activity_id="{{../../activity_id}}"
+                                                            id="remarksactapp">
                                                     </div>
                                                 </div>
-                                                {{#if_eq this.hour ""}} {{else}}
-                                                {{!-- <div class="col-md-2">
+                                                {{#if_eq this.hour ""}} {{else}} {{!--
+                                                <div class="col-md-2">
                                                     <div class="form-group">
                                                         <input type="button" class="btn btn-info" data-budget_id="{{this.id}}" data-remarks="{{this.remarks}}" data-activity_id="{{../../activity_id}}"
                                                             id="remarks_btn" value="Remarks">
                                                     </div>
-                                                </div> --}}
-                                                {{/if_eq}}
+                                                </div> --}} {{/if_eq}}
                                             </div>
                                         </div>
                                         {{/each}}
@@ -73,47 +153,50 @@
                     </div>
                 </div>
 
-                    {{!-- <div class="m-t-15 text-center">
-                        <button class="btn btn-primary btn-lg" data-activity_id="{{activity_id}}" data-status_id="2" type="button" id="btnApproveActivityBudget">Approve</button>
-                        <button class="btn btn-primary btn-lg" data-activity_id="{{activity_id}}" data-status_id="3" type="button" id="btnRejectActivityBudget">Reject</button>
-                    </div> --}}
+                {{!--
+                <div class="m-t-15 text-center">
+                    <button class="btn btn-primary btn-lg" data-activity_id="{{activity_id}}" data-status_id="2" type="button" id="btnApproveActivityBudget">Approve</button>
+                    <button class="btn btn-primary btn-lg" data-activity_id="{{activity_id}}" data-status_id="3" type="button" id="btnRejectActivityBudget">Reject</button>
+                </div> --}}
 
 
-                    <div class="modal-footer">
-                        <div class="panel panel-primary modal-footer-panel">
-                            <div class="panel-body">
-                                <div class="list">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <h5>Total</h5>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <span class="form-control" id="hourDetails"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <span class="form-control" id="amountDetails"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <button class="btn btn-info btn-lg" type="button" id="remarksActivity">Remarks</button>
-                                            </div>
+                <div class="modal-footer">
+                    <div class="panel panel-primary modal-footer-panel">
+                        <div class="panel-body">
+                            <div class="list">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h5>Total</h5>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <span class="form-control" id="hourDetails"></span>
                                         </div>
                                     </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <span class="form-control" id="amountDetails"></span>
+                                        </div>
+                                    </div>
+                                    {{!-- <div class="col-md-2">
+                                        <div class="form-group">
+                                            <button class="btn btn-info btn-lg" type="button" id="remarksActivity">Remarks</button>
+                                        </div>
+                                    </div> --}}
                                 </div>
                             </div>
-                            <div class="text-center">
-                                {{!-- <button class="btn btn-primary btn-lg" type="button" id="btnEditActivityBudget">Update</button> --}}
-                                <button class="btn btn-primary btn-lg" data-activity_id="{{activity_id}}" data-status_id="2" type="button" id="btnApproveActivityBudget">Approve</button>
-                                <button class="btn btn-primary btn-lg" data-activity_id="{{activity_id}}" data-status_id="3" type="button" id="btnRejectActivityBudget">Reject</button>
-                                <button class="btn btn-primary btn-lg" type="button" id="btnCancelActivityBudget">Cancel</button>
-                                
-                            </div>
+                        </div>
+                        <div class="text-center">
+                            {{!--
+                            <button class="btn btn-primary btn-lg" type="button" id="btnEditActivityBudget">Update</button> --}}
+                            <button class="btn btn-primary btn-lg" type="button" id="remarksActivity">Remarks</button>
+                            <button class="btn btn-primary btn-lg" data-activity_id="{{activity_id}}" data-status_id="2" type="button" id="btnApproveActivityBudget">Approve</button>
+                            <button class="btn btn-primary btn-lg" data-activity_id="{{activity_id}}" data-status_id="3" type="button" id="btnRejectActivityBudget">Reject</button>
+                            <button class="btn btn-primary btn-lg" type="button" id="btnCancelActivityBudget">Cancel</button>
+
                         </div>
                     </div>
+                </div>
 
 
             </div>
@@ -163,8 +246,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>ACTIVITY
 
 <script type="text/javascript">
-    $(document).on("click", "#btnCancelActivityBudget", function(e){
-        window.location.href="/activity-approvals";
+    $(document).on("click", "#btnCancelActivityBudget", function (e) {
+        window.location.href = "/activity-approvals";
     })
 
     /*$(document).on('click', '#remarks_btn', function (e) {
@@ -224,32 +307,52 @@
 
 
     $(document).ready(function (e) {
-      // budget hour count total 
+        // budget hour count total 
+        var frmDate = $("#activity_date_period").data("from-date");
+        var toDate = $("#activity_date_period").data("to-date");
+        var date_all = frmDate+" - "+toDate;
+        if(frmDate == toDate)
+        {
+            $("#activity_date_period").html(frmDate);
+        }  
+        else
+        {
+            $("#activity_date_period").html(date_all);
+        }  
+        var sumHour = 0;
+        $('.budget_hour').each(function (index) {
+            if ($(this).val() !== "") {
+                sumHour += Number($(this).val());
+            }
+        });
+        $('#hourDetails').html(sumHour);
 
-      var sumHour = 0;
-      $('.budget_hour').each(function (index) {
-        if ($(this).val() !== "") {
-          sumHour += Number($(this).val());
-        }
-      });
-      $('#hourDetails').html(sumHour);
-      
-      var sumAmount = 0;
-      $('.budget_amount').each(function (index) {
-        if ($(this).val() !== "") {
-          sumAmount += Number($(this).val());
-        }
-      });
-      $('#amountDetails').html(sumAmount);
+        var sumAmount = 0;
+        $('.budget_amount').each(function (index) {
+            if ($(this).val() !== "") {
+                sumAmount += Number($(this).val());
+            }
+        });
+        $('#amountDetails').html(sumAmount);
 
-      // Slim Scrollbar for Activity Budget Modal
-      $('#approvalBudget .modal-scroll').slimScroll({
-        color: '#455A64',
-        size: '10px',
-        alwaysVisible: false,
-        height: '350px'
-      });
+        // Slim Scrollbar for Activity Budget Modal
+        $('#approvalBudget .modal-scroll').slimScroll({
+            color: '#455A64',
+            size: '10px',
+            alwaysVisible: false,
+            height: '350px'
+        });
 
     });
+
+    // Equal Height
+
+        var maxHeight = 0;
+
+        $(".apporval-sent .apprv-item").each(function () {
+            if ($(this).height() > maxHeight) { maxHeight = $(this).height(); }
+        });
+
+        $(".apporval-sent .apprv-item").height(maxHeight);
 
 </script> {{/content}}

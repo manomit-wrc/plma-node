@@ -96,7 +96,8 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 			['activity_goal', 'ASC']
 		],
         where: {
-            'firm_id': req.user.firm_id
+            'firm_id': req.user.firm_id,
+            'user_id': req.user.id
         }
     });
     AttorneyPracticeArea.belongsTo(PracticeArea, {
@@ -255,7 +256,8 @@ router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res)
     var success_message = req.flash('success-message')[0];
     const activity_goal = await ActivityGoal.findAll({
         where: {
-            'firm_id': req.user.firm_id
+            'firm_id': req.user.firm_id,
+            'user_id': req.user.id
         }
     });
     const target = await Target.findAll({
@@ -279,7 +281,6 @@ router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res)
             'attorney_id': req.user.id
         }
     });
-
     var activity = await Activity.findAll({
         where: whereCondition,
     });
@@ -460,6 +461,15 @@ router.post('/activity/add', auth, upload.single('activity_attachment'), firmAtt
                     });
                 }
             }
+            var attr_ids = req.body.attorney_user;
+            for (var p = 0; p < attr_ids.length; p++) {
+                await notificationTable.create({
+                    notification_details: " You are invited to join " + req.body.activity_name + " from " + req.user.first_name + " " + req.user.last_name + ".",
+                    activity_type_id: parseInt(attr_ids[p]),
+                    sender_id: parseInt(req.user.id),
+                    status: 0
+                });
+            }
         }
     }
     else
@@ -570,7 +580,8 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
     const activity_goal = await ActivityGoal.findAll({
 
         where: {
-            'firm_id': req.user.firm_id
+            'firm_id': req.user.firm_id,
+            'user_id': req.user.id
         }
     });
     AttorneyPracticeArea.belongsTo(PracticeArea, {
@@ -807,7 +818,8 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 			['activity_goal', 'ASC']
 		],
         where: {
-            'firm_id': req.user.firm_id
+            'firm_id': req.user.firm_id,
+            'user_id': req.user.id
         }
     });
     AttorneyPracticeArea.belongsTo(PracticeArea, {
@@ -1833,7 +1845,8 @@ router.get('/activity-send-request/:id', auth, firmAttrAuth, csrfProtection, asy
     const activity_goal = await ActivityGoal.findAll({
 
         where: {
-            'firm_id': req.user.firm_id
+            'firm_id': req.user.firm_id,
+            'user_id': req.user.id
         }
     });
     AttorneyPracticeArea.belongsTo(PracticeArea, {

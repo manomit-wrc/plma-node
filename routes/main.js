@@ -656,10 +656,10 @@ router.post('/client/multi-delete/', auth, firmAttrAuth, async (req, res) => {
 
 
 
-router.post("/get-duplicate-email-block", auth, async (req, res) => {
+router.post("/get-duplicate-email-block-client", auth, async (req, res) => {
 	const attr_email = await client.findOne({
 		where: {
-			email: req.body.email
+			email: req.body.mail
 		}
 	});
 	if (attr_email !== null) {
