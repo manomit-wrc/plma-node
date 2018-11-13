@@ -460,7 +460,7 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
     const state = await State.findById(referral.state.toString());
     const city = await City.findById(referral.city.toString());
     const zipcode = await Zipcode.findById(referral.zipcode.toString());
-    const industry = await industry_type.findById(referral.industry_type.toString());
+    const industry = await industry_type.findById(referral.industry_type ? referral.industry_type.toString(): null);
 
 	const referredDetails = await Referred_Client_Targets.findAll({
 		where: {

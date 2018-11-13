@@ -467,7 +467,8 @@ router.post('/activity/add', auth, upload.single('activity_attachment'), firmAtt
                     notification_details: " You are invited to join " + req.body.activity_name + " from " + req.user.first_name + " " + req.user.last_name + ".",
                     activity_type_id: parseInt(attr_ids[p]),
                     sender_id: parseInt(req.user.id),
-                    status: 0
+                    status: 0,
+                    link: "/team-activity-approvals"
                 });
             }
         }
@@ -547,7 +548,8 @@ router.post('/activity/add', auth, upload.single('activity_attachment'), firmAtt
                     notification_details:" You are invited to join " +  req.body.activity_name + " from " + req.user.first_name + " " + req.user.last_name +".",
                     activity_type_id: parseInt(attr_ids[p]),
                     sender_id: parseInt(req.user.id),
-                    status: 0
+                    status: 0,
+                    link: "/team-activity-approvals"
                 });
             }
        }
@@ -1390,8 +1392,8 @@ router.get('/activity/update_approval_request/:id/:activity_name', auth, firmAtt
                 sender_id: parseInt(req.user.id),
                 activity_id: req.params['id'],
                 approve_id: 1,
-                status: 0
-    
+                status: 0,
+                link: "/approval_details/" + req.params['id']
            });
         }
 
@@ -1403,15 +1405,6 @@ router.get('/activity/update_approval_request/:id/:activity_name', auth, firmAtt
                 'approver_status': 1,
                 'approve': 0
             });
-            await notificationTable.create({
-                notification_details:  "Request for approval for " + req.params['activity_name'] + " from " + req.user.first_name+ " " + req.user.last_name + " on "  ,
-                activity_type_id: parseInt(userInformation_2_l1.id),
-                sender_id: parseInt(req.user.id),
-                activity_id: req.params['id'],
-                approve_id: 0,
-                status: 0
-    
-           });
         }
 
         const _activityApprovals = await requestApproval.findOne({
@@ -1500,8 +1493,8 @@ router.get('/activity/update_approval_request/:id/:activity_name', auth, firmAtt
                 sender_id: parseInt(req.user.id),
                 activity_id: req.params['id'],
                 approve_id: 1,
-                status: 0
-    
+                status: 0,
+                link: "/approval_details/" + req.params['id']
            });
         }
 
@@ -1516,15 +1509,7 @@ router.get('/activity/update_approval_request/:id/:activity_name', auth, firmAtt
                 'approver_status': 2,
                 'approve': 0
             });
-            await notificationTable.create({
-                notification_details:  "Request for approval for " + req.params['activity_name'] + " from " + req.user.first_name+ " " + req.user.last_name + " on "  ,
-                activity_type_id: parseInt(userInformation_3_l2.id),
-                sender_id: parseInt(req.user.id),
-                activity_id: req.params['id'],
-                approve_id: 0,
-                status: 0
-    
-           });
+            
         }
         if (userInformation_3_l1 !== null) {
             await requestApproval.create({
@@ -1534,15 +1519,7 @@ router.get('/activity/update_approval_request/:id/:activity_name', auth, firmAtt
                 'approver_status': 1,
                 'approve': 0
             });
-            await notificationTable.create({
-                notification_details:  "Request for approval for " + req.params['activity_name'] + " from " + req.user.first_name+ " " + req.user.last_name + " on "  ,
-                activity_type_id: parseInt(userInformation_3_l1.id),
-                sender_id: parseInt(req.user.id),
-                activity_id: req.params['id'],
-                approve_id: 0,
-                status: 0
-    
-           });
+            
         }
         const _activityApprovals = await requestApproval.findOne({
             attributes: [[Sequelize.fn('MAX', Sequelize.col('approver_status')), 'max_approver_status']],
@@ -1645,8 +1622,8 @@ router.get('/activity/update_approval_request/:id/:activity_name', auth, firmAtt
                 sender_id: parseInt(req.user.id),
                 activity_id: req.params['id'],
                 approve_id: 1,
-                status: 0
-    
+                status: 0,
+                link: "/approval_details/" + req.params['id']
            });
         }
         if (userInformation_4_l3 !== null) {
@@ -1657,15 +1634,7 @@ router.get('/activity/update_approval_request/:id/:activity_name', auth, firmAtt
                 'approver_status': 3,
                 'approve': 0
             });
-            await notificationTable.create({
-                notification_details:  "Request for approval for " + req.params['activity_name'] + " from " + req.user.first_name+ " " + req.user.last_name + " on "  ,
-                activity_type_id: parseInt(userInformation_4_l3.id),
-                sender_id: parseInt(req.user.id),
-                activity_id: req.params['id'],
-                approve_id: 0,
-                status: 0
-    
-           });
+            
         }
         if (userInformation_4_l2 !== null) {
             await requestApproval.create({
@@ -1675,15 +1644,7 @@ router.get('/activity/update_approval_request/:id/:activity_name', auth, firmAtt
                 'approver_status': 2,
                 'approve': 0
             });
-            await notificationTable.create({
-                notification_details:  "Request for approval for " + req.params['activity_name'] + " from " + req.user.first_name+ " " + req.user.last_name + " on "  ,
-                activity_type_id: parseInt(userInformation_4_l2.id),
-                sender_id: parseInt(req.user.id),
-                activity_id: req.params['id'],
-                approve_id: 0,
-                status: 0
-    
-           });
+            
         }
         if (userInformation_4_l1 !== null) {
             await requestApproval.create({
@@ -1693,15 +1654,7 @@ router.get('/activity/update_approval_request/:id/:activity_name', auth, firmAtt
                 'approver_status': 1,
                 'approve': 0
             });
-            await notificationTable.create({
-                notification_details:  "Request for approval for " + req.params['activity_name'] + " from " + req.user.first_name+ " " + req.user.last_name + " on "  ,
-                activity_type_id: parseInt(userInformation_4_l1.id),
-                sender_id: parseInt(req.user.id),
-                activity_id: req.params['id'],
-                approve_id: 0,
-                status: 0
-    
-           });
+            
         }
         const _activityApprovals = await requestApproval.findOne({
             attributes: [[Sequelize.fn('MAX', Sequelize.col('approver_status')), 'max_approver_status']],
@@ -1750,8 +1703,8 @@ router.get('/activity/update_approval_request/:id/:activity_name', auth, firmAtt
                 sender_id: parseInt(req.user.id),
                 activity_id: req.params['id'],
                 approve_id: 1,
-                status: 0
-    
+                status: 0,
+                link: "/approval_details/" + req.params['id']
            });
         }
         const _activityApprovals = await requestApproval.findOne({

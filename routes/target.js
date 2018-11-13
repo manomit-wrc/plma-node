@@ -548,11 +548,12 @@ router.get('/target/view/:id', auth, firmAttrAuth, csrfProtection, async(req, re
             model: Activity
         }]
     });
+    var industry_type_id = target.industry_type ? target.industry_type.toString() : null;
     const country = await Country.findById("233");
     const state = await State.findById(target.state.toString());
     const city = await City.findById(target.city.toString());
     const zip = await Zipcode.findById(target.postal_code.toString());
-    const industrys = await industry_type.findById(target.industry_type.toString());
+    const industrys = await industry_type.findById(industry_type_id);
 
     res.render('target/targetview', {
         layout: 'dashboard',

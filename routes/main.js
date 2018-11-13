@@ -883,7 +883,7 @@ router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 	const state = await State.findById(clients.state.toString());
 	const city = await City.findById(clients.city.toString());
 	const zip = await Zipcode.findById(clients.pin_code.toString());
-	const industrys = await Industry.findById(clients.industry_type.toString());
+	const industrys = await Industry.findById(clients.industry_type ? clients.industry_type.toString(): null);
 
 	const designations = await Designation.findAll();
 	const tags = await Tag.findAll();

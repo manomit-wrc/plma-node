@@ -14,6 +14,12 @@ const Revenue = require('../models').revenue;
 const router = express.Router();
 const Client = require('../models').client;
 const notificationTable = require('../models').notificationTable;
+var fs = require('fs');
+var xlsx = require('node-xlsx');
+const Zipcode = require('../models').zipcode;
+const City = require('../models').city;
+const State = require('../models').state;
+const Country = require('../models').country;
 
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
@@ -27,7 +33,6 @@ router.get('/activity-approvals', auth, async (req, res) => {
     const activityRequest = await requestApproval.findAll({
         where: {
             'approver_id': req.user.id,
-            'status': '1'
         },
         include: [{
             model: Activity
@@ -129,7 +134,7 @@ router.post('/add_activity_budget_remark', auth, async (req, res) => {
 });
 
 router.post('/update_activity_approve_reject', auth, async (req, res) => {
-
+    var selectActivity = await Activity.findById(req.body.activity_id);
      if (req.body.status==3){
         await requestApproval.update({
             'approve': '0',
@@ -148,6 +153,16 @@ router.post('/update_activity_approve_reject', auth, async (req, res) => {
             where: {
                 'id': req.body.activity_id
             }
+        });
+
+        
+        await notificationTable.create({
+            notification_details: selectActivity.activity_name + " has been rejected from approver. Please update this activity and resend for approval",
+            activity_type_id: parseInt(selectActivity.user_id),
+            sender_id: parseInt(req.user.id),
+            activity_id: req.body.activity_id,
+            status: 0,
+            link: "/activity/edit/" + req.body.activity_id
         });
 
     } else {
@@ -181,14 +196,24 @@ router.post('/update_activity_approve_reject', auth, async (req, res) => {
                     'approver_status': _activityApprovals.get('max_approver_status')
                 }
             });
-             await notificationTable.update({
-                approve_id: 1
-            },{
+            var findAppr = await requestApproval.findOne({
                 where: {
-                    activity_type_id: req.user.id,
-                    activity_id: req.body.activity_id
+                    'activity_id': req.body.activity_id,
+                    'status': "1",
+                    'approve': "0"
                 }
+            })
+            const findActivity = await Activity.findById(req.body.activity_id);
+            const findOrgAttr = await User.findById(findActivity.user_id)
+            await notificationTable.create({
+                notification_details: "Request for approval for " + findActivity.activity_name + " from " + findOrgAttr.first_name + " " + findOrgAttr.last_name + " on ",
+                activity_type_id: parseInt(findAppr.approver_id),
+                sender_id: parseInt(req.user.id),
+                activity_id: req.body.activity_id,
+                status: 0,
+                link: "/approval_details/" + req.body.activity_id
             });
+
         } else {
             await Activity.update({
                 activity_status: req.body.status
@@ -196,6 +221,14 @@ router.post('/update_activity_approve_reject', auth, async (req, res) => {
                 where: {
                     id: req.body.activity_id
                 }
+            });
+            await notificationTable.create({
+                notification_details: selectActivity.activity_name + " has been approved from approver",
+                activity_type_id: parseInt(selectActivity.user_id),
+                sender_id: parseInt(req.user.id),
+                activity_id: req.body.activity_id,
+                status: 0,
+                link: "/activity/view/" + req.body.activity_id
             });
         }
     } 
@@ -367,5 +400,86 @@ router.post("/change-read-status", auth, async(req, res)=> {
         success: true
     })
 });
+
+router.get("/end-planning-period-noti-crown", async(req, res)=> {
+    const allRevenue = await Revenue.findAll({
+        where: {
+            'type':'C',
+            'status': 0
+        }
+    });
+    const dateDetails = new Date();
+    for (var i=0; i<allRevenue.length; i++) {
+        if (dateDetails > allRevenue[i].end_date) {
+            var clientDetails =  await Client.findById(allRevenue[i].client_id);
+            var clientName = clientDetails ? clientDetails.first_name + " " + clientDetails.last_name : '';
+            await notificationTable.create({
+                notification_details: "End planning Period for" + clientName + " on ",
+                activity_type_id: parseInt(allRevenue[i].user_id),
+                sender_id: 0,
+                status: 0,
+                link: "/client/edit/" + allRevenue[i].client_id
+            });
+        }
+    }
+    res.redirect("/dashboard");
+})
+
+// function convertToJSON(array) {
+//     var first = array[0].join()
+//     var headers = first.split(',');
+
+//     var jsonData = [];
+//     for (var i = 1, length = array.length; i < length; i++) {
+//         var myRow = array[i].join();
+//         var row = myRow.split(',');
+
+//         var data = {};
+//         for (var x = 0; x < row.length; x++) {
+//             data[headers[x]] = row[x];
+//         }
+//         jsonData.push(data);
+//     }
+//     return jsonData;
+// }
+
+// function toTitleCase(str) {
+//     return str.replace(/\w\S*/g, function (txt) {
+//         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+//     });
+// }
+
+// router.get("/uploads-xlxs-country-state", async(req, res)=> {
+//     var xxx = xlsx.parse(fs.readFileSync('public/importstatecityfetch.xlsx'));
+//     var importedData = JSON.stringify(convertToJSON(xxx[0].data));
+//     var xxxo = JSON.parse(importedData);
+//     //const loadArr = lodash.filter(xxxo, arr => arr.full_state === "Ohio");
+//     for (var y = 0; y < xxxo.length; y++) {
+//         if (xxxo[y].full_state == "Wyoming")
+//         {
+//             if (xxxo[y].city !== "NULL") {
+//                 if (xxxo[y].city != xxxo[y + 1].city)
+//                 {
+//                     //console.log(xxxo[y].city);
+//                     await City.create({
+//                         state_id: "51",
+//                         name: toTitleCase(xxxo[y].city)
+//                     })
+//                 }
+//                 if (xxxo[y].zip != xxxo[y + 1].zip)
+//                 {
+//                     await Zipcode.create({
+//                         zip: xxxo[y].zip,
+//                         city_name: toTitleCase(xxxo[y].city),
+//                         lat:xxxo[y].lat,
+//                         lng:xxxo[y].long
+//                     })
+//                 }
+//             }
+//         }
+//     }
+//     console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!============completed================!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+//     res.send("completed");
+// })
 
 module.exports = router;

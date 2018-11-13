@@ -393,7 +393,7 @@
               }, function () {
                 $.ajax({
                   type: "GET",
-                  url: "/activity/update_approval_request/" + activity_id,
+                  url: "/activity/update_approval_request/" + activity_id + "/" + activity_name,
                   success: function (response) {
                     if (response.success == true) {
                       swal({

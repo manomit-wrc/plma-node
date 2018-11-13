@@ -66,7 +66,8 @@ router.get('/tempActivity/approvalRequest/', auth, async (req, res) => {
                 notification_details: "All team members have accepted the invitation for " + activity.activity_name,
                 activity_type_id: parseInt(activity.user_id),
                 sender_id: parseInt(req.user.id),
-                status: 0
+                status: 0,
+                link: "/activity/view/" + activityId
             });
         }
     } else {

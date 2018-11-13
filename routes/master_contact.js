@@ -792,7 +792,7 @@ router.post('/master_contact/move-to-referral/', auth, async (req, res) => {
 			youtube: contact_data.youtube,
 			//firm_id: contact_data.firm_id,
 
-			attorney_id: req.contact_data.user_id,
+			attorney_id: contact_data.user_id,
 			remarks: contact_data.remarks,
 			firm_id: req.user.firm_id,
 		});

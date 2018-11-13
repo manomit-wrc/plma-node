@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     activity_type_id: DataTypes.INTEGER,
     sender_id: DataTypes.INTEGER,
     activity_id: DataTypes.INTEGER,
-
+    link: DataTypes.STRING,
     status: DataTypes.INTEGER
   }, {});
   notificationTable.associate = function(models) {

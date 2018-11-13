@@ -346,12 +346,11 @@
                 var bgcolor = "";
                 if (response.noti[j].status === 0) {
                   bgcolor = "#d4d4d4";
-                //$(".notification-message").css({ "background-color": "#f2dfd4" });
                 }
                 else {
                   bgcolor= "";
                 }
-                $("#notiMsg").append('<li class="media notification-message read_status" style="background-color:'+ bgcolor+'" data-noti-id = "'+response.noti[j].id+'">' +
+                $("#notiMsg").append('<li class="media notification-message read_status" style="background-color:'+ bgcolor+'" data-noti-id = "'+response.noti[j].id+'" data-noti-link = "' + response.noti[j].link +'">' +
                   '<a href="javascript:void(0)">' +
                     '<div class="media-left">' +
                       '<span class="avatar">' +
@@ -389,6 +388,7 @@
 
   $(document).on('click', ".read_status", function(){
     var noti_id = $(this).data("noti-id");
+    var noti_link = $(this).data("noti-link");
     $.ajax({
         type: "POST",
         url: "/change-read-status",
@@ -397,7 +397,7 @@
         },
         success: function (response) {
           if(response.success == true){
-            window.location.reload(); 
+            window.location.href = noti_link; 
           }
         },
         error: function (xhr) {
