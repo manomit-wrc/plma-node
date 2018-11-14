@@ -265,13 +265,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Remarks</label>
-                                    <textarea class="form-control floating" id="remarks" name="remarks" rows="5" disabled>{{editdata.remarks}}</textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-6 pull-right">
+                            
+                            <div class="col-md-2 pull-right">
                                 {{#if editdata.attachment_field}}
                                 <div class="download-btn">
                                     <div class="form-group form-focus">
@@ -284,7 +279,7 @@
                                 <div class="form-group form-focus"></div>
                                 {{/if}}
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <div class="form-group form-focus select-focus select-attorney">
                                     <label class="control-label">Activity Details Status</label>
                                     <select class="form-control floatingb " id="budget_status" name="budget_status" disabled>
@@ -295,7 +290,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <div class="form-group form-focus select-focus select-attorney">
                                     <label class="control-label">Activity Budget Details Status</label>
                                     <select class="form-control floating " id="budget_details_status" name="budget_details_status" disabled>
@@ -307,6 +302,15 @@
                                         <option value="guestimate" {{#if_eq editdata.budget_details_status "guestimate"}} selected="selected" {{/if_eq}}>GUESTIMATE</option>
                                     </select>
                                 </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-focus select-focus">
+                                    <label class="control-label">Remarks</label>
+                                    <textarea class="form-control floating" id="invitation_remarks" name="invitation_remarks" rows="5"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-primary btn-lg" id="invitationRemarksButton" data-activity-id="{{editdata.id}}"><i class="fa fa-plus"></i> Add</button>
                             </div>
                         </div>
                     </div>
@@ -582,6 +586,40 @@
         });
 
     });
+
+    $(document).on("click","#invitationRemarksButton", function(){
+        var activity_id = $(this).data("activity-id");
+        var invi_remarks = $("#invitation_remarks").val();
+        if(invi_remarks != "")
+        {
+            $.ajax({
+                type: 'POST',
+                url: '/add-invitation-remarks',
+                data: {
+                    activity_id: activity_id,
+                    invi_remarks: invi_remarks
+                },
+                success: function (response) {
+                    if (response.success === true) {
+                        swal({
+                            title: "Nice!",
+                            text: "Remarks Added Successfully!",
+                            type: "success"
+                        }, function () {
+                            window.location.reload();
+                        });
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        }
+        else
+        {
+            swal("warning!", "Remarks can't be blank","warning");
+        }
+    })
 
 
 </script> {{/content}}

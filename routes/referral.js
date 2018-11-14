@@ -464,7 +464,8 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
 
 	const referredDetails = await Referred_Client_Targets.findAll({
 		where: {
-			referral_id: req.params['id']
+			referral_id: req.params['id'],
+			status:1
 		}
 	});
 
@@ -598,7 +599,8 @@ router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 
 	const referredDetails = await Referred_Client_Targets.findAll({
 		where: {
-			referral_id: req.params['id']
+			referral_id: req.params['id'],
+			status: 1
 		}
 	});
 

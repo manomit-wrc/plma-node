@@ -20,6 +20,7 @@ const Referral = require('../models').referral;
 const multer = require('multer');
 const User = require('../models').user;
 const notificationTable = require('../models').notificationTable;
+const practiceAreaToActivity = require('../models').practice_area_to_activity;
 
 
 const requestApproval = require('../models').request_approval;
@@ -335,6 +336,7 @@ router.post('/activity/add-budget', auth, firmAttrAuth, csrfProtection, async (r
 
 // ========{{  insert data to the database  }}=====================//
 router.post('/activity/add', auth, upload.single('activity_attachment'), firmAttrAuth, csrfProtection, async (req, res) => {
+    var activity_practice_area = req.body.practice_area;
     var target_user = [];
     var client_user = [];
     var referral_user = [];
@@ -393,7 +395,7 @@ router.post('/activity/add', auth, upload.single('activity_attachment'), firmAtt
         await Activity.update({
             'activity_type': req.body.activity_type,
             'activity_goal_id': req.body.activity_goal,
-            'practice_area': req.body.practice_area,
+            //'practice_area': req.body.practice_area,
             'remarks': req.body.remarks,
             'activity_creation_date': CreationDate ? CreationDate[2] + "-" + CreationDate[0] + "-" + CreationDate[1] : null,
             'activity_from_date': FromDate ? FromDate[2] + "-" + FromDate[0] + "-" + FromDate[1] : null,
@@ -467,10 +469,18 @@ router.post('/activity/add', auth, upload.single('activity_attachment'), firmAtt
                     notification_details: " You are invited to join " + req.body.activity_name + " from " + req.user.first_name + " " + req.user.last_name + ".",
                     activity_type_id: parseInt(attr_ids[p]),
                     sender_id: parseInt(req.user.id),
+                    activity_id: req.body.activity_id,
                     status: 0,
                     link: "/team-activity-approvals"
                 });
             }
+        }
+        for (var p = 0; p < activity_practice_area.length; p++) {
+            const practicearea = await practiceAreaToActivity.create({
+                activity_id: parseInt(req.body.activity_id),
+                practice_area_id: parseInt(activity_practice_area[p]),
+                status: 0
+            });
         }
     }
     else
@@ -478,7 +488,7 @@ router.post('/activity/add', auth, upload.single('activity_attachment'), firmAtt
        var activitys = await Activity.create({
            'activity_type': req.body.activity_type,
            'activity_goal_id': req.body.activity_goal,
-           'practice_area': req.body.practice_area,
+          // 'practice_area': req.body.practice_area,
            'remarks': req.body.remarks,
            'activity_creation_date': CreationDate ? CreationDate[2] + "-" + CreationDate[0] + "-" + CreationDate[1] : null,
            'activity_from_date': FromDate ? FromDate[2] + "-" + FromDate[0] + "-" + FromDate[1] : null,
@@ -548,6 +558,7 @@ router.post('/activity/add', auth, upload.single('activity_attachment'), firmAtt
                     notification_details:" You are invited to join " +  req.body.activity_name + " from " + req.user.first_name + " " + req.user.last_name +".",
                     activity_type_id: parseInt(attr_ids[p]),
                     sender_id: parseInt(req.user.id),
+                    activity_id: activitys.id,
                     status: 0,
                     link: "/team-activity-approvals"
                 });
@@ -561,17 +572,32 @@ router.post('/activity/add', auth, upload.single('activity_attachment'), firmAtt
            hour: 0,
            amount: 0,
        });
-       
-
-       
-
+       for (var p = 0; p < activity_practice_area.length; p++) {
+           const practicearea = await practiceAreaToActivity.create({
+               activity_id: parseInt(activitys.id),
+               practice_area_id: parseInt(activity_practice_area[p]),
+               status: 0
+           });
+       }
     }
+    
     req.flash('success-activity-message', 'Activity Created Successfully');
     res.redirect('/activitypage');
 });
 
 router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+    await notificationTable.update({
+        status:1
+    },{
+        where: {
+            link: "/activity/view/" + req.params['id'],
+            activity_type_id: req.user.id
+        }
+    });
     Activity.hasMany(Activity_to_user_type, {
+        foreignKey: 'activity_id'
+    });
+    Activity.hasMany(practiceAreaToActivity, {
         foreignKey: 'activity_id'
     });
     const firm = await Firm.findAll({
@@ -586,15 +612,15 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
             'user_id': req.user.id
         }
     });
-    AttorneyPracticeArea.belongsTo(PracticeArea, {
+    AttorneyFirmPracticeArea.belongsTo(PracticeArea, {
         order: [
             ['name', 'ASC'],
         ],
         foreignKey: 'practice_area_id'
     });
-    const practice_area = await AttorneyPracticeArea.findAll({
+    const practice_area = await AttorneyFirmPracticeArea.findAll({
         where: {
-            attorney_id: req.user.id
+           firm_id: req.user.firm_id
         },
         include: [{
             model: PracticeArea
@@ -646,8 +672,16 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
         },
         include: [{
             model: Activity_to_user_type
+        }, {
+            model: practiceAreaToActivity
         }]
     });
+
+    var result = JSON.parse(JSON.stringify(editdata[0].practice_area_to_activities));
+    var p_type_arr = [];
+    for (var i = 0; i < result.length; i++) {
+        p_type_arr.push(result[i].practice_area_id);
+    }
     const practicearea = await PracticeArea.findOne({
         where: {
             id: editdata[0].practice_area
@@ -800,13 +834,17 @@ router.get('/activity/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
         attorney: allAttorney,
         practicearea,
         invluser,
-        orgnattr
+        orgnattr,
+        p_type_arr
     });
 });
 
 //.....................{{   edit data  }}.......................................//
 router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
     Activity.hasMany(Activity_to_user_type, {
+        foreignKey: 'activity_id'
+    });
+    Activity.hasMany(practiceAreaToActivity, {
         foreignKey: 'activity_id'
     });
     const firm = await Firm.findAll({
@@ -908,8 +946,15 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
         },
         include: [{
             model: Activity_to_user_type
+        },{
+            model: practiceAreaToActivity
         }]
     });
+    var result = JSON.parse(JSON.stringify(editdata[0].practice_area_to_activities));
+    var p_type_arr = [];
+    for (var i = 0; i < result.length; i++) {
+        p_type_arr.push(result[i].practice_area_id);
+    }
 
     const practicearea = await PracticeArea.findOne({
         where: {
@@ -1082,7 +1127,8 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
         existingtclen: existingtclen.length,
         Cdata,
         tdata,
-        Rdata
+        Rdata,
+        p_type_arr
     });
 });
 
@@ -1119,6 +1165,7 @@ router.post('/activity/edit-budget', auth, firmAttrAuth, csrfProtection, async (
 });
 
 router.post('/activity/update/:id', auth, upload.single('activity_attachment'), firmAttrAuth, csrfProtection, async (req, res) => {
+    var activity_edit_p_area = req.body.practice_area;
     var target_user = [];
     var client_user = [];
     var referral_user = [];
@@ -1218,7 +1265,7 @@ router.post('/activity/update/:id', auth, upload.single('activity_attachment'), 
     await Activity.update({
         'activity_type': req.body.activity_type,
         'activity_goal_id': req.body.activity_goal,
-        'practice_area': req.body.practice_area,
+        //'practice_area': req.body.practice_area,
         'remarks': req.body.remarks,
         'activity_creation_date': CreationDate1 ? CreationDate1[2] + "-" + CreationDate1[0] + "-" + CreationDate1[1] : null,
         'activity_from_date': FormDate1 ? FormDate1[2] + "-" + FormDate1[0] + "-" + FormDate1[1] : null,
@@ -1239,6 +1286,18 @@ router.post('/activity/update/:id', auth, upload.single('activity_attachment'), 
             'id': req.params['id']
         }
     });
+    const del_practice = await practiceAreaToActivity.destroy({
+        where: {
+            activity_id: req.params['id']
+        }
+    });
+    for (var p = 0; p < activity_edit_p_area.length; p++) {
+        const practicearea = await practiceAreaToActivity.create({
+            activity_id: req.params['id'],
+            practice_area_id: activity_edit_p_area[p],
+            status: 0
+        });
+    }
     if (req.body.budget_update == '1') {
         if (activityBudgetData[0].level_type !== 'Individual') {
             await Activity.update({
@@ -1320,6 +1379,14 @@ router.post('/activity/update/:id', auth, upload.single('activity_attachment'), 
 });
 
 router.get('/activity/update_approval_request/:id/:activity_name', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+    await notificationTable.update({
+        status: 1
+    }, {
+        where: {
+            link: "/activity/view/" + req.params['id'],
+            activity_type_id: req.user.id
+        }
+    });
     var userInformation_4_l4;
     var userInformation_4_l3;
     var userInformation_4_l2;
@@ -2015,6 +2082,19 @@ router.get("/team-invition-approval-system/:id", auth, async(req, res)=> {
         attr_count: accepted_activity.length,
         rej_attr_count: rejected_activity.length
     });
+});
+
+router.get("/get-invitation-remark-attr/:attr_id/:id", auth, async(req, res)=> {
+    const selected_attr = await Activity_attorney.findOne({
+        where: {
+            'activity_id': req.params['id'],
+            'attorney_id': req.params['attr_id']
+        }
+    });
+    res.json({
+        success:true,
+        remarks: selected_attr.remarks
+    })
 });
 
 //====================================END ACTIVITY=============================================================================//

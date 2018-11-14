@@ -453,7 +453,7 @@ router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, re
 			target_id: req.params['id']
 		}
 	});
-
+    //console.log(referralDetails);
 	for (var i = 0; i < referralDetails.length; i++) {
         const referDetails = await Referral.findOne({
             where: {
@@ -462,7 +462,8 @@ router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, re
         });
         referralListArr.push({
             "name": referDetails.first_name + " " + referDetails.last_name,
-            "email": referDetails.email
+            "email": referDetails.email,
+            "id": referralDetails[i].id
         });
 	}
 
@@ -1085,5 +1086,16 @@ router.post("/target/referraladd", auth, csrfProtection, async (req, res) => {
 		message: 'Success'
 	});
 });
+
+router.get("/referred-target-clint-delete/:id", auth, async(req, res)=> {
+    await Referred_Client_Targets.destroy({
+        where: {
+            id: req.params['id']
+        }
+    });
+    res.json({
+        success: true
+    })
+})
 
 module.exports = router;

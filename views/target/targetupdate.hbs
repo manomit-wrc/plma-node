@@ -400,6 +400,7 @@
 										<th>SL#</th>
 										<th>Referral Sources Name</th>
 										<th>Email</th>
+										<th>Action</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -408,6 +409,10 @@
 										<td>{{math @index "+" 1}}</td>
 										<td>{{this.name}}</td>
 										<td>{{this.email}}</td>
+										<td><a href="javascript:void(0)" id="delAssociatedReferral" data-ctr-id="{{this.id}}" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom"
+										 title="Delete">
+											<i class="fa fa-trash-o m-r-5"></i>
+										</a></td>
 									</tr>
 									{{/each}}
 								</tbody>
@@ -712,6 +717,34 @@ $("#life_time_revenue").inputmask("numeric", {
 					$("#end_date").val(end_date);
 				}
 			}
+		});
+	});
+	$(document).on('click',"#delAssociatedReferral", function(){
+		var ctrId = $(this).data("ctr-id");
+		swal({
+			title: "Are you sure?",
+			text: "You want to delete this associated referral sources?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonClass: "btn-danger",
+			confirmButtonText: "Yes",
+			closeOnConfirm: false
+		}, function () {
+			$.ajax({
+				type: "GET",
+				url: "/referred-target-clint-delete/" + ctrId,
+				success: function (response) {
+					if (response.success == true) {
+						swal({
+							title: "Success!",
+							text: "Associated Referral Deleted successfully",
+							type: "success"
+						}, function () {
+							window.location.reload();
+						});
+					}
+				}
+			});
 		});
 	});
 </script>

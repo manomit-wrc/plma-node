@@ -38,7 +38,15 @@ router.get('/tempActivity/approvalRequest/', auth, async (req, res) => {
 
     const activityId = req.query['activity_id'];
     const requestApproval = req.query['approvalStatus'];
-
+    await notificationTable.update({
+        status: 1
+    },{
+        where: {
+            link: "/team-activity-approvals",
+            activity_id: activityId,
+            activity_type_id: req.user.id
+        }
+    });
     if (requestApproval==='approva') {
         await activityAttorney.update({
             'status': 1
@@ -66,6 +74,7 @@ router.get('/tempActivity/approvalRequest/', auth, async (req, res) => {
                 notification_details: "All team members have accepted the invitation for " + activity.activity_name,
                 activity_type_id: parseInt(activity.user_id),
                 sender_id: parseInt(req.user.id),
+                activity_id: activityId,
                 status: 0,
                 link: "/activity/view/" + activityId
             });
@@ -87,6 +96,29 @@ router.get('/tempActivity/approvalRequest/', auth, async (req, res) => {
     });
 
     
+});
+
+router.post("/add-invitation-remarks", auth, async(req, res)=> {
+    await activityAttorney.update({
+        remarks: req.body.invi_remarks
+    },{
+        where: {
+            attorney_id: req.user.id,
+            activity_id: req.body.activity_id
+        }
+    })
+    const activity_creator = await Activity.findById(req.body.activity_id);
+    await notificationTable.create({
+        notification_details: "You got a remarks for " + activity_creator.activity_name + " activity from " + req.user.first_name +" " + req.user.last_name,
+        activity_type_id: parseInt(activity_creator.user_id),
+        sender_id: parseInt(req.user.id),
+        activity_id: req.body.activity_id,
+        status: 0,
+        link: "/activity/view/" + req.body.activity_id
+    });
+    res.json({
+        success: true
+    })
 });
 
 

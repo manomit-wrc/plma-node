@@ -38,7 +38,6 @@ router.get('/activity-approvals', auth, async (req, res) => {
             model: Activity
         }],
     });
-    
     res.render('activity-approvals/index', {
         layout: 'dashboard',
         title: 'Pending Activity Approval Listing',
@@ -102,7 +101,26 @@ router.get('/approval_details/:id', auth, async (req, res) => {
     const originAttr = await User.findById(activity.user_id);
     const activity_goal = await ActivityGoal.findById(activity.activity_goal_id);
     const practice_area = await PracticeArea.findById(activity.practice_area);
-    //console.log(originAttr.first_name);
+    requestApproval.belongsTo(User, {
+        foreignKey: 'approver_id'
+    });
+    const responseApprls = await requestApproval.findAll({
+        where:{
+            activity_id: req.params['id']
+        },
+        include: [{
+            model: User
+        }],
+        order: [
+            ['approver_status', 'DESC']
+        ]
+    })
+    const responseApprl = await requestApproval.findOne({
+        where: {
+            activity_id: req.params['id'],
+            approver_id: req.user.id
+        }
+    })
     res.render('activity-approvals/approval_details', {
         layout: 'dashboard',
         title: 'View Activity Details for Approval',
@@ -112,8 +130,10 @@ router.get('/approval_details/:id', auth, async (req, res) => {
         'tclength': jointActivities.length,
         act_remark: act_remark ? act_remark.approver_remarks: "",
         activity_goal: activity_goal.activity_goal,
-        practice_area: practice_area.name,
-        origin_attr: originAttr.first_name + " " + originAttr.last_name
+        //practice_area: practice_area.name,
+        origin_attr: originAttr.first_name + " " + originAttr.last_name,
+        responseApprl,
+        responseApprls
     });
 
 });
@@ -135,6 +155,15 @@ router.post('/add_activity_budget_remark', auth, async (req, res) => {
 
 router.post('/update_activity_approve_reject', auth, async (req, res) => {
     var selectActivity = await Activity.findById(req.body.activity_id);
+    await notificationTable.update({
+        status: 1
+    },{
+        where: {
+            link: "/approval_details/" + req.body.activity_id,
+            activity_id: req.body.activity_id,
+            activity_type_id: req.user.id
+        }
+    });
      if (req.body.status==3){
         await requestApproval.update({
             'approve': '0',

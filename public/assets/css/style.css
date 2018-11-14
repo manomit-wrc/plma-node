@@ -6292,6 +6292,13 @@ i.fa.fa-eye.m-r-5 {
 	text-transform: uppercase;
 }
 
+.apprvlStatus {
+    position: absolute;
+    padding: 10px 50px;
+    top: 132px;
+    font-size: 15px;
+}
+
 
 /*------------------------------------------------------------------
 [39-a.... Custom Styles]

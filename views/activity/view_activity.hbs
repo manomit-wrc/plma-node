@@ -136,6 +136,7 @@
                      {{#if '0'}} {{#inArrayCustom1 ../attr_arr this.id '0'}} <span class="label label-warning-border">Pending</span> {{/inArrayCustom1}} {{/if}}{{#if '1'}} {{#inArrayCustom1
                     ../attr_arr this.id '1'}} <span class="label label-success-border">Accepted</span> {{/inArrayCustom1}} {{/if}} {{#if '2'}} {{#inArrayCustom1 ../attr_arr this.id
                     '2'}} <span class="label label-danger-border">Rejected</span> {{/inArrayCustom1}} {{/if}}
+                    <button id="showInviRemark" type="button" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" data-attr-id="{{this.id}}" data-activity-id="{{../editdata.id}}" title="Show Remarks"><i class="fa fa-comment"></i></button>
                   </li>
                 {{/each}}
                 </ul>
@@ -234,7 +235,7 @@
                   </select>
                 </div>
               </div>
-              <div class="col-md-6">
+              {{!-- <div class="col-md-6">
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">Practice Area Type</label>
                   <select id="practice_area" name="practice_area" class="form-control floating" disabled>
@@ -254,6 +255,27 @@
                     {{/if_eq}}
                     </select>
                 </div>
+              </div> --}}
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="">
+                    <select class="form-control floating " id="practice_area" name="practice_area[]" multiple="multiple">
+                      {{!-- {{#if_eq user.actual_role_id "2"}}  --}}
+                      {{#each practice_area}}
+                        <option value="{{this.practicearea.id}}" disabled {{#inArray ../p_type_arr this.practicearea.id}} selected="selected" {{/inArray}}>{{this.practicearea.name}}</option>
+                      {{/each}} 
+                    {{!-- {{else}}
+                      {{#each practice_area}}
+                      <option value="{{this.practicearea.id}}" disabled {{#inArray ../p_type_arr this.practicearea.id}} selected="selected" {{/inArray}}>{{this.practicearea.name}}</option>
+                      {{/each}}
+                      {{#if_eq user.id editdata.user_id}}
+                      {{else}}
+                      <option value="{{practicearea.id}}" disabled {{#inArray ../p_type_arr this.practicearea.id}} selected="selected" {{/inArray}}>{{practicearea.name}}</option>
+                      {{/if_eq}} --}}
+                    {{!-- {{/if_eq}} --}}
+                    </select>
+                  </div>
+                </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group form-focus select-focus">
@@ -264,9 +286,9 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-6">
+              {{!-- <div class="col-md-6">
                 <div class="form-group form-focus select-focus"></div>
-              </div>
+              </div> --}}
               <div class="col-md-2" id="oneDay_ActivityEvent">
                 <button class="btn btn-primary btn-lg" type="button" id="oneDayActivityEvent" style="display:none;" disabled>One Day Event</button>
               </div>
@@ -507,6 +529,24 @@
   </div>
 </div>
 
+<div class="modal fade" id="inviteAttrRemarks" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <strong>Attorney's Remarks</strong>
+        <button type="button" class="close" data-dismiss="modal">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <textarea class="form-control floating" id="show_remark_invite" name="show_remark_invite" rows="5" disabled></textarea>
+        </div>
+      </div>
+      <div class="modal-footer"></div>
+    </div>
+  </div>
+</div>
+
 {{#content "script" mode="append"}}
 <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
@@ -515,7 +555,14 @@
 <script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript">
-
+  $('#practice_area').multiselect({
+      nonSelectedText: 'Select Practice Area',
+      enableFiltering: true,
+      includeSelectAllOption: true,
+      buttonWidth: '100%',
+      maxHeight: 400,
+      dropDown: true
+    })
   $('#target_id').multiselect({
     nonSelectedText: 'Select Targets',
     includeSelectAllOption: true,
@@ -621,6 +668,21 @@
       height: '350px'
     });
 
+  });
+  $(document).on("click","#showInviRemark", function(){
+    var attr_id = $(this).data("attr-id");
+    var activity_id = $(this).data("activity-id");
+    $.ajax({
+      type: "GET",
+      url:"/get-invitation-remark-attr/"+ attr_id+"/"+ activity_id,
+      success:function(response) {
+        if(response.success == true)
+        {
+          $("#show_remark_invite").val(response.remarks);
+          $("#inviteAttrRemarks").modal('show');
+        }
+      }
+    })
   });
 
 

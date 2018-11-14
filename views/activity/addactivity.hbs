@@ -183,7 +183,7 @@
                                     <a href="/activity-goal/add">Tactical Marketing Goals</a>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            {{!-- <div class="col-md-6">
                                 <div class="form-group form-focus select-focus select-attorney">
                                     <label class="control-label">Practice Area Type <span class="req-lbl">*</span> </label>
                                     <select id="practice_area" name="practice_area" class="form-control floating" >
@@ -198,6 +198,23 @@
                                             {{/each}}
                                         {{/if_eq}}
                                     </select>
+                                </div>
+                            </div> --}}
+                            <div class="col-md-6">
+                                <div class="form-group form-focus select-focus ">
+                                    <div class="">
+                                        <select class="form-control floating" id="practice_area" name="practice_area[]" multiple="multiple">
+                                        {{#if_eq user.actual_role_id "2"}}
+                                            {{#each practice_area_firm}}
+                                                <option value="{{this.practicearea.id}}">{{this.practicearea.name}}</option>
+                                            {{/each}}
+                                        {{else}}
+                                            {{#each practice_area}}
+                                                <option value="{{this.practicearea.id}}">{{this.practicearea.name}}</option>
+                                            {{/each}}
+                                        {{/if_eq}}
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             {{!-- <div class="col-md-6">
@@ -435,6 +452,14 @@
 
 
 <script type="text/javascript">
+    $('#practice_area').multiselect({
+        nonSelectedText: 'Select Practice Area',
+        enableFiltering: true,
+        includeSelectAllOption: true,
+        buttonWidth: '100%',
+        maxHeight: 400,
+        dropDown: true
+    });
     $(document).on("click","#oneDayActivityEvent", function(){
         $("#activity_dateO").show();
         $("#SomeDay_ActivityEvent").show();

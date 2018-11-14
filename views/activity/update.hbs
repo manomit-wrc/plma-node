@@ -228,7 +228,7 @@
                   <a href="/activity-goal/add">Add Tactical Marketing Goals</a>
                 </div>
               </div>
-              <div class="col-md-6">
+              {{!-- <div class="col-md-6">
                 <div class="form-group form-focus select-focus select-attorney">
                   <label class="control-label">Practice Area Type <span class="req-lbl">*</span> </label>
                   <select id="practice_area" name="practice_area" class="form-control floating ">
@@ -248,6 +248,27 @@
                     {{/if_eq}}
                   </select>
                 </div>
+              </div> --}}
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="">
+                    <select class="form-control floating " id="practice_area" name="practice_area[]" multiple="multiple">
+                      {{!-- {{#if_eq user.actual_role_id "2"}}  --}}
+                      {{#each practice_area_firm}}
+                        <option value="{{this.practicearea.id}}"{{#inArray ../p_type_arr this.practicearea.id}} selected="selected" {{/inArray}}>{{this.practicearea.name}}</option>
+                      {{/each}} 
+                    {{!-- {{else}}
+                      {{#each practice_area}}
+                      <option value="{{this.practicearea.id}}"{{#inArray ../p_type_arr this.practicearea.id}} selected="selected" {{/inArray}}>{{this.practicearea.name}}</option>
+                      {{/each}}
+                      {{#if_eq user.id editdata.user_id}}
+                      {{else}}
+                      <option value="{{practicearea.id}}"{{#inArray ../p_type_arr this.practicearea.id}} selected="selected" {{/inArray}}>{{practicearea.name}}</option>
+                      {{/if_eq}} --}}
+                    {{!-- {{/if_eq}} --}}
+                    </select>
+                  </div>
+                </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group form-focus">
@@ -258,9 +279,9 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-6">
+              {{!-- <div class="col-md-6">
                 <div class="form-group form-focus select-focus"></div>
-              </div>
+              </div> --}}
               <div class="col-md-2" id="oneDay_ActivityEvent">
                 <button class="btn btn-primary btn-lg" type="button" id="oneDayActivityEvent" style="display:none;">One Day Event</button>
               </div>
@@ -679,6 +700,14 @@
 
 <script type="text/javascript">
   $(document).ready(function () {
+    $('#practice_area').multiselect({
+        nonSelectedText: 'Select Practice Area',
+        enableFiltering: true,
+        includeSelectAllOption: true,
+        buttonWidth: '100%',
+        maxHeight: 400,
+        dropDown: true
+    })
     var frmDate = $("#acvtFrmDate").val();
     var toDate = $("#acvtToDate").val();
     if(frmDate == toDate)

@@ -797,7 +797,8 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
         });
         referralListArr.push({
             "name": referDetails.first_name + " " + referDetails.last_name,
-            "email": referDetails.email
+			"email": referDetails.email,
+			"id": referralDetails[i].id
         });
 	}
 

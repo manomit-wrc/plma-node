@@ -13,18 +13,86 @@
                     <strong>Error! </strong>{{success_message}}
                 </div>
                 {{/if}}
-                <div class="col-xs-4">
+                <div class="col-xs-8">
                     <h4 class="page-title">ACTIVITY APPROVAL DETAILS</h4>
+                </div>
+                <div class="col-xs-4">
+                    <div class="text-right">
+                        <a href="/activity-approvals" class="btn btn-primary pull-right rounded ">
+                            <i class="fa fa-arrow-left"></i> Back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-box">
+            <h3 class="card-title">Approval Status</h3>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped custom-table">
+                            <thead>
+                                <tr>
+                                    <th>SL#</th>
+                                    <th>Approval Level</th>
+                                    <th>Approver Name</th>
+                                    <th>Approval Status</th>
+                                    <th>Date of Approved/Rejected</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each responseApprls}}
+                                <tr>
+                                    <td>{{math @index "+" 1}}</td>
+                                    <td>
+                                        {{#if_eq this.approver_status "4"}} Fourth Level Approver {{/if_eq}}
+                                        {{#if_eq this.approver_status "3"}} Third Level Approver {{/if_eq}}
+                                        {{#if_eq this.approver_status "2"}} Second Level Approver {{/if_eq}}
+                                        {{#if_eq this.approver_status "1"}} First Level Approver {{/if_eq}}
+                                    </td>
+                                    <td>{{this.user.first_name}} {{this.user.last_name}}</td>
+                                    <td>
+                                        
+                                        {{#if_eq this.approve "0"}}{{#if_eq this.status "1"}}
+                                        <span class="label label-warning-border">Pending</span>{{/if_eq}}{{/if_eq}} {{#if_eq this.approve "0"}}{{#if_eq this.status "0"}}
+                                        <span class="label label-warning-border">Pending</span>{{/if_eq}}{{/if_eq}} {{#if_eq this.approve "1"}} {{#if_eq this.status
+                                        "0"}}
+                                        <span class="label label-success-border">Approved</span>{{/if_eq}}{{/if_eq}} {{#if_eq this.approve "0"}} {{#if_eq this.status "2"}}
+                                        <span class="label label-danger-border">Rejected</span>{{/if_eq}}{{/if_eq}}
+                                    </td>
+                                    <td>
+                                        {{#if_eq this.approve "0"}}{{#if_eq this.status "1"}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; —{{/if_eq}}{{/if_eq}}
+                                        {{#if_eq this.approve "0"}}{{#if_eq this.status "0"}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        —{{/if_eq}}{{/if_eq}} {{#if_eq this.approve "1"}} {{#if_eq this.status "0"}}{{dateFormat this.updatedAt
+                                        "MM-DD-YYYY"}}{{/if_eq}}{{/if_eq}} {{#if_eq this.approve "0"}} {{#if_eq this.status "2"}}{{dateFormat
+                                        this.updatedAt "MM-DD-YYYY"}}{{/if_eq}}{{/if_eq}}
+                                    </td>
+                                    
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="card-box apporval-sent">
-            <div class="text-center">
-                <h4 class="m-b-20 text-uppercase">
-                    <strong>{{activity.activity_name}}</strong>
-                </h4>
-            </div>
+            {{!-- {{#if_eq responseApprl.approve "0"}}{{#if_eq responseApprl.status "0"}}<span class="label label-warning-border apprvlStatus">Waiting! No  response from other approver</span>{{/if_eq}}{{/if_eq}} --}}
+            {{!-- {{#if_eq responseApprl.approve "1"}} {{#if_eq responseApprl.status "0"}}<span class="label label-success-border apprvlStatus">Approved</span>{{/if_eq}}{{/if_eq}} --}}
+            {{!-- {{#if_eq responseApprl.approve "0"}} {{#if_eq responseApprl.status "2"}}<span class="label label-danger-border apprvlStatus">Rejected</span>{{/if_eq}}{{/if_eq}} --}}
+        <h3 class="card-title">Activity Details</h3>
             <div class="row">
+                <div class="col-md-4">
+                    <div class="apprv-item">
+                        <h5 class="m-t-10">
+                            <strong>
+                                Activity Name
+                            </strong>
+                        </h5>
+                        <p>
+                            {{activity.activity_name}}
+                        </p>
+                    </div>
+                </div>
                 <div class="col-md-4">
                     <div class="apprv-item">
                         <h5 class="m-t-10">
@@ -70,18 +138,6 @@
                         </h5>
                         <p>
                              {{activity.activity_type}}
-                        </p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="apprv-item">
-                        <h5 class="m-t-10">
-                            <strong>
-                                Practice Area
-                            </strong>
-                        </h5>
-                        <p>
-                            {{practice_area}}
                         </p>
                     </div>
                 </div>
@@ -189,11 +245,12 @@
                         <div class="text-center">
                             {{!--
                             <button class="btn btn-primary btn-lg" type="button" id="btnEditActivityBudget">Update</button> --}}
-                            <button class="btn btn-primary btn-lg" type="button" id="remarksActivity">Remarks</button>
-                            <button class="btn btn-primary btn-lg" data-activity_id="{{activity_id}}" data-status_id="2" type="button" id="btnApproveActivityBudget">Approve</button>
-                            <button class="btn btn-primary btn-lg" data-activity_id="{{activity_id}}" data-status_id="3" type="button" id="btnRejectActivityBudget">Reject</button>
-                            <button class="btn btn-primary btn-lg" type="button" id="btnCancelActivityBudget">Cancel</button>
-
+                            {{#if_eq responseApprl.approve "0"}}{{#if_eq responseApprl.status "1"}}
+                                <button class="btn btn-primary btn-lg" type="button" id="remarksActivity">Remarks</button>
+                                <button class="btn btn-primary btn-lg" data-activity_id="{{activity_id}}" data-status_id="2" type="button" id="btnApproveActivityBudget">Approve</button>
+                                <button class="btn btn-primary btn-lg" data-activity_id="{{activity_id}}" data-status_id="3" type="button" id="btnRejectActivityBudget">Reject</button>
+                                <button class="btn btn-primary btn-lg" type="button" id="btnCancelActivityBudget">Cancel</button>
+                            {{/if_eq}}{{/if_eq}}
                         </div>
                     </div>
                 </div>
