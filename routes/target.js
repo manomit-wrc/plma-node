@@ -181,6 +181,20 @@ router.get('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =>
 			['title', 'ASC']
 		],
     });
+    var fetchReferral = {};
+    if (req.user.role_id != 2) {
+        fetchReferral.attorney_id = req.user.id;
+        fetchReferral.firm_id = req.user.firm_id;
+    } else {
+        fetchReferral.firm_id = req.user.firm_id;
+    }
+
+    const referral = await Referral.findAll({
+        order: [
+            ['first_name', 'ASC'],
+        ],
+        where: fetchReferral
+    });
     var industry = await industry_type.findAll({
         order: [
 			['industry_name', 'ASC']
@@ -210,7 +224,8 @@ router.get('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =>
         designations: designation,
         industry: industry,
         attorney: attorney,
-        error_message
+        error_message,
+        referral
     });
 });
 
@@ -310,6 +325,14 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
                 user_id:req.user.id,
                 firm_id: req.user.firm_id
             });
+
+            await Referred_Client_Targets.create({
+                'type': 'T',
+                'target_id': parseInt(insertData.id),
+                'client_id': 0,
+                'referral_id': parseInt(req.body.referral_resource_add),
+                'status': 1
+            });
             req.flash('success-message', 'Target Added Successfully');
             res.redirect('/target')
 
@@ -367,6 +390,13 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
                 estimated_revenue: removePhoneMask(req.body.estimated_revenue),
                 user_id: req.user.id,
                 firm_id: req.user.firm_id
+            });
+            await Referred_Client_Targets.create({
+                'type': 'T',
+                'target_id': parseInt(indidata.id),
+                'client_id': 0,
+                'referral_id': parseInt(req.body.referral_resource_add),
+                'status': 1
             });
             req.flash('success-message', 'Target Added Successfully');
             res.redirect('/target')

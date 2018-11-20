@@ -597,6 +597,20 @@ router.get('/client/add', auth, firmAttrAuth, csrfProtection, async (req, res) =
 			['title', 'ASC']
 		],
 	});
+	var fetchReferral = {};
+	if (req.user.role_id != 2) {
+		fetchReferral.attorney_id = req.user.id;
+		fetchReferral.firm_id = req.user.firm_id;
+	} else {
+		fetchReferral.firm_id = req.user.firm_id;
+	}
+
+	const referral = await Referral.findAll({
+		order: [
+			['first_name', 'ASC'],
+		],
+		where: fetchReferral
+	});
 	const industry = await Industry.findAll({
 		order: [
 			['industry_name', 'ASC']
@@ -631,7 +645,8 @@ router.get('/client/add', auth, firmAttrAuth, csrfProtection, async (req, res) =
 		designations: designation,
 		industry: industry,
 		attorney: attorney,
-		error_message
+		error_message,
+		referral
 	});
 });
 
@@ -1124,7 +1139,13 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				user_id: req.user.id,
 				firm_id: req.user.firm_id
 			});
-
+			await Referred_Client_Targets.create({
+				'type': 'C',
+				'target_id': 0,
+				'client_id': parseInt(insertData.id),
+				'referral_id': parseInt(req.body.referral_resource_add),
+				'status': 1
+			});
 
 			req.flash('success-message', 'Client Added Successfully');
 			res.redirect('/client');
@@ -1187,7 +1208,13 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				user_id: req.user.id,
 				firm_id: req.user.firm_id
 			});
-
+			await Referred_Client_Targets.create({
+				'type': 'C',
+				'target_id': 0,
+				'client_id': parseInt(insertData.id),
+				'referral_id': parseInt(req.body.referral_resource_add),
+				'status': 1
+			});
 			req.flash('success-message', 'Client Added Successfully');
 			res.redirect('/client');
 		}

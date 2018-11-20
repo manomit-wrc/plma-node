@@ -702,6 +702,7 @@ router.post('/master_contact/move-to-target/', auth, async (req, res) => {
 				id: contact_ids[i]
 			}
 		});
+		
 		const target_data = await Target.create({
 			first_name: contact_data.first_name,
 			last_name: contact_data.last_name,
@@ -712,7 +713,7 @@ router.post('/master_contact/move-to-target/', auth, async (req, res) => {
 			facebbok: contact_data.social_url,
 			linkedin: contact_data.linkedin,
 			address_remarks: contact_data.address_remarks,
-
+			industry_type: contact_data.industry_type,
 			phone_no: contact_data.phone_no,
 			date_of_birth: contact_data.date_of_birth,
 			gender: contact_data.gender,

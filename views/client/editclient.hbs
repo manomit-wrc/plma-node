@@ -823,7 +823,7 @@
 						if (response.code == 200) {
 							swal("", "Referral added successfully", "success");
 							setTimeout(function () {
-								location.reload();
+								$("#add_referral").modal('hide');
 							}, 2000);
 						} else {
 							swal("", "Please try again", "warning");

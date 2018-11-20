@@ -602,9 +602,7 @@ $("#life_time_revenue").inputmask("numeric", {
 					success: function (response) {
 						if (response.code == 200) {
 							swal("", "Referral added successfully", "success");
-							setTimeout(function () {
-								location.reload();
-							}, 2000);
+							$("#add_referral").modal('hide');
 						} else {
 							swal("", "Please try again", "warning");
 						}
