@@ -26,49 +26,50 @@
                 <div class="col-xs-8 text-right">
                     <a href="/strategic-marketing-goal/add" class="btn btn-primary pull-right rounded">
                         <i class="fa fa-plus"></i> Add Strategic Marketing Goals</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="table-responsive">
-                    <table class="table table-striped custom-table datatable activity-goal">
-                        <thead>
-                            <tr>
-                                <th>SL#</th>
-                                <th style="width:25%;">Strategic Marketing Goals</th>
-                                <th>Description</th>
-                                <th>Associated Tactical Marketing Goals</th>
-                                <th class="text-right" style="width:20%;">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{#each strategic_show}}
-                            <tr>
-                                <td>{{math @index "+" 1}}</td>
-                                <td>
-                                    <a href="/strategic-marketing-goal/view/{{this.id}}">
-                                        {{this.name}}
-                                    </a>
-                                </td>
-                                <td>{{this.description}}</td>
-                                <td><a href="/strategic-marketing-goal/view-tactical_goals/{{this.id}}">{{get_activity_goal_total this.strategic_goal_to_activity_goals}}</a></td>
-                                <td class="text-right">
-                                    <a href="/strategic-marketing-goal/view-tactical_goals/{{this.id}}" class="btn btn-success btn-sm"  data-toggle="tooltip" data-placement="bottom" title="See associated Tactical Marketing Goals">
-                                        <i class="fa fa-tasks"></i>
-                                    </a>
-                                    <a href="/strategic-marketing-goal/view/{{this.id}}" data-toggle="tooltip" data-placement="bottom" title="View" class="btn btn-success btn-sm">
-                                        <i class="fa fa-eye m-r-5"></i>
-                                    </a>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="tb-toggle"></div>
+                    <div class="table-responsive">
+                        <table class="table table-striped custom-table datatable activity-goal">
+                            <thead>
+                                <tr>
+                                    <th>SL#</th>
+                                    <th style="width:25%;">Strategic Marketing Goals</th>
+                                    <th>Description</th>
+                                    <th>Associated Tactical Marketing Goals</th>
+                                    <th class="text-right" style="width:20%;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each strategic_show}}
+                                <tr>
+                                    <td>{{math @index "+" 1}}</td>
+                                    <td>
+                                        <a href="/strategic-marketing-goal/view/{{this.id}}">
+                                            {{this.name}}
+                                        </a>
+                                    </td>
+                                    <td>{{this.description}}</td>
+                                    <td><a href="/strategic-marketing-goal/view-tactical_goals/{{this.id}}">{{get_activity_goal_total this.strategic_goal_to_activity_goals}}</a></td>
+                                    <td class="text-right">
+                                        <a href="/strategic-marketing-goal/view-tactical_goals/{{this.id}}" class="btn btn-success btn-sm"  data-toggle="tooltip" data-placement="bottom" title="See associated Tactical Marketing Goals">
+                                            <i class="fa fa-tasks"></i>
+                                        </a>
+                                        <a href="/strategic-marketing-goal/view/{{this.id}}" data-toggle="tooltip" data-placement="bottom" title="View" class="btn btn-success btn-sm">
+                                            <i class="fa fa-eye m-r-5"></i>
+                                        </a>
 
-                                    <a href="/strategic-marketing-goal/edit/{{this.id}}" data-toggle="tooltip" data-placement="bottom" title="Edit" class="btn btn-success btn-sm">
-                                        <i class="fa fa-pencil m-r-5"></i>
-                                    </a>
-                                 <span data-toggle="modal" data-target="delete_users" >
-                                    <a href="javascript:void(0);"  data-toggle="tooltip" data-placement="bottom" title="Delete" data-activitygoal-id="{{this.id}}" id="delete_activitygoal"
-                                        class="btn btn-danger btn-sm target-delete">
-                                        <i class="fa fa-trash-o m-r-5"></i>
-                                    </a>
+                                        <a href="/strategic-marketing-goal/edit/{{this.id}}" data-toggle="tooltip" data-placement="bottom" title="Edit" class="btn btn-success btn-sm">
+                                            <i class="fa fa-pencil m-r-5"></i>
+                                        </a>
+                                        <span data-toggle="modal" data-target="delete_users" >
+                                            <a href="javascript:void(0);"  data-toggle="tooltip" data-placement="bottom" title="Delete" data-activitygoal-id="{{this.id}}" id="delete_activitygoal"
+                                            class="btn btn-danger btn-sm target-delete">
+                                            <i class="fa fa-trash-o m-r-5"></i>
+                                        </a>
                                     </span>
                                 </td>
                             </tr>
@@ -125,6 +126,11 @@
     $(document).on('click', "#setUrlItem", function () {
         localStorage.removeItem('url');
         localStorage.setItem("url", window.location.pathname);
+    });
+    $(document).ready(function(){
+        $(".tb-toggle").click(function(){
+            $(".dt-buttons").slideToggle();
+        });
     });
 
 </script> {{/content}}

@@ -19,6 +19,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
+                <div class="tb-toggle"></div>
                 <div class="table-responsive">
                     <table class="table table-striped custom-table datatable activity-approvals" id="searchData">
                         <thead>
@@ -131,6 +132,12 @@ $(document).on('click', '.requestReject', function (e) {
       });
     });
   });
+
+   $(document).ready(function(){
+        $(".tb-toggle").click(function(){
+            $(".dt-buttons").slideToggle();
+        });
+    });
 
 </script>
 

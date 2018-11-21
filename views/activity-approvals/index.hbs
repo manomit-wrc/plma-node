@@ -19,6 +19,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
+                <div class="tb-toggle"></div>
                 <div class="table-responsive">
                     <table class="table table-striped custom-table datatable activity-approvals" id="searchData">
                         <thead>
@@ -76,4 +77,14 @@
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>ACTIVITY {{/content}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+        $(".tb-toggle").click(function(){
+            $(".dt-buttons").slideToggle();
+        });
+    });
+</script>
+
+ACTIVITY {{/content}}

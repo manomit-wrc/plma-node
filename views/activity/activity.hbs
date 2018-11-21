@@ -21,116 +21,117 @@
           <a href="/activityseen" class="btn btn-primary rounded">
             <i class="fa fa-plus"></i> Add Activity</a>
             {{/if_eq}}
+          </div>
         </div>
       </div>
-    </div>
     </form>
     <div class="row">
       <div class="col-md-12">
+        <div class="tb-toggle"></div>
         <div class="table-responsive">
           {{#if_eq count_query "0"}}{{else}}
           <a href="/activitypage" class="btn btn-primary rounded advancedFilter" style="right: 595px !important;">
             <i class="fa fa-eraser"></i> Clear Filter</a>
-          {{/if_eq}}
-          <button class="btn btn-primary rounded advancedFilter" data-toggle="modal" data-target="#add_user">
-            <i class="fa fa-filter"></i> Filter</button>
-          <table class="table table-striped custom-table datatable" id="searchData">
-            <thead>
-              <tr>
-                <th>SL#</th>
-                <th>Activity Name</th>
-                <th>From Date</th>
-                <th>To Date</th>
-                <th>Total Budget Costs</th>
-                <th>Activity Type</th>
-                <th>Status</th>
-                <th class="text-right">Action</th>
-              </tr>
-            </thead>
-            <tbody id="mainTable">
-               {{#if_eq user.role_id "2"}} 
-                   {{#each row}}
-                  <tr {{#if_eq this.activity_status '2'}} {{/if_eq}} {{#if_eq this.activity_status '3'}} {{/if_eq}} {{#if_eq this.activity_status
-                    '1'}} {{/if_eq}}>
-                    <td>{{math @index "+" 1}}</td>
-                    <td>
-                      <a href="/activity/view/{{this.id}}">{{this.activity_name}}</a>
-                    </td>
-                    <td>{{dateFormat this.activity_from_date "MM-DD-YYYY"}}</td>
-                    <td>{{dateFormat this.activity_to_date "MM-DD-YYYY"}}</td>
-                    <td>$ {{this.total_budget_amount}}</td>
-                    <td>
-                      {{#if_eq this.activity_type "individual"}}INDIVIDUAL{{/if_eq}}
-                      {{#if_eq this.activity_type "strategic_group"}}STRATEGIC{{/if_eq}}
-                      {{#if_eq this.activity_type "team"}}TEAM{{/if_eq}}
-                    </td>
-                    <td>
-                      <input type="hidden" name="_csrf" value="{{csrfToken}}">
-                      <input type="hidden" name="activity_id" id="activity_id" value="{{this.id}}"> {{#if_eq this.activity_status '0'}}
-                      <span class="label label-info-border">NEW ACTIVITY - CREATED</span> {{/if_eq}} {{#if (and (eq this.activity_status '3')(eq this.activity_update 'update'))
-                      }}<span class="label label-info-border"> ACTIVITY UPDATE</span> {{else}} {{#if_eq this.activity_status '3'}}
-                      <span class="label label-danger-border">NOT APPROVED - DISCARD ACTIVITY</span> {{/if_eq}} {{/if}} {{#if_eq this.activity_status '1'}}
-                      <span class="label label-warning-border">PENDING APPROVAL - IN-PROGRESS</span> {{/if_eq}} {{#if_eq this.activity_status '2'}}
-                      <span class="label label-success-border">APPROVED - PROCEED</span> {{/if_eq}}
-                    </td>
-                    <td class="text-right">
-                      <a href="/activity/view/{{this.id}}" class="btn btn-success btn-sm" id="setUrlItem">
-                        <i class="fa fa-eye m-r-5"></i>
-                      </a>
-                    </td>
+            {{/if_eq}}
+            <button class="btn btn-primary rounded advancedFilter" data-toggle="modal" data-target="#add_user">
+              <i class="fa fa-filter"></i> Filter</button>
+              <table class="table table-striped custom-table datatable" id="searchData">
+                <thead>
+                  <tr>
+                    <th>SL#</th>
+                    <th>Activity Name</th>
+                    <th>From Date</th>
+                    <th>To Date</th>
+                    <th>Total Budget Costs</th>
+                    <th>Activity Type</th>
+                    <th>Status</th>
+                    <th class="text-right">Action</th>
                   </tr>
-                  {{/each}}
-               {{else}}
-                  {{#each row}}
-                  <tr {{#if_eq this.activity_status '2'}} {{/if_eq}} {{#if_eq this.activity_status '3'}} {{/if_eq}} {{#if_eq this.activity_status
-                    '1'}} {{/if_eq}}>
-                    <td>{{math @index "+" 1}}</td>
-                    <td><a href="/activity/view/{{this.id}}">{{this.activity_name}}</a></td>
-                    <td>{{dateFormat this.activity_from_date "MM-DD-YYYY"}}</td>
-                    <td>{{dateFormat this.activity_to_date "MM-DD-YYYY"}}</td>
-                    <td>$ {{this.total_budget_amount}}</td>
-                    <td>{{#if_eq this.activity_type "individual"}}INDIVIDUAL{{/if_eq}} {{#if_eq this.activity_type "strategic_group"}}STRATEGIC{{/if_eq}}
-                    {{#if_eq this.activity_type "team"}}TEAM{{/if_eq}}</td>
-                    <td>
-                      <input type="hidden" name="_csrf" value="{{csrfToken}}">
-                      <input type="hidden" name="activity_id" id="activity_id" value="{{this.id}}"> {{#if_eq this.activity_status '0'}}
-                      <span class="label label-info-border">NEW ACTIVITY - CREATED</span> {{/if_eq}} {{#if (and (eq this.activity_status '3')(eq this.activity_update
-                      'update')) }}<span class="label label-info-border"> ACTIVITY UPDATE </span>{{else}} {{#if_eq this.activity_status '3'}}
-                      <span class="label label-danger-border">NOT APPROVED - DISCARD ACTIVITY</span> {{/if_eq}} {{/if}} {{#if_eq this.activity_status '1'}}
-                      <span class="label label-warning-border">PENDING APPROVAL - IN-PROGRESS</span> {{/if_eq}} {{#if_eq this.activity_status '2'}}
-                      <span class="label label-success-border">APPROVED - PROCEED</span> {{/if_eq}}
-                    </td>
-                      <td class="text-right">
-                        {{#if_eq this.user_id ../user.id}}
-                          {{#if (or (eq this.activity_status "0")(and (eq this.activity_status "3")(eq this.activity_update "update"))) }}
-                          <a href="javascript:void(0);" class="btn btn-success btn-sm approval_request_sent" data-toggle="tooltip" data-placement="bottom" id="approval_request_sent" title="Request for Approval" data-activity-type="{{this.activity_type}}" data-target-request-id="{{this.id}}" data-activity-name="{{this.activity_name}}">
-                            <i class="fa fa-check" aria-hidden="true"></i>
-                          </a>
-                          {{/if}}   
-                        {{/if_eq}}
-                        <a href="/activity/view/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="View" id="setUrlItem">
-                          <i class="fa fa-eye m-r-5"></i>
-                        </a>
-                        {{#if (or (eq this.activity_status "0")(eq this.activity_status "3"))}}
-                        <a href="/activity/edit/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit">
-                          <i class="fa fa-pencil m-r-5"></i>
-                        </a>
-                        <span data-toggle="modal" data-target="delete_users" >
-                        <a href="javascript:void(0);" data-activity-id="{{this.id}}" id="delete_activity" class="btn btn-danger btn-sm target-delete" data-toggle="tooltip" data-placement="bottom" title="Delete" >
-                          <i class="fa fa-trash-o m-r-5"></i>
-                        </a>
-                        </span>
-                        {{/if}}
-                      </td>
-                  </tr>
-                  {{/each}}
+                </thead>
+                <tbody id="mainTable">
+                 {{#if_eq user.role_id "2"}} 
+                 {{#each row}}
+                 <tr {{#if_eq this.activity_status '2'}} {{/if_eq}} {{#if_eq this.activity_status '3'}} {{/if_eq}} {{#if_eq this.activity_status
+                 '1'}} {{/if_eq}}>
+                 <td>{{math @index "+" 1}}</td>
+                 <td>
+                  <a href="/activity/view/{{this.id}}">{{this.activity_name}}</a>
+                </td>
+                <td>{{dateFormat this.activity_from_date "MM-DD-YYYY"}}</td>
+                <td>{{dateFormat this.activity_to_date "MM-DD-YYYY"}}</td>
+                <td>$ {{this.total_budget_amount}}</td>
+                <td>
+                  {{#if_eq this.activity_type "individual"}}INDIVIDUAL{{/if_eq}}
+                  {{#if_eq this.activity_type "strategic_group"}}STRATEGIC{{/if_eq}}
+                  {{#if_eq this.activity_type "team"}}TEAM{{/if_eq}}
+                </td>
+                <td>
+                  <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                  <input type="hidden" name="activity_id" id="activity_id" value="{{this.id}}"> {{#if_eq this.activity_status '0'}}
+                  <span class="label label-info-border">NEW ACTIVITY - CREATED</span> {{/if_eq}} {{#if (and (eq this.activity_status '3')(eq this.activity_update 'update'))
+                }}<span class="label label-info-border"> ACTIVITY UPDATE</span> {{else}} {{#if_eq this.activity_status '3'}}
+                <span class="label label-danger-border">NOT APPROVED - DISCARD ACTIVITY</span> {{/if_eq}} {{/if}} {{#if_eq this.activity_status '1'}}
+                <span class="label label-warning-border">PENDING APPROVAL - IN-PROGRESS</span> {{/if_eq}} {{#if_eq this.activity_status '2'}}
+                <span class="label label-success-border">APPROVED - PROCEED</span> {{/if_eq}}
+              </td>
+              <td class="text-right">
+                <a href="/activity/view/{{this.id}}" class="btn btn-success btn-sm" id="setUrlItem">
+                  <i class="fa fa-eye m-r-5"></i>
+                </a>
+              </td>
+            </tr>
+            {{/each}}
+            {{else}}
+            {{#each row}}
+            <tr {{#if_eq this.activity_status '2'}} {{/if_eq}} {{#if_eq this.activity_status '3'}} {{/if_eq}} {{#if_eq this.activity_status
+            '1'}} {{/if_eq}}>
+            <td>{{math @index "+" 1}}</td>
+            <td><a href="/activity/view/{{this.id}}">{{this.activity_name}}</a></td>
+            <td>{{dateFormat this.activity_from_date "MM-DD-YYYY"}}</td>
+            <td>{{dateFormat this.activity_to_date "MM-DD-YYYY"}}</td>
+            <td>$ {{this.total_budget_amount}}</td>
+            <td>{{#if_eq this.activity_type "individual"}}INDIVIDUAL{{/if_eq}} {{#if_eq this.activity_type "strategic_group"}}STRATEGIC{{/if_eq}}
+            {{#if_eq this.activity_type "team"}}TEAM{{/if_eq}}</td>
+            <td>
+              <input type="hidden" name="_csrf" value="{{csrfToken}}">
+              <input type="hidden" name="activity_id" id="activity_id" value="{{this.id}}"> {{#if_eq this.activity_status '0'}}
+              <span class="label label-info-border">NEW ACTIVITY - CREATED</span> {{/if_eq}} {{#if (and (eq this.activity_status '3')(eq this.activity_update
+              'update')) }}<span class="label label-info-border"> ACTIVITY UPDATE </span>{{else}} {{#if_eq this.activity_status '3'}}
+              <span class="label label-danger-border">NOT APPROVED - DISCARD ACTIVITY</span> {{/if_eq}} {{/if}} {{#if_eq this.activity_status '1'}}
+              <span class="label label-warning-border">PENDING APPROVAL - IN-PROGRESS</span> {{/if_eq}} {{#if_eq this.activity_status '2'}}
+              <span class="label label-success-border">APPROVED - PROCEED</span> {{/if_eq}}
+            </td>
+            <td class="text-right">
+              {{#if_eq this.user_id ../user.id}}
+              {{#if (or (eq this.activity_status "0")(and (eq this.activity_status "3")(eq this.activity_update "update"))) }}
+              <a href="javascript:void(0);" class="btn btn-success btn-sm approval_request_sent" data-toggle="tooltip" data-placement="bottom" id="approval_request_sent" title="Request for Approval" data-activity-type="{{this.activity_type}}" data-target-request-id="{{this.id}}" data-activity-name="{{this.activity_name}}">
+                <i class="fa fa-check" aria-hidden="true"></i>
+              </a>
+              {{/if}}   
               {{/if_eq}}
-            </tbody>
-          </table>
-        </div>
-      </div>
+              <a href="/activity/view/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="View" id="setUrlItem">
+                <i class="fa fa-eye m-r-5"></i>
+              </a>
+              {{#if (or (eq this.activity_status "0")(eq this.activity_status "3"))}}
+              <a href="/activity/edit/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit">
+                <i class="fa fa-pencil m-r-5"></i>
+              </a>
+              <span data-toggle="modal" data-target="delete_users" >
+                <a href="javascript:void(0);" data-activity-id="{{this.id}}" id="delete_activity" class="btn btn-danger btn-sm target-delete" data-toggle="tooltip" data-placement="bottom" title="Delete" >
+                  <i class="fa fa-trash-o m-r-5"></i>
+                </a>
+              </span>
+              {{/if}}
+            </td>
+          </tr>
+          {{/each}}
+          {{/if_eq}}
+        </tbody>
+      </table>
     </div>
   </div>
+</div>
+</div>
 </div>
 <div id="delete_users" class="modal custom-modal fade del-mastercontact" role="dialog">
   <div class="modal-dialog">
@@ -157,87 +158,87 @@
       <div class="modal-header">
         <h4 class="modal-title">
           <i class="fa fa-filter"></i> Filter By</h4>
-      </div>
-      <div class="modal-body">
-        <form class="m-b-30" name="advancedFilter" id="advancedFilter" method="GET">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <label class="control-label">Tactical Marketing Goals</label>
-                <select class="form-control" id="activity_goal_id" name="activity_goal_id">
-                  <option value="">Select Tactical Marketing Goals</option>
-                  {{#each activity_goal}}
-                  <option value="{{this.id}}" {{#if_eq this.id ../activity_goal_id}} selected="selected" {{/if_eq}}>{{this.activity_goal}}</option>
-                  {{/each}}
-                </select>
-              </div>
-            </div>
-            <div class="col-md-12">
-              <div class="form-group">
-                <label class="control-label">Activity Type</label>
-                <select class="form-control" id="activity_type" name="activity_type">
-                  <option value="">Select Activity Type</option>
-                  <option value="individual" {{#if_eq activity_type "individual"}} selected="selected" {{/if_eq}}>INDIVIDUAL LEVEL</option>
-                  <option value="section" {{#if_eq activity_type "section"}} selected="selected" {{/if_eq}}>SECTION LEVEL</option>
-                  <option value="strategic_group" {{#if_eq activity_type "strategic_group"}} selected="selected" {{/if_eq}}>STRATEGIC GROUP LEVEL</option>
-                  <option value="team" {{#if_eq activity_type "team"}} selected="selected" {{/if_eq}}>TEAM LEVEL</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-12">
-              <div class="form-group">
-                <label class="control-label">Activity Approval Status</label>
-                <select class="form-control" id="approval_status" name="approval_status">
-                  <option value="">Select Approval Status</option>
-                  <option value="0" {{#if_eq approval_status "0"}} selected="selected" {{/if_eq}}>NEW ACTIVITY - CREATED</option>
-                  <option value="1" {{#if_eq approval_status "1"}} selected="selected" {{/if_eq}}>PENDING APPROVAL - IN-PROGRESS</option>
-                  <option value="2" {{#if_eq approval_status "2"}} selected="selected" {{/if_eq}}>APPROVED - PROCEED</option>
-                  <option value="3" {{#if_eq approval_status "3"}} selected="selected" {{/if_eq}}>NOT APPROVED - DISCARD ACTIVITY</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <label class="control-label">Activity User Type</label>
-              <div class="form-inline m-b-15">
+        </div>
+        <div class="modal-body">
+          <form class="m-b-30" name="advancedFilter" id="advancedFilter" method="GET">
+            <div class="row">
+              <div class="col-md-12">
                 <div class="form-group">
-                  <label class="input-group">
-                    <span class="input-group-addon">
-                      <input type="radio" id="target_type" name="ref_type" value="T" {{#if_eq refer_type "T"}} checked {{/if_eq}} />
-                    </span>
-                    <div class="form-control form-control-static">Target</div>
-                    <span class="glyphicon form-control-feedback"></span>
-                  </label>
-                </div>
-                <div class="form-group">
-                  <label class="input-group">
-                    <span class="input-group-addon">
-                      <input type="radio" id="organization_type" name="ref_type" value="C" {{#if_eq refer_type "C"}} checked {{/if_eq}} />
-                    </span>
-                    <div class="form-control form-control-static">Client</div>
-                    <span class="glyphicon form-control-feedback"></span>
-                  </label>
-                </div>
-                <div class="form-group">
-                  <label class="input-group">
-                    <span class="input-group-addon">
-                      <input type="radio" id="referral_type" name="ref_type" value="R" {{#if_eq refer_type "R"}} checked {{/if_eq}} />
-                    </span>
-                    <div class="form-control form-control-static">Referral Sources</div>
-                    <span class="glyphicon form-control-feedback"></span>
-                  </label>
-                </div>
-                <div class="form-group">
-                  <label class="input-group">
-                    <span class="input-group-addon">
-                      <input type="radio" id="general_type" name="ref_type" value="G" {{#if_eq refer_type "G"}} checked {{/if_eq}} />
-                    </span>
-                    <div class="form-control form-control-static">General</div>
-                    <span class="glyphicon form-control-feedback"></span>
-                  </label>
+                  <label class="control-label">Tactical Marketing Goals</label>
+                  <select class="form-control" id="activity_goal_id" name="activity_goal_id">
+                    <option value="">Select Tactical Marketing Goals</option>
+                    {{#each activity_goal}}
+                    <option value="{{this.id}}" {{#if_eq this.id ../activity_goal_id}} selected="selected" {{/if_eq}}>{{this.activity_goal}}</option>
+                    {{/each}}
+                  </select>
                 </div>
               </div>
-            </div>
-            <div class="col-md-6" id="target_list" {{#if_eq refer_type "T"}} style="display: block;" {{else}} style="display: none;"
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label">Activity Type</label>
+                  <select class="form-control" id="activity_type" name="activity_type">
+                    <option value="">Select Activity Type</option>
+                    <option value="individual" {{#if_eq activity_type "individual"}} selected="selected" {{/if_eq}}>INDIVIDUAL LEVEL</option>
+                    <option value="section" {{#if_eq activity_type "section"}} selected="selected" {{/if_eq}}>SECTION LEVEL</option>
+                    <option value="strategic_group" {{#if_eq activity_type "strategic_group"}} selected="selected" {{/if_eq}}>STRATEGIC GROUP LEVEL</option>
+                    <option value="team" {{#if_eq activity_type "team"}} selected="selected" {{/if_eq}}>TEAM LEVEL</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label">Activity Approval Status</label>
+                  <select class="form-control" id="approval_status" name="approval_status">
+                    <option value="">Select Approval Status</option>
+                    <option value="0" {{#if_eq approval_status "0"}} selected="selected" {{/if_eq}}>NEW ACTIVITY - CREATED</option>
+                    <option value="1" {{#if_eq approval_status "1"}} selected="selected" {{/if_eq}}>PENDING APPROVAL - IN-PROGRESS</option>
+                    <option value="2" {{#if_eq approval_status "2"}} selected="selected" {{/if_eq}}>APPROVED - PROCEED</option>
+                    <option value="3" {{#if_eq approval_status "3"}} selected="selected" {{/if_eq}}>NOT APPROVED - DISCARD ACTIVITY</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="control-label">Activity User Type</label>
+                <div class="form-inline m-b-15">
+                  <div class="form-group">
+                    <label class="input-group">
+                      <span class="input-group-addon">
+                        <input type="radio" id="target_type" name="ref_type" value="T" {{#if_eq refer_type "T"}} checked {{/if_eq}} />
+                      </span>
+                      <div class="form-control form-control-static">Target</div>
+                      <span class="glyphicon form-control-feedback"></span>
+                    </label>
+                  </div>
+                  <div class="form-group">
+                    <label class="input-group">
+                      <span class="input-group-addon">
+                        <input type="radio" id="organization_type" name="ref_type" value="C" {{#if_eq refer_type "C"}} checked {{/if_eq}} />
+                      </span>
+                      <div class="form-control form-control-static">Client</div>
+                      <span class="glyphicon form-control-feedback"></span>
+                    </label>
+                  </div>
+                  <div class="form-group">
+                    <label class="input-group">
+                      <span class="input-group-addon">
+                        <input type="radio" id="referral_type" name="ref_type" value="R" {{#if_eq refer_type "R"}} checked {{/if_eq}} />
+                      </span>
+                      <div class="form-control form-control-static">Referral Sources</div>
+                      <span class="glyphicon form-control-feedback"></span>
+                    </label>
+                  </div>
+                  <div class="form-group">
+                    <label class="input-group">
+                      <span class="input-group-addon">
+                        <input type="radio" id="general_type" name="ref_type" value="G" {{#if_eq refer_type "G"}} checked {{/if_eq}} />
+                      </span>
+                      <div class="form-control form-control-static">General</div>
+                      <span class="glyphicon form-control-feedback"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6" id="target_list" {{#if_eq refer_type "T"}} style="display: block;" {{else}} style="display: none;"
               {{/if_eq}}>
               <div class="form-group">
                 <label class="control-label">Target List
@@ -254,46 +255,46 @@
               </div>
             </div>
             <div class="col-md-6" id="client_list" {{#if_eq refer_type "C"}} style="display: block;" {{else}} style="display: none;"
-              {{/if_eq}}>
-              <div class="form-group">
-                <label class="control-label">Client List
-                  <span class="text-danger">*</span>
-                </label>
-                <select id="client_id" name="client_user" class="form-control">
-                  <option value="">Please Select One</option>
-                  {{#each client}} {{#if_eq client_type "I"}}
-                  <option value="{{this.id}}" {{#if_eq this.id ../user_client}} selected {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
-                  {{/if_eq}} {{#if_eq client_type "O"}}
-                  <option value="{{this.id}}" {{#if_eq this.id ../user_client}} selected {{/if_eq}}>{{this.organization_name}}</option>
-                  {{/if_eq}} {{/each}}
-                </select>
-              </div>
+            {{/if_eq}}>
+            <div class="form-group">
+              <label class="control-label">Client List
+                <span class="text-danger">*</span>
+              </label>
+              <select id="client_id" name="client_user" class="form-control">
+                <option value="">Please Select One</option>
+                {{#each client}} {{#if_eq client_type "I"}}
+                <option value="{{this.id}}" {{#if_eq this.id ../user_client}} selected {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+                {{/if_eq}} {{#if_eq client_type "O"}}
+                <option value="{{this.id}}" {{#if_eq this.id ../user_client}} selected {{/if_eq}}>{{this.organization_name}}</option>
+                {{/if_eq}} {{/each}}
+              </select>
             </div>
-            <div class="col-md-6" id="referral_list" {{#if_eq refer_type "R"}} style="display: block;" {{else}} style="display: none;"
-              {{/if_eq}}>
-              <div class="form-group">
-                <label class="control-label">Referral Sources List
-                  <span class="text-danger">*</span>
-                </label>
-                <select id="referral_id" name="referral_user" class="form-control">
-                  <option value="">Please Select One</option>
-                  {{#each referral}}
-                  <option value="{{this.id}}" {{#if_eq this.id ../user_referral}} selected {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
-                  {{/each}}
-                </select>
-              </div>
-            </div>
-            <div class="col-md-6" id="general_list" {{#if_eq refer_type "G"}} style="display: block;" {{else}} style="display: none;"
-              {{/if_eq}}>&nbsp;</div>
           </div>
-          <div class="m-t-20 text-center">
-            <button class="btn btn-primary btn-lg" type="submit" id="btnAddGroup">Search</button>
-            <a href="/activitypage" class="btn btn-primary btn-lg m-l-10">Cancel</a>
+          <div class="col-md-6" id="referral_list" {{#if_eq refer_type "R"}} style="display: block;" {{else}} style="display: none;"
+          {{/if_eq}}>
+          <div class="form-group">
+            <label class="control-label">Referral Sources List
+              <span class="text-danger">*</span>
+            </label>
+            <select id="referral_id" name="referral_user" class="form-control">
+              <option value="">Please Select One</option>
+              {{#each referral}}
+              <option value="{{this.id}}" {{#if_eq this.id ../user_referral}} selected {{/if_eq}}>{{this.first_name}} {{this.last_name}}</option>
+              {{/each}}
+            </select>
           </div>
-        </form>
+        </div>
+        <div class="col-md-6" id="general_list" {{#if_eq refer_type "G"}} style="display: block;" {{else}} style="display: none;"
+        {{/if_eq}}>&nbsp;</div>
       </div>
-    </div>
+      <div class="m-t-20 text-center">
+        <button class="btn btn-primary btn-lg" type="submit" id="btnAddGroup">Search</button>
+        <a href="/activitypage" class="btn btn-primary btn-lg m-l-10">Cancel</a>
+      </div>
+    </form>
   </div>
+</div>
+</div>
 </div>
 
 {{#content "script" mode="append"}}
@@ -460,6 +461,12 @@
     $("#removeBtnDelete").remove();
     $("#delete_users").modal('show');
     $("#delDiv").append('<a href="/activity/deletedata/' + activity_id + '" class="btn btn-danger" id="removeBtnDelete">' + "Delete" + '</a>');
+  });
+
+  $(document).ready(function(){
+    $(".tb-toggle").click(function(){
+      $(".dt-buttons").slideToggle();
+    });
   });
 
 </script> {{/content}}
