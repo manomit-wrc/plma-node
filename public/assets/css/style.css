@@ -7898,6 +7898,10 @@ select.gender {
 			text-align: center !important;
 			width: 100%;
 		}
+
+		.role-header h4 {
+			display: none;
+		}
 	}
 
 	@media only screen and (max-width: 390px) {
