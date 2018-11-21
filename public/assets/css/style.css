@@ -6291,7 +6291,7 @@ i.fa.fa-eye.m-r-5 {
 }
 
 .tb-toggle::after {
-	background: #afa399;
+	background: #FF881F;
 	border-radius: 25px;
 	content: "buttons";
 	cursor: pointer;
@@ -6333,7 +6333,7 @@ i.fa.fa-eye.m-r-5 {
 }
 
 .master-cont::after {
-	background: #afa399 none repeat scroll 0 0;
+	background: #FF881F none repeat scroll 0 0;
 	border-radius: 25px;
 	color: #fff;
 	content: "buttons";
