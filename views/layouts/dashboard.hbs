@@ -80,7 +80,7 @@
   <script src="/assets/input-mask/jquery.inputmask.bundle.min.js" type="text/javascript"></script>
 
   <script type="text/javascript">
-    
+
        $("#show_password").mousedown(function () {
          $(this).removeClass("fa fa-eye");
          $(this).addClass("fa fa-eye-slash");
@@ -90,7 +90,7 @@
           $(this).addClass("fa fa-eye");
           $("#new_password").prop('type', 'password');
         }).mouseout(function () {
-          $(this).removeClass("fa fa-eye-slash"); 
+          $(this).removeClass("fa fa-eye-slash");
           $(this).addClass("fa fa-eye");
           $("#new_password").prop('type', 'password');
         });
@@ -102,6 +102,14 @@
 
 
     $(document).ready(function () {
+
+      $("textarea").focusin(function () {
+        $(this).siblings(".control-label").hide();
+      });
+      $("textarea").focusout(function () {
+        $(this).siblings(".control-label").show();
+      });
+
       $(".number_validator").inputmask("mask", {
         "mask": "(999) 999-9999"
       });
@@ -118,14 +126,37 @@
             type: "POST",
             url: "/firm-profiles/get-city",
             data: { state_id: state_id },
+            beforeSend: function (xhr) {
+             $(".loadingImgCityAjax").show();
+            },
             success: function (response) {
+              $(".loadingImgCityAjax").hide();
               for (var i = 0; i < response.get_city.length; i++) {
                 $("#city").append('<option value="' + response.get_city[i].id + '">' + response.get_city[i].name + '</option>');
+
               }
+              var options = $('#city option:not(:first)');
+              var arr = options.map(function(_, o) {
+                  return {
+                      t: $(o).text(),
+                      v: o.value
+                  };
+              }).get();
+              arr.sort(function(o1, o2) {
+                  return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0;
+              });
+              options.each(function(i, o) {
+                  //console.log(i);
+                  o.value = arr[i].v;
+                  $(o).text(arr[i].t);
+              });
             },
             error: function (xhr) {
 
             }
+
+
+
           });
         }
       });
@@ -138,7 +169,11 @@
             type: "POST",
             url: "/firm-profiles/get-zipcode",
             data: { city_name: city_name },
+            beforeSend: function (xhr) {
+              $(".loadingImgZipAjax").show();
+            },
             success: function (response) {
+              $(".loadingImgZipAjax").hide();
               for (var i = 0; i < response.zipcode.length; i++) {
                 // console.log(response.zipcode[i]);
                 $("#zipcode").append('<option value="' + response.zipcode[i].id + '">' + response.zipcode[i].zip + '</option>');
@@ -162,7 +197,7 @@
         $("i", this).toggleClass("fa fa-bars fa fa-times");
       });
     });
-  </script> 
+  </script>
   {{/block}}
   <a href="#" class="scrollup btn btn-primary">
     <i class="fa fa-long-arrow-up"></i>
@@ -297,7 +332,13 @@
     $(window).load(function () {
       $(".loader").fadeOut("slow");
     });
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
   </script>
+
+
 </body>
 
 </html>

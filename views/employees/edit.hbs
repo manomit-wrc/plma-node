@@ -30,40 +30,31 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">First Name</label>
+                                    <label class="control-label">First Name<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control floating" id="first_name" name="first_name" value="{{empl.first_name}}" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">Last Name</label>
+                                    <label class="control-label">Last Name<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control floating" id="last_name" name="last_name" value="{{empl.last_name}}" />
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">Email</label>
+                                    <label class="control-label">Email<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control floating" id="email" name="email" value="{{empl.email}}" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
-                                    <label class="control-label">Date of Birth</label>
+                                    <label class="control-label">Date of Birth<span class="text-danger">*</span></label>
                                     <div class="cal-icon">
                                         <input class="form-control floating datetimepicker" type="text" id="dob" name="dob" value="{{dateFormat empl.dob " MM-DD-YYYY"}}"  data-date-format="MM-DD-YYYY">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group form-focus select-focus select-attorney">
-                                    <label class="control-label">Gender</label>
-                                    <select class="form-control floating " id="gender" name="gender">
-                                        <option value="M" {{#if_eq empl.gender "M"}} selected="selected" {{/if_eq}}>Male</option>
-                                        <option value="F" {{#if_eq empl.gender "F"}} selected="selected" {{/if_eq}}>Female</option>
-                                        <option value="O" {{#if_eq empl.gender "O"}} selected="selected" {{/if_eq}}>Other</option>
-                                    </select>
-                                </div>
-                            </div>
+                            
                         </div>
 
                     </div>
@@ -74,14 +65,14 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group form-focus">
-                            <label class="control-label">Mobile No.</label>
+                            <label class="control-label">Mobile No.<span class="text-danger">*</span></label>
                             <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" value="{{empl.mobile_no}}"
                             />
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group form-focus">
-                            <label class="control-label">Address</label>
+                            <label class="control-label">Address<span class="text-danger">*</span></label>
                             <input type="text" class="form-control floating" id="address" name="address" value="{{empl.address}}" />
                         </div>
                     </div>
@@ -98,7 +89,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
-                            <label class="control-label">State</label>
+                            <label class="control-label">State<span class="text-danger">*</span></label>
                             <select class="form-control floating" id="state" name="state">
                                 <option value="">Select State</option>
                                 {{#each state}}
@@ -109,7 +100,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
-                            <label class="control-label">City</label>
+                            <label class="control-label">City<span class="text-danger">*</span></label>
                             <select class="form-control floating" id="city" name="city">
                                 <option value="">Select City</option>
                                 {{#each city}}
@@ -120,7 +111,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus">
-                            <label class="control-label">Zip Code</label>
+                            <label class="control-label">Zip Code<span class="text-danger">*</span></label>
                             <select class="form-control floating" id="zipcode" name="zipcode">
                                 <option value="">Select Zipcode</option>
                                 {{#each zipcode}}
@@ -187,6 +178,25 @@
                 password: {
                     required: true
                 },
+
+                    dob: {
+                    required: true
+                },
+                 state: {
+                    required: true
+                },
+                 city: {
+                    required: true
+                },
+                 zipcode: {
+                    required: true
+                },
+                  mobile_no: {
+                    required: true
+                },
+                  address: {
+                    required: true
+                },
                 firm_id: {
                     required: true
                 }
@@ -204,6 +214,24 @@
                 },
                 password: {
                     required: "Password can't be blank"
+                },
+                  address: {
+                    required: "Address can't be blank"
+                },
+                 zipcode: {
+                    required: "Zipcode can't be blank"
+                },
+                 city: {
+                    required: "City can't be blank"
+                },
+                 state: {
+                    required: "State can't be blank"
+                },
+                 dob: {
+                    required: "Date of Birth can't be blank"
+                },
+                 mobile_no: {
+                    required: "Mobile number can't be blank"
                 },
                 firm_id: {
                     required: "Select atleast one firm"

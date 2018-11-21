@@ -46,22 +46,25 @@
                                 <td>{{this.remarks}}</td>
                                 <td>{{dateFormat this.createdAt "DD-MM-YYYY, hh:mm a"}}</td>
                                 <td class="text-right">
-
-                                    <a href="#" data-toggle="modal" data-target="#view_users" data-practice-area-id="{{this.id}}" data-code="{{this.code}}" data-name="{{this.name}}"
-                                        data-remarks="{{this.remarks}}" id="view-practice-area" class="btn btn-success btn-sm">
+<span  data-toggle="modal" data-target="#view_users">
+                                    <a href="#" data-practice-area-id="{{this.id}}" data-code="{{this.code}}" data-name="{{this.name}}"
+                                        data-remarks="{{this.remarks}}" id="view-practice-area" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="View" >
                                         <i class="fa fa-eye m-r-5"></i>
                                     </a>
-
-                                    <a href="#" data-toggle="modal" data-target="#edit_users" data-practice-area-id="{{this.id}}" data-code="{{this.code}}" data-name="{{this.name}}"
-                                        data-remarks="{{this.remarks}}" id="edit-practice-area" class="btn btn-success btn-sm">
+</span>
+<span  data-toggle="modal" data-target="#edit_users">
+                                    <a href="#" data-practice-area-id="{{this.id}}" data-code="{{this.code}}" data-name="{{this.name}}"
+                                        data-remarks="{{this.remarks}}" id="edit-practice-area" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit" >
                                         <i class="fa fa-pencil m-r-5"></i>
                                     </a>
-                                    <a href="#" data-toggle="modal" data-target="#delete_users" data-practice-area-id="{{this.id}}" id="delete-practice-area"
-                                        class="btn btn-danger btn-sm">
+                                    </span>
+                                    <spandata-toggle="modal" data-target="#delete_users" >
+                                    <a href="#" data-practice-area-id="{{this.id}}" id="delete-practice-area"
+                                        class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete" >
                                         <i class="fa fa-trash-o m-r-5"></i>
                                     </a>
 
-
+</span>
                                 </td>
                             </tr>
                             {{/each}}
@@ -190,7 +193,7 @@
             </div>
             <form>
                 <div class="modal-body card-box">
-                    <p>Are you sure want to delete this?</p>
+                    <p>Are you sure you want to delete this practice area?</p>
                     <div class="m-t-20">
                         <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
                         <button type="submit" class="btn btn-danger delPracticeAreaBtn">Delete</button>

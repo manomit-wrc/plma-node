@@ -40,21 +40,22 @@
                            </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group form-focus select-focus select-attorney">
-                                <label class="control-label">Strategic Goals</label>
-                                <select class="form-control floating " id="strategic_goal" name="strategic_goal" >
-                                    <option value="">Select Strategic Goals</option>
-                                    {{#each stragic_goal}}
+                            <div class="form-group form-focus select-focus ">
+                                <div class="">
+                                    <select class="form-control floating" id="strategic_goal" name="strategic_goal[]" multiple="multiple">
+                                        {{#each stragic_goal}}
                                         <option value="{{this.id}}">{{this.name}}</option>
-                                    {{/each}}
-                                </select>
+                                        {{/each}}
+                                    </select>
+                                </div>
                             </div>
                         </div>
+
+                        
                         
                         <div class="col-md-6">
                             <div class="form-group form-focus">
                                 <label class="control-label">From Date
-                                  <span class="req-lbl">*</span>
 
                                 </label>
                                 <div class="cal-icon">
@@ -67,7 +68,6 @@
                         <div class="col-md-6">
                             <div class="form-group form-focus">
                                 <label class="control-label">To Date
-                                  <span class="req-lbl">*</span>
 
                                 </label>
                                 <div class="cal-icon">
@@ -111,7 +111,14 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-            
+            $('#strategic_goal').multiselect({
+                nonSelectedText: 'Select Strategic Goal',
+                enableFiltering: true,
+                includeSelectAllOption: true,
+                buttonWidth: '100%',
+                maxHeight: 400,
+                dropDown: true
+            });
             $("#frmAddActivityGoal").validate({
                 ignore: [],
                 rules: {
@@ -124,12 +131,7 @@
                     strategic_goal: {
                         required: true
                     },
-                    from_date: {
-                        required: true
-                    },
-                    to_date: {
-                        required: true
-                    },
+                  
                     remarks: {
                         required: true
                     }
@@ -144,12 +146,7 @@
                     strategic_goal: {
                         required: "Please select strategic goals"
                     },
-                    from_date: {
-                        required: "From date can't be blank"
-                    },
-                    to_date: {
-                        required: "To date can't be blank"
-                    },
+                 
                     remarks: {
                         required: "Remarsks can't be blank"
                     }

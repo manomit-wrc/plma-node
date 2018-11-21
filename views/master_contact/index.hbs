@@ -19,18 +19,22 @@
                     <strong>Success! </strong>{{success_edit_message}}
                 </div>
                 {{/if}}
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <h4 class="page-title">Master Contacts</h4>
                 </div>
-                <div class="col-md-8 text-right">
-                    <a href="/master_contact/add" class="btn btn-primary rounded pull-right"><i class="fa fa-plus"></i> Add
-                        Master Contact</a>
-                    <a href="javascript:void(0)" data-toggle="modal" data-target="#import" class="btn btn-primary rounded pull-right m-r-5"><i
-                            class="fa fa-cloud-download"></i> Import Master Contact </a>
-                    <a href="javascript:void(0);" class="btn btn-primary rounded move-target pull-right"><i class="fa fa-share"
-                            aria-hidden="true"></i> Move to Target </a>
-                    <a href="javascript:void(0);" class="btn btn-primary rounded master-contact-delete pull-right m-r-5"><i
-                            class="fa fa-trash" aria-hidden="true"></i> Delete </a>
+                <div class="col-md-10 text-right">
+                    <a href="/master_contact/add" class="btn btn-primary rounded pull-right">
+                        <i class="fa fa-plus"></i> Add Master Contact</a>
+                    <a href="javascript:void(0)" data-toggle="modal" data-target="#import" class="btn btn-primary rounded pull-right m-r-5">
+                        <i class="fa fa-cloud-download"></i> Import Master Contact</a>
+                    <a href="javascript:void(0);" class="btn btn-primary rounded move-target pull-right">
+                        <i class="fa fa-share" aria-hidden="true"></i> Move to Target</a>
+                    <a href="javascript:void(0);" class="btn btn-primary rounded move-client pull-right m-r-5">
+                        <i class="fa fa-share" aria-hidden="true"></i> Move to Client</a>
+                    <a href="javascript:void(0);" class="btn btn-primary rounded move-referral pull-right m-r-5">
+                        <i class="fa fa-share" aria-hidden="true"></i> Move to Referral Sources</a>
+                    <a href="javascript:void(0);" class="btn btn-primary rounded master-contact-delete pull-right m-r-5">
+                        <i class="fa fa-trash" aria-hidden="true"></i> Delete </a>
                 </div>
             </div>
         </div>
@@ -50,7 +54,8 @@
                 <table class="table table-striped custom-table datatable mast">
                     <thead>
                         <tr>
-                            <th><input type="checkbox" onClick="checkall(this);" /> SL#</th>
+                            <th>
+                                <input type="checkbox" onClick="checkall(this);" /> SL#</th>
                             <th>Name</th>
                             <th>Email Id</th>
                             <th>Mobile Number</th>
@@ -62,25 +67,35 @@
                     <tbody>
                         {{#each contacts}}
                         <tr>
-                            <td><input type="checkbox" name="contact_id" value="{{this.id}}" /> {{math @index "+" 1}}</td>
-                            <td><a href="/master_contact/view/{{this.id}}">{{#if organization_name}} {{this.organization_name}}
-                                    {{else}} {{this.first_name}} {{this.last_name}} {{/if}} </a></td>
-                            <td>{{this.email}}</td>
-                            <td class="number_validator">{{this.mobile_no}}</td>
-                            <td>{{this.company_name}}</td>
-                            <td>{{this.status}}</td>
+                            <td>
+                                <input type="checkbox" name="contact_id" value="{{this.id}}" /> {{math @index "+" 1}}</td>
+                            <td>
+                                <a href="/master_contact/view/{{this.id}}">{{#if organization_name}} {{this.organization_name}} {{else}} {{this.first_name}} {{this.last_name}}
+                                    {{/if}} </a>
+                            </td>
+                            <td>{{#if this.email}} {{this.email}} {{else}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; — {{/if}}</td>
+                            <td {{#if this.mobile_no}} class="number_validator" {{/if}}>
+                                {{#if this.mobile_no}} {{this.mobile_no}} {{else}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; — {{/if}}
+                            </td>
+                            <td>
+                                {{#if this.company_name}} {{this.company_name}} {{else}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; — {{/if}}
+                            </td>
+                            <td>
+                                {{#if this.status}} {{this.status}} {{else}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; — {{/if}}
+                            </td>
                             <td class="text-right">
-                                <a href="/master_contact/view/{{this.id}}" class="btn btn-success btn-sm">
+                                <a href="/master_contact/view/{{this.id}}" class="btn btn-success btn-sm"  data-toggle="tooltip" data-placement="bottom" title="View">
                                     <i class="fa fa-eye m-r-5"></i>
                                 </a>
-                                <a href="/master_contact/edit/{{this.id}}" class="btn btn-success btn-sm">
+                                <a href="/master_contact/edit/{{this.id}}" class="btn btn-success btn-sm"  data-toggle="tooltip" data-placement="bottom" title="Edit">
                                     <i class="fa fa-pencil m-r-5"></i>
                                 </a>
-
-                                <a href="javascript:void(0)" data-toggle="modal" data-target="delete_users" data-mastercontact-id="{{this.id}}" id="delete_mastercontact"
-                                    class="btn btn-danger btn-sm">
+                               <span  data-toggle="modal" data-target="delete_users" >
+                                <a href="javascript:void(0)"data-mastercontact-id="{{this.id}}" id="delete_mastercontact"
+                                    class="btn btn-danger btn-sm"  data-toggle="tooltip" data-placement="bottom" title="Delete">
                                     <i class="fa fa-trash-o m-r-5"></i>
                                 </a>
+                                </span>
                             </td>
                         </tr>
                         {{/each}}
@@ -99,7 +114,7 @@
             </div>
             <form>
                 <div class="modal-body card-box">
-                    <p>are you sure you want to delete this master contact ?</p>
+                    <p>Are you sure you want to delete this master contact ?</p>
                     <div class="m-t-20" id="delDiv">
                         <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
                     </div>
@@ -126,7 +141,9 @@
                 </form>
             </div>
             <div class="modal-footer">
-
+                <a href="/xcel-temp/master_contact_layouts.xlsx" download class="btn btn-info" title="Download template">
+                    <i class="fa fa-download" aria-hidden="true"></i>
+                </a>
                 <input type="submit" name="import" value="Import" class="btn btn-info" />
 
             </div>
@@ -181,8 +198,8 @@
                                 <select class="select form-control" id="attorney" name="attorney">
                                     <option value="">Select Attorney</option>
                                     {{#each attorney}}
-                                    <option value="{{this.id}}" {{#if_eq this.id ../attr_search}} selected="selected" {{/if_eq}}>{{this.first_name}}
-                                        {{this.last_name}}</option>
+                                    <option value="{{this.id}}" {{#if_eq this.id ../attr_search}} selected="selected" {{/if_eq}}>{{this.first_name}} {{this.last_name}}
+                                    </option>
                                     {{/each}}
                                 </select>
                             </div>
@@ -200,19 +217,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="control-label">Association Status
-                                </label>
-                                <select class="select form-control" id="association" name="association">
-                                    <option value="">Select Association</option>
-                                    <option value="NEW TARGET" {{#if_eq association "NEW TARGET"}} selected="selected" {{/if_eq}}>NEW
-                                        TARGET</option>
-                                    <option value="CONVERTED" {{#if_eq association "CONVERTED"}} selected="selected" {{/if_eq}}>CONVERTED</option>
-                                    <option value="TS-INTERIM" {{#if_eq association "TS-INTERIM"}} selected="selected" {{/if_eq}}>TS-INTERIM</option>
-                                </select>
-                            </div>
-                        </div>
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Country
@@ -303,12 +308,12 @@
         });
 
         if (contact_ids.length == 0) {
-            swal("", "Please select one or more master contact!", "warning");
+            swal("", "Please select at least one contact!", "warning");
         } else {
             //$('#move_to_target_2').modal('show');
             swal({
                 title: "",
-                text: "are you sure you want to move this record to target ?",
+                text: "Are you sure you want to move this record to target ?",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonClass: "btn-danger",
@@ -348,12 +353,12 @@
         });
 
         if (contact_ids.length == 0) {
-            swal("", "Please select one or more master contact!", "warning");
+            swal("", "Please select at least one master contact!", "warning");
         } else {
             //$('#master-contact-delete-2').modal('show');
             swal({
                 title: "",
-                text: "are you sure you want to delete this record ?",
+                text: "Are you sure you want to delete this record ?",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonClass: "btn-danger",
@@ -392,5 +397,97 @@
         $("#delete_users").modal('show');
         $("#delDiv").append('<a href="/master_contact/delete/' + mastercontact_id + '" class="btn btn-danger" id="removeBtnDelete">' + "Delete" + '</a>');
     });
+
+    $('.move-client').on('click', function (e) {
+        var contact_ids = [];
+        $('input[name="contact_id"]:checked').each(function () {
+            contact_ids.push(this.value);
+        });
+
+        if (contact_ids.length == 0) {
+            swal("", "Please select at least one contact!", "warning");
+        } else {
+            //$('#move_to_target_2').modal('show');
+            swal({
+                title: "",
+                text: "Are you sure you want to move this record to client ?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Ok",
+                closeOnConfirm: false
+            }, function () {
+                $.ajax({
+                    url: '/master_contact/move-to-client/',
+                    type: 'POST',
+                    data: {
+                        contact_id: contact_ids
+                    },
+                    success: function (response) {
+                        if (response.code === '200') {
+                            $('#move_to_target_2').modal('hide');
+                            swal({
+                                title: "Nice!",
+                                text: "Master Contact moved successfully",
+                                type: "success"
+                            }, function () {
+                                window.location.reload();
+                            });
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+        }
+    });
+
+    $('.move-referral').on('click', function (e) {
+        var contact_ids = [];
+        $('input[name="contact_id"]:checked').each(function () {
+            contact_ids.push(this.value);
+        });
+
+        if (contact_ids.length == 0) {
+            swal("", "Please select at least one master contact!", "warning");
+        } else {
+            //$('#move_to_target_2').modal('show');
+            swal({
+                title: "",
+                text: "Are you sure you want to move this record to referral sources ?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Ok",
+                closeOnConfirm: false
+            }, function () {
+                $.ajax({
+                    url: '/master_contact/move-to-referral/',
+                    type: 'POST',
+                    data: {
+                        contact_id: contact_ids
+                    },
+                    success: function (response) {
+                        if (response.code === '200') {
+                            $('#move_to_target_2').modal('hide');
+                            swal({
+                                title: "Nice!",
+                                text: "Master Contact moved successfully",
+                                type: "success"
+                            }, function () {
+                                window.location.reload();
+                            });
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+        }
+    });
+
+    
 
 </script> {{/content}}

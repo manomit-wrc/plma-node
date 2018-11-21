@@ -11,6 +11,12 @@
       <div class="col-sm-8">
         <h4 class="page-title">Add Referral Sources</h4>
       </div>
+      <div class="col-sm-4">
+        <div class="text-right">
+          <a href="/referral" class="btn btn-primary pull-right rounded m-r-5">
+            <i class="fa fa-arrow-left"></i> Back</a>
+        </div>
+      </div>
     </div>
     {{#if err_message}}
     <div class="alert alert-danger">
@@ -85,26 +91,12 @@
               <div class="col-md-6">
                 <div class="form-group form-focus">
                   <label class="control-label">Mobile Number
-                    <span class="req-lbl">*</span>
                   </label>
                   <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" />
                 </div>
               </div>
             
-              <div class="col-md-6">
-                <div class="form-group form-focus select-focus select-attorney">
-                  <label class="control-label">Gender
-                    <span class="req-lbl">*</span>
-                  </label>
-                  <select class="form-control floating" id="gender" name="gender" >
-                    <option value="">Select Gender</option>
-                    <option value="M">Male</option>
-                    <option value="F">Female</option>
-                    <option value="O">Others</option>
-
-                  </select>
-                </div>
-              </div>
+            
             
 
             </div>
@@ -141,7 +133,6 @@
           <div class="col-md-12">
             <div class="form-group form-focus">
               <label class="control-label">Address Line 1
-                <span class="req-lbl">*</span>
               </label>
               <input type="text" class="form-control floating" id="address1" name="address1" />
             </div>
@@ -161,10 +152,9 @@
           <div class="col-md-6">
             <div class="form-group form-focus select-focus">
               <label class="control-label">Country
-                <span class="req-lbl">*</span>
               </label>
               <select id="country" name="country" class="select form-control floating">
-                <option value="">Select Country</option>
+                <option value="0">Select Country</option>
                 {{#each country}}
                 <option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
                 {{/each}}
@@ -174,10 +164,9 @@
           <div class="col-md-6">
             <div class="form-group form-focus select-focus">
               <label class="control-label">State
-                <span class="req-lbl">*</span>
               </label>
               <select id="state" name="state" class="select form-control floating">
-                <option value="">Select State</option>
+                <option value="0">Select State</option>
                 {{#each state}}
                 <option value="{{this.id}}">{{this.name}}</option>
                 {{/each}}
@@ -185,23 +174,23 @@
             </div>
           </div>
           <div class="col-md-6">
+            <img class="loadingImgCityAjax m-r-10" style="display:none" src="/assets/img/loading.gif" height="15" width="15" alt="">
             <div class="form-group form-focus select-focus">
               <label class="control-label">City
-                <span class="req-lbl">*</span>
               </label>
               <select id="city" name="city" class="select form-control floating">
-                <option value="">Select City</option>
+                <option value="0">Select City</option>
 
               </select>
             </div>
           </div>
           <div class="col-md-6">
+            <img class="loadingImgZipAjax m-r-10" style="display:none" src="/assets/img/loading.gif" height="15" width="15" alt="">
             <div class="form-group form-focus select-focus">
               <label class="control-label">Zip Code
-                <span class="req-lbl">*</span>
               </label>
               <select id="zipcode" name="zipcode" class="select form-control floating">
-                <option value="">Select Zipcode</option>
+                <option value="0">Select Zipcode</option>
               </select>
             </div>
           </div>
@@ -237,21 +226,7 @@
                   <input type="text" class="form-control floating" id="clientDetailsSecondName" name="clientDetailsSecondName[]" />
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="form-group form-focus select-focus">
-                  <label class="control-label">Gender
-                    <span class="req-lbl">*</span>
-
-                  </label>
-                  <select class="select form-control floating" id="clientDetailsGender" name="clientDetailsGender[]">
-                    <option value="">Select Gender</option>
-                    <option value="M">Male</option>
-                    <option value="F">Female</option>
-                    <option value="O">Others</option>
-
-                  </select>
-                </div>
-              </div>
+           
               <div class="col-md-6">
                 <div class="form-group form-focus">
                   <label class="control-label">Email Id
@@ -265,24 +240,16 @@
               <div class="col-md-6">
                 <div class="form-group form-focus">
                   <label class="control-label">Phone No.
-                    <span class="req-lbl">*</span>
 
                   </label>
                   <input type="text" class="form-control floating number_validator" id="clientDetailsPhone_no" name="clientDetailsPhone_no[]"
                     maxlength="50" />
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="form-group form-focus">
-                  <label class="control-label">Fax</label>
-                  <input type="text" class="form-control floating number_validator" id="clientDetailsFax" name="clientDetailsFax[]" maxlength="50"
-                  />
-                </div>
-              </div>
+           
               <div class="col-md-6">
                 <div class="form-group form-focus">
                   <label class="control-label">Mobile No.
-                    <span class="req-lbl">*</span>
                   </label>
                   <input type="text" class="form-control floating number_validator" id="clientDetailsMobile_no" name="clientDetailsMobile_no[]"
                     maxlength="50" />
@@ -315,20 +282,7 @@
                       <input type="text" class="form-control floating" name="clientDetailsSecondName[]" />
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="form-group form-focus select-focus">
-                      <label class="control-label">Gender
-                        <span class="req-lbl">*</span>
-
-                      </label>
-                      <select class="form-control floating" name="clientDetailsGender[]">
-                        <option value="">Select Gender</option>
-                        <option value="M">Male</option>
-                        <option value="F">Female</option>
-                        <option value="O">Others</option>
-                      </select>
-                    </div>
-                  </div>
+                  
                   <div class="col-md-6">
                     <div class="form-group form-focus">
                       <label class="control-label">Email Id
@@ -342,22 +296,15 @@
                   <div class="col-md-6">
                     <div class="form-group form-focus">
                       <label class="control-label">Phone No.
-                        <span class="req-lbl">*</span>
 
                       </label>
                       <input type="text" class="form-control floating number_validator" name="clientDetailsPhone_no[]" maxlength="50" />
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="form-group form-focus">
-                      <label class="control-label">Fax</label>
-                      <input type="text" class="form-control floating number_validator" name="clientDetailsFax[]" maxlength="50" />
-                    </div>
-                  </div>
+               
                   <div class="col-md-6">
                     <div class="form-group form-focus">
                       <label class="control-label">Mobile No.
-                        <span class="req-lbl">*</span>
                       </label>
                       <input type="text" class="form-control floating number_validator" name="clientDetailsMobile_no[]" maxlength="50" />
                     </div>
@@ -385,12 +332,7 @@
               <input type="text" class="form-control floating url_selector" id="website_url" name="website_url" />
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="form-group form-focus">
-              <label class="control-label">Fax</label>
-              <input type="text" class="form-control floating number_validator" id="fax" name="fax" />
-            </div>
-          </div>
+     
           <div class="col-md-6">
             <div class="form-group form-focus">
               <label class="control-label">Phone Number
@@ -449,17 +391,7 @@
               <input type="text" class="form-control floating url_selector" id="youtube" name="youtube" />
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="form-group form-focus select-focus select-attorney">
-              <label class="control-label">Association Status</label>
-              <select id="association" name="association" class="form-control floating " >
-                <option value="0"> Select Association</option>
-                <option value="CONVERTED">CONVERTED</option>
-                <option value="NEW TARGET">NEW TARGET</option>
-                <option value="TS-INTERIM">TS-INTERIM</option>
-              </select>
-            </div>
-          </div>
+        
           <div class="col-md-6">
             <div class="form-group form-focus select-focus select-attorney">
               <label class="control-label">Industry Type</label>
@@ -522,43 +454,15 @@
         org_name: {
           required: true
         },
-        email: {
-          required: true
-        },
-        mobile_no: {
-          required: true
-        },
+      
         target_id: {
           required: true
         },
         client_id: {
           required: true
         },
-        gender: {
-          required: true
-        },
+    
         estimated_revenue: {
-          required: true
-        },
-        address1: {
-          required: true
-        },
-        country: {
-          required: true
-        },
-        state: {
-          required: true
-        },
-        city: {
-          required: true
-        },
-        zipcode: {
-          required: true
-        },
-        referred_id_t: {
-          required: true
-        },
-        referred_id_c: {
           required: true
         }
       },
@@ -575,44 +479,17 @@
         org_name: {
           required: "Organization name can't be blank"
         },
-        email: {
-          required: "Email ID can't be blank"
-        },
-        mobile_no: {
-          required: "Mobile number can't be blank"
-        },
+     
         target_id: {
           required: "Please select reffered name"
         },
         client_id: {
           required: "Please select reffered name"
         },
-        gender: {
-          required: "Please select gender"
-        },
+       
+     
         estimated_revenue: {
           required: "Estimated revenue can't be blank"
-        },
-        address1: {
-          required: "Address can't be blank"
-        },
-        country: {
-          required: "Please Choose your country"
-        },
-        state: {
-          required: "Please Choose your state"
-        },
-        city: {
-          required: "Please Choose your city"
-        },
-        zipcode: {
-          required: "Please Choose your zipcode"
-        },
-        referred_id_t: {
-          required: "Please select target"
-        },
-        referred_id_c: {
-          required: "Please select client"
         }
       }
     });
@@ -650,6 +527,58 @@
   });
 
 
+</script>
 
 
-</script> {{/content}}
+
+<script>
+ $(document).ready(function () {
+	   $("#email").keyup(function () {
+            $("div").remove(".validation");
+
+        });
+ });
+
+function validateEmail(mail) {
+        var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        if (filter.test(mail)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+	    $(document).on('change', "#email", function (e) {
+        var mail = $(this).val();
+        $("div").remove(".validation");
+        if (mail !== '') {
+            $.ajax({
+                type: "POST",
+                url: "/get-duplicate-email-block-referral",
+                data: {
+                    mail: mail
+                },
+                success: function (response) {
+
+                    if (response.success == true) {
+                        $("#email").parent().append("<div class='validation' style='color:red;margin-bottom: 20px;'><i class='fa fa-close iconDuplicateEmail'></i><b> Email Id already exists</b></div>");
+                    }
+                    else {
+                        if (validateEmail(mail)) {
+                            $("#email").parent().append("<div class='validation' style='color:green;margin-bottom: 20px;'><i class='fa fa-check iconDuplicateEmail' style='background-color:#c2f7c6 !important;''></i></div>");
+                        }
+                        else {
+                            $("#email").parent().append("<div class='validation' style='color:red;margin-bottom: 20px;'><i class='fa fa-close iconDuplicateEmail'></i></div>");
+
+                        }
+                    }
+                },
+                error: function (xhr) {
+                }
+            });
+        }
+    });
+</script>
+
+ {{/content}}

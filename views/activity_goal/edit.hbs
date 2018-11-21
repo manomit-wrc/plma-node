@@ -41,26 +41,26 @@
                            </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group form-focus select-focus select-attorney">
-                                <label class="control-label">Strategic Goals</label>
-                                <select class="form-control floating " id="strategic_goal" name="strategic_goal" >
-                                    <option value="">Select Strategic Goals</option>
-                                    {{#each stragic_goal}}
-                                    <option value="{{this.id}}" {{#if_eq this.id ../edit_goals.strategic_goal_id}} selected="selected" {{/if_eq}}>{{this.name}}</option>
-                                    {{/each}}
-                                </select>
+                            <div class="form-group form-focus select-focus ">
+                                <div class="">
+                                    <select class="form-control floating" id="strategic_goal" name="strategic_goal[]" multiple="multiple">
+                                        {{#each stragic_goal}}
+                                        <option value="{{this.id}}" {{#inArray ../strategicGoalArr this.id}} selected="selected" {{/inArray}}>{{this.name}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
                             </div>
                         </div>
+                        
                         
                         <div class="col-md-6">
                             <div class="form-group form-focus">
                                 <label class="control-label">From Date
-                                  <span class="req-lbl">*</span>
 
                                 </label>
                                 <div class="cal-icon">
                                     <input class="form-control floating datetimepicker"
-                                        type="text" id="from_date" name="from_date" value="{{dateFormat edit_goals.from_date "MM-DD-YYYY"}}" data-date-format="MM-DD-YYYY"
+                                        type="text" id="from_date" name="from_date"{{#if edit_goals.from_date}} value="{{dateFormat edit_goals.from_date "MM-DD-YYYY"}}" {{else}} value="" {{/if}} data-date-format="MM-DD-YYYY"
                                     >
                                 </div>
                             </div>
@@ -68,12 +68,11 @@
                         <div class="col-md-6">
                             <div class="form-group form-focus">
                                 <label class="control-label">To Date
-                                  <span class="req-lbl">*</span>
 
                                 </label>
                                 <div class="cal-icon">
                                     <input class="form-control floating datetimepicker"
-                                        type="text" id="to_date" name="to_date" value="{{dateFormat edit_goals.to_date "MM-DD-YYYY"}}" data-date-format="MM-DD-YYYY"
+                                        type="text" id="to_date" name="to_date" {{#if edit_goals.to_date}} value="{{dateFormat edit_goals.to_date "MM-DD-YYYY"}}" {{else}} value="" {{/if}} data-date-format="MM-DD-YYYY"
                                     >
                                 </div>
                             </div>
@@ -112,6 +111,14 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
+            $('#strategic_goal').multiselect({
+                nonSelectedText: 'Select Strategic Goal',
+                enableFiltering: true,
+                includeSelectAllOption: true,
+                buttonWidth: '100%',
+                maxHeight: 400,
+                dropDown: true
+            });
             /*$('#firm_id').multiselect({
                 nonSelectedText: 'Select Firms',
                 includeSelectAllOption: true,
@@ -129,12 +136,7 @@
                     strategic_goal: {
                         required: true
                     },
-                    from_date: {
-                        required: true
-                    },
-                    to_date: {
-                        required: true
-                    },
+                 
                     remarks: {
                         required: true
                     }
@@ -149,12 +151,7 @@
                     strategic_goal: {
                         required: "Please select Strategic Goal"
                     },
-                    from_date: {
-                        required: "From date can't be blank"
-                    },
-                    to_date: {
-                        required: "To date can't be blank"
-                    },
+                  
                     remarks: {
                         required: "Remarsks can't be blank"
                     }

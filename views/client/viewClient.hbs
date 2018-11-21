@@ -63,10 +63,7 @@
 													<p class="number_validator">
 														{{client.phone_no}}
 													</p>
-													<span>F:</span>
-													<p class="number_validator">
-														{{client.fax}}
-													</p>
+													
 												</div>
 											</div>
 										</div>
@@ -190,7 +187,7 @@
 														<ul class="personal-info other-info lifetime-revenue">
 															<li>
 																<span class="title">Estimated Customer Lifetime Value:</span>
-																<span class="text revenue_cost">{{client.estimated_customer_life_time_value}}</span>
+																<span class="text">{{client.estimated_customer_life_time_value}}</span>
 															</li>
 															<li>
 																<span class="title">Life time revenue:</span>
@@ -198,7 +195,7 @@
 															</li>
 															<li>
 																<span class="title">Close Date:</span>
-																<span class="text">{{dateFormat client.close_date "MM-DD-YYYY"}}</span>
+																<span class="text">{{#if client.revenueclosingDate}}{{dateFormat client.revenueclosingDate "MM-DD-YYYY"}}{{/if}}</span>
 															</li>
 														</ul>
 														{{#each client.revenues}}
@@ -208,7 +205,7 @@
 															</li>
 															<li>
 																<span class="title">Planning Period Start Date:</span>
-																<span class="text">{{dateFormat this.start_date "MM-DD-YYYY"}}</span>
+																<span class="text">{{#if this.start_date}}{{dateFormat this.start_date "MM-DD-YYYY"}} {{/if}}</span>
 															</li>
 															<li>
 																<span class="title">Revenue Planning Period (Month):</span>
@@ -216,11 +213,11 @@
 															</li>
 															<li>
 																<span class="title">Planning Period End Date:</span>
-																<span class="text">{{dateFormat this.end_date "MM-DD-YYYY"}}</span>
+																<span class="text">{{#if this.end_date}}{{dateFormat this.end_date "MM-DD-YYYY"}} {{/if}}</span>
 															</li>
 															<li>
 																<span class="title">Estimated Planning Period Revenue:</span>
-																<span class="text revenue_cost">{{this.estimated_revenue}}</span>
+																<span class="text revenue_cost">{{#if this.estimated_revenue}}{{this.estimated_revenue}}{{else}}$ 0{{/if}}</span>
 															</li>
 															<li>
 																<span class="title">Actual Planning Period Revenue:</span>
@@ -270,14 +267,7 @@
 									<div class="row">
 										<div class="col-md-12">
 											<ul class="personal-info other-info">
-												<li>
-													<span class="title">Gender:</span>
-													<span class="text">
-														{{#if_eq client.gender "M"}} Male {{/if_eq}} {{#if_eq client.gender "F"}} Female {{/if_eq}} {{#if_eq
-														client.gender "O"}}
-														Other {{/if_eq}}
-													</span>
-												</li>
+												
 												<li>
 													<span class="title">Company Name:</span>
 													<span class="text">{{client.company_name}}</span>
@@ -310,10 +300,7 @@
 													<span class="title">Youtube:</span>
 													<span class="text"><a href="{{client.youtub}}" target="_blank">{{client.youtub}}</a></span>
 												</li>
-												<li>
-													<span class="title">Association Status:</span>
-													<span class="text">{{client.association_type}}</span>
-												</li>
+												
 												<li>
 													<span class="title">Industry Type:</span>
 													<span class="text">{{industry.industry_name}}</span>

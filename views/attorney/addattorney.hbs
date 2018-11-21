@@ -128,17 +128,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group form-focus select-focus select-attorney">
-                            <label class="control-label">Gender</label>
-                            <select class="form-control floating " id="gender" name="gender">
-                                <option value="">Select Gender</option>
-                                <option value="M">Male</option>
-                                <option value="F">Female</option>
-                                <option value="O">Others</option>
-                            </select>
-                        </div>
-                    </div>
+                  
                     <div class="col-md-6">
                         <div class="form-group form-focus">
                             <label class="control-label">Attorney ID</label>
@@ -152,23 +142,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6">
-                        <div class="form-group form-focus select-focus select-attorney">
-                            <label class="control-label">Attorney Type</label>
-                            <select class="form-control floating " id="attorney_type" name="attorney_type">
-                                <option value="">Select Attorney Type</option>
-                                <option value="AT-APPROVED">APPROVED ATTORNEY</option>
-                                <option value="PENDING">ATTORNEY TO BE ASSIGNED</option>
-                                <option value="AT-INTERIM">INTERIM ATTORNEY</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group form-focus">
-                            <label class="control-label">Mobile No</label>
-                            <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" />
-                        </div>
-                    </div>
+                  
                 </div>
             </div>
             <div class="card-box">
@@ -177,19 +151,19 @@
                     <div class="col-md-4">
                         <div class="form-group form-focus">
                             <label class="control-label">Degree Type</label>
-                            <input type="text" class="form-control floating" id="degree" name="degree[]" />
+                            <input type="text" class="form-control floating" id="degree" name="degree" />
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group form-focus">
                             <label class="control-label">University</label>
-                            <input type="text" class="form-control floating" id="university" name="university[]" />
+                            <input type="text" class="form-control floating" id="university" name="university" />
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group form-focus">
                             <label class="control-label">Year</label>
-                            <input type="text" class="form-control floating" id="year" name="year[]" onkeypress="return isNumber(event)" maxlength="4"
+                            <input type="text" class="form-control floating" id="year" name="year" onkeypress="return isNumber(event)" maxlength="4"
                                 title="Only numbers are allowed" />
                         </div>
                     </div>
@@ -202,19 +176,19 @@
                             <div class="col-md-4">
                                 <div class="form-group form-focus">
                                     <label class="control-label">Degree Type</label>
-                                    <input type="text" class="form-control floating" name="degree[]" />
+                                    <input type="text" class="form-control floating" name="degree" />
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group form-focus">
                                     <label class="control-label">University</label>
-                                    <input type="text" class="form-control floating" name="university[]" />
+                                    <input type="text" class="form-control floating" name="university" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group form-focus">
                                     <label class="control-label">Year</label>
-                                    <input type="text" class="form-control floating" id="year" name="year[]" onkeypress="return isNumber(event)" maxlength="4"
+                                    <input type="text" class="form-control floating" id="year" name="year" onkeypress="return isNumber(event)" maxlength="4"
                                         title="Only numbers are allowed" />
                                 </div>
                             </div>
@@ -237,12 +211,11 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus select-attorney">
-                            <label class="control-label">Job Type</label>
+                            <label class="control-label">Compensation Type</label>
                             <select class="form-control floating " id="job_type" name="job_type">
-                                <option value="">Select Job Type</option>
-                                <option value="FULLTIME">FULLTIME</option>
-                                <option value="STERMCON">SHORT TERM CONTRACT</option>
-                                <option value="TEMP">TEMPORARY</option>
+                                <option value="">Select Compensation Type</option>
+                                <option value="FULLTIME">Salary</option>
+                                <option value="STERMCON">Hourly</option>
                             </select>
                         </div>
                     </div>
@@ -294,6 +267,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus ">
                             <div class="">
+                                <label class="control-label"><span class="req-lbl">*</span></label>
                                 <select class="form-control floating" id="jurisdiction" name="jurisdiction" multiple="multiple">
                                     {{#each allJurisdiction}}
                                     <option value="{{this.jurisdiction.id}}">{{this.jurisdiction.name}}</option>
@@ -306,6 +280,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-focus select-focus ">
                             <div class="">
+                                <label class="control-label"><span class="req-lbl">*</span></label>
                                 <select class="form-control floating" id="practice_area" name="practice_area" multiple="multiple">
                                     {{#each allPracticeArea}}
                                     <option value="{{this.practicearea.id}}">{{this.practicearea.name}}</option>
@@ -322,9 +297,20 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group form-focus">
+                            <label class="control-label">Office address
+                            </label>
+                            <select id="office" name="office" class="form-control floating">
+                                <option value="0">Select Office address</option>
+                                {{#each office}}
+                                    <option value="{{this.id}}">{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group form-focus">
                             <label class="control-label">Address Line 1
                                 <span class="req-lbl">*</span>
-
                             </label>
                             <input type="text" class="form-control floating" id="address" name="address" />
                         </div>
@@ -395,16 +381,17 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-focus">
-                            <label class="control-label">Phone No</label>
-                            <input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" />
+                            <label class="control-label">Mobile No</label>
+                            <input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-focus">
-                            <label class="control-label">Fax</label>
-                            <input type="text" class="form-control floating number_validator" id="fax" name="fax" />
+                            <label class="control-label">Phone No</label>
+                            <input type="text" class="form-control floating number_validator" id="phone_no" name="phone_no" />
                         </div>
                     </div>
+                   
                     <div class="col-md-6">
                         <div class="form-group form-focus">
                             <label class="control-label">Website URL</label>
@@ -413,19 +400,8 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-focus">
-                            <label class="control-label">Social URL</label>
+                            <label class="control-label">LinkedIn URL</label>
                             <input type="text" class="form-control floating url_selector" id="social_url" name="social_url" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card-box">
-                <h3 class="card-title">Remarks</h3>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group form-focus">
-                            <label class="control-label">Remarks </label>
-                            <textarea class="form-control floating" id="remarks" name="remarks"></textarea>
                         </div>
                     </div>
                 </div>
@@ -521,20 +497,20 @@
                 required: "designation can't be blank"
             },
             first_name: {
-                required: "first_name can't be blank"
+                required: "First name can't be blank"
             },
             last_name: {
-                required: "last_name can't be blank"
+                required: "Last name can't be blank"
             },
 
             address: {
-                required: "address  can't be blank"
+                required: "address can't be blank"
             },
             country: {
-                required: "country  can't be blank"
+                required: "country can't be blank"
             },
             state: {
-                required: "state  can't be blank"
+                required: "state can't be blank"
             },
             zipcode: {
                 required: "zipcode can't be blank"
@@ -575,7 +551,7 @@
                 swal("", "Please select section", "warning");
                 $("#designation").val('').attr("selected", true);
             }
-            else if (designation_id == 70) {
+            /*else if (designation_id == 70) {
                 $.ajax({
                     type: "POST",
                     url: "/get-firm-user-designation",
@@ -593,7 +569,7 @@
 
                     }
                 });
-            }
+            }*/
             else if (section_id != "" && designation_id == 74) {
                 $.ajax({
                     type: "POST",
@@ -741,4 +717,83 @@
         }
     });
 /* ================================ Duplicate email checking ajax call ========================*/
+/* ================================ Starts Autofill firm Address ======================================*/
+
+    $(document).ready(function(){
+        $.ajax({
+            type: "GET",
+            url: "/get-firm-address",
+            success: function (response) {
+                if(response.success == true)
+                {
+                    for (var i = 0; i < response.city.length; i++) {
+                        $("#city").append('<option value="' + response.city[i].id + '">' + response.city[i].name + '</option>');
+                    }
+                    for (var j = 0; j < response.zipcode.length; j++) {
+                        $("#zipcode").append('<option value="' + response.zipcode[j].id + '">' + response.zipcode[j].zip + '</option>');
+                    }
+                    var firm = response.firm;
+                    $("#address").val(firm.address);
+                    $("#address2").val(firm.address1);
+                    $("#address3").val(firm.address2);
+                    $("#state").val(firm.state);
+                    $("#city").val(firm.city);
+                    $("#zipcode").val(firm.zipcode);
+                }
+            },
+            error: function (xhr) {
+            }
+        });
+    });
+    $(document).on('change',"#office", function(){
+        var office_id = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: "/get-firm-office-address",
+            data: {
+                office_id: office_id
+            },
+            success: function (response) {
+                if (response.success == 1) {
+                    $("#city").find('option').not(':first').remove();
+                    $("#zipcode").find('option').not(':first').remove();
+                    for (var i = 0; i < response.city.length; i++) {
+                        $("#city").append('<option value="' + response.city[i].id + '">' + response.city[i].name + '</option>');
+                    }
+                    for (var j = 0; j < response.zipcode.length; j++) {
+                        $("#zipcode").append('<option value="' + response.zipcode[j].id + '">' + response.zipcode[j].zip + '</option>');
+                    }
+                    var firm = response.firm;
+                    $("#address").val(firm.address);
+                    $("#address2").val(firm.address1);
+                    $("#address3").val(firm.address2);
+                    $("#state").val(firm.state);
+                    $("#city").val(firm.city);
+                    $("#zipcode").val(firm.zipcode);
+                }
+                else if(response.success == 2)
+                {
+                    $("#city").find('option').not(':first').remove();
+                    $("#zipcode").find('option').not(':first').remove();
+                    for (var i = 0; i < response.city.length; i++) {
+                        $("#city").append('<option value="' + response.city[i].id + '">' + response.city[i].name + '</option>');
+                    }
+                    for (var j = 0; j < response.zipcode.length; j++) {
+                        $("#zipcode").append('<option value="' + response.zipcode[j].id + '">' + response.zipcode[j].zip + '</option>');
+                    }
+                    var office = response.office;
+                    $("#address").val(office.address);
+                    $("#address2").val(office.address1);
+                    $("#address3").val(office.address2);
+                    $("#state").val(office.state);
+                    $("#city").val(office.city);
+                    $("#zipcode").val(office.zipcode);
+                }
+            },
+            error: function (xhr) {
+            }
+        });
+    });
+
+/* ================================ Ends Autofill firm Address ======================================*/
 </script> {{/content}}

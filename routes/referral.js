@@ -127,18 +127,33 @@ router.get('/referral', auth, firmAttrAuth, csrfProtection, async (req, res) => 
 	}
 	if (req.query.state) {
 		var city = await City.findAll({
+			order: [
+				['name', 'ASC'],
+			],
+
+			// order: [sequelize.fn('max', sequelize.col('city'))],
+			// order: sequelize.col('city'),
+
+			// order: [
+			// 	['city', 'ASC'],
+			// ],
+			// order: [sequelize.literal('max(city) ASE')],
+
 			where: {
 				state_id: req.query.state
-			}
+			},
+
 		});
 		whereCondition.state = req.query.state;
 	}
 	if (req.query.city) {
 		const cities = await City.findById(req.query.city);
 		var zipcode = await Zipcode.findAll({
+
 			where: {
 				city_name: cities.name
-			}
+			},
+
 		});
 		whereCondition.city = req.query.city;
 	}
@@ -264,7 +279,6 @@ router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async (req, res
 	var gender = req.body.clientDetailsGender;
 	var email = req.body.clientDetailsEmail;
 	var phone_no = req.body.clientDetailsPhone_no;
-	var fax = req.body.clientDetailsFax;
 	var mobile_no = req.body.clientDetailsMobile_no;
 
 	const closingDate = req.body.revenueclosingDate ? req.body.revenueclosingDate.split("-") : '';
@@ -278,7 +292,6 @@ router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async (req, res
 				"gender": gender[i],
 				"email": email[i],
 				"phone_no": removePhoneMask(phone_no[i]),
-				"fax": removePhoneMask(fax[i]),
 				"mobile_no": removePhoneMask(mobile_no[i])
 			});
 		}
@@ -317,7 +330,6 @@ router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async (req, res
 				address_remarks: req.body.address_remarks,
 				company_name: req.body.company_name,
 				website_url: req.body.website_url,
-				fax: removePhoneMask(req.body.fax),
 				phone_no: removePhoneMask(req.body.phone_no),
 				im: req.body.im,
 				twitter: req.body.twitter,
@@ -354,7 +366,6 @@ router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async (req, res
 				address_remarks: req.body.address_remarks,
 				company_name: req.body.company_name,
 				website_url: req.body.website_url,
-				fax: removePhoneMask(req.body.fax),
 				phone_no: removePhoneMask(req.body.phone_no),
 				im: req.body.im,
 				twitter: req.body.twitter,
@@ -375,7 +386,6 @@ router.post('/referral/add', auth, firmAttrAuth, csrfProtection, async (req, res
 					email: clientDetails[j].email,
 					mobile_no: clientDetails[j].mobile_no,
 					phone_no: clientDetails[j].phone_no,
-					fax: clientDetails[j].fax,
 					type: 'M',
 					contact_id: insertData.id
 				});
@@ -450,14 +460,15 @@ router.get('/referral/view/:id', auth, firmAttrAuth, csrfProtection, async (req,
     const state = await State.findById(referral.state.toString());
     const city = await City.findById(referral.city.toString());
     const zipcode = await Zipcode.findById(referral.zipcode.toString());
-    const industry = await industry_type.findById(referral.industry_type.toString());
-	
+    const industry = await industry_type.findById(referral.industry_type ? referral.industry_type.toString(): null);
+
 	const referredDetails = await Referred_Client_Targets.findAll({
 		where: {
-			referral_id: req.params['id']
+			referral_id: req.params['id'],
+			status:1
 		}
 	});
-	
+
 	var referredListArr = [];
 	for(var i = 0; i < referredDetails.length; i++) {
 		if (referredDetails[i].type === 'T') {
@@ -516,7 +527,7 @@ router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 			['industry_name', 'ASC'],
 		],
 	});
-	const cities = await City.findById(referral.city.toString());
+
 
 	var fetchTarget = {};
 	var fetchClient = {};
@@ -563,29 +574,36 @@ router.get('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
 	});
 
 	const city = await City.findAll({
+		order: [
+			['name', 'ASC'],
+		],
 		where: {
 			state_id: referral.state.toString()
 		}
 	});
-
-	const zipcode = await Zipcode.findAll({
-		where: {
-			city_name: cities.name
-		}
-	});
+	if (referral.city != "0")
+	{
+		const cities = await City.findById(referral.city.toString());
+		var zipcode = await Zipcode.findAll({
+			where: {
+				city_name: cities.name
+			}
+		});
+	}
 
 	const contactDetails = await ContactInformation.findAll({
 		where: {
 			'contact_id': req.params['id']
 		}
 	});
-	
+
 	const referredDetails = await Referred_Client_Targets.findAll({
 		where: {
-			referral_id: req.params['id']
+			referral_id: req.params['id'],
+			status: 1
 		}
 	});
-	
+
 	for(var i = 0; i < referredDetails.length; i++) {
 		if (referredDetails[i].type === 'T') {
 			const targetDetails = await Target.findOne({
@@ -640,7 +658,6 @@ router.post('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req
 	var gender = req.body.contactDetailsGender;
 	var email = req.body.contactDetailsEmail;
 	var phone_no = req.body.contactDetailsPhone_no;
-	var fax = req.body.contactDetailsFax;
 	var mobile_no = req.body.contactDetailsMobile_no;
 
 	const closingDate = req.body.revenueclosingDate ? req.body.revenueclosingDate.split("-") : '';
@@ -654,7 +671,6 @@ router.post('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req
 				"gender": gender[i],
 				"email": email[i],
 				"phone_no": removePhoneMask(phone_no[i]),
-				"fax": removePhoneMask(fax[i]),
 				"mobile_no": removePhoneMask(mobile_no[i])
 			});
 		}
@@ -671,7 +687,7 @@ router.post('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req
 	});
 
 
-	
+
 	if (edit_data === null) {
 		await Referral.update({
 			referral_type: req.body.referral_type,
@@ -694,7 +710,6 @@ router.post('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req
 			address_remarks: req.body.address_remarks,
 			company_name: req.body.company_name,
 			website_url: req.body.website_url,
-			fax: removePhoneMask(req.body.fax),
 			phone_no: removePhoneMask(req.body.phone_no),
 			im: req.body.im,
 			twitter: req.body.twitter,
@@ -726,7 +741,6 @@ router.post('/referral/edit/:id', auth, firmAttrAuth, csrfProtection, async (req
 				email: contactDetails[j].email,
 				mobile_no: contactDetails[j].mobile_no,
 				phone_no: contactDetails[j].phone_no,
-				fax: contactDetails[j].fax,
 				type: 'M',
 				contact_id: req.params['id']
 			});
@@ -997,6 +1011,27 @@ router.post('/referral/targetclientadd', auth, csrfProtection, async (req, res) 
 		code: "200",
 		message: 'Success'
 	});
+});
+
+
+
+
+router.post("/get-duplicate-email-block-referral", auth, async (req, res) => {
+	const attr_email = await Referral.findOne({
+		where: {
+			email: req.body.mail
+		}
+	});
+	if (attr_email !== null) {
+		res.json({
+			success: true
+		});
+	} else {
+		res.json({
+			success: false
+		});
+	}
+
 });
 
 module.exports = router;

@@ -20,6 +20,7 @@ const sectionToFirm = require('../models').section_to_firms;
 const PracticeAreaToFirm = require('../models').practice_area_to_firms;
 const PracticeAreaToAttr = require('../models').practice_area_to_attorney;
 const Education = require('../models').education;
+const Office = require('../models').office;
 var csrfProtection = csrf({
 	cookie: true
 });
@@ -58,34 +59,50 @@ router.get('/attorneys', auth, csrfProtection, async (req, res) => {
 	User.hasMany(Attorney_Details, {
 		foreignKey: 'user_id'
 	});
+	User.belongsTo(Designation, {
+		foreignKey: 'designation_id'
+	});
+	var attrCondition = {};
+	if(req.user.is_attorney == "1")
+	{
+		attrCondition.role_id = [3, 2],
+		attrCondition.firm_id = req.user.firm_id
+	}
+	else
+	{
+		attrCondition.role_id = 3,
+		attrCondition.firm_id = req.user.firm_id
+		
+	}
 
 	const attr = await User.findAll({
-		where: {
-			role_id: 3,
-			firm_id: req.user.firm_id
-		},
+		where: attrCondition,
 		include: [{
 			model: Attorney_Details
+		},
+		{
+			model: Designation
 		}]
 	});
 
+	//console.log(attr[0].designation);
 
 
-	for (var i = 0; i < attr.length; i++) {
-		var name = attr[i].first_name + " " + attr[i].last_name;
-		var email = attr[i].email;
-		var mobile_no = attr[i].mobile_no;
-		var id = attr[i].id;
-		var attr_type = attr[i].attorney_details.length > 0 ? (attr[i].attorney_details[0].attorney_type !== '' ? attr[i].attorney_details[0].attorney_type : 'N/A') : 'N/A';
+	// for (var i = 0; i < attr.length; i++) {
+	// 	var name = attr[i].first_name + " " + attr[i].last_name;
+	// 	var email = attr[i].email;
+	// 	var mobile_no = attr[i].mobile_no;
+	// 	var id = attr[i].id;
+	// 	var attr_type = attr[i].attorney_details.length > 0 ? (attr[i].attorney_details[0].attorney_type !== '' ? attr[i].attorney_details[0].attorney_type : 'N/A') : 'N/A';
 
-		attar_information.push({
-			name: name,
-			email: email,
-			mobile_no: mobile_no,
-			id: id,
-			attr_type: attr_type,
-		})
-	}
+	// 	attar_information.push({
+	// 		name: name,
+	// 		email: email,
+	// 		mobile_no: mobile_no,
+	// 		id: id,
+	// 		attr_type: attr_type,
+	// 	})
+	// }
 
 	res.render('attorney/index', {
 		layout: 'dashboard',
@@ -93,7 +110,7 @@ router.get('/attorneys', auth, csrfProtection, async (req, res) => {
 		success_message,
 		success_edit_message,
 		csrfToken: req.csrfToken(),
-		row: attar_information
+		row: attr
 	});
 });
 
@@ -236,6 +253,11 @@ router.get('/attorneys/addAttorney', auth, firmAttrAuth, csrfProtection, async (
 			country_id: "233"
 		}
 	});
+	const office = await Office.findAll({
+		where: {
+			firm_id: req.user.firm_id
+		}
+	})
 	res.render('attorney/addattorney', {
 		layout: 'dashboard',
 		title: 'Add Attorney',
@@ -249,7 +271,8 @@ router.get('/attorneys/addAttorney', auth, firmAttrAuth, csrfProtection, async (
 		industry_type: industry_type,
 		err_message,
 		allPracticeArea,
-		allJurisdiction
+		allJurisdiction,
+		office
 	});
 });
 
@@ -293,8 +316,7 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 	if (attorney_data != null) {
 		req.flash('success-err-message', 'Email ID already exists');
 		res.redirect('/attorneys/addAttorney');
-	}
-	else {
+	} else {
 		await User.create({
 			first_name: req.body.first_name,
 			last_name: req.body.last_name,
@@ -319,7 +341,7 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 			mobile_no: removeMobileMask(req.body.mobile_no),
 			dob: Dob ? Dob[2] + "-" + Dob[0] + "-" + Dob[1] : null,
 
-		}).then( async function (resp)  {
+		}).then(async function (resp) {
 			attrorney_details_id = resp.id;
 
 			await Attorney_Details.create({
@@ -340,11 +362,11 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 				address2: req.body.address2,
 				address3: req.body.address3,
 				phone_no: removePhoneMask(req.body.phone_no),
-				fax: removePhoneMask(req.body.fax),
 				website_url: req.body.website_url,
 				social_url: req.body.social_url,
 				remarks: req.body.remarks,
 				user_id: attrorney_details_id,
+				office_id: req.body.office,
 				firm_join_date: Firm_Join_Date ? Firm_Join_Date[2] + "-" + Firm_Join_Date[0] + "-" + Firm_Join_Date[1] : null,
 				bar_practice_date: Bar_Practice_date ? Bar_Practice_date[2] + "-" + Bar_Practice_date[0] + "-" + Bar_Practice_date[1] : null,
 
@@ -374,7 +396,7 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
 		});
 		var url = req.protocol + '://' + req.get('host');
 		var email_body =
-		`<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+			`<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
@@ -555,14 +577,14 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
                   </tr>
                   <tr>
                     <td class="content-message" style="font-family:'Calibri',OpenSans-Light, Arial, sans-serif; color: #595959;">
-                      <p style = "font-size: 30px; margin-bottom: 15px; margin-top: 10px; text-decoration: underline;" > Welcome to performlaw `+ req.body.first_name +`! </p>
-                      <p style = "font-size: 18px;" > A very special welcome to you `+ req.body.first_name +`, thank you
-                      for joining perform law law as an Attorney! </p>
+                      <p style = "font-size: 30px; margin-bottom: 15px; margin-top: 10px; text-decoration: underline;" > Welcome to performlaw ` + req.body.first_name + `! </p>
+                      <p style = "font-size: 18px;" > A very special welcome to you ` + req.body.first_name + `, Thank you
+                      for joining PerformLaw Management Application as an Attorney! </p>
                       <p style="font-size: 18px; font-family: &quot;OpenSans-Light&quot;,Calibri,Arial,sans-serif; text-align: center;">
-                        Your Username is - <span style = "color:#FF851A; font-weight: bold;"> ` + req.body.mail +` </span>
+                        Your Username is - <span style = "color:#FF851A; font-weight: bold;"> ` + req.body.mail + ` </span>
                       </p>
                       <p style="font-size: 18px; font-family: &quot;OpenSans-Light&quot;,Calibri,Arial,sans-serif; text-align: center;">
-                        Your Password is - <span style="color:#FF851A; font-weight: bold;">` + req.body.pass +`</span>
+                        Your Password is - <span style="color:#FF851A; font-weight: bold;">` + req.body.pass + `</span>
                       </p>
                       <p style="font-size: 18px;">Please keep it secret, keep it safe!</p>
 
@@ -571,7 +593,7 @@ router.post('/attorneys/add', auth, firmAttrAuth, csrfProtection, async (req, re
                         <tr>
                           <td width="325" height="60" bgcolor="#FF851A" style="text-align:center; display: table;
     margin: 0 auto;">
-                            <a href=`+ url +` align="center" style="display:block; font-family:'Open Sans',Calibri, Arial, sans-serif;; font-size:20px; color:#ffffff; text-align: center; line-height:60px; display:block; text-decoration:none;">Click to sign in</a>
+                            <a href=` + url + ` align="center" style="display:block; font-family:'Open Sans',Calibri, Arial, sans-serif;; font-size:20px; color:#ffffff; text-align: center; line-height:60px; display:block; text-decoration:none;">Click to sign in</a>
                           </td>
                           <td>&nbsp;</td>
                           <td>&nbsp;</td>
@@ -707,6 +729,9 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 	var zipcode = [];
 	if (state_id != null) {
 		city = await City.findAll({
+			order: [
+				['name', 'ASC'],
+			],
 			where: {
 				state_id: state_id.toString()
 			}
@@ -723,13 +748,18 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 	var result = JSON.parse(JSON.stringify(edata[0].practice_area_to_attorneys));
 	var arr = [];
 	for (var i = 0; i < result.length; i++) {
-	arr.push(result[i].practice_area_id);
+		arr.push(result[i].practice_area_id);
 	}
 	var result_jurisdiction = JSON.parse(JSON.stringify(edata[0].jurisdiction_to_attorneys));
 	var jurisdiction_arr = [];
 	for (var j = 0; j < result_jurisdiction.length; j++) {
-	jurisdiction_arr.push(result_jurisdiction[j].jurisdiction_id);
+		jurisdiction_arr.push(result_jurisdiction[j].jurisdiction_id);
 	}
+	const office = await Office.findAll({
+		where: {
+			firm_id: req.user.firm_id
+		}
+	})
 
 	res.render('attorney/updateattorney', {
 		layout: 'dashboard',
@@ -747,9 +777,23 @@ router.get('/attorneys/edit/:id', auth, csrfProtection, async (req, res) => {
 		allPracticeArea,
 		allJurisdiction,
 		arr,
-		jurisdiction_arr
+		jurisdiction_arr,
+		office
 	});
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 router.get('/attorneys/viewdata/:id', auth, csrfProtection, async (req, res) => {
@@ -863,6 +907,11 @@ router.get('/attorneys/viewdata/:id', auth, csrfProtection, async (req, res) => 
 	for (var i = 0; i < result_jurisdiction.length; i++) {
 		jurisdiction_arr.push(result_jurisdiction[i].jurisdiction_id);
 	}
+	const office = await Office.findAll({
+		where: {
+			firm_id: req.user.firm_id
+		}
+	})
 	res.render('attorney/viewattorney', {
 		layout: 'dashboard',
 		title: 'View Attorney',
@@ -879,7 +928,8 @@ router.get('/attorneys/viewdata/:id', auth, csrfProtection, async (req, res) => 
 		allPracticeArea,
 		allJurisdiction,
 		jurisdiction_arr,
-		arr
+		arr,
+		office
 	});
 });
 
@@ -948,10 +998,10 @@ router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async (
 		address3: req.body.address3,
 		e_mail: req.body.e_mail,
 		phone_no: removePhoneMask(req.body.phone_no),
-		fax: removePhoneMask(req.body.fax),
 		website_url: req.body.website_url,
 		social_url: req.body.social_url,
 		remarks: req.body.remarks,
+		office_id: req.body.office,
 		firm_join_date: Firm_Join_Date1 ? Firm_Join_Date1[2] + "-" + Firm_Join_Date1[0] + "-" + Firm_Join_Date1[1] : null,
 		bar_practice_date: Bar_Practice_date1 ? Bar_Practice_date1[2] + "-" + Bar_Practice_date1[0] + "-" + Bar_Practice_date1[1] : null,
 
@@ -1003,24 +1053,116 @@ router.post('/attorneys/update/:id', auth, firmAttrAuth, csrfProtection, async (
 	res.redirect('/attorneys');
 });
 
-router.post("/get-duplicate-email-block", auth, async(req, res) => {
+router.post("/get-duplicate-email-block", auth, async (req, res) => {
 	const attr_email = await User.findOne({
 		where: {
 			email: req.body.email
 		}
 	});
-	if (attr_email !== null){
+	if (attr_email !== null) {
 		res.json({
 			success: true
 		});
-	}
-	else
-	{
+	} else {
 		res.json({
 			success: false
 		});
 	}
 
+});
+
+router.get("/get-firm-address", auth, async (req, res) => {
+	var firms = await Firm.findOne({
+		where: {
+			id: req.user.firm_id
+		}
+	});
+	var state_id = firms.state;
+	var city_id = firms.city;
+	var city = [];
+	var zipcode = [];
+	if (state_id != null) {
+		city = await City.findAll({
+			where: {
+				state_id: state_id.toString()
+			}
+		});
+	}
+	if (city_id != null) {
+		const cities = await City.findById(city_id.toString());
+		zipcode = await Zipcode.findAll({
+			where: {
+				city_name: cities.name
+			}
+		});
+	}
+	res.json({
+		success: true,
+		firm: firms,
+		city: city,
+		zipcode: zipcode
+	});
+});
+router.post("/get-firm-office-address", auth, async (req, res) => {
+	if (req.body.office_id == "0") {
+		var firms = await Firm.findOne({
+			where: {
+				id: req.user.firm_id
+			}
+		});
+		var state_id = firms.state;
+		var city_id = firms.city;
+		var city = [];
+		var zipcode = [];
+		if (state_id != null) {
+			city = await City.findAll({
+				where: {
+					state_id: state_id.toString()
+				}
+			});
+		}
+		if (city_id != null) {
+			const cities = await City.findById(city_id.toString());
+			zipcode = await Zipcode.findAll({
+				where: {
+					city_name: cities.name
+				}
+			});
+		}
+		res.json({
+			success: 1,
+			firm: firms,
+			city: city,
+			zipcode: zipcode
+		});
+	} else {
+		var office = await Office.findById(req.body.office_id);
+		var state_id = office.state;
+		var city_id = office.city;
+		var city = [];
+		var zipcode = [];
+		if (state_id != null) {
+			city = await City.findAll({
+				where: {
+					state_id: state_id.toString()
+				}
+			});
+		}
+		if (city_id != null) {
+			const cities = await City.findById(city_id.toString());
+			zipcode = await Zipcode.findAll({
+				where: {
+					city_name: cities.name
+				}
+			});
+		}
+		res.json({
+			success: 2,
+			office: office,
+			city: city,
+			zipcode: zipcode
+		});
+	}
 });
 
 module.exports = router;

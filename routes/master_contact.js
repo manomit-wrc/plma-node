@@ -13,6 +13,9 @@ const Country = require('../models').country;
 const industry_type = require('../models').industry_type;
 const Contact = require('../models').master_contact;
 const Target = require('../models').target;
+const Client = require('../models').client;
+const Referral = require('../models').referral;
+const Revenue = require('../models').revenue;
 const user = require('../models').user;
 const ContactInformation = require('../models').contact_information;
 const router = express.Router();
@@ -80,6 +83,9 @@ router.get('/master_contact', auth, firmAttrAuth, csrfProtection, async (req, re
 	}
 	if (req.query.state) {
 		var city = await City.findAll({
+			order: [
+				['name', 'ASC'],
+			],
 			where: {
 				state_id: req.query.state
 			}
@@ -193,11 +199,11 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 	var gender = req.body.contactDetailsGender;
 	var email = req.body.contactDetailsEmail;
 	var phone_no = req.body.contactDetailsPhone_no;
-	var fax = req.body.contactDetailsFax;
 	var mobile_no = req.body.contactDetailsMobile_no;
 
-	const closingDate = req.body.revenueclosingDate ? req.body.revenueclosingDate.split("-") : '';
-
+	// const closingDate = req.body.revenueclosingDate ? req.body.revenueclosingDate.split("-") : '';
+	// console.log(req.body);
+	
 	let length = first_name.length;
 	for (let i = 0; i < length; i++) {
 		if (first_name[i] !== "") {
@@ -207,7 +213,6 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 				"gender": gender[i],
 				"email": email[i],
 				"phone_no": removePhoneMask(phone_no[i]),
-				"fax": removePhoneMask(fax[i]),
 				"mobile_no": removePhoneMask(mobile_no[i])
 			});
 		}
@@ -226,7 +231,6 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 				last_name: req.body.last_name,
 				email: req.body.email,
 				phone_no: removePhoneMask(req.body.phone_no),
-				fax: removePhoneMask(req.body.fax),
 				mobile_no: removePhoneMask(req.body.mobile_no),
 				master_contact_id: req.body.master_contact_id,
 				master_contact_code: req.body.master_contact_code,
@@ -254,8 +258,8 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 				attorney_id: req.body.attorney_id,
 				facebook: req.body.facebook_url,
 				master_contact_type: req.body.masterContact_type,
-				estimated_revenue: removePhoneMask(req.body.estimated_revenue),
-				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[0] + "-" + closingDate[1] : null,
+				// estimated_revenue: removePhoneMask(req.body.estimated_revenue),
+				//revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[0] + "-" + closingDate[1] : null,
 			});
 		} else {
 			const insertData = await Contact.create({
@@ -263,10 +267,9 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 				organization_code: req.body.org_code,
 				email: req.body.email,
 				phone_no: removePhoneMask(req.body.phone_no),
-				fax: removePhoneMask(req.body.fax),
 				mobile_no: removePhoneMask(req.body.mobile_no),
 				master_contact_id: req.body.master_contact_id,
-				master_contact_code: req.body.master_contact_code,
+				//master_contact_code: req.body.master_contact_code,
 				company_name: req.body.master_contact_comp,
 				gender: req.body.gender,
 				address1: req.body.address1,
@@ -291,7 +294,7 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 				attorney_id: req.body.attorney_id,
 				facebook: req.body.facebook_url,
 				master_contact_type: req.body.masterContact_type,
-				revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[0] + "-" + closingDate[1] : null,
+				//revenueclosingDate: closingDate ? closingDate[2] + "-" + closingDate[0] + "-" + closingDate[1] : null,
 			});
 
 			for (let j = 0; j < contactDetails.length; j++) {
@@ -302,7 +305,6 @@ router.post('/master_contact/add', auth, firmAttrAuth, csrfProtection, async (re
 					email: contactDetails[j].email,
 					mobile_no: contactDetails[j].mobile_no,
 					phone_no: contactDetails[j].phone_no,
-					fax: contactDetails[j].fax,
 					type: 'M',
 					contact_id: insertData.id
 				});
@@ -331,16 +333,21 @@ router.get('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, async
 		where: { country_id: "233" }
 	});
 	const city = await City.findAll({
+		order: [
+			['name', 'ASC'],
+		],
 		where: {
 			state_id: contact.state.toString()
 		}
 	});
-	const cities = await City.findById(contact.city.toString());
-	const zipcode = await Zipcode.findAll({
-		where: {
-			city_name: cities.name
-		}
-	});
+	if (contact.city != "0"){
+		const cities = await City.findById(contact.city.toString());
+		var zipcode = await Zipcode.findAll({
+			where: {
+				city_name: cities.name
+			}
+		});
+	}
 
 	const attorney = await user.findAll({
 		order: [
@@ -389,12 +396,14 @@ router.get('/master_contact/view/:id', auth, firmAttrAuth, csrfProtection, async
 			state_id: contact.state.toString()
 		}
 	});
-	const cities = await City.findById(contact.city.toString());
-	const zipcode = await Zipcode.findAll({
-		where: {
-			city_name: cities.name
-		}
-	});
+	if (contact.city != "0") {
+		const cities = await City.findById(contact.city.toString());
+		var zipcode = await Zipcode.findAll({
+			where: {
+				city_name: cities.name
+			}
+		});
+	}
 
 	const attorney = await user.findAll({
 		where: {
@@ -428,14 +437,7 @@ router.get('/master_contact/view/:id', auth, firmAttrAuth, csrfProtection, async
 
 router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	const formatDate = req.body.dob ? req.body.dob.split("-") : '';
-	const contact_edit_data = await Contact.findOne({
-		where: {
-			email: req.body.email,
-			id: {
-				[Op.ne]: req.params['id']
-			}
-		}
-	});
+	
 
 
 	var contactDetails = [];
@@ -444,7 +446,6 @@ router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, asyn
 	var gender = req.body.contactDetailsGender;
 	var email = req.body.contactDetailsEmail;
 	var phone_no = req.body.contactDetailsPhone_no;
-	var fax = req.body.contactDetailsFax;
 	var mobile_no = req.body.contactDetailsMobile_no;
 
 	const closingDate = req.body.revenueclosingDate ? req.body.revenueclosingDate.split("-") : '';
@@ -458,20 +459,18 @@ router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, asyn
 				"gender": gender[i],
 				"email": email[i],
 				"phone_no": removePhoneMask(phone_no[i]),
-				"fax": removePhoneMask(fax[i]),
 				"mobile_no": removePhoneMask(mobile_no[i])
 			});
 		}
 	}
 
-	if (contact_edit_data === null) {
+	
 		if (req.body.masterContact_type === "I") {
 			await Contact.update({
 				first_name: req.body.first_name,
 				last_name: req.body.last_name,
 				email: req.body.email,
 				phone_no: removePhoneMask(req.body.phone_no),
-				fax: removePhoneMask(req.body.fax),
 				mobile_no: removePhoneMask(req.body.mobile_no),
 				master_contact_code: req.body.master_contact_code,
 				master_designation: req.body.master_contact_desg,
@@ -511,7 +510,6 @@ router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, asyn
 				organization_code: req.body.org_code,
 				email: req.body.email,
 				phone_no: removePhoneMask(req.body.phone_no),
-				fax: removePhoneMask(req.body.fax),
 				mobile_no: removePhoneMask(req.body.mobile_no),
 				master_contact_id: req.body.master_contact_id,
 				master_contact_code: req.body.master_contact_code,
@@ -560,7 +558,6 @@ router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, asyn
 					email: contactDetails[j].email,
 					mobile_no: contactDetails[j].mobile_no,
 					phone_no: contactDetails[j].phone_no,
-					fax: contactDetails[j].fax,
 					type: 'M',
 					contact_id: req.params['id']
 				});
@@ -569,10 +566,7 @@ router.post('/master_contact/edit/:id', auth, firmAttrAuth, csrfProtection, asyn
 		}
 		req.flash('success-message', 'Master Contact Updated Successfully');
 		res.redirect('/master_contact')
-	} else {
-		req.flash('error-contact-message', 'Email already taken.');
-		res.redirect('/master_contact/edit/' + req.params['id']);
-	}
+	 
 });
 
 router.get('/master_contact/delete/:id', auth, firmAttrAuth, (req, res) => {
@@ -663,7 +657,6 @@ router.post('/master_contact/import', auth, upload.single('file_name'), csrfProt
 					last_name: excelContact[i].last_name,
 					email: excelContact[i].email,
 					phone_no: excelContact[i].phone,
-					fax: excelContact[i].fax,
 					mobile_no: excelContact[i].mobile,
 					master_contact_id: excelContact[i].master_contact_id,
 					master_contact_code: excelContact[i].master_contact_code,
@@ -709,16 +702,23 @@ router.post('/master_contact/move-to-target/', auth, async (req, res) => {
 				id: contact_ids[i]
 			}
 		});
-		await Target.create({
+		
+		const target_data = await Target.create({
 			first_name: contact_data.first_name,
 			last_name: contact_data.last_name,
 			email: contact_data.email,
 			mobile_no: contact_data.mobile_no,
-			fax: contact_data.fax,
+
+			website_url: contact_data.website_url,
+			facebbok: contact_data.social_url,
+			linkedin: contact_data.linkedin,
+			address_remarks: contact_data.address_remarks,
+			industry_type: contact_data.industry_type,
+			phone_no: contact_data.phone_no,
 			date_of_birth: contact_data.date_of_birth,
 			gender: contact_data.gender,
-			address_1: contact_data.address1,
-			address_2: contact_data.address2,
+			address1: contact_data.address1,
+			address2: contact_data.address2,
 			address3: contact_data.address3,
 			country: contact_data.country,
 			state: contact_data.state,
@@ -736,8 +736,66 @@ router.post('/master_contact/move-to-target/', auth, async (req, res) => {
 			user_id: contact_data.user_id,
 			remarks: contact_data.remarks,
 			firm_id: req.user.firm_id,
-			estimated_revenue: '0',
+			// estimated_revenue: '0',
 			attorney_id: req.user.id
+		});
+
+		await Contact.update({
+			contact_status: 0
+		}, {
+				where: {
+					id: contact_ids[i]
+				}
+								
+			});
+
+			await Revenue.create({
+				target_id: target_data.id,
+				'type': 'T'
+
+			})	
+	}
+	res.json({
+		code: "200",
+		message: 'Success'
+	});
+});
+router.post('/master_contact/move-to-referral/', auth, async (req, res) => {
+	var contact_ids = req.body.contact_id;
+	var n = req.body.contact_id.length;
+
+	for (i = 0; i < n; i++) {
+		var contact_data = await Contact.findOne({
+			where: {
+				id: contact_ids[i]
+			}
+		});
+		await Referral.create({
+			first_name: contact_data.first_name,
+			last_name: contact_data.last_name,
+			email: contact_data.email,
+			mobile: contact_data.mobile_no,
+			fax: contact_data.fax,
+			date_of_birth: contact_data.date_of_birth,
+			gender: contact_data.gender,
+			address1: contact_data.address1,
+			address2: contact_data.address2,
+			address3: contact_data.address3,
+			country: contact_data.country,
+			state: contact_data.state,
+			city: contact_data.city,
+			zipcode: contact_data.zip_code,
+			im: contact_data.im,
+			referral_type: 'I',
+			twitter: contact_data.twitter,
+			linkedin: contact_data.linkedin,
+			google: contact_data.google,
+			youtube: contact_data.youtube,
+			//firm_id: contact_data.firm_id,
+
+			attorney_id: contact_data.user_id,
+			remarks: contact_data.remarks,
+			firm_id: req.user.firm_id,
 		});
 
 		await Contact.update({
@@ -753,5 +811,30 @@ router.post('/master_contact/move-to-target/', auth, async (req, res) => {
 		message: 'Success'
 	});
 });
+
+
+
+
+
+
+
+router.post("/get-duplicate-email-block-mcontact", auth, async (req, res) => {
+	const attr_email = await Contact.findOne({
+		where: {
+			email: req.body.email
+		}
+	});
+	if (attr_email !== null) {
+		res.json({
+			success: true
+		});
+	} else {
+		res.json({
+			success: false
+		});
+	}
+
+});
+
 
 module.exports = router;

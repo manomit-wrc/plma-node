@@ -6,6 +6,7 @@ const StrategicGoal = require('../models').strategic_goal;
 const Firm = require('../models').firm;
 const Activity = require('../models').activity;
 const ActivityBudget = require('../models').activity_budget;
+const ActivityGoalToStrategicGoal = require('../models').strategic_goal_to_activity_goal;
 const csrf = require('csurf');
 var csrfProtection = csrf({
     cookie: true
@@ -13,22 +14,34 @@ var csrfProtection = csrf({
 const router = express.Router();
 
 router.get("/strategic-marketing-goal", auth, firmAttrAuth, async(req, res)=> {
+    
     var success_message = req.flash('success-strategicGoal-message')[0];
     var success_edit_message = req.flash('success-strategicEditGoal-message')[0];
     var success_Del_message = req.flash('success-strategicDelGoal-message')[0];
     StrategicGoal.hasMany(ActivityGoal, {
         foreignKey: 'strategic_goal_id'
     });
+    StrategicGoal.hasMany(ActivityGoalToStrategicGoal, {
+        foreignKey: 'strategic_goal_id'
+    });
+    var whereGoals = {};
+    whereGoals.firm_id = req.user.firm_id;
+    if (req.user.role_id != 2) {
+        whereGoals.user_id = req.user.id;
+    }
     const strategic_show = await StrategicGoal.findAll({
-        where: {
-            firm_id: req.user.firm_id
-        },
+        where: whereGoals,
         include: [{
             model: ActivityGoal
+        },
+        {
+            model: ActivityGoalToStrategicGoal
         }]
     });
     
+    
     res.render("strategic_goals/index", {
+       
         layout: 'dashboard',
         title: 'Strategic Masketing Goals Listing',
         strategic_show,
@@ -101,25 +114,16 @@ router.get("/strategic-marketing-goal/delete/:id", auth, firmAttrAuth, async(req
 });
 
 router.get("/strategic-marketing-goal/view-tactical_goals/:id", auth, firmAttrAuth, async(req, res)=> {
-    ActivityGoal.belongsTo(Firm, {
-        foreignKey: 'firm_id'
-    });
-    ActivityGoal.hasMany(ActivityBudget, {
+   
+    ActivityGoalToStrategicGoal.belongsTo(ActivityGoal, {
         foreignKey: 'activity_goal_id'
     });
-    ActivityGoal.hasMany(Activity, {
-        foreignKey: 'activity_goal_id'
-    });
-    const asso_goal = await ActivityGoal.findAll({
+    const asso_goal = await ActivityGoalToStrategicGoal.findAll({
         where: {
             strategic_goal_id: req.params['id']
         },
         include: [{
-            model: Firm
-        }, {
-            model: Activity
-        }, {
-            model: ActivityBudget
+            model: ActivityGoal
         }]
     });
     res.render("strategic_goals/view_tactical_goal", {

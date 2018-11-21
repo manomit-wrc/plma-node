@@ -44,20 +44,26 @@
                                 <td>{{this.remarks}}</td>
                                 <td>{{dateFormat this.createdAt "DD-MM-YYYY, hh:mm a"}}</td>
                                 <td class="text-right">
-
-                                  <a href="#" data-toggle="modal" data-target="#view_users" data-group-id="{{this.id}}"
+<span  data-toggle="modal" data-target="#view_users">
+                                  <a href="#" data-group-id="{{this.id}}"
                                                   data-code="{{this.code}}" data-name="{{this.name}}" data-remarks="{{this.remarks}}"
-                                                  id="view-group" class="btn btn-success btn-sm" >
+                                                  id="view-group" class="btn btn-success btn-sm"  data-toggle="tooltip" data-placement="bottom" title="View" >
                                                   <i class="fa fa-eye m-r-5"></i></a>
+                                                  </span>
+<span data-toggle="modal" data-target="#edit_users" >
 
-                                    <a href="#" data-toggle="modal" data-target="#edit_users" data-group-id="{{this.id}}"
+                                    <a href="#" data-group-id="{{this.id}}"
                                                     data-code="{{this.code}}" data-name="{{this.name}}" data-remarks="{{this.remarks}}"
-                                                    id="edit-group" class="btn btn-success btn-sm">
+                                                    id="edit-group" class="btn btn-success btn-sm"  data-toggle="tooltip" data-placement="bottom" title="Edit">
                                                     <i class="fa fa-pencil m-r-5"></i></a>
-                                    <a href="#" data-toggle="modal" data-target="#delete_users" data-group-id="{{this.id}}"
-                                                    id="delete-group" class="btn btn-danger btn-sm">
-                                                    <i class="fa fa-trash-o m-r-5"></i></a>
+                                                    </span>
+                                                    
+ <span data-toggle="modal" data-target="#delete_users">
 
+                                    <a href="#"  data-group-id="{{this.id}}"
+                                                    id="delete-group" class="btn btn-danger btn-sm"  data-toggle="tooltip" data-placement="bottom" title="Delete">
+                                                    <i class="fa fa-trash-o m-r-5"></i></a>
+</span>
                                 </td>
                             </tr>
                             {{/each}}
@@ -189,7 +195,7 @@
             </div>
             <form>
                 <div class="modal-body card-box">
-                    <p>are you sure you want to delete this group?</p>
+                    <p>Are you sure you want to delete this group?</p>
                     <div class="m-t-20">
                         <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
                         <button type="submit" class="btn btn-danger delGroupBtn">Delete</button>

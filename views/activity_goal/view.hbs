@@ -36,14 +36,14 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group form-focus select-focus select-attorney">
-                                    <label class="control-label">Strategic Goals</label>
-                                    <select class="form-control floating selectpicker" disabled id="strategic_goal" name="strategic_goal" data-show-subtext="true" data-live-search="true">
-                                        <option value="">Select Strategic Goals</option>
-                                        {{#each stragic_goal}}
-                                        <option value="{{this.id}}" {{#if_eq this.id ../edit_goals.strategic_goal_id}} selected="selected" {{/if_eq}}>{{this.name}}</option>
-                                        {{/each}}
-                                    </select>
+                                <div class="form-group form-focus select-focus ">
+                                    <div class="">
+                                        <select class="form-control floating" id="strategic_goal" name="strategic_goal" multiple="multiple" >
+                                            {{#each stragic_goal}}
+                                            <option value="{{this.id}}" {{#inArray ../strategicGoalArr this.id}} selected="selected" {{/inArray}} disabled>{{this.name}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             
@@ -51,7 +51,7 @@
                                 <div class="form-group form-focus">
                                     <label class="control-label">From Date <span class="req-lbl">*</span> </label>
                                     <div class="cal-icon">
-                                        <input disabled class="form-control floating" type="text" id="from_date" name="from_date" value="{{dateFormat edit_goals.from_date "MM-DD-YYYY"}}">
+                                        <input disabled class="form-control floating" type="text" id="from_date" name="from_date" {{#if edit_goals.from_date}} value="{{dateFormat edit_goals.from_date "MM-DD-YYYY"}}" {{else}} value="" {{/if}} data-date-format="MM-DD-YYYY">
                                     </div>
                                 </div>
                             </div>
@@ -59,7 +59,7 @@
                                 <div class="form-group form-focus">
                                     <label class="control-label">To Date <span class="req-lbl">*</span> </label>
                                     <div class="cal-icon">
-                                        <input disabled class="form-control floating" type="text" id="to_date" name="to_date" value="{{dateFormat edit_goals.to_date "MM-DD-YYYY"}}">
+                                        <input disabled class="form-control floating" type="text" id="to_date" name="to_date" {{#if edit_goals.to_date}} value="{{dateFormat edit_goals.to_date "MM-DD-YYYY"}}" {{else}} value="" {{/if}} data-date-format="MM-DD-YYYY">
                                     </div>
                                 </div>
                             </div>
@@ -81,4 +81,14 @@
 <script type="text/javascript" src="/assets/js/select2.min.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script>
+    $('#strategic_goal').multiselect({
+            nonSelectedText: 'Select Strategic Goal',
+            enableFiltering: true,
+            includeSelectAllOption: true,
+            buttonWidth: '100%',
+            maxHeight: 400,
+            dropDown: true
+        });
+</script>
 {{/content}}

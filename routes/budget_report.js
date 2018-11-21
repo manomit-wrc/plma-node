@@ -40,7 +40,8 @@ router.get('/activity-budget-report', auth, csrfProtection, async (req, res) => 
   var firm_id = req.user.firm_id;
     var activity_goals = await ActivityGoal.findAll({
       where: {
-        firm_id: firm_id
+        firm_id: firm_id,
+        user_id:req.user.id
       }
     });
 

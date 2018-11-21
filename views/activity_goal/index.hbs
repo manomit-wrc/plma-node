@@ -54,30 +54,38 @@
                                     </a>
                                 </td>
                                
-                                <td>{{dateFormat this.from_date "MM-DD-YYYY"}} To {{dateFormat this.to_date "MM-DD-YYYY"}}</td>
+                                <td>
+                                    {{#if this.from_date}}
+                                    {{dateFormat this.from_date "MM-DD-YYYY"}} To {{dateFormat this.to_date "MM-DD-YYYY"}}
+                                    {{else}}
+                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;—
+                                     {{/if}} 
+                                </td>
                                 <td><a href="/activity-goal/view-activity/{{this.id}}">{{get_total_activity this.activities}}</a></td>
                                 <td><a href="/budget-report/activity-goal/{{this.id}}">{{get_activity_goal_hours this.activity_budgets}}</a></td>
                                 <td><a href="/budget-report/activity-goal/{{this.id}}">$ {{get_activity_goal_amounts this.activity_budgets}}</a></td>
                                 <td class="text-right">
-                                    <a href="/budget-report/activity-goal/{{this.id}}" class="btn btn-success btn-sm" id="setUrlItem" title="See Budget Report">
+                                    <a href="/budget-report/activity-goal/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" id="setUrlItem" title="See Budget Report">
                                         <i class="fa fa-money"></i>
                                     </a>
-                                    <a href="/activity-goal/view-activity/{{this.id}}" class="btn btn-success btn-sm" title="See associated activity">
+                                    <a href="/activity-goal/view-activity/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="See associated activity">
                                         <i class="fa fa-tasks"></i>
                                     </a>
 
-                                    <a href="/activity-goal/view/{{this.id}}" class="btn btn-success btn-sm">
+                                    <a href="/activity-goal/view/{{this.id}}" class="btn btn-success btn-sm"data-toggle="tooltip" data-placement="bottom" title="View">
                                         <i class="fa fa-eye m-r-5"></i>
                                     </a>
 
-                                    <a href="/activity-goal/edit/{{this.id}}" class="btn btn-success btn-sm">
+                                    <a href="/activity-goal/edit/{{this.id}}" class="btn btn-success btn-sm"data-toggle="tooltip" data-placement="bottom" title="Edit">
                                         <i class="fa fa-pencil m-r-5"></i>
                                     </a>
-                                   
-                                    <a href="javascript:void(0);" data-toggle="modal" data-target="delete_users" data-activitygoal-id="{{this.id}}" id="delete_activitygoal"
-                                        class="btn btn-danger btn-sm target-delete">
-                                        <i class="fa fa-trash-o m-r-5"></i>
-                                    </a>
+                                   <span data-toggle="modal"  data-target="delete_users">
+                                       
+                                        <a href="javascript:void(0);"   data-activitygoal-id="{{this.id}}" id="delete_activitygoal"
+                                            class="btn btn-danger btn-sm target-delete" data-toggle="tooltip" data-placement="bottom" title="Delete">
+                                            <i class="fa fa-trash-o m-r-5"></i>
+                                        </a>
+                                   </span>
                                 </td>
                             </tr>
 
@@ -98,7 +106,7 @@
             </div>
             <form>
                 <div class="modal-body card-box">
-                    <p>are you sure you want to delete this Tactical Marketing Goals?</p>
+                    <p>Are you sure you want to delete this Tactical Marketing Goals?</p>
                     <div class="m-t-20" id="delDiv">
                         <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
                     </div>

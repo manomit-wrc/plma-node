@@ -46,6 +46,9 @@ const allowCrossDomain = function (req, res, next) {
 app.use(allowCrossDomain);
 require('./config/passport')(passport);
 
+
+
+/////////////////////////////
 const hbs = exphbs.create({
     extname: '.hbs',
     helpers: {
@@ -383,6 +386,9 @@ const hbs = exphbs.create({
             return array.length;
         },
         get_activity_goal_total: function (array) {
+            return array.length;
+        },
+        get_referred_TC_info: function (array) {
             return array.length;
         },
         round_up: function(value)

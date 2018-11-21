@@ -149,6 +149,9 @@ router.get('/employee/edit/:id', csrfProtection, siteAuth, auth, async (req, res
     if(state_id != null)
     {
          city = await City.findAll({
+             order: [
+                 ['name', 'ASC'],
+             ],
             where: {state_id: state_id.toString()}
         });
     }

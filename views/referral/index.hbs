@@ -73,25 +73,31 @@
                                     {{#if_eq referral_type "I"}} Individual {{/if_eq}} {{#if_eq referral_type "O"}} Organization {{/if_eq}}
                                 </td>
                                 <td>
-                                    {{this.email}}
+                                     {{#if this.email}} {{this.email}} {{else}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; — {{/if}}
                                 </td>
-                                <td class="number_validator">{{this.mobile}}</td>
+                                <td {{#if this.mobile}} class="number_validator" {{/if}}>{{#if this.mobile}}
+                                        {{this.mobile}}
+                                    {{else}}
+                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; —
+                                    {{/if}}    
+                                </td>
                                 <td class="text-right">
-                                    <a href="/referral/view-activity/{{this.id}}" class="btn btn-success btn-sm" title="See associated activity">
+                                    <a href="/referral/view-activity/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom"  title="See associated activity">
                                         <i class="fa fa-tasks"></i>
                                     </a>
-                                    <a href="/referral/view/{{this.id}}" class="btn btn-success btn-sm">
+                                    <a href="/referral/view/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="View">
                                         <i class="fa fa-eye m-r-5"></i>
                                     </a>
 
-                                    <a href="/referral/edit/{{this.id}}" class="btn btn-success btn-sm">
+                                    <a href="/referral/edit/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit">
                                         <i class="fa fa-pencil m-r-5"></i>
                                     </a>
-
-                                    <a href="javascript:void(0);" data-toggle="modal" data-target="delete_users" data-referral-id="{{this.id}}" id="delete_referral"
-                                        class="btn btn-danger btn-sm">
+                                 <span  data-toggle="modal" data-target="delete_users" >
+                                    <a href="javascript:void(0);"data-referral-id="{{this.id}}" id="delete_referral"
+                                        class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete">
                                         <i class="fa fa-trash-o m-r-5"></i>
                                     </a>
+                                    </span>
                                 </td>
                             </tr>
                              {{/each}}
@@ -115,7 +121,7 @@
             </div>
             <form>
                 <div class="modal-body card-box">
-                    <p>are you sure you want to delete this Referral Sources?</p>
+                    <p>Are you sure you want to delete this referral?</p>
                     <div class="m-t-20" id="delDiv">
                         <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
                         {{!--
@@ -157,6 +163,9 @@
                             </div>
                         </div>
                         <div class="m-t-20 text-center">
+                            <a href="/xcel-temp/referral_layouts.xlsx" download class="btn btn-primary" title="Download template">
+                                <i class="fa fa-download" aria-hidden="true"></i>
+                            </a>
                             <button class="btn btn-primary" type="submit" id="btnUploadXls" disabled>Upload File</button>
                             <br/>
                         </div>
@@ -282,18 +291,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="control-label">Association Status
-                                </label>
-                                <select class="select form-control" id="association" name="association">
-                                    <option value="">Select Association</option>
-                                    <option value="NEW TARGET" {{#if_eq association "NEW TARGET"}} selected="selected" {{/if_eq}}>NEW TARGET</option>
-                                    <option value="CONVERTED" {{#if_eq association "CONVERTED"}} selected="selected" {{/if_eq}}>CONVERTED</option>
-                                    <option value="TS-INTERIM" {{#if_eq association "TS-INTERIM"}} selected="selected" {{/if_eq}}>TS-INTERIM</option>
-                                </select>
-                            </div>
-                        </div>
+                        
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Country
@@ -434,12 +432,12 @@
             referral_id.push(this.value);
         });
         if (referral_id.length == 0) {
-            swal("", "Please select one or more referral!", "warning");
+            swal("", "Please select at least one referral!", "warning");
         } else {
 
             swal({
                 title: "",
-                text: "are you sure you want to delete this referral?",
+                text: "Are you sure you want to delete this referral?",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonClass: "btn-danger",

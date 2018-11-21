@@ -17,6 +17,12 @@
 			<div class="col-sm-8">
 				<h4 class="page-title">Edit Client</h4>
 			</div>
+			<div class="col-sm-4">
+				<div class="text-right">
+					<a href="/client" class="btn btn-primary pull-right rounded m-r-5">
+						<i class="fa fa-arrow-left"></i> Back</a>
+				</div>
+			</div>
 		</div>
 		<form id="clientform" method="POST" action="/client/editClient/{{client.id}}">
 			<input type="hidden" name="_csrf" value="{{csrfToken}}">
@@ -122,7 +128,7 @@
 								</div>
 							</div>
 
-							<div class="col-md-6">
+							{{!-- <div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Closing Date<span class="req-lbl">*</span> </label>
 									<div class="cal-icon">
@@ -130,20 +136,9 @@
 										 MM-DD-YYYY "}}" data-date-format="MM-DD-YYYY">
 									</div>
 								</div>
-							</div>
+							</div> --}}
 
-							<div class="col-md-6">
-								<div class="form-group form-focus select-focus select-attorney">
-									<label class="control-label">Gender<span class="req-lbl">*</span></label>
-									<select class="form-control floating " id="client_gender" name="client_gender" >
-										<option value="">Select Gender</option>
-										<option value="M" {{#if_eq client.gender "M"}} selected {{/if_eq}}>Male</option>
-										<option value="F" {{#if_eq client.gender "F"}} selected {{/if_eq}}>Female</option>
-										<option value="O" {{#if_eq client.gender "O"}} selected {{/if_eq}}>Others</option>
-
-									</select>
-								</div>
-							</div>
+							
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Client Company</label>
@@ -174,12 +169,7 @@
 								/>
 							</div>
 						</div>
-						<div class="col-md-6">
-							<div class="form-group form-focus select-focus">
-								<label class="control-label">Fax</label>
-								<input type="text" class="form-control floating number_validator" id="fax" name="fax" value="{{client.fax}}" />
-							</div>
-						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -227,7 +217,7 @@
 											<label class="control-label">Planning Period (Month)
 											</label>
 											<select class="form-control floating " disabled>
-												<option value="">Select Planning Period </option>
+												<option value="0">Select Planning Period </option>
 												<option value="1" {{#if_eq this.planning_period '1'}} selected {{/if_eq}}>1</option>
 												<option value="2" {{#if_eq this.planning_period '2'}} selected {{/if_eq}}>2</option>
 												<option value="3" {{#if_eq this.planning_period '3'}} selected {{/if_eq}}>3</option>
@@ -289,7 +279,7 @@
 									<label class="control-label">Planning Period (Month)
 									</label>
 									<select class="form-control floating " id="planning_period" name="planning_period">
-										<option value="">Select Planning Period </option>
+										<option value="0">Select Planning Period </option>
 										<option value="1" {{#if_eq client_revenue.planning_period '1'}} selected {{/if_eq}} >1</option>
 										<option value="2" {{#if_eq client_revenue.planning_period '2'}} selected {{/if_eq}} >2</option>
 										<option value="3" {{#if_eq client_revenue.planning_period '3'}} selected {{/if_eq}} >3</option>
@@ -351,7 +341,7 @@
 											<label class="control-label">Planning Period (Month)
 											</label>
 											<select class="form-control floating " id="planning_period_new" name="planning_period_new">
-												<option value="">Select Planning Period </option>
+												<option value="0">Select Planning Period </option>
 												<option value="1">1</option>
 												<option value="2">2</option>
 												<option value="3">3</option>
@@ -462,7 +452,7 @@
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">State <span class="req-lbl">*</span> </label>
 							<select id="state" name="state" class="form-control floating">
-								<option value="">Select State</option>
+								<option value="0">Select State</option>
 								{{#each state}}
 								<option value="{{this.id}}" {{#if_eq this.id ../client.state}} selected="selected" {{/if_eq}}>{{this.name}}</option>
 								{{/each}}
@@ -470,10 +460,11 @@
 						</div>
 					</div>
 					<div class="col-md-6">
+						<img class="loadingImgCityAjax m-r-10" style="display:none" src="/assets/img/loading.gif" height="15" width="15" alt="">
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">City <span class="req-lbl">*</span> </label>
 							<select id="city" name="city" class="form-control floating">
-								<option value="">Select City</option>
+								<option value="0">Select City</option>
 								{{#each city}}
 								<option value="{{this.id}}" {{#if_eq this.id ../client.city}} selected="selected" {{/if_eq}}>{{this.name}}</option>
 								{{/each}}
@@ -481,10 +472,11 @@
 						</div>
 					</div>
 					<div class="col-md-6">
+						<img class="loadingImgZipAjax m-r-10" style="display:none" src="/assets/img/loading.gif" height="15" width="15" alt="">
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Zip Code <span class="req-lbl">*</span> </label>
 							<select id="zipcode" name="zipcode" class="form-control floating">
-								<option value="">Select Zipcode</option>
+								<option value="0">Select Zipcode</option>
 								{{#each zipcode}}
 								<option value="{{this.id}}" {{#if_eq this.id ../client.pin_code}} selected="selected" {{/if_eq}}>{{this.zip}}</option>
 								{{/each}}
@@ -530,20 +522,7 @@
 										/>
 									</div>
 								</div>
-								<div class="col-md-6">
-									<div class="form-group form-focus select-focus">
-										<label class="control-label">Gender
-											<span class="req-lbl">*</span>
-
-										</label>
-										<select class="select form-control floating" id="contactDetailsGender" name="contactDetailsGender[]">
-											<option value="">Select Gender</option>
-											<option value="M" {{#if_eq this.gender "M"}} selected {{/if_eq}}>Male</option>
-											<option value="F" {{#if_eq this.gender "F"}} selected {{/if_eq}}>Female</option>
-											<option value="O" {{#if_eq this.gender "O"}} selected {{/if_eq}}>Others</option>
-										</select>
-									</div>
-								</div>
+					
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Email Id
@@ -565,13 +544,7 @@
 										 maxlength="50" value={{this.phone_no}} />
 									</div>
 								</div>
-								<div class="col-md-6">
-									<div class="form-group form-focus">
-										<label class="control-label">Fax</label>
-										<input type="text" class="form-control floating number_validator" id="contactDetailsFax" name="contactDetailsFax[]" maxlength="50"
-										 value="{{this.fax}}" />
-									</div>
-								</div>
+								
 								<div class="col-md-6">
 									<div class="form-group form-focus">
 										<label class="control-label">Mobile No.
@@ -609,20 +582,7 @@
 											<input type="text" class="form-control floating" name="contactDetailsSecondName[]" />
 										</div>
 									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus select-focus">
-											<label class="control-label">Gender
-												<span class="req-lbl">*</span>
-
-											</label>
-											<select class="form-control floating" name="contactDetailsGender[]">
-												<option value="">Select Gender</option>
-												<option value="M">Male</option>
-												<option value="F">Female</option>
-												<option value="O">Others</option>
-											</select>
-										</div>
-									</div>
+									
 									<div class="col-md-6">
 										<div class="form-group form-focus">
 											<label class="control-label">Email Id
@@ -642,12 +602,7 @@
 											<input type="text" class="form-control floating number_validator" name="contactDetailsPhone_no[]" maxlength="50" />
 										</div>
 									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus">
-											<label class="control-label">Fax</label>
-											<input type="text" class="form-control floating number_validator" name="contactDetailsFax[]" maxlength="50" />
-										</div>
-									</div>
+								
 									<div class="col-md-6">
 										<div class="form-group form-focus">
 											<label class="control-label">Mobile No.
@@ -666,11 +621,11 @@
 
 			<div class="card-box">
 				<div class="col-xs-4">
-					<h3 class="card-title">Referral Information</h3>
+					<h3 class="card-title">Referral Sources Information</h3>
 				</div>
 				<div class="col-xs-8 text-right">
 					<a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_referral"><i class="fa fa-plus"></i>
-						Add Referral</a>
+						Add Referral Sources</a>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
@@ -679,8 +634,9 @@
 								<thead>
 									<tr>
 										<th>SL#</th>
-										<th>Referral Name</th>
+										<th>Referral Sources Name</th>
 										<th>Email</th>
+										<th>Action</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -689,6 +645,12 @@
 										<td>{{math @index "+" 1}}</td>
 										<td>{{this.name}}</td>
 										<td>{{this.email}}</td>
+										<td>
+											<a href="javascript:void(0)" id="delAssociatedReferralC" data-ctr-id="{{this.id}}" class="btn btn-danger btn-sm" data-toggle="tooltip"
+											 data-placement="bottom" title="Delete">
+												<i class="fa fa-trash-o m-r-5"></i>
+											</a>
+										</td>
 									</tr>
 									{{/each}}
 								</tbody>
@@ -753,17 +715,7 @@
 							<input type="text" class="form-control floating url_selector" id="google" name="google" value="{{client.google}}" />
 						</div>
 					</div>
-					<div class="col-md-6">
-						<div class="form-group form-focus select-focus select-attorney">
-							<label class="control-label">Association Status</label>
-							<select id="association" name="association" class="form-control floating " >
-								<option value="0">Select Association</option>
-								<option value="CONVERTED" {{#if_eq client.association_type "CONVERTED"}} selected="selected" {{/if_eq}}>CONVERTED</option>
-								<option value="NEW TARGET" {{#if_eq client.association_type "NEW TARGET"}} selected="selected" {{/if_eq}}>NEW TARGET</option>
-								<option value="TS-INTERIM" {{#if_eq client.association_type "TS-INTERIM"}} selected="selected" {{/if_eq}}>TS-INTERIM</option>
-							</select>
-						</div>
-					</div>
+					
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus select-attorney">
 							<label class="control-label">Industry Type</label>
@@ -797,7 +749,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">Add Referral</h4>
+				<h4 class="modal-title">Add Referral Sources</h4>
 			</div>
 			<div class="modal-body" style="height: 100px;">
 				<form name="addRefferal" id="addRefferal" method="POST">
@@ -805,7 +757,7 @@
 					<div class="col-md-6 col-md-offset-3" id="referral_list">
 						<div class="form-group form-focus select-attorney">
 							<select id="referral_id" name="referral_id_c" class="form-control floating">
-								<option value="">Select Referral</option>
+								<option value="">Select Referral Sources</option>
 								{{#each referral}}
 								<option value="{{this.id}}" {{#inArrayCustom3 ../referralDetails this.id}} disabled {{/inArrayCustom3}}>{{this.first_name}}
 									{{this.last_name}}</option>
@@ -871,7 +823,7 @@
 						if (response.code == 200) {
 							swal("", "Referral added successfully", "success");
 							setTimeout(function () {
-								location.reload();
+								$("#add_referral").modal('hide');
 							}, 2000);
 						} else {
 							swal("", "Please try again", "warning");
@@ -900,7 +852,23 @@
 			rightAlign: false
 		});
 
-		$("#estimated_customer_life_time_value").inputmask("numeric", {
+		//$("#estimated_customer_life_time_value").keydown(function (e) {
+			// Allow: backspace, delete, tab, escape, enter and .
+	//		if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
+				// Allow: Ctrl+A, Command+A
+			//	(e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+				// Allow: home, end, left, right, down, up
+			//	(e.keyCode >= 35 && e.keyCode <= 40)) {
+				// let it happen, don't do anything
+			//	return;
+		//	}
+			// Ensure that it is a number and stop the keypress
+		//	if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+			//	e.preventDefault();
+		//	}
+		//});
+
+$("#estimated_customer_life_time_value").inputmask("numeric", {
 			radixPoint: ".",
 			groupSeparator: ",",
 			digits: 2,
@@ -908,7 +876,7 @@
 			prefix: '$ ',
 			rightAlign: false
 		});
-
+		
 		$("#life_time_revenue").inputmask("numeric", {
 			radixPoint: ".",
 			groupSeparator: ",",
@@ -956,47 +924,6 @@
 				attorney_id: {
 					required: true
 				},
-				email: {
-					required: true,
-					email: true
-				},
-				mobile_no: {
-					required: true
-				},
-				fax: {
-					required: true
-				},
-				address1: {
-					required: true
-				},
-				country: {
-					required: true
-				},
-				state: {
-					required: true
-				},
-				city: {
-					required: true
-				},
-				zipcode: {
-					required: true
-				},
-				phone_no: {
-					required: true
-				},
-				life_time_revenue: {
-					required:true
-				},
-				clientStartDate: {
-					required: true
-				},
-				planning_period: {
-					required:true
-				},
-				
-				estimated_revenue: {
-					required: true
-				},
 				current_revenue: {
 					required: true
 				}
@@ -1011,42 +938,8 @@
 				org_name: {
 					required: "Organisation name can't be blank"
 				},
-				email: {
-					required: "Email ID can't be blank",
-					email: "Enter valid email ID"
-				},
-				mobile_no: {
-					required: "Mobile number can't be blank"
-				},
-				fax: {
-					required: "Fax can't be blank"
-				},
-				address1: {
-					required: "Must provide address"
-				},
-				country: {
-					required: "Choose your country"
-				},
-				state: {
-					required: "Choose your state"
-				},
-				city: {
-					required: "Choose your city"
-				},
-				zipcode: {
-					required: "Choose your zipcode"
-				},
-				life_time_revenue: {
-					required: "Life time revenue can't be blank"
-				},
-				clientStartDate: {
-					required: "Client Start Date can't be blank"
-				},
-				planning_period: {
-					required: "Choose your Planning period"
-				},
-				estimated_revenue: {
-					required: "Estimated revenue can't be blank"
+				attorney_id: {
+					required: "Please select an attorney"
 				},
 				current_revenue: {
 					required: "Current revenue can't be blank"
@@ -1160,24 +1053,31 @@
 		var start_date = $("#clientStartDate").val();
 		var period = $(this).val();
 		if(start_date == ""){
-			alert("1212121212");
+			swal("", "Please Select Start date!", "warning");
+			$(this).val('0').attr("selected", true);
+			$("#end_date").val('');
 		}
 		else{
-		var start_date_split = start_date.split('-');
-		var month = start_date_split[2] + "," + start_date_split[0] + "," + start_date_split[1];
-		var current_date = new Date(month);
-		var end_date = new Date(current_date.setMonth(current_date.getMonth() + parseInt(period)));
-		var dd = end_date.getDate();
-			var mm = end_date.getMonth() + 1; //January is 0!
+			if ($(this).val() == '0') {
+				swal("", "Please selcet planning period!", "warning");
+				$("#end_date").val('');
+			} else {
+				var start_date_split = start_date.split('-');
+				var month = start_date_split[2] + "," + start_date_split[0] + "," + start_date_split[1];
+				var current_date = new Date(month);
+				var end_date = new Date(current_date.setMonth(current_date.getMonth() + parseInt(period)));
+				var dd = end_date.getDate();
+				var mm = end_date.getMonth() + 1; //January is 0!
 
-			var yyyy = end_date.getFullYear();
-			if (dd < 10) {
-				dd = '0' + dd;
+				var yyyy = end_date.getFullYear();
+				if (dd < 10) {
+					dd = '0' + dd;
+				}
+				if (mm < 10) {
+					mm = '0' + mm;
+				}
+				var end_date = mm + '-' + dd + '-' + yyyy;
 			}
-			if (mm < 10) {
-				mm = '0' + mm;
-			}
-			var end_date = mm + '-' + dd + '-' + yyyy;
 		}
 		$("#end_date").val(end_date);
 	});
@@ -1272,6 +1172,35 @@
 				}
 			});
 		}
+	});
+
+	$(document).on('click', "#delAssociatedReferralC", function () {
+		var ctrId = $(this).data("ctr-id");
+		swal({
+			title: "Are you sure?",
+			text: "You want to delete this associated referral sources?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonClass: "btn-danger",
+			confirmButtonText: "Yes",
+			closeOnConfirm: false
+		}, function () {
+			$.ajax({
+				type: "GET",
+				url: "/referred-target-clint-delete/" + ctrId,
+				success: function (response) {
+					if (response.success == true) {
+						swal({
+							title: "Success!",
+							text: "Associated Referral Deleted successfully",
+							type: "success"
+						}, function () {
+							window.location.reload();
+						});
+					}
+				}
+			});
+		});
 	});
 
 </script> {{/content}}

@@ -373,6 +373,9 @@ router.get('/settings', auth, csrfProtection, async (req, res) => {
 
 	 if (settings != ''){
 		cities = await City.findAll({
+			order: [
+				['name', 'ASC'],
+			],
 			where: {
 				state_id: settings[0].state
 			}
@@ -594,6 +597,20 @@ router.get('/client/add', auth, firmAttrAuth, csrfProtection, async (req, res) =
 			['title', 'ASC']
 		],
 	});
+	var fetchReferral = {};
+	if (req.user.role_id != 2) {
+		fetchReferral.attorney_id = req.user.id;
+		fetchReferral.firm_id = req.user.firm_id;
+	} else {
+		fetchReferral.firm_id = req.user.firm_id;
+	}
+
+	const referral = await Referral.findAll({
+		order: [
+			['first_name', 'ASC'],
+		],
+		where: fetchReferral
+	});
 	const industry = await Industry.findAll({
 		order: [
 			['industry_name', 'ASC']
@@ -628,7 +645,8 @@ router.get('/client/add', auth, firmAttrAuth, csrfProtection, async (req, res) =
 		designations: designation,
 		industry: industry,
 		attorney: attorney,
-		error_message
+		error_message,
+		referral
 	});
 });
 
@@ -650,6 +668,27 @@ router.post('/client/multi-delete/', auth, firmAttrAuth, async (req, res) => {
 		message: 'Success'
 	});
 });
+
+
+
+router.post("/get-duplicate-email-block-client", auth, async (req, res) => {
+	const attr_email = await client.findOne({
+		where: {
+			email: req.body.mail
+		}
+	});
+	if (attr_email !== null) {
+		res.json({
+			success: true
+		});
+	} else {
+		res.json({
+			success: false
+		});
+	}
+
+});
+
 
 router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, res) => {
 	var error_message = req.flash('error-clientEdit-message')[0];
@@ -716,14 +755,17 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 	});
 	var client_city = [];
 	var client_zipcode = [];
-	if (clients.state != null) {
+	if (clients.state != "0") {
 		var client_city = await City.findAll({
+			order: [
+				['name', 'ASC'],
+			],
 			where: {
 				state_id: clients.state.toString()
 			}
 		});
 	}
-	if (clients.city !== null) {
+	if (clients.city != "0") {
 		var client_cities = await City.findById(clients.city.toString());
 		var client_zipcode = await Zipcode.findAll({
 			where: {
@@ -770,7 +812,8 @@ router.get('/client/edit/:id', auth, firmAttrAuth, csrfProtection, async (req, r
         });
         referralListArr.push({
             "name": referDetails.first_name + " " + referDetails.last_name,
-            "email": referDetails.email
+			"email": referDetails.email,
+			"id": referralDetails[i].id
         });
 	}
 
@@ -856,7 +899,7 @@ router.get('/client/view/:id', auth, firmAttrAuth, csrfProtection, async (req, r
 	const state = await State.findById(clients.state.toString());
 	const city = await City.findById(clients.city.toString());
 	const zip = await Zipcode.findById(clients.pin_code.toString());
-	const industrys = await Industry.findById(clients.industry_type.toString());
+	const industrys = await Industry.findById(clients.industry_type ? clients.industry_type.toString(): null);
 
 	const designations = await Designation.findAll();
 	const tags = await Tag.findAll();
@@ -983,7 +1026,6 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 	var gender = req.body.clientDetailsGender;
 	var email = req.body.clientDetailsEmail;
 	var phone_no = req.body.clientDetailsPhone_no;
-	var fax = req.body.clientDetailsFax;
 	var mobile_no = req.body.clientDetailsMobile_no;
 
 	const closingDate = req.body.revenueclosingDate ? req.body.revenueclosingDate.split("-") : '';
@@ -999,7 +1041,6 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				"gender":gender[i],
 				"email":email[i],
 				"phone_no":removePhoneMask(phone_no[i]),
-				"fax":removePhoneMask(fax[i]),
 				"mobile_no":removePhoneMask(mobile_no[i])
 			});
 		}
@@ -1057,7 +1098,6 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				industry_type: req.body.industry_type,
 				firm_id: req.user.firm_id,
 				user_id: req.user.id,
-				fax: removePhoneMask(req.body.fax),
 				client_type: req.body.client_type,
 				IM: req.body.im,
 				social_url: req.body.social,
@@ -1078,7 +1118,6 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 					email: clientDetails[j].email,
 					mobile_no: clientDetails[j].mobile_no,
 					phone_no: clientDetails[j].phone_no,
-					fax: clientDetails[j].fax,
 					type: 'M',
 					contact_id: insertData.id
 				});
@@ -1100,7 +1139,13 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				user_id: req.user.id,
 				firm_id: req.user.firm_id
 			});
-
+			await Referred_Client_Targets.create({
+				'type': 'C',
+				'target_id': 0,
+				'client_id': parseInt(insertData.id),
+				'referral_id': parseInt(req.body.referral_resource_add),
+				'status': 1
+			});
 
 			req.flash('success-message', 'Client Added Successfully');
 			res.redirect('/client');
@@ -1132,7 +1177,6 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				industry_type: req.body.industry_type,
 				firm_id: req.user.firm_id,
 				user_id: req.user.id,
-				fax: removePhoneMask(req.body.fax),
 				client_type: req.body.client_type,
 				IM: req.body.im,
 				date_of_birth: formatDate ? formatDate[2] + "-" + formatDate[0] + "-" + formatDate[1] : null,
@@ -1164,7 +1208,13 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				user_id: req.user.id,
 				firm_id: req.user.firm_id
 			});
-
+			await Referred_Client_Targets.create({
+				'type': 'C',
+				'target_id': 0,
+				'client_id': parseInt(insertData.id),
+				'referral_id': parseInt(req.body.referral_resource_add),
+				'status': 1
+			});
 			req.flash('success-message', 'Client Added Successfully');
 			res.redirect('/client');
 		}
@@ -1182,7 +1232,6 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 	var gender = req.body.contactDetailsGender;
 	var email = req.body.contactDetailsEmail;
 	var phone_no = req.body.contactDetailsPhone_no;
-	var fax = req.body.contactDetailsFax;
 	var mobile_no = req.body.contactDetailsMobile_no;
 
 	const closingDate = req.body.revenueclosingDate ? req.body.revenueclosingDate.split("-") : '';
@@ -1199,7 +1248,6 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 				"gender":gender[i],
 				"email":email[i],
 				"phone_no": phone_no[i] ? removePhoneMask(phone_no[i]) : '',
-				"fax": fax[i] ? removePhoneMask(fax[i]) : '',
 				"mobile_no": mobile_no[i] ? removePhoneMask(mobile_no[i]): ''
 			});
 		}
@@ -1251,7 +1299,6 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
 			association_type: req.body.association,
 			industry_type: req.body.industry_type,
 			firm_id: req.user.firm_id,
-			fax: removePhoneMask(req.body.fax),
 			IM: req.body.im,
 			date_of_birth: formatDate ? formatDate[2] + "-" + formatDate[0] + "-" + formatDate[1] : null,
 			gender: req.body.client_gender,
@@ -1286,7 +1333,6 @@ router.post('/client/editClient/:id', auth, firmAttrAuth, csrfProtection, async 
                 email: contactDetails[j].email,
                 mobile_no: contactDetails[j].mobile_no,
                 phone_no: contactDetails[j].phone_no,
-                fax: contactDetails[j].fax,
                 type: 'M',
                 contact_id: req.params['id']
             });
@@ -1904,7 +1950,6 @@ router.post('/client/upload-excel', auth, upload_client_excel.single('client_xls
 					company_name: excelClient[i].company_name,
 					firm_id: req.user.firm_id,
 					user_id: req.user.id,
-					fax: excelClient[i].fax,
 					twitter: `http://${excelClient[i].twitter}`,
 					linkdn: `http://${excelClient[i].linkdn}`,
 					facebook: `http://${excelClient[i].facebook}`,
@@ -1929,7 +1974,6 @@ router.post('/client/upload-excel', auth, upload_client_excel.single('client_xls
 					company_name: excelClient[i].company_name,
 					firm_id: req.user.firm_id,
 					user_id: req.user.id,
-					fax: excelClient[i].fax,
 					twitter: `http://${excelClient[i].twitter}`,
 					linkdn: `http://${excelClient[i].linkdn}`,
 					facebook: `http://${excelClient[i].facebook}`,
@@ -1971,7 +2015,7 @@ router.post('/client/upload-excel', auth, upload_client_excel.single('client_xls
 // 		});
 // 	}
 // 	console.log("===================end============================");
-	
+
 // 	res.redirect('/dashboard');
 // });
 module.exports = router;

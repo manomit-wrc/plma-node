@@ -6220,6 +6220,86 @@ i.fa.fa-eye.m-r-5 {
 
 
 
+/* Table Fixed Layout  */
+
+.common-tbl-fixed {
+	table-layout: fixed;
+}
+
+.common-tbl-fixed  .common-tbl-fixed-row {
+    margin-right: 0;
+    margin-left: 0;
+    width: 100%;
+    overflow: hidden;
+    clear: both;
+}
+
+.common-tbl-fixed  .common-tbl-fixed-row td.col-md-4 {
+	width: 33% !important;
+    display: block;
+    float: left !important;
+}
+
+.common-tbl-fixed  .common-tbl-fixed-row td.col-md-4 .div_left {
+	margin: 0;
+}
+
+.common-tbl-fixed .common-tbl-fixed-row .col-md-8 {
+    width: 67% !important;
+    float: left !important;
+    display: block;
+}
+
+.common-tbl-fixed .persist-header td a {
+    width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+	display: inline-block;
+	text-align: center;
+	margin: 0 auto;
+}
+
+/*... Table Fixed Layout  */
+
+
+@media screen and (max-width: 480px) {
+	.role-header h4 {
+		display: none !important;
+	}
+}
+
+.radioError label#ref_type-error {
+	position: absolute;
+	bottom: -25px;
+	left: 5px;
+}
+
+
+.apporval-sent .apprv-item {
+	-webkit-box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.5);
+	-ms-box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.5);
+	-o-box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.5);
+	box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.5);
+	padding: 10px;
+	margin-bottom: 20px;
+	text-align: center;
+	background: #f5f5f5;
+}
+
+.apprv-item p {
+	text-transform: uppercase;
+}
+
+.apprvlStatus {
+    position: absolute;
+    padding: 10px 50px;
+    top: 132px;
+    font-size: 15px;
+}
+
+
 /*------------------------------------------------------------------
 [39-a.... Custom Styles]
 */
@@ -6498,7 +6578,7 @@ select.gender {
 		}
 
 		.client thead th:nth-child(6) {
-			width: 8% !important;
+			width: 14% !important;
 		}
 
 		.client thead th:nth-child(7) {
@@ -6620,7 +6700,7 @@ select.gender {
 		}
 
 		.custom-table.mast thead th:nth-child(1) {
-			width: 6% !important;
+			width: 8% !important;
 		}
 
 		/* .custom-table tr.odd td:nth-child(5) a, .custom-table tr.even td:nth-child(5) a {
@@ -6794,9 +6874,9 @@ select.gender {
 					color: #ff881f;
 				}
 
-				.table-responsive.refe.sourc thead th:nth-child(1) {
+				/* .table-responsive.refe.sourc thead th:nth-child(1) {
 					width: 49%;
-				}
+				} */
 
 
 				/*Ends on css 03-09-2018*/
@@ -6945,10 +7025,10 @@ select.gender {
 				}
 
 
-				
+
 
 				/*Ends on css 11-09-2018*/
-				
+
 				.yearly-revenue-tbl td:nth-child(1) {
 					width: auto !important;
 				}
@@ -7353,12 +7433,12 @@ select.gender {
 				.info-tile.address-target .border-divider {
 					border: 0 none;
 					margin-bottom: 15px;
-					
-					
+
+
 				}
 
 				.info-tile.address-target .col-md-3 {
-					
+
 					width: 50%;
 					padding-left: 0;
 				}
@@ -7373,6 +7453,10 @@ select.gender {
 
 				.address-target .address-panel {
 					border: 1px solid #ccc !important;
+				}
+
+				.apporval-sent .apprv-item {
+					height: auto !important;
 				}
 
 			}
@@ -7566,7 +7650,12 @@ select.gender {
 	}
 
 	.navbar-nav .open .dropdown-menu {
-		left: -26px;
+		left: -40px;
+	}
+
+
+	.navbar-nav .open .dropdown-menu li a {
+		padding: 5px 15px 5px 15px;
 	}
 
 	.dataTables_wrapper .dataTables_filter {
@@ -7917,3 +8006,5 @@ select.gender {
 			margin-right: 5px;
 		}
 	}
+
+

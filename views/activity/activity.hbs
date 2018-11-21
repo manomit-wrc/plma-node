@@ -42,7 +42,7 @@
                 <th>From Date</th>
                 <th>To Date</th>
                 <th>Total Budget Costs</th>
-                <th>Remarks</th>
+                <th>Activity Type</th>
                 <th>Status</th>
                 <th class="text-right">Action</th>
               </tr>
@@ -59,12 +59,16 @@
                     <td>{{dateFormat this.activity_from_date "MM-DD-YYYY"}}</td>
                     <td>{{dateFormat this.activity_to_date "MM-DD-YYYY"}}</td>
                     <td>$ {{this.total_budget_amount}}</td>
-                    <td>{{this.remarks}}</td>
+                    <td>
+                      {{#if_eq this.activity_type "individual"}}INDIVIDUAL{{/if_eq}}
+                      {{#if_eq this.activity_type "strategic_group"}}STRATEGIC{{/if_eq}}
+                      {{#if_eq this.activity_type "team"}}TEAM{{/if_eq}}
+                    </td>
                     <td>
                       <input type="hidden" name="_csrf" value="{{csrfToken}}">
                       <input type="hidden" name="activity_id" id="activity_id" value="{{this.id}}"> {{#if_eq this.activity_status '0'}}
                       <span class="label label-info-border">NEW ACTIVITY - CREATED</span> {{/if_eq}} {{#if (and (eq this.activity_status '3')(eq this.activity_update 'update'))
-                      }} ACTIVITY UPDATE {{else}} {{#if_eq this.activity_status '3'}}
+                      }}<span class="label label-info-border"> ACTIVITY UPDATE</span> {{else}} {{#if_eq this.activity_status '3'}}
                       <span class="label label-danger-border">NOT APPROVED - DISCARD ACTIVITY</span> {{/if_eq}} {{/if}} {{#if_eq this.activity_status '1'}}
                       <span class="label label-warning-border">PENDING APPROVAL - IN-PROGRESS</span> {{/if_eq}} {{#if_eq this.activity_status '2'}}
                       <span class="label label-success-border">APPROVED - PROCEED</span> {{/if_eq}}
@@ -85,32 +89,37 @@
                     <td>{{dateFormat this.activity_from_date "MM-DD-YYYY"}}</td>
                     <td>{{dateFormat this.activity_to_date "MM-DD-YYYY"}}</td>
                     <td>$ {{this.total_budget_amount}}</td>
-                    <td>{{this.remarks}}</td>
+                    <td>{{#if_eq this.activity_type "individual"}}INDIVIDUAL{{/if_eq}} {{#if_eq this.activity_type "strategic_group"}}STRATEGIC{{/if_eq}}
+                    {{#if_eq this.activity_type "team"}}TEAM{{/if_eq}}</td>
                     <td>
                       <input type="hidden" name="_csrf" value="{{csrfToken}}">
                       <input type="hidden" name="activity_id" id="activity_id" value="{{this.id}}"> {{#if_eq this.activity_status '0'}}
                       <span class="label label-info-border">NEW ACTIVITY - CREATED</span> {{/if_eq}} {{#if (and (eq this.activity_status '3')(eq this.activity_update
-                      'update')) }} ACTIVITY UPDATE {{else}} {{#if_eq this.activity_status '3'}}
+                      'update')) }}<span class="label label-info-border"> ACTIVITY UPDATE </span>{{else}} {{#if_eq this.activity_status '3'}}
                       <span class="label label-danger-border">NOT APPROVED - DISCARD ACTIVITY</span> {{/if_eq}} {{/if}} {{#if_eq this.activity_status '1'}}
                       <span class="label label-warning-border">PENDING APPROVAL - IN-PROGRESS</span> {{/if_eq}} {{#if_eq this.activity_status '2'}}
                       <span class="label label-success-border">APPROVED - PROCEED</span> {{/if_eq}}
                     </td>
                       <td class="text-right">
-                        {{#if (or (eq this.activity_status "0")(and (eq this.activity_status "3")(eq this.activity_update "update"))) }}
-                        <a href="javascript:void(0);" class="btn btn-success btn-sm approval_request_sent" id="approval_request_sent" title="Request for Approval" data-target-request-id="{{this.id}}">
-                          <i class="fa fa-check" aria-hidden="true"></i>
-                        </a>
-                        {{/if}}
-                        <a href="/activity/view/{{this.id}}" class="btn btn-success btn-sm" id="setUrlItem">
+                        {{#if_eq this.user_id ../user.id}}
+                          {{#if (or (eq this.activity_status "0")(and (eq this.activity_status "3")(eq this.activity_update "update"))) }}
+                          <a href="javascript:void(0);" class="btn btn-success btn-sm approval_request_sent" data-toggle="tooltip" data-placement="bottom" id="approval_request_sent" title="Request for Approval" data-activity-type="{{this.activity_type}}" data-target-request-id="{{this.id}}" data-activity-name="{{this.activity_name}}">
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                          </a>
+                          {{/if}}   
+                        {{/if_eq}}
+                        <a href="/activity/view/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="View" id="setUrlItem">
                           <i class="fa fa-eye m-r-5"></i>
                         </a>
                         {{#if (or (eq this.activity_status "0")(eq this.activity_status "3"))}}
-                        <a href="/activity/edit/{{this.id}}" class="btn btn-success btn-sm">
+                        <a href="/activity/edit/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit">
                           <i class="fa fa-pencil m-r-5"></i>
                         </a>
-                        <a href="javascript:void(0);" data-toggle="modal" data-target="delete_users" data-activity-id="{{this.id}}" id="delete_activity" class="btn btn-danger btn-sm target-delete">
+                        <span data-toggle="modal" data-target="delete_users" >
+                        <a href="javascript:void(0);" data-activity-id="{{this.id}}" id="delete_activity" class="btn btn-danger btn-sm target-delete" data-toggle="tooltip" data-placement="bottom" title="Delete" >
                           <i class="fa fa-trash-o m-r-5"></i>
                         </a>
+                        </span>
                         {{/if}}
                       </td>
                   </tr>
@@ -131,7 +140,7 @@
       </div>
       <form>
         <div class="modal-body card-box">
-          <p>Are you sure you want to delete this activity?</p>
+          <p>Are you sure you want to delete this activity</p>
           <div class="m-t-20" id="delDiv">
             <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
           </div>
@@ -213,7 +222,7 @@
                     <span class="input-group-addon">
                       <input type="radio" id="referral_type" name="ref_type" value="R" {{#if_eq refer_type "R"}} checked {{/if_eq}} />
                     </span>
-                    <div class="form-control form-control-static">Referral</div>
+                    <div class="form-control form-control-static">Referral Sources</div>
                     <span class="glyphicon form-control-feedback"></span>
                   </label>
                 </div>
@@ -263,7 +272,7 @@
             <div class="col-md-6" id="referral_list" {{#if_eq refer_type "R"}} style="display: block;" {{else}} style="display: none;"
               {{/if_eq}}>
               <div class="form-group">
-                <label class="control-label">Referral List
+                <label class="control-label">Referral Sources List
                   <span class="text-danger">*</span>
                 </label>
                 <select id="referral_id" name="referral_user" class="form-control">
@@ -362,31 +371,83 @@
   
   $(document).on('click', '.approval_request_sent', function (e) {
     var activity_id = $(this).data("target-request-id");
-    swal({
-      title: "Are you sure?",
-      text: "You want to send this activity for approval?",
-      type: "warning",
-      showCancelButton: true,
-      confirmButtonClass: "btn-danger",
-      confirmButtonText: "Yes",
-      closeOnConfirm: false
-    }, function () {
+    var activity_type = $(this).data("activity-type");
+    var activity_name = $(this).data("activity-name");
+    if(activity_type == "team")
+    {
       $.ajax({
         type: "GET",
-        url: "/activity/update_approval_request/" + activity_id,
+        url: "/team-invition-approval-system/" + activity_id,
         success: function (response) {
           if (response.success == true) {
-            swal({
-              title: "Nice!",
-              text: "Approval sent successfully",
-              type: "success"
-            }, function () {
-              window.location.reload();
-            });
+            if(response.attr_count == "0" && response.rej_attr_count == "0")
+            {
+              swal({
+                title: "Are you sure?",
+                text: "You want to send this activity for approval?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Yes",
+                closeOnConfirm: false
+              }, function () {
+                $.ajax({
+                  type: "GET",
+                  url: "/activity/update_approval_request/" + activity_id + "/" + activity_name,
+                  success: function (response) {
+                    if (response.success == true) {
+                      swal({
+                        title: "Nice!",
+                        text: "Approval sent successfully",
+                        type: "success"
+                      }, function () {
+                        window.location.reload();
+                      });
+                    }
+                  }
+                });
+              });
+            }
+            else if(response.attr_count != "0")
+            {
+              swal("Please Wait","No response from other team members!","warning");
+            }
+            else if(response.rej_attr_count != "0")
+            {
+              swal("Rejected!","Activity rejected from other team members, Please edit activity and resubmit.","warning");
+            }
           }
         }
       });
-    });
+    }
+    else
+    {
+      swal({
+        title: "Are you sure?",
+        text: "You want to send this activity for approval?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes",
+        closeOnConfirm: false
+      }, function () {
+        $.ajax({
+          type: "GET",
+          url: "/activity/update_approval_request/" + activity_id + "/" + activity_name,
+          success: function (response) {
+            if (response.success == true) {
+              swal({
+                title: "Nice!",
+                text: "Approval sent successfully",
+                type: "success"
+              }, function () {
+                window.location.reload();
+              });
+            }
+          }
+        });
+      });
+    }
   });
 
   $(document).on('click', "#setUrlItem", function () {

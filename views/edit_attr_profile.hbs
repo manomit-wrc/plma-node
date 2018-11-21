@@ -62,17 +62,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group form-focus select-focus select-attorney">
-                                        <label class="control-label">Gender</label>
-                                        <select class="form-control floating selectpicker" id="gender" name="gender" data-show-subtext="true" data-live-search="true">
-                                            <option value="">Select Gender</option>
-                                            <option value="M" {{#if_eq user.gender "M"}} selected="selected" {{/if_eq}}>Male</option>
-                                            <option value="F" {{#if_eq user.gender "F"}} selected="selected" {{/if_eq}}>Female</option>
-                                            <option value="O" {{#if_eq user.gender "O"}} selected="selected" {{/if_eq}}>Others</option>
-                                        </select>
-                                    </div>
-                                </div>
+                            
                             </div>
                         </div>
                     </div>
@@ -129,6 +119,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
+                        <img class="loadingImgCityAjax m-r-10" style="display:none" src="/assets/img/loading.gif" height="15" width="15" alt="">
                         <div class="form-group form-focus">
                             <label class="control-label">City</label>
                             <select class="select form-control floating" id="city" name="city">
@@ -140,6 +131,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
+                        <img class="loadingImgZipAjax m-r-10" style="display:none" src="/assets/img/loading.gif" height="15" width="15" alt="">
                         <div class="form-group form-focus">
                             <label class="control-label">Zipcode</label>
                             <select class="select form-control floating" id="zipcode" name="zipcode">
@@ -308,13 +300,7 @@
                             </div>
                         </div>
                         
-                        <div class="col-md-6">
-                            <div class="form-group form-focus">
-                                <label class="control-label">Fax</label>
-                                <input type="text" class="form-control floating number_validator" id="fax" name="fax" value="{{edata.attorney_details.0.fax}}"
-                                />
-                            </div>
-                        </div>
+                        
                         <div class="col-md-6">
                             <div class="form-group form-focus select-focus select-attorney">
                                 <label class="control-label">Attorney Type</label>

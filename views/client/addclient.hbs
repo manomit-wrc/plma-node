@@ -20,6 +20,12 @@
 			<div class="col-sm-8">
 				<h4 class="page-title">Add Client</h4>
 			</div>
+			<div class="col-sm-4">
+				<div class="text-right">
+					<a href="/client" class="btn btn-primary pull-right rounded m-r-5">
+						<i class="fa fa-arrow-left"></i> Back</a>
+				</div>
+			</div>
 		</div>
 		<form id="clientform" method="POST" action="/client/addClient">
 			<input type="hidden" name="_csrf" value="{{csrfToken}}"> 
@@ -117,27 +123,16 @@
 							</div>
 							
 
-							<div class="col-md-6">
+							{{!-- <div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Closing Date<span class="req-lbl">*</span> </label>
 									<div class="cal-icon">
 										<input class="form-control floating datetimepicker" type="text" id="revenueclosingDate" name="revenueclosingDate" data-date-format="MM-DD-YYYY">
 									</div>
 								</div>
-							</div>
+							</div> --}}
 
-				           <div class="col-md-6">
-								<div class="form-group form-focus select-focus select-attorney">
-									<label class="control-label">Gender <span class="req-lbl">*</span> </label>
-									<select class="form-control floating " id="client_gender" name="client_gender" >
-										<option value="">Select Gender</option>
-										<option value="M">Male</option>
-										<option value="F">Female</option>
-										<option value="O">Others</option>
-
-									</select>
-								</div>
-							</div>
+				          
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Client Company</label>
@@ -165,12 +160,7 @@
 								<input type="text" class="form-control floating number_validator" id="mobile_no" name="mobile_no" />
 							</div>
 						</div>
-						<div class="col-md-6">
-							<div class="form-group form-focus">
-								<label class="control-label">Fax</label>
-								<input type="text" class="form-control floating number_validator" id="fax" name="fax" />
-							</div>
-						</div>
+						
 
 					</div>
 				</div>
@@ -206,7 +196,7 @@
 							<label class="control-label">Planning Period (Month)
 							</label>
 							<select class="form-control floating " id="planning_period" name="planning_period">
-								<option value="">Select Planning Period </option>
+								<option value="0">Select Planning Period </option>
 								<option value="1">1</option>
 								<option value="2">2</option>
 								<option value="3">3</option>
@@ -293,7 +283,7 @@
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Country <span class="req-lbl">*</span> </label>
 							<select id="country" name="country" class="form-control floating">
-								<option value="">Select Country</option>
+								<option value="0">Select Country</option>
 								{{#each country}}
 									<option value="{{this.id}}" {{#if_eq this.id 233}} selected="selected" {{/if_eq}}>{{this.name}}</option>
 								{{/each}}
@@ -304,7 +294,7 @@
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">State <span class="req-lbl">*</span> </label>
 							<select id="state" name="state" class="form-control floating">
-								<option value="">Select State</option>
+								<option value="0">Select State</option>
 								{{#each state}}
 									<option value="{{this.id}}">{{this.name}}</option>
 								{{/each}}
@@ -312,24 +302,41 @@
 						</div>
 					</div>
 					<div class="col-md-6">
+						<img class="loadingImgCityAjax m-r-10" style="display:none" src="/assets/img/loading.gif" height="15" width="15" alt="">
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">City<span class="req-lbl">*</span></label>
 							<select id="city" name="city" class="form-control floating">
-								<option value="">Select City</option>
+								<option value="0">Select City</option>
 							</select>
 						</div>
 					</div>
 					<div class="col-md-6">
+						<img class="loadingImgZipAjax m-r-10" style="display:none" src="/assets/img/loading.gif" height="15" width="15" alt="">
 						<div class="form-group form-focus select-focus">
 							<label class="control-label">Zip Code<span class="req-lbl">*</span></label>
 							<select id="zipcode" name="zipcode" class="form-control floating">
-								<option value="">Select Zipcode</option>
+								<option value="0">Select Zipcode</option>
 							</select>
 						</div>
 					</div>
 				</div>
 			</div>
-
+			<div class="card-box">
+				<h3 class="card-title">Add Referral Resources</h3>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group form-focus select-focus select-attorney">
+							<label class="control-label">Referral Resources </label>
+							<select id="referral_resource_add" name="referral_resource_add" class="form-control floating">
+								<option value="">Select Referral Sources</option>
+								{{#each referral}}
+								<option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="card-box" id="m_s_target" style="display:none;">
 				<h3 class="card-title">Contact Information</h3>
 				<div class="contact-information targetPlus" id="contactInformationPlus">
@@ -353,21 +360,7 @@
 									<input type="text" class="form-control floating" id="clientDetailsSecondName" name="clientDetailsSecondName[]" />
 								</div>
 							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus select-focus">
-									<label class="control-label">Gender
-										<span class="req-lbl">*</span>
-
-									</label>
-									<select class="select form-control floating" id="clientDetailsGender" name="clientDetailsGender[]">
-										<option value="">Select Gender</option>
-										<option value="M">Male</option>
-										<option value="F">Female</option>
-										<option value="O">Others</option>
-
-									</select>
-								</div>
-							</div>
+						
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Email Id
@@ -388,13 +381,7 @@
 									 maxlength="50" />
 								</div>
 							</div>
-							<div class="col-md-6">
-								<div class="form-group form-focus">
-									<label class="control-label">Fax</label>
-									<input type="text" class="form-control floating number_validator" id="clientDetailsFax" name="clientDetailsFax[]" maxlength="50"
-									/>
-								</div>
-							</div>
+						
 							<div class="col-md-6">
 								<div class="form-group form-focus">
 									<label class="control-label">Mobile No.
@@ -431,20 +418,7 @@
 											<input type="text" class="form-control floating"  name="clientDetailsSecondName[]" />
 										</div>
 									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus select-focus">
-											<label class="control-label">Gender
-												<span class="req-lbl">*</span>
-
-											</label>
-											<select class="form-control floating"  name="clientDetailsGender[]">
-												<option value="">Select Gender</option>
-												<option value="M">Male</option>
-												<option value="F">Female</option>
-												<option value="O">Others</option>
-											</select>
-										</div>
-									</div>
+								
 									<div class="col-md-6">
 										<div class="form-group form-focus">
 											<label class="control-label">Email Id
@@ -465,13 +439,7 @@
 											 maxlength="50" />
 										</div>
 									</div>
-									<div class="col-md-6">
-										<div class="form-group form-focus">
-											<label class="control-label">Fax</label>
-											<input type="text" class="form-control floating number_validator"  name="clientDetailsFax[]" maxlength="50"
-											/>
-										</div>
-									</div>
+									
 									<div class="col-md-6">
 										<div class="form-group form-focus">
 											<label class="control-label">Mobile No.
@@ -539,17 +507,7 @@
 							<input type="text" class="form-control floating url_selector" id="google" name="google" />
 						</div>
 					</div>
-					<div class="col-md-6">
-						<div class="form-group form-focus select-focus select-attorney">
-							<label class="control-label">Association Status</label>
-							<select id="association" name="association" class="form-control floating" >
-								<option value="0">Select Association</option>
-								<option value="CONVERTED">CONVERTED</option>
-								<option value="NEW TARGET">NEW TARGET</option>
-								<option value="TS-INTERIM">TS-INTERIM</option>
-							</select>
-						</div>
-					</div>
+					
 					<div class="col-md-6">
 						<div class="form-group form-focus select-focus select-attorney">
 							<label class="control-label">Industry Type <span class="req-lbl">*</span> </label>
@@ -562,7 +520,7 @@
 							</select>
 						</div>
 					</div>
-					<div class="col-md-12">
+					<div class="col-md-6">
 						<div class="form-group form-focus">
 							<label class="control-label">Remarks</label>
 							<textarea class="form-control floating" id="remarks" name="remarks" rows="5"></textarea>
@@ -602,15 +560,21 @@
             prefix: '$ ',
             rightAlign: false
         });
-		$("#estimated_customer_life_time_value").inputmask("numeric", {
-            radixPoint: ".",
-            groupSeparator: ",",
-            digits: 2,
-            autoGroup: true,
-            prefix: '$ ',
-            rightAlign: false
-        });
-
+		//$("#estimated_customer_life_time_value").keydown(function (e) {
+			// Allow: backspace, delete, tab, escape, enter and .
+//if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
+				// Allow: Ctrl+A, Command+A
+			//	(e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+				// Allow: home, end, left, right, down, up
+			//	(e.keyCode >= 35 && e.keyCode <= 40)) {
+				// let it happen, don't do anything
+			//	return;
+		//	}
+			// Ensure that it is a number and stop the keypress
+			//if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+			//	e.preventDefault();
+		//	}
+		//});
 		$("#estimated_revenue").inputmask("numeric", {
             radixPoint: ".",
             groupSeparator: ",",
@@ -619,7 +583,8 @@
             prefix: '$ ',
             rightAlign: false
         });
-		$("#life_time_revenue").inputmask("numeric", {
+		
+	$("#estimated_customer_life_time_value").inputmask("numeric", {
             radixPoint: ".",
             groupSeparator: ",",
             digits: 2,
@@ -627,6 +592,17 @@
             prefix: '$ ',
             rightAlign: false
         });
+
+$("#life_time_revenue").inputmask("numeric", {
+            radixPoint: ".",
+            groupSeparator: ",",
+            digits: 2,
+            autoGroup: true,
+            prefix: '$ ',
+            rightAlign: false
+        });
+
+	
 
 		$('#select-existing-tags').multiselect({
 			nonSelectedText: 'Select Existing Tags',
@@ -646,52 +622,9 @@
 					required: true
 				},
 				
-				email: {
-					required: true,
-					email: true
-				},
-				client_gender: {
-					required: true
-				},
-				mobile_no: {
-					required: true
-				},
-				phone_no: {
-					required: true
-				},
-				
 				attorney_id: {
 					required: true
-				},
-				address1: {
-					required: true
-				},
-				country: {
-					required: true
-				},
-				state: {
-					required: true
-				},
-				city: {
-					required: true
-				},
-				zipcode: {
-					required: true
-				},
-				life_time_revenue: {
-					required:true
-				},
-				clientStartDate: {
-					required: true
-				},
-				planning_period: {
-					required:true
-				},
-				
-				estimated_revenue: {
-					required: true
 				}
-				
 			},
 			messages: {
 				client_first_name: {
@@ -703,45 +636,8 @@
 				org_name: {
 					required: "Organization name can't be blank"
 				},
-				email: {
-					required: "Email ID can't be blank",
-					email: "Enter valid email ID"
-				},
-				client_gender: {
-					required: "Choose your gender"
-				},
-				mobile_no: {
-					required: "Mobile no. can't be blank"
-				},
-				phone_no: {
-					required: "Phone no. can't be blank"
-				},
-				address1: {
-					required: "Must provide address"
-				},
-				country: {
-					required: "Choose your country"
-				},
-				state: {
-					required: "Choose your state"
-				},
-				city: {
-					required: "Choose your city"
-				},
-				zipcode: {
-					required: "Choose your zipcode"
-				},
-				life_time_revenue: {
-					required: "Life time revenue can't be blank"
-				},
-				clientStartDate: {
-					required: "Client Start Date can't be blank"
-				},
-				planning_period: {
-					required: "Choose your Planning period"
-				},
-				estimated_revenue: {
-					required: "Estimated revenue can't be blank"
+				attorney_id: {
+					required: "Select any attorney"
 				}
 			}
 		});
@@ -788,28 +684,87 @@
 		var start_date = $("#clientStartDate").val();
 		var period = $(this).val();
 		if(start_date == ""){
-			alert("1212121212");
+			swal("", "Please Select Start date!", "warning");
+			$(this).val('0').attr("selected", true);
+			$("#end_date").val('');
 		}
 		else{
-		var start_date_split = start_date.split('-');
-		var month = start_date_split[2] + "," + start_date_split[0] + "," + start_date_split[1];
-		var current_date = new Date(month);
-		var end_date = new Date(current_date.setMonth(current_date.getMonth() + parseInt(period)));
-		var dd = end_date.getDate();
-			var mm = end_date.getMonth() + 1; //January is 0!
+			if ($(this).val() == '0') {
+				swal("", "Please selcet planning period!", "warning");
+				$("#end_date").val('');
+			} else {
+				var start_date_split = start_date.split('-');
+				var month = start_date_split[2] + "," + start_date_split[0] + "," + start_date_split[1];
+				var current_date = new Date(month);
+				var end_date = new Date(current_date.setMonth(current_date.getMonth() + parseInt(period)));
+				var dd = end_date.getDate();
+				var mm = end_date.getMonth() + 1; //January is 0!
 
-			var yyyy = end_date.getFullYear();
-			if (dd < 10) {
-				dd = '0' + dd;
+				var yyyy = end_date.getFullYear();
+				if (dd < 10) {
+					dd = '0' + dd;
+				}
+				if (mm < 10) {
+					mm = '0' + mm;
+				}
+				var end_date = mm + '-' + dd + '-' + yyyy;
 			}
-			if (mm < 10) {
-				mm = '0' + mm;
-			}
-			var end_date = mm + '-' + dd + '-' + yyyy;
 		}
 		$("#end_date").val(end_date);
 	});
 
 
 </script> 
+
+
+<script>
+ $(document).ready(function () {
+	   $("#email").keyup(function () {
+            $("div").remove(".validation");
+
+        });
+ });
+
+function validateEmail(email) {
+        var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        if (filter.test(email)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+	    $(document).on('change', "#email", function (e) {
+        var mail = $(this).val();
+        $("div").remove(".validation");
+        if (mail !== '') {
+            $.ajax({
+                type: "POST",
+                url: "/get-duplicate-email-block-client",
+                data: {
+                    mail: mail
+                },
+                success: function (response) {
+
+                    if (response.success == true) {
+                        $("#email").parent().append("<div class='validation' style='color:red;margin-bottom: 20px;'><i class='fa fa-close iconDuplicateEmail'></i><b> Email Id already exists</b></div>");
+                    }
+                    else {
+                        if (validateEmail(mail)) {
+                            $("#email").parent().append("<div class='validation' style='color:green;margin-bottom: 20px;'><i class='fa fa-check iconDuplicateEmail' style='background-color:#c2f7c6 !important;''></i></div>");
+                        }
+                        else {
+                            $("#email").parent().append("<div class='validation' style='color:red;margin-bottom: 20px;'><i class='fa fa-close iconDuplicateEmail'></i></div>");
+
+                        }
+                    }
+                },
+                error: function (xhr) {
+                }
+            });
+        }
+    });
+
+</script>
 {{/content}}

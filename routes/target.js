@@ -92,6 +92,9 @@ router.get('/target', auth, firmAttrAuth, csrfProtection, async(req, res) => {
     }
     if (req.query.state) {
         var city = await City.findAll({
+            order: [
+                ['name', 'ASC'],
+            ],
             where: {
                 state_id: req.query.state
             }
@@ -151,12 +154,46 @@ router.get('/target', auth, firmAttrAuth, csrfProtection, async(req, res) => {
 
 });
 
+
+router.post("/get-duplicate-email-block-target", auth, async (req, res) => {
+	const attr_email = await Target.findOne({
+		where: {
+			email: req.body.email
+		}
+	});
+	if (attr_email !== null) {
+		res.json({
+			success: true
+		});
+	} else {
+		res.json({
+			success: false
+		});
+	}
+
+});
+
+
 router.get('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) => {
     var error_message = req.flash('error-target-message')[0];
     var designation = await Designation.findAll({
         order: [
 			['title', 'ASC']
 		],
+    });
+    var fetchReferral = {};
+    if (req.user.role_id != 2) {
+        fetchReferral.attorney_id = req.user.id;
+        fetchReferral.firm_id = req.user.firm_id;
+    } else {
+        fetchReferral.firm_id = req.user.firm_id;
+    }
+
+    const referral = await Referral.findAll({
+        order: [
+            ['first_name', 'ASC'],
+        ],
+        where: fetchReferral
     });
     var industry = await industry_type.findAll({
         order: [
@@ -187,7 +224,8 @@ router.get('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =>
         designations: designation,
         industry: industry,
         attorney: attorney,
-        error_message
+        error_message,
+        referral
     });
 });
 
@@ -198,7 +236,6 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
 	var gender = req.body.targetDetailsGender;
 	var email = req.body.targetDetailsEmail;
 	var phone_no = req.body.targetDetailsPhone_no;
-	var fax = req.body.targetDetailsFax;
     var mobile_no = req.body.targetDetailsMobile_no;
 
     const startDate = req.body.targetStartDate ? req.body.targetStartDate.split("-") : '';
@@ -214,7 +251,6 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
 				"gender":gender[i],
 				"email":email[i],
 				"phone_no":removePhoneMask(phone_no[i]),
-				"fax":removePhoneMask(fax[i]),
 				"mobile_no":removePhoneMask(mobile_no[i])
 			});
 		}
@@ -234,7 +270,6 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
                 organization_code: req.body.org_code,
                 email: req.body.email,
                 phone_no: removePhoneMask(req.body.phone_no),
-                fax: removePhoneMask(req.body.fax),
                 mobile_no: removePhoneMask(req.body.mobile_no),
                 address1: req.body.address1,
                 address2: req.body.address2,
@@ -276,7 +311,6 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
 					email: targetDetails[j].email,
 					mobile_no: targetDetails[j].mobile_no,
 					phone_no: targetDetails[j].phone_no,
-					fax: targetDetails[j].fax,
 					type: 'M',
 					contact_id: insertData.id
 				});
@@ -290,6 +324,14 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
                 estimated_revenue: removePhoneMask(req.body.estimated_revenue),
                 user_id:req.user.id,
                 firm_id: req.user.firm_id
+            });
+
+            await Referred_Client_Targets.create({
+                'type': 'T',
+                'target_id': parseInt(insertData.id),
+                'client_id': 0,
+                'referral_id': parseInt(req.body.referral_resource_add),
+                'status': 1
             });
             req.flash('success-message', 'Target Added Successfully');
             res.redirect('/target')
@@ -305,7 +347,6 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
                 designation_id: req.body.designation,
                 email: req.body.email,
                 phone_no: removePhoneMask(req.body.phone_no),
-                fax: removePhoneMask(req.body.fax),
                 mobile_no: removePhoneMask(req.body.mobile_no),
                 address1: req.body.address1,
                 address2: req.body.address2,
@@ -350,6 +391,13 @@ router.post('/target/add', auth, firmAttrAuth, csrfProtection, async(req, res) =
                 user_id: req.user.id,
                 firm_id: req.user.firm_id
             });
+            await Referred_Client_Targets.create({
+                'type': 'T',
+                'target_id': parseInt(indidata.id),
+                'client_id': 0,
+                'referral_id': parseInt(req.body.referral_resource_add),
+                'status': 1
+            });
             req.flash('success-message', 'Target Added Successfully');
             res.redirect('/target')
         }
@@ -389,16 +437,21 @@ router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, re
         }
     });
     const city = await City.findAll({
+        order: [
+            ['name', 'ASC'],
+        ],
         where: {
             state_id: target.state.toString()
         }
     });
-    const cities = await City.findById(target.city.toString());
-    const zipcode = await Zipcode.findAll({
-        where: {
-            city_name: cities.name
-        }
-    });
+    if (target.city != "0") {
+        const cities = await City.findById(target.city.toString());
+        var zipcode = await Zipcode.findAll({
+            where: {
+                city_name: cities.name
+            }
+        });
+    }
     const attorney = await user.findAll({
         order: [
 			['first_name', 'ASC'],
@@ -430,7 +483,7 @@ router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, re
 			target_id: req.params['id']
 		}
 	});
-
+    //console.log(referralDetails);
 	for (var i = 0; i < referralDetails.length; i++) {
         const referDetails = await Referral.findOne({
             where: {
@@ -439,7 +492,8 @@ router.get('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, re
         });
         referralListArr.push({
             "name": referDetails.first_name + " " + referDetails.last_name,
-            "email": referDetails.email
+            "email": referDetails.email,
+            "id": referralDetails[i].id
         });
 	}
 
@@ -525,11 +579,12 @@ router.get('/target/view/:id', auth, firmAttrAuth, csrfProtection, async(req, re
             model: Activity
         }]
     });
+    var industry_type_id = target.industry_type ? target.industry_type.toString() : null;
     const country = await Country.findById("233");
     const state = await State.findById(target.state.toString());
     const city = await City.findById(target.city.toString());
     const zip = await Zipcode.findById(target.postal_code.toString());
-    const industrys = await industry_type.findById(target.industry_type.toString());
+    const industrys = await industry_type.findById(industry_type_id);
 
     res.render('target/targetview', {
         layout: 'dashboard',
@@ -557,7 +612,6 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
 	var gender = req.body.contactDetailsGender;
 	var email = req.body.contactDetailsEmail;
 	var phone_no = req.body.contactDetailsPhone_no;
-	var fax = req.body.contactDetailsFax;
     var mobile_no = req.body.contactDetailsMobile_no;
 
    const startDate = req.body.targetStartDate ? req.body.targetStartDate.split("-") : '';
@@ -573,7 +627,6 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
 				"gender":gender[i],
 				"email":email[i],
 				"phone_no":removePhoneMask(phone_no[i]),
-				"fax":removePhoneMask(fax[i]),
 				"mobile_no":removePhoneMask(mobile_no[i])
 			});
 		}
@@ -600,7 +653,6 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
             email: req.body.email,
             phone_no: removePhoneMask(req.body.phone_no),
             mobile_no: removePhoneMask(req.body.mobile_no),
-            fax: removePhoneMask(req.body.fax),
             address1: req.body.address1,
             address2: req.body.address2,
             address3: req.body.address3,
@@ -613,7 +665,7 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
             company_name: req.body.company_name,
             attorney_id: req.body.attorney,
             website_url: req.body.website_url,
-            social_url: req.body.social_url,
+            facebook: req.body.social_url,
             twitter: req.body.twitter,
             linkedin: req.body.linkedin,
             youtube: req.body.youtube,
@@ -669,7 +721,6 @@ router.post('/target/edit/:id', auth, firmAttrAuth, csrfProtection, async(req, r
                 email: contactDetails[j].email,
                 mobile_no: contactDetails[j].mobile_no,
                 phone_no: contactDetails[j].phone_no,
-                fax: contactDetails[j].fax,
                 type: 'M',
                 contact_id: req.params['id']
             });
@@ -782,7 +833,6 @@ router.post('/target/import', auth, upload.single('file_name'), csrfProtection, 
                     organization_code: excelTarget[i].organisation_code,
                     email: excelTarget[i].email,
                     mobile_no: excelTarget[i].mobile,
-                    fax: excelTarget[i].fax,
                     address1: excelTarget[i].address1,
                     address2: excelTarget[i].address2,
                     address3: excelTarget[i].address3,
@@ -811,7 +861,6 @@ router.post('/target/import', auth, upload.single('file_name'), csrfProtection, 
                     gender: excelTarget[i].gender,
                     email: excelTarget[i].email,
                     mobile_no: excelTarget[i].mobile,
-                    fax: excelTarget[i].fax,
                     address1: excelTarget[i].address1,
                     address2: excelTarget[i].address2,
                     address3: excelTarget[i].address3,
@@ -880,16 +929,14 @@ router.post('/target/move-to-client', auth, async(req, res) => {
                     id: target_ids[i]
                 }
             });
-
             var moveClient = await Client.create({
                 first_name: target_data.first_name,
                 last_name: target_data.last_name,
                 email: target_data.email,
                 mobile_no: target_data.mobile_no,
-                fax: target_data.fax,
                 address1: target_data.address1,
                 address2: target_data.address2,
-                address3: target_data.address3,
+                address_line_3: target_data.address3,
                 country: target_data.country,
                 state: target_data.state,
                 city: target_data.city,
@@ -901,8 +948,16 @@ router.post('/target/move-to-client', auth, async(req, res) => {
                 industry_type: target_data.industry_type,
                 company_name: target_data.company_name,
                 twitter: target_data.twitter,
-                linkedin: target_data.linkedin,
-                youtube: target_data.youtube,
+                linkdn: target_data.linkedin,
+                youtub: target_data.youtube,
+
+                social: target_data.social,
+                website_url: target_data.website_url,
+                social: target_data.social,
+                phone_no: target_data.phone_no,
+
+
+
                 google: target_data.google,
                 client_id: target_data.target_id,
                 master_id: target_data.target_code,
@@ -917,12 +972,41 @@ router.post('/target/move-to-client', auth, async(req, res) => {
                 user_id: target_data.user_id,
                 client_type: target_data.target_type,
                 remarks: target_data.remarks,
-                attorney_id: req.user.id,
-                life_time_revenue: target_data.estimated_lifetime_value,
+                attorney_id: target_data.attorney_id,
+
+                // attorney_id: req.user.id,
+                estimated_customer_life_time_value: target_data.life_time_revenue,
                 //revenueclosingDate: target_data.close_date
                 // revenueclosingDate: target_data.revenueclosingDate,
 
             });
+
+
+
+
+            var refT = await Referred_Client_Targets.findOne({
+                where: {
+                    type: "T",
+                    target_id: target_ids[i]
+                }
+            });
+            if (refT !== null) {
+                await Referred_Client_Targets.update({
+                    status: 0
+                },{
+                    where: {
+                        type: "T",
+                        target_id: target_ids[i]
+                    }
+                });
+                await Referred_Client_Targets.create({
+                    type: "C",
+                    target_id: 0,
+                    client_id: moveClient.id,
+                    referral_id: refT.referral_id,
+                    status:1
+                });
+            }
             await Revenue.create({
                 type: "C",
                 client_id: moveClient.id,
@@ -936,6 +1020,10 @@ router.post('/target/move-to-client', auth, async(req, res) => {
                     id: target_ids[i]
                 }
             });
+
+        
+
+
         }
         res.json({
             code: "200",
@@ -1028,5 +1116,16 @@ router.post("/target/referraladd", auth, csrfProtection, async (req, res) => {
 		message: 'Success'
 	});
 });
+
+router.get("/referred-target-clint-delete/:id", auth, async(req, res)=> {
+    await Referred_Client_Targets.destroy({
+        where: {
+            id: req.params['id']
+        }
+    });
+    res.json({
+        success: true
+    })
+})
 
 module.exports = router;

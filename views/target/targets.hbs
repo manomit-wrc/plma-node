@@ -44,7 +44,7 @@
                     {{/if}}
                     <button class="btn btn-primary rounded advancedFilter" data-toggle="modal" data-target="#add_user">
                         <i class="fa fa-filter"></i> Filter</button>
-                    <table class="table table-striped custom-table datatable target">
+                    <table class="table table-striped custom-table target" id="targetTable">
                         <thead>
                             <tr>
                                 <th>
@@ -52,8 +52,7 @@
                                 </th>
                                 <th>Name</th>
                                 <th>Email Id</th>
-                                <th>Start date</th>
-                                <th>End Date</th>
+                                <th>Current Revenue Planning Period</th>
                                 <th>Estimated Revenue</th>
                                 <th class="text-right" style="width: 18%;">Action</th>
                             </tr>
@@ -72,32 +71,53 @@
                                         {{/if_eq}}
                                     </a>
                                 </td>
-                                <td>{{this.email}}</td>
-                                <td>{{dateFormat this.revenues.0.start_date "MM-DD-YYYY"}}</td>
-                                <td>{{dateFormat this.revenues.0.end_date "MM-DD-YYYY"}}</td>
-                                <td>$ {{this.revenues.0.estimated_revenue}}</td>
+                                <td>{{#if this.email}} {{this.email}} {{else}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; — {{/if}}</td>
+                                <td>
+                                    {{#if this.revenues.0.start_date}}
+                                        {{dateFormat this.revenues.0.start_date "MM-DD-YYYY"}} - {{dateFormat this.revenues.0.end_date "MM-DD-YYYY"}}
+                                    {{else}}
+                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; —
+                                    {{/if}}
+                                </td>
+                                <td>
+                                    {{#if this.revenues.0.estimated_revenue}}
+                                         $ {{this.revenues.0.estimated_revenue}}
+                                    {{else}}
+                                         $ 0
+                                    {{/if}}
+                                </td>
                                 <td class="text-right">
                                     {{!-- <a href="/target/view-referral/{{this.id}}" class="btn btn-success btn-sm" title="See associate referral">
                                         <i class="fa fa-user-plus"></i>
                                     </a> --}}
-                                    <a href="/target/view-activity/{{this.id}}" class="btn btn-success btn-sm" title="See associated activity">
+                                    <a href="/target/view-activity/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="See associated activity">
                                         <i class="fa fa-tasks"></i>
                                     </a>
-                                    <a href="/target/view/{{this.id}}" class="btn btn-success btn-sm">
+                                    <a href="/target/view/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="View">
                                         <i class="fa fa-eye m-r-5"></i>
                                     </a>
-                                    <a href="/target/edit/{{this.id}}" class="btn btn-success btn-sm">
+                                    <a href="/target/edit/{{this.id}}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit">
                                         <i class="fa fa-pencil m-r-5"></i>
                                     </a>
-
-                                    <a href="javascript:void(0)" data-toggle="modal" data-target="delete_users"
-                                        data-target-id="{{this.id}}" id="delete_target" class="btn btn-danger btn-sm">
+                                     <span data-toggle="modal" data-target="delete_users">
+                                    <a href="javascript:void(0)" 
+                                        data-target-id="{{this.id}}" id="delete_target" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Delete">
                                         <i class="fa fa-trash-o m-r-5"></i>
                                     </a>
+                                    </span>
                                 </td>
                             </tr>
                             {{/each}}
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3"></td>
+                                <td>
+                                    <b>Total Estimated Revenue</b>
+                                </td>
+                                <td colspan="2" id="sum_tot"></td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
@@ -112,7 +132,7 @@
             </div>
             <form>
                 <div class="modal-body card-box">
-                    <p>are you sure you want to delete this target?</p>
+                    <p>Are you sure you want to delete this target?</p>
                     <div class="m-t-20" id="delDiv">
                         <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
                     </div>
@@ -126,7 +146,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <p>are you sure you want to move this record to client ?</p>
+                <p>Are you sure you want to move this record to client ?</p>
             </div>
             <div class="modal-footer">
                 <a href="javascript:void(0)" class="btn btn-danger move-to-client">ok</a>
@@ -170,6 +190,9 @@
                 </form>
             </div>
             <div class="modal-footer">
+                <a href="/xcel-temp/target_layout.xlsx" download class="btn btn-info" title="Download template">
+                    <i class="fa fa-download" aria-hidden="true"></i>
+                </a>
                 <input type="submit" name="import" value="Import" class="btn btn-info" />
             </div>
         </div>
@@ -243,21 +266,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="control-label">Association Status
-                                </label>
-                                <select class="select form-control" id="association" name="association">
-                                    <option value="">Select Association</option>
-                                    <option value="NEW TARGET" {{#if_eq association "NEW TARGET"}} selected="selected"
-                                        {{/if_eq}}>NEW TARGET</option>
-                                    <option value="CONVERTED" {{#if_eq association "CONVERTED"}} selected="selected"
-                                        {{/if_eq}}>CONVERTED</option>
-                                    <option value="TS-INTERIM" {{#if_eq association "TS-INTERIM"}} selected="selected"
-                                        {{/if_eq}}>TS-INTERIM</option>
-                                </select>
-                            </div>
-                        </div>
+                       
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Country
@@ -334,6 +343,49 @@
 <script type="text/javascript" src="/assets/plugins/bootstrap-sweetalert/sweet-alert.min.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript">
+
+    $(document).ready(function(){
+        $('#targetTable').DataTable({
+            "footerCallback": function (row, data, start, end, display) {
+                var api = this.api(), data;
+
+                // Remove the formatting to get integer data for summation
+                var intVal = function (i) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '') * 1 :
+                        typeof i === 'number' ?
+                            i : 0;
+                };
+
+                // Total over all pages
+                var total = api
+                    .column(4)
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+
+                // Total over this page
+                var pageTotal = api
+                    .column(4, { page: 'current' })
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+
+                // Update footer
+                $(api.column(4).footer()).html(
+                    '<b>$ ' + pageTotal + '</b>'
+                );
+            },
+            "searching": true,
+            "dom": 'lBfrtip',
+            "paging": true,
+            "buttons": [
+                'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+    });
     function checkall(source) {
         var checkboxes = document.getElementsByName('target_id');
         for (var i = 0; i < checkboxes.length; i++) {
@@ -347,12 +399,12 @@
             target_ids.push(this.value);
         });
         if (target_ids.length == 0) {
-            swal("", "Please select one or more target!", "warning");
+            swal("", "Please select at least one target!", "warning");
         } else {
             // $('#move_to_client_2').modal('show');
             swal({
                 title: "",
-                text: "are you sure you want to move this record to client ?",
+                text: "Are you sure you want to move this record to client ?",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonClass: "btn-danger",
@@ -389,12 +441,12 @@
             target_ids.push(this.value);
         });
         if (target_ids.length == 0) {
-            swal("", "Please select one or more target!", "warning");
+            swal("", "Please select at least one target!", "warning");
         } else {
             // $('#target-delete-2').modal('show');
             swal({
                 title: "",
-                text: "are you sure you want to delete this target?",
+                text: "Are you sure you want to delete this target?",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonClass: "btn-danger",

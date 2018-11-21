@@ -21,16 +21,17 @@
             <input type="hidden" name="activity_id" id="activity_id">
             <input type="hidden" name="total_hour" id="total_hour">
             <input type="hidden" name="total_amount" id="total_amount">
+            <input type="hidden" name="status_bud" id="status_bud" value="0">
             <div class="card-box">
                 <h3 class="card-title">Client / Target Information</h3>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row">
-                            <div class="form-inline m-b-15 col-md-6">
+                            <div class="radioError form-inline m-b-15 col-md-6">
                                 <div class="form-group">
                                     <label class="input-group">
                                         <span class="input-group-addon">
-                                            <input type="radio" id="target_type" name="ref_type" value="T" checked />
+                                            <input type="radio" id="target_type" name="ref_type" value="T"  />
                                         </span>
                                         <div class="form-control form-control-static">Target</div>
                                         <span class="glyphicon form-control-feedback"></span>
@@ -50,7 +51,7 @@
                                         <span class="input-group-addon">
                                             <input type="radio" id="referral_type" name="ref_type" value="R" />
                                         </span>
-                                        <div class="form-control form-control-static">Referral</div>
+                                        <div class="form-control form-control-static">Referral Sources</div>
                                         <span class="glyphicon form-control-feedback"></span>
                                     </label>
                                 </div>
@@ -64,7 +65,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-6" id="target_list">
+                            <div class="col-md-6" id="target_list" style="display: none;">
                                 <div class="form-group select-focus">
                                     <select id="target_id" name="target_user[]" class="form-control floating onchangeBudget" multiple="multiple">
                                         {{#each target}}
@@ -130,7 +131,6 @@
                                     <select class="form-control floating" id="activity_type" name="activity_type">
                                         <option value="">Select One</option>
                                         <option value="individual">INDIVIDUAL LEVEL</option>
-                                        <option value="section">SECTION LEVEL</option>
                                         <option value="strategic_group">STRATEGIC GROUP LEVEL</option>
                                         <option value="team">TEAM LEVEL</option>
                                     </select>
@@ -152,7 +152,7 @@
                             </div>
                             <div class="col-md-6 strategyGroup" style="display: none;">
                                 <div class="form-group form-focus select-focus">
-                                    <label class="control-label">Strategy Group <span class="req-lbl">*</span> </label>
+                                    <label class="control-label">Strategy Group  </label>
                                     <select class="form-control floating" id="strategyGroup" name="strategy_group">
                                         <option value="0">Select Strategy Group</option>
                                         <option value="1">NEED TO DISCUSS</option>
@@ -183,11 +183,11 @@
                                     <a href="/activity-goal/add">Tactical Marketing Goals</a>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            {{!-- <div class="col-md-6">
                                 <div class="form-group form-focus select-focus select-attorney">
                                     <label class="control-label">Practice Area Type <span class="req-lbl">*</span> </label>
                                     <select id="practice_area" name="practice_area" class="form-control floating" >
-                                        <option value="">Select Practice Area</option>
+                                        <option value="">Select Practice Area </option>
                                         {{#if_eq user.actual_role_id "2"}}
                                             {{#each practice_area_firm}}
                                                 <option value="{{this.practicearea.id}}">{{this.practicearea.name}}</option>
@@ -198,6 +198,23 @@
                                             {{/each}}
                                         {{/if_eq}}
                                     </select>
+                                </div>
+                            </div> --}}
+                            <div class="col-md-6">
+                                <div class="form-group form-focus select-focus ">
+                                    <div class="">
+                                        <select class="form-control floating" id="practice_area" name="practice_area[]" multiple="multiple">
+                                        {{#if_eq user.actual_role_id "2"}}
+                                            {{#each practice_area_firm}}
+                                                <option value="{{this.practicearea.id}}">{{this.practicearea.name}}</option>
+                                            {{/each}}
+                                        {{else}}
+                                            {{#each practice_area}}
+                                                <option value="{{this.practicearea.id}}">{{this.practicearea.name}}</option>
+                                            {{/each}}
+                                        {{/if_eq}}
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             {{!-- <div class="col-md-6">
@@ -236,7 +253,21 @@
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus"></div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-2" id="oneDay_ActivityEvent">
+                                <button class="btn btn-primary btn-lg" type="button" id="oneDayActivityEvent">One Day Event</button>
+                            </div>
+                            <div class="col-md-2" id="SomeDay_ActivityEvent" style="display:none">
+                                <button class="btn btn-primary btn-lg" type="button" id="SomeDayActivityEvent">Multiple day event</button>
+                            </div>
+                            <div class="col-md-9" id="activity_dateO" style="display:none">
+                                <div class="form-group form-focus">
+                                    <label class="control-label"> Date <span class="req-lbl">*</span> </label>
+                                    <div class="cal-icon">
+                                        <input class="form-control floating datetimepicker" type="text" id="activity_date" name="activity_date" data-date-format="MM-DD-YYYY">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 fromDate">
                                 <div class="form-group form-focus">
                                     <label class="control-label">From Date <span class="req-lbl">*</span> </label>
                                     <div class="cal-icon">
@@ -244,7 +275,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-5 toDate">
                                 <div class="form-group form-focus">
                                     <label class="control-label">To Date <span class="req-lbl">*</span> </label>
                                     <div class="cal-icon">
@@ -295,7 +326,7 @@
             </div>
             
             <div class="text-center m-t-20">
-                <button class="btn btn-primary btn-lg" type="submit" id="btnAdd" disabled>Add Activity</button>
+                <button class="btn btn-primary btn-lg" type="submit" id="btnAdd" >Add Activity</button>
                 <a href="/activitypage" class="btn btn-primary btn-lg m-l-10">Cancel</a>
             </div>
         </form>
@@ -419,7 +450,33 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 
 
+
 <script type="text/javascript">
+    $('#practice_area').multiselect({
+        nonSelectedText: 'Select Practice Area',
+        enableFiltering: true,
+        includeSelectAllOption: true,
+        buttonWidth: '100%',
+        maxHeight: 400,
+        dropDown: true
+    });
+    $(document).on("click","#oneDayActivityEvent", function(){
+        $("#activity_dateO").show();
+        $("#SomeDay_ActivityEvent").show();
+        $("#activity_from_date").val('');
+        $("#activity_to_date").val('');
+        $(".fromDate").hide();
+        $(".toDate").hide();
+        $("#oneDay_ActivityEvent").hide();
+    });
+    $(document).on("click","#SomeDayActivityEvent", function(){
+        $("#activity_dateO").hide();
+        $("#SomeDay_ActivityEvent").hide();
+        $("#activity_date").val('');
+        $(".fromDate").show();
+        $(".toDate").show();
+        $("#oneDay_ActivityEvent").show();
+    });
 
     $(document).on('keyup', '.budget_hour', function () {
         var sumHour = 0;
@@ -540,8 +597,8 @@
             if ($(this).val() !== "") {
                 var budgetId = $(this).data("budget-id");
                 var amount = $(".budget_amount")[index].value;
-                totalAmount += parseInt(amount);
-                totalHour += parseInt($(this).val());
+                totalAmount += parseFloat(amount);
+                totalHour += parseFloat($(this).val());
                 budgetArray.push({
                     budget_id: budgetId,
                     budget_hour: $(this).val(),
@@ -575,6 +632,7 @@
                     }, 2000);
                     $("#btnActivityBudget").html("Budget Added");
                     $("#btnAdd").prop('disabled', false);
+                    $("#status_bud").val("1");
                 }
             }
         });
@@ -583,6 +641,8 @@
     // add designation ajax and form validation starts
     $(document).ready(function (e) {
         $(".number_budget").keydown(function (e) {
+
+            
             // Allow: backspace, delete, tab, escape, enter and .
             if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
                 // Allow: Ctrl+A, Command+A
@@ -592,6 +652,11 @@
                 // let it happen, don't do anything
                 return;
             }
+
+ if(data.indexOf('.') > -1){
+}
+
+
             // Ensure that it is a number and stop the keypress
             if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
                 e.preventDefault();
@@ -601,6 +666,9 @@
         $("#frmAddFirm").validate({
             rules: {
                 activity_type: {
+                    required: true
+                },
+                ref_type: {
                     required: true
                 },
                 activity_goal: {
@@ -618,19 +686,22 @@
                 activity_from_date: {
                     required: true
                 },
+                activity_date: {
+                    required: true
+                },
                 activity_to_date: {
                     required: true
                 },
                 activity_name: {
-                    required: true
-                },
-                category: {
                     required: true
                 }
             },
             messages: {
                 activity_type: {
                     required: "Activity type can't be blank"
+                },
+                ref_type: {
+                    required: "Please select one"
                 },
                 activity_goal: {
                     required: "Tactical Marketing Goals can't be blank"
@@ -647,14 +718,14 @@
                 activity_from_date: {
                     required: "From date can't be blank"
                 },
+                activity_date: {
+                    required: "Date can't be blank"
+                },
                 activity_to_date: {
                     required: "To date can't be blank"
                 },
                 activity_name: {
                     required: "Activity name can't be blank"
-                },
-                category: {
-                    required: "Activity reason can't be blank"
                 }
             }
         });

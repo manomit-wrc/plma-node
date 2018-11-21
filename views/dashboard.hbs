@@ -230,7 +230,7 @@
           <div class="dash-widget-info">
             <h3>{{referral_count}}</h3>
             <span>
-              <a href="/referral" style="color:#333;">Referrals</a>
+              <a href="/referral" style="color:#333;">Referral Sources</a>
             </span>
           </div>
         </div>
@@ -241,18 +241,21 @@
         <div class="row">
           <div class="col-sm-6 text-center" id="monthlyChartDiv">
             <div class="card-box">
+              <h4>Activities &amp; Budgets</h4>
               <div id='myChart'></div>
-              <button type="button" class="btn btn-primary btn-sm chartYearActivityBtn">Year</button>
+              {{!-- <button type="button" class="btn btn-primary btn-sm chartYearActivityBtn">Year</button> --}}
             </div>
           </div>
           <div class="col-sm-6 text-center" style="display:none;" id="yearlyChartDiv">
             <div class="card-box">
+              <h4>Revenue Estimations</h4>
               <div id='myChart1'></div>
               <button type="button" class="btn btn-primary btn-sm chartMonthActivityBtn">Month</button>
             </div>
           </div>
           <div class="col-sm-6 text-center">
             <div class="card-box">
+              <h4>Revenue Estimations</h4>
               <div id='myChart2'></div>
             </div>
           </div>
@@ -347,7 +350,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-12">
         <div class="panel panel-table">
           <div class="panel-heading">
             <h3 class="panel-title">Clients</h3>
@@ -359,13 +362,16 @@
                   <tr>
                     <th style="min-width:200px;">Name</th>
                     <th>Email</th>
+                    <th>Mobile Number</th>
+                    <th>Current Revenue Planning Period</th>
+                    <th>Estimated Revenue</th>
                     <th>Client Type</th>
                   </tr>
                 </thead>
                 <tbody>
                   {{#if_eq client_count "0"}}
                   <tr>
-                    <td colspan="4" class="text-center gap-col">No data available in table</td>
+                    <td colspan="6" class="text-center gap-col">No data available in table</td>
                   </tr>
                   {{else}} {{#each client}}
                   <tr class="activity_custom_del">
@@ -383,6 +389,12 @@
                       {{/if_eq}}
                     </td>
                     <td>{{this.email}}</td>
+                    <td {{#if this.mobile_no}} class="number_validator" {{/if}}>{{#if this.mobile_no}} {{this.phone_no}} {{else}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; — {{/if}}</td>
+                    <td>{{#if this.revenues.0.end_date}} {{dateFormat this.revenues.0.start_date "MM-DD-YYYY"}} - {{dateFormat this.revenues.0.end_date
+                      "MM-DD-YYYY"}} {{else}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; — {{/if}}
+                    </td>
+                    <td>{{#if this.revenues.0.estimated_revenue}} $ {{this.revenues.0.estimated_revenue}} {{else}} $ 0 {{/if}}
+                    </td>
                     <td>{{#if_eq client_type "I"}}
                       <span class="label label-success-border">Individual</span>
                       {{else}}
@@ -400,7 +412,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-12">
         <div class="panel panel-table">
           <div class="panel-heading">
             <h3 class="panel-title">Targets</h3>
@@ -412,13 +424,16 @@
                   <tr>
                     <th style="min-width:200px;">Name</th>
                     <th>Email</th>
+                    <th>Mobile No</th>
+                    <th>Current Revenue Planning Period</th>
+                    <th>Estimated Revenue</th>
                     <th>Target Type</th>
                   </tr>
                 </thead>
                 <tbody>
                   {{#if_eq target_count "0"}}
                   <tr>
-                    <td colspan="4" class="text-center gap-col">No data available in table</td>
+                    <td colspan="6" class="text-center gap-col">No data available in table</td>
                   </tr>
                   {{else}} {{#each target}}
                   <tr class="activity_custom_del">
@@ -435,7 +450,18 @@
                       </h2>
                       {{/if_eq}}
                     </td>
+
+
                     <td>{{this.email}}</td>
+                    <td {{#if this.mobile_no}} class="number_validator" {{/if}}>{{#if this.mobile_no}} {{this.mobile_no}} {{else}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; — {{/if}}</td>
+                    <td>
+                      {{#if this.revenues.0.start_date}} {{dateFormat this.revenues.0.start_date "MM-DD-YYYY"}} - {{dateFormat this.revenues.0.end_date
+                      "MM-DD-YYYY"}} {{else}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; — {{/if}}
+                    </td>
+                    <td>
+                      {{#if this.revenues.0.estimated_revenue}} $ {{this.revenues.0.estimated_revenue}} {{else}} $ 0 {{/if}}
+                    </td>
+
                     <td>{{#if_eq target_type "I"}}
                       <span class="label label-success-border">Individual</span>
                       {{else}}
@@ -456,7 +482,7 @@
     </div>
 
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-12">
         <div class="panel panel-table">
           <div class="panel-heading">
             <h3 class="panel-title">Referral Sources</h3>
@@ -468,17 +494,20 @@
                   <tr>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>Mobile No</th>
+                    <th>Gender</th>
+                    <th>Referred clients &amp; targets</th>
                     <th>Referral Sources Type</th>
                   </tr>
                 </thead>
                 <tbody>
                   {{#if_eq referral_count "0"}}
                   <tr>
-                    <td colspan="3" class="text-center gap-col">No data available in table</td>
+                    <td colspan="6" class="text-center gap-col">No data available in table</td>
                   </tr>
                   {{else}} {{#each referral}}
                   <tr class="activity_custom_del">
-                    <td style="min-width:200px;">
+                    <td>
                       {{#if_eq referral_type "I"}}
                       <a href="/referral/view/{{this.id}}" class="avatar">{{first_letter this.first_name}}</a>
                       <h2>
@@ -492,6 +521,15 @@
                       {{/if_eq}}
                     </td>
                     <td>{{this.email}}</td>
+                    <td {{#if this.mobile}} class="number_validator" {{/if}}>{{#if this.mobile}} {{this.mobile}} {{else}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; —  {{/if}}</td>
+                    <td>
+                      {{#if_eq this.gender "M"}} Male {{/if_eq}}
+                      {{#if_eq this.gender "F"}} Female {{/if_eq}}
+                      {{#if_eq this.gender "O"}} Others {{/if_eq}}
+                      {{#if_eq this.gender ""}} &nbsp; — {{/if_eq}}
+                    </td>
+                    <td>{{get_referred_TC_info this.referred_client_targets}}</td>
+                    
                     <td>{{#if_eq referral_type "I"}}
                       <span class="label label-success-border">Individual</span>
                       {{else}}
@@ -505,12 +543,12 @@
             </div>
           </div>
           <div class="panel-footer">
-            <a href="/referral" class="text-primary">View all referrals</a>
+            <a href="/referral" class="text-primary">View all Referral Sources</a>
           </div>
         </div>
       </div>
       
-      <div class="col-md-6">
+      {{!-- <div class="col-md-6">
         <div class="panel panel-table">
           <div class="panel-heading">
             <h3 class="panel-title">Notifications</h3>
@@ -559,7 +597,7 @@
             <a href="/activity-approvals" class="text-primary">View all Approval</a>
           </div>
         </div>
-      </div>
+      </div> --}}
       
     </div>
 
@@ -607,6 +645,9 @@
                     "thousands-separator": ",",
                     label: {
                       text: "Total No. of activities and budgets"
+                    },
+                    item: {
+                      visible: false
                     }
                   },
                   guide: {
@@ -722,6 +763,9 @@
                     "thousands-separator": ",",
                     label: {
                       text: "Total No. of activities and budgets"
+                    },
+                    item: {
+                      visible: false
                     }
                   },
                   guide: {
@@ -831,6 +875,9 @@
                     "thousands-separator": ",",
                     label: {
                       text: "Total Estimated revenue"
+                    },
+                    item: {
+                      visible: false
                     }
                   },
                   guide: {

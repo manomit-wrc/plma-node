@@ -33,6 +33,7 @@ const Sequelize = require('sequelize');
 const requestApproval = require('../models').request_approval;
 const activityAttorney = require('../models').activity_attorney;
 const Revenue = require('../models').revenue;
+const Referred_Client_Targets = require('../models').referred_client_target;
 const Op = Sequelize.Op;
 
 var csrfProtection = csrf({ cookie: true });
@@ -74,8 +75,34 @@ router.get('/dashboard', auth,  async(req, res) => {
     var activityCondition = {};
     if(req.user.role_id != "1"){
         activityCondition.firm_id = req.user.firm_id;
-        if(req.user.role_id != "2"){
-            activityCondition.user_id = req.user.id;
+        if (req.user.role_id == 2) {
+            activityCondition.firm_id = req.user.firm_id;
+        } else {
+            activityCondition.firm_id = req.user.firm_id;
+            const accepted_activity = await activityAttorney.findAll({
+                where: {
+                    'attorney_id': req.user.id,
+                    'status': '1'
+                }
+            });
+            var accptActArr = [];
+            if (accepted_activity.length > 0) {
+                for (var j = 0; j < accepted_activity.length; j++) {
+                    accptActArr.push(accepted_activity[j].activity_id);
+                }
+                //activityCondition.user_id = '';
+                var origin_activity = await Activity.findAll({
+                    where: {
+                        user_id: req.user.id
+                    }
+                });
+                for (var a = 0; a < origin_activity.length; a++) {
+                    accptActArr.push(origin_activity[a].id);
+                }
+                activityCondition.id = accptActArr;
+            } else {
+                activityCondition.user_id = req.user.id;
+            }
         }
     }
 
@@ -93,13 +120,13 @@ router.get('/dashboard', auth,  async(req, res) => {
     catch(error) {
         console.log(error);
     }
-
-
-
     var activity_count = activity.length;
+    
 /* =================== Activity Count Ends ================================*/
 /* =================== Target Count Ends ================================*/
-
+    Target.hasMany(Revenue, {
+        foreignKey: 'target_id'
+    });
     var targetCondition = {};
     targetCondition.target_status = 1;
     if (req.user.role_id != "1") {
@@ -110,6 +137,9 @@ router.get('/dashboard', auth,  async(req, res) => {
     }
     var target = await Target.findAll({
         where: targetCondition,
+        include: [{
+            model: Revenue
+        }],
         order: [
             ['createdAt', 'DESC']
         ]
@@ -118,6 +148,9 @@ router.get('/dashboard', auth,  async(req, res) => {
 /* =================== Target Count Ends ================================*/
 
 /* =================== Client Count Ends ================================*/
+    Client.hasMany(Revenue, {
+        foreignKey: 'client_id'
+    });
     var clientCondition = {};
     if (req.user.role_id != "1") {
         clientCondition.firm_id = req.user.firm_id;
@@ -127,6 +160,9 @@ router.get('/dashboard', auth,  async(req, res) => {
     }
     var client = await Client.findAll({
         where: clientCondition,
+        include: [{
+            model: Revenue
+        }],
         order: [
             ['createdAt', 'DESC']
         ]
@@ -135,12 +171,10 @@ router.get('/dashboard', auth,  async(req, res) => {
 /* =================== Client Count Ends ================================*/
 
 /* =================== Referral Count Ends ================================*/
-    Referral.belongsTo(Target, {
-        foreignKey: 'target_id'
+    Referral.hasMany(Referred_Client_Targets, {
+        foreignKey: 'referral_id'
     });
-    Referral.belongsTo(Client, {
-        foreignKey: 'client_id'
-    });
+    
     var referralCondition = {};
     if (req.user.role_id != "1") {
         referralCondition.firm_id = req.user.firm_id;
@@ -151,14 +185,14 @@ router.get('/dashboard', auth,  async(req, res) => {
     var referral = await Referral.findAll({
         where: referralCondition,
         include: [{
-            model: Target
-        }, {
-            model: Client
+            model: Referred_Client_Targets
         }],
         order: [
             ['createdAt', 'DESC']
-        ]
+        ],
+      
     });
+    
     var referral_count = referral.length;
 
 /* =================== Referral Count Ends ================================*/
@@ -308,47 +342,47 @@ router.get('/dashboard', auth,  async(req, res) => {
 
 
 
-    if (teamActivityAttorney.length>0) {
-        for (let i=0; i< teamActivityAttorney.length; i++) {
-            const userDetails = await User.findOne({
-                where:{
-                    'id':teamActivityAttorney[i].activity.user_id
-                }
-            })
+    // if (teamActivityAttorney.length>0) {
+    //     for (let i=0; i< teamActivityAttorney.length; i++) {
+    //         const userDetails = await User.findOne({
+    //             where:{
+    //                 'id':teamActivityAttorney[i].activity.user_id
+    //             }
+    //         })
 
-            notiFicationDetails.push({
-                'name': teamActivityAttorney[i].activity.activity_name,
-                'createDate':teamActivityAttorney[i].activity.activity_creation_date,
-                'updateDate': teamActivityAttorney[i].activity.updatedAt,
-                'updatedAt':teamActivityAttorney[i].updatedAt,
-                'activity_id':teamActivityAttorney[i].activity.id,
-                'userFirstName':userDetails.first_name,
-                'userLastName':userDetails.last_name,
-                'type': '1'
-            })
-        }
-    }
+    //         notiFicationDetails.push({
+    //             'name': teamActivityAttorney[i].activity.activity_name,
+    //             'createDate':teamActivityAttorney[i].activity.activity_creation_date,
+    //             'updateDate': teamActivityAttorney[i].activity.updatedAt,
+    //             'updatedAt':teamActivityAttorney[i].updatedAt,
+    //             'activity_id':teamActivityAttorney[i].activity.id,
+    //             'userFirstName':userDetails.first_name,
+    //             'userLastName':userDetails.last_name,
+    //             'type': '1'
+    //         })
+    //     }
+    // }
 
-    if (noti.length>0) {
-        for (let i=0; i< noti.length; i++) {
-            const userDetails = await User.findOne({
-                where:{
-                    'id':noti[i].activity.user_id
-                }
-            })
+    // if (noti.length>0) {
+    //     for (let i=0; i< noti.length; i++) {
+    //         const userDetails = await User.findOne({
+    //             where:{
+    //                 'id':noti[i].activity.user_id
+    //             }
+    //         })
 
-            notiFicationDetails.push({
-                'name':noti[i].activity.activity_name,
-                'createDate':noti[i].activity.activity_creation_date,
-                'updateDate': noti[i].activity.updatedAt,
-                'updatedAt':noti[i].updatedAt,
-                'activity_id':noti[i].activity.id,
-                'userFirstName':userDetails.first_name,
-                'userLastName':userDetails.last_name,
-                'type':'2'
-            })
-        }
-    }
+    //         notiFicationDetails.push({
+    //             'name':noti[i].activity.activity_name,
+    //             'createDate':noti[i].activity.activity_creation_date,
+    //             'updateDate': noti[i].activity.updatedAt,
+    //             'updatedAt':noti[i].updatedAt,
+    //             'activity_id':noti[i].activity.id,
+    //             'userFirstName':userDetails.first_name,
+    //             'userLastName':userDetails.last_name,
+    //             'type':'2'
+    //         })
+    //     }
+    // }
     // console.log('notiFicationDetails',notiFicationDetails.length);
 
     //notifications end 09-19-2018
@@ -452,6 +486,9 @@ router.get('/edit-profile', csrfProtection, auth, async (req, res) => {
     var zipcode = [];
     if(req.user.state != null) {
         city = await City.findAll({
+            order: [
+                ['name', 'ASC'],
+            ],
             where: {
                 state_id: req.user.state.toString()
             }
@@ -538,11 +575,13 @@ router.post('/change-password', auth, csrfProtection, (req, res) => {
 
 router.post('/firm-profiles/get-city', auth, (req, res) =>{
     City.findAll({
+   
         where: { state_id : req.body.state_id}
     }).then(result => {
         res.send({get_city:result});
     });
 });
+
 router.post('/firm-profiles/get-zipcode', auth, (req, res) =>{
     Zipcode.findAll({
         where: { city_name : req.body.city_name}
@@ -713,6 +752,9 @@ router.get("/edit-attorney-profile", auth, csrfProtection, attrAuth, async (req,
     var zipcode = [];
     if (state_id != null) {
         city = await City.findAll({
+            order: [
+                ['name', 'ASC'],
+            ],
             where: {
                 state_id: state_id.toString()
             }
@@ -820,7 +862,7 @@ router.post("/edit-attorney-profile", auth, profile.single('avatar'), csrfProtec
         address3: req.body.address3,
         e_mail: req.body.e_mail,
         phone_no: removePhoneMask(req.body.phone_no),
-        fax: removePhoneMask(req.body.fax),
+        //fax: removePhoneMask(req.body.fax),
         website_url: req.body.website_url,
         social_url: req.body.social_url,
         remarks: req.body.remarks,
@@ -872,8 +914,34 @@ router.get("/get-chart-activity-count-value", auth, async(req, res)=> {
     var activityCondition = {};
     if (req.user.role_id != "1") {
         activityCondition.firm_id = req.user.firm_id;
-        if (req.user.role_id != "2") {
-            activityCondition.user_id = req.user.id;
+        if (req.user.role_id == 2) {
+            activityCondition.firm_id = req.user.firm_id;
+        } else {
+            activityCondition.firm_id = req.user.firm_id;
+            const accepted_activity = await activityAttorney.findAll({
+                where: {
+                    'attorney_id': req.user.id,
+                    'status': '1'
+                }
+            });
+            var accptActArr = [];
+            if (accepted_activity.length > 0) {
+                for (var j = 0; j < accepted_activity.length; j++) {
+                    accptActArr.push(accepted_activity[j].activity_id);
+                }
+                //activityCondition.user_id = '';
+                var origin_activity = await Activity.findAll({
+                    where: {
+                        user_id: req.user.id
+                    }
+                });
+                for (var a = 0; a < origin_activity.length; a++) {
+                    accptActArr.push(origin_activity[a].id);
+                }
+                activityCondition.id = accptActArr;
+            } else {
+                activityCondition.user_id = req.user.id;
+            }
         }
     }
     const monthNames = ["January", "February", "March", "April", "May", "June",
@@ -985,8 +1053,34 @@ router.get("/get-chart-two-activity-count-value", auth, async(req, res)=> {
     var activityCondition = {};
     if (req.user.role_id != "1") {
         activityCondition.firm_id = req.user.firm_id;
-        if (req.user.role_id != "2") {
-            activityCondition.user_id = req.user.id;
+        if (req.user.role_id == 2) {
+            activityCondition.firm_id = req.user.firm_id;
+        } else {
+            activityCondition.firm_id = req.user.firm_id;
+            const accepted_activity = await activityAttorney.findAll({
+                where: {
+                    'attorney_id': req.user.id,
+                    'status': '1'
+                }
+            });
+            var accptActArr = [];
+            if (accepted_activity.length > 0) {
+                for (var j = 0; j < accepted_activity.length; j++) {
+                    accptActArr.push(accepted_activity[j].activity_id);
+                }
+                //activityCondition.user_id = '';
+                var origin_activity = await Activity.findAll({
+                    where: {
+                        user_id: req.user.id
+                    }
+                });
+                for (var a = 0; a < origin_activity.length; a++) {
+                    accptActArr.push(origin_activity[a].id);
+                }
+                activityCondition.id = accptActArr;
+            } else {
+                activityCondition.user_id = req.user.id;
+            }
         }
     }
     var year1 = [];

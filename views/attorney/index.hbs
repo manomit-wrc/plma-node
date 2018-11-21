@@ -34,7 +34,8 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Mobile</th>
-                <th>Attorney Type</th>
+                <th>Designation</th>
+                <th>Approver</th>
                 {{!--
                 <th>Industry Type</th> --}}
                 <th class="text-right">Action</th>
@@ -46,19 +47,20 @@
                 <td>{{math @index "+" 1}}</td>
                 <td>
                   <a href="/attorneys/viewdata/{{this.id}}">
-                    {{this.name}}
+                    {{this.first_name}} {{this.last_name}}
                   </a>
                 </td>
                 <td>{{this.email}}</td>
-                <td class="number_validator">{{this.mobile_no}}</td>
-                <td>{{ this.attr_type}}</td>
+                <td {{#if this.mobile_no}} class="number_validator" {{/if}}>{{#if this.mobile_no}} {{this.mobile_no}} {{else}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; — {{/if}}</td>
+                <td><span class="label label-info-border">{{this.designation.title}}</span></td>
+                <td>{{#if_eq this.approver "1"}}<span class="label label-success-border"> Yes </span>{{else}}<span class="label label-danger-border"> No </span>{{/if_eq}}</td>
                 {{!--
                 <td>{{this.industry_name}}</td> --}}
                 <td class="text-right">
-                  <a href="/attorneys/viewdata/{{this.id}}" class="btn btn-success btn-sm">
+                  <a href="/attorneys/viewdata/{{this.id}}" data-toggle="tooltip" data-placement="bottom" title="View" class="btn btn-success btn-sm">
                     <i class="fa fa-eye m-r-5"></i>
                   </a>
-                  <a href="/attorneys/edit/{{this.id}}" class="btn btn-success btn-sm">
+                  <a href="/attorneys/edit/{{this.id}}" data-toggle="tooltip" data-placement="bottom" title="Edit" class="btn btn-success btn-sm">
                     <i class="fa fa-pencil m-r-5"></i>
                   </a>
                 </td>

@@ -26,96 +26,124 @@
       <input type="hidden" name="activity_id" id="activity_id" value="{{editdata.id}}">
       <input type="hidden" name="total_hour" id="total_hour">
       <input type="hidden" name="total_amount" id="total_amount">
+      <input type="hidden" id="acvtFrmDate" value="{{dateFormat editdata.activity_from_date " MM-DD-YYYY "}}">
+      <input type="hidden" id="acvtToDate" value="{{dateFormat editdata.activity_to_date " MM-DD-YYYY "}}">
       <input type="hidden" id="activityTypeDetails" value={{editdata.target}}>
-      <div class="card-box">
-        <h3 class="card-title">Client / Target Information</h3>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="row">
-              <div class="form-inline m-b-15 col-md-6">
-                <div class="form-group">
-                  <label class="input-group">
-                    <span class="input-group-addon">
-                      <input type="radio" id="target_type" name="ref_type" value="T" {{#if_eq editdata.target "T"}} checked {{/if_eq}} disabled
-                      />
-                    </span>
-                    <div class="form-control form-control-static">Target</div>
-                    <span class="glyphicon form-control-feedback"></span>
-                  </label>
+       {{#if_eq user.id editdata.user_id}}
+        <div class="card-box">
+          <h3 class="card-title">Client / Target Information</h3>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="form-inline m-b-15 col-md-6">
+                  <div class="form-group">
+                    <label class="input-group">
+                      <span class="input-group-addon">
+                        <input type="radio" id="target_type" name="ref_type" value="T" {{#if_eq editdata.target "T"}} checked {{/if_eq}} disabled
+                        />
+                      </span>
+                      <div class="form-control form-control-static">Target</div>
+                      <span class="glyphicon form-control-feedback"></span>
+                    </label>
+                  </div>
+                  <div class="form-group">
+                    <label class="input-group">
+                      <span class="input-group-addon">
+                        <input type="radio" id="organization_type" name="ref_type" value="C" {{#if_eq editdata.target "C"}} checked {{/if_eq}} disabled
+                        />
+                      </span>
+                      <div class="form-control form-control-static">Client</div>
+                      <span class="glyphicon form-control-feedback"></span>
+                    </label>
+                  </div>
+                  <div class="form-group">
+                    <label class="input-group">
+                      <span class="input-group-addon">
+                        <input type="radio" id="referral_type" name="ref_type" value="R" {{#if_eq editdata.target "R"}} checked {{/if_eq}} disabled
+                        />
+                      </span>
+                      <div class="form-control form-control-static">Referral Sources</div>
+                      <span class="glyphicon form-control-feedback"></span>
+                    </label>
+                  </div>
+                  <div class="form-group">
+                    <label class="input-group">
+                      <span class="input-group-addon">
+                        <input type="radio" id="general_type" name="ref_type" value="G" {{#if_eq editdata.target "G"}} checked {{/if_eq}} disabled
+                        />
+                      </span>
+                      <div class="form-control form-control-static">General</div>
+                      <span class="glyphicon form-control-feedback"></span>
+                    </label>
+                  </div>
                 </div>
-                <div class="form-group">
-                  <label class="input-group">
-                    <span class="input-group-addon">
-                      <input type="radio" id="organization_type" name="ref_type" value="C" {{#if_eq editdata.target "C"}} checked {{/if_eq}} disabled
-                      />
-                    </span>
-                    <div class="form-control form-control-static">Client</div>
-                    <span class="glyphicon form-control-feedback"></span>
-                  </label>
+                <div class="col-md-6">
+                  <div class="form-group form-focus select-focus" id="target_list" {{#if_eq editdata.target "T"}} style="display: block;" {{else}}
+                    style="display: none;" {{/if_eq}}>
+                    <select id="target_id" name="target_user[]" class="form-control floating" multiple="multiple" disabled>
+                      {{#each target}}
+                      <option value="{{this.id}}" {{#inArrayCustom ../arr this.id "T"}} selected="selected" {{/inArrayCustom}}>{{this.first_name}}
+                        {{this.last_name}}
+                      </option>
+                      {{/each}}
+                    </select>
+                  </div>
                 </div>
-                <div class="form-group">
-                  <label class="input-group">
-                    <span class="input-group-addon">
-                      <input type="radio" id="referral_type" name="ref_type" value="R" {{#if_eq editdata.target "R"}} checked {{/if_eq}} disabled
-                      />
-                    </span>
-                    <div class="form-control form-control-static">Referral</div>
-                    <span class="glyphicon form-control-feedback"></span>
-                  </label>
+                <div class="col-md-6" id="client_list" {{#if_eq editdata.target "C"}} style="display: block;" {{else}} style="display: none;"
+                  {{/if_eq}}>
+                  <div class="form-group form-focus select-focus">
+                    <select id="client_id" name="client_user[]" class="form-control floating" multiple="multiple" disabled>
+                      {{#each client}}
+                      <option value="{{this.id}}" {{#inArrayCustom ../arr this.id "C"}} selected="selected" {{/inArrayCustom}}>{{this.first_name}}
+                        {{this.last_name}}
+                      </option>
+                      {{/each}}
+                    </select>
+                  </div>
                 </div>
-                <div class="form-group">
-                  <label class="input-group">
-                    <span class="input-group-addon">
-                      <input type="radio" id="general_type" name="ref_type" value="G" {{#if_eq editdata.target "G"}} checked {{/if_eq}} disabled
-                      />
-                    </span>
-                    <div class="form-control form-control-static">General</div>
-                    <span class="glyphicon form-control-feedback"></span>
-                  </label>
+                <div class="col-md-6" id="referral_list" {{#if_eq editdata.target "R"}} style="display: block;" {{else}} style="display: none;"
+                  {{/if_eq}}>
+                  <div class="form-group form-focus select-focus">
+                    <select id="referral_id" name="referral_user[]" class="form-control floating" multiple="multiple" disabled>
+                      {{#each referral}}
+                      <option value="{{this.id}}" {{#inArrayCustom ../arr this.id "R"}} selected="selected" {{/inArrayCustom}}>{{this.first_name}}
+                        {{this.last_name}}
+                      </option>
+                      {{/each}}
+                    </select>
+                  </div>
                 </div>
+                <div class="col-md-6" id="general_list" {{#if_eq editdata.target "G"}} style="display: block;" {{else}} style="display: none;"
+                  {{/if_eq}}></div>
               </div>
-              <div class="col-md-6">
-                <div class="form-group form-focus select-focus" id="target_list" {{#if_eq editdata.target "T"}} style="display: block;" {{else}}
-                  style="display: none;" {{/if_eq}}>
-                  <select id="target_id" name="target_user[]" class="form-control floating" multiple="multiple" disabled>
-                    {{#each target}}
-                    <option value="{{this.id}}" {{#inArrayCustom ../arr this.id "T"}} selected="selected" {{/inArrayCustom}}>{{this.first_name}}
-                      {{this.last_name}}
-                    </option>
-                    {{/each}}
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-6" id="client_list" {{#if_eq editdata.target "C"}} style="display: block;" {{else}} style="display: none;"
-                {{/if_eq}}>
-                <div class="form-group form-focus select-focus">
-                  <select id="client_id" name="client_user[]" class="form-control floating" multiple="multiple" disabled>
-                    {{#each client}}
-                    <option value="{{this.id}}" {{#inArrayCustom ../arr this.id "C"}} selected="selected" {{/inArrayCustom}}>{{this.first_name}}
-                      {{this.last_name}}
-                    </option>
-                    {{/each}}
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-6" id="referral_list" {{#if_eq editdata.target "R"}} style="display: block;" {{else}} style="display: none;"
-                {{/if_eq}}>
-                <div class="form-group form-focus select-focus">
-                  <select id="referral_id" name="referral_user[]" class="form-control floating" multiple="multiple" disabled>
-                    {{#each referral}}
-                    <option value="{{this.id}}" {{#inArrayCustom ../arr this.id "R"}} selected="selected" {{/inArrayCustom}}>{{this.first_name}}
-                      {{this.last_name}}
-                    </option>
-                    {{/each}}
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-6" id="general_list" {{#if_eq editdata.target "G"}} style="display: block;" {{else}} style="display: none;"
-                {{/if_eq}}></div>
             </div>
           </div>
         </div>
+      {{/if_eq}}
+       {{#if_eq editdata.activity_type "team"}}
+      <div class="card-box">
+          <h3 class="card-title">All Involved Attorneys</h3>
+          <div class="row">
+            <div class="col-md-12">
+                <ul>
+                  <li class="col-md-4">
+                    <span class="text" style="font-size: 15px; text-transform: capitalize;">{{orgnattr.first_name}} {{orgnattr.last_name}}</span>
+                    <span class="label label-info-border">Origin Attorney</span>
+                  </li>
+                 {{#each invluser}}
+                  <li class="col-md-4">
+                    <span class="text" style="font-size: 15px; text-transform: capitalize;">{{this.first_name}} {{this.last_name}}</span>
+                     {{#if '0'}} {{#inArrayCustom1 ../attr_arr this.id '0'}} <span class="label label-warning-border">Pending</span> {{/inArrayCustom1}} {{/if}}{{#if '1'}} {{#inArrayCustom1
+                    ../attr_arr this.id '1'}} <span class="label label-success-border">Accepted</span> {{/inArrayCustom1}} {{/if}} {{#if '2'}} {{#inArrayCustom1 ../attr_arr this.id
+                    '2'}} <span class="label label-danger-border">Rejected</span> {{/inArrayCustom1}} {{/if}}
+                    <button id="showInviRemark" type="button" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" data-attr-id="{{this.id}}" data-activity-id="{{../editdata.id}}" title="Show Remarks"><i class="fa fa-comment"></i></button>
+                  </li>
+                {{/each}}
+                </ul>
+            </div>
+          </div>
       </div>
+      {{/if_eq}}
       <div class="card-box">
         <h3 class="card-title">Basic Information</h3>
         <div class="row">
@@ -186,10 +214,11 @@
                 {{else}} style="display: none; margin-bottom: 23px; margin-top: 8px;" {{/if_eq}}>
                 <div class="form-group select-focus">
                   {{!-- <label class="control-label">Attorney <span class="req-lbl">*</span> </label> --}}
-                  <select class="form-control floating" id="attorney_user" name="attorney_user[]" multiple="multiple" disabled>
+                  <select class="form-control floating" id="attorney_user" name="attorney_user[]" multiple="multiple">
                     {{!-- <option value="0">Select Attorney</option> --}} {{#each attorney}}
-                    <option value="{{this.id}}" {{#inArray ../attr_arr this.id}} selected="selected" {{/inArray}}>{{this.first_name}}
-                      {{this.last_name}}
+                    <option value="{{this.id}}" disabled {{#if '0'}} {{#inArrayCustom1 ../attr_arr this.id '0'}} selected="selected" {{/inArrayCustom1}}
+                      {{/if}} {{#if '1'}} {{#inArrayCustom1 ../attr_arr this.id '1'}} selected="selected" {{/inArrayCustom1}} {{/if}}
+                      {{#if '2'}} {{#inArrayCustom1 ../attr_arr this.id '2'}} selected="selected" {{/inArrayCustom1}} {{/if}}>{{this.first_name}} {{this.last_name}}
                     </option>
                     {{/each}}
                   </select>
@@ -206,16 +235,46 @@
                   </select>
                 </div>
               </div>
-              <div class="col-md-6">
+              {{!-- <div class="col-md-6">
                 <div class="form-group form-focus select-focus">
                   <label class="control-label">Practice Area Type</label>
                   <select id="practice_area" name="practice_area" class="form-control floating" disabled>
                     <option value="">Select Practice Area</option>
-                    {{#each practice_area}}
-                    <option value="{{this.practicearea.id}}" {{#if_eq this.practicearea.id ../editdata.practice_area}} selected="selected" {{/if_eq}}>{{this.practicearea.name}}</option>
-                    {{/each}}
-                    <option value="{{practicearea.id}}" {{#if_eq practicearea.id editdata.practice_area}} selected {{/if_eq}}>{{practicearea.name}}</option>
-                  </select>
+                    {{#if_eq user.actual_role_id "2"}} 
+                      {{#each practice_area_firm}}
+                        <option value="{{this.practicearea.id}}" {{#if_eq this.practicearea.id ../editdata.practice_area}} selected="selected" {{/if_eq}}>{{this.practicearea.name}}</option>
+                      {{/each}} 
+                    {{else}}
+                      {{#each practice_area}}
+                      <option value="{{this.practicearea.id}}" {{#if_eq this.practicearea.id ../editdata.practice_area}} selected="selected" {{/if_eq}}>{{this.practicearea.name}}</option>
+                      {{/each}}
+                      {{#if_eq user.id editdata.user_id}}
+                      {{else}}
+                      <option value="{{practicearea.id}}" {{#if_eq practicearea.id editdata.practice_area}} selected {{/if_eq}}>{{practicearea.name}}</option>
+                      {{/if_eq}}
+                    {{/if_eq}}
+                    </select>
+                </div>
+              </div> --}}
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="">
+                    <select class="form-control floating " id="practice_area" name="practice_area[]" multiple="multiple">
+                      {{!-- {{#if_eq user.actual_role_id "2"}}  --}}
+                      {{#each practice_area}}
+                        <option value="{{this.practicearea.id}}" disabled {{#inArray ../p_type_arr this.practicearea.id}} selected="selected" {{/inArray}}>{{this.practicearea.name}}</option>
+                      {{/each}} 
+                    {{!-- {{else}}
+                      {{#each practice_area}}
+                      <option value="{{this.practicearea.id}}" disabled {{#inArray ../p_type_arr this.practicearea.id}} selected="selected" {{/inArray}}>{{this.practicearea.name}}</option>
+                      {{/each}}
+                      {{#if_eq user.id editdata.user_id}}
+                      {{else}}
+                      <option value="{{practicearea.id}}" disabled {{#inArray ../p_type_arr this.practicearea.id}} selected="selected" {{/inArray}}>{{practicearea.name}}</option>
+                      {{/if_eq}} --}}
+                    {{!-- {{/if_eq}} --}}
+                    </select>
+                  </div>
                 </div>
               </div>
               <div class="col-md-6">
@@ -227,24 +286,45 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-6">
+              {{!-- <div class="col-md-6">
                 <div class="form-group form-focus select-focus"></div>
+              </div> --}}
+              <div class="col-md-2" id="oneDay_ActivityEvent">
+                <button class="btn btn-primary btn-lg" type="button" id="oneDayActivityEvent" style="display:none;" disabled>One Day Event</button>
               </div>
-              <div class="col-md-6">
-                <div class="form-group form-focus select-focus">
-                  <label class="control-label">From Date</label>
+              <div class="col-md-2" id="SomeDay_ActivityEvent">
+                <button class="btn btn-primary btn-lg" type="button" id="SomeDayActivityEvent" style="display:none;" disabled>Multiple day event</button>
+              </div>
+              <div class="col-md-9" id="activity_dateO" style="display:none;">
+                <div class="form-group form-focus">
+                  <label class="control-label"> Date
+                    <span class="req-lbl">*</span>
+                  </label>
                   <div class="cal-icon">
-                    <input class="form-control floating datetimepicker" type="text" id="activity_from_date" name="activity_from_date" value="{{dateFormat editdata.activity_from_date "
-                      MM-DD-YYYY "}}" data-date-format="MM-DD-YYYY" disabled>
+                    <input class="form-control floating datetimepicker" disabled type="text" id="activity_date" name="activity_date" value="{{dateFormat editdata.activity_date "
+                      MM-DD-YYYY "}}" data-date-format="MM-DD-YYYY">
                   </div>
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="form-group form-focus select-focus">
-                  <label class="control-label">To Date</label>
+              <div class="col-md-5 fromDate" style="display:none;">
+                <div class="form-group form-focus">
+                  <label class="control-label">From Date
+                    <span class="req-lbl">*</span>
+                  </label>
                   <div class="cal-icon">
-                    <input class="form-control floating datetimepicker" type="text" id="activity_to_date" name="activity_to_date" value="{{dateFormat editdata.activity_to_date "
-                      MM-DD-YYYY "}}" data-date-format="MM-DD-YYYY" disabled>
+                    <input class="form-control floating datetimepicker" disabled type="text" id="activity_from_date" name="activity_from_date" value="{{dateFormat editdata.activity_from_date "
+                      MM-DD-YYYY "}}" data-date-format="MM-DD-YYYY">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-5 toDate" style="display:none;">
+                <div class="form-group form-focus">
+                  <label class="control-label">To Date
+                    <span class="req-lbl">*</span>
+                  </label>
+                  <div class="cal-icon">
+                    <input class="form-control floating datetimepicker" disabled type="text" id="activity_to_date" name="activity_to_date" value="{{dateFormat editdata.activity_to_date "
+                      MM-DD-YYYY "}}" data-date-format="MM-DD-YYYY">
                   </div>
                 </div>
               </div>
@@ -321,7 +401,7 @@
                       <tr>
                         <td>{{this.attorney_name}}</td>
                         <td> {{#if_eq this.relation 'C'}} Client {{/if_eq}} {{#if_eq this.relation 'T'}} Target {{/if_eq}}
-                          {{#if_eq this.relation 'R'}} Referral {{/if_eq}} {{#if_eq this.relation 'G'}} General {{/if_eq}}</td>
+                          {{#if_eq this.relation 'R'}} Referral Sources {{/if_eq}} {{#if_eq this.relation 'G'}} General {{/if_eq}}</td>
                         <td>{{ this.company_name }}</td>
                         <td>
                           <a href="#" id="budgetUpdate" data-toggle="modal" data-target="#update_budget">$ {{this.total_cost}}</a>
@@ -449,6 +529,24 @@
   </div>
 </div>
 
+<div class="modal fade" id="inviteAttrRemarks" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <strong>Attorney's Remarks</strong>
+        <button type="button" class="close" data-dismiss="modal">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <textarea class="form-control floating" id="show_remark_invite" name="show_remark_invite" rows="5" disabled></textarea>
+        </div>
+      </div>
+      <div class="modal-footer"></div>
+    </div>
+  </div>
+</div>
+
 {{#content "script" mode="append"}}
 <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
@@ -457,7 +555,14 @@
 <script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript">
-
+  $('#practice_area').multiselect({
+      nonSelectedText: 'Select Practice Area',
+      enableFiltering: true,
+      includeSelectAllOption: true,
+      buttonWidth: '100%',
+      maxHeight: 400,
+      dropDown: true
+    })
   $('#target_id').multiselect({
     nonSelectedText: 'Select Targets',
     includeSelectAllOption: true,
@@ -489,6 +594,46 @@
 
 
   $(document).ready(function (e) {
+    var frmDate = $("#acvtFrmDate").val();
+    var toDate = $("#acvtToDate").val();
+    if (frmDate == toDate) {
+      $("#activity_dateO").show();
+      $("#SomeDay_ActivityEvent").show();
+      $("#SomeDayActivityEvent").show();
+      $("#activity_from_date").val('');
+      $("#activity_to_date").val('');
+      $(".fromDate").hide();
+      $(".toDate").hide();
+      $("#oneDay_ActivityEvent").hide();
+    }
+    else {
+      $("#activity_dateO").hide();
+      $("#SomeDay_ActivityEvent").hide();
+      $("#activity_date").val('');
+      $(".fromDate").show();
+      $(".toDate").show();
+      $("#oneDay_ActivityEvent").show();
+      $("#oneDayActivityEvent").show();
+    }
+    $(document).on("click", "#oneDayActivityEvent", function () {
+      $("#activity_dateO").show();
+      $("#SomeDay_ActivityEvent").show();
+      $("#SomeDayActivityEvent").show();
+      $("#activity_from_date").val('');
+      $("#activity_to_date").val('');
+      $(".fromDate").hide();
+      $(".toDate").hide();
+      $("#oneDay_ActivityEvent").hide();
+    });
+    $(document).on("click", "#SomeDayActivityEvent", function () {
+      $("#activity_dateO").hide();
+      $("#SomeDay_ActivityEvent").hide();
+      $("#activity_date").val('');
+      $(".fromDate").show();
+      $(".toDate").show();
+      $("#oneDay_ActivityEvent").show();
+      $("#oneDayActivityEvent").show();
+    });
     // budget hour count total 
     var optionValues = [];
     $('#practice_area option').each(function () {
@@ -523,6 +668,21 @@
       height: '350px'
     });
 
+  });
+  $(document).on("click","#showInviRemark", function(){
+    var attr_id = $(this).data("attr-id");
+    var activity_id = $(this).data("activity-id");
+    $.ajax({
+      type: "GET",
+      url:"/get-invitation-remark-attr/"+ attr_id+"/"+ activity_id,
+      success:function(response) {
+        if(response.success == true)
+        {
+          $("#show_remark_invite").val(response.remarks);
+          $("#inviteAttrRemarks").modal('show');
+        }
+      }
+    })
   });
 
 

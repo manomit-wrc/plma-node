@@ -28,7 +28,8 @@
                                 <th>Activity Name</th>
                                 <th>From Date</th>
                                 <th>To Date</th>
-                                <th>Remarks</th>
+                                <th>Total Hours</th>
+                                <th>Total Amounts</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -47,11 +48,13 @@
                                 {{!-- <td>{{this.activity.activity_name}}</td> --}}
                                 <td>{{dateFormat this.activity.activity_from_date "MM-DD-YYYY"}}</td>
                                 <td>{{dateFormat this.activity.activity_to_date "MM-DD-YYYY"}}</td>
-                                <td>{{this.activity.remarks}}</td>
-                                <td> {{#if_eq this.activity.activity_status '0'}} NEW ACTIVITY - CREATED {{/if_eq}}
-                                    {{#if_eq this.activity.activity_status '1'}} PENDING APPROVAL - IN-PROGRESS {{/if_eq}}
-                                    {{#if_eq this.activity.activity_status '2'}} APPROVED - PROCEED {{/if_eq}}
-                                    {{#if_eq this.activity.activity_status '3'}} NOT APPROVED - DISCARD ACTIVITY {{/if_eq}}
+                                <td>{{this.activity.total_budget_hour}}</td>
+                                <td>{{this.activity.total_budget_amount}}</td>
+                                <td> {{#if_eq this.activity.activity_status '0'}}
+                                <span class="label label-info-border">NEW ACTIVITY - CREATED</span> {{/if_eq}} {{#if_eq this.activity.activity_status '1'}}
+                                <span class="label label-warning-border">PENDING APPROVAL - IN-PROGRESS</span> {{/if_eq}} {{#if_eq this.activity.activity_status '2'}}
+                                <span class="label label-success-border">APPROVED - PROCEED</span> {{/if_eq}} {{#if_eq this.activity.activity_status '3'}}
+                                <span class="label label-danger-border">NOT APPROVED - DISCARD ACTIVITY</span> {{/if_eq}}
                                 </td>
                             </tr>
                             {{/each}}
