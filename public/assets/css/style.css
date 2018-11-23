@@ -6253,8 +6253,8 @@ i.fa.fa-eye.m-r-5 {
 
 .common-tbl-fixed .persist-header td a {
 	width: 100px;
-	overflow: hidden;
-	/*text-overflow: ellipsis;
+	/*overflow: hidden;
+	text-overflow: ellipsis;
 	white-space: nowrap;*/
 	display: inline-block;
 	text-align: center;
