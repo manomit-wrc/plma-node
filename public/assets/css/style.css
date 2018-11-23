@@ -7969,136 +7969,182 @@ select.gender {
 	}
 
 	.pg-header .col-xs-9 a.btn.btn-primary.rounded {
-		right: -270px;
+		left: 130px;
+	}
+
+	.pg-header .col-xs-9 .master-cont + .master-all-btns {
+		right: 160px;
+	}
+
+	.pg-header .col-xs-9 .master-cont::after {
+		top: -50px !important;
+	}
+
+	/*.client .advancedFilter {
+		right: 100px;
+		top: -51px;
+	}*/
+
+	.client .advancedFilter {
+		left: 100px !important;
+		top: -51px;
+	}
+
+	.pg-header.referral-sources .master-cont::after {
+		top: -50px !important;
+	}
+
+	.pg-header.referral-sources + .row .col-md-12 .advancedFilter {
+		left: 190px;
+		top: -51px;
+	}
+
+	.pg-header.strategic-marketing-goals a.btn.btn-primary.rounded {
+		left: 0;
 	}
 
 }
 
-@media screen and (max-height: 575px){ #rc-imageselect, .g-recaptcha {transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;}
+@media screen and (max-height: 575px)
+{ 
+	#rc-imageselect, .g-recaptcha 
+	{
+		transform:scale(0.77);
+		-webkit-transform:scale(0.77);
+		transform-origin:0 0;
+		-webkit-transform-origin:0 0;
+	}
+}
 
 @media only screen and (max-width: 556px) {
 	.advancedFilter {
-		right: 14px;
+		left: 14px;
 		top: -45px;
 	}
 
+
+	.pg-header .col-xs-9 .master-cont + .master-all-btns {
+		right: 140px;
+	}
+
+
 	.master-cont::after {
-		right: 312px;
+		right: 12px;
 		top: -4px !important;
 	}
 
 	.master-cont + .master-all-btns {
-		right: 70px;
+		right: -90px;
 	}
 
 	/*.pg-header .col-xs-9 a.btn.btn-primary.rounded {
 		right: -180px;
-	}*/
-}
+		}*/
+	}
 
-/*Ends Tab Css 18-06-2018*/
-@media only screen and (max-width: 479px) {
-	.user-menu {
-		display: none;
-	}
-	.mobile-user-menu {
-		display: block;
-	}
-	.message-search {
-		display: none;
-	}
-	.staff-grid-row>.col-xs-6 {
-		width: 100%;
-	}
-	.filter-row>.col-xs-6 {
-		width: 100%;
-	}
-	.filter-row {
-		margin-bottom: 15px;
-	}
-	.page-wrapper>.content {
-		padding: 15px;
-	}
-	.profile-view .profile-basic {
-		margin-left: 0;
-	}
-	.profile-img-wrap {
-		position: relative;
-		margin: 0 auto;
-	}
-	.profile-view .profile-img-wrap {
-		margin: 0 auto 10px;
-		height: 100px;
-		width: 100px;
-	}
-	.profile-view .profile-img {
-		height: 100px;
-		width: 100px;
-	}
-	.profile-view .profile-img .avatar {
-		font-size: 24px;
-		height: 100px;
-		line-height: 100px;
-		margin: 0;
-		width: 100px;
-	}
-	.profile-info-left {
-		text-align: center;
-	}
-	.profile-basic {
-		margin-left: 0;
-		margin-top: 15px;
-	}
-	.page-title {
-		font-size: 18px;
-	}
-	.fc-toolbar .fc-right {
-		display: inline-block;
-		float: none;
-		margin: 10px auto 0;
-		width: 200px;
-		clear: both;
-	}
-	.fc-toolbar .fc-left {
-		float: none;
-		margin: 0 auto;
-		width: 200px;
-	}
-	.upload-text {
-		font-size: 18px;
-	}
-	.chat-right .chat-content {
-		max-width: 90%;
-	}
-	.chat-right .chat-body {
-		padding-left: 0;
-		padding-right: 0;
-	}
-	.chat-left .chat-content {
-		max-width: 90%;
-	}
-	.chat-left .chat-body {
-		padding-left: 0;
-		padding-right: 0;
-	}
-	.chat-avatar .avatar {
-		height: 20px;
-		line-height: 20px;
-		width: 20px;
-	}
-	.account-box {
-		width: 100%;
-		margin-bottom: 20px;
-	}
-	.pull-left.ticket-view-details {
-		width: 80%;
-	}
-	.chat-menu.navbar-nav>li>a {
-		margin-left: 10px;
-	}
-	.contact-alphapets {
-		top: 113px;
-	}
+	/*Ends Tab Css 18-06-2018*/
+	@media only screen and (max-width: 479px) {
+		.user-menu {
+			display: none;
+		}
+		.mobile-user-menu {
+			display: block;
+		}
+		.message-search {
+			display: none;
+		}
+		.staff-grid-row>.col-xs-6 {
+			width: 100%;
+		}
+		.filter-row>.col-xs-6 {
+			width: 100%;
+		}
+		.filter-row {
+			margin-bottom: 15px;
+		}
+		.page-wrapper>.content {
+			padding: 15px;
+		}
+		.profile-view .profile-basic {
+			margin-left: 0;
+		}
+		.profile-img-wrap {
+			position: relative;
+			margin: 0 auto;
+		}
+		.profile-view .profile-img-wrap {
+			margin: 0 auto 10px;
+			height: 100px;
+			width: 100px;
+		}
+		.profile-view .profile-img {
+			height: 100px;
+			width: 100px;
+		}
+		.profile-view .profile-img .avatar {
+			font-size: 24px;
+			height: 100px;
+			line-height: 100px;
+			margin: 0;
+			width: 100px;
+		}
+		.profile-info-left {
+			text-align: center;
+		}
+		.profile-basic {
+			margin-left: 0;
+			margin-top: 15px;
+		}
+		.page-title {
+			font-size: 18px;
+		}
+		.fc-toolbar .fc-right {
+			display: inline-block;
+			float: none;
+			margin: 10px auto 0;
+			width: 200px;
+			clear: both;
+		}
+		.fc-toolbar .fc-left {
+			float: none;
+			margin: 0 auto;
+			width: 200px;
+		}
+		.upload-text {
+			font-size: 18px;
+		}
+		.chat-right .chat-content {
+			max-width: 90%;
+		}
+		.chat-right .chat-body {
+			padding-left: 0;
+			padding-right: 0;
+		}
+		.chat-left .chat-content {
+			max-width: 90%;
+		}
+		.chat-left .chat-body {
+			padding-left: 0;
+			padding-right: 0;
+		}
+		.chat-avatar .avatar {
+			height: 20px;
+			line-height: 20px;
+			width: 20px;
+		}
+		.account-box {
+			width: 100%;
+			margin-bottom: 20px;
+		}
+		.pull-left.ticket-view-details {
+			width: 80%;
+		}
+		.chat-menu.navbar-nav>li>a {
+			margin-left: 10px;
+		}
+		.contact-alphapets {
+			top: 113px;
+		}
 
 	/*.ghanta {
 		position: absolute;
@@ -8164,7 +8210,28 @@ select.gender {
 		}
 
 		.master-cont::after {
-			right: 277px;
+			right: 20px;
+			font-size: 12px;
+		}
+
+		.pg-header a.btn.btn-primary.rounded {
+			font-size: 12px;
+			right: 0;
+			top: -45px;
+		}
+
+		.master-cont + .master-all-btns {
+			right: 20px;
+			top: 80px;
+		}
+
+		.advancedFilter {
+			font-size: 12px;
+		}
+
+		.pg-header.strategic-marketing-goals a.btn.btn-primary.rounded {
+			left: 0;
+			top: 0;
 		}
 	}
 
@@ -8185,7 +8252,7 @@ select.gender {
 
 	@media only screen and (max-width: 360px) {
 		.advancedFilter {
-			top: -85px;
+			top: -41px;
 		}
 
 		.pg-header a.btn.btn-primary.rounded {
@@ -8193,7 +8260,11 @@ select.gender {
 		}
 
 		.master-cont::after {
-			right: 207px;
+			right: 20px;
+		}
+
+		.pg-header .page-title {
+			font-size: 16px;
 		}
 	}
 
