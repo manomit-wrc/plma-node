@@ -31,6 +31,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
+                <div class="tb-toggle"></div>
                 <div class="table-responsive">
                     <table class="table table-striped custom-table datatable activity-goal">
                         <thead>
@@ -99,6 +100,12 @@
     $(document).on('click', "#setUrlItem", function () {
         localStorage.removeItem('url');
         localStorage.setItem("url", window.location.pathname);
+    });
+
+    $(document).ready(function(){
+        $(".tb-toggle").click(function(){
+            $(".dt-buttons").slideToggle();
+        });
     });
 
 </script> {{/content}}
