@@ -319,6 +319,11 @@ router.post('/insertActivity', auth, async (req, res) => {
 
 router.post('/activity/add-budget', auth, firmAttrAuth, csrfProtection, async (req, res) => {
     var budget = JSON.parse(req.body.budget);
+    await ActivityBudget.destroy({
+        where: {
+            activity_id: req.body.activity_id
+        }
+    })
     for (var b = 0; b < budget.length; b++) {
         await ActivityBudget.create({
             activity_id: req.body.activity_id,
@@ -335,7 +340,8 @@ router.post('/activity/add-budget', auth, firmAttrAuth, csrfProtection, async (r
 })
 
 // ========{{  insert data to the database  }}=====================//
-router.post('/activity/add', auth, upload.single('activity_attachment'), firmAttrAuth, csrfProtection, async (req, res) => {
+router.post('/activity/add', auth, upload.array('activity_attachment'), firmAttrAuth, csrfProtection, async (req, res) => {
+    return false;
     var activity_practice_area = req.body.practice_area;
     var target_user = [];
     var client_user = [];

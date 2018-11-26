@@ -25,7 +25,14 @@
             </div>
         </div>
         <div class="card-box">
-            <h3 class="card-title">Approval Status</h3>
+            <div class="col-md-8">
+                <h3 class="card-title">Approval Status</h3>
+            </div>
+            <div class="col-md-4 text-right">
+                {{#if_eq responseApprl.status "1"}}
+                    <button class="btn btn-primary pull-right rounded" id="addApprovalRemarksBtn"><i class="fa fa-plus"></i> Add Approval Remarks</button>
+                {{/if_eq}}
+            </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="table-responsive">
@@ -37,6 +44,7 @@
                                     <th>Approver Name</th>
                                     <th>Approval Status</th>
                                     <th>Date of Approved/Rejected</th>
+                                    <th>Remarks</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -66,7 +74,13 @@
                                         "MM-DD-YYYY"}}{{/if_eq}}{{/if_eq}} {{#if_eq this.approve "0"}} {{#if_eq this.status "2"}}{{dateFormat
                                         this.updatedAt "MM-DD-YYYY"}}{{/if_eq}}{{/if_eq}}
                                     </td>
-                                    
+                                    <td>
+                                        {{#if this.remarks}}
+                                            {{this.remarks}}
+                                        {{else}}
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; —
+                                        {{/if}}
+                                    </td>
                                 </tr>
                                 {{/each}}
                             </tbody>
@@ -153,6 +167,20 @@
                         </p>
                     </div>
                 </div>
+                {{#if activity.remarks}}
+                <div class="col-md-12">
+                    <div class="apprv-item">
+                        <h5 class="m-t-10">
+                            <strong>
+                               Activity Remarks
+                            </strong>
+                        </h5>
+                        <p>
+                            {{activity.remarks}}
+                        </p>
+                    </div>
+                </div>
+                {{/if}}
             </div>
         </div>
         <form class="m-b-10" name="editActivityBudgetFrm" id="editActivityBudgetFrm">
@@ -246,9 +274,10 @@
                             {{!--
                             <button class="btn btn-primary btn-lg" type="button" id="btnEditActivityBudget">Update</button> --}}
                             {{#if_eq responseApprl.approve "0"}}{{#if_eq responseApprl.status "1"}}
-                                <button class="btn btn-primary btn-lg" type="button" id="remarksActivity">Remarks</button>
+                                {{!-- <button class="btn btn-primary btn-lg" type="button" id="remarksActivity">Remarks</button> --}}
                                 <button class="btn btn-primary btn-lg" data-activity_id="{{activity_id}}" data-status_id="2" type="button" id="btnApproveActivityBudget">Approve</button>
-                                <button class="btn btn-primary btn-lg" data-activity_id="{{activity_id}}" data-status_id="3" type="button" id="btnRejectActivityBudget">Reject</button>
+                                {{!-- <button class="btn btn-primary btn-lg" data-activity_id="{{activity_id}}" data-status_id="3" type="button" id="btnRejectActivityBudget">Reject</button> --}}
+                                <button class="btn btn-primary btn-lg" type="button" id="rejectActivityBtn">Reject</button>
                                 <button class="btn btn-primary btn-lg" type="button" id="btnCancelActivityBudget">Cancel</button>
                             {{/if_eq}}{{/if_eq}}
                         </div>
@@ -267,17 +296,38 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <strong>Activity Approval Remark</strong>
+                <strong>Activity Rejection Remark</strong>
                 <button type="button" class="close" data-dismiss="modal">×</button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
                     <input type="hidden" id="activity_id" />
                     <input type="hidden" id="budget_id" />
-                    <textarea class="form-control floating" id="approver_remarks" name="approver_remarks" rows="5">{{act_remark}}</textarea>
+                    <textarea class="form-control floating" id="approver_remarks" name="approver_remarks" rows="5" placeholder="Enter your remarks">{{act_remark}}</textarea>
                 </div>
                 <div class="form-group text-right">
                     <input type="button" value="Submit" class="btn btn-info approval_remark_details" />
+                    <button class="btn btn-primary" data-activity_id="{{activity_id}}" data-status_id="3" disabled type="button" id="btnRejectActivityBudget">Reject</button>
+                </div>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addApprovalRemarksModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <strong>Add Remarks</strong>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <textarea class="form-control floating" id="add_remarks" name="add_remarks" rows="5" placeholder="Enter your remarks">{{responseApprl.remarks}}</textarea>
+                </div>
+                <div class="form-group text-right">
+                    <input type="button" value="Submit" class="btn btn-primary" id="addApprovalRemarksModalBtn"/>
                 </div>
             </div>
             <div class="modal-footer"></div>
@@ -331,8 +381,9 @@
             },
             success: function (response) {
                 if (response.success == true) {
-                    $('#update_budget').modal('hide');
-                    swal('', 'Updated Successfully', 'success');
+                    //$('#update_budget').modal('hide');
+                    swal('', 'Remarks added Successfully. now click on reject button to reject this activity', 'success');
+                    $("#btnRejectActivityBudget").attr("disabled", false);
                 }
             },
             error: function (err) {
@@ -411,5 +462,44 @@
         });
 
         $(".apporval-sent .apprv-item").height(maxHeight);
+    
+    $(document).on("click","#rejectActivityBtn", function(){
+        $('#update_budget').modal('show');  
+    })
+    $(document).on("click","#addApprovalRemarksBtn", function(){
+        $('#addApprovalRemarksModal').modal('show');  
+    })
+    $(document).on("click","#addApprovalRemarksModalBtn", function(){
+        var remarks = $("#add_remarks").val();
+        if(remarks)
+        {
+            $.ajax({
+                type: 'POST',
+                url: '/add-approval-remarks-from-approver',
+                data: {
+                    activity_id: {{activity_id}},
+                    remarks: remarks 
+                },
+                success: function (response) {
+                    if (response.success == true) {
+                        swal({
+                            title: "Success!",
+                            text: "Remarks added Successfully!",
+                            type: "success"
+                        }, function () {
+                            window.location.reload();
+                        });
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        }
+        else
+        {
+            swal("Warning","Remarks can't be blank","warning");
+        }
+    })
 
 </script> {{/content}}

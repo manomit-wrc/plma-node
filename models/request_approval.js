@@ -5,7 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     approver_id: DataTypes.INTEGER,
     status: DataTypes.STRING,
     approver_status: DataTypes.STRING,
-    approve: DataTypes.STRING
+    approve: DataTypes.STRING,
+    remarks: DataTypes.TEXT
   }, {});
   request_approval.associate = function(models) {
     // associations can be defined here

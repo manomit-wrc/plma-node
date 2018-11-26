@@ -511,4 +511,18 @@ router.get("/end-planning-period-noti-crown", async(req, res)=> {
 //     res.send("completed");
 // })
 
+router.post("/add-approval-remarks-from-approver", auth, async(req, res) => {
+    await requestApproval.update({
+        remarks: req.body.remarks
+    },{
+        where: {
+            approver_id: req.user.id,
+            activity_id: req.body.activity_id
+        }
+    });
+    res.json({
+        success: true
+    })
+});
+
 module.exports = router;

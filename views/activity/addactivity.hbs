@@ -284,15 +284,22 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
+                                {{!-- <div class="form-group form-focus select-focus">
+                                    <input class="form-control floating" type="file" id="activity_attachment" name="activity_attachment" style="height: auto;">
+                                    <div class="btn btn-primary">
+                                        <img src="/assets/img/choose-file.png" alt="">Choose File for Attachment</div>
+                                </div> --}}
+                                <input id="uploadFile" placeholder="Add files from My Computer" />
+                                <div class="fileUpload btn btn-primary">
+                                    <span>Browse</span>
+                                    <input id="uploadBtn" type="file" class="upload" multiple="multiple" name="activity_attachment" />
+                                </div>
+                                <div id="upload_prev"></div>
+                            </div>
+                            <div class="col-md-12">
                                 <div class="form-group form-focus">
                                     <label class="control-label">Remarks</label>
                                     <textarea class="form-control floating" id="remarks" name="remarks" rows="5"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group form-focus select-focus">
-                                    <input class="form-control floating" type="file" id="activity_attachment" name="activity_attachment" style="height: auto;">
-                                    <div class="btn btn-primary"><img src="/assets/img/choose-file.png" alt="">Choose File for Attachment</div>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -626,11 +633,14 @@
             },
             success: function (response) {
                 if (response.success == true) {
-                    $(`<div class="alert alert-success"><strong>Success! </strong>Budget Added Successfully</div>`).insertBefore("#btnActivityBudget");
+                    $(`<div class="alert alert-success budalert"><strong>Success! </strong>Budget Added Successfully</div>`).insertBefore("#btnActivityBudget");
                     setTimeout(function () {
                         $("#add_budget").modal('hide');
+                        $(".budalert").hide();
                     }, 2000);
-                    $("#btnActivityBudget").html("Budget Added");
+                    $("#btnActivityBudget").html("Update");
+                    $("#budgetAdd").html("+ Edit Budget");
+                    $("#btnActivityBudget").prop('disabled', false);
                     $("#btnAdd").prop('disabled', false);
                     $("#status_bud").val("1");
                 }
@@ -791,5 +801,31 @@
             height: '350px'
         });
     });
+    $(document).on('click', '.close', function () {
+        var files = $('#uploadBtn')[0].files;
+        var upfilename = $(this).parent().find("div").html();
+        //const longWords = files.map(files => files.name > 1);
+        var xxx = $.grep(files, function (e) {
+            return e.name != upfilename;
+        });
+        console.log(files);
+        $(this).parents('span').remove();
+    })
+
+    document.getElementById('uploadBtn').onchange = uploadOnChange;
+
+    function uploadOnChange() {
+        document.getElementById("uploadFile").value = this.value;
+        var filename = this.value;
+        var lastIndex = filename.lastIndexOf("\\");
+        if (lastIndex >= 0) {
+            filename = filename.substring(lastIndex + 1);
+        }
+        var files = $('#uploadBtn')[0].files;
+        for (var i = 0; i < files.length; i++) {
+            $("#upload_prev").append('<span>' + '<div class="filenameupload">' + files[i].name + '</div>' + '<p class="close" >X</p></span>');
+        }
+        document.getElementById('filename').value = filename;
+    }
 </script>
 {{/content}}
