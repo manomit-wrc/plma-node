@@ -1139,13 +1139,16 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				user_id: req.user.id,
 				firm_id: req.user.firm_id
 			});
-			await Referred_Client_Targets.create({
-				'type': 'C',
-				'target_id': 0,
-				'client_id': parseInt(insertData.id),
-				'referral_id': parseInt(req.body.referral_resource_add),
-				'status': 1
-			});
+			if (req.body.referral_resource_add)
+			{
+				await Referred_Client_Targets.create({
+					'type': 'C',
+					'target_id': 0,
+					'client_id': parseInt(insertData.id),
+					'referral_id': parseInt(req.body.referral_resource_add),
+					'status': 1
+				});
+			}
 
 			req.flash('success-message', 'Client Added Successfully');
 			res.redirect('/client');
@@ -1208,13 +1211,16 @@ router.post('/client/addClient', auth, firmAttrAuth, csrfProtection, async (req,
 				user_id: req.user.id,
 				firm_id: req.user.firm_id
 			});
-			await Referred_Client_Targets.create({
-				'type': 'C',
-				'target_id': 0,
-				'client_id': parseInt(insertData.id),
-				'referral_id': parseInt(req.body.referral_resource_add),
-				'status': 1
-			});
+			if (req.body.referral_resource_add)
+			{
+				await Referred_Client_Targets.create({
+					'type': 'C',
+					'target_id': 0,
+					'client_id': parseInt(insertData.id),
+					'referral_id': parseInt(req.body.referral_resource_add),
+					'status': 1
+				});
+			}
 			req.flash('success-message', 'Client Added Successfully');
 			res.redirect('/client');
 		}

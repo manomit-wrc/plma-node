@@ -3,6 +3,7 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-sweetalert/sweet-alert.css">
+<link rel="stylesheet" type="text/css" href="/assets/plugins/dropzone/dist/dropzone.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
@@ -203,7 +204,7 @@
                             <div class="col-md-6">
                                 <div class="form-group form-focus select-focus ">
                                     <div class="">
-                                        <select class="form-control floating" id="practice_area" name="practice_area[]" multiple="multiple">
+                                        <select class="form-control floating" id="practice_area" name="practice_area" multiple="multiple">
                                         {{#if_eq user.actual_role_id "2"}}
                                             {{#each practice_area_firm}}
                                                 <option value="{{this.practicearea.id}}">{{this.practicearea.name}}</option>
@@ -283,18 +284,35 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 {{!-- <div class="form-group form-focus select-focus">
                                     <input class="form-control floating" type="file" id="activity_attachment" name="activity_attachment" style="height: auto;">
                                     <div class="btn btn-primary">
                                         <img src="/assets/img/choose-file.png" alt="">Choose File for Attachment</div>
                                 </div> --}}
-                                <input id="uploadFile" placeholder="Add files from My Computer" />
+                                {{!-- <input id="uploadFile" placeholder="Add files from My Computer" />
                                 <div class="fileUpload btn btn-primary">
                                     <span>Browse</span>
                                     <input id="uploadBtn" type="file" class="upload" multiple="multiple" name="activity_attachment" />
                                 </div>
-                                <div id="upload_prev"></div>
+                                <div id="upload_prev"></div> --}}
+                                <div class="form-group dropzone" id="real-dropzone_photo_handler">
+                                    <div class="dz-message">
+                                
+                                    </div>
+                                
+                                    <div class="fallback">
+                                        <input name="photo_handler_image" id='photo_handler_image' type="file" multiple />
+                                    </div>
+                                
+                                    <div class="dropzone-previews" id="dropzonePreview"></div>
+                                
+                                    <input type="hidden" name="photo_handler_id" id="photo_handler_id">
+                                
+                                    <h4 style="text-align: center;color:#428bca;">Drop attachment in this area
+                                        <span class="glyphicon glyphicon-hand-down"></span>
+                                    </h4>
+                                </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group form-focus">
@@ -449,6 +467,7 @@
 <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/assets/js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript" src="/assets/plugins/bootstrap-sweetalert/sweet-alert.min.js"></script>
+<script type="text/javascript" src="/assets/plugins/dropzone/dist/dropzone.js"></script>
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
@@ -801,31 +820,42 @@
             height: '350px'
         });
     });
-    $(document).on('click', '.close', function () {
-        var files = $('#uploadBtn')[0].files;
-        var upfilename = $(this).parent().find("div").html();
-        //const longWords = files.map(files => files.name > 1);
-        var xxx = $.grep(files, function (e) {
-            return e.name != upfilename;
-        });
-        console.log(files);
-        $(this).parents('span').remove();
-    })
+    var dropzone = $("#real-dropzone_photo_handler").dropzone({
+        url: "/attachment-file-upload-dz/",
+        maxFiles: 100,
+        paramName: 'photo_handler_image',
+        addRemoveLinks: true,
+        sending: function (file, xhr, formData) {
+            console.log(file)
+        },
+        init: function () {
+            var myDropzone = this;
+            this.on("success", function (file, response) {
+                file.file_id = response.file_id;
+                file.name = response.file_name;
+                var a = document.createElement('a');
+                a.setAttribute('href', "" + response.file_name);
+                a.setAttribute('target', "blank");
+                a.innerHTML = "View";
+                file.previewTemplate.appendChild(a);
+            });
+            
+            this.on("removedfile", function (file) {
+                console.log(file);
+                $.ajax({
+                    type: 'POST',
+                    url: '/activity_attachment_remove/',
+                    data: {file_id: file.file_id },
+                    success: function (data) {
 
-    document.getElementById('uploadBtn').onchange = uploadOnChange;
+                    }
+                });
 
-    function uploadOnChange() {
-        document.getElementById("uploadFile").value = this.value;
-        var filename = this.value;
-        var lastIndex = filename.lastIndexOf("\\");
-        if (lastIndex >= 0) {
-            filename = filename.substring(lastIndex + 1);
-        }
-        var files = $('#uploadBtn')[0].files;
-        for (var i = 0; i < files.length; i++) {
-            $("#upload_prev").append('<span>' + '<div class="filenameupload">' + files[i].name + '</div>' + '<p class="close" >X</p></span>');
-        }
-        document.getElementById('filename').value = filename;
-    }
+
+            });
+        },
+        uploadMultiple: false,
+        acceptedFiles: '.jpg, .jpeg, .png, .svg, .pdf, .docx, .xlxs, .xls'
+    });
 </script>
 {{/content}}

@@ -3,6 +3,7 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-sweetalert/sweet-alert.css">
+<link rel="stylesheet" type="text/css" href="/assets/plugins/dropzone/dist/dropzone.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css">
 
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" /> {{/content}}
@@ -318,13 +319,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="form-group form-focus">
-                  <label class="control-label">Remarks</label>
-                  <textarea class="form-control floating" id="remarks" name="remarks" rows="5">{{editdata.remarks}}</textarea>
-                </div>
-              </div>
-              <div class="col-md-5">
+              {{!-- <div class="col-md-5">
                 <div class="form-group form-focus select-focus">
                   <input class="form-control floating" type="file" id="activity_attachment" name="activity_attachment" style="height: auto;">
                   <div class="btn btn-primary"><img src="/assets/img/choose-file.png" alt="">Choose File for Attachment</div>
@@ -340,6 +335,33 @@
                   </div>
                 </div>
                 {{/if}}
+              </div> --}}
+              <div class="col-md-12">
+                <div class="form-group dropzone" id="real-dropzone_photo_handler_edit">
+                  <div class="dz-message">
+                
+                  </div>
+                
+                  <div class="fallback">
+                    <input name="photo_handler_image" id='photo_handler_image' type="file" multiple />
+                  </div>
+                
+                  <div class="dropzone-previews" id="dropzonePreview"></div>
+                
+                  <input type="hidden" name="activity_id_attach" id="activity_id_attach" value="{{editdata.id}}">
+                
+                  <h4 style="text-align: center;color:#428bca;">Drop attachment in this area
+                    <span class="glyphicon glyphicon-hand-down"></span>
+                  </h4>
+                </div>
+              </div>
+              <div class="col-md-12">
+                 {{!-- {{#each attach_file}}
+                <img src="{{this.attachment}}" width="100px" height="100px" /> {{/each}} --}}
+                <div class="form-group form-focus">
+                  <label class="control-label">Remarks</label>
+                  <textarea class="form-control floating" id="remarks" name="remarks" rows="5">{{editdata.remarks}}</textarea>
+                </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group form-focus select-focus select-attorney">
@@ -695,6 +717,7 @@
 <script type="text/javascript" src="/assets/js/moment.min.js"></script>
 <script type="text/javascript" src="/assets/plugins/bootstrap-sweetalert/sweet-alert.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script type="text/javascript" src="/assets/plugins/dropzone/dist/dropzone.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 
@@ -1118,5 +1141,73 @@
                 });
             }
         });
-  })
+  });
+  var dropzone = $("#real-dropzone_photo_handler_edit").dropzone({
+      url: "/attachment-file-upload-dz/",
+      maxFiles: 100,
+      paramName: 'photo_handler_image',
+      addRemoveLinks: true,
+      sending: function (file, xhr, formData) {
+        console.log(file)
+      },
+      init: function () {
+        var myDropzone = this;
+        this.on("success", function (file, response) {
+          console.log(response)
+          file.file_id = response.file_id;
+          file.name = response.file_name;
+          var a = document.createElement('a');
+          a.setAttribute('href', "" + response.file_name);
+          a.setAttribute('target', "blank");
+          a.innerHTML = "View";
+          file.previewTemplate.appendChild(a);
+        });
+        $.ajax({
+          type: 'POST',
+          url: '/photo_holdler_details_image_get/',
+          data: { activity_id_attach: $("#activity_id_attach").val() }, 
+          beforeSend: function () {
+
+          },
+          success: function (response) {
+            var obj = response;
+            try {
+              for (var i = 0; i < obj.attach_file.length; i++) {
+
+                var file = { name: obj.attach_file[i].attachment, file_id: obj.attach_file[i].id };
+                myDropzone.options.addedfile.call(myDropzone, file);
+                myDropzone.createThumbnailFromUrl(file, obj.attach_file[i].attachment);
+                myDropzone.emit("complete", file);
+                var a = document.createElement('a');
+                a.setAttribute('href', "" + file.name);
+                a.setAttribute('target', "blank");
+                a.innerHTML = "View";
+                file.previewTemplate.appendChild(a);
+              }
+            }
+            catch (error) {
+              console.log(error)
+            }
+
+          }
+        });
+        
+
+        this.on("removedfile", function (file) {
+          console.log(file);
+          $.ajax({
+            type: 'POST',
+            url: '/activity_attachment_remove/',
+            data: { file_id: file.file_id },
+            success: function (data) {
+
+            }
+          });
+
+
+        });
+      },
+      uploadMultiple: false,
+      acceptedFiles: '.jpg, .jpeg, .png, .svg, .pdf, .docx, .xlxs, .xls'
+    });
 </script> {{/content}}

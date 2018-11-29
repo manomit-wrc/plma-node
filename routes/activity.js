@@ -21,6 +21,7 @@ const multer = require('multer');
 const User = require('../models').user;
 const notificationTable = require('../models').notificationTable;
 const practiceAreaToActivity = require('../models').practice_area_to_activity;
+const ActivityAttachment = require('../models').activity_attachment;
 
 
 const requestApproval = require('../models').request_approval;
@@ -62,6 +63,11 @@ function removePhoneMask(removeCharacter) {
 }
 
 router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+    await ActivityAttachment.destroy({
+        where: {
+            activity_id: 0
+        }
+    });
     var activityFilter = {};
     if (req.query.searchActive) {
         activityFilter.activity_type = req.query.searchActive;
@@ -190,6 +196,12 @@ router.get('/activityseen', auth, firmAttrAuth, csrfProtection, async (req, res)
 
 //fetch
 router.get('/activitypage', auth, firmAttrAuth, csrfProtection, async (req, res) => {
+    await Activity.destroy({
+        where: {
+            user_id: null,
+            firm_id: 0
+        }
+    });
     var whereCondition = {};
 
     if (req.query.activity_goal_id) {
@@ -340,8 +352,8 @@ router.post('/activity/add-budget', auth, firmAttrAuth, csrfProtection, async (r
 })
 
 // ========{{  insert data to the database  }}=====================//
-router.post('/activity/add', auth, upload.array('activity_attachment'), firmAttrAuth, csrfProtection, async (req, res) => {
-    return false;
+router.post('/activity/add', auth, upload.single('activity_attachment'), firmAttrAuth, csrfProtection, async (req, res) => {
+    //return false;
     var activity_practice_area = req.body.practice_area;
     var target_user = [];
     var client_user = [];
@@ -417,11 +429,19 @@ router.post('/activity/add', auth, upload.array('activity_attachment'), firmAttr
             'total_budget_amount': req.body.total_amount,
             'section_id': req.body.section,
             's_group_id': req.body.strategy_group,
-            'attachment_field': fileName,
+            //'attachment_field': fileName,
             'activity_update': 'new'
         }, {
             where: {
                 'id': req.body.activity_id
+            }
+        });
+        await ActivityAttachment.update({
+            activity_id: req.body.activity_id
+        },{
+            where: 
+            {
+                activity_id: 0
             }
         });
         if (req.body.ref_type == "T") {
@@ -510,8 +530,15 @@ router.post('/activity/add', auth, upload.array('activity_attachment'), firmAttr
            'total_budget_amount': 0,
            'section_id': req.body.section,
            's_group_id': req.body.strategy_group,
-           'attachment_field': fileName,
+           //'attachment_field': fileName,
            'activity_update': 'new'
+       });
+       await ActivityAttachment.update({
+           activity_id: activitys.id
+       }, {
+           where: {
+               activity_id: 0
+           }
        });
        if (req.body.ref_type == "T") {
            for (var i = 0; i < target_user.length; i++) {
@@ -1109,6 +1136,7 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
             id: editdata[0].user_id
         }
     });
+    
     res.render('activity/update', {
         layout: 'dashboard',
         title: 'Edit Activity',
@@ -1134,7 +1162,7 @@ router.get('/activity/edit/:id', auth, firmAttrAuth, csrfProtection, async (req,
         Cdata,
         tdata,
         Rdata,
-        p_type_arr
+        p_type_arr,
     });
 });
 
@@ -1285,11 +1313,18 @@ router.post('/activity/update/:id', auth, upload.single('activity_attachment'), 
         'target': req.body.ref_type,
         'section_id': req.body.section,
         's_group_id': req.body.strategy_group,
-        'attachment_field': fileName,
+        //'attachment_field': fileName,
         'activity_update': 'update'
     }, {
         where: {
             'id': req.params['id']
+        }
+    });
+    await ActivityAttachment.update({
+        activity_id: req.params['id']
+    }, {
+        where: {
+            activity_id: 0
         }
     });
     const del_practice = await practiceAreaToActivity.destroy({
@@ -2101,6 +2136,41 @@ router.get("/get-invitation-remark-attr/:attr_id/:id", auth, async(req, res)=> {
         success:true,
         remarks: selected_attr.remarks
     })
+});
+
+router.post("/attachment-file-upload-dz", auth, upload.array('photo_handler_image'), async (req, res) => {
+    var attachment = await ActivityAttachment.create({
+        attachment: "/activity/"+fileName,
+        activity_id: 0,
+        status: 0
+    });
+    res.json({
+        success: true,
+        file_id: attachment.id,
+        file_name: "/activity/" + fileName
+    });
+}); 
+
+router.post("/activity_attachment_remove", auth, async(req, res)=> {
+    await ActivityAttachment.destroy({
+        where: {
+            id: req.body.file_id
+        }
+    });
+    res.json({
+        success: true
+    });
+});
+
+router.post("/photo_holdler_details_image_get", auth, async(req, res)=> {
+     var attach_file = await ActivityAttachment.findAll({
+         where: {
+             activity_id: req.body.activity_id_attach
+         }
+     });
+     res.json({
+         attach_file: attach_file
+     })
 });
 
 //====================================END ACTIVITY=============================================================================//
