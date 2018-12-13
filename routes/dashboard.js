@@ -338,6 +338,18 @@ router.get('/dashboard', auth,  async(req, res) => {
         }],
     });
 
+    var activityGoalCondition = {};
+    if (req.user.role_id != "1") {
+        activityGoalCondition.firm_id = req.user.firm_id;
+        if (req.user.role_id != "2") {
+            activityGoalCondition.user_id = req.user.id;
+        }
+    }
+    const tactical_goal = await ActivityGoal.findAll({
+        where: activityGoalCondition
+    });
+
+
 
 
 
@@ -414,7 +426,8 @@ router.get('/dashboard', auth,  async(req, res) => {
         attorney,
         total_budget_amount,
         pieChart,
-        notiFicationDetails
+        notiFicationDetails,
+        tactical_goal
     });
 
 }).get('/logout', auth, (req, res) => {

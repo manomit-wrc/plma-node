@@ -6517,6 +6517,28 @@ p.close {
 	font-size: 14px;
 }
 
+.full-screen-calender-section {
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: 999999;
+	overflow-y: auto;
+	height: 100%;
+	padding-top: 30px;
+	overflow-x: hidden;
+}
+
+#activityCalBtn,
+#activityGoalCalBtn,
+#activityChartBtn,
+#revenueChartBtn {
+	position: absolute;
+	top: 15px;
+	right: 40px;
+}
+z
+
 
 /*------------------------------------------------------------------
 [39-a.... Custom Styles]
